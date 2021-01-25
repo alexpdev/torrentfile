@@ -106,23 +106,24 @@ def decode_torrent(path):
 path = Path("C:\\Users\\asp\\Downloads\\inactiveRecent_Ts").resolve()
 
 def make_info_list(path):
-	info_list, output = {}, None
+	data, output = {}, None
 	for p in path.iterdir():
-		if ".torrent" not in p.name:
-			continue
-		output = decode_torrent(p)
-		info = output["info"]
-		info_list[p.name] = {"name": info["name"]}
-		if "files" in info:
-			info_list["files"] = parse_info(info["files"])
-	return info_list
+		if ".torrent" in p.name:
+			output = decode_torrent(p)
+			info = output["info"]
+			this = data[p.name] = {}
+			if "files" in info:
+				data[p.name] = parse_info(info["files"])
+			else:
+				data[p.name] = info["name"]
+	return data
 
 def parse_info(info):
 	lst = []
 	for dic in info:
 		for k in dic:
 			if k == "path":
-				lst.append(dic[k])
+				lst += dic[k]
 	return lst
 
 
