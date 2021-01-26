@@ -106,16 +106,19 @@ def decode_torrent(path):
 path = Path("C:\\Users\\asp\\Downloads\\inactiveRecent_Ts").resolve()
 
 def make_info_list(path):
-	data, output = {}, None
+	data = {}
+	temp_1 = open("temp1.txt","wt")
 	for p in path.iterdir():
 		if ".torrent" in p.name:
 			output = decode_torrent(p)
 			info = output["info"]
-			this = data[p.name] = {}
 			if "files" in info:
 				data[p.name] = parse_info(info["files"])
 			else:
 				data[p.name] = info["name"]
+				out = p.name + "\t" + info["name"] + "\n"
+				temp_1.write(out)
+	temp_1.close()
 	return data
 
 def parse_info(info):
@@ -128,8 +131,9 @@ def parse_info(info):
 
 
 
+# path = Path("C:\\Users\\asp\\Documents\\Code\\Github-Repos\\torrent_standard\\temp1.txt").resolve()
 
-output = make_info_list(path)
-json.dump(output,open("formated.json","wt"))
+# output = make_info_list(path,root)
+# json.dump(output,open("formated.json","wt"))
 
 

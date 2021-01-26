@@ -6,25 +6,19 @@ import funcs
 
 sys.path.append(Path(__file__).resolve().parent)
 data_dir = None
-root = Path("A:").resolve()
 path = Path("C:\\Users\\asp\\Downloads\\inactiveRecent_Ts").resolve()
 
 
-def look(root,names):
+def look(root,filename):
 	for fname in root.iterdir():
-		try:
-			if fname.is_dir():
-				look(fname,names)
-			elif fname.is_file():
-				if isinstance(names,list):
-					if fname in names:
-						return fname
-				else:
-					if fname.name == names:
-						return fname
-		except:
-			return None
-	return None
+		if fname.is_dir():
+			try:
+				look(fname,filename)
+			except:
+				continue
+		else:
+			if fname.name == filename:
+				return fname
 
 
 
@@ -38,8 +32,23 @@ def find_dirs(path,root):
 			print(torrent)
 	return
 
-output = funcs.make_info_list(path)
-final = find_dirs(output,root)
+def find_paths(path,root):
+	pairs = open("pairings.txt","wt")
+	with open(path,"rt") as fp:
+		for line in fp.readlines():
+			name,filename = line.split("\t")
+			match = look(root,filename)
+			if match:
+				out = name + "\t" + str(match) + "\n"
+				pairs.write(out)
+	pairs.close()
+
+root = Path("A:").resolve()
+path = Path("C:\\Users\\asp\\Documents\\Code\\Github-Repos\\torrent_standard\\temp1.txt").resolve()
+find_paths(path,root)
+
+# output = funcs.make_info_list(path)
+# final = find_dirs(output,root)
 
 
 
