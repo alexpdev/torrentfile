@@ -1,6 +1,4 @@
-import os, json, re
-from pathlib import Path
-
+import re
 
 class BencodeDecoder:
 
@@ -70,13 +68,12 @@ class BencodeDecoder:
 
 class BencodeEncoder:
 
-    def __init__(self,txt):
-        self.txt = txt
-        self.ended = bytes()
+    def __init__(self,data):
+        self.info = data
 
-    def encode_all(self,txt):
-        self.ended = self.encode(txt)
-        return self.encode(txt)
+    def encode_all(self):
+        output = self.encode(self.info)
+        return output
 
     def encode(self,val):
         if type(val) == str:
@@ -115,20 +112,22 @@ class BencodeEncoder:
 
 class Torrent:
 
-    def __init__(self, path):
-        self.path = Path(path).resolve()
-        self.decoder = BencodeDecoder()
-        self.raw_data  = None
-        self.files = []
-        self.info = []
+    def __init__(self,data=None,path=None):
+        self.data = data
+        self.path = path
 
-    def decode(self):
+    def create(self,data):
+        info = BencodeEncoder(data)
+        self.output = info.encode_all()
+
+    def translate(self,path):
+        """ Convert .torrent file into readable format """
+        self.path = path
         data = open(self.path,"rb").read()
-        self.raw_data = self.decoder.decode_all(data)
-        info = self.raw_data["info"]
-        if "name" in info:
-            self.name = info["name"]
-            self.files = info["files"]
+        decoder = BencodeDecoder()
+        self.data = decoder.decode_all(self.data)
+        print(self.data)
+        return self.data
 
     def info(self):
         print(self.name,self.files)

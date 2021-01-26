@@ -1,12 +1,9 @@
-import os
-import sys
+import os,sys
 from pathlib import Path
-import json
-import funcs
-
 sys.path.append(Path(__file__).resolve().parent)
-data_dir = None
-path = Path("C:\\Users\\asp\\Downloads\\inactiveRecent_Ts").resolve()
+import json
+import funcs, classes
+from config import torrent_folder, search_folder, data_folder
 
 
 def look(root,filename):
@@ -20,9 +17,6 @@ def look(root,filename):
 			if fname.name == filename:
 				return fname
 
-
-
-# data = json.load(open(path,"rt").read())
 def find_dirs(path,root):
 	temp = open("temp.txt","wt")
 	for torrent,fp in path.items():
@@ -43,12 +37,29 @@ def find_paths(path,root):
 				pairs.write(out)
 	pairs.close()
 
-root = Path("A:").resolve()
-path = Path("C:\\Users\\asp\\Documents\\Code\\Github-Repos\\torrent_standard\\temp1.txt").resolve()
-find_paths(path,root)
+def make_info_list(path,data_folder):
+	data = {}
+	temp_1 = open(os.path.join(data_folder,"temp1.txt"),"wt")
+	for p in path.iterdir():
+		if ".torrent" in p.name:
+			output = funcs.decode_torrent_file(p)
+			info = output["info"]
+			if "files" in info:
+				data[p.name] = parse_info(info["files"])
+			else:
+				data[p.name] = info["name"]
+				out = p.name + "\t" + info["name"] + "\n"
+				temp_1.write(out)
+	temp_1.close()
+	return data
 
-# output = funcs.make_info_list(path)
-# final = find_dirs(output,root)
+def parse_info(info):
+	lst = []
+	for dic in info:
+		for k in dic:
+			if k == "path":
+				lst += dic[k]
+	return lst
 
 
-
+make_info_list(torrent_folder,data_folder)

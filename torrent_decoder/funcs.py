@@ -1,9 +1,12 @@
-import re, json, string
-from pathlib import Path
+import re
+
 
 """decoding bincode format"""
 
 def de_str(bits):
+	""" Extracts strings from bencoded data
+		Returns: string : [first encoded string found]
+	"""
 	match = re.match(b"(\\d+):",bits)
 	word_len, start = int(match.groups()[0]), match.span()[1]
 	word = bits[start : start + word_len]
@@ -15,11 +18,13 @@ def de_str(bits):
 
 
 def de_int(bits):
+	""" Decodes Integers for bencoded data"""
 	obj = re.match(b"i(-?\d+)e", bits)
 	return int(obj.group(1)), obj.end()
 
 
 def de_dict(bits):
+	""" decodes dictionary from bencoded data """
 	dic, feed = {}, 1
 	while not bits[feed:].startswith(b"e"):
 		match1, rest = decode(bits[feed:])
@@ -31,6 +36,7 @@ def de_dict(bits):
 	return dic, feed
 
 def de_list(bits):
+	""" decodes list from bencoded data """
 	lst, feed = [], 1
 	while not bits[feed:].startswith(b"e"):
 		match, rest = decode(bits[feed:])
@@ -40,6 +46,8 @@ def de_list(bits):
 	return lst, feed
 
 def decode(bits):
+	""" Receives bencoded data and decodes it using type decoder functions
+	"""
 	if bits.startswith(b"i"):
 		match, feed = de_int(bits)
 		return match, feed
@@ -59,6 +67,7 @@ def decode(bits):
 """Encode dict to bincode format"""
 
 def encode(self,val):
+	""" Receives a dictionary and encodes it to Bencode format """
 	if type(val) == str:
 		return self.to_str(val)
 	elif type(val) == int:
@@ -71,13 +80,16 @@ def encode(self,val):
 		return
 
 def to_str(txt):
+	""" returns a bencoded str """
 	size = str(len(txt)).encode("utf-8")
 	return size + b":" + txt.encode("utf-8")
 
 def to_int(i):
+	""" returns bencoded int """
 	return b"i" + b"{i}" + b"e"
 
 def to_list(elems):
+	""" returns bencoded list """
 	lst = [b"l"]
 	for elem in elems:
 		encoded = encode(elem)
@@ -87,53 +99,14 @@ def to_list(elems):
 	return bit_lst
 
 def to_dict(dic):
+	""" returns bencoded dictionary """
 	result = b"d"
 	for k,v in dic.items():
 		result += b"".join([encode(k), encode(v)])
 	return result + b"e"
 
 
-def decode_torrent(path):
-	data = open(path,"rb").read()
-	output, feed = decode(data)
+def decode_torrent_file(path):
+	torrent_data = open(path,"rb").read()
+	output, _ = decode(torrent_data)
 	return output
-
-
-
-
-
-
-path = Path("C:\\Users\\asp\\Downloads\\inactiveRecent_Ts").resolve()
-
-def make_info_list(path):
-	data = {}
-	temp_1 = open("temp1.txt","wt")
-	for p in path.iterdir():
-		if ".torrent" in p.name:
-			output = decode_torrent(p)
-			info = output["info"]
-			if "files" in info:
-				data[p.name] = parse_info(info["files"])
-			else:
-				data[p.name] = info["name"]
-				out = p.name + "\t" + info["name"] + "\n"
-				temp_1.write(out)
-	temp_1.close()
-	return data
-
-def parse_info(info):
-	lst = []
-	for dic in info:
-		for k in dic:
-			if k == "path":
-				lst += dic[k]
-	return lst
-
-
-
-# path = Path("C:\\Users\\asp\\Documents\\Code\\Github-Repos\\torrent_standard\\temp1.txt").resolve()
-
-# output = make_info_list(path,root)
-# json.dump(output,open("formated.json","wt"))
-
-
