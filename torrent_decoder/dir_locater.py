@@ -1,56 +1,49 @@
-import os,sys
+import os
+import sys
+import re
 from pathlib import Path
+
 sys.path.append(Path(__file__).resolve().parent)
 import json
-import funcs, classes
-from config import torrent_folder, search_folder, data_folder
+import classes
+import funcs
+from config import data_folder, search_folder, torrent_folder
 
-
-def look(root,filename):
+def look(root,fileset,pairs):
 	for fname in root.iterdir():
 		if fname.is_dir():
 			try:
-				look(fname,filename)
+				look(fname,fileset,pairs)
 			except:
 				continue
 		else:
-			if fname.name == filename:
-				return fname
+			if fname.name in fileset:
+				pairs.update({str(fname):fname.name})
+	return pairs
 
-def find_dirs(path,root):
-	temp = open("temp.txt","wt")
-	for torrent,fp in path.items():
-		pairs = look(root,fp)
-		if pairs:
-			temp.write(str(pairs) + "\n")
-			print(torrent)
+
+def find_dirs(file_list,root):
+	fileset = set(file_list)
+	matches = {}
+	pairs = look(root,fileset,matches)
+	json.dump(pairs,open(os.path.join(data_folder,"pairs.json"),"wt"))
 	return
 
-def find_paths(path,root):
-	pairs = open("pairings.txt","wt")
-	with open(path,"rt") as fp:
-		for line in fp.readlines():
-			name,filename = line.split("\t")
-			match = look(root,filename)
-			if match:
-				out = name + "\t" + str(match) + "\n"
-				pairs.write(out)
-	pairs.close()
 
 def make_info_list(path,data_folder):
-	data = {}
-	temp_1 = open(os.path.join(data_folder,"temp1.txt"),"wt")
+	data,filenames = {},[]
+	temp_1 = open(os.path.join(data_folder,"temp1.json"),"wt")
 	for p in path.iterdir():
 		if ".torrent" in p.name:
 			output = funcs.decode_torrent_file(p)
-			info = output["info"]
-			if "files" in info:
-				data[p.name] = parse_info(info["files"])
+			if "files" in (info := output["info"]):
+				names = data[p.name] = parse_info(info["files"])
+				filenames += list(filter_titles(names))
 			else:
-				data[p.name] = info["name"]
-				out = p.name + "\t" + info["name"] + "\n"
-				temp_1.write(out)
-	temp_1.close()
+				data[p.name] = [info["name"]]
+				filenames.append(info["name"])
+	data["file_list"] = filenames
+	json.dump(data,temp_1)
 	return data
 
 def parse_info(info):
@@ -61,5 +54,11 @@ def parse_info(info):
 				lst += dic[k]
 	return lst
 
+def filter_titles(names):
+	for name in names:
+		if re.search("\\.\\w+$",name):
+			yield name
 
-make_info_list(torrent_folder,data_folder)
+data = make_info_list(torrent_folder,data_folder)
+find_dirs(data["file_list"],search_folder)
+
