@@ -7,29 +7,39 @@ sys.path.append(Path(__file__).resolve().parent)
 torrent_folder = Path("A:\\torrents\\.torrents").resolve()
 search_folder = Path("A:\\torrents").resolve()
 data_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
-
+from config import v_folder
 from funcs import decode_torrent_file
 from classes import Torrent
 
 """ Iter through directory of .torrent files individually"""
 
-def filter_trackers(torrent):
-	public = ['leechers-paradise.org', 'openbittorrent.com', 'demonii.com', 'coppersurfer.tk', 'desync.com', 'opentrackr.org']
-	trackers = []
-	if "announce_list" in torrent.meta.keys():
-		trackers = torrent.meta["announce_list"] + [torrent.meta["announce"]]
-		print(trackers)
+def filter_trackers(torrent,path):
+    if "private" not in torrent.meta.keys():
+        print(torrent.meta)
+        return path
+    # else:
+    #     public = ['leechers-paradise.org', 'openbittorrent.com', 'demonii.com', 'coppersurfer.tk', 'desync.com', 'opentrackr.org']
+    #     if "announce" in torrent.meta and "announce-list" in torrent.meta:
+    #         trackers = [torrent.meta["announce"]] + torrent.meta["announce-list"]
+    #         for domain in public:
+    #             for tracker in trackers:
+    #                 if domain in tracker:
+    #                     return path
+
+
+
+
 
 
 def select_torrent(torrent_folder):
     for files in Path(torrent_folder).iterdir():
         contents = open(files, "rb").read()
-        yield contents
+        yield files, contents
 
 
-def get_obj(contents):
+def get_obj(contents,path):
     torrent = Torrent().read(contents)
-	filter_trackers(torrent)
+    return filter_trackers(torrent,path)
     # print(torrent.meta)
 
 
@@ -41,8 +51,16 @@ def filter_titles(names):
 
 
 if __name__ == "__main__":
-    for torrent in select_torrent(torrent_folder):
-        get_obj(torrent)
+    filter_lst = []
+    with open("filter_lst.txt","wt") as fp:
+        for path, torrent in select_torrent(v_folder):
+            if fpath := get_obj(torrent,path):
+                filter_lst.append(fpath)
+                print(fpath)
+                fp.write(str(fpath))
+                os.remove(fpath)
+    fp.close()
+
 
 
 # def look(root,fileset,pairs):
