@@ -1,35 +1,24 @@
+import json
 import os
 import sys
 import re
 from pathlib import Path
 
 sys.path.append(Path(__file__).resolve().parent)
-torrent_folder = Path("A:\\torrents\\.torrents").resolve()
-search_folder = Path("A:\\torrents").resolve()
+torrent_folder = Path("V:\\.torrents").resolve()
+public_folder = Path("V:\\.torrents.public").resolve()
 data_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 from config import v_folder
 from funcs import decode_torrent_file
 from classes import Torrent
 
+
+
 """ Iter through directory of .torrent files individually"""
-
-def filter_trackers(torrent,path):
-    if "private" not in torrent.meta.keys():
-        print(torrent.meta)
+def is_public(torrent,path):
+    if "private" not in torrent.meta.keys() or torrent.meta["private"] != 1:
         return path
-    # else:
-    #     public = ['leechers-paradise.org', 'openbittorrent.com', 'demonii.com', 'coppersurfer.tk', 'desync.com', 'opentrackr.org']
-    #     if "announce" in torrent.meta and "announce-list" in torrent.meta:
-    #         trackers = [torrent.meta["announce"]] + torrent.meta["announce-list"]
-    #         for domain in public:
-    #             for tracker in trackers:
-    #                 if domain in tracker:
-    #                     return path
-
-
-
-
-
+    return False
 
 def select_torrent(torrent_folder):
     for files in Path(torrent_folder).iterdir():
@@ -39,7 +28,10 @@ def select_torrent(torrent_folder):
 
 def get_obj(contents,path):
     torrent = Torrent().read(contents)
-    return filter_trackers(torrent,path)
+    if is_public(torrent,path):
+        os.rename(path,public_folder / path.name)
+        return False
+    return True
     # print(torrent.meta)
 
 
@@ -51,17 +43,13 @@ def filter_titles(names):
 
 
 if __name__ == "__main__":
-    filter_lst = []
-    with open("filter_lst.txt","wt") as fp:
-        for path, torrent in select_torrent(v_folder):
+    filters = {"torrents":[]}
+    # filters = {"private" : [], "public" : []}
+    with open("filter_lst.txt","wt") as output:
+        for path, torrent in select_torrent(torrent_folder):
             if fpath := get_obj(torrent,path):
-                filter_lst.append(fpath)
-                print(fpath)
-                fp.write(str(fpath))
-                os.remove(fpath)
-    fp.close()
-
-
+                output.write(str(path) + "\n")
+    output.close()
 
 # def look(root,fileset,pairs):
 # 	for fname in root.iterdir():
@@ -90,3 +78,11 @@ if __name__ == "__main__":
 # 				filenames.append(info["name"])
 # 	data["file_list"] = filenames
 # 	return data
+# def filter_trackers(torrent,path):
+#     public = ['leechers-paradise.org', 'openbittorrent.com', 'demonii.com', 'coppersurfer.tk', 'desync.com', 'opentrackr.org']
+#     if "announce" in torrent.meta and "announce-list" in torrent.meta:
+#         trackers = [torrent.meta["announce"]] + torrent.meta["announce-list"]
+#         for domain in public:
+#             for tracker in trackers:
+#                 if domain in tracker:
+#                     return path
