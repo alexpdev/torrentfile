@@ -1,20 +1,41 @@
 root = true
 
 [*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+
+[*.md]
+trim_trailing_whitespace = false
+insert_final_newline = true
+
+
+[*.{py,c,cpp,java}]
 indent_style = space
 indent_size = 4
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = true
-max_line_length = 120
 
-[CHANGELOG.md]
+[*.py]
+trim_trailing_whitespace = true
+indent_style = space
+
+[*.{js,ts,json}]
 indent_style = space
 indent_size = 2
 
-[*.json]
-max_line_length = off
+[lib/**.js]
+indent_style = space
+indent_size = 2
 
 [Makefile]
-max_line_length = off
+indent_style = tab
+
+[{package.json,.travis.yml}]
+indent_style = space
+indent_size = 2
+
+[*.bat]
+indent_style = tab
+end_of_line = crlf
+
+[LICENSE]
+insert_final_newline = false

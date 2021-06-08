@@ -1,7 +1,8 @@
+#! /usr/bin/python3
+# -*- coding: utf-8 -*-
+
 import re
 
-
-"""decoding bincode format"""
 
 def de_str(bits):
 	""" Extracts strings from bencoded data

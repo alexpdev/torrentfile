@@ -6,6 +6,7 @@ node_modules/
 activate.bat
 activate.ps1
 activate
+tests/test_data/
 
 # bite-code
 *.pyc

@@ -7,11 +7,10 @@
     "type": "git",
     "url": "git+https://github.com/alexpdev/torrent_standard.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "alexpdev",
+  "license": "GNU LGPL",
   "bugs": {
     "url": "https://github.com/alexpdev/torrent_standard/issues"
   },
   "homepage": "https://github.com/alexpdev/torrent_standard#readme"
 }
-
