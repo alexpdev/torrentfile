@@ -7,6 +7,7 @@ activate.bat
 activate.ps1
 activate
 tests/test_data/
+*.torrent
 
 # bite-code
 *.pyc

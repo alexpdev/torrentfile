@@ -9,11 +9,18 @@ sys.path.insert(0,project_dir)
 
 from torrent_standard.funcs import decode
 
-def test_decode():
-    torrent = open(".\\tests\\test_data\\25 in 1 Electronic Project On Breadboard Flasher, alarm, detector, ultrasonic, timer, amplifier, no soldering & easy to build.torrent","rb").read()
-    decoded = decode(torrent)
-    assert type(decoded) == tuple
-    print(decoded)
+data_folder = os.path.join(project_dir,"test_data")
+torrent_files = os.listdir(data_folder)
 
 
-test_decode()
+class TestFunctions:
+
+    def test_decode(self):
+        for part in torrent_files:
+            assert part.split(".")[-1].lower() == "torrent"
+            path = os.path.join(data_folder,part)
+            with open(path,"rb") as data:
+                bytes_data = data.read()
+                decoded = decode(bytes_data)
+                assert len(decoded) == 2
+                assert isinstance(decoded[0],dict)
