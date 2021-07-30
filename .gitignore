@@ -31,7 +31,9 @@ __settings.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+scraper.py
 *$py.class
+WinRAR*/
 
 # C extensions
 *.so

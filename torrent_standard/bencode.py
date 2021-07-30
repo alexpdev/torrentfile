@@ -2,19 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import re
-import os
-
 
 class BencodeDecoder:
-
-    def __init__(self, text=None):
-        self.raw = text if text else None
-        self.decoded = {}
-
-    def decode_all(self, bits):
-        self.text = bits
-        dic, feed = self.decode(bits)
-        return dic
 
     def decode(self, bits):
         if bits.startswith(b"i"):
@@ -63,18 +52,11 @@ class BencodeDecoder:
         return word, start + word_len
 
     def de_int(self, bits):
-        obj = re.match(b"i(-?\d+)e", bits)
+        obj = re.match(b"i(-?\\d+)e", bits)
         return int(obj.group(1)), obj.end()
 
 
 class BencodeEncoder:
-
-    def __init__(self, data=None):
-        self.info = data
-
-    def encode_all(self):
-        output = self.encode(self.info)
-        return output
 
     def encode(self, val):
         if type(val) == str:
@@ -93,7 +75,7 @@ class BencodeEncoder:
         return size + b":" + txt.encode("utf-8")
 
     def to_int(self, i):
-        return b"i" + b"{i}" + b"e"
+        return b"i" + bytes(str(i)) + b"e"
 
     def to_list(self, elems):
         lst = [b"l"]
@@ -109,53 +91,6 @@ class BencodeEncoder:
         for k, v in dic.items():
             result += b"".join([self.encode(k), self.encode(v)])
         return result + b"e"
-
-
-class Torrent:
-
-    def __init__(self):
-        self.encoder = BencodeEncoder()
-        self.decoder = BencodeDecoder()
-        self.meta = {}
-
-    def __str__(self):
-        if self.name:
-            return "Torrent: " + self.name
-        else:
-            return "Torrent:(empty)"
-
-    def read(self, torrent):
-        if not isinstance(torrent, bytes):
-            print(type(torrent))
-            torrent = os.open(torrent, "rb")
-        meta = self.decoder.decode_all(torrent)
-        self.organize_metadata(meta)
-        return self
-
-    def translate(self, contents):
-        meta = self.decoder.decode_all(contents)
-        self.organize_metadata(meta)
-
-    def organize_metadata(self, meta):
-        # print(meta.keys())
-        info = meta["info"]
-        for k, v in meta.items():
-            if k not in ["pieces", "info", "piece_length"]:
-                self.meta[k] = v
-        self.contents = []
-        for k, v in info.items():
-            if k == "path":
-                self.contents.append(v)
-            elif k not in ["pieces","piece_length"]:
-                self.meta[k] = v
-
-    @classmethod
-    def create(self, data):
-        info = BencodeEncoder(data)
-        self.meta = info.encode_all()
-
-    def info(self):
-        print(self.name, self.contents, self.info)
 
 
 def de_str(bits):
@@ -182,9 +117,9 @@ def de_dict(bits):
 	""" decodes dictionary from bencoded data """
 	dic, feed = {}, 1
 	while not bits[feed:].startswith(b"e"):
-		match1, rest = decode(bits[feed:])
+		match1, rest = bendecode(bits[feed:])
 		feed += rest
-		match2, rest = decode(bits[feed:])
+		match2, rest = bendecode(bits[feed:])
 		feed += rest
 		dic[match1] = match2
 	feed += 1
@@ -194,13 +129,13 @@ def de_list(bits):
 	""" decodes list from bencoded data """
 	lst, feed = [], 1
 	while not bits[feed:].startswith(b"e"):
-		match, rest = decode(bits[feed:])
+		match, rest = bendecode(bits[feed:])
 		lst.append(match)
 		feed += rest
 	feed += 1
 	return lst, feed
 
-def decode(bits):
+def bendecode(bits):
 	""" Receives bencoded data and decodes it using type decoder functions
 	"""
 	if bits.startswith(b"i"):
@@ -221,7 +156,7 @@ def decode(bits):
 
 """Encode dict to bincode format"""
 
-def encode(self,val):
+def bencode(self,val):
 	""" Receives a dictionary and encodes it to Bencode format """
 	if type(val) == str:
 		return self.to_str(val)
@@ -232,7 +167,7 @@ def encode(self,val):
 	elif type(val) == dict:
 		return self.to_dict(val)
 	else:
-		return
+		raise Exception
 
 def to_str(txt):
 	""" returns a bencoded str """
@@ -247,7 +182,7 @@ def to_list(elems):
 	""" returns bencoded list """
 	lst = [b"l"]
 	for elem in elems:
-		encoded = encode(elem)
+		encoded = bencode(elem)
 		lst.append(encoded)
 	lst.append(b"e")
 	bit_lst = b"".join(lst)
@@ -257,10 +192,5 @@ def to_dict(dic):
 	""" returns bencoded dictionary """
 	result = b"d"
 	for k,v in dic.items():
-		result += b"".join([encode(k), encode(v)])
+		result += b"".join([bencode(k), bencode(v)])
 	return result + b"e"
-
-def decode_torrent_file(path):
-	torrent_data = open(path,"rb").read()
-	output, _ = decode(torrent_data)
-	return output
