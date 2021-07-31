@@ -142,7 +142,55 @@ class Hasher:
     def get_data(self):
         return self._get_data_v1()
 
-class Torrent:
+class TorrentInfo:
+    def __init__(self,**kw):
+        self.meta = {}
+        self.info = self.meta["info"] = {}
+        if "version" in kw:
+            self.info['version'] = kw["version"]
+        if "announce" in kw:
+            self.meta['announce'] = kw["announce"]
+        if "announce-list" in kw:
+            self.meta['announce-list'] = kw['announce-list']
+        if 'comment' in kw:
+            self.info["comment"] = kw['comment']
+        if "private" in kw:
+            self.info['private'] = kw["private"]
+        else:
+            self.info["private"] = False
+        if 'created by' in kw:
+            self.meta['created by'] = kw['created by']
+        else:
+            self.meta['created by'] = "Unknown"
+
+    @property
+    def announce_list(self):
+        return self.meta["announce-list"]
+
+    def set_announce(self,uri):
+        self.meta["announce"] = uri
+
+    def set_announce_list(self,arr):
+        self.meta["announce-list"] = arr
+
+    def set_comment(self,comment):
+        self.info["comment"] = comment
+
+    def set_private(self,private=True):
+        self.info["private"] = private
+
+    def set_source(self,source):
+        self.info["source"] = source
+
+    def set_name(self,name):
+        self.info["name"] = name
+
+
+
+
+
+
+class TorrentFiles:
     def __init__(self, path, piece_length):
         self.path = os.path.normpath(path)
         self.pathObj = Path(path)

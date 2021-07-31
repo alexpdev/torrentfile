@@ -8,6 +8,7 @@ activate.ps1
 activate
 tests/test_data/
 *.torrent
+repos/
 
 # bite-code
 *.pyc
