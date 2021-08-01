@@ -11,18 +11,8 @@ MIB = KIB**2
 GIB = KIB**3
 MIN_BLOCK = 2**14
 
-def bencode(self,val):
-	""" Receives a dictionary and encodes it to Bencode format """
-	if type(val) == str:
-		return self.to_str(val)
-	elif type(val) == int:
-		return self.to_int(val)
-	elif type(val) == list:
-		return self.to_list(val)
-	elif type(val) == dict:
-		return self.to_dict(val)
-	else:
-		return
+class InvalidDataType(Exception):
+    pass
 
 def to_str(txt):
 	""" returns a bencoded str """
@@ -84,6 +74,19 @@ def de_int(s):
     obj = re.match(b"i(-?\\d+)e", s)
     return int(obj.group(1)), obj.end()
 
+def bencode(self,val):
+	""" Receives a dictionary and encodes it to Bencode format """
+	if type(val) == str:
+		return self.to_str(val)
+	elif type(val) == int:
+		return self.to_int(val)
+	elif type(val) == list:
+		return self.to_list(val)
+	elif type(val) == dict:
+		return self.to_dict(val)
+	else:
+		raise InvalidDataType
+
 def bendecode(s):
     if s.startswith(b"i"):
         match, feed = de_int(s)
@@ -98,7 +101,7 @@ def bendecode(s):
         dic, feed = de_dict(s)
         return dic, feed
     else:
-        raise Exception
+        raise InvalidDataType
 
 def sha1(data):
     piece = hashlib.sha1()
@@ -142,6 +145,56 @@ class Hasher:
     def get_data(self):
         return self._get_data_v1()
 
+
+def get_pieces(paths,piece_size):
+    def hash_file(path, piece_length):
+        pieces = []
+        with open(path,"rb") as fd:
+            data = bytearray(piece_length)
+            while True:
+                length = fd.readinto(data)
+                if length == piece_length:
+                    pieces.append(sha1(data))
+                elif length > 0:
+                    pieces.append(sha1(data[:length]))
+                else:
+                    break
+        return bytes().join(pieces)
+    piece_layers = []
+    for path in paths:
+        piece = hash_file(path,piece_size)
+        piece_layers.append(piece)
+    return bytes().join(piece_layers)
+
+def walk_path(base,path,files,paths):
+    for fd in sorted(os.listdir(path)):
+        p = os.path.join(path,fd)
+        if os.path.isfile(p):
+            desc = {'path': os.path.relpath(p, base).split(os.sep),
+                    'size' :os.path.getsize(p)}
+            files.append(desc)
+            paths.append(p)
+        else:
+            walk_path(base,p,files,paths)
+    return
+
+def folder_info(path,piece_size):
+    info = {}
+    paths = []
+    info['piece length'] = piece_size
+    info['name'] = os.path.basename(path)
+    info['files'] = []
+    if os.path.isfile(path):
+        info['length'] = os.path.getsize(path)
+        paths.append(path)
+    else:
+        walk_path(path,path,info['files'],paths)
+    info['pieces'] = get_pieces(paths,piece_size)
+    return info
+
+
+
+
 class TorrentInfo:
     def __init__(self,**kw):
         self.meta = {}
@@ -184,10 +237,6 @@ class TorrentInfo:
 
     def set_name(self,name):
         self.info["name"] = name
-
-
-
-
 
 
 class TorrentFiles:

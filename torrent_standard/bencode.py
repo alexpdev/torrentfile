@@ -3,18 +3,35 @@
 
 import re
 
+"""Collection of functions and classes for encoding and decoding with bencoded data"""
+
 class BencodeDecoder:
+    """Decode class contains all decode methods."""
 
     def decode(self, bits):
+        """Decode bencoded data.
+
+        args:
+            bits (bytes): bencoded data for decoding.
+
+        returns:
+            any: the decoded data.
+        """
         if bits.startswith(b"i"):
             match, feed = self.de_int(bits)
             return match, feed
+
+        # decode string
         elif chr(bits[0]).isdigit():
             match, feed = self.de_str(bits)
             return match, feed
+
+        # decode list and contents
         elif bits.startswith(b"l"):
             lst, feed = self.de_list(bits)
             return lst, feed
+
+        # decode dictionary and contents
         elif bits.startswith(b"d"):
             dic, feed = self.de_dict(bits)
             return dic, feed
@@ -22,6 +39,15 @@ class BencodeDecoder:
             raise Exception
 
     def de_dict(self, bits):
+        """
+        Decode keys and values in dictionary.
+
+        Args:
+            bits (bytearray): bytes of data for decoding.
+
+        Returns:
+            [dict]: dictionary and contents.
+        """
         dic, feed = {}, 1
         while not bits[feed:].startswith(b"e"):
             match1, rest = self.decode(bits[feed:])
@@ -33,6 +59,15 @@ class BencodeDecoder:
         return dic, feed
 
     def de_list(self, bits):
+        """
+        Decode list and its contents.
+
+        Args:
+            bits (bytearray): bencoded data.
+
+        Returns:
+            [list]: decoded list and contents
+        """
         lst, feed = [], 1
         while not bits[feed:].startswith(b"e"):
             match, rest = self.decode(bits[feed:])
@@ -42,6 +77,15 @@ class BencodeDecoder:
         return lst, feed
 
     def de_str(self, bits):
+        """
+        Decode string.
+
+        Args:
+            bits (bytearray): bencoded string.
+
+        Returns:
+            [str]: decoded string.
+        """
         match = re.match(b"(\\d+):", bits)
         word_len, start = int(match.groups()[0]), match.span()[1]
         word = bits[start: start + word_len]
@@ -52,6 +96,15 @@ class BencodeDecoder:
         return word, start + word_len
 
     def de_int(self, bits):
+        """
+        Decode intiger.
+
+        Args:
+            bits (bytearray): bencoded intiger.
+
+        Returns:
+            [int]: decoded intiger.
+        """
         obj = re.match(b"i(-?\\d+)e", bits)
         return int(obj.group(1)), obj.end()
 
