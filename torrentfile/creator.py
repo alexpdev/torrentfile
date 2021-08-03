@@ -3,6 +3,7 @@ import os
 import math
 from pathlib import Path
 import hashlib
+from torrentfile.bencode import bencode
 
 __version__ = '0.1.0'
 
@@ -13,95 +14,6 @@ MIN_BLOCK = 2**14
 
 class InvalidDataType(Exception):
     pass
-
-def to_str(txt):
-	""" returns a bencoded str """
-	size = str(len(txt)).encode("utf-8")
-	return size + b":" + txt.encode("utf-8")
-
-def to_int(i):
-	""" returns bencoded int """
-	return b"i" + b"{i}" + b"e"
-
-def to_list(elems):
-	""" returns bencoded list """
-	lst = [b"l"]
-	for elem in elems:
-		encoded = bencode(elem)
-		lst.append(encoded)
-	lst.append(b"e")
-	bit_lst = b"".join(lst)
-	return bit_lst
-
-def to_dict(dic):
-	""" returns bencoded dictionary """
-	result = b"d"
-	for k,v in dic.items():
-		result += b"".join([bencode(k), bencode(v)])
-	return result + b"e"
-
-def de_dict(s):
-    dic, feed = {}, 1
-    while not s[feed:].startswith(b"e"):
-        match1, rest = bendecode(s[feed:])
-        feed += rest
-        match2, rest = bendecode(s[feed:])
-        feed += rest
-        dic[match1] = match2
-    feed += 1
-    return dic, feed
-
-def de_list(s):
-    lst, feed = [], 1
-    while not s[feed:].startswith(b"e"):
-        match, rest = bendecode(s[feed:])
-        lst.append(match)
-        feed += rest
-    feed += 1
-    return lst, feed
-
-def de_str(s):
-    match = re.match(b"(\\d+):", s)
-    word_len, start = int(match.groups()[0]), match.span()[1]
-    word = s[start: start + word_len]
-    try:
-        word = word.bendecode("utf-8")
-    except:
-        word = word
-    return word, start + word_len
-
-def de_int(s):
-    obj = re.match(b"i(-?\\d+)e", s)
-    return int(obj.group(1)), obj.end()
-
-def bencode(self,val):
-	""" Receives a dictionary and encodes it to Bencode format """
-	if type(val) == str:
-		return self.to_str(val)
-	elif type(val) == int:
-		return self.to_int(val)
-	elif type(val) == list:
-		return self.to_list(val)
-	elif type(val) == dict:
-		return self.to_dict(val)
-	else:
-		raise InvalidDataType
-
-def bendecode(s):
-    if s.startswith(b"i"):
-        match, feed = de_int(s)
-        return match, feed
-    elif chr(s[0]).isdigit():
-        match, feed = de_str(s)
-        return match, feed
-    elif s.startswith(b"l"):
-        lst, feed = de_list(s)
-        return lst, feed
-    elif s.startswith(b"d"):
-        dic, feed = de_dict(s)
-        return dic, feed
-    else:
-        raise InvalidDataType
 
 def sha1(data):
     piece = hashlib.sha1()
@@ -191,9 +103,6 @@ def folder_info(path,piece_size):
         walk_path(path,path,info['files'],paths)
     info['pieces'] = get_pieces(paths,piece_size)
     return info
-
-
-
 
 class TorrentInfo:
     def __init__(self,**kw):

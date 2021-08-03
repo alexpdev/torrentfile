@@ -1,16 +1,16 @@
 {
-  "name": "torrent_standard",
+  "name": "torrentfile",
   "version": "1.0.0",
-  "description": "Bittorent Standard Implementations",
+  "description": "Bittorent .torrent file utilities",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexpdev/torrent_standard.git"
+    "url": "git+https://github.com/alexpdev/torrentfile.git"
   },
   "author": "alexpdev",
   "license": "GNU LGPL",
   "bugs": {
-    "url": "https://github.com/alexpdev/torrent_standard/issues"
+    "url": "https://github.com/alexpdev/torrentfile/issues"
   },
-  "homepage": "https://github.com/alexpdev/torrent_standard#readme"
+  "homepage": "https://github.com/alexpdev/torrentfile#readme"
 }

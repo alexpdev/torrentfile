@@ -1,0 +1,11 @@
+include LICENSE
+include README.md
+include Makefile
+recursive-include tests *
+recursive-include torrentfile
+recursive-exclude * __pycache__
+recursive-exclude * *.pyc
+recursive-exclude * *.pyd
+recursive-exclude * *.pyo
+recursive-exclude * *.pyo
+recursive-exclude * empty

@@ -2,8 +2,8 @@ from pathlib import Path
 import json
 import os
 import shutil
-from torrent_standard.creator import Torrent
-from torrent_standard.piecelength import get_piece_length
+from torrentfile.creator import Torrent
+from torrentfile.piecelength import get_piece_length
 
 titles = "WinRAR.v6.02.x64"
 path = Path(titles)
@@ -15,7 +15,6 @@ def traverse(torrent_files,titles):
             decoder = ()
             tree = decoder.decode_all(data)
             print(tree)
-
 
 def calculate_total(path):
     total = os.path.getsize(path)

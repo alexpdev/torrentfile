@@ -58,10 +58,6 @@ def folder_info(path,piece_size):
     info['pieces'] = get_pieces(paths,piece_size)
     return info
 
-
-
-
-
 if __name__ == "__main__":
     home = os.environ["USERPROFILE"]
     test_path = path = os.path.join(home,"Documents","Documentation","Folder")
