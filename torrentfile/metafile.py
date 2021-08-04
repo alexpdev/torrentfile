@@ -107,8 +107,8 @@ def get_pieces(paths,piece_size):
 def walk_path(base,files,all_files):
     for item in all_files:
         if os.path.isfile(item):
-            desc = {'path': os.path.relpath(item, base).split(os.sep),
-                    'size' :os.path.getsize(item)}
+            desc = {b'length' :os.path.getsize(item),
+                    b'path': os.path.relpath(item, base).split(os.sep)}
             files.append(desc)
     return
 
@@ -121,7 +121,7 @@ class TorrentFile:
     def __init__(self,path=None,piece_length=None,creator=None,announce=None,private=None,source=None,length=None):
         self._path = path
         self.Path = Path(path)
-        self._is_file = self.Path._is_file()
+        self._is_file = self.Path.is_file()
         self._name = self.Path.name
         self._piece_length = piece_length
         self._creator = creator
@@ -133,7 +133,6 @@ class TorrentFile:
         self._files = []
         self.info = {}
         self.meta = {}
-
 
     def _get_filenames(self, directory, all_files):
         names = os.listdir(directory)
@@ -147,30 +146,30 @@ class TorrentFile:
         return all_files
 
     def assemble(self):
+        if not self._length:
+            self._length = self._path_size()
         if not self._piece_length:
-            if not self._length:
-                self._length = self._path_size()
             self._piece_length = get_piece_length(self._length)
         directory = os.path.abspath(self._path)
         all_files = self._get_filenames(directory, [])
-        self._info["piece length"] = self._piece_length
-        self._info["name"] = self._name.encode('uft-8')
+        self.info[b"piece length"] = self._piece_length
+        self.info["name"] = self._name.encode('utf-8')
         if self._private:
-            self._info["private"] = self._private.encode("uft-8")
+            self.info["private"] = 1 if self._private else 0
         if self._creator:
-            self._info["created by"] = self._creator.encode("utf-8")
+            self.info["created by"] = self._creator.encode("utf-8")
         else:
-            self._info["created by"] = "pytorrentfile".encode("utf-8")
+            self.info["created by"] = "pytorrentfile".encode("utf-8")
         if self._source:
-            self._info["source"] = self._source.encode('utf-8')
-        self._info["creation date"] = datetime.datetime.isoformat(datetime.datetime.today()).encode('utf-8')
-        if self.is_file():
-            self._info['length'] = self._length
-            return self._info
-        walk_path(self.Path.name, self._files, all_files)
-        self._info["files"] = self._files
-        self._info['pieces'] = get_pieces(all_files,self._piece_size)
-        return self._info
+            self.info["source"] = self._source.encode('utf-8')
+        self.info["creation date"] = datetime.datetime.isoformat(datetime.datetime.today()).encode('utf-8')
+        if self._is_file:
+            self.info[b'length'] = self._length
+            return self.info
+        walk_path(self._name, self._files, all_files)
+        self.info[b"files"] = self._files
+        self.info[b'pieces'] = get_pieces(all_files,self._piece_length)
+        return self.info
 
     def _folder_size(self,path):
         size = 0
