@@ -56,6 +56,7 @@ file case, it's the name of a directory.
 import os
 import time
 import hashlib
+import collections
 from pathlib import Path
 from torrentfile.bencode import Benencoder
 from torrentfile.hasher import PieceHasher
@@ -66,6 +67,14 @@ MIN_BLOCK = 2**14
 
 class InvalidDataType(Exception):
     pass
+
+class MissingTracker(Exception):
+    pass
+
+class ODict(collections.OrderedDict):
+    def __init__(self,items):
+        super().__init__(items)
+
 
 def sha1(data):
     piece = hashlib.sha1()
@@ -92,9 +101,8 @@ class TorrentFile:
                 source=None,
                 length=None,
                 comment=None,
-                announce_list=None,
-                outfile=None,
-                infodict=None):
+                announce_list=None):
+
         self._path = path
         self.Path = Path(path)
         self._is_file = self.Path.is_file()
@@ -104,52 +112,51 @@ class TorrentFile:
         self._private = private
         self._source = source
         self._length = length
-        self._infodict = infodict
         self._comment = comment
-        self._outfile = outfile
         self._announce_list = announce_list
         self._files = []
         self.info = {}
         self.meta = {}
 
     def _assemble_infodict(self):
-        if self._infodict:
-            self.info = self._infodict
+        hasher = PieceHasher(self._path, piece_length=self._piece_length)
+        if self._is_file:
+            self.info["length"] = hasher.length
         else:
-            hasher = PieceHasher(self._path, piece_length=self._piece_length)
-            if self._is_file:
-                self.info["length"] = hasher.length
-            else:
-                self.info["files"] = hasher.files
-            self.info['pieces'] = hasher.get_pieces()
-            self.info['piece length'] = hasher.piece_length
-        self.info["name"] = os.path.split(self._path)[-1].encode("utf-8")
-        self.info["creation date"] = int(time.time())
+            self.info["files"] = hasher.files
+            print(self.info)
+        self.info['pieces'] = hasher.get_pieces()
+        self.info['piece length'] = hasher.piece_length
+        self.info["name"] = os.path.split(self._path)[-1]
         if self._announce_list:
             self.info["announce-list"] = self.announce_list
         if self._source:
-            self.info["source"] = self._source.encode("utf-8")
+            self.info["source"] = self._source
         if self._comment:
-            self.info["comment"] = self._comment.encode("utf-8")
+            self.info["comment"] = self._comment
         if self._private:
-            self.info["private"] = self._pivate
-        if self._created_by:
-            self.info["created by"] = self._created_by.encode("utf-8")
-        else:
-            self.info["created by"] = "alexpdev".encode("utf-8")
+            self.info["private"] = self._private
         return self.info
 
     def assemble(self):
-        self.meta["info"] = self._assemble_infodict()
+        if not self._announce:
+            raise MissingTracker
         self.meta["announce"] = self._announce
+        self.meta["creation date"] = int(time.time())
+        if self._created_by:
+            self.meta["created by"] = self._created_by
+        else:
+            self.meta["created by"] = "alexpdev"
+        self.meta["info"] = self._assemble_infodict()
+        print(self.meta)
         encoder = Benencoder()
         data = encoder.encode(self.meta)
-        if self._outfile:
-            with open(self._outfile,"wb") as outfile:
-                outfile.write(data)
-        else:
-            filename = self.info["name"] + ".torrent"
-            with open(filename,"wb") as outfile:
-                outfile.write(data)
-        print(data)
-        return data
+        self.data = data
+
+    def write(self,outfile=None):
+        if not outfile:
+            outfile = self.info["name"] + ".torrent"
+        with open(outfile, "wb") as fd:
+            fd.write(self.data)
+        print("success")
+        return self.data

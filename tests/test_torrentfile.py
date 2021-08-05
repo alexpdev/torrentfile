@@ -9,6 +9,7 @@ class TestTorrentFile:
 
     def test_torrentfile_init(self):
         self.path = TEST_DIR
-        tfile = TorrentFile(self.path)
+        announce = "http://example.com/announce"
+        tfile = TorrentFile(self.path,announce=announce,source="nunya",private=1)
         data = tfile.assemble()
         assert data is not None

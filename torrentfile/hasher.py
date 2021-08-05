@@ -32,9 +32,11 @@ class PieceHasher:
         if os.path.isfile(path):
             self.length = os.path.getsize(path)
             if not self.piece_length:
-                self.piece_length = get_piece_length(self.length)
+                self.piece_length = get_piece_length(self.length * 8)
         else:
             self.walk_path(self.Path, self.path)
+            if not self.piece_length:
+                self.piece_length = get_piece_length(self.size * 8)
 
     def walk_path(self, path, root):
         listdir = sorted(os.listdir(path),key=str.lower)
@@ -47,7 +49,6 @@ class PieceHasher:
                 size = os.path.getsize(full_path)
                 self.size += size
                 parts = os.path.relpath(full_path, root).split(os.sep)
-                parts = [str(i).encode("utf-8") for i in parts]
                 fdict = {"length": size, "path": parts}
                 if self.usemd5:
                     fdict["md5sum"] = md5(open(full_path,"rb").read()).digest()

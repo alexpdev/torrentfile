@@ -1,10 +1,12 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
-
 import re
 
 """Collection of functions and classes for encoding and decoding with bencoded data"""
+
+class BenencodeError(Exception):
+    pass
 
 class Bendecoder:
     """Decode class contains all decode methods."""
@@ -124,6 +126,8 @@ class Benencoder:
         """
         if type(val) == str:
             return self.to_str(val)
+        if hasattr(val,"hex"):
+            return self.to_bytes(val)
         elif type(val) == int:
             return self.to_int(val)
         elif type(val) == list:
@@ -131,7 +135,12 @@ class Benencoder:
         elif type(val) == dict:
             return self.to_dict(val)
         else:
-            return
+            print(val.decode("utf-8",errors="ignore"))
+            raise BenencodeError
+
+    def to_bytes(self,val):
+        return b''.join([(str(len(val)) + ":").encode("utf-8"),val])
+
 
     def to_str(self, txt):
         """
@@ -143,8 +152,7 @@ class Benencoder:
         Returns:
             [bytes]: bencoded string.
         """
-        size = str(len(txt))
-        return size.encode("utf-8") + b":" + txt.encode("utf-8")
+        return (str(len(txt)) + ":" + txt).encode("utf-8")
 
     def to_int(self, i):
         """
@@ -156,7 +164,7 @@ class Benencoder:
         Returns:
             [bytes]: bencoded intiger.
         """
-        return b"i" + str(i).encode("utf-8") + b"e"
+        return ''.join(["i" ,str(i), "e"]).encode("utf-8")
 
     def to_list(self, elems):
         """
@@ -168,13 +176,12 @@ class Benencoder:
         Returns:
             [bytes]: bencoded data
         """
-        lst = [b"l"]
+        start = bytearray("l",encoding="utf-8")
         for elem in elems:
             encoded = self.encode(elem)
-            lst.append(encoded)
-        lst.append(b"e")
-        bit_lst = b"".join(lst)
-        return bit_lst
+            start.extend(encoded)
+        start.extend("e".encode("utf-8"))
+        return start
 
     def to_dict(self, dic):
         """
@@ -220,7 +227,7 @@ def de_int(bits):
         bits (bytes): becoded intiger bytes
 
     Returns:
-        int: decoded int value
+        [int]: decoded int value
     """
     obj = re.match(b"i(-?\d+)e", bits)
     return int(obj.group(1)), obj.end()
@@ -254,7 +261,7 @@ def de_list(bits):
         bits (bytes): bencoded list.
 
     Returns:
-        list: decoded list and contents.
+        [list]: decoded list and contents.
     """
     lst, feed = [], 1
     while not bits[feed:].startswith(b"e"):
@@ -272,10 +279,10 @@ def bendecode(bits):
         bits (bytes): becoded data.
 
     Raises:
-        Exception: Malformed data.
+        [Exception]: Malformed data.
 
     Returns:
-        any: decoded data.
+        [any]: decoded data.
     """
     if bits.startswith(b"i"):
         match, feed = de_int(bits)
@@ -300,10 +307,10 @@ def bencode(self,val):
         val (any): Data.
 
     Raises:
-        Exception: Invalid type.
+        [Exception]: Invalid type.
 
     Returns:
-        bytes: Bencoded data.
+        [bytes]: Bencoded data.
     """
     if type(val) == str:
         return self.to_str(val)
