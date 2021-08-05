@@ -1,17 +1,19 @@
-from torrentfile.bencode import Benencoder, Bendecoder, bencode, bendecode
-from torrentfile.piecelength import get_piece_length
-from torrentfile.metafile  import  (TorrentFile,
-                                    get_pieces,
-                                    folder_info,
-                                    sha1,
-                                    sha256,
-                                    md5,
-                                    walk_path)
+#! /usr/bin/python3
+# -*- coding: utf-8 -*-
+
+
 from torrentfile.hasher import PieceHasher
+from torrentfile.piecelength import get_piece_length
+from torrentfile.bencode import Benencoder, Bendecoder, bencode, bendecode
+from torrentfile.metafile  import  TorrentFile
+
 
 __all__ = [
-    "TorrentFile", "walk_path", "get_pieces",
-    "folder_info", "sha1", "sha256", "md5",
-    "get_piece_length", "Benencoder", "Bendecoder",
-    "bencode", "bendecode", "PieceHasher"
-    ]
+    "TorrentFile",
+    "get_piece_length",
+    "Benencoder",
+    "Bendecoder",
+    "bencode",
+    "bendecode",
+    "PieceHasher"
+]

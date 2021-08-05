@@ -34,8 +34,6 @@ import math
 Kb = 2**10
 Mb = Kb**2
 
-__all__ = ["get_piece_length"]
-
 def get_piece_length(size):
     """
     Calculate the ideal piece length for bittorrent data.
@@ -60,9 +58,9 @@ def get_piece_length(size):
         return 8 * Mb
 
     # Ensure total pieces is over 1000
-    if size / (2 ** exp) < 1000:
-        return 2 ** (exp-1)
+    if size / (1 << exp) < 1000:
+        return 1 << (exp-1)
     else:
-        return 2 ** exp
+        return 1 << exp
 
 __main__ = get_piece_length

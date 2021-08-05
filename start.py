@@ -3,7 +3,6 @@ import json
 import os
 import shutil
 from torrentfile.piecelength import get_piece_length
-from torrentfile.tcreator import Torrent
 from torrentfile.metafile import TorrentFile
 
 
@@ -48,12 +47,5 @@ def decode_contents(d):
 if __name__ == "__main__":
     total = calculate_total(path) * 8
     piece_size = get_piece_length(total)
-    t = Torrent(path,piece_size)
-    torrent = t.create("http://tracker.com/announce",hybrid=True)
     torrentfile = TorrentFile(path,piece_size,announce="http://tracker.com/announce",source="AlphaRatio",private=True)
-    info1 = torrent[b'info']
     info2 = torrentfile.assemble()
-    print(info1,"\n",info2)
-    torrent1 = decode_contents(torrent)
-    with open(path.parent / "a.txt","wt") as fd:
-        fd.write(str(torrentfile))

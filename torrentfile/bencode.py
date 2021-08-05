@@ -156,7 +156,7 @@ class Benencoder:
         Returns:
             [bytes]: bencoded intiger.
         """
-        return b"i" + bytes(str(i)) + b"e"
+        return b"i" + str(i).encode("utf-8") + b"e"
 
     def to_list(self, elems):
         """
