@@ -7,6 +7,8 @@ import re
 
 class BenencodeError(Exception):
     pass
+class BendecodeError(Exception):
+    pass
 
 class Bendecoder:
     """Decode class contains all decode methods."""
@@ -39,7 +41,7 @@ class Bendecoder:
             dic, feed = self.de_dict(bits)
             return dic, feed
         else:
-            raise Exception
+            raise BendecodeError
 
     def de_dict(self, bits):
         """
@@ -299,7 +301,7 @@ def bendecode(bits):
     else:
         raise Exception
 
-def bencode(self,val):
+def bencode(val):
     """
     Encode data with bencoding.
 
@@ -313,15 +315,31 @@ def bencode(self,val):
         [bytes]: Bencoded data.
     """
     if type(val) == str:
-        return self.to_str(val)
+        return to_str(val)
+    if hasattr(val,"hex"):
+        return to_bin(val)
     elif type(val) == int:
-        return self.to_int(val)
+        return to_int(val)
     elif type(val) == list:
-        return self.to_list(val)
-    elif type(val) == dict:
-        return self.to_dict(val)
+        return to_list(val)
+    elif hasattr(val,"values"):
+        return to_dict(val)
     else:
-        raise Exception
+        print(val)
+        raise BenencodeError
+
+def to_bin(val):
+    """
+    Bencode string types.
+
+    Args:
+        txt (str): string
+
+    Returns:
+        bytes: bencoded string
+    """
+    size = (str(len(val)) + ":").encode("utf-8")
+    return b''.join([size,val])
 
 def to_str(txt):
     """
@@ -346,7 +364,7 @@ def to_int(i):
     Returns:
         bytes: bencoded int
     """
-    return b"i" + b"{i}" + b"e"
+    return ("i" + str(i) + "e").encode("utf-8")
 
 def to_list(elems):
     """
@@ -358,13 +376,12 @@ def to_list(elems):
     Returns:
         bytes: bencoded list and contents
     """
-    lst = [b"l"]
+    start = bytearray("l",encoding="utf-8")
     for elem in elems:
         encoded = bencode(elem)
-        lst.append(encoded)
-    lst.append(b"e")
-    bit_lst = b"".join(lst)
-    return bit_lst
+        start.extend(encoded)
+    start.extend("e".encode("utf-8"))
+    return start
 
 def to_dict(dic):
     """

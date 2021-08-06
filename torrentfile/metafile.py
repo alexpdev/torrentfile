@@ -124,8 +124,8 @@ class TorrentFile:
             self.info["length"] = hasher.length
         else:
             self.info["files"] = hasher.files
-            print(self.info)
         self.info['pieces'] = hasher.get_pieces()
+        print("torrentfile", self.info['pieces'])
         self.info['piece length'] = hasher.piece_length
         self.info["name"] = os.path.split(self._path)[-1]
         if self._announce_list:
@@ -152,6 +152,7 @@ class TorrentFile:
         encoder = Benencoder()
         data = encoder.encode(self.meta)
         self.data = data
+        return self.data
 
     def write(self,outfile=None):
         if not outfile:

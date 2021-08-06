@@ -1,13 +1,11 @@
-import os
-import sys
-
 from torrentfile import *
 
-path = "data\\WinRAR.v6.02.x64"
+path1 = "WinRAR.v6.02.x64"
 
 
-if __name__ == '__main__':
-    announce = "http://announce.com/announce"
-    torrentfile = TorrentFile(path,announce=announce,private=1,source="me")
-    torrentfile.assemble()
-    torrentfile.write()
+if __name__ == "__main__":
+    size, piece_length = folder_stat(path1)
+    feeder = Feeder(path1,piece_length)
+    leaves = []
+    for leaf in feeder:
+        leaves.append(leaf)

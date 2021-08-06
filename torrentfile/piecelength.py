@@ -28,8 +28,9 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ###############################################################################
-
+import os
 import math
+
 
 Kb = 2**10
 Mb = Kb**2
@@ -63,4 +64,17 @@ def get_piece_length(size):
     else:
         return 1 << exp
 
-__main__ = get_piece_length
+def path_size(path):
+    if os.path.isfile(path):
+        return os.path.getsize(path)
+    elif os.path.isdir(path):
+        size = 0
+        for name in os.listdir(path):
+            fullpath = os.path.join(path,name)
+            size += path_size(fullpath)
+    return size
+
+def folder_stat(path):
+    size = path_size(path)
+    piece_length = get_piece_length(size)
+    return (size, piece_length)

@@ -32,11 +32,11 @@ class PieceHasher:
         if os.path.isfile(path):
             self.length = os.path.getsize(path)
             if not self.piece_length:
-                self.piece_length = get_piece_length(self.length * 8)
+                self.piece_length = get_piece_length(self.length)
         else:
             self.walk_path(self.Path, self.path)
             if not self.piece_length:
-                self.piece_length = get_piece_length(self.size * 8)
+                self.piece_length = get_piece_length(self.size)
 
     def walk_path(self, path, root):
         listdir = sorted(os.listdir(path),key=str.lower)
@@ -56,41 +56,45 @@ class PieceHasher:
         return
 
     def single_file_hash(self):
-        pieces = []
+        pieces = bytearray()
         with open(self.path,"rb") as filename:
             piece = bytearray(self.piece_length)
             while True:
                 size = filename.readinto(piece)
                 if size == self.piece_length:
                     digest = sha1(piece)
-                    pieces.append(digest)
+                    pieces.extend(digest)
                 elif size == 0:
                     break
                 elif size < self.piece_length:
                     digest = sha1(piece[:size])
-                    pieces.append(digest)
-        self.pieces = ''.join(pieces)
+                    pieces.extend(digest)
+        self.pieces = pieces
         return self.pieces
 
-
-    def get_pieces(self):
-        if os.path.isfile(self.path):
-            return self.single_file_hash()
-        if not self.piece_length:
-            self.piece_length = get_piece_length(self.size)
-        pieces = list()
-        if not self.paths:
-            self.walk_path(self.path)
+    def _get_pieces(self):
+        num_pieces = (self.size / self.piece_length)
+        pieces = bytearray()
         for filename in self.paths:
             data = bytearray(self.piece_length)
             with open(filename,"rb") as fd:
                 while True:
                     size = fd.readinto(data)
                     if size == self.piece_length:
-                        pieces.append(sha1(data))
+                        pieces.extend(sha1(data))
+                        print("torrentfile", pieces)
+                        num_pieces -= 1
                     elif size == 0:
                         break
                     elif size < self.piece_length:
-                        pieces.append(sha1(data[:size]))
-        self.pieces = b''.join(pieces)
+                        pieces.extend(sha1(data[:size]))
+                        print("torrentfile",pieces)
+                        num_pieces -= 1
+        self.pieces = pieces
         return self.pieces
+
+
+    def get_pieces(self):
+        if os.path.isfile(self.path):
+            return self.single_file_hash()
+        return self._get_pieces()
