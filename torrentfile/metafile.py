@@ -55,7 +55,6 @@ file case, it's the name of a directory.
 """
 import os
 import time
-import hashlib
 import collections
 from pathlib import Path
 from torrentfile.bencode import Benencoder
@@ -63,7 +62,7 @@ from torrentfile.hasher import PieceHasher
 
 KIB = 2**10
 MIB = KIB**2
-MIN_BLOCK = 2**14
+BLOCK_SIZE = 2**14
 
 class InvalidDataType(Exception):
     pass
@@ -74,22 +73,6 @@ class MissingTracker(Exception):
 class ODict(collections.OrderedDict):
     def __init__(self,items):
         super().__init__(items)
-
-
-def sha1(data):
-    piece = hashlib.sha1()
-    piece.update(data)
-    return piece.digest()
-
-def sha256(data):
-    piece = hashlib.sha256()
-    piece.update(data)
-    return piece.digest()
-
-def md5(data):
-    piece = hashlib.md5()
-    piece.update(data)
-    return piece.digest()
 
 class TorrentFile:
     def __init__(self,
@@ -139,19 +122,29 @@ class TorrentFile:
         return self.info
 
     def assemble(self):
-        if not self._announce:
-            raise MissingTracker
+        """
+        Assemble components of torrent metafile.
+
+        Raises:
+            MissingTracker: Announce field is required for all torrents.
+
+        Returns:
+            dict: metadata dictionary for torrent file
+        """
+        if not self._announce: raise MissingTracker
         self.meta["announce"] = self._announce
+
         self.meta["creation date"] = int(time.time())
+
         if self._created_by:
             self.meta["created by"] = self._created_by
         else:
             self.meta["created by"] = "alexpdev"
+
         self.meta["info"] = self._assemble_infodict()
-        print(self.meta)
+
         encoder = Benencoder()
-        data = encoder.encode(self.meta)
-        self.data = data
+        self.data = encoder.encode(self.meta)
         return self.data
 
     def write(self,outfile=None):

@@ -1,92 +1,78 @@
+import math
 import os
-import hashlib
-
-def sha1(content):
-    return hashlib.sha1(content).digest()
+from torrentfile.utils import sha1, sha256, path_size
 
 class Feeder:
 
-    def __init__(self, path, piece_length):
-        self.path = path
-        self.name = os.path.basename(path)
+    def __init__(self, paths, piece_length, total_size=None, sha256=True):
         self.piece_length = piece_length
-        self.filenames = []
+        self.paths = paths
+        self.sha256 = sha256
+        self.total_size = total_size
+        self.pieces = []
+        self._partial = 0
         self.index = 0
         self.current = None
-        self.size = 0
-        self.pieces = []
-        self.generator = None
-        self._get_filenames()
+        self._generator = None
 
-    def __next__(self):
-        try:
-            return next(self.generator)
-        except StopIteration:
-            self.generator = iter(self)
-            return next(self.generator)
+    @property
+    def total_pieces(self):
+        if not self.total_size:
+            self.total_size = sum(path_size(i) for i in self.paths)
+        return math.ceil(self.total_size // self.piece_length)
+
+    @property
+    def hasher(self):
+        if self.sha256:
+            return sha256
+        return sha1
 
     def __iter__(self):
-        self.generator = self.leaves()
-        return self.generator
+        self._generator = self.leaves()
+        return self._generator
+
+    def __next__(self):
+        return next(self._generator)
+
+    def _handle_partial(self, arr):
+        part_size = self.partial
+        temp = bytearray(self.piece_length - part_size)
+        self.current.readinto(temp)
+        arr[part_size:] = temp
+        assert temp == arr[part_size:]
+        assert len(arr) == self.piece_length
+        self.reset_partial()
+        return self.hasher(part_size)
+
+    def _next_path(self):
+        self.current.close()
+        self.index += 1
+
+    @property
+    def partial(self):
+        return self._partial
+
+    def set_partial(self, number):
+        self._partial = number
+
+    def reset_partial(self):
+        self._partial = 0
 
     def leaves(self):
-        part_size = 0
-        partial = False
         counter = 0
-        total_pieces = int(self.total_size // self.piece_length) + 1
         piece = bytearray(self.piece_length)
         while self.index < len(self.filenames):
             self.current = open(self.filenames[self.index],"rb")
-            if partial:
-                temp = bytearray(self.piece_length - part_size)
-                self.current.readinto(temp)
-                piece[part_size:] = temp
-                if len(piece) != self.piece_length:
-                    raise Exception
-                yield sha1(piece)
+            if self.partial:
+                yield self._handle_partial(piece)
                 counter += 1
-                partial = False
             while True:
                 size = self.current.readinto(piece)
                 if size == 0: break
                 elif size < self.piece_length:
-                    partial = True
-                    part_size = size
+                    self.set_partial(size)
                     break
-                else:
-                    yield sha1(piece)
-                    counter += 1
-            self.current.close()
-            self.index += 1
-        if partial:
-            yield sha1(piece[:part_size-1])
-        if abs(total_pieces - counter) > 1:
-            print(total_pieces)
-            raise Exception
-
-    def _single_file(self):
-        self.length = os.path.getsize(self.path)
-        self.total_size = self.length
-        self.filenames.append(self.path)
-
-    def _walk(self, path, level):
-        dirlist = sorted(os.listdir(path), key=str.lower)
-        for filename in dirlist:
-            full = os.path.join(path, filename)
-            if os.path.isfile(full):
-                self.total_size += os.path.getsize(full)
-                final = level[:] + [filename]
-                filedict = {'length': os.path.getsize(full), 'path': final}
-                self.files.append(filedict)
-                self.filenames.append(full)
-            elif os.path.isdir(full):
-                level.append(filename)
-                self._walk(full, level)
-
-    def _get_filenames(self):
-        if os.path.isfile(self.path):
-            self.length = 0
-            return self.single_file()
-        self.files = []
-        self.total_size = 0
-        return self._walk(self.path, [])
+                yield self.hasher(piece)
+                counter += 1
+            self._next_path()
+        if self.partial: yield sha1(piece[:self.partial])

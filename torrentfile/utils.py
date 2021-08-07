@@ -40,38 +40,55 @@ def get_piece_length(size):
     else:
         return 1 << exp
 
-def _path_size(path):
-    if path.is_file():
-        return path.stat().st_size
-    size = 0
-    for item in path.iterdir():
-        size += _path_size(item)
-    return size
-
 def path_size(path):
-    """
-    Calculate sum of all file sizes in path.
+    """Calculate sum of all filesizes within directory.
 
     Args:
-        path (str or pathlike): path to file or dir.
+        path (pathlike): The path to start calculating from.
 
     Returns:
-        int: size in bits.
+        int: total sum in bytes
     """
-    path = resolve(path)
-    return _path_size(path)
-
-def _directory_file_list(path):
     if os.path.isfile(path):
-        return [path]
+        return os.path.getsize(path)
+
+    #recursive sum for all files in folder
+    elif os.path.isdir(path):
+        size = 0
+        for name in os.listdir(path):
+            fullpath = os.path.join(path,name)
+            size += path_size(fullpath)
+    return size
+
+def get_file_list(path, sort=False):
+    """Search directory tree for files.
+
+    Args:
+        path (pathlike): path to file or directory base
+        sort (bool, optional): return list sorted. Defaults to False.
+
+    Returns:
+        [list]: all file paths within directory tree.
+    """
+    if os.path.isfile(path): return [path]
+
+    # put all files into filelist within directory
     files = list()
-    for item in path.iterdir():
-        files.extend(_directory_file_list(item))
+    filelist = os.listdir()
+
+    # optional canonical sort of filelist
+    if sort: filelist.sort(key=str.lower)
+
+    # recursive for all folders
+    for item in filelist:
+        full = os.path.join(path,item)
+        files.extend(get_file_list(full,sort=sort))
     return files
 
-def directory_file_list(path):
-    path = resolve(path)
-    return _directory_file_list(path)
+def folder_stat(path):
+    size = path_size(path)
+    piece_length = get_piece_length(size)
+    return (size, piece_length)
 
 def sha1(data):
     piece = hashlib.sha1()

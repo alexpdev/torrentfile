@@ -2,21 +2,7 @@ import os
 import hashlib
 from pathlib import Path
 from torrentfile.piecelength import get_piece_length
-
-def sha1(data):
-    piece = hashlib.sha1()
-    piece.update(data)
-    return piece.digest()
-
-def sha256(data):
-    piece = hashlib.sha256()
-    piece.update(data)
-    return piece.digest()
-
-def md5(data):
-    piece = hashlib.md5()
-    piece.update(data)
-    return piece.digest()
+from torrentfile.utils import md5, sha1
 
 class PieceHasher:
     def __init__(self, path, piece_length=None, usemd5=False):
@@ -27,7 +13,7 @@ class PieceHasher:
         self.piece_length = piece_length
         self.files = []
         self.paths = []
-        self.pieces = None
+        self.pieces = []
         self.size = 0
         if os.path.isfile(path):
             self.length = os.path.getsize(path)
@@ -72,29 +58,24 @@ class PieceHasher:
         self.pieces = pieces
         return self.pieces
 
-    def _get_pieces(self):
-        num_pieces = (self.size / self.piece_length)
-        pieces = bytearray()
-        for filename in self.paths:
-            data = bytearray(self.piece_length)
-            with open(filename,"rb") as fd:
-                while True:
-                    size = fd.readinto(data)
-                    if size == self.piece_length:
-                        pieces.extend(sha1(data))
-                        print("torrentfile", pieces)
-                        num_pieces -= 1
-                    elif size == 0:
-                        break
-                    elif size < self.piece_length:
-                        pieces.extend(sha1(data[:size]))
-                        print("torrentfile",pieces)
-                        num_pieces -= 1
-        self.pieces = pieces
+    def _concat(self):
+        arr = bytearray()
+        for path in self.paths:
+            arr.extend(open(path,"rb").read())
+            self.gen_pieces(arr)
+        self.gen_pieces(arr,last=True)
         return self.pieces
 
+    def gen_pieces(self, arr, last=False):
+        while len(arr) >= self.piece_length:
+            self.pieces.append(sha1(arr[:self.piece_length - 1]))
+            del arr[:self.piece_length-1]
+        if last:
+            self.pieces.append(sha1(arr))
+            del arr
+        return
 
     def get_pieces(self):
         if os.path.isfile(self.path):
             return self.single_file_hash()
-        return self._get_pieces()
+        return self._concat()
