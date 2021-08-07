@@ -3,7 +3,6 @@ import math
 import hashlib
 from pathlib import Path
 
-
 KIB = 1 << 10
 MIB = KIB * KIB
 GIB = KIB**3
@@ -39,6 +38,23 @@ def get_piece_length(size):
         return 1 << (exp-1)
     else:
         return 1 << exp
+
+def sortfiles(path):
+    filelist = os.listdir(path)
+    filelist.sort(key=str.lower)
+    for item in filelist:
+        yield os.path.join(path,item)
+
+def dir_files_sizes(path):
+    if os.path.isfile(path):
+        return [path], os.path.getsize(path)
+    filelist, total = [], 0
+    if os.path.isdir(path):
+        for item in sortfiles(path):
+            files, size = dir_files_sizes(item)
+            filelist.extend(files)
+            total += size
+    return filelist, total
 
 def path_size(path):
     """Calculate sum of all filesizes within directory.
@@ -85,10 +101,10 @@ def get_file_list(path, sort=False):
         files.extend(get_file_list(full,sort=sort))
     return files
 
-def folder_stat(path):
-    size = path_size(path)
+def path_stat(path):
+    filelist, size = dir_files_sizes(path)
     piece_length = get_piece_length(size)
-    return (size, piece_length)
+    return (filelist, size, piece_length)
 
 def sha1(data):
     piece = hashlib.sha1()
@@ -104,3 +120,6 @@ def md5(data):
     piece = hashlib.md5()
     piece.update(data)
     return piece.digest()
+
+def __do__something__different():
+    pass

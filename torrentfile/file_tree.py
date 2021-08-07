@@ -50,7 +50,9 @@ class FileTree:
     def __init__(self, path, piece_length):
         self.path = path
         self.piece_length = piece_length
-        self.tree = {}
+        self.file_tree = {}
+        self.build_tree()
+
 
     def _build_tree(self, path, tree):
         name = os.path.basename(path)
@@ -70,6 +72,6 @@ class FileTree:
         else:
             raise InvalidDirectoryItem
 
-    def build(self):
+    def build_tree(self):
         self._build_tree(self.path, self.tree)
         return self.tree

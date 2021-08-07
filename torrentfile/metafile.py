@@ -59,6 +59,9 @@ import collections
 from pathlib import Path
 from torrentfile.bencode import Benencoder
 from torrentfile.hasher import PieceHasher
+from torrentfile.feeder import Feeder
+from torrentfile.utils import path_stat, __do__something__different
+
 
 KIB = 2**10
 MIB = KIB**2
@@ -84,12 +87,14 @@ class TorrentFile:
                 source=None,
                 length=None,
                 comment=None,
-                announce_list=None):
-
+                announce_list=None,
+                v2=False):
         self._path = path
         self.Path = Path(path)
+        self.name = os.path.basename(self._path)
+        self.base = path
         self._is_file = self.Path.is_file()
-        self._piece_length = piece_length
+        self.piece_length = piece_length
         self._created_by = created_by
         self._announce = announce
         self._private = private
@@ -97,20 +102,14 @@ class TorrentFile:
         self._length = length
         self._comment = comment
         self._announce_list = announce_list
-        self._files = []
+        self.v2 = v2
+        self.files = []
         self.info = {}
         self.meta = {}
 
+
     def _assemble_infodict(self):
-        hasher = PieceHasher(self._path, piece_length=self._piece_length)
-        if self._is_file:
-            self.info["length"] = hasher.length
-        else:
-            self.info["files"] = hasher.files
-        self.info['pieces'] = hasher.get_pieces()
-        print("torrentfile", self.info['pieces'])
-        self.info['piece length'] = hasher.piece_length
-        self.info["name"] = os.path.split(self._path)[-1]
+        self.info["name"] = self.name
         if self._announce_list:
             self.info["announce-list"] = self.announce_list
         if self._source:
@@ -119,6 +118,26 @@ class TorrentFile:
             self.info["comment"] = self._comment
         if self._private:
             self.info["private"] = self._private
+        filelist, size, piece_length = path_stat(self.base)
+        if not self.piece_length:
+            self.info["piece length"] = self.piece_length = piece_length
+        else:
+            self.info["piece length"] = self.piece_length
+        if os.path.isfile(self.base):
+            self.info["length"] = size
+        else:
+            self.files = self.info["files"] = [{
+                "length": os.path.getsize(p),
+                "path": os.path.relpath(p, self.base).split(os.sep)
+                } for p in filelist]
+        feeder = Feeder(filelist,
+                        self.piece_length,
+                        total_size=size,
+                        sha256=False)
+        pieces = bytearray()
+        for piece in feeder:
+            pieces.extend(piece)
+        self.info["pieces"] = pieces
         return self.info
 
     def assemble(self):
@@ -140,11 +159,12 @@ class TorrentFile:
             self.meta["created by"] = self._created_by
         else:
             self.meta["created by"] = "alexpdev"
-
-        self.meta["info"] = self._assemble_infodict()
-
-        encoder = Benencoder()
-        self.data = encoder.encode(self.meta)
+        if self.v2:
+            self.data = __do__something__different()
+        else:
+            self.meta["info"] = self._assemble_infodict()
+            encoder = Benencoder()
+            self.data = encoder.encode(self.meta)
         return self.data
 
     def write(self,outfile=None):
