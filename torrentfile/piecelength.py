@@ -32,8 +32,9 @@ import os
 import math
 
 
-Kb = 2**10
-Mb = Kb**2
+KIB = 2**10
+MIB = KIB**2
+BLOCK = 2**14
 
 def get_piece_length(size):
     """
@@ -45,24 +46,13 @@ def get_piece_length(size):
     Returns:
         int: the ideal peace length calculated from the size arguement
     """
-    length = size / 1500  # 1500 = ideal number of pieces
-
-    # Check if length is under minimum 16Kb
-    if length < 16*Kb:
-        return 16*Kb
-
-    # Calculate closest perfect power of 2 to target length
-    exp = int(math.ceil(math.log2(length)))
-
-    # Check if length is over maximum 8Mb
-    if 1 << exp > 8 * Mb:
-        return 8 * Mb
-
-    # Ensure total pieces is over 1000
-    if size / (1 << exp) < 1000:
-        return 1 << (exp-1)
-    else:
-        return 1 << exp
+    exp = 14
+    while size / (2**exp) > 50 and exp < 20:
+        exp += 1
+    if exp == 19 and size / MIB > 2000:
+        while size / (2**exp) > 2000 and exp <= 23:
+            exp += 1
+    return 2**exp
 
 def path_size(path):
     if os.path.isfile(path):

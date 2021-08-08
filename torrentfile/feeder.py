@@ -42,7 +42,7 @@ class Feeder:
         assert temp == arr[part_size:]
         assert len(arr) == self.piece_length
         self.reset_partial()
-        return self.hasher(part_size)
+        return self.hasher(arr)
 
     def _next_path(self):
         self.current.close()
@@ -61,8 +61,8 @@ class Feeder:
     def leaves(self):
         counter = 0
         piece = bytearray(self.piece_length)
-        while self.index < len(self.filenames):
-            self.current = open(self.filenames[self.index],"rb")
+        while self.index < len(self.paths):
+            self.current = open(self.paths[self.index],"rb")
             if self.partial:
                 yield self._handle_partial(piece)
                 counter += 1

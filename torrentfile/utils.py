@@ -7,6 +7,8 @@ KIB = 1 << 10
 MIB = KIB * KIB
 GIB = KIB**3
 MIN_BLOCK = 2**14
+TOP_SIZE = 2**18
+
 
 resolve = lambda x: Path(x).resolve()
 
@@ -20,24 +22,32 @@ def get_piece_length(size):
     Returns:
         int: the ideal peace length calculated from the size arguement
     """
-    length = size / 1500  # 1500 = ideal number of pieces
+    exp = 14
+    while size / (2**exp) > 50 and exp < 20:
+        exp += 1
+    if exp == 19 and size / MIB > 2000:
+        while size / (2**exp) > 2000 and exp <= 23:
+            exp += 1
+    return 2**exp
 
-    # Check if length is under minimum 16Kb
-    if length < 16 * KIB:
-        return 16 * KIB
+    # length = size / 1500  # 1500 = ideal number of pieces
 
-    # Calculate closest perfect power of 2 to target length
-    exp = int(math.ceil(math.log2(length)))
+    # # Check if length is under minimum 16Kb
+    # if length < 16 * KIB:
+    #     return 16 * KIB
 
-    # Check if length is over maximum 8Mb
-    if 1 << exp > 8 * MIB:
-        return 8 * MIB
+    # # Calculate closest perfect power of 2 to target length
+    # exp = int(math.ceil(math.log2(length)))
 
-    # Ensure total pieces is over 1000
-    if size / (1 << exp) < 1000:
-        return 1 << (exp-1)
-    else:
-        return 1 << exp
+    # # Check if length is over maximum 8Mb
+    # if 1 << exp > 8 * MIB:
+    #     return 8 * MIB
+
+    # # Ensure total pieces is over 1000
+    # if size / (1 << exp) < 1000:
+    #     return 1 << (exp-1)
+    # else:
+    #     return 1 << exp
 
 def sortfiles(path):
     filelist = os.listdir(path)
