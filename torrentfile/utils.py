@@ -131,5 +131,5 @@ def md5(data):
     piece.update(data)
     return piece.digest()
 
-def __do__something__different():
+def do_something():
     pass
