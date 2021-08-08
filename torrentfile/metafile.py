@@ -55,8 +55,6 @@ file case, it's the name of a directory.
 """
 import os
 import time
-import collections
-from pathlib import Path
 from torrentfile.bencode import Benencoder
 from torrentfile.feeder import Feeder
 from torrentfile.utils import path_stat, do_something
@@ -72,10 +70,6 @@ class InvalidDataType(Exception):
 class MissingTracker(Exception):
     pass
 
-class ODict(collections.OrderedDict):
-    def __init__(self,items):
-        super().__init__(items)
-
 class TorrentFile:
     def __init__(self,
                 path=None,
@@ -88,18 +82,17 @@ class TorrentFile:
                 comment=None,
                 announce_list=None,
                 v2=False):
-        self._path = path
-        self.Path = Path(path)
+        self.path = path
         self.name = os.path.basename(self._path)
         self.base = path
         self.piece_length = piece_length
-        self._created_by = created_by
-        self._announce = announce
-        self._private = private
-        self._source = source
-        self._length = length
-        self._comment = comment
-        self._announce_list = announce_list
+        self.created_by = created_by
+        self.announce = announce
+        self.private = private
+        self.source = source
+        self.length = length
+        self.comment = comment
+        self.announce_list = announce_list
         self.v2 = v2
         self.files = []
         self.info = {}
@@ -107,10 +100,10 @@ class TorrentFile:
 
     def _assemble_infodict(self):
         filelist, size, piece_length = path_stat(self.base)
-        if self._announce_list:
+        if self.announce_list:
             self.info["announce-list"] = self.announce_list
-        if self._comment:
-            self.info["comment"] = self._comment
+        if self.comment:
+            self.info["comment"] = self.comment
         if os.path.isfile(self.base):
             self.info["length"] = size
         else:
@@ -147,11 +140,11 @@ class TorrentFile:
         Returns:
             dict: metadata dictionary for torrent file
         """
-        if not self._announce: raise MissingTracker
-        self.meta["announce"] = self._announce
+        if not self.announce: raise MissingTracker
+        self.meta["announce"] = self.announce
 
-        if self._created_by:
-            self.meta["created by"] = self._created_by
+        if self.created_by:
+            self.meta["created by"] = self.created_by
         else:
             self.meta["created by"] = "alexpdev"
 

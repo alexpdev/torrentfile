@@ -1,6 +1,7 @@
 import math
 import os
-from torrentfile.utils import sha1, sha256, path_size
+from hashlib import sha256, sha1
+from torrentfile.utils import path_size
 
 class Feeder:
 
@@ -10,10 +11,9 @@ class Feeder:
         self.sha256 = sha256
         self.total_size = total_size
         self.pieces = []
-        self._partial = 0
         self.index = 0
         self.current = None
-        self._generator = None
+        self.generator = self.leaves()
 
     @property
     def total_pieces(self):
@@ -21,58 +21,47 @@ class Feeder:
             self.total_size = sum(path_size(i) for i in self.paths)
         return math.ceil(self.total_size // self.piece_length)
 
-    @property
-    def hasher(self):
+    def hasher(self, data):
         if self.sha256:
-            return sha256
-        return sha1
+            return sha256(data).digest()
+        return sha1(data).digest()
 
     def __iter__(self):
-        self._generator = self.leaves()
-        return self._generator
+        self.generator = self.leaves()
+        return self.generator
 
     def __next__(self):
-        return next(self._generator)
+        return next(self.generator)
 
-    def _handle_partial(self, arr):
-        part_size = self.partial
-        temp = bytearray(self.piece_length - part_size)
-        self.current.readinto(temp)
-        arr[part_size:] = temp
-        assert temp == arr[part_size:]
-        assert len(arr) == self.piece_length
-        self.reset_partial()
+    def handle_partial(self, arr, partial):
+        while partial < self.piece_length:
+            temp = bytearray(self.piece_length - partial)
+            size = self.current.readinto(temp)
+            arr[partial : partial + size] = temp[:size]
+            partial += size
+            if partial < self.piece_length:
+                if not self.next_file():
+                    return self.hasher(arr[:partial])
+        assert partial == self.piece_length
         return self.hasher(arr)
 
-    def _next_path(self):
-        self.current.close()
+    def next_file(self):
         self.index += 1
-
-    @property
-    def partial(self):
-        return self._partial
-
-    def set_partial(self, number):
-        self._partial = number
-
-    def reset_partial(self):
-        self._partial = 0
+        if self.index < len(self.paths):
+            self.current.close()
+            self.current = open(self.paths[self.index],"rb")
+            return True
+        return False
 
     def leaves(self):
-        counter = 0
-        piece = bytearray(self.piece_length)
-        while self.index < len(self.paths):
-            self.current = open(self.paths[self.index],"rb")
-            if self.partial:
-                yield self._handle_partial(piece)
-                counter += 1
-            while True:
-                size = self.current.readinto(piece)
-                if size == 0: break
-                elif size < self.piece_length:
-                    self.set_partial(size)
+        self.current = open(self.paths[self.index],"rb")
+        while True:
+            piece = bytearray(self.piece_length)
+            size = self.current.readinto(piece)
+            if size == 0:
+                if not self.next_file():
                     break
+            elif size < self.piece_length:
+                yield self.handle_partial(piece, size)
+            else:
                 yield self.hasher(piece)
-                counter += 1
-            self._next_path()
-        if self.partial: yield sha1(piece[:self.partial])

@@ -1,6 +1,4 @@
 import os
-import math
-import hashlib
 from pathlib import Path
 
 KIB = 1 << 10
@@ -30,28 +28,8 @@ def get_piece_length(size):
             exp += 1
     return 2**exp
 
-    # length = size / 1500  # 1500 = ideal number of pieces
-
-    # # Check if length is under minimum 16Kb
-    # if length < 16 * KIB:
-    #     return 16 * KIB
-
-    # # Calculate closest perfect power of 2 to target length
-    # exp = int(math.ceil(math.log2(length)))
-
-    # # Check if length is over maximum 8Mb
-    # if 1 << exp > 8 * MIB:
-    #     return 8 * MIB
-
-    # # Ensure total pieces is over 1000
-    # if size / (1 << exp) < 1000:
-    #     return 1 << (exp-1)
-    # else:
-    #     return 1 << exp
-
 def sortfiles(path):
-    filelist = os.listdir(path)
-    filelist.sort(key=str.lower)
+    filelist = sorted(os.listdir(path),key=str.lower)
     for item in filelist:
         yield os.path.join(path,item)
 
@@ -116,20 +94,6 @@ def path_stat(path):
     piece_length = get_piece_length(size)
     return (filelist, size, piece_length)
 
-def sha1(data):
-    piece = hashlib.sha1()
-    piece.update(data)
-    return piece.digest()
-
-def sha256(data):
-    piece = hashlib.sha256()
-    piece.update(data)
-    return piece.digest()
-
-def md5(data):
-    piece = hashlib.md5()
-    piece.update(data)
-    return piece.digest()
 
 def do_something():
     pass

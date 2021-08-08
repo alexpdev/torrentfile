@@ -1,12 +1,13 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
-
-from torrentfile.hasher import PieceHasher
-from torrentfile.piecelength import get_piece_length, path_size, folder_stat
-from torrentfile.bencode import Benencoder, Bendecoder, benencode, bendecode
-from torrentfile.metafile  import  TorrentFile
+from torrentfile.bencode import Benencoder
 from torrentfile.feeder import Feeder
+from torrentfile.metafile import TorrentFile
+from torrentfile.utils import (path_stat,
+                               get_piece_length,
+                               get_file_list,
+                               path_size)
 
 
 __all__ = [
@@ -15,9 +16,7 @@ __all__ = [
     "path_size",
     "folder_stat",
     "Benencoder",
-    "Bendecoder",
-    "benencode",
-    "bendecode",
-    "PieceHasher",
-    "Feeder"
+    "Feeder",
+    "path_stat",
+    "get_file_list"
 ]
