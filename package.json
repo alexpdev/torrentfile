@@ -1,14 +1,13 @@
 {
   "name": "torrentfile",
   "version": "1.0.0",
-  "description": "Bittorent .torrent file utilities",
-  "scripts": {},
+  "description": "Bittorent v1 .torrent file creation.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexpdev/torrentfile.git"
   },
   "author": "alexpdev",
-  "license": "GNU LGPL",
+  "license": "GNU LGPL v3",
   "bugs": {
     "url": "https://github.com/alexpdev/torrentfile/issues"
   },

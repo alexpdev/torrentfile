@@ -55,14 +55,8 @@ file case, it's the name of a directory.
 """
 import os
 import time
-from torrentfile.bencode import Benencoder
 from torrentfile.feeder import Feeder
-from torrentfile.utils import path_stat, do_something
-
-
-KIB = 2**10
-MIB = KIB**2
-BLOCK_SIZE = 2**14
+from torrentfile.utils import path_stat, do_something, Benencoder
 
 class InvalidDataType(Exception):
     pass
@@ -99,11 +93,20 @@ class TorrentFile:
         self.meta = {}
 
     def _assemble_infodict(self):
+        """
+        Create info dictionary.
+
+        Returns:
+            dict: info dictionary.
+        """
         filelist, size, piece_length = path_stat(self.base)
+        # create dictionary keys for available fields.
         if self.announce_list:
             self.info["announce-list"] = self.announce_list
+        # add comment
         if self.comment:
             self.info["comment"] = self.comment
+        # if single file, add 'length' key otherwise
         if os.path.isfile(self.base):
             self.info["length"] = size
         else:
