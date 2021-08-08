@@ -8,6 +8,9 @@
   },
   "author": "alexpdev",
   "license": "GNU LGPL v3",
+  "email": "alexpdev@protonmail.com",
+  "url": "https://github.com/alexpdev",
+  "keywords": ["Bittorrent", "metadata", "torrent", "p2p"],
   "bugs": {
     "url": "https://github.com/alexpdev/torrentfile/issues"
   },

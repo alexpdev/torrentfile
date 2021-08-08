@@ -23,10 +23,8 @@
 from setuptools import setup, find_packages
 import json
 
-INFO = json.load(open("./package.json"))
-
-with open("README.md", encoding="UTF-8") as readme:
-    long_description = readme.read()
+INFO = json.load(open("package.json"))
+long_description = open("README").read()
 
 setup(
     name=INFO["name"],
