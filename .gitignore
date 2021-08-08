@@ -3,6 +3,7 @@
 node_modules/
 *.env
 .env
+start.py
 activate.bat
 activate.ps1
 activate
