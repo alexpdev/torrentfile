@@ -23,15 +23,15 @@
 from setuptools import setup, find_packages
 import json
 
-INFO = json.load(open('./package.json'))
+INFO = json.load(open("./package.json"))
 
 with open("README.md", encoding="UTF-8") as readme:
     long_description = readme.read()
 
 setup(
-    name=INFO['name'],
-    version=INFO['version'],
-    description=INFO['description'],
+    name=INFO["name"],
+    version=INFO["version"],
+    description=INFO["description"],
     long_description=long_description,
     classifiers=[
         "Development Status :: 3 - Alpha",

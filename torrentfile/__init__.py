@@ -3,11 +3,13 @@
 
 from torrentfile.feeder import Feeder
 from torrentfile.metafile import TorrentFile
-from torrentfile.utils import (path_stat,
-                               get_piece_length,
-                               get_file_list,
-                               path_size,
-                               Benencoder)
+from torrentfile.utils import (
+    path_stat,
+    get_piece_length,
+    get_file_list,
+    path_size,
+    Benencoder,
+)
 
 __version__ = "1.0.0"
 __author__ = "alexpdev"
@@ -20,5 +22,5 @@ __all__ = [
     "Benencoder",
     "Feeder",
     "path_stat",
-    "get_file_list"
+    "get_file_list",
 ]

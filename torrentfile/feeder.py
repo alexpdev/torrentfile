@@ -3,8 +3,8 @@ import os
 from hashlib import sha256, sha1
 from torrentfile.utils import path_size
 
-class Feeder:
 
+class Feeder:
     def __init__(self, paths, piece_length, total_size=None, sha256=True):
         self.piece_length = piece_length
         self.paths = paths
@@ -49,12 +49,12 @@ class Feeder:
         self.index += 1
         if self.index < len(self.paths):
             self.current.close()
-            self.current = open(self.paths[self.index],"rb")
+            self.current = open(self.paths[self.index], "rb")
             return True
         return False
 
     def leaves(self):
-        self.current = open(self.paths[self.index],"rb")
+        self.current = open(self.paths[self.index], "rb")
         while True:
             piece = bytearray(self.piece_length)
             size = self.current.readinto(piece)

@@ -58,24 +58,29 @@ import time
 from torrentfile.feeder import Feeder
 from torrentfile.utils import path_stat, do_something, Benencoder
 
+
 class InvalidDataType(Exception):
     pass
+
 
 class MissingTracker(Exception):
     pass
 
+
 class TorrentFile:
-    def __init__(self,
-                path=None,
-                piece_length=None,
-                created_by=None,
-                announce=None,
-                private=None,
-                source=None,
-                length=None,
-                comment=None,
-                announce_list=None,
-                v2=False):
+    def __init__(
+        self,
+        path=None,
+        piece_length=None,
+        created_by=None,
+        announce=None,
+        private=None,
+        source=None,
+        length=None,
+        comment=None,
+        announce_list=None,
+        v2=False,
+    ):
         self.path = path
         self.name = os.path.basename(self._path)
         self.base = path
@@ -110,19 +115,19 @@ class TorrentFile:
         if os.path.isfile(self.base):
             self.info["length"] = size
         else:
-            self.files = self.info["files"] = [{
-                "length": os.path.getsize(p),
-                "path": os.path.relpath(p, self.base).split(os.sep)
-                } for p in filelist]
+            self.files = self.info["files"] = [
+                {
+                    "length": os.path.getsize(p),
+                    "path": os.path.relpath(p, self.base).split(os.sep),
+                }
+                for p in filelist
+            ]
         self.info["name"] = self.name
         if not self.piece_length:
             self.info["piece length"] = self.piece_length = piece_length
         else:
             self.info["piece length"] = self.piece_length
-        feeder = Feeder(filelist,
-                        self.piece_length,
-                        total_size=size,
-                        sha256=False)
+        feeder = Feeder(filelist, self.piece_length, total_size=size, sha256=False)
         pieces = bytearray()
         for piece in feeder:
             pieces.extend(piece)
@@ -143,7 +148,8 @@ class TorrentFile:
         Returns:
             dict: metadata dictionary for torrent file
         """
-        if not self.announce: raise MissingTracker
+        if not self.announce:
+            raise MissingTracker
         self.meta["announce"] = self.announce
 
         if self.created_by:
@@ -152,14 +158,15 @@ class TorrentFile:
             self.meta["created by"] = "alexpdev"
 
         self.meta["creation date"] = int(time.time())
-        if self.v2: self.data = do_something()
+        if self.v2:
+            self.data = do_something()
         else:
             self.meta["info"] = self._assemble_infodict()
             encoder = Benencoder()
             self.data = encoder.encode(self.meta)
         return self.data
 
-    def write(self,outfile=None):
+    def write(self, outfile=None):
         if not outfile:
             outfile = self.info["name"] + ".torrent"
         with open(outfile, "wb") as fd:
