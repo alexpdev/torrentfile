@@ -1,8 +1,6 @@
 import math
-import os
 from hashlib import sha256, sha1
 from torrentfile.utils import path_size
-
 
 class Feeder:
     def __init__(self, paths, piece_length, total_size=None, sha256=True):

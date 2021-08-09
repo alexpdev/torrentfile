@@ -1,3 +1,16 @@
+#! /usr/bin/python3
+# -*- coding: utf-8 -*-
+
+#####################################################################
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+#####################################################################
 """
 metainfo files
 
@@ -58,16 +71,14 @@ import time
 from torrentfile.feeder import Feeder
 from torrentfile.utils import path_stat, do_something, Benencoder
 
-
-class InvalidDataType(Exception):
-    pass
-
-
 class MissingTracker(Exception):
+    """Exception for missing torrent fields."""
     pass
 
 
 class TorrentFile:
+    """Class for creating Bittorrent meta files."""
+
     def __init__(
         self,
         path=None,
@@ -81,6 +92,20 @@ class TorrentFile:
         announce_list=None,
         v2=False,
     ):
+        """Constructor for Torrentfile Class
+
+        Args:
+            path (str): path to torrent file or directory.
+            piece_length (int): size of each piece of torrent data.
+            created_by (str): creator.
+            announce (str): tracker url.
+            private (int): 1 if private torrent else 0.
+            source (str): source tracker.
+            length (int): size of torrent.
+            comment (str): comment string.
+            announce_list (list): List of tracker urls.
+            v2 (bool): Torrent v2 or v1.
+        """
         self.path = path
         self.name = os.path.basename(self._path)
         self.base = path
@@ -167,6 +192,15 @@ class TorrentFile:
         return self.data
 
     def write(self, outfile=None):
+        """
+        Write assembled data to .torrent file.
+
+        Args:
+            outfile (str, optional): path to save location. Defaults to None.
+
+        Returns:
+            bytes: data writtend to .torrent file
+        """
         if not outfile:
             outfile = self.info["name"] + ".torrent"
         with open(outfile, "wb") as fd:
