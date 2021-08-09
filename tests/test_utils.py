@@ -16,23 +16,24 @@ import random
 import os
 import math
 from tests.context import TEST_DIR
-from torrentfile.utils import ( path_stat,
-                                path_size,
-                                get_piece_length,
-                                get_file_list,
-                                dir_files_sizes)
+from torrentfile.utils import (
+    path_stat,
+    path_size,
+    get_piece_length,
+    get_file_list,
+    dir_files_sizes,
+)
 
-KIB = 2**10
-MIB = KIB**2
-GIB = KIB**3
+KIB = 2 ** 10
+MIB = KIB ** 2
+GIB = KIB ** 3
 MIN_BLOCK = 2 ** 14
 MAX_BLOCK = MIB * 16
 
 
 class TestUtils:
-
     def test_get_piece_length(self):
-        for i in range(MIB,20*GIB,200 * MIB):
+        for i in range(MIB, 20 * GIB, 200 * MIB):
             result = get_piece_length(i)
             total_pieces = math.ceil(i / result)
             assert total_pieces > 20
@@ -48,10 +49,11 @@ class TestUtils:
             sizes = []
             if os.path.isdir(path):
                 for item in os.listdir(path):
-                    full = os.path.join(path,item)
+                    full = os.path.join(path, item)
                     sizes.append(path_size(path))
                     sizes.extend(walk(full))
             return sizes
+
         path = TEST_DIR
         for size in walk(path):
             assert size > 0

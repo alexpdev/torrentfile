@@ -19,8 +19,9 @@
 ############################################################################
 
 
-from setuptools import setup, find_packages
 import json
+
+from setuptools import find_packages, setup
 
 INFO = json.load(open("package.json"))
 long_description = open("README.md").read()

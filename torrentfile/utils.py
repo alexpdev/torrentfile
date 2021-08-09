@@ -169,7 +169,7 @@ def get_piece_length(size):
     while size / (2 ** exp) > 50 and exp < 20:
         exp += 1
     if exp == 20 and size / MIB > 2000:
-        pieces = lambda x:  size / 2**x
+        pieces = lambda x: size / 2 ** x
         while 20 < pieces(exp) > 2000 and exp <= 23:
             exp += 1
     return 2 ** exp
