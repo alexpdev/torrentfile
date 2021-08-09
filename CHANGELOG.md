@@ -1,5 +1,15 @@
 # torrentfile
 
+## Version [1.1.0]
+
+## Added
+
+- Test suite
+
+## Fixed
+
+- Bug Fixes
+
 ## Version [1.0.0]
 
 ### Added

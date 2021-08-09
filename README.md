@@ -8,8 +8,14 @@ Create Bittorrent metafiles (".torrent") with granular control over all settings
 
 ## Installation
 
-```sh
-pip install torrentfile
+```bash
+>> python -m pip install torrentfile
+```
+
+or
+
+```bash
+>> pip3 install torrentfile
 ```
 
 ## Usage example
@@ -20,15 +26,14 @@ _For more examples and usage, please refer to the [Wiki][wiki]._
 
 ## Development setup
 
-Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
-
-```sh
-make install
-npm test
+```bash
+>> python -m pip install torrentfile pytest
 ```
 
 ## Release History
 
+* 1.1.0
+  * Bug Fixes and Expanded Testing
 * 1.0.0
   * The first working release for public use
 * 0.1.0
