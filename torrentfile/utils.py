@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #####################################################################
-# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+# THE SOFTWARE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 # OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 # NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
@@ -40,7 +40,6 @@ from pathlib import Path
 
 class BenencodingError:
     """Error occured during encoding process."""
-
     pass
 
 
@@ -48,21 +47,24 @@ class Benencoder:
     """Encode collection of methods for Bencoding data."""
 
     def __init__(self, data=None):
-        """Initialize Benencoder insance with optional pre compiled data.
+        """ *__init__* Initialize Benencoder insance with optional pre compiled data.
 
         Args:
-            data (any, optional): Target data for encoding. Defaults to None.
+
+            * data (any, optional): Target data for encoding. Defaults to None.
         """
         self.data = data
 
     def encode(self, val=None):
-        """Encode data with bencode protocol.
+        """ *encode* Encode data with bencode protocol.
 
         args:
-            bits (bytes): bencoded data for decoding.
+
+            * `bits` (bytes): bencoded data for decoding.
 
         returns:
-            any: the decoded data.
+
+            * `any`: the decoded data.
         """
         if val is None:
             val = self.data
@@ -88,39 +90,42 @@ class Benencoder:
         return size.encode("utf-8") + val
 
     def _encode_str(self, txt):
-        """
-        Decode string.
+        """Decode string.
 
         Args:
-            txt (str): string.
+
+           * txt (str): string.
 
         Returns:
-            [bytes]: bencoded string.
+
+           * bytes: bencoded string.
         """
         size = str(len(txt)).encode("utf-8")
         return size + b":" + txt.encode("utf-8")
 
     def _encode_int(self, i):
-        """
-        Encode intiger.
+        """Encode intiger.
 
         Args:
-            i (int): intiger.
+
+           * i (int): intiger.
 
         Returns:
-            [bytes]: bencoded intiger.
+
+            * bytes: bencoded intiger.
         """
         return b"i" + str(i).encode("utf-8") + b"e"
 
     def _encode_list(self, elems):
-        """
-        Encode list and its contents.
+        """Encode list and its contents.
 
         Args:
-            elems (list): List of content to be encoded.
+
+           * elems (list): List of content to be encoded.
 
         Returns:
-            [bytes]: bencoded data
+
+            * bytes: bencoded data
         """
         lst = [b"l"]
         for elem in elems:
@@ -131,14 +136,15 @@ class Benencoder:
         return bit_lst
 
     def _encode_dict(self, dic):
-        """
-        Encode keys and values in dictionary.
+        """ Encode keys and values in dictionary.
 
         Args:
-            dic (dict): dictionary of data for encoding.
+
+            * dic (dict): dictionary of data for encoding.
 
         Returns:
-            [bytes]: bencoded data.
+
+            * bytes: bencoded data.
         """
         result = b"d"
         for k, v in dic.items():
@@ -152,18 +158,17 @@ GIB = KIB ** 3
 MIN_BLOCK = 2 ** 14
 TOP_SIZE = 2 ** 18
 
-resolve = lambda x: Path(x).resolve()
-
-
 def get_piece_length(size):
     """
     Calculate the ideal piece length for bittorrent data.
 
     Args:
-        size (int): total bits of all files incluided in .torrent file
+
+        * size (int): total bits of all files incluided in .torrent file.
 
     Returns:
-        int: the ideal peace length calculated from the size arguement
+
+        * int: the ideal peace length calculated from the size arguement.
     """
     exp = 14
     while size / (2 ** exp) > 50 and exp < 20:
@@ -176,14 +181,15 @@ def get_piece_length(size):
 
 
 def sortfiles(path):
-    """
-    sortfiles Generator function to sort and return files one at a time.
+    """ *sortfiles* Generator function to sort and return files one at a time.
 
     Args:
-        path (path-like): directory path to get file list from.
+
+        * path (path-like): directory path to get file list from.
 
     Yields:
-        path-like: next path in filelist
+
+        * path-like: next path in filelist
     """
     filelist = sorted(os.listdir(path), key=str.lower)
     for item in filelist:
@@ -195,10 +201,12 @@ def dir_files_sizes(path):
     dir_files_sizes generates a file list and their sizes for given dir.
 
     Args:
-        path (path-like): directory to start FROM
+
+        * path (path-like): directory to start FROM
 
     Returns:
-        tuple: filelist and total size.
+
+        * tuple: filelist and total size.
     """
     if os.path.isfile(path):
         return [path], os.path.getsize(path)
@@ -215,10 +223,12 @@ def path_size(path):
     """Calculate sum of all filesizes within directory.
 
     Args:
-        path (pathlike): The path to start calculating from.
+
+        * path (pathlike): The path to start calculating from.
 
     Returns:
-        int: total sum in bytes
+
+        * int: total sum in bytes
     """
     if os.path.isfile(path):
         return os.path.getsize(path)
@@ -236,11 +246,13 @@ def get_file_list(path, sort=False):
     """Search directory tree for files.
 
     Args:
-        path (pathlike): path to file or directory base
-        sort (bool, optional): return list sorted. Defaults to False.
+
+        * path (pathlike): path to file or directory base
+        * sort (bool, optional): return list sorted. Defaults to False.
 
     Returns:
-        [list]: all file paths within directory tree.
+
+        * list: all file paths within directory tree.
     """
     if os.path.isfile(path):
         return [path]
@@ -267,5 +279,5 @@ def path_stat(path):
     return (filelist, size, piece_length)
 
 
-def do_something():
+def _do_something():
     pass

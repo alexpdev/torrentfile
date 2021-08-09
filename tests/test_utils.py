@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #####################################################################
-# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+# THE SOFTWARE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 # OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 # NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
@@ -12,17 +12,12 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-import random
-import os
 import math
+import os
+
 from tests.context import TEST_DIR
-from torrentfile.utils import (
-    path_stat,
-    path_size,
-    get_piece_length,
-    get_file_list,
-    dir_files_sizes,
-)
+from torrentfile.utils import (dir_files_sizes, get_file_list,
+                               get_piece_length, path_size, path_stat)
 
 KIB = 2 ** 10
 MIB = KIB ** 2

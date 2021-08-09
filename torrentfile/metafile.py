@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #####################################################################
-# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+# THE SOFTWARE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 # OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 # NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
@@ -68,13 +68,16 @@ file case, it's the name of a directory.
 """
 import os
 import time
+
 from torrentfile.feeder import Feeder
-from torrentfile.utils import path_stat, do_something, Benencoder
+from torrentfile.utils import Benencoder, _do_something, path_stat
 
 
 class MissingTracker(Exception):
-    """Exception for missing torrent fields."""
+    """ *MissingTracker* Announce parameter is required.
 
+    Subclass of builtin *Exception*.
+    """
     pass
 
 
@@ -94,19 +97,20 @@ class TorrentFile:
         announce_list=None,
         v2=False,
     ):
-        """Constructor for Torrentfile Class
+        """Constructor for *Torrentfile* class.
 
         Args:
-            path (str): path to torrent file or directory.
-            piece_length (int): size of each piece of torrent data.
-            created_by (str): creator.
-            announce (str): tracker url.
-            private (int): 1 if private torrent else 0.
-            source (str): source tracker.
-            length (int): size of torrent.
-            comment (str): comment string.
-            announce_list (list): List of tracker urls.
-            v2 (bool): Torrent v2 or v1.
+
+            * path (str): path to torrent file or directory.
+            * piece_length (int): size of each piece of torrent data.
+            * created_by (str): creator.
+            * announce (str): tracker url.
+            * private (int): 1 if private torrent else 0.
+            * source (str): source tracker.
+            * length (int): size of torrent.
+            * comment (str): comment string.
+            * announce_list (list): List of tracker urls.
+            * v2 (bool): Torrent v2 or v1.
         """
         self.path = path
         self.base = path
@@ -125,11 +129,11 @@ class TorrentFile:
         self.meta = {}
 
     def _assemble_infodict(self):
-        """
-        Create info dictionary.
+        """Create info dictionary.
 
         Returns:
-            dict: info dictionary.
+
+            * dict: info dictionary.
         """
         filelist, size, piece_length = path_stat(self.base)
         # create dictionary keys for available fields.
@@ -166,14 +170,15 @@ class TorrentFile:
         return self.info
 
     def assemble(self):
-        """
-        Assemble components of torrent metafile.
+        """*assemble* Assemble components of torrent metafile.
 
         Raises:
-            MissingTracker: Announce field is required for all torrents.
+
+            * MissingTracker: Announce field is required for all torrents.
 
         Returns:
-            dict: metadata dictionary for torrent file
+
+            * `dict`: metadata dictionary for torrent file
         """
         if not self.announce:
             raise MissingTracker
@@ -186,7 +191,7 @@ class TorrentFile:
 
         self.meta["creation date"] = int(time.time())
         if self.v2:
-            self.data = do_something()
+            self.data = _do_something()
         else:
             self.meta["info"] = self._assemble_infodict()
             encoder = Benencoder()
@@ -194,14 +199,15 @@ class TorrentFile:
         return self.data
 
     def write(self, outfile=None):
-        """
-        Write assembled data to .torrent file.
+        """ *self.write(outfile)* Write assembled data to .torrent file.
 
         Args:
-            outfile (str, optional): path to save location. Defaults to None.
+
+            * outfile (`str`): path to save location. default = None
 
         Returns:
-            bytes: data writtend to .torrent file
+
+            * `bytes`: data writtend to .torrent file
         """
         if not outfile:
             outfile = self.info["name"] + ".torrent"

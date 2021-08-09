@@ -1,20 +1,34 @@
+#! /usr/bin/python3
+# -*- coding: utf-8 -*-
+
+#####################################################################
+# THE SOFTWARE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+#####################################################################
+
 import math
-from hashlib import sha256, sha1
-from torrentfile.utils import path_size
+from hashlib import sha1, sha256
 
 
 class Feeder:
-    """Generator class for feeding a continious stream of data from input file list chuncked into specific pieces."""
+    """Seemlesly generate hashes of piece length data from filelist contents."""
 
     def __init__(self, paths, piece_length, total, sha256=False):
         """
         __init__ Constructor for the Feeder class.
 
         Args:
-            paths (list[str]): list of files.
-            piece_length (int): Size of chuncks to split the data into.
-            total (int): Sum of all files in file list.
-            sha256 (bool, optional): use sha256 hash instead of sha1. False.
+
+            * paths (list[str]): list of files.
+            * piece_length (int): Size of chuncks to split the data into.
+            * total (int): Sum of all files in file list.
+            * sha256 (bool, optional): use sha256 hash instead of sha1. False.
         """
         self.piece_length = piece_length
         self.paths = paths
@@ -26,42 +40,43 @@ class Feeder:
         self.iterator = self.leaves()
 
     def __iter__(self):
-        """
-        __iter__ iterate through feed pieces.
+        """ *__iter__* iterate through feed pieces.
 
         Returns:
-            iterator: Iterator object
+
+            * iterator: Iterator object
         """
         self.iterator = self.leaves()
         return self.iterator
 
     def __next__(self):
-        """
-        __next__ returns the next element from iterator.
+        """ *__next__* returns the next element from iterator.
 
         Returns:
-            bytes-like: piece_length length pieces of data.
+
+            * bytes-like: piece_length length pieces of data.
         """
         return self.iterator.__next__()
 
     def total_pieces(self):
-        """
-        total_pieces total size / piece length.
+        """ *total_pieces* total size / piece length.
 
         Returns:
-            int: number of pieces for entire torrrent
+
+            * int: number of pieces for entire torrrent
         """
         return math.ceil(self.total // self.piece_length)
 
     def hasher(self, data):
-        """
-        hasher sha1 or sha256
+        """ *hasher* sha1 or sha256
 
         Args:
-            data (bytes): data to be hashed.
+
+            * data (bytes): data to be hashed.
 
         Returns:
-            bytes: sha1 or sha256 hash of input data.
+
+            * bytes: sha1 or sha256 hash of input data.
         """
         if self.sha256:
             return sha256(data).digest()
@@ -72,11 +87,13 @@ class Feeder:
         handle_partial seemlessly move to next file for input data.
 
         Args:
-            arr (bytes-like): incomplete piece containing partial data
-            partial (int): size of incomplete piece_length
+
+            * arr (bytes-like): incomplete piece containing partial data
+            * partial (int): size of incomplete piece_length
 
         Returns:
-            bytes-like: final piece filled with data or final piece remains incomplete.
+
+            * bytes-like: final piece filled with data.
         """
         while partial < self.piece_length:
             temp = bytearray(self.piece_length - partial)
@@ -94,7 +111,8 @@ class Feeder:
         next_file Seemlessly transition to next file in file list.
 
         Returns:
-            bool: returns false if no more files are left
+
+            * bool: returns false if no more files are left
         """
         self.index += 1
         if self.index < len(self.paths):
@@ -107,11 +125,9 @@ class Feeder:
         """
         leaves generator of piece-length pieces of data from input file list.
 
-        Raises:
-            StopIteration: When no more files to iterate through.
-
         Yields:
-            bytes: hash values of chuncked data.
+
+            * bytes: hash values of chuncked data.
         """
         while True:
             piece = bytearray(self.piece_length)
