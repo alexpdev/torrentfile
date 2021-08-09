@@ -1,23 +1,10 @@
-#! /usr/bin/python3
-# -*- coding: utf-8 -*-
-
-#####################################################################
-# THE SOFTWARE IS PROVIDED “AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-# OTHER DEALINGS IN THE SOFTWARE.
-#####################################################################
-
 import math
-from hashlib import sha1, sha256
+from hashlib import sha256, sha1
+from torrentfile.utils import path_size
 
 
 class Feeder:
-    """Generate seemless piece_length chuncks of data from filelist."""
+    """Generator class for feeding a continious stream of data from input file list chuncked into specific pieces."""
 
     def __init__(self, paths, piece_length, total, sha256=False):
         """

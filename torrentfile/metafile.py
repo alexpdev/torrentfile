@@ -68,9 +68,8 @@ file case, it's the name of a directory.
 """
 import os
 import time
-
 from torrentfile.feeder import Feeder
-from torrentfile.utils import Benencoder, do_something, path_stat
+from torrentfile.utils import path_stat, do_something, Benencoder
 
 
 class MissingTracker(Exception):
@@ -98,16 +97,16 @@ class TorrentFile:
         """Constructor for Torrentfile Class
 
         Args:
-            - path (str): path to torrent file or directory.
-            - piece_length (int): size of each piece of torrent data.
-            - created_by (str): creator.
-            - announce (str): tracker url.
-            - private (int): 1 if private torrent else 0.
-            - source (str): source tracker.
-            - length (int): size of torrent.
-            - comment (str): comment string.
-            - announce_list (list): List of tracker urls.
-            - v2 (bool): Torrent v2 or v1.
+            path (str): path to torrent file or directory.
+            piece_length (int): size of each piece of torrent data.
+            created_by (str): creator.
+            announce (str): tracker url.
+            private (int): 1 if private torrent else 0.
+            source (str): source tracker.
+            length (int): size of torrent.
+            comment (str): comment string.
+            announce_list (list): List of tracker urls.
+            v2 (bool): Torrent v2 or v1.
         """
         self.path = path
         self.base = path
@@ -126,10 +125,11 @@ class TorrentFile:
         self.meta = {}
 
     def _assemble_infodict(self):
-        """*_assemble_infodict* Create info dictionary.
+        """
+        Create info dictionary.
 
         Returns:
-            - dict: info dictionary
+            dict: info dictionary.
         """
         filelist, size, piece_length = path_stat(self.base)
         # create dictionary keys for available fields.
