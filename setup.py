@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 #############################################################################
-# ??????  extends builtin min and max functions.
 # Copyright (C) 2021 alexpdev
 #
 # This program is free software: you can redistribute it and/or modify

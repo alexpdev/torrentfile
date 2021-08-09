@@ -168,8 +168,9 @@ def get_piece_length(size):
     exp = 14
     while size / (2 ** exp) > 50 and exp < 20:
         exp += 1
-    if exp == 19 and size / MIB > 2000:
-        while size / (2 ** exp) > 2000 and exp <= 23:
+    if exp == 20 and size / MIB > 2000:
+        pieces = lambda x:  size / 2**x
+        while 20 < pieces(exp) > 2000 and exp <= 23:
             exp += 1
     return 2 ** exp
 
@@ -246,7 +247,7 @@ def get_file_list(path, sort=False):
 
     # put all files into filelist within directory
     files = list()
-    filelist = os.listdir()
+    filelist = os.listdir(path)
 
     # optional canonical sort of filelist
     if sort:

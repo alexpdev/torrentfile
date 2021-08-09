@@ -119,7 +119,7 @@ class Feeder:
             if size == 0:
                 if not self.next_file():
                     self.current.close()
-                    raise StopIteration
+                    break
             elif size < self.piece_length:
                 yield self.handle_partial(piece, size)
             else:

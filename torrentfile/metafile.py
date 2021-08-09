@@ -109,8 +109,8 @@ class TorrentFile:
             v2 (bool): Torrent v2 or v1.
         """
         self.path = path
-        self.name = os.path.basename(self._path)
         self.base = path
+        self.name = os.path.basename(self.path)
         self.piece_length = piece_length
         self.created_by = created_by
         self.announce = announce
@@ -159,10 +159,10 @@ class TorrentFile:
         for piece in feeder:
             pieces.extend(piece)
         self.info["pieces"] = pieces
-        if self._private:
-            self.info["private"] = self._private
-        if self._source:
-            self.info["source"] = self._source
+        if self.private:
+            self.info["private"] = self.private
+        if self.source:
+            self.info["source"] = self.source
         return self.info
 
     def assemble(self):
