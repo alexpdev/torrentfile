@@ -71,8 +71,10 @@ import time
 from torrentfile.feeder import Feeder
 from torrentfile.utils import path_stat, do_something, Benencoder
 
+
 class MissingTracker(Exception):
     """Exception for missing torrent fields."""
+
     pass
 
 
@@ -152,7 +154,7 @@ class TorrentFile:
             self.info["piece length"] = self.piece_length = piece_length
         else:
             self.info["piece length"] = self.piece_length
-        feeder = Feeder(filelist, self.piece_length, total_size=size, sha256=False)
+        feeder = Feeder(filelist, self.piece_length, size, sha256=False)
         pieces = bytearray()
         for piece in feeder:
             pieces.extend(piece)

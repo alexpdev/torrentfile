@@ -24,7 +24,7 @@ from setuptools import setup, find_packages
 import json
 
 INFO = json.load(open("package.json"))
-long_description = open("README").read()
+long_description = open("README.md").read()
 
 setup(
     name=INFO["name"],

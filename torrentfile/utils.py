@@ -175,12 +175,30 @@ def get_piece_length(size):
 
 
 def sortfiles(path):
+    """
+    sortfiles Generator function to sort and return files one at a time.
+
+    Args:
+        path (path-like): directory path to get file list from.
+
+    Yields:
+        path-like: next path in filelist
+    """
     filelist = sorted(os.listdir(path), key=str.lower)
     for item in filelist:
         yield os.path.join(path, item)
 
 
 def dir_files_sizes(path):
+    """
+    dir_files_sizes generates a file list and their sizes for given dir.
+
+    Args:
+        path (path-like): directory to start FROM
+
+    Returns:
+        tuple: filelist and total size.
+    """
     if os.path.isfile(path):
         return [path], os.path.getsize(path)
     filelist, total = [], 0
@@ -242,6 +260,7 @@ def get_file_list(path, sort=False):
 
 
 def path_stat(path):
+    """combines a series of functions to work like a stat call for a directory and its contents."""
     filelist, size = dir_files_sizes(path)
     piece_length = get_piece_length(size)
     return (filelist, size, piece_length)

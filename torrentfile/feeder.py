@@ -2,36 +2,82 @@ import math
 from hashlib import sha256, sha1
 from torrentfile.utils import path_size
 
+
 class Feeder:
-    def __init__(self, paths, piece_length, total_size=None, sha256=True):
+    """Generator class for feeding a continious stream of data from input file list chuncked into specific pieces."""
+
+    def __init__(self, paths, piece_length, total, sha256=False):
+        """
+        __init__ Constructor for the Feeder class.
+
+        Args:
+            paths (list[str]): list of files.
+            piece_length (int): Size of chuncks to split the data into.
+            total (int): Sum of all files in file list.
+            sha256 (bool, optional): use sha256 hash instead of sha1. False.
+        """
         self.piece_length = piece_length
         self.paths = paths
         self.sha256 = sha256
-        self.total_size = total_size
+        self.total = total
         self.pieces = []
         self.index = 0
-        self.current = None
-        self.generator = self.leaves()
+        self.current = open(self.paths[self.index], "rb")
+        self.iterator = self.leaves()
 
-    @property
+    def __iter__(self):
+        """
+        __iter__ iterate through feed pieces.
+
+        Returns:
+            iterator: Iterator object
+        """
+        self.iterator = self.leaves()
+        return self.iterator
+
+    def __next__(self):
+        """
+        __next__ returns the next element from iterator.
+
+        Returns:
+            bytes-like: piece_length length pieces of data.
+        """
+        return self.iterator.__next__()
+
     def total_pieces(self):
-        if not self.total_size:
-            self.total_size = sum(path_size(i) for i in self.paths)
-        return math.ceil(self.total_size // self.piece_length)
+        """
+        total_pieces total size / piece length.
+
+        Returns:
+            int: number of pieces for entire torrrent
+        """
+        return math.ceil(self.total // self.piece_length)
 
     def hasher(self, data):
+        """
+        hasher sha1 or sha256
+
+        Args:
+            data (bytes): data to be hashed.
+
+        Returns:
+            bytes: sha1 or sha256 hash of input data.
+        """
         if self.sha256:
             return sha256(data).digest()
         return sha1(data).digest()
 
-    def __iter__(self):
-        self.generator = self.leaves()
-        return self.generator
-
-    def __next__(self):
-        return next(self.generator)
-
     def handle_partial(self, arr, partial):
+        """
+        handle_partial seemlessly move to next file for input data.
+
+        Args:
+            arr (bytes-like): incomplete piece containing partial data
+            partial (int): size of incomplete piece_length
+
+        Returns:
+            bytes-like: final piece filled with data or final piece remains incomplete.
+        """
         while partial < self.piece_length:
             temp = bytearray(self.piece_length - partial)
             size = self.current.readinto(temp)
@@ -44,6 +90,12 @@ class Feeder:
         return self.hasher(arr)
 
     def next_file(self):
+        """
+        next_file Seemlessly transition to next file in file list.
+
+        Returns:
+            bool: returns false if no more files are left
+        """
         self.index += 1
         if self.index < len(self.paths):
             self.current.close()
@@ -52,13 +104,22 @@ class Feeder:
         return False
 
     def leaves(self):
-        self.current = open(self.paths[self.index], "rb")
+        """
+        leaves generator of piece-length pieces of data from input file list.
+
+        Raises:
+            StopIteration: When no more files to iterate through.
+
+        Yields:
+            bytes: hash values of chuncked data.
+        """
         while True:
             piece = bytearray(self.piece_length)
             size = self.current.readinto(piece)
             if size == 0:
                 if not self.next_file():
-                    break
+                    self.current.close()
+                    raise StopIteration
             elif size < self.piece_length:
                 yield self.handle_partial(piece, size)
             else:
