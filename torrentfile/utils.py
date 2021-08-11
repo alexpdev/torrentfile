@@ -13,16 +13,6 @@
 #####################################################################
 
 """
-Library of functions and classes for encoding and decoding bencoded data.
-
-Usage: How to import:
-
->> from benencoding import *
->> from benencoding import Benencoder, Bendecoder
->> from benencoding import benencode, bendecode
-
-Usage: How to Encode/Decode:
-
 >> data = b'l18:Some Bencoded Datai15ee'
 >> decoder = Bendecoder(data)
 >> decoder.decode()
@@ -34,20 +24,152 @@ b'l18:Some Bencoded Datai15ee'
 >> benencode(results)
 b'l18:Some Bencoded Datai15ee'
 """
+import json
 import os
-from pathlib import Path
+import re
 
 
-class BenencodingError:
+class BendecodingError:
+    """Error occured during decode process."""
+
+    def __init__(self, val):
+        message = f"{type(val)} : {val} is of unknown value or type"
+        print(message)
+
+
+class BenencodingError(Exception):
     """Error occured during encoding process."""
-    pass
+
+    def __init__(self, val):
+        message = f"{type(val)} : {val} is of unknown value or type"
+        print(message)
+
+
+class Bendecoder:
+    """`Bendecoder` class contains all decode and convenience methods"""
+
+    def __init__(self, data=None):
+        """
+        Initialize instance with optional pre compiled data.
+
+        Args:
+
+            * data (bytes-like, optional): target data for decoding.
+        """
+        self.data = data
+
+    def tojson(self, bits=None):
+        data, _ = self.decode(bits=bits)
+        return json.dumps(data)
+
+    def decode(self, bits=None):
+        """Decode bencoded data.
+
+        args:
+            bits (bytes): bencoded data for decoding.
+
+        returns:
+            any: the decoded data.
+        """
+        if bits is None:
+            bits = self.data
+        if bits.startswith(b"i"):
+            match, feed = self._decode_int(bits)
+            return match, feed
+
+        # decode string
+        elif chr(bits[0]).isdigit():
+            num, feed = self._decode_str(bits)
+            return num, feed
+
+        # decode list and contents
+        elif bits.startswith(b"l"):
+            lst, feed = self._decode_list(bits)
+            return lst, feed
+
+        # decode dictionary and contents
+        elif bits.startswith(b"d"):
+            dic, feed = self._decode_dict(bits)
+            return dic, feed
+        else:
+            raise BendecodingError
+
+    def _decode_dict(self, bits):
+        """
+        Decode keys and values in dictionary.
+
+        Args:
+            bits (bytearray): bytes of data for decoding.
+
+        Returns:
+            [dict]: dictionary and contents.
+        """
+        dic, feed = {}, 1
+        while not bits[feed:].startswith(b"e"):
+            match1, rest = self.decode(bits[feed:])
+            feed += rest
+            match2, rest = self.decode(bits[feed:])
+            feed += rest
+            dic[match1] = match2
+        feed += 1
+        return dic, feed
+
+    def _decode_list(self, bits):
+        """
+        Decode list and its contents.
+
+        Args:
+            bits (bytearray): bencoded data.
+
+        Returns:
+            [list]: decoded list and contents
+        """
+        lst, feed = [], 1
+        while not bits[feed:].startswith(b"e"):
+            match, rest = self.decode(bits[feed:])
+            lst.append(match)
+            feed += rest
+        feed += 1
+        return lst, feed
+
+    def _decode_str(self, bits):
+        """
+        Decode string.
+
+        Args:
+            bits (bytearray): bencoded string.
+
+        Returns:
+            [str]: decoded string.
+        """
+        match = re.match(b"(\d+):", bits)
+        word_len, start = int(match.groups()[0]), match.span()[1]
+        word = bits[start : start + word_len]
+        try:
+            word = word.decode("utf-8")
+        except:
+            word = word.hex()
+        return word, start + word_len
+
+    def _decode_int(self, bits):
+        """
+        Decode intiger.
+
+        Args:
+            bits (bytearray): bencoded intiger.
+
+        Returns:
+            [int]: decoded intiger.
+        """
+        obj = re.match(b"i(-?\d+)e", bits)
+        return int(obj.group(1)), obj.end()
 
 
 class Benencoder:
     """Encode collection of methods for Bencoding data."""
 
     def __init__(self, data=None):
-        """ *__init__* Initialize Benencoder insance with optional pre compiled data.
+        """*__init__* Initialize Benencoder insance with optional pre compiled data.
 
         Args:
 
@@ -56,7 +178,7 @@ class Benencoder:
         self.data = data
 
     def encode(self, val=None):
-        """ *encode* Encode data with bencode protocol.
+        """*encode* Encode data with bencode protocol.
 
         args:
 
@@ -83,7 +205,10 @@ class Benencoder:
         elif type(val) == dict:
             return self._encode_dict(val)
 
-        raise BenencodingError
+        elif type(val) == bool:
+            return 1 if val else 0
+
+        raise BenencodingError(val)
 
     def _encode_bytes(self, val):
         size = str(len(val)) + ":"
@@ -136,7 +261,7 @@ class Benencoder:
         return bit_lst
 
     def _encode_dict(self, dic):
-        """ Encode keys and values in dictionary.
+        """Encode keys and values in dictionary.
 
         Args:
 
@@ -157,6 +282,7 @@ MIB = KIB * KIB
 GIB = KIB ** 3
 MIN_BLOCK = 2 ** 14
 TOP_SIZE = 2 ** 18
+
 
 def get_piece_length(size):
     """
@@ -181,7 +307,7 @@ def get_piece_length(size):
 
 
 def sortfiles(path):
-    """ *sortfiles* Generator function to sort and return files one at a time.
+    """*sortfiles* Generator function to sort and return files one at a time.
 
     Args:
 

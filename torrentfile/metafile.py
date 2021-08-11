@@ -74,10 +74,11 @@ from torrentfile.utils import Benencoder, _do_something, path_stat
 
 
 class MissingTracker(Exception):
-    """ *MissingTracker* Announce parameter is required.
+    """*MissingTracker* Announce parameter is required.
 
     Subclass of builtin *Exception*.
     """
+
     pass
 
 
@@ -199,7 +200,7 @@ class TorrentFile:
         return self.data
 
     def write(self, outfile=None):
-        """ *self.write(outfile)* Write assembled data to .torrent file.
+        """*self.write(outfile)* Write assembled data to .torrent file.
 
         Args:
 

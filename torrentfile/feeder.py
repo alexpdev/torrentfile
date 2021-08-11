@@ -40,7 +40,7 @@ class Feeder:
         self.iterator = self.leaves()
 
     def __iter__(self):
-        """ *__iter__* iterate through feed pieces.
+        """*__iter__* iterate through feed pieces.
 
         Returns:
 
@@ -50,7 +50,7 @@ class Feeder:
         return self.iterator
 
     def __next__(self):
-        """ *__next__* returns the next element from iterator.
+        """*__next__* returns the next element from iterator.
 
         Returns:
 
@@ -59,7 +59,7 @@ class Feeder:
         return self.iterator.__next__()
 
     def total_pieces(self):
-        """ *total_pieces* total size / piece length.
+        """*total_pieces* total size / piece length.
 
         Returns:
 
@@ -68,7 +68,7 @@ class Feeder:
         return math.ceil(self.total // self.piece_length)
 
     def hasher(self, data):
-        """ *hasher* sha1 or sha256
+        """*hasher* sha1 or sha256
 
         Args:
 

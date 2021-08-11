@@ -31,6 +31,7 @@ setup(
     version=INFO["version"],
     description=INFO["description"],
     long_description=long_description,
+    long_description_content_type = "text/markdown",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Operating System :: OS Independent",
@@ -50,6 +51,7 @@ setup(
     license=INFO["license"],
     packages=find_packages(exclude=["env"]),
     include_package_data=True,
+    entry_points={"console_scripts": ["torrentfile = torrentfile:main"]},
     tests_require=["pytest"],
     setup_requires=["setuptools"],
     zip_safe=False,
