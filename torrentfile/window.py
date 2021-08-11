@@ -1,12 +1,16 @@
 import os
 import sys
-from pathlib import Path
-from benencoding import Bendecoder
+
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QAction, QIcon
+from PyQt6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFileDialog,
+                             QGridLayout, QHBoxLayout, QLabel, QLineEdit,
+                             QMainWindow, QMenu, QMenuBar, QPlainTextEdit,
+                             QPushButton, QToolButton, QWidget)
+
 from torrentfile.metafile import TorrentFile
-from torrentfile.utils import path_stat
-from PyQt6.QtWidgets import *
-from PyQt6.QtGui import *
-from PyQt6.QtCore import *
+from torrentfile.utils import Bendecoder, path_stat
+
 
 class Window(QMainWindow):
 
@@ -14,7 +18,7 @@ class Window(QMainWindow):
         background-color: #1e1f2f;
         }"""
 
-    def __init__(self,parent=None,app=None):
+    def __init__(self, parent=None, app=None):
         super().__init__(parent=parent)
         self.app = app
         self.setObjectName("Mainwindow")
@@ -22,7 +26,7 @@ class Window(QMainWindow):
         self.setWindowTitle("Torrentfile Tools")
         icon = QIcon("./assets/torrent-icon.png")
         self.setWindowIcon(icon)
-        self.resize(400,400)
+        self.resize(400, 400)
         self._setupUI()
 
     def _setupUI(self):
@@ -35,66 +39,66 @@ class Window(QMainWindow):
         self.hlayout3 = QHBoxLayout()
         self.central.setLayout(self.clayout)
         self.setCentralWidget(self.central)
-        self.path_label = Label("Path",parent=self)
+        self.path_label = Label("Path", parent=self)
         self.path_input = LineEdit(parent=self)
         self.browse_button = BrowseButton(parent=self)
         self.hlayout1.addWidget(self.path_input)
         self.hlayout1.addWidget(self.browse_button)
         self.path_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.path_input.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        self.clayout.addWidget(self.path_label,0,0,1,1)
-        self.clayout.addLayout(self.hlayout1,0,1,1,1)
-        self.private_label = Label("Private:",parent=self)
+        self.clayout.addWidget(self.path_label, 0, 0, 1, 1)
+        self.clayout.addLayout(self.hlayout1, 0, 1, 1, 1)
+        self.private_label = Label("Private:", parent=self)
         self.private_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.private = QCheckBox(parent=self)
-        self.piece_length_label = Label("Piece Length:",parent=self)
+        self.piece_length_label = Label("Piece Length:", parent=self)
         self.piece_length_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.piece_length = ComboBox(parent=self)
         self.hlayout3.addWidget(self.private_label)
         self.hlayout3.addWidget(self.private)
         self.hlayout3.addWidget(self.piece_length_label)
         self.hlayout3.addWidget(self.piece_length)
-        self.clayout.addLayout(self.hlayout3,1,0,1,2)
-        self.size_label = Label("Total Size:",parent=self)
+        self.clayout.addLayout(self.hlayout3, 1, 0, 1, 2)
+        self.size_label = Label("Total Size:", parent=self)
         self.size_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        self.size_result = Label("0",parent=self)
+        self.size_result = Label("0", parent=self)
         self.size_result.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        self.pieces_label = Label("Pieces:",parent=self)
+        self.pieces_label = Label("Pieces:", parent=self)
         self.pieces_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.pieces = Label("0",parent=self)
+        self.pieces = Label("0", parent=self)
         self.pieces.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.hlayout2.addWidget(self.size_label)
         self.hlayout2.addWidget(self.size_result)
         self.hlayout2.addWidget(self.pieces_label)
         self.hlayout2.addWidget(self.pieces)
-        self.clayout.addLayout(self.hlayout2,2,0,1,2)
+        self.clayout.addLayout(self.hlayout2, 2, 0, 1, 2)
         self.created_by_label = Label("Created By:", parent=self)
         self.created_by_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.created_by_input = LineEdit(parent=self)
         self.created_by_input.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        self.clayout.addWidget(self.created_by_label,3,0,1,1)
-        self.clayout.addWidget(self.created_by_input,3,1,1,1)
-        self.announce_label = Label("Trackers:",parent=self)
+        self.clayout.addWidget(self.created_by_label, 3, 0, 1, 1)
+        self.clayout.addWidget(self.created_by_input, 3, 1, 1, 1)
+        self.announce_label = Label("Trackers:", parent=self)
         self.announce_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.announce_input = TextEdit(parent=self)
-        self.clayout.addWidget(self.announce_label,4,0,1,1)
-        self.clayout.addWidget(self.announce_input,4,1,1,1)
-        self.source_label = Label("Source:",parent=self)
+        self.clayout.addWidget(self.announce_label, 4, 0, 1, 1)
+        self.clayout.addWidget(self.announce_input, 4, 1, 1, 1)
+        self.source_label = Label("Source:", parent=self)
         self.source_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.source_input = LineEdit(parent=self)
         self.source_input.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        self.clayout.addWidget(self.source_label,5,0,1,1)
-        self.clayout.addWidget(self.source_input,5,1,1,1)
-        self.comment_label = Label("Comment:",parent=self)
+        self.clayout.addWidget(self.source_label, 5, 0, 1, 1)
+        self.clayout.addWidget(self.source_input, 5, 1, 1, 1)
+        self.comment_label = Label("Comment:", parent=self)
         self.comment_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.comment_input = LineEdit(parent=self)
         self.comment_input.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        self.clayout.addWidget(self.comment_label,6,0,1,1)
-        self.clayout.addWidget(self.comment_input,6,1,1,1)
-        self.submit_button = SubmitButton("Create Torrent",parent=self)
-        self.clayout.addWidget(self.submit_button,7,0,1,2)
+        self.clayout.addWidget(self.comment_label, 6, 0, 1, 1)
+        self.clayout.addWidget(self.comment_input, 6, 1, 1, 1)
+        self.submit_button = SubmitButton("Create Torrent", parent=self)
+        self.clayout.addWidget(self.submit_button, 7, 0, 1, 2)
 
-    def apply_settings(self,result):
+    def apply_settings(self, result):
         d = result[0]
         info = d["info"]
         trackers = d["announce"]
@@ -113,7 +117,7 @@ class Window(QMainWindow):
             if info["private"]:
                 self.private.setChecked()
         val_kb = str(int(piece_length) // 1024)
-        val_mb = str(int(piece_length) // (1024**2))
+        val_mb = str(int(piece_length) // (1024 ** 2))
         for i in range(self.piece_length.count()):
             if val_kb in self.piece_length.itemText(i):
                 self.piece_length.setCurrentIndex(i)
@@ -123,16 +127,15 @@ class Window(QMainWindow):
                 break
 
     def set_path(self):
-        path = QFileDialog.getExistingDirectory(parent=self,caption="choose file")
+        path = QFileDialog.getExistingDirectory(parent=self, caption="choose file")
         self.path_input.insert(str(path))
         _, size, piece_length = path_stat(path)
         self.size_result.setText(str(size))
-        self.pieces.setText(str(size/piece_length))
+        self.pieces.setText(str(size / piece_length))
 
 
 class BrowseButton(QToolButton):
-
-    def __init__(self,parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent=parent)
         self.setText("...")
         self._parent = parent
@@ -158,8 +161,8 @@ class SubmitButton(QPushButton):
             background-color: #191f74;
         }"""
 
-    def __init__(self,text,parent=None):
-        super().__init__(text,parent=parent)
+    def __init__(self, text, parent=None):
+        super().__init__(text, parent=parent)
         self._text = text
         self._parent = parent
         self.setText(text)
@@ -179,19 +182,28 @@ class SubmitButton(QPushButton):
         if denom == "KB":
             val = int(val) * 1024
         elif denom == "MB":
-            val = int(val) * (1024**2)
+            val = int(val) * (1024 ** 2)
         comment = window.comment_input.text()
-        torrentfile = TorrentFile(path=path,private=private,source=source,announce=announce,created_by=created_by,piece_length=val,comment=comment)
+        torrentfile = TorrentFile(
+            path=path,
+            private=private,
+            source=source,
+            announce=announce,
+            created_by=created_by,
+            piece_length=val,
+            comment=comment,
+        )
         torrentfile.assemble()
         try:
             save_dir = os.getenv("HOME")
         except:
             save_dir = os.getenv("USERPROFILE")
-        save_file = os.path.join(save_dir,os.path.basename(path) + ".torrent")
-        save_location = QFileDialog.getSaveFileName(parent=window,caption="Save Location", directory=save_file)
+        save_file = os.path.join(save_dir, os.path.basename(path) + ".torrent")
+        save_location = QFileDialog.getSaveFileName(
+            parent=window, caption="Save Location", directory=save_file
+        )
         torrentfile.write(save_location)
         print("success")
-
 
 
 class Label(QLabel):
@@ -203,8 +215,8 @@ class Label(QLabel):
         padding: 3px;
     }"""
 
-    def __init__(self,text,parent=None):
-        super().__init__(text,parent=parent)
+    def __init__(self, text, parent=None):
+        super().__init__(text, parent=parent)
         self.setStyleSheet(self.stylesheet)
         font = self.font()
         font.setBold(True)
@@ -226,7 +238,7 @@ class LineEdit(QLineEdit):
         selection-color: #FFFFFF;
     }"""
 
-    def __init__(self,parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent=parent)
         self._parent = parent
         self.setStyleSheet(self.stylesheet)
@@ -246,7 +258,7 @@ class TextEdit(QPlainTextEdit):
         selection-color: #FFFFFF;
     }"""
 
-    def __init__(self,parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent=parent)
         self._parent = parent
         self.setStyleSheet(self.stylesheet)
@@ -268,16 +280,16 @@ class ComboBox(QComboBox):
             margin: 10px;
         }"""
 
-    def __init__(self,parent=None,*args,**kwargs):
+    def __init__(self, parent=None, *args, **kwargs):
         super().__init__(parent=parent)
         self.args = args
         self.kwargs = kwargs
         self.setStyleSheet(self.stylesheet)
         self.addItem("")
-        kib = 2**10
-        mib = kib**2
-        for exp in range(14,24):
-            item = (2**exp) // kib
+        kib = 2 ** 10
+        mib = kib ** 2
+        for exp in range(14, 24):
+            item = (2 ** exp) // kib
             suffix = "KB"
             if item >= kib:
                 item = item // kib
@@ -341,7 +353,7 @@ class MenuBar(QMenuBar):
             background-color:#1e1d23;
         }"""
 
-    def __init__(self,parent=None,*args,**kwargs):
+    def __init__(self, parent=None, *args, **kwargs):
         super().__init__(parent=parent)
         self.args = args
         self.kwargs = kwargs
@@ -366,16 +378,25 @@ class MenuBar(QMenuBar):
         self.parent().app.exit()
 
     def load(self):
-        filename = QFileDialog.getOpenFileName(self,"Select Torrent File",
-                                                "/", "*.torrent")[0]
+        filename = QFileDialog.getOpenFileName(
+            self, "Select Torrent File", "/", "*.torrent"
+        )[0]
         decoder = Bendecoder()
-        data = open(filename,"rb").read()
+        data = open(filename, "rb").read()
         results = decoder.decode(data)
         self.parent().apply_settings(results)
 
+
+class Application(QApplication):
+    def __init__(self, args=None):
+        if not args:
+            args = sys.argv
+        super().__init__(args)
+
+
 def start():
-    app = QApplication(sys.argv)
-    window = Window(parent=None,app=app)
+    app = Application()
+    window = Window(parent=None, app=app)
     window.show()
     sys.exit(app.exec())
 

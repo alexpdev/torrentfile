@@ -50,6 +50,7 @@ setup(
     license=INFO["license"],
     packages=find_packages(exclude=["env"]),
     include_package_data=True,
+    entry_points={"console_scripts": ["torrentfile = torrentfile:main"]},
     tests_require=["pytest"],
     setup_requires=["setuptools"],
     zip_safe=False,
