@@ -1,5 +1,6 @@
-import sys
 import os
+import sys
+from pathlib import Path
 from benencoding import Bendecoder
 from torrentfile.metafile import TorrentFile
 from torrentfile.utils import path_stat
@@ -9,7 +10,9 @@ from PyQt6.QtCore import *
 
 class Window(QMainWindow):
 
-    stylesheet = """QMainWindow {background-color: #1e1f2f}"""
+    stylesheet = """QMainWindow {
+        background-color: #1e1f2f;
+        }"""
 
     def __init__(self,parent=None,app=None):
         super().__init__(parent=parent)
@@ -27,23 +30,31 @@ class Window(QMainWindow):
         self.setMenuBar(self.menubar)
         self.central = QWidget(parent=self)
         self.clayout = QGridLayout()
+        self.hlayout1 = QHBoxLayout()
         self.hlayout2 = QHBoxLayout()
+        self.hlayout3 = QHBoxLayout()
         self.central.setLayout(self.clayout)
         self.setCentralWidget(self.central)
         self.path_label = Label("Path",parent=self)
         self.path_input = LineEdit(parent=self)
         self.browse_button = BrowseButton(parent=self)
-        self.hlayout1 = QHBoxLayout()
         self.hlayout1.addWidget(self.path_input)
         self.hlayout1.addWidget(self.browse_button)
         self.path_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.path_input.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.clayout.addWidget(self.path_label,0,0,1,1)
         self.clayout.addLayout(self.hlayout1,0,1,1,1)
+        self.private_label = Label("Private:",parent=self)
+        self.private_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        self.private = QCheckBox(parent=self)
         self.piece_length_label = Label("Piece Length:",parent=self)
+        self.piece_length_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.piece_length = ComboBox(parent=self)
-        self.clayout.addWidget(self.piece_length_label,1,0,1,1)
-        self.clayout.addWidget(self.piece_length,1,1,1,1)
+        self.hlayout3.addWidget(self.private_label)
+        self.hlayout3.addWidget(self.private)
+        self.hlayout3.addWidget(self.piece_length_label)
+        self.hlayout3.addWidget(self.piece_length)
+        self.clayout.addLayout(self.hlayout3,1,0,1,2)
         self.size_label = Label("Total Size:",parent=self)
         self.size_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.size_result = Label("0",parent=self)
@@ -56,10 +67,6 @@ class Window(QMainWindow):
         self.hlayout2.addWidget(self.size_result)
         self.hlayout2.addWidget(self.pieces_label)
         self.hlayout2.addWidget(self.pieces)
-        # self.clayout.addWidget(self.size_label,2,0,1,1)
-        # self.clayout.addWidget(self.size_result,2,1,1,1)
-        # self.clayout.addWidget(self.pieces_label,3,0,1,1)
-        # self.clayout.addWidget(self.pieces,3,1,1,1)
         self.clayout.addLayout(self.hlayout2,2,0,1,2)
         self.created_by_label = Label("Created By:", parent=self)
         self.created_by_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
@@ -70,7 +77,6 @@ class Window(QMainWindow):
         self.announce_label = Label("Trackers:",parent=self)
         self.announce_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.announce_input = TextEdit(parent=self)
-        self.announce_input.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.clayout.addWidget(self.announce_label,4,0,1,1)
         self.clayout.addWidget(self.announce_input,4,1,1,1)
         self.source_label = Label("Source:",parent=self)
@@ -79,7 +85,7 @@ class Window(QMainWindow):
         self.source_input.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.clayout.addWidget(self.source_label,5,0,1,1)
         self.clayout.addWidget(self.source_input,5,1,1,1)
-        self.comment_label = Label("Comment",parent=self)
+        self.comment_label = Label("Comment:",parent=self)
         self.comment_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.comment_input = LineEdit(parent=self)
         self.comment_input.setAlignment(Qt.AlignmentFlag.AlignLeft)
@@ -92,8 +98,8 @@ class Window(QMainWindow):
         d = result[0]
         info = d["info"]
         trackers = d["announce"]
-        piece_length = d["piece length"]
-        self.announce_input.insert(trackers)
+        piece_length = info["piece length"]
+        self.announce_input.appendPlainText(trackers)
         if "source" in info:
             source = info["source"]
             self.source_input.insert(source)
@@ -104,27 +110,28 @@ class Window(QMainWindow):
             created_by = info["created by"]
             self.created_by_input.insert(created_by)
         if "private" in info:
-            private = info["private"]
-        val_kb = str(int(piece_length) / 1024)
-        val_mb = str(int(piece_length) / (1024**2))
+            if info["private"]:
+                self.private.setChecked()
+        val_kb = str(int(piece_length) // 1024)
+        val_mb = str(int(piece_length) // (1024**2))
         for i in range(self.piece_length.count()):
             if val_kb in self.piece_length.itemText(i):
-                self.piece_length.set_current_index(i)
+                self.piece_length.setCurrentIndex(i)
                 break
             elif val_mb in self.piece_length.itemText(i):
-                self.piece_length.set_current_index(i)
+                self.piece_length.setCurrentIndex(i)
                 break
 
-    def set_path(self, path):
-        path = path.path()
-        self.path_input.insert(path)
-        file_lst, size, piece_length = path_stat(path)
+    def set_path(self):
+        path = QFileDialog.getExistingDirectory(parent=self,caption="choose file")
+        self.path_input.insert(str(path))
+        _, size, piece_length = path_stat(path)
         self.size_result.setText(str(size))
         self.pieces.setText(str(size/piece_length))
 
 
-
 class BrowseButton(QToolButton):
+
     def __init__(self,parent=None):
         super().__init__(parent=parent)
         self.setText("...")
@@ -132,10 +139,7 @@ class BrowseButton(QToolButton):
         self.pressed.connect(self.browse)
 
     def browse(self):
-        path = QFileDialog.getExistingDirectoryUrl(parent=self._parent,
-                                                  caption="Select File/Folder")
-        self._parent.set_path(path)
-
+        self._parent.set_path()
 
 
 class SubmitButton(QPushButton):
@@ -163,12 +167,42 @@ class SubmitButton(QPushButton):
         self.pressed.connect(self.submit)
 
     def submit(self):
-        filename = QFileDialog.getOpenFileName(self,"Open File", "/", "*.torrent")
-        self.parent().imported = filename
+        window = self._parent
+        path = window.path_input.text()
+        private = 1 if window.private.isChecked() else 0
+        source = window.source_input.text()
+        announce = window.announce_input.toPlainText()
+        announce = announce.split("\n")
+        created_by = window.created_by_input.text()
+        piece_length = window.piece_length.currentText()
+        val, denom = piece_length.split(" ")
+        if denom == "KB":
+            val = int(val) * 1024
+        elif denom == "MB":
+            val = int(val) * (1024**2)
+        comment = window.comment_input.text()
+        torrentfile = TorrentFile(path=path,private=private,source=source,announce=announce,created_by=created_by,piece_length=val,comment=comment)
+        torrentfile.assemble()
+        try:
+            save_dir = os.getenv("HOME")
+        except:
+            save_dir = os.getenv("USERPROFILE")
+        save_file = os.path.join(save_dir,os.path.basename(path) + ".torrent")
+        save_location = QFileDialog.getSaveFileName(parent=window,caption="Save Location", directory=save_file)
+        torrentfile.write(save_location)
+        print("success")
+
 
 
 class Label(QLabel):
-    stylesheet = """QLabel {color: #FAFAFA}"""
+
+    stylesheet = """QLabel {
+        color: #FAFAFA;
+        margin-right: 3px;
+        margin-bottom: 3px;
+        padding: 3px;
+    }"""
+
     def __init__(self,text,parent=None):
         super().__init__(text,parent=parent)
         self.setStyleSheet(self.stylesheet)
@@ -176,6 +210,7 @@ class Label(QLabel):
         font.setBold(True)
         font.setPointSize(12)
         self.setFont(font)
+
 
 class LineEdit(QLineEdit):
 
@@ -197,7 +232,7 @@ class LineEdit(QLineEdit):
         self.setStyleSheet(self.stylesheet)
 
 
-class TextEdit(QTextEdit):
+class TextEdit(QPlainTextEdit):
 
     stylesheet = """QTextEdit {
         border-color: #4edff3;
@@ -216,19 +251,29 @@ class TextEdit(QTextEdit):
         self._parent = parent
         self.setStyleSheet(self.stylesheet)
 
+
 class ComboBox(QComboBox):
+
     stylesheet = """
+        QCombobox {
+            margin: 10px;
+        }
         QComboBox QAbstractItemView {
             padding: 4px;
             background-color: #444;
             color: #FFF;
             border: 1px solid brown;
+        }
+        QCombobox QLineEdit {
+            margin: 10px;
         }"""
+
     def __init__(self,parent=None,*args,**kwargs):
         super().__init__(parent=parent)
         self.args = args
         self.kwargs = kwargs
         self.setStyleSheet(self.stylesheet)
+        self.addItem("")
         kib = 2**10
         mib = kib**2
         for exp in range(14,24):
@@ -240,6 +285,7 @@ class ComboBox(QComboBox):
             item = f"{item} {suffix}"
             self.addItem(item)
         self.setEditable(False)
+        print(self.currentIndex(), repr(self.currentText()))
 
 
 class MenuBar(QMenuBar):
@@ -320,18 +366,19 @@ class MenuBar(QMenuBar):
         self.parent().app.exit()
 
     def load(self):
-        filename = QFileDialog.getOpenFileName(self,"Open File", "/", "*.torrent")
+        filename = QFileDialog.getOpenFileName(self,"Select Torrent File",
+                                                "/", "*.torrent")[0]
         decoder = Bendecoder()
         data = open(filename,"rb").read()
         results = decoder.decode(data)
         self.parent().apply_settings(results)
-
 
 def start():
     app = QApplication(sys.argv)
     window = Window(parent=None,app=app)
     window.show()
     sys.exit(app.exec())
+
 
 if __name__ == "__main__":
     start()

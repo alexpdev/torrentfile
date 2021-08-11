@@ -211,6 +211,8 @@ class TorrentFile:
         """
         if not outfile:
             outfile = self.info["name"] + ".torrent"
+        elif isinstance(outfile, tuple):
+            outfile = outfile[0]
         with open(outfile, "wb") as fd:
             fd.write(self.data)
         print("success")
