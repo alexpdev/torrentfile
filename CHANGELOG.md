@@ -1,5 +1,16 @@
 # torrentfile
 
+## Version [1.2.0]
+
+## Added
+
+- Command Line Interface
+- Rough Graphical User Interface
+
+## Fixed
+
+- Minor Bug Fixes
+
 ## Version [1.1.0]
 
 ## Added

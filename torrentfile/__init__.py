@@ -23,7 +23,7 @@ from torrentfile.utils import (Benencoder, get_file_list, get_piece_length,
                                path_size, path_stat)
 from torrentfile.window import Application, Window
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 __author__ = "alexpdev"
 __cwd__ = os.getcwd()
 __platform__ = sys.platform
