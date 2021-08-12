@@ -21,7 +21,7 @@ from torrentfile.feeder import Feeder
 from torrentfile.metafile import TorrentFile
 from torrentfile.utils import (Benencoder, get_file_list, get_piece_length,
                                path_size, path_stat)
-from torrentfile.window import Application, Window
+from torrentfile.window import Application, Window, start
 
 __version__ = "1.2.0"
 __author__ = "alexpdev"
@@ -153,9 +153,14 @@ def cli_parse(args):
 
 
 def main():
-    args = sys.argsv
-    cli_parse(args)
-
+    args = sys.argv
+    try:
+        if sys.stdin.isatty():
+            cli_parse(args)
+        else:
+            start()
+    except:
+        start()
 
 if __name__ == "__main__":
     main()
