@@ -286,7 +286,7 @@ class LineEdit(QLineEdit):
         color: #fff;
         background: #646464;
         selection-background-color: #bbbbbb;
-        selection-color: ##3c3f41;
+        selection-color: #3c3f41;
     }"""
 
     def __init__(self, parent=None):
