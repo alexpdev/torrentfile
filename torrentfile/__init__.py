@@ -12,9 +12,6 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-import os
-import sys
-
 from torrentfile.feeder import Feeder
 from torrentfile.metafile import TorrentFile
 from torrentfile.utils import (Benencoder, get_file_list, get_piece_length,
@@ -24,8 +21,6 @@ from torrentfile.torrentfile import cli_parse, CLI, main
 
 __version__ = "1.2.1"
 __author__ = "alexpdev"
-__cwd__ = os.getcwd()
-__platform__ = sys.platform
 
 __all__ = [
     "__version__",
