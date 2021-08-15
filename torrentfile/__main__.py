@@ -13,5 +13,9 @@
 #####################################################################
 from torrentfile import main
 
+"""
+This file is here for convenience.  It makes it easier to activate the Command Line Interface.
+"""
+
 if __name__ == "__main__":
     main()
