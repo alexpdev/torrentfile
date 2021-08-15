@@ -12,7 +12,17 @@ from PyQt6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFileDialog,
 from torrentfile.metafile import TorrentFile
 from torrentfile.utils import Bendecoder, path_stat
 
+"""
+Graphical Extension for Users who prefer a GUI over CLI.
+"""
+
 class Window(QMainWindow):
+    """
+    Window MainWindow of GUI extension interface.
+
+    Subclass:
+        QMainWindow (QWidget): PyQt6 QMainWindow
+    """
 
     labelRole = QFormLayout.ItemRole.LabelRole
     fieldRole = QFormLayout.ItemRole.FieldRole
@@ -23,6 +33,13 @@ class Window(QMainWindow):
         }"""
 
     def __init__(self, parent=None, app=None):
+        """
+        __init__ Constructor for Window class.
+
+        Args:
+            parent (QWidget, optional): The current Widget's parent. Defaults to None.
+            app (QApplication, optional): Controls the GUI application. Defaults to None.
+        """
         super().__init__(parent=parent)
         self.app = app
         self.menubar = MenuBar(parent=self)
@@ -39,6 +56,9 @@ class Window(QMainWindow):
         self._setupUI()
 
     def _setupUI(self):
+        """
+        _setupUI Internal function for setting up UI elements.
+        """
         self.resize(450, 450)
         self.formLayout = QFormLayout(self.central)
         self.central.setLayout(self.formLayout)
@@ -118,25 +138,37 @@ class Window(QMainWindow):
         self.statusbar.setObjectName(u"statusbar")
 
     def apply_settings(self, result):
+        """
+        apply_settings Activated by MenuBar action to import from external file.
+
+        Args:
+            result (dict): Data retreived from external file.
+        """
         d = result[0]
         info = d["info"]
         trackers = d["announce"]
         piece_length = info["piece length"]
         self.announce_input.appendPlainText(trackers)
+
         if "source" in info:
             source = info["source"]
             self.source_input.insert(source)
+
         if "comment" in info:
             comment = info["comment"]
             self.comment_input.insert(comment)
+
         if "created by" in info:
             created_by = info["created by"]
             self.created_by_input.insert(created_by)
+
         if "private" in info:
             if info["private"]:
                 self.private.setChecked()
+
         val_kb = str(int(piece_length) // 1024)
         val_mb = str(int(piece_length) // (1024 ** 2))
+
         for i in range(self.piece_length.count()):
             if val_kb in self.piece_length.itemText(i):
                 self.piece_length.setCurrentIndex(i)
@@ -144,10 +176,16 @@ class Window(QMainWindow):
             elif val_mb in self.piece_length.itemText(i):
                 self.piece_length.setCurrentIndex(i)
                 break
-
+        return
 
 
 class BrowseButton(QToolButton):
+    """
+    BrowseButton ToolButton for activating filebrowser.
+
+    Subclass:
+        QToolButton : PyQt6 Button Widget
+    """
 
     stylesheet = """
         QPushButton {
@@ -164,23 +202,35 @@ class BrowseButton(QToolButton):
 
     def __init__(self, parent=None):
         super().__init__(parent=parent)
+        """
+        __init__ public constructor for BrowseButton Class.
+        """
         self.setText("...")
         self.window = parent
         self.setCursor(Qt.CursorShape.PointingHandCursor)
         self.pressed.connect(self.browse)
 
     def browse(self):
-        path = QFileDialog.getExistingDirectory(parent=self.window,
-                                                caption="Choose File")
+        """
+        browse Action performed when user presses button.
+
+        Opens File/Folder Dialog.
+
+        Returns:
+            str: Path to file or folder to include in torrent.
+        """
+        caption = "Choose File or Root Folder"
+        path = QFileDialog.getExistingDirectory(parent=self.window, caption=caption)
         self.window.path_input.insert(str(path))
         _, size, piece_length = path_stat(path)
-        print(_,size,piece_length)
+
         if piece_length < (2**20):
             val = f"{piece_length//(2**10)}KB"
+
         else:
             val = f"{piece_length//(2**20)}MB"
+
         for i in range(self.window.piece_length.count()):
-            print(self.window.piece_length.itemText(i))
             if self.window.piece_length.itemText(i) == val:
                 self.window.piece_length.setCurrentIndex(i)
                 break
@@ -188,6 +238,12 @@ class BrowseButton(QToolButton):
 
 
 class SubmitButton(QPushButton):
+    """
+    SubmitButton Button to signal finished setup options.
+
+    Subclass:
+        QPushButton
+    """
 
     stylesheet = """
         QPushButton {
@@ -214,29 +270,47 @@ class SubmitButton(QPushButton):
         }"""
 
     def __init__(self, text, parent=None):
+        """
+        __init__ Public Constructor for Submit Button.
+
+        Args:
+            text (str): Text displayed on the button itself.
+            parent (QWidget, optional): This Widget's parent. Defaults to None.
+        """
         super().__init__(text, parent=parent)
         self._text = text
-        self._parent = parent
+        self.window = parent
         self.setCursor(Qt.CursorShape.PointingHandCursor)
         self.setText(text)
         self.setStyleSheet(self.stylesheet)
         self.pressed.connect(self.submit)
 
     def submit(self):
-        window = self._parent
+        """
+        submit Action performed when user presses Submit Button.
+        """
+        window = self.window
+        # Gather Information from other Widgets.
         path = window.path_input.text()
         private = 1 if window.private.isChecked() else 0
         source = window.source_input.text()
+        # at least 1 tracker input is required
         announce = window.announce_input.toPlainText()
         announce = announce.split("\n")
+        # Calculates piece length if not specified by user.
         created_by = window.created_by_input.text()
         piece_length = window.piece_length.currentText()
+
         val, denom = piece_length.split(" ")
+
         if denom == "KB":
             val = int(val) * 1024
+
         elif denom == "MB":
             val = int(val) * (1024 ** 2)
+
         comment = window.comment_input.text()
+
         torrentfile = TorrentFile(
             path=path,
             private=private,
@@ -260,6 +334,12 @@ class SubmitButton(QPushButton):
 
 
 class Label(QLabel):
+    """
+    Label Identifier for Window Widgets.
+
+    Subclass:
+        QLabel
+    """
 
     stylesheet = """QLabel {
         color: #fff;
