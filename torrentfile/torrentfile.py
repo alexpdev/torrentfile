@@ -11,8 +11,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 import sys, argparse
-from torrentfile import start
-from torrentfile import TorrentFile
+from torrentfile.metafile import TorrentFile
 
 class CLI:
 
@@ -119,13 +118,7 @@ def cli_parse(args):
 
 def main():
     args = sys.argv
-    try:
-        if sys.stdin.isatty() and args[1:]:
-            return cli_parse(args)
-        else:
-            return start()
-    except Exception:
-        return start()
+    return cli_parse(args)
 
 if __name__ == "__main__":
     main()

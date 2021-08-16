@@ -16,7 +16,6 @@ from torrentfile.feeder import Feeder
 from torrentfile.metafile import TorrentFile
 from torrentfile.utils import (Benencoder, get_file_list, get_piece_length,
                                path_size, path_stat, Bendecoder)
-from torrentfile.window import Application, Window, start
 from torrentfile.torrentfile import cli_parse, CLI, main
 
 __version__ = "1.2.1"
@@ -24,17 +23,14 @@ __author__ = "alexpdev"
 
 __all__ = [
     "__version__",
-    "Application",
     "Benencoder",
     "Bendecoder",
     "Feeder",
     "TorrentFile",
-    "Window",
     "cli_parse",
     "get_file_list",
     "get_piece_length",
     "main",
     "path_stat",
     "path_size",
-    "start",
 ]
