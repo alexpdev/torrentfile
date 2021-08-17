@@ -19,7 +19,7 @@ from hashlib import sha1, sha256
 class Feeder:
     """Seemlesly generate hashes of piece length data from filelist contents."""
 
-    def __init__(self, paths, piece_length, total, sha256=False):
+    def __init__(self, paths, piece_length, total=None, sha256=False):
         """
         __init__ Constructor for the Feeder class.
 

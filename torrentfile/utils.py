@@ -63,6 +63,12 @@ class Bendecoder:
         return json.dumps(data)
 
     def decode(self, bits=None):
+        if bits is None:
+            bits = self.data
+        data, _ = self._decode(bits)
+        return data
+
+    def _decode(self, bits):
         """Decode bencoded data.
 
         args:
@@ -126,7 +132,7 @@ class Bendecoder:
         """
         lst, feed = [], 1
         while not bits[feed:].startswith(b"e"):
-            match, rest = self.decode(bits[feed:])
+            match, rest = self._decode(bits[feed:])
             lst.append(match)
             feed += rest
         feed += 1
@@ -146,7 +152,7 @@ class Bendecoder:
         word_len, start = int(match.groups()[0]), match.span()[1]
         word = bits[start : start + word_len]
         try:
-            word = word.decode("utf-8")
+            word = word._decode("utf-8")
         except:
             word = word.hex()
         return word, start + word_len

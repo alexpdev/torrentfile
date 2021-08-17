@@ -12,6 +12,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
+from torrentfile.checker import Checker
 from torrentfile.feeder import Feeder
 from torrentfile.metafile import TorrentFile
 from torrentfile.utils import (Benencoder, get_file_list, get_piece_length,
@@ -25,12 +26,13 @@ __all__ = [
     "__version__",
     "Benencoder",
     "Bendecoder",
-    "Feeder",
-    "TorrentFile",
     "cli_parse",
+    "Checker",
+    "Feeder",
     "get_file_list",
     "get_piece_length",
     "main",
     "path_stat",
     "path_size",
+    "TorrentFile",
 ]
