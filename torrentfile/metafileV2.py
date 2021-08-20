@@ -106,3 +106,9 @@ class TorrentFilev2:
 
         self.info = {}
         self.meta = {}
+
+    def get_infor(self):
+      pass
+
+    def assemble(self):
+      pass
