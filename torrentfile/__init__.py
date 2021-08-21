@@ -19,7 +19,7 @@ from torrentfile.utils import (Benencoder, get_file_list, get_piece_length,
                                path_size, path_stat, Bendecoder)
 from torrentfile.torrentfile import cli_parse, CLI, main
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 __author__ = "alexpdev"
 
 __all__ = [
