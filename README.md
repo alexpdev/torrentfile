@@ -32,17 +32,17 @@ _For more examples and usage, please refer to the [Wiki][wiki]._
 
 ## Release History
 
-* 1.2.2
+* 0.1.4
   * Removed GUI. Now available as a seperate project [HERE](https://github.com/alexpdev/)
-* 1.2.1
+* 0.1.3
   * Supports Bittorrent V2 files
-* 1.2.0
+* 0.1.2
   * Added GUI and better CLI
-* 1.1.0
+* 0.1.1
   * Bug Fixes and Expanded Testing
-* 1.0.0
-  * The first working release for public use
 * 0.1.0
+  * The first working release for public use
+* 0.0.2
   * Work in progress
 * 0.0.1
   * Initial planning
