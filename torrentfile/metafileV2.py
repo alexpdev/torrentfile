@@ -95,8 +95,11 @@ When verifying an infohash implementations must also check that the piece layers
 """
 
 import os
+import math
 from datetime import datetime, date
 from hashlib import sha256
+
+BLOCK_SIZE = 2**14 # 16KB
 
 class TorrentFilev2:
 
@@ -115,7 +118,6 @@ class TorrentFilev2:
         self.file_tree = {}
         self.info = {}
         self.meta = {}
-
 
     def assemble(self):
         self.get_info()
@@ -140,24 +142,78 @@ class TorrentFilev2:
         self.meta["creation date"] = self.creation_date
         self.info["created by"] = self.created_by
 
-    def _walk_path(self):
-        pass
+    def process_file(self,path):
+        hashes = V2Hasher(path,self.piece_length)
+        self.hasher = hashes
+        self.piece_layers.append(hashes)
+        name = os.path.relpath(path,self.path).split(os.seq)
+        self.files.append({'length': hashes.length, 'path':name})
+        if hashes.length == 0:
+            return {'':{'length':hashes.length}}
+        else:
+            return {'':{'length':hashes.length,'pieces root': hashes.root}}
+
+    def _traverse(self, path):
+        if os.path.isfile(path):
+            return self.process_file(path)
+        elif os.path.isdir(path):
+            fds = [(p.name, p.path) for p in os.scandir(path)]
+            fds.sort()
+            return {p[0]: self._traverse(p[1]) for p in fds}
 
     def get_info(self):
         if os.path.isfile(self.path):
             self.length = os.path.getsize(self.path)
-            self.file_tree = {os.path.basename(self.path):self._walk_path(self.path)}
+            self.file_tree = {os.path.basename(self.path):self._traverse(self.path)}
         else:
-            self.file_tree = self._walk_path(self.path)
+            self.file_tree = self._traverse(self.path)
         self.pieces = bytes([byte for piece in self.pieces for byte in piece])
 
 
+class V2Hasher:
+    def __init__(self, path, piece_length):
+        self.fsize = os.path.getsize(path)
+        self.piece_length = piece_length
+        self.total_pieces = self.fsize / piece_length
+        self.perpiece = piece_length // BLOCK_SIZE
+        self.path = path
+        self.length = 0
+        self.pieces = []
+        self.grab(path)
 
+    def grab(self,path):
+        with open(path,"rb") as fd:
+            while True:
+                chunk = bytearray(BLOCK_SIZE)
+                blocks = []
+                for i in range(self.perpiece):
+                    size = fd.readinto(chunk)
+                    if size == 0:
+                        break
+                    blocks.append(sha256(chunk[:size]).digest())
+                    self.length += size
+                if not len(blocks):
+                    break
+                if len(blocks) != self.perpiece:
+                    needed = self.perpiece
+                    if not len(self.pieces):
+                        needed = int(math.log2(len(blocks)-1)) + 1
+                    for i in range(abs(needed - len(blocks))):
+                        blocks.append(bytearray(32))
+                merkle_root = self.get_merkle_hash(blocks)
+                self.pieces.append(merkle_root)
+            self._calculate_root()
 
-def root_hash(hashes):
-    """
-    Compute the root hash of a merkle tree with the given list of leaf hashes
-    """
-    while len(hashes) > 1:
-        hashes = [sha256(l + r).digest() for l, r in zip(*[iter(hashes)]*2)]
-    return hashes[0]
+    def _calculate_root(self):
+        layer_hash = self.pieces
+        if len(self.pieces) > 1:
+            self.pieces = b''.join(self.pieces)
+            padding = self.get_merkle_hash([bytearray(32)] for _ in range(self.perpiece))
+            layer_hash += [padding for _ in range(int(math.log2(len(layer_hash)-1)) + 1 - len(layer_hash))]
+        self.root = self.get_merkle_hash(layer_hash)
+
+    @staticmethod
+    def get_merkle_hash(blocks):
+        while len(blocks) > 1:
+            blocks = [sha256(x + y).digest() for x, y in zip(*[iter(blocks)]*2)]
+        return blocks[0]
