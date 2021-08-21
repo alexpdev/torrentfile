@@ -1,8 +1,8 @@
 # torrentfile
 
-## Version [1.2.2]
+## Version [1.2.2.2]
 
-## Removed v=1.2.2
+## Removed v=1.2.2.2
 
 - Graphical User Interface.
 - the GUI is now packaged seperately. See README for details.

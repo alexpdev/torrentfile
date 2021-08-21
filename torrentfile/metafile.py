@@ -187,12 +187,9 @@ class TorrentFile:
             self.meta["created by"] = "alexpdev"
 
         self.meta["creation date"] = int(time.time())
-        if self.v2:
-            self.data = _do_something()
-        else:
-            self.meta["info"] = self._assemble_infodict()
-            encoder = Benencoder()
-            self.data = encoder.encode(self.meta)
+        self.meta["info"] = self._assemble_infodict()
+        encoder = Benencoder()
+        self.data = encoder.encode(self.meta)
         return self.data
 
     def write(self, outfile=None):
