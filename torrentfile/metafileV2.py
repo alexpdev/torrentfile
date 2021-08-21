@@ -94,21 +94,45 @@ For some uses as torrent identifier it is truncated to 20 bytes.
 When verifying an infohash implementations must also check that the piece layers hashes outside the info dictionary match the pieces root fields.
 """
 
+import os
+from datetime import datetime, date
+
 class TorrentFilev2:
 
-    def __init__(self, path, piece_length=None, private=False, source=None, announce=None):
+    def __init__(self, path, piece_length=None, private=False, source=None, announce=None, comment=None):
         self.path = path
+        self.comment = comment
         self.piece_length = piece_length
         self.private = private
         self.source = source
+        self.creation_date = datetime.timestamp(date.today())
+        self.created_by = "ASPDEV"
+        self.length = None
         self.announce = announce
+        self.infohash = None
         self.piece_layers = {}
-
+        self.file_tree = {}
         self.info = {}
         self.meta = {}
 
-    def get_infor(self):
-      pass
-
     def assemble(self):
-      pass
+        self.meta["piece layers"] = self.piece_layers
+        if isinstance(self.announce,str):
+            self.meta["announce"] = self.announce
+        else:
+            self.meta["announce"] = self.announce[0]
+            self.info["announce list"] = self.announce[1:]
+        self.meta["info"] = self.info
+        if self.private:
+            self.info["private"] = 1
+        if self.source:
+            self.info["source"] = self.source
+        self.info["name"] = os.path.basepath(self.path)
+        self.info["piece length"] = self.piece_length
+        self.info["file tree"] = self.file_tree
+        if self.length is not None:
+            self.info["length"] = self.length
+        self.info["meta version"] = "2"
+        self.info["infohash"] = self.infohash
+        self.meta["creation date"] = self.creation_date
+        self.info["created by"] = self.created_by
