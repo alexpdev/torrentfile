@@ -1,46 +1,48 @@
 # torrentfile
 
-## Version [1.2.1]
+## Version [1.2.2]
 
-## Added
-
-- Rough Bittorrent v2 protocol support
-- BugFixes
-
-## Removed
+## Removed v=1.2.2
 
 - Graphical User Interface.
 - the GUI is now packaged seperately. See README for details.
 
+## Version [1.2.1]
+
+## Added v=1.2.1
+
+- Rough Bittorrent v2 protocol support
+- BugFixes
+
 ## Version [1.2.0]
 
-## Added
+## Added v=1.2.0
 
 - Command Line Interface
 - Rough Graphical User Interface
 
-## Fixed
+## Fixed v=1.2.0
 
 - Minor Bug Fixes
 
 ## Version [1.1.0]
 
-## Added
+## Added v=1.1.0
 
 - Test suite
 
-## Fixed
+## Fixed v=1.1.0
 
 - Bug Fixes
 
 ## Version [1.0.0]
 
-### Added
+### Added v=1.0.0
 
 - SHA256 support
 - Feeder class for seemless file switching
 
-### Fixed
+### Fixed v=1.0.0
 
 - Primary function now works
 - Better docstrings
@@ -48,7 +50,7 @@
 
 ## Version [0.1.0]
 
-### Added
+### Added v=0.1.0
 
 - Test suite
 - bencoding support

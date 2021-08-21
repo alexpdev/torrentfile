@@ -104,10 +104,10 @@ def cli_parse(args):
     parser.add_argument(
         "-t",
         "-a",
-        action="extend",
+        action="append",
         required=True,
         nargs="+",
-        help="trackers/announce urls",
+        help="\"-t [url]\" required for each trackers to be added to tracker list",
         dest="announce",
         metavar="url",
     )
