@@ -1,11 +1,15 @@
 include LICENSE
-include README
+include README.md
 include Makefile
+include CHANGELOG.md
+include package.json
+include .editorconfig
 recursive-include tests *
-recursive-include torrentfile
-recursive-exclude * __pycache__
+recursive-include torrentfile *
+recursive-include assets *
+recursive-include docs *
+recursive-exclude * __pycache__ *
 recursive-exclude * *.pyc
 recursive-exclude * *.pyd
-recursive-exclude * *.pyo
 recursive-exclude * *.pyo
 recursive-exclude * empty
