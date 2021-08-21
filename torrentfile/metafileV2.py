@@ -96,6 +96,7 @@ When verifying an infohash implementations must also check that the piece layers
 
 import os
 from datetime import datetime, date
+from hashlib import sha256
 
 class TorrentFilev2:
 
@@ -115,7 +116,9 @@ class TorrentFilev2:
         self.info = {}
         self.meta = {}
 
+
     def assemble(self):
+        self.get_info()
         self.meta["piece layers"] = self.piece_layers
         if isinstance(self.announce,str):
             self.meta["announce"] = self.announce
@@ -136,3 +139,25 @@ class TorrentFilev2:
         self.info["infohash"] = self.infohash
         self.meta["creation date"] = self.creation_date
         self.info["created by"] = self.created_by
+
+    def _walk_path(self):
+        pass
+
+    def get_info(self):
+        if os.path.isfile(self.path):
+            self.length = os.path.getsize(self.path)
+            self.file_tree = {os.path.basename(self.path):self._walk_path(self.path)}
+        else:
+            self.file_tree = self._walk_path(self.path)
+        self.pieces = bytes([byte for piece in self.pieces for byte in piece])
+
+
+
+
+def root_hash(hashes):
+    """
+    Compute the root hash of a merkle tree with the given list of leaf hashes
+    """
+    while len(hashes) > 1:
+        hashes = [sha256(l + r).digest() for l, r in zip(*[iter(hashes)]*2)]
+    return hashes[0]

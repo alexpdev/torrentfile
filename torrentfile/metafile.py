@@ -71,6 +71,7 @@ import time
 
 from torrentfile.feeder import Feeder
 from torrentfile.utils import Benencoder, _do_something, path_stat
+from hashlib import sha256
 
 
 class MissingTracker(Exception):
@@ -93,10 +94,7 @@ class TorrentFile:
         announce=None,
         private=None,
         source=None,
-        length=None,
         comment=None,
-        announce_list=None,
-        v2=False,
     ):
         """Constructor for *Torrentfile* class.
 
@@ -121,10 +119,8 @@ class TorrentFile:
         self.announce = announce
         self.private = private
         self.source = source
-        self.length = length
+        self.length = None
         self.comment = comment
-        self.announce_list = announce_list
-        self.v2 = v2
         self.files = []
         self.info = {}
         self.meta = {}
