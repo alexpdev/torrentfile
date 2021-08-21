@@ -1,5 +1,17 @@
 # torrentfile
 
+## Version [1.2.1]
+
+## Added
+
+- Rough Bittorrent v2 protocol support
+- BugFixes
+
+## Removed
+
+- Graphical User Interface.
+- the GUI is now packaged seperately. See README for details.
+
 ## Version [1.2.0]
 
 ## Added
