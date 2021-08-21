@@ -1,5 +1,11 @@
 # torrentfile
 
+## Version [0.1.6]
+
+## Fixed v=0.1.6
+
+- Bug Fixes
+
 ## Version [0.1.4]
 
 ## Removed v=0.1.4

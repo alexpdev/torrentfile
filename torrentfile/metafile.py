@@ -134,8 +134,6 @@ class TorrentFile:
         """
         filelist, size, piece_length = path_stat(self.base)
         # create dictionary keys for available fields.
-        if self.announce_list:
-            self.info["announce-list"] = self.announce_list
         # add comment
         if self.comment:
             self.info["comment"] = self.comment
@@ -179,7 +177,12 @@ class TorrentFile:
         """
         if not self.announce:
             raise MissingTracker
-        self.meta["announce"] = self.announce
+        if isinstance(self.announce,str):
+            self.meta["announce"] = self.announce
+        else:
+            self.meta["announce"] = self.announce[0]
+            if len(self.announce) > 1:
+                self.info["announce list"] = self.announce[1:]
 
         if self.created_by:
             self.meta["created by"] = self.created_by
