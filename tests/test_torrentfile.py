@@ -11,14 +11,22 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-from tests.context import TEST_DIR
-from torrentfile.metafile import TorrentFile
+
+from tests.context import testdir, testfile
+from torrentfile import TorrentFile
 
 
-class TestTorrentFile:
-    def test_torrentfile_init(self):
-        self.path = TEST_DIR
-        announce = "http://example.com/announce"
-        tfile = TorrentFile(self.path, announce=announce, source="nunya", private=1)
-        data = tfile.assemble()
-        assert data is not None
+
+def test_torrentfile_dir(testdir):
+    path = testdir
+    announce = "http://example.com/announce"
+    tfile = TorrentFile(path=path, announce=announce, source="nunya", private=1)
+    data = tfile.assemble()
+    assert data is not None
+
+def test_torrentfile_file(testfile):
+    path = testfile
+    announce = "http://example.com/announce"
+    tfile = TorrentFile(path=path, announce=announce, source="nunya", private=1)
+    data = tfile.assemble()
+    assert data is not None

@@ -3,7 +3,6 @@ include README.md
 include Makefile
 include CHANGELOG.md
 include .editorconfig
-include package.json
 recursive-include tests *
 recursive-include torrentfile *
 recursive-include assets *

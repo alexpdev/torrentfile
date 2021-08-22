@@ -148,7 +148,7 @@ class Bendecoder:
         Returns:
             [str]: decoded string.
         """
-        match = re.match(b"(\d+):", bits)
+        match = re.match(rb"(\d+):", bits)
         word_len, start = int(match.groups()[0]), match.span()[1]
         word = bits[start : start + word_len]
         try:
@@ -167,7 +167,7 @@ class Bendecoder:
         Returns:
             [int]: decoded intiger.
         """
-        obj = re.match(b"i(-?\d+)e", bits)
+        obj = re.match(rb"i(-?\d+)e", bits)
         return int(obj.group(1)), obj.end()
 
 
@@ -328,7 +328,7 @@ def sortfiles(path):
         yield os.path.join(path, item)
 
 
-def dir_files_sizes(path):
+def _dir_files_sizes(path):
     """
     dir_files_sizes generates a file list and their sizes for given dir.
 
@@ -345,7 +345,7 @@ def dir_files_sizes(path):
     filelist, total = [], 0
     if os.path.isdir(path):
         for item in sortfiles(path):
-            files, size = dir_files_sizes(item)
+            files, size = _dir_files_sizes(item)
             filelist.extend(files)
             total += size
     return filelist, total
@@ -406,10 +406,6 @@ def get_file_list(path, sort=False):
 
 def path_stat(path):
     """combines a series of functions to work like a stat call for a directory and its contents."""
-    filelist, size = dir_files_sizes(path)
+    filelist, size = _dir_files_sizes(path)
     piece_length = get_piece_length(size)
     return (filelist, size, piece_length)
-
-
-def _do_something():
-    pass
