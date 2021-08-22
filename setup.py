@@ -22,6 +22,7 @@
 import json
 
 from setuptools import find_packages, setup
+import torrentfile
 
 INFO = json.load(open("package.json"))
 long_description = open("README.md").read()
