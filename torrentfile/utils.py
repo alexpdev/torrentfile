@@ -325,7 +325,7 @@ def sortfiles(path):
     """
     filelist = sorted(os.listdir(path), key=str.lower)
     for item in filelist:
-        yield os.path.join(path, item)
+        yield (item, os.path.join(path, item))
 
 
 def _dir_files_sizes(path):
@@ -344,7 +344,7 @@ def _dir_files_sizes(path):
         return [path], os.path.getsize(path)
     filelist, total = [], 0
     if os.path.isdir(path):
-        for item in sortfiles(path):
+        for _, item in sortfiles(path):
             files, size = _dir_files_sizes(item)
             filelist.extend(files)
             total += size
@@ -409,3 +409,8 @@ def path_stat(path):
     filelist, size = _dir_files_sizes(path)
     piece_length = get_piece_length(size)
     return (filelist, size, piece_length)
+
+
+def get_plength(path):
+    _, _, piece_length = path_stat(path)
+    return piece_length

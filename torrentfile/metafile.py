@@ -67,11 +67,13 @@ In the single file case, the name key is the name of a file, in the muliple
 file case, it's the name of a directory.
 """
 import os
-import time
+from datetime import datetime
 
 from torrentfile.feeder import Feeder
 from torrentfile.utils import Benencoder, Bendecoder, path_stat
 
+
+timestamp = lambda: int(datetime.timestamp(datetime.now()))
 
 class MissingTracker(Exception):
     """*MissingTracker* Announce parameter is required.
@@ -89,7 +91,6 @@ class TorrentFile:
         self,
         path=None,
         piece_length=None,
-        created_by=None,
         announce=None,
         private=None,
         source=None,
@@ -112,9 +113,8 @@ class TorrentFile:
         """
         self.path = path
         self.base = path
-        self.name = os.path.basename(self.path)
+        self.name = os.path.basename(path)
         self.piece_length = piece_length
-        self.created_by = created_by
         self.announce = announce
         self.private = private
         self.source = source
@@ -183,12 +183,8 @@ class TorrentFile:
             if len(self.announce) > 1:
                 self.info["announce list"] = self.announce[1:]
 
-        if self.created_by:
-            self.meta["created by"] = self.created_by
-        else:
-            self.meta["created by"] = "alexpdev"
-
-        self.meta["creation date"] = int(time.time())
+        self.meta["created by"] = "torrentfile"
+        self.meta["creation date"] = timestamp()
         self.meta["info"] = self._assemble_infodict()
         encoder = Benencoder()
         self.data = encoder.encode(self.meta)

@@ -96,124 +96,153 @@ When verifying an infohash implementations must also check that the piece layers
 
 import os
 import math
-from datetime import datetime, date
-from hashlib import sha256
+import hashlib
+from datetime import datetime
+from torrentfile.utils import sortfiles, get_plength
 
 BLOCK_SIZE = 2**14 # 16KB
 
+timestamp = lambda: int(datetime.timestamp(datetime.now()))
+
+class MissingTrackerV2(Exception):
+    """(deprecated)*MissingTracker* Announce parameter is required.
+
+    Subclass of builtin *Exception*.
+    """
+    pass
+
 class TorrentFilev2:
 
-    def __init__(self, path, piece_length=None, private=False, source=None, announce=None, comment=None):
+    def __init__(self, path, announce=None, piece_length=None,
+                private=False, source=None, comment=None):
+        self.name = os.path.basename(path)
         self.path = path
         self.comment = comment
         self.piece_length = piece_length
         self.private = private
         self.source = source
-        self.creation_date = datetime.timestamp(date.today())
-        self.created_by = "ASPDEV"
-        self.length = None
         self.announce = announce
-        self.infohash = None
+        self.length = None
+        self.hashes = []
         self.piece_layers = {}
         self.file_tree = {}
         self.info = {}
         self.meta = {}
 
-    def assemble(self):
-        self.get_info()
-        self.meta["piece layers"] = self.piece_layers
-        if isinstance(self.announce,str):
-            self.meta["announce"] = self.announce
+    def _assemble_infodict(self):
+        """Create info dictionary for metafile v2.
+
+        Returns:
+
+            * dict: info dictionary.
+        """
+        if self.comment:
+            self.info["comment"] = self.comment
+
+        if os.path.isfile(self.path):
+            self.info["file tree"] = self.traverse(self.path)
+            self.info["length"] = os.path.getsize(self.path)
         else:
-            self.meta["announce"] = self.announce[0]
-            self.info["announce list"] = self.announce[1:]
-        self.meta["info"] = self.info
+            self.info["file tree"] = self.traverse(self.path)
+
+        # Bittorrent Protocol v2
+        self.info["meta version"] = "2"
+        # ---------------------------------------------
+        self.info["name"] = self.name
+
+        # calculate best piece length if not provided by user
+        if not self.piece_length:
+            self.piece_length = get_plength(self.path)
+        self.info["piece length"] = self.piece_length
+
         if self.private:
             self.info["private"] = 1
         if self.source:
             self.info["source"] = self.source
-        self.info["name"] = os.path.basepath(self.path)
-        self.info["piece length"] = self.piece_length
-        self.info["file tree"] = self.file_tree
-        if self.length is not None:
-            self.info["length"] = self.length
-        self.info["meta version"] = "2"
-        self.info["infohash"] = self.infohash
-        self.meta["creation date"] = self.creation_date
-        self.info["created by"] = self.created_by
+        return self.info
 
-    def process_file(self,path):
-        hashes = V2Hasher(path,self.piece_length)
-        self.hasher = hashes
-        self.piece_layers.append(hashes)
-        name = os.path.relpath(path,self.path).split(os.seq)
-        self.files.append({'length': hashes.length, 'path':name})
-        if hashes.length == 0:
-            return {'':{'length':hashes.length}}
+    def assemble(self):
+        """*assemble* Assemble components of torrent metafile v2.
+
+        Returns:
+
+            * `dict`: metadata dictionary for torrent file
+        """
+
+        # if no tracker url was provided, place dummy string in its place
+        # which can be later replaced by some Bittorrent clients
+        if not self.announce:
+            self.meta["announce"] = "UnkownTrackerGoesHere"
+
+        elif isinstance(self.announce, str):
+            self.meta["announce"] = self.announce
         else:
-            return {'':{'length':hashes.length,'pieces root': hashes.root}}
+            # if announce is iterable, only first url is used
+            self.meta["announce"] = self.announce[0]
+            if len(self.announce) > 1:
+                # the leftover urls become the announce list
+                self.info["announce list"] = self.announce[1:]
 
-    def _traverse(self, path):
+        self.meta["created by"] = "torrentfile"
+        self.meta["creation date"] = timestamp()
+        self.info = self._assemble_infodict()
+        self.meta["piece layers"] = self.piece_layers
+
+    def traverse(self, path):
         if os.path.isfile(path):
-            return self.process_file(path)
+            size = os.path.getsize(path)
+            if size == 0:
+                return {'':{'length': size}}
+            else:
+                hashes = Hashes(path, self.piece_length, root_hash=None, layer_hashes=None)
+                self.hashes.append(hashes)
+                return {'':{'length': size, 'pieces root': hashes.root_hash}}
         elif os.path.isdir(path):
-            fds = [(p.name, p.path) for p in os.scandir(path)]
-            fds.sort()
-            return {p[0]: self._traverse(p[1]) for p in fds}
-
-    def get_info(self):
-        if os.path.isfile(self.path):
-            self.length = os.path.getsize(self.path)
-            self.file_tree = {os.path.basename(self.path):self._traverse(self.path)}
-        else:
-            self.file_tree = self._traverse(self.path)
-        self.pieces = bytes([byte for piece in self.pieces for byte in piece])
+            for base, full in sortfiles(path):
+                return {base: self.traverse(full)}
 
 
-class V2Hasher:
+class Hashes:
+
     def __init__(self, path, piece_length):
+        self.total = 0
+        self.path = path
+        self.root_hash = None
+        self.layer_hashes = []
         self.fsize = os.path.getsize(path)
         self.piece_length = piece_length
-        self.total_pieces = self.fsize / piece_length
-        self.perpiece = piece_length // BLOCK_SIZE
-        self.path = path
-        self.length = 0
-        self.pieces = []
-        self.grab(path)
+        self.pieces_per_file = self.fsize / piece_length
+        self.blocks_per_piece = piece_length // BLOCK_SIZE
 
-    def grab(self,path):
-        with open(path,"rb") as fd:
+    def process_file(self, path):
+        with open(path, "rb") as fd:
             while True:
-                chunk = bytearray(BLOCK_SIZE)
                 blocks = []
-                for i in range(self.perpiece):
-                    size = fd.readinto(chunk)
-                    if size == 0:
-                        break
-                    blocks.append(sha256(chunk[:size]).digest())
-                    self.length += size
-                if not len(blocks):
-                    break
-                if len(blocks) != self.perpiece:
-                    needed = self.perpiece
-                    if not len(self.pieces):
-                        needed = int(math.log2(len(blocks)-1)) + 1
-                    for i in range(abs(needed - len(blocks))):
-                        blocks.append(bytearray(32))
-                merkle_root = self.get_merkle_hash(blocks)
-                self.pieces.append(merkle_root)
+                leaf = bytearray(BLOCK_SIZE)
+                for _ in range(self.blocks_per_piece):
+                    size = fd.readinto(leaf)
+                    if not size: break
+                    blocks.append(sha256(leaf[:size]))
+                    self.total += size
+                if not len(blocks): break
+                if len(blocks) < self.blocks_per_piece:
+                    next_power2 = 2**(int(math.log2(self.total-1))+1)
+                    blocks += [bytearray(BLOCK_SIZE) for _ in range(len(blocks) - next_power2)]
+                layer_hash = self._merkle_hash(blocks)
+                self.layer_hashes.append(layer_hash)
             self._calculate_root()
 
     def _calculate_root(self):
-        layer_hash = self.pieces
-        if len(self.pieces) > 1:
+        if len(self.layer_hashes) > 1:
             self.pieces = b''.join(self.pieces)
-            padding = self.get_merkle_hash([bytearray(32)] for _ in range(self.perpiece))
-            layer_hash += [padding for _ in range(int(math.log2(len(layer_hash)-1)) + 1 - len(layer_hash))]
-        self.root = self.get_merkle_hash(layer_hash)
+        self.root_hash = self._merkle_hash(self.layer_hashes)
 
     @staticmethod
-    def get_merkle_hash(blocks):
-        while len(blocks) > 1:
-            blocks = [sha256(x + y).digest() for x, y in zip(*[iter(blocks)]*2)]
-        return blocks[0]
+    def _merkle_hash(pieces):
+        while len(pieces) > 1:
+            pieces = [sha256(x + y) for x, y in zip(*[iter(pieces)]*2)]
+        return pieces[0]
+
+def sha256(data):
+    _hash = hashlib.sha256(data)
+    return _hash.digest()
