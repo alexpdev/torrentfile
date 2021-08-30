@@ -16,13 +16,13 @@ from tests.context import testdir, testfile
 from torrentfile import TorrentFile
 
 
-
 def test_torrentfile_dir(testdir):
     path = testdir
     announce = "http://example.com/announce"
     tfile = TorrentFile(path=path, announce=announce, source="nunya", private=1)
     data = tfile.assemble()
     assert data is not None
+
 
 def test_torrentfile_file(testfile):
     path = testfile

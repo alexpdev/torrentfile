@@ -10,8 +10,10 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-import sys, argparse
-from torrentfile.metafile import TorrentFile
+import sys
+import argparse
+from torrentfile import TorrentFile, TorrentFileV2
+
 
 class CLI:
 
@@ -25,100 +27,129 @@ class CLI:
         "source": None,
     }
 
-    @classmethod
-    def compile_kwargs(cls):
-        for k, v in cls.__dict__.items():
-            if k in cls.kwargs:
+    def __init__(
+        self,
+        announce=None,
+        comment=None,
+        created_by="torrentfile",
+        path=None,
+        piece_length=None,
+        private=False,
+        source=None,
+        version=1,
+        outfile=None,
+    ):
+        self.announce = announce
+        self.comment = comment
+        self.created_by = created_by
+        self.path = path
+        self.piece_length = piece_length
+        self.private = private
+        self.source = source
+        self.outfile = outfile
+        self.version = version
+
+    def compile_kwargs(self):
+        for k, v in self.__dict__.items():
+            print(k, v)
+            if v and k in self.kwargs:
                 if isinstance(v, bool):
                     v = 1 if v else 0
-                cls.kwargs[k] = v
-                print(k, v)
-        return cls.kwargs
+                self.kwargs[k] = v
+        return self.kwargs
 
-    @classmethod
-    def create_torrentfile(cls):
-        kwargs = cls.kwargs
-        torrentfile = TorrentFile(**kwargs)
+    def create_torrentfile(self):
+        self.compile_kwargs()
+        torrentfile = TorrentFile
+        if self.version == 2:
+            torrentfile = TorrentFileV2
+        torrentfile = torrentfile(**self.kwargs)
         torrentfile.assemble()
-        if cls.outfile:
-            torrentfile.write(cls.outfile)
-        else:
-            torrentfile.write()
+        torrentfile.write()
 
 
-def cli_parse(args):
-    parser = argparse.ArgumentParser(
-        prog="torrentfile", description="Torrentfile Interface", prefix_chars="-"
-    )
-    parser.add_argument(
-        "--created-by",
-        action="store",
-        dest="created_by",
-        metavar="X",
-        help="leave out unless specifically instructed otherwise",
-    )
-    parser.add_argument(
-        "--comment",
-        action="store",
-        dest="comment",
-        metavar="X",
-        help="include comment in binary data",
-    )
-    parser.add_argument(
-        "-o",
-        "--outfile",
-        action="store",
-        help="save output to file.",
-        dest="outfile",
-        metavar="~/X.torrent",
-    )
-    parser.add_argument(
-        "-p",
-        "--path",
-        action="store",
-        required=True,
-        help="Path to file of directory of torrent contents.",
-        dest="path",
-        metavar="~/X",
-    )
-    parser.add_argument(
-        "--piece-length",
-        action="store",
-        help="Size of individual pieces of the torrent data.",
-        dest="piece_length",
-        metavar="X",
-    )
-    parser.add_argument(
-        "--private",
-        action="store_true",
-        help="torrent will be distributed on a private tracker",
-        dest="private",
-    )
-    parser.add_argument(
-        "--source",
-        action="store",
-        dest="source",
-        metavar="X",
-        help="leave out unless specifically instructed otherwise",
-    )
-    parser.add_argument(
-        "-t",
-        "-a",
-        action="append",
-        required=True,
-        nargs="+",
-        help="\"-t [url]\" required for each trackers to be added to tracker list",
-        dest="announce",
-        metavar="url",
-    )
-    parser.parse_args(args=args[1:], namespace=CLI)
-    CLI.compile_kwargs()
-    CLI.create_torrentfile()
+class Parser(argparse.ArgumentParser):
+    def __init__(
+        self, prog="torrentfile", description="Torrentfile CLI", prefix_chars="-"
+    ):
+        super().__init__(
+            self, prog=prog, description=description, prefix_chars=prefix_chars
+        )
+        self.namespace = CLI
+        self.add_args()
+
+    def parse_args(self, args):
+        super().parse_args(args, self.namespace)
+        self.namespace.create_torrentfile()
+        return True
+
+    def add_args(self):
+        self.add_argument(
+            "--created-by",
+            action="store",
+            dest="created_by",
+            metavar="X",
+            help="leave out unless specifically instructed otherwise",
+        )
+        self.add_argument(
+            "--comment",
+            action="store",
+            dest="comment",
+            metavar="X",
+            help="include comment in binary data",
+        )
+        self.add_argument(
+            "-o",
+            "--outfile",
+            action="store",
+            help="save output to file.",
+            dest="outfile",
+            metavar="~/X.torrent",
+        )
+        self.add_argument(
+            "-p",
+            "--path",
+            action="store",
+            help="Path to file of directory of torrent contents.",
+            dest="path",
+            metavar="~/X",
+        )
+        self.add_argument(
+            "--piece-length",
+            action="store",
+            help="Size of individual pieces of the torrent data.",
+            dest="piece_length",
+            metavar="X",
+        )
+        self.add_argument(
+            "--private",
+            action="store_true",
+            help="torrent will be distributed on a private tracker",
+            dest="private",
+        )
+        self.add_argument(
+            "--source",
+            action="store",
+            dest="source",
+            metavar="X",
+            help="leave out unless specifically instructed otherwise",
+        )
+        self.add_argument(
+            "-t",
+            "-a",
+            action="append",
+            nargs="+",
+            help='"-t [url]" required for each trackers to be added to tracker list',
+            dest="announce",
+            metavar="url",
+        )
 
 
-def main():
-    args = sys.argv
-    return cli_parse(args)
+def main(args):
+    parser = Parser()
+    return parser.parse_args(args)
+
 
 if __name__ == "__main__":
-    main()
+    args = sys.argv[1:]
+    main(args)

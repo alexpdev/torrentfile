@@ -32,7 +32,7 @@ setup(
     version=INFO["version"],
     description=INFO["description"],
     long_description=long_description,
-    long_description_content_type = "text/markdown",
+    long_description_content_type="text/markdown",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Operating System :: OS Independent",

@@ -12,15 +12,19 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
+from torrentfile import metafile, metafileV2, utils
 from torrentfile.feeder import Feeder
 from torrentfile.metafile import TorrentFile, Checker
-from torrentfile.torrentfile import cli_parse, CLI, main
-from torrentfile.utils import ( Bendecoder,
-                                Benencoder,
-                                get_file_list,
-                                get_piece_length,
-                                path_size,
-                                path_stat)
+from torrentfile.metafileV2 import TorrentFileV2
+from torrentfile.torrentfile import CLI, Parser, main
+from torrentfile.utils import (
+    Bendecoder,
+    Benencoder,
+    get_file_list,
+    get_piece_length,
+    path_size,
+    path_stat,
+)
 
 __version__ = "0.1.7"
 __author__ = "alexpdev"
@@ -30,12 +34,17 @@ __all__ = [
     "Bendecoder",
     "Benencoder",
     "Checker",
+    "CLI",
     "Feeder",
+    "Parser",
     "TorrentFile",
-    "cli_parse",
+    "TorrentFileV2",
     "get_file_list",
     "get_piece_length",
     "main",
+    "metafile",
+    "metafileV2",
     "path_stat",
     "path_size",
+    "utils",
 ]

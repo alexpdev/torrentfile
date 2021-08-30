@@ -100,21 +100,31 @@ import hashlib
 from datetime import datetime
 from torrentfile.utils import sortfiles, get_plength
 
-BLOCK_SIZE = 2**14 # 16KB
+BLOCK_SIZE = 2 ** 14  # 16KB
 
 timestamp = lambda: int(datetime.timestamp(datetime.now()))
+
 
 class MissingTrackerV2(Exception):
     """(deprecated)*MissingTracker* Announce parameter is required.
 
     Subclass of builtin *Exception*.
     """
+
     pass
 
-class TorrentFilev2:
 
-    def __init__(self, path, announce=None, piece_length=None,
-                private=False, source=None, comment=None):
+class TorrentFileV2:
+    def __init__(
+        self,
+        path,
+        announce=None,
+        piece_length=None,
+        private=False,
+        source=None,
+        comment=None,
+        outfile=None,
+    ):
         self.name = os.path.basename(path)
         self.path = path
         self.comment = comment
@@ -122,6 +132,7 @@ class TorrentFilev2:
         self.private = private
         self.source = source
         self.announce = announce
+        self.outfile = outfile
         self.length = None
         self.hashes = []
         self.piece_layers = {}
@@ -192,18 +203,44 @@ class TorrentFilev2:
         if os.path.isfile(path):
             size = os.path.getsize(path)
             if size == 0:
-                return {'':{'length': size}}
+                return {"": {"length": size}}
             else:
-                hashes = Hashes(path, self.piece_length, root_hash=None, layer_hashes=None)
+                hashes = Hashes(
+                    path, self.piece_length, root_hash=None, layer_hashes=None
+                )
                 self.hashes.append(hashes)
-                return {'':{'length': size, 'pieces root': hashes.root_hash}}
+                return {"": {"length": size, "pieces root": hashes.root_hash}}
         elif os.path.isdir(path):
             for base, full in sortfiles(path):
                 return {base: self.traverse(full)}
 
+    def write(self, outfile=None):
+        """self.write(outfile)
+
+        Write assembled data to .torrent file.
+
+        Args
+        ------------
+
+            outfile:
+                str: path to save location.
+
+        Returns
+        -----------
+
+            bytes:
+                data writtend to .torrent file.
+        """
+        if outfile:
+            self.outfile = outfile
+        elif not self.outfile:
+            self.outfile = self.info["name"] + ".torrent"
+        with open(self.outfile, "wb") as fd:
+            fd.write(self.data)
+        return self.data
+
 
 class Hashes:
-
     def __init__(self, path, piece_length):
         self.total = 0
         self.path = path
@@ -221,27 +258,32 @@ class Hashes:
                 leaf = bytearray(BLOCK_SIZE)
                 for _ in range(self.blocks_per_piece):
                     size = fd.readinto(leaf)
-                    if not size: break
+                    if not size:
+                        break
                     blocks.append(sha256(leaf[:size]))
                     self.total += size
-                if not len(blocks): break
+                if not len(blocks):
+                    break
                 if len(blocks) < self.blocks_per_piece:
-                    next_power2 = 2**(int(math.log2(self.total-1))+1)
-                    blocks += [bytearray(BLOCK_SIZE) for _ in range(len(blocks) - next_power2)]
+                    next_power2 = 2 ** (int(math.log2(self.total - 1)) + 1)
+                    blocks += [
+                        bytearray(BLOCK_SIZE) for _ in range(len(blocks) - next_power2)
+                    ]
                 layer_hash = self._merkle_hash(blocks)
                 self.layer_hashes.append(layer_hash)
             self._calculate_root()
 
     def _calculate_root(self):
         if len(self.layer_hashes) > 1:
-            self.pieces = b''.join(self.pieces)
+            self.pieces = b"".join(self.pieces)
         self.root_hash = self._merkle_hash(self.layer_hashes)
 
     @staticmethod
     def _merkle_hash(pieces):
         while len(pieces) > 1:
-            pieces = [sha256(x + y) for x, y in zip(*[iter(pieces)]*2)]
+            pieces = [sha256(x + y) for x, y in zip(*[iter(pieces)] * 2)]
         return pieces[0]
+
 
 def sha256(data):
     _hash = hashlib.sha256(data)

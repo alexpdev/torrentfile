@@ -75,6 +75,7 @@ from torrentfile.utils import Benencoder, Bendecoder, path_stat
 
 timestamp = lambda: int(datetime.timestamp(datetime.now()))
 
+
 class MissingTracker(Exception):
     """*MissingTracker* Announce parameter is required.
 
@@ -95,6 +96,7 @@ class TorrentFile:
         private=None,
         source=None,
         comment=None,
+        outfile=None,
     ):
         """Constructor for *Torrentfile* class.
 
@@ -108,10 +110,7 @@ class TorrentFile:
             * source (str): source tracker.
             * length (int): size of torrent.
             * comment (str): comment string.
-            * announce_list (list): List of tracker urls.
-            * v2 (bool): Torrent v2 or v1.
         """
-        self.path = path
         self.base = path
         self.name = os.path.basename(path)
         self.piece_length = piece_length
@@ -120,6 +119,7 @@ class TorrentFile:
         self.source = source
         self.length = None
         self.comment = comment
+        self.outfile = outfile
         self.files = []
         self.info = {}
         self.meta = {}
@@ -174,20 +174,24 @@ class TorrentFile:
 
             * `dict`: metadata dictionary for torrent file
         """
-        if not self.announce:
-            raise MissingTracker
-        if isinstance(self.announce,str):
-            self.meta["announce"] = self.announce
-        else:
-            self.meta["announce"] = self.announce[0]
-            if len(self.announce) > 1:
-                self.info["announce list"] = self.announce[1:]
+        if self.announce:
+            # if announce is a string assign it to announce key in meta dict
+            if isinstance(self.announce, str):
+                self.meta["announce"] = self.announce
+            # otherwise it must be a iterable then assign first item to
+            # announce key and the rest to announce_list key in info dict
+            else:
+                self.meta["announce"] = self.announce[0]
+                if len(self.announce) > 1:
+                    self.info["announce list"] = self.announce[1:]
 
         self.meta["created by"] = "torrentfile"
         self.meta["creation date"] = timestamp()
         self.meta["info"] = self._assemble_infodict()
+
         encoder = Benencoder()
         self.data = encoder.encode(self.meta)
+
         return self.data
 
     def write(self, outfile=None):
@@ -201,13 +205,12 @@ class TorrentFile:
 
             * `bytes`: data writtend to .torrent file
         """
-        if not outfile:
-            outfile = self.info["name"] + ".torrent"
-        elif isinstance(outfile, tuple):
-            outfile = outfile[0]
-        with open(outfile, "wb") as fd:
+        if outfile:
+            self.outfile = outfile
+        elif not self.outfile:
+            self.outfile = self.info["name"] + ".torrent"
+        with open(self.outfile, "wb") as fd:
             fd.write(self.data)
-        print("success")
         return self.data
 
 
@@ -242,13 +245,13 @@ class Checker:
 
     def decode_metafile(self):
         """decode_metafile Decode bencoded data inside .torrent file."""
-        fd = open(self.metafile,"rb").read()
+        fd = open(self.metafile, "rb").read()
         decoder = Bendecoder()
         dictt = decoder.decode(fd)
-        for k,v in dictt.items():
+        for k, v in dictt.items():
             self.meta[k] = v
             if k == "info":
-                for k1,v1 in v.items():
+                for k1, v1 in v.items():
                     self.info[k1] = v1
         self.piece_length = self.info["piece length"]
         self.pieces = self.info["pieces"]
@@ -278,8 +281,8 @@ class Checker:
         pieces = bytes.fromhex(self.pieces)
         counter = 0
         for digest in feeder:
-            if pieces[:len(digest)] == digest:
-                pieces = pieces[len(digest):]
+            if pieces[: len(digest)] == digest:
+                pieces = pieces[len(digest) :]
                 counter += 1
             else:
                 print("Number of matching pieces = ", counter)
