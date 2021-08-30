@@ -14,17 +14,11 @@
 
 from torrentfile import metafile, metafileV2, utils
 from torrentfile.feeder import Feeder
-from torrentfile.metafile import TorrentFile, Checker
+from torrentfile.metafile import Checker, TorrentFile
 from torrentfile.metafileV2 import TorrentFileV2
 from torrentfile.torrentfile import CLI, Parser, main
-from torrentfile.utils import (
-    Bendecoder,
-    Benencoder,
-    get_file_list,
-    get_piece_length,
-    path_size,
-    path_stat,
-)
+from torrentfile.utils import (Bendecoder, Benencoder, get_file_list,
+                               get_piece_length, path_size, path_stat)
 
 __version__ = "0.1.7"
 __author__ = "alexpdev"

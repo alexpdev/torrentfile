@@ -70,19 +70,36 @@ import os
 from datetime import datetime
 
 from torrentfile.feeder import Feeder
-from torrentfile.utils import Benencoder, Bendecoder, path_stat
-
+from torrentfile.utils import Bendecoder, Benencoder, path_stat
 
 timestamp = lambda: int(datetime.timestamp(datetime.now()))
 
 
-class MissingTracker(Exception):
+class MissingArgError(Exception):
+    def __init__(self, message="Missing Required Function Arguement"):
+        self.message = message
+
+
+class MissingTrackerError(MissingArgError):
     """*MissingTracker* Announce parameter is required.
 
     Subclass of builtin *Exception*.
     """
 
-    pass
+    def __init__(self):
+        super().__init__()
+        self.message = "Tracker arguement is missing and required"
+
+
+class MissingPathError(Exception):
+    """*MissingPath* path parameter is required.
+
+    Subclass of builtin *Exception*.
+    """
+
+    def __init__(self, message="Path arguement is missing and required"):
+        """Path arguement is missing and required"""
+        self.message = message
 
 
 class TorrentFile:
@@ -97,6 +114,7 @@ class TorrentFile:
         source=None,
         comment=None,
         outfile=None,
+        created_by=None,
     ):
         """Constructor for *Torrentfile* class.
 
@@ -111,6 +129,8 @@ class TorrentFile:
             * length (int): size of torrent.
             * comment (str): comment string.
         """
+        if not path:
+            raise MissingPathError('"-p" or "--path" is required as arguement')
         self.base = path
         self.name = os.path.basename(path)
         self.piece_length = piece_length
@@ -120,6 +140,7 @@ class TorrentFile:
         self.length = None
         self.comment = comment
         self.outfile = outfile
+        self.created_by = created_by
         self.files = []
         self.info = {}
         self.meta = {}

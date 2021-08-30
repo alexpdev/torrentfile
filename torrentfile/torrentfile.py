@@ -10,8 +10,9 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-import sys
 import argparse
+import sys
+
 from torrentfile import TorrentFile, TorrentFileV2
 
 
@@ -25,45 +26,26 @@ class CLI:
         "piece_length": None,
         "private": None,
         "source": None,
+        "outfile": None,
     }
 
-    def __init__(
-        self,
-        announce=None,
-        comment=None,
-        created_by="torrentfile",
-        path=None,
-        piece_length=None,
-        private=False,
-        source=None,
-        version=1,
-        outfile=None,
-    ):
-        self.announce = announce
-        self.comment = comment
-        self.created_by = created_by
-        self.path = path
-        self.piece_length = piece_length
-        self.private = private
-        self.source = source
-        self.outfile = outfile
-        self.version = version
-
-    def compile_kwargs(self):
-        for k, v in self.__dict__.items():
+    @classmethod
+    def compile_kwargs(cls):
+        for k, v in cls.__dict__.items():
             print(k, v)
-            if v and k in self.kwargs:
+            if k in cls.kwargs:
                 if isinstance(v, bool):
                     v = 1 if v else 0
-                self.kwargs[k] = v
-        return self.kwargs
+                cls.kwargs[k] = v
+        return cls.kwargs
 
-    def create_torrentfile(self):
-        self.compile_kwargs()
+    @classmethod
+    def create_torrentfile(cls):
+        cls.compile_kwargs()
         torrentfile = TorrentFile
-        if self.version == 2:
+        if hasattr(cls, "version") and cls.version == 2:
             torrentfile = TorrentFileV2
-        torrentfile = torrentfile(**self.kwargs)
+        torrentfile = torrentfile(**cls.kwargs)
         torrentfile.assemble()
         torrentfile.write()
 
@@ -72,9 +54,8 @@ class Parser(argparse.ArgumentParser):
     def __init__(
         self, prog="torrentfile", description="Torrentfile CLI", prefix_chars="-"
     ):
-        super().__init__(
-            self, prog=prog, description=description, prefix_chars=prefix_chars
-        )
+        print(prog)
+        super().__init__(self, prog, description=description, prefix_chars=prefix_chars)
         self.namespace = CLI
         self.add_args()
 

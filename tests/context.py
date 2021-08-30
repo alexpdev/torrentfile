@@ -59,27 +59,37 @@ def gen_out(l):
     return txt
 
 
-@pytest.fixture(scope="module")
-def testfile(n=1):
-    if n > 5:
+def gen_exp(n):
+    if n >= 5:
         n = 5
-    elif n < 1:
+    elif n <= 1:
         n = 1
     sizes = {1: 23, 2: 24, 3: 25, 4: 26, 5: 27}
+    return sizes[n]
+
+
+def gen_name(name):
     current = os.path.dirname(os.path.abspath(__file__))
-    fname = os.path.join(current, "testfile.bin")
-    write_out_bin(fname, sizes[n])
+    fname = os.path.join(current, name)
+    return fname
+
+
+@pytest.fixture(scope="module")
+def testfile(n=1):
+    exp = gen_exp(n)
+    fname = gen_name("testfile.bin")
+    write_out_bin(fname, exp)
     yield fname
     os.remove(fname)
 
 
 @pytest.fixture(scope="module")
 def testdir(n=1):
-    if n > 5:
-        n = 5
-    elif n < 1:
-        n = 1
-    sizes = {1: 23, 2: 24, 3: 25, 4: 26, 5: 27}
+    exp = gen_exp(n)
+    dname = gen_name("testdir")
+    if os.path.exists(dname):
+        shutil.rmtree(dname)
+    os.mkdir(dname)
     test_structure = {
         "testing": [
             "temp_data.dat",
@@ -90,14 +100,11 @@ def testdir(n=1):
             "temp_text.txt",
         ],
     }
-    current = os.path.dirname(os.path.abspath(__file__))
-    dname = os.path.join(current, "testdir")
-    os.mkdir(dname)
     for k, v in test_structure.items():
         subdir = os.path.join(dname, k)
         os.mkdir(subdir)
         for fd in v:
             temp1 = os.path.join(subdir, fd)
-            write_out_bin(temp1, sizes[n])
+            write_out_bin(temp1, exp)
     yield dname
     shutil.rmtree(dname)

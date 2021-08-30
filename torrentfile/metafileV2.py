@@ -94,11 +94,12 @@ For some uses as torrent identifier it is truncated to 20 bytes.
 When verifying an infohash implementations must also check that the piece layers hashes outside the info dictionary match the pieces root fields.
 """
 
-import os
-import math
 import hashlib
+import math
+import os
 from datetime import datetime
-from torrentfile.utils import sortfiles, get_plength
+
+from torrentfile.utils import get_plength, sortfiles
 
 BLOCK_SIZE = 2 ** 14  # 16KB
 

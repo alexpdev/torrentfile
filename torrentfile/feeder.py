@@ -67,21 +67,6 @@ class Feeder:
         """
         return math.ceil(self.total // self.piece_length)
 
-    def hasher(self, data):
-        """*hasher* sha1 or sha256
-
-        Args:
-
-            * data (bytes): data to be hashed.
-
-        Returns:
-
-            * bytes: sha1 or sha256 hash of input data.
-        """
-        if self.sha256:
-            return sha256(data).digest()
-        return sha1(data).digest()
-
     def handle_partial(self, arr, partial):
         """
         handle_partial seemlessly move to next file for input data.
@@ -102,9 +87,9 @@ class Feeder:
             partial += size
             if partial < self.piece_length:
                 if not self.next_file():
-                    return self.hasher(arr[:partial])
+                    return sha1(arr[:partial]).digest()
         assert partial == self.piece_length
-        return self.hasher(arr)
+        return sha1(arr).digest()
 
     def next_file(self):
         """
@@ -139,4 +124,4 @@ class Feeder:
             elif size < self.piece_length:
                 yield self.handle_partial(piece, size)
             else:
-                yield self.hasher(piece)
+                yield sha1(piece).digest()
