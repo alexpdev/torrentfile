@@ -9,13 +9,15 @@ Options = [
     "--created-by",
     "--comment",
     "-o",
+    "--outfile",
     "--path",
     "--piece-length",
     "--private",
     "--source",
     "-t",
-    "--v2",
-]
+    "-a",
+    "--v2"
+    ]
 """
 
 

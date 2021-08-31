@@ -1,5 +1,6 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
+
 #####################################################################
 # THE SOFTWARE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
@@ -10,6 +11,7 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
+
 import argparse
 import sys
 from torrentfile.metafile import TorrentFile
@@ -17,6 +19,11 @@ from torrentfile.metafileV2 import TorrentFileV2
 
 
 class CLI:
+    """CLI.
+
+    Command Line Interface for torrentfile.
+    """
+
 
     kwargs = {
         "announce": None,
@@ -31,6 +38,8 @@ class CLI:
 
     @classmethod
     def compile_kwargs(cls):
+        """compile_kwargs.
+        """
         cdict = cls.__dict__
         ckwargs = cls.kwargs
         for item in ckwargs:
@@ -44,6 +53,8 @@ class CLI:
 
     @classmethod
     def create_torrentfile(cls):
+        """create_torrentfile.
+        """
         cls.compile_kwargs()
         torrentfile = TorrentFile
         if hasattr(cls, "version") and cls.version == True:
@@ -55,19 +66,51 @@ class CLI:
 
 
 class Parser(argparse.ArgumentParser):
+    """Parser.
+    """
+
     def __init__(
         self, prog="torrentfile", description="Torrentfile CLI", prefix_chars="-"
     ):
+        """__init__.
+
+        #### Initialize Parser class.
+
+        Parameters
+        ----------
+        - prog : str
+            - Name of the program
+        - description : str
+            - short summary of program functionality
+        - prefix_chars : str
+            - string containing all characters used as flag prefixes on command line
+        """
         super().__init__(self, prog, description=description, prefix_chars=prefix_chars)
         self.namespace = CLI
         self.add_args()
 
     def parse_args(self, args):
+        """ ## parse_args.
+
+        #### Parse input arguments from command line.
+
+        Parameters
+        ----------
+        - args : list[str]
+            - List of arguments
+
+        Returns
+        ---------
+        - output : tuple
+            - Path to torrentfile, and meta dictionary
+        """
         super().parse_args(args, self.namespace)
         output = self.namespace.create_torrentfile()
         return output
 
     def add_args(self):
+        """add_args.
+        """
         self.add_argument(
             "--created-by",
             action="store",
@@ -138,6 +181,18 @@ class Parser(argparse.ArgumentParser):
 
 
 def main(args):
+    """main.
+
+    Parameters
+    ----------
+    - args : list[str]
+        - sys.argv strings
+
+    Returns
+    ---------
+    - tuple :
+        - outfile, dictionary
+    """
     parser = Parser()
     outfile, meta = parser.parse_args(args)
     return (outfile, meta)
