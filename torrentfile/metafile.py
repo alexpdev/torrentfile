@@ -76,7 +76,6 @@ from torrentfile.exceptions import MissingPathError
 timestamp = lambda: int(datetime.timestamp(datetime.now()))
 
 
-
 class TorrentFile:
     """Class for creating Bittorrent meta files."""
 

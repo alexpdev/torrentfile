@@ -36,7 +36,7 @@ class CLI:
         for item in ckwargs:
             if item in cdict:
                 val = cdict[item]
-                if isinstance(val,bool):
+                if isinstance(val, bool):
                     ckwargs[item] = 1 if val else 0
                 else:
                     ckwargs[item] = val
@@ -52,6 +52,7 @@ class CLI:
         torrentfile.assemble()
         output = torrentfile.write()
         return output
+
 
 class Parser(argparse.ArgumentParser):
     def __init__(
@@ -135,10 +136,12 @@ class Parser(argparse.ArgumentParser):
             dest="version",
         )
 
+
 def main(args):
     parser = Parser()
     outfile, meta = parser.parse_args(args)
     return (outfile, meta)
+
 
 if __name__ == "__main__":
     args = sys.argv[1:]

@@ -29,6 +29,7 @@ import os
 import re
 from torrentfile.exceptions import BenencodingError, BendecodingError
 
+
 class Bendecoder:
     """`Bendecoder` class contains all decode and convenience methods"""
 

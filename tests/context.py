@@ -58,6 +58,7 @@ def gen_out(l):
         txt += random.choice(l)
     return txt
 
+
 def gen_exp(n):
     if n >= 5:
         n = 5
@@ -71,6 +72,7 @@ def gen_name(name):
     current = os.path.dirname(os.path.abspath(__file__))
     fname = os.path.join(current, name)
     return fname
+
 
 def rmpath(path):
     if not os.path.exists(path):

@@ -14,7 +14,6 @@
 
 import os
 import pytest
-import random
 
 from tests.context import testdir, testfile
 from torrentfile.utils import get_file_list, get_piece_length, path_size, path_stat

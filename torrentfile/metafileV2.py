@@ -106,6 +106,7 @@ BLOCK_SIZE = 2 ** 14  # 16KB
 
 timestamp = lambda: int(datetime.timestamp(datetime.now()))
 
+
 class TorrentFileV2:
     def __init__(
         self,
@@ -116,8 +117,8 @@ class TorrentFileV2:
         source=None,
         comment=None,
         outfile=None,
-        created_by=None
-        ):
+        created_by=None,
+    ):
         if not path:
             raise MissingPathError
         self.name = os.path.basename(path)
@@ -195,7 +196,6 @@ class TorrentFileV2:
         self.meta["creation date"] = timestamp()
         # assemble info dictionary and assign it to info key in meta
         self.info = self._assemble_infodict()
-
 
         for hasher in self.hashes:
             if hasher.piece_layers:
