@@ -12,8 +12,8 @@
 #####################################################################
 import argparse
 import sys
-
-from torrentfile import TorrentFile, TorrentFileV2
+from torrentfile.metafile import TorrentFile
+from torrentfile.metafileV2 import TorrentFileV2
 
 
 class CLI:
@@ -31,38 +31,40 @@ class CLI:
 
     @classmethod
     def compile_kwargs(cls):
-        for k, v in cls.__dict__.items():
-            print(k, v)
-            if k in cls.kwargs:
-                if isinstance(v, bool):
-                    v = 1 if v else 0
-                cls.kwargs[k] = v
-        return cls.kwargs
+        cdict = cls.__dict__
+        ckwargs = cls.kwargs
+        for item in ckwargs:
+            if item in cdict:
+                val = cdict[item]
+                if isinstance(val,bool):
+                    ckwargs[item] = 1 if val else 0
+                else:
+                    ckwargs[item] = val
+        return ckwargs
 
     @classmethod
     def create_torrentfile(cls):
         cls.compile_kwargs()
         torrentfile = TorrentFile
-        if hasattr(cls, "version") and cls.version == 2:
+        if hasattr(cls, "version") and cls.version == True:
             torrentfile = TorrentFileV2
         torrentfile = torrentfile(**cls.kwargs)
         torrentfile.assemble()
-        torrentfile.write()
-
+        output = torrentfile.write()
+        return output
 
 class Parser(argparse.ArgumentParser):
     def __init__(
         self, prog="torrentfile", description="Torrentfile CLI", prefix_chars="-"
     ):
-        print(prog)
         super().__init__(self, prog, description=description, prefix_chars=prefix_chars)
         self.namespace = CLI
         self.add_args()
 
     def parse_args(self, args):
         super().parse_args(args, self.namespace)
-        self.namespace.create_torrentfile()
-        return True
+        output = self.namespace.create_torrentfile()
+        return output
 
     def add_args(self):
         self.add_argument(
@@ -124,13 +126,21 @@ class Parser(argparse.ArgumentParser):
             dest="announce",
             metavar="url",
         )
-
+        self.add_argument(
+            "-v",
+            "--v2",
+            "--version2",
+            action="store_true",
+            help="use Bittorrent V2 protocol if missing V1 is assumed",
+            dest="version",
+        )
 
 def main(args):
     parser = Parser()
-    return parser.parse_args(args)
-
+    outfile, meta = parser.parse_args(args)
+    return (outfile, meta)
 
 if __name__ == "__main__":
     args = sys.argv[1:]
     main(args)
+    print("success")

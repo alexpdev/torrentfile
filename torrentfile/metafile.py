@@ -71,35 +71,10 @@ from datetime import datetime
 
 from torrentfile.feeder import Feeder
 from torrentfile.utils import Bendecoder, Benencoder, path_stat
+from torrentfile.exceptions import MissingPathError
 
 timestamp = lambda: int(datetime.timestamp(datetime.now()))
 
-
-class MissingArgError(Exception):
-    def __init__(self, message="Missing Required Function Arguement"):
-        self.message = message
-
-
-class MissingTrackerError(MissingArgError):
-    """*MissingTracker* Announce parameter is required.
-
-    Subclass of builtin *Exception*.
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.message = "Tracker arguement is missing and required"
-
-
-class MissingPathError(Exception):
-    """*MissingPath* path parameter is required.
-
-    Subclass of builtin *Exception*.
-    """
-
-    def __init__(self, message="Path arguement is missing and required"):
-        """Path arguement is missing and required"""
-        self.message = message
 
 
 class TorrentFile:
@@ -126,11 +101,11 @@ class TorrentFile:
             * announce (str): tracker url.
             * private (int): 1 if private torrent else 0.
             * source (str): source tracker.
-            * length (int): size of torrent.
             * comment (str): comment string.
+            * outfile (str): path to write metfile to.
         """
         if not path:
-            raise MissingPathError('"-p" or "--path" is required as arguement')
+            raise MissingPathError
         self.base = path
         self.name = os.path.basename(path)
         self.piece_length = piece_length
@@ -232,7 +207,7 @@ class TorrentFile:
             self.outfile = self.info["name"] + ".torrent"
         with open(self.outfile, "wb") as fd:
             fd.write(self.data)
-        return self.data
+        return (self.outfile, self.meta)
 
 
 class Checker:

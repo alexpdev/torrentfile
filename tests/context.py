@@ -58,7 +58,6 @@ def gen_out(l):
         txt += random.choice(l)
     return txt
 
-
 def gen_exp(n):
     if n >= 5:
         n = 5
@@ -73,6 +72,14 @@ def gen_name(name):
     fname = os.path.join(current, name)
     return fname
 
+def rmpath(path):
+    if not os.path.exists(path):
+        return
+    elif os.path.isdir(path):
+        shutil.rmtree(path)
+    else:
+        os.remove(path)
+
 
 @pytest.fixture(scope="module")
 def testfile(n=1):
@@ -80,15 +87,14 @@ def testfile(n=1):
     fname = gen_name("testfile.bin")
     write_out_bin(fname, exp)
     yield fname
-    os.remove(fname)
+    rmpath(fname)
 
 
 @pytest.fixture(scope="module")
 def testdir(n=1):
     exp = gen_exp(n)
     dname = gen_name("testdir")
-    if os.path.exists(dname):
-        shutil.rmtree(dname)
+    rmpath(dname)
     os.mkdir(dname)
     test_structure = {
         "testing": [
@@ -107,4 +113,4 @@ def testdir(n=1):
             temp1 = os.path.join(subdir, fd)
             write_out_bin(temp1, exp)
     yield dname
-    shutil.rmtree(dname)
+    rmpath(dname)

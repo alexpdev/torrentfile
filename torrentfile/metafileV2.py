@@ -99,33 +99,27 @@ import math
 import os
 from datetime import datetime
 
-from torrentfile.utils import get_plength, sortfiles
+from torrentfile.utils import path_piece_length, sortfiles, Benencoder
+from torrentfile.exceptions import MissingPathError
 
 BLOCK_SIZE = 2 ** 14  # 16KB
 
 timestamp = lambda: int(datetime.timestamp(datetime.now()))
 
-
-class MissingTrackerV2(Exception):
-    """(deprecated)*MissingTracker* Announce parameter is required.
-
-    Subclass of builtin *Exception*.
-    """
-
-    pass
-
-
 class TorrentFileV2:
     def __init__(
         self,
-        path,
+        path=None,
         announce=None,
         piece_length=None,
         private=False,
         source=None,
         comment=None,
         outfile=None,
-    ):
+        created_by=None
+        ):
+        if not path:
+            raise MissingPathError
         self.name = os.path.basename(path)
         self.path = path
         self.comment = comment
@@ -134,6 +128,7 @@ class TorrentFileV2:
         self.source = source
         self.announce = announce
         self.outfile = outfile
+        self.created_by = created_by
         self.length = None
         self.hashes = []
         self.piece_layers = {}
@@ -163,14 +158,13 @@ class TorrentFileV2:
         self.info["name"] = self.name
 
         # calculate best piece length if not provided by user
-        if not self.piece_length:
-            self.piece_length = get_plength(self.path)
         self.info["piece length"] = self.piece_length
 
         if self.private:
             self.info["private"] = 1
         if self.source:
             self.info["source"] = self.source
+
         return self.info
 
     def assemble(self):
@@ -195,10 +189,24 @@ class TorrentFileV2:
                 # the leftover urls become the announce list
                 self.info["announce list"] = self.announce[1:]
 
+        if not self.piece_length:
+            self.piece_length = path_piece_length(self.path)
         self.meta["created by"] = "torrentfile"
         self.meta["creation date"] = timestamp()
+        # assemble info dictionary and assign it to info key in meta
         self.info = self._assemble_infodict()
+
+
+        for hasher in self.hashes:
+            if hasher.piece_layers:
+                self.piece_layers[hasher.root_hash] = hasher.piece_layers
+
+        self.meta["info"] = self.info
+
         self.meta["piece layers"] = self.piece_layers
+
+        encoder = Benencoder()
+        self.data = encoder.encode(self.meta)
 
     def traverse(self, path):
         if os.path.isfile(path):
@@ -206,14 +214,15 @@ class TorrentFileV2:
             if size == 0:
                 return {"": {"length": size}}
             else:
-                hashes = Hashes(
-                    path, self.piece_length, root_hash=None, layer_hashes=None
-                )
+                hashes = Hashes(path, self.piece_length)
+                hashes.process_file()
                 self.hashes.append(hashes)
                 return {"": {"length": size, "pieces root": hashes.root_hash}}
         elif os.path.isdir(path):
+            file_tree = {}
             for base, full in sortfiles(path):
-                return {base: self.traverse(full)}
+                file_tree[base] = self.traverse(full)
+        return file_tree
 
     def write(self, outfile=None):
         """self.write(outfile)
@@ -238,7 +247,7 @@ class TorrentFileV2:
             self.outfile = self.info["name"] + ".torrent"
         with open(self.outfile, "wb") as fd:
             fd.write(self.data)
-        return self.data
+        return self.outfile, self.meta
 
 
 class Hashes:
@@ -246,14 +255,15 @@ class Hashes:
         self.total = 0
         self.path = path
         self.root_hash = None
+        self.piece_layers = None
         self.layer_hashes = []
         self.fsize = os.path.getsize(path)
         self.piece_length = piece_length
         self.pieces_per_file = self.fsize / piece_length
         self.blocks_per_piece = piece_length // BLOCK_SIZE
 
-    def process_file(self, path):
-        with open(path, "rb") as fd:
+    def process_file(self):
+        with open(self.path, "rb") as fd:
             while True:
                 blocks = []
                 leaf = bytearray(BLOCK_SIZE)
@@ -276,7 +286,7 @@ class Hashes:
 
     def _calculate_root(self):
         if len(self.layer_hashes) > 1:
-            self.pieces = b"".join(self.pieces)
+            self.piece_layers = b"".join(self.layer_hashes)
         self.root_hash = self._merkle_hash(self.layer_hashes)
 
     @staticmethod

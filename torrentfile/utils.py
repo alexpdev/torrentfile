@@ -27,23 +27,7 @@ b'l18:Some Bencoded Datai15ee'
 import json
 import os
 import re
-
-
-class BendecodingError:
-    """Error occured during decode process."""
-
-    def __init__(self, val):
-        message = f"{type(val)} : {val} is of unknown value or type"
-        print(message)
-
-
-class BenencodingError(Exception):
-    """Error occured during encoding process."""
-
-    def __init__(self, val):
-        message = f"{type(val)} : {val} is of unknown value or type"
-        print(message)
-
+from torrentfile.exceptions import BenencodingError, BendecodingError
 
 class Bendecoder:
     """`Bendecoder` class contains all decode and convenience methods"""
@@ -411,6 +395,6 @@ def path_stat(path):
     return (filelist, size, piece_length)
 
 
-def get_plength(path):
-    _, _, piece_length = path_stat(path)
-    return piece_length
+def path_piece_length(path):
+    psize = path_size(path)
+    return get_piece_length(psize)
