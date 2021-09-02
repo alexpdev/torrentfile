@@ -1,9 +1,11 @@
-import pytest
 import os
 import shutil
+
+import pytest
+
+from tests.context import ntempdir, testdir, testfile
 from torrentfile import main
 from torrentfile.exceptions import MissingPathError
-from tests.context import testdir, testfile, ntempdir
 
 """
 List of flags for the Command Line Interface.
@@ -17,16 +19,28 @@ Options = [
     ("-o", "--outfile",)]
 """
 
+
 @pytest.fixture(scope="function")
 def tmeta(ntempdir):
-    args = ["--path", ntempdir, "-t", "http://anounce.com/announce",
-            "--source", "Alpha","--piece-length", str(2**20),
-            "--private","--comment","some comment"]
+    args = [
+        "--path",
+        ntempdir,
+        "-t",
+        "http://anounce.com/announce",
+        "--source",
+        "Alpha",
+        "--piece-length",
+        str(2 ** 20),
+        "--private",
+        "--comment",
+        "some comment",
+    ]
     outfile, meta = main(args)
     yield meta
     os.remove(outfile)
     if os.path.exists(ntempdir):
         shutil.rmtree(ntempdir)
+
 
 def test_cli_args_dir(testdir):
     args = ["--path", testdir]
@@ -70,6 +84,7 @@ def test_cli_no_args_v2():
         assert main(args)
     except MissingPathError:
         assert True
+
 
 def test_cli_meta_source_dir(tmeta):
     assert "source" in tmeta["info"]

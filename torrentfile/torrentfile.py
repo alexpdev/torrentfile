@@ -14,6 +14,7 @@
 
 import argparse
 import sys
+
 from torrentfile.metafile import TorrentFile
 from torrentfile.metafileV2 import TorrentFileV2
 
@@ -23,7 +24,6 @@ class CLI:
 
     Command Line Interface for torrentfile.
     """
-
 
     kwargs = {
         "announce": None,
@@ -37,7 +37,7 @@ class CLI:
     }
 
     def compile_kwargs(self):
-        """ ### compile_kwargs
+        """### compile_kwargs
 
         Returns
         -----------
@@ -47,14 +47,16 @@ class CLI:
         cdict, ckwargs = vars(self), self.kwargs
         for item in ckwargs:
             val = cdict[item]
-            if val in [True, False]: ckwargs[item] = 1 if val else 0
-            elif val and item == "piece_length": ckwargs[item] = int(val)
-            else: ckwargs[item] = val
+            if val in [True, False]:
+                ckwargs[item] = 1 if val else 0
+            elif val and item == "piece_length":
+                ckwargs[item] = int(val)
+            else:
+                ckwargs[item] = val
         return ckwargs
 
     def create_torrentfile(self):
-        """create_torrentfile.
-        """
+        """create_torrentfile."""
         self.compile_kwargs()
         torrentfile = TorrentFileV2 if self.version else TorrentFile
         torrentfile = torrentfile(**self.kwargs)
@@ -64,8 +66,7 @@ class CLI:
 
 
 class Parser(argparse.ArgumentParser):
-    """Parser.
-    """
+    """Parser."""
 
     def __init__(
         self, prog="torrentfile", description="Torrentfile CLI", prefix_chars="-"
@@ -88,7 +89,7 @@ class Parser(argparse.ArgumentParser):
         self.add_args()
 
     def parse_args(self, args):
-        """ ## parse_args.
+        """## parse_args.
 
         #### Parse input arguments from command line.
 
@@ -107,8 +108,7 @@ class Parser(argparse.ArgumentParser):
         return output
 
     def add_args(self):
-        """add_args.
-        """
+        """add_args."""
         self.add_argument(
             "--created-by",
             action="store",

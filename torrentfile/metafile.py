@@ -68,9 +68,9 @@ file case, it's the name of a directory.
 import os
 from datetime import datetime
 
+from torrentfile.exceptions import MissingPathError
 from torrentfile.feeder import Feeder
 from torrentfile.utils import Bendecoder, Benencoder, path_stat
-from torrentfile.exceptions import MissingPathError
 
 timestamp = lambda: int(datetime.timestamp(datetime.now()))
 

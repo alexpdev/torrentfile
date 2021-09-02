@@ -13,10 +13,11 @@
 #####################################################################
 
 import os
-import pytest
-import string
 import random
 import shutil
+import string
+
+import pytest
 
 PIECE_LENGTH1 = 2 ** 14
 PIECE_LENGTH2 = 2 ** 16
@@ -82,9 +83,13 @@ def rmpath(path):
     else:
         os.remove(path)
 
+
 def tree_structure():
-    return {"testing": ["temp_data.dat", "temp_text.txt"],
-            "temp_dir": ["temp_data.dat","temp_text.txt"]}
+    return {
+        "testing": ["temp_data.dat", "temp_text.txt"],
+        "temp_dir": ["temp_data.dat", "temp_text.txt"],
+    }
+
 
 @pytest.fixture(scope="module")
 def testfile(n=1):
@@ -93,6 +98,7 @@ def testfile(n=1):
     write_out_bin(fname, exp)
     yield fname
     rmpath(fname)
+
 
 @pytest.fixture(scope="module")
 def testdir(n=1):
@@ -108,6 +114,7 @@ def testdir(n=1):
             write_out_bin(temp1, exp)
     yield dname
     rmpath(dname)
+
 
 @pytest.fixture(scope="function")
 def ntempdir():

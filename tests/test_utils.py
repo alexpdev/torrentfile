@@ -13,10 +13,12 @@
 #####################################################################
 
 import os
+
 import pytest
 
 from tests.context import testdir, testfile
-from torrentfile.utils import get_file_list, get_piece_length, path_size, path_stat
+from torrentfile.utils import (get_file_list, get_piece_length, path_size,
+                               path_stat)
 
 KIB = 2 ** 10
 MIB = KIB ** 2

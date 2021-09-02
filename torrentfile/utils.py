@@ -27,7 +27,8 @@ b'l18:Some Bencoded Datai15ee'
 import json
 import os
 import re
-from torrentfile.exceptions import BenencodingError, BendecodingError
+
+from torrentfile.exceptions import BendecodingError, BenencodingError
 
 
 class Bendecoder:

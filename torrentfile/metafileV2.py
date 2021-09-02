@@ -99,8 +99,8 @@ import math
 import os
 from datetime import datetime
 
-from torrentfile.utils import path_piece_length, sortfiles, Benencoder
 from torrentfile.exceptions import MissingPathError
+from torrentfile.utils import Benencoder, path_piece_length, sortfiles
 
 BLOCK_SIZE = 2 ** 14  # 16KB
 
