@@ -82,6 +82,9 @@ def rmpath(path):
     else:
         os.remove(path)
 
+def tree_structure():
+    return {"testing": ["temp_data.dat", "temp_text.txt"],
+            "temp_dir": ["temp_data.dat","temp_text.txt"]}
 
 @pytest.fixture(scope="module")
 def testfile(n=1):
@@ -91,24 +94,13 @@ def testfile(n=1):
     yield fname
     rmpath(fname)
 
-
 @pytest.fixture(scope="module")
 def testdir(n=1):
     exp = gen_exp(n)
     dname = gen_name("testdir")
     rmpath(dname)
     os.mkdir(dname)
-    test_structure = {
-        "testing": [
-            "temp_data.dat",
-            "temp_text.txt",
-        ],
-        "temp_dir": [
-            "temp_data.dat",
-            "temp_text.txt",
-        ],
-    }
-    for k, v in test_structure.items():
+    for k, v in tree_structure().items():
         subdir = os.path.join(dname, k)
         os.mkdir(subdir)
         for fd in v:
@@ -116,3 +108,17 @@ def testdir(n=1):
             write_out_bin(temp1, exp)
     yield dname
     rmpath(dname)
+
+@pytest.fixture(scope="function")
+def ntempdir():
+    exp = gen_exp(1)
+    dname = gen_name("testdir")
+    rmpath(dname)
+    os.mkdir(dname)
+    for k, v in tree_structure().items():
+        subdir = os.path.join(dname, k)
+        os.mkdir(subdir)
+        for fd in v:
+            temp1 = os.path.join(subdir, fd)
+            write_out_bin(temp1, exp)
+    return dname

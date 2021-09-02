@@ -11,8 +11,7 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""
-metainfo files
+""" Metainfo Files (.torrent)
 
 Metainfo files (also known as .torrent files) are bencoded dictionaries with
 the following keys:
@@ -127,10 +126,16 @@ class TorrentFile:
             * dict: info dictionary.
         """
         filelist, size, piece_length = path_stat(self.base)
+
+        if not self.piece_length:
+            self.piece_length = piece_length
+
         # create dictionary keys for available fields.
         # add comment
+
         if self.comment:
             self.info["comment"] = self.comment
+
         # if single file, add 'length' key otherwise
         if os.path.isfile(self.base):
             self.info["length"] = size
@@ -142,20 +147,22 @@ class TorrentFile:
                 }
                 for p in filelist
             ]
+
         self.info["name"] = self.name
-        if not self.piece_length:
-            self.info["piece length"] = self.piece_length = piece_length
-        else:
-            self.info["piece length"] = self.piece_length
-        feeder = Feeder(filelist, self.piece_length, size, sha256=False)
+
+        self.info["piece_length"] = self.piece_length
+
         pieces = bytearray()
-        for piece in feeder:
+        for piece in Feeder(filelist, self.piece_length, size):
             pieces.extend(piece)
         self.info["pieces"] = pieces
+
         if self.private:
             self.info["private"] = self.private
+
         if self.source:
             self.info["source"] = self.source
+
         return self.info
 
     def assemble(self):
@@ -187,7 +194,7 @@ class TorrentFile:
         encoder = Benencoder()
         self.data = encoder.encode(self.meta)
 
-        return self.data
+        return self.meta
 
     def write(self, outfile=None):
         """*self.write(outfile)* Write assembled data to .torrent file.
@@ -202,10 +209,13 @@ class TorrentFile:
         """
         if outfile:
             self.outfile = outfile
+
         elif not self.outfile:
             self.outfile = self.info["name"] + ".torrent"
+
         with open(self.outfile, "wb") as fd:
             fd.write(self.data)
+
         return (self.outfile, self.meta)
 
 
@@ -248,9 +258,11 @@ class Checker:
             if k == "info":
                 for k1, v1 in v.items():
                     self.info[k1] = v1
+
         self.piece_length = self.info["piece length"]
         self.pieces = self.info["pieces"]
         self.name = self.info["name"]
+
         if "length" in self.info:
             self.length = self.info["length"]
         else:
@@ -262,6 +274,7 @@ class Checker:
         if self.length is not None:
             self.paths.append(self.name)
             self.fileinfo[self.name] = self.length
+
         else:
             for item in self.files:
                 size = item["length"]
@@ -275,24 +288,31 @@ class Checker:
         feeder = Feeder(paths, self.piece_length, self.total, sha256=False)
         pieces = bytes.fromhex(self.pieces)
         counter = 0
+
         for digest in feeder:
             if pieces[: len(digest)] == digest:
                 pieces = pieces[len(digest) :]
                 counter += 1
             else:
                 print("Number of matching pieces = ", counter)
+
         return "complete"
 
     def check_path(self):
         base = os.path.join(self.location, self.name)
+
         if os.path.isfile(base):
             paths = [base]
+
         else:
             paths = [os.path.join(base, i) for i in self.paths]
+
         return self._check_path(paths)
 
     def check(self):
         self.decode_metafile()
+
         self.get_paths()
+
         status = self.check_path()
         print(status)

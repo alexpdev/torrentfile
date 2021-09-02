@@ -13,13 +13,13 @@
 #####################################################################
 
 import math
-from hashlib import sha1, sha256
+from hashlib import sha1
 
 
 class Feeder:
     """Seemlesly generate hashes of piece length data from filelist contents."""
 
-    def __init__(self, paths, piece_length, total=None, sha256=False):
+    def __init__(self, paths, piece_length, total):
         """
         __init__ Constructor for the Feeder class.
 
@@ -28,11 +28,9 @@ class Feeder:
             * paths (list[str]): list of files.
             * piece_length (int): Size of chuncks to split the data into.
             * total (int): Sum of all files in file list.
-            * sha256 (bool, optional): use sha256 hash instead of sha1. False.
         """
         self.piece_length = piece_length
         self.paths = paths
-        self.sha256 = sha256
         self.total = total
         self.pieces = []
         self.index = 0

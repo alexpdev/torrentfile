@@ -36,30 +36,28 @@ class CLI:
         "outfile": None,
     }
 
-    @classmethod
-    def compile_kwargs(cls):
-        """compile_kwargs.
+    def compile_kwargs(self):
+        """ ### compile_kwargs
+
+        Returns
+        -----------
+        - ckwargs: dict
+            - : keyword args for MetaFile Class Init.
         """
-        cdict = cls.__dict__
-        ckwargs = cls.kwargs
+        cdict, ckwargs = vars(self), self.kwargs
         for item in ckwargs:
-            if item in cdict:
-                val = cdict[item]
-                if isinstance(val, bool):
-                    ckwargs[item] = 1 if val else 0
-                else:
-                    ckwargs[item] = val
+            val = cdict[item]
+            if val in [True, False]: ckwargs[item] = 1 if val else 0
+            elif val and item == "piece_length": ckwargs[item] = int(val)
+            else: ckwargs[item] = val
         return ckwargs
 
-    @classmethod
-    def create_torrentfile(cls):
+    def create_torrentfile(self):
         """create_torrentfile.
         """
-        cls.compile_kwargs()
-        torrentfile = TorrentFile
-        if hasattr(cls, "version") and cls.version == True:
-            torrentfile = TorrentFileV2
-        torrentfile = torrentfile(**cls.kwargs)
+        self.compile_kwargs()
+        torrentfile = TorrentFileV2 if self.version else TorrentFile
+        torrentfile = torrentfile(**self.kwargs)
         torrentfile.assemble()
         output = torrentfile.write()
         return output
@@ -86,7 +84,7 @@ class Parser(argparse.ArgumentParser):
             - string containing all characters used as flag prefixes on command line
         """
         super().__init__(self, prog, description=description, prefix_chars=prefix_chars)
-        self.namespace = CLI
+        self.namespace = CLI()
         self.add_args()
 
     def parse_args(self, args):
