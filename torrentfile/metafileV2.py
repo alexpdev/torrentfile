@@ -144,6 +144,10 @@ class TorrentFileV2:
 
             * dict: info dictionary.
         """
+        if self.announce and len(self.announce) > 1:
+            # the leftover urls become the announce list
+            self.info["announce list"] = self.announce[1:]
+
         if self.comment:
             self.info["comment"] = self.comment
 
@@ -166,8 +170,6 @@ class TorrentFileV2:
         if self.source:
             self.info["source"] = self.source
 
-        return self.info
-
     def assemble(self):
         """*assemble* Assemble components of torrent metafile v2.
 
@@ -186,23 +188,23 @@ class TorrentFileV2:
         else:
             # if announce is iterable, only first url is used
             self.meta["announce"] = self.announce[0]
-            if len(self.announce) > 1:
-                # the leftover urls become the announce list
-                self.info["announce list"] = self.announce[1:]
+            if isinstance(self.meta["announce"], list):
+                self.meta["announce"] = self.meta["announce"][0]
 
         if not self.piece_length:
             self.piece_length = path_piece_length(self.path)
+
         self.meta["created by"] = "torrentfile"
         self.meta["creation date"] = timestamp()
+
         # assemble info dictionary and assign it to info key in meta
-        self.info = self._assemble_infodict()
+        self._assemble_infodict()
 
         for hasher in self.hashes:
             if hasher.piece_layers:
                 self.piece_layers[hasher.root_hash] = hasher.piece_layers
 
         self.meta["info"] = self.info
-
         self.meta["piece layers"] = self.piece_layers
 
         encoder = Benencoder()

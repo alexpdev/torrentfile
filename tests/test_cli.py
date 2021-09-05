@@ -1,11 +1,8 @@
 import os
-import shutil
-
 import pytest
-
-from tests.context import ntempdir, testdir, testfile
 from torrentfile import main
 from torrentfile.exceptions import MissingPathError
+from tests.context import tempfile, tempdir, rmpath
 
 """
 List of flags for the Command Line Interface.
@@ -19,12 +16,28 @@ Options = [
     ("-o", "--outfile",)]
 """
 
+@pytest.fixture(scope="module")
+def tdir():
+    folder = tempdir()
+    yield folder
+    rmpath(folder)
+
+@pytest.fixture(scope="module")
+def testdir():
+    folder = tempdir()
+    return folder
+
+@pytest.fixture(scope="module")
+def tfile():
+    fd = tempfile()
+    yield fd
+    rmpath(fd)
 
 @pytest.fixture(scope="function")
-def tmeta(ntempdir):
+def tmeta(testdir):
     args = [
         "--path",
-        ntempdir,
+        testdir,
         "-t",
         "http://anounce.com/announce",
         "--source",
@@ -37,34 +50,33 @@ def tmeta(ntempdir):
     ]
     outfile, meta = main(args)
     yield meta
-    os.remove(outfile)
-    if os.path.exists(ntempdir):
-        shutil.rmtree(ntempdir)
+    rmpath(outfile)
+    rmpath(testdir)
 
 
-def test_cli_args_dir(testdir):
-    args = ["--path", testdir]
+def test_cli_args_dir(tdir):
+    args = ["--path", tdir]
     outfile, _ = main(args)
     assert os.path.exists(outfile)
     os.remove(outfile)
 
 
-def test_cli_args_dir_v2(testdir):
-    args = ["--path", testdir, "--v2"]
+def test_cli_args_dir_v2(tdir):
+    args = ["--path", tdir, "--v2"]
     outfile, _ = main(args)
     assert os.path.exists(outfile)
     os.remove(outfile)
 
 
-def test_cli_args_file(testfile):
-    args = ["--path", testfile]
+def test_cli_args_file(tfile):
+    args = ["--path", tfile]
     outfile, _ = main(args)
     assert os.path.exists(outfile)
     os.remove(outfile)
 
 
-def test_cli_args_file_v2(testfile):
-    args = ["--path", testfile, "--v2"]
+def test_cli_args_file_v2(tfile):
+    args = ["--path", tfile, "--v2"]
     outfile, _ = main(args)
     assert os.path.exists(outfile)
     os.remove(outfile)
@@ -89,6 +101,3 @@ def test_cli_no_args_v2():
 def test_cli_meta_source_dir(tmeta):
     assert "source" in tmeta["info"]
     assert tmeta["info"]["source"] == "Alpha"
-
-
-fixtures_ = [testdir, testfile, ntempdir]

@@ -16,6 +16,9 @@ repos/
 *.bin
 
 # temp files
+bep*
+/tests/tempdir
+testing.py
 temp/
 data/*.json
 data/

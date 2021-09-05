@@ -12,21 +12,33 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-from tests.context import testdir, testfile
+import os
+import pytest
 from torrentfile import TorrentFile
+from tests.context import tempfile, tempdir, rmpath
+
+@pytest.fixture(scope="module")
+def tdir():
+    folder = tempdir()
+    yield folder
+    rmpath(folder)
+
+@pytest.fixture(scope="module")
+def tfile():
+    fd = tempfile()
+    yield fd
+    rmpath(fd)
 
 
-def test_torrentfile_dir(testdir):
-    path = testdir
+def test_torrentfile_dir(tdir):
     announce = "http://example.com/announce"
-    tfile = TorrentFile(path=path, announce=announce, source="nunya", private=1)
-    data = tfile.assemble()
+    torrent = TorrentFile(path=tdir, announce=announce, private=1)
+    data = torrent.assemble()
     assert data is not None
 
 
-def test_torrentfile_file(testfile):
-    path = testfile
+def test_torrentfile_file(tfile):
     announce = "http://example.com/announce"
-    tfile = TorrentFile(path=path, announce=announce, source="nunya", private=1)
-    data = tfile.assemble()
+    torrent = TorrentFile(path=tfile, announce=announce, private=1)
+    data = torrent.assemble()
     assert data is not None

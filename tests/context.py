@@ -23,21 +23,33 @@ class MakeDirError(Exception):
 
 def fill_file(path, exp):
     bits = (string.printable).encode('utf8')
-    l = len(bits)
-    with open(path, "wd") as fd:
-        while l < 2**exp:
+    filesize = l = len(bits)
+    with open(path, "wb") as fd:
+        while filesize < 2**exp:
             fd.write(bits)
-    return
+            filesize += l
 
 def fill_folder(folder):
-    files = {"file1.bin": 26, "file2.bin": 27, "file3.bin": 28}
+    files = {"file1.bin": 25, "file2.bin": 26}
     for k,v in files.items():
         path = os.path.join(folder, k)
         fill_file(path, v)
-    return
 
 def rmpath(path):
     if not os.path.exists(path): return
     if os.path.isdir(path): shutil.rmtree(path)
     else: os.remove(path)
-    return
+
+def tempdir():
+    tdir = os.path.join(TD, "tempdir")
+    tdir_1 = os.path.join(tdir,"directory1")
+    for folder in [tdir, tdir_1]:
+        rmpath(folder)
+        os.mkdir(folder)
+        fill_folder(folder)
+    return tdir
+
+def tempfile():
+    path = os.path.join(TD,"tempfile.bin")
+    fill_file(path, 28)
+    return path
