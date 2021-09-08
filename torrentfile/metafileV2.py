@@ -158,7 +158,7 @@ class TorrentFileV2:
             self.info["file tree"] = self.traverse(self.path)
 
         # Bittorrent Protocol v2
-        self.info["meta version"] = "2"
+        self.info["meta version"] = 2
         # ---------------------------------------------
         self.info["name"] = self.name
 

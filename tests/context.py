@@ -13,6 +13,7 @@
 #####################################################################
 
 import os
+import random
 import shutil
 import string
 
@@ -21,8 +22,13 @@ TD = os.path.abspath(os.path.dirname(__file__))
 class MakeDirError(Exception):
     pass
 
+def seq():
+    text = string.printable + string.punctuation + string.hexdigits
+    random.shuffle(list(text))
+    return "".join(text)
+
 def fill_file(path, exp):
-    bits = (string.printable).encode('utf8')
+    bits = seq().encode('utf8')
     filesize = l = len(bits)
     with open(path, "wb") as fd:
         while filesize < 2**exp:
