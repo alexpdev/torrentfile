@@ -12,14 +12,12 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-import argparse
 import sys
+import argparse
+from torrentfile import __version__, TorrentFile, TorrentFileV2
 
-from torrentfile.metafile import TorrentFile
-from torrentfile.metafileV2 import TorrentFileV2
 
-
-class CLI:
+class Cli:
     """CLI.
 
     Command Line Interface for torrentfile.
@@ -85,7 +83,9 @@ class Parser(argparse.ArgumentParser):
             - string containing all characters used as flag prefixes on command line
         """
         super().__init__(self, prog, description=description, prefix_chars=prefix_chars)
-        self.namespace = CLI()
+        self.name = prog
+        self.version = __version__
+        self.namespace = Cli()
         self.add_args()
 
     def parse_args(self, args):
@@ -106,15 +106,20 @@ class Parser(argparse.ArgumentParser):
         super().parse_args(args, self.namespace)
         output = self.namespace.create_torrentfile()
         return output
-
     def add_args(self):
         """add_args."""
+        self.add_arguement(
+            "--version",
+            action="version",
+            version=f"{self.name} v{self.version}",
+            help="Display program version."
+        )
         self.add_argument(
             "--created-by",
             action="store",
             dest="created_by",
             metavar="X",
-            help="leave out unless specifically instructed otherwise",
+            help="Leave out unless specifically instructed otherwise.",
         )
         self.add_argument(
             "--comment",
@@ -160,16 +165,15 @@ class Parser(argparse.ArgumentParser):
             help="leave out unless specifically instructed otherwise",
         )
         self.add_argument(
-            "-t",
-            "-a",
-            action="append",
+            "--tracker",
+            "--announce",
+            action="extend",
             nargs="+",
-            help='"-t [url]" required for each trackers to be added to tracker list',
+            help='"--tracker [url1] [url2]..."  add torrent tracker(s).',
             dest="announce",
             metavar="url",
         )
         self.add_argument(
-            "-v",
             "--v2",
             "--version2",
             action="store_true",
