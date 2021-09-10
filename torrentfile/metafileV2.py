@@ -144,18 +144,12 @@ class TorrentFileV2:
 
             * dict: info dictionary.
         """
-        if self.announce and len(self.announce) > 1:
-            # the leftover urls become the announce list
-            self.info["announce list"] = self.announce[1:]
-
-        if self.comment:
-            self.info["comment"] = self.comment
+        if self.comment: self.info["comment"] = self.comment
 
         if os.path.isfile(self.path):
-            self.info["file tree"] = self.traverse(self.path)
             self.info["length"] = os.path.getsize(self.path)
-        else:
-            self.info["file tree"] = self.traverse(self.path)
+
+        self.info["file tree"] = self.traverse(self.path)
 
         # Bittorrent Protocol v2
         self.info["meta version"] = 2
@@ -164,11 +158,8 @@ class TorrentFileV2:
 
         # calculate best piece length if not provided by user
         self.info["piece length"] = self.piece_length
-
-        if self.private:
-            self.info["private"] = 1
-        if self.source:
-            self.info["source"] = self.source
+        if self.private: self.info["private"] = 1
+        if self.source: self.info["source"] = self.source
 
     def assemble(self):
         """*assemble* Assemble components of torrent metafile v2.
@@ -188,8 +179,6 @@ class TorrentFileV2:
         else:
             # if announce is iterable, only first url is used
             self.meta["announce"] = self.announce[0]
-            if isinstance(self.meta["announce"], list):
-                self.meta["announce"] = self.meta["announce"][0]
 
         if not self.piece_length:
             self.piece_length = path_piece_length(self.path)
@@ -216,8 +205,7 @@ class TorrentFileV2:
             if size == 0:
                 return {"": {"length": size}}
             else:
-                hashes = Hashes(path, self.piece_length)
-                hashes.process_file()
+                hashes = FileHash(path, self.piece_length, size)
                 self.hashes.append(hashes)
                 return {"": {"length": size, "pieces root": hashes.root_hash}}
         elif os.path.isdir(path):
@@ -252,17 +240,17 @@ class TorrentFileV2:
         return self.outfile, self.meta
 
 
-class Hashes:
-    def __init__(self, path, piece_length):
-        self.total = 0
+class FileHash:
+    def __init__(self, path, piece_length, size):
         self.path = path
         self.root_hash = None
         self.piece_layers = None
         self.layer_hashes = []
-        self.fsize = os.path.getsize(path)
+        self.fsize = size
         self.piece_length = piece_length
-        self.pieces_per_file = self.fsize / piece_length
+        self.pieces_left = self.fsize // piece_length
         self.blocks_per_piece = piece_length // BLOCK_SIZE
+        self.process_file()
 
     def process_file(self):
         with open(self.path, "rb") as fd:
@@ -274,29 +262,23 @@ class Hashes:
                     if not size:
                         break
                     blocks.append(sha256(leaf[:size]))
-                    self.total += size
-                if not len(blocks):
-                    break
+                if not len(blocks): break
                 if len(blocks) < self.blocks_per_piece:
-                    next_power2 = 2 ** (int(math.log2(self.total - 1)) + 1)
-                    blocks += [
-                        bytearray(BLOCK_SIZE) for _ in range(len(blocks) - next_power2)
-                    ]
-                layer_hash = self._merkle_hash(blocks)
-                self.layer_hashes.append(layer_hash)
+                    remaining = ((1 << (len(blocks) - 1).bit_length())
+                                // BLOCK_SIZE) - len(blocks)
+                    blocks += [bytes(32) for _ in range(remaining)]
+                self.layer_hashes.append(merkle_root(blocks))
             self._calculate_root()
 
     def _calculate_root(self):
         if len(self.layer_hashes) > 1:
             self.piece_layers = b"".join(self.layer_hashes)
-        self.root_hash = self._merkle_hash(self.layer_hashes)
+        self.root_hash = merkle_root(self.layer_hashes)
 
-    @staticmethod
-    def _merkle_hash(pieces):
-        while len(pieces) > 1:
-            pieces = [sha256(x + y) for x, y in zip(*[iter(pieces)] * 2)]
-        return pieces[0]
-
+def merkle_root(pieces):
+    while len(pieces) > 1:
+        pieces = [sha256(x + y) for x, y in zip(*[iter(pieces)] * 2)]
+    return pieces[0]
 
 def sha256(data):
     _hash = hashlib.sha256(data)

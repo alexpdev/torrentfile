@@ -14,7 +14,10 @@
 
 import sys
 import argparse
-from torrentfile import __version__, TorrentFile, TorrentFileV2
+import torrentfile
+from torrentfile.metafile import TorrentFile
+from torrentfile.metafileV2 import TorrentFileV2
+
 
 
 class Cli:
@@ -84,7 +87,7 @@ class Parser(argparse.ArgumentParser):
         """
         super().__init__(self, prog, description=description, prefix_chars=prefix_chars)
         self.name = prog
-        self.version = __version__
+        self.version = torrentfile.__version__
         self.namespace = Cli()
         self.add_args()
 
@@ -108,7 +111,7 @@ class Parser(argparse.ArgumentParser):
         return output
     def add_args(self):
         """add_args."""
-        self.add_arguement(
+        self.add_argument(
             "--version",
             action="version",
             version=f"{self.name} v{self.version}",
@@ -165,8 +168,8 @@ class Parser(argparse.ArgumentParser):
             help="leave out unless specifically instructed otherwise",
         )
         self.add_argument(
-            "--tracker",
-            "--announce",
+            "-t",
+            "-a",
             action="extend",
             nargs="+",
             help='"--tracker [url1] [url2]..."  add torrent tracker(s).',
