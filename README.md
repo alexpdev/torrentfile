@@ -3,6 +3,7 @@
 > Helpful utilities for Bittorrent metafiles.
 
 Create Bittorrent metafiles (".torrent") with granular control over all settings.
+Supports Bittorrent version 1 & 2 metafile creation.
 
 ![torrentfile](assets/torrentfile.png)
 
@@ -22,20 +23,12 @@ Create Bittorrent metafiles (".torrent") with granular control over all settings
 
 ## Release History
 
-* 0.1.4
-  * Removed GUI. Now available as a seperate project [HERE](https://github.com/alexpdev/)
-* 0.1.3
-  * Supports Bittorrent V2 files
-* 0.1.2
-  * Added GUI and better CLI
-* 0.1.1
-  * Bug Fixes and Expanded Testing
+* 0.2.0
+  * Support for creating Bittorrent Protocol V2 metafiles
 * 0.1.0
-  * The first working release for public use
-* 0.0.2
-  * Work in progress
+  * Added CLI and Testing Suit
 * 0.0.1
-  * Initial planning
+  * Initial Commit
 
 ## Meta
 
@@ -50,8 +43,3 @@ Distributed under the GNU LGPL v3 license. See ``LICENSE`` for more information.
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
-
-<!-- Markdown link & img dfn's -->
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square

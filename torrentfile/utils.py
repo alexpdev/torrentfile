@@ -348,12 +348,12 @@ def path_size(path):
 
         * int: total sum in bytes
     """
+    size = 0
     if os.path.isfile(path):
         return os.path.getsize(path)
 
     # recursive sum for all files in folder
     elif os.path.isdir(path):
-        size = 0
         for name in os.listdir(path):
             fullpath = os.path.join(path, name)
             size += path_size(fullpath)

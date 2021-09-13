@@ -19,7 +19,6 @@ from torrentfile.metafile import TorrentFile
 from torrentfile.metafileV2 import TorrentFileV2
 
 
-
 class Cli:
     """CLI.
 
@@ -109,13 +108,14 @@ class Parser(argparse.ArgumentParser):
         super().parse_args(args, self.namespace)
         output = self.namespace.create_torrentfile()
         return output
+
     def add_args(self):
         """add_args."""
         self.add_argument(
             "--version",
             action="version",
             version=f"{self.name} v{self.version}",
-            help="Display program version."
+            help="Display program version.",
         )
         self.add_argument(
             "--created-by",
@@ -143,22 +143,22 @@ class Parser(argparse.ArgumentParser):
             "-p",
             "--path",
             action="store",
-            help="Path to file of directory of torrent contents.",
             dest="path",
             metavar="~/X",
+            help="Path to file of directory of torrent contents.",
         )
         self.add_argument(
             "--piece-length",
             action="store",
-            help="Size of individual pieces of the torrent data.",
             dest="piece_length",
             metavar="X",
+            help="Size of individual pieces of the torrent data.",
         )
         self.add_argument(
             "--private",
             action="store_true",
-            help="torrent will be distributed on a private tracker",
             dest="private",
+            help="torrent will be distributed on a private tracker",
         )
         self.add_argument(
             "--source",
@@ -172,21 +172,22 @@ class Parser(argparse.ArgumentParser):
             "-a",
             action="extend",
             nargs="+",
-            help='"--tracker [url1] [url2]..."  add torrent tracker(s).',
             dest="announce",
             metavar="url",
+            help='"--tracker [url1] [url2]..."  add torrent tracker(s).',
         )
         self.add_argument(
             "--v2",
             "--version2",
             action="store_true",
-            help="use Bittorrent V2 protocol if missing V1 is assumed",
             dest="version",
+            help="use Bittorrent V2 protocol if missing V1 is assumed",
         )
 
 
 def main(args):
-    """main.
+    """
+    Initialize Primary Function CLI
 
     Parameters
     ----------

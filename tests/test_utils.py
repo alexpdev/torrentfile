@@ -14,8 +14,7 @@
 
 import os
 import pytest
-from torrentfile.utils import (get_file_list, get_piece_length, path_size,
-                               path_stat)
+from torrentfile.utils import get_file_list, get_piece_length, path_size, path_stat
 from tests.context import tempfile, tempdir, rmpath
 
 KIB = 2 ** 10
@@ -24,18 +23,19 @@ GIB = KIB ** 3
 MIN_BLOCK = 2 ** 14
 MAX_BLOCK = MIB * 16
 
+
 @pytest.fixture(scope="module")
 def tdir():
     folder = tempdir()
     yield folder
     rmpath(folder)
 
+
 @pytest.fixture(scope="module")
 def tfile():
     fd = tempfile()
     yield fd
     rmpath(fd)
-
 
 
 def test_get_piece_len(tfile):
@@ -71,6 +71,7 @@ def test_path_size_file(tfile):
 def test_path_size_file_gt0(tfile):
     val = path_size(tfile)
     assert val > 0
+
 
 def test_get_file_list_file(tfile):
     results = get_file_list(tfile)

@@ -319,8 +319,6 @@ class Checker:
         print(status)
 
 
-
-
 class Feeder:
     """Seemlesly generate hashes of piece length data from filelist contents."""
 

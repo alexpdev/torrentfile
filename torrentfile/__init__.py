@@ -17,7 +17,7 @@ from torrentfile.metafile import TorrentFile
 from torrentfile.metafileV2 import TorrentFileV2
 from torrentfile.torrentfile import main
 
-__version__ = "0.1.8"
+__version__ = "0.2.0"
 __author__ = "alexpdev"
 
 __all__ = [

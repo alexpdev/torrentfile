@@ -17,11 +17,13 @@ import pytest
 from torrentfile import TorrentFile
 from tests.context import tempfile, tempdir, rmpath
 
+
 @pytest.fixture(scope="module")
 def tdir():
     folder = tempdir()
     yield folder
     rmpath(folder)
+
 
 @pytest.fixture(scope="module")
 def tfile():

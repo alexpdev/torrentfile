@@ -16,22 +16,26 @@ Options = [
     ("-o", "--outfile",)]
 """
 
+
 @pytest.fixture(scope="module")
 def tdir():
     folder = tempdir()
     yield folder
     rmpath(folder)
 
+
 @pytest.fixture(scope="module")
 def testdir():
     folder = tempdir()
     return folder
+
 
 @pytest.fixture(scope="module")
 def tfile():
     fd = tempfile()
     yield fd
     rmpath(fd)
+
 
 @pytest.fixture(scope="function")
 def tmeta(testdir):

@@ -1,28 +1,24 @@
 class BendecodingError(Exception):
     """Error occured during decode process."""
 
-    def __init__(self, val, message=None):
-        if not message:
-            self.message = f"{type(val)} : {val} is of unknown value or type"
-        else:
-            self.message = message
-        print(self.message)
+    def __init__(self, val):
+        message = f"{type(val)} : {val} is of unknown value or type"
+        super().__init__(message)
 
 
 class BenencodingError(Exception):
     """Error occured during encoding process."""
 
-    def __init__(self, val, message=None):
-        if not message:
-            self.message = f"{type(val)} : {val} is of unknown value or type"
-        else:
-            self.message = message
-        print(self.message)
+    def __init__(self, val):
+        message = f"{type(val)} : {val} is of unknown value or type"
+        super().__init__(message)
 
 
 class MissingArgError(Exception):
-    def __init__(self, message="Missing Required Function Arguement"):
-        self.message = message
+    def __init__(self, message=None):
+        if not message:
+            message = "Missing Required Function Arguement"
+        super().__init__(message)
 
 
 class MissingTrackerError(MissingArgError):
@@ -32,11 +28,9 @@ class MissingTrackerError(MissingArgError):
     """
 
     def __init__(self, message=None):
-        if message:
-            self.message = message
-        else:
+        if not message:
             self.message = "Tracker arguement is missing and required"
-        print(self.message)
+        super().__init__(message)
 
 
 class MissingPathError(MissingArgError):
@@ -47,8 +41,13 @@ class MissingPathError(MissingArgError):
 
     def __init__(self, message=None):
         """Path arguement is missing and required"""
-        if message:
-            self.message = message
-        else:
+        if not message:
             self.message = "Path arguement is missing and required"
-        print(self.message)
+        super().__init__(message)
+
+
+class PieceLengthError(Exception):
+    def __init__(self, val, message=None):
+        if not message:
+            message = f"{val} is not a power of 2"
+        super().__init__(message)
