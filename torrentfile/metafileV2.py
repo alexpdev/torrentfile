@@ -139,11 +139,13 @@ class TorrentFileV2:
         self.meta = {}
 
     def _assemble_infodict(self):
-        """Create info dictionary for metafile v2.
+        """
+        Create info dictionary for metafile v2.
 
         Returns:
-
-            * dict: info dictionary.
+        ---------
+        dict:
+            Info dictionary.
         """
         if self.comment:
             self.info["comment"] = self.comment
@@ -166,11 +168,13 @@ class TorrentFileV2:
             self.info["source"] = self.source
 
     def assemble(self):
-        """*assemble* Assemble components of torrent metafile v2.
+        """
+        Assemble components of torrent metafile v2.
 
-        Returns:
-
-            * `dict`: metadata dictionary for torrent file
+        Returns
+        -------------
+        `dict`:
+            metadata dictionary for torrent file
         """
 
         # if no tracker url was provided, place dummy string in its place
@@ -219,21 +223,18 @@ class TorrentFileV2:
         return file_tree
 
     def write(self, outfile=None):
-        """self.write(outfile)
-
+        """
         Write assembled data to .torrent file.
 
         Args
         ------------
-
-            outfile:
-                str: path to save location.
+        outfile:
+            str: path to save location.
 
         Returns
         -----------
-
-            bytes:
-                data writtend to .torrent file.
+        bytes:
+            data writtend to .torrent file.
         """
         if outfile:
             self.outfile = outfile

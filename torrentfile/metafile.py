@@ -90,18 +90,27 @@ class TorrentFile:
         outfile=None,
         created_by=None,
     ):
-        """Constructor for *Torrentfile* class.
+        """
+        Constructor for *Torrentfile* class.
 
-        Args:
-
-            * path (str): path to torrent file or directory.
-            * piece_length (int): size of each piece of torrent data.
-            * created_by (str): creator.
-            * announce (str): tracker url.
-            * private (int): 1 if private torrent else 0.
-            * source (str): source tracker.
-            * comment (str): comment string.
-            * outfile (str): path to write metfile to.
+        Args
+        --------------------
+        path: str
+            path to torrent file or directory.
+        piece_length: (int)
+            size of each piece of torrent data.
+        created_by: str
+            creator.
+        announce: str
+            tracker url.
+        private: (int)
+            1 if private torrent else 0.
+        source: str
+            source tracker.
+        comment: str
+            comment string.
+        outfile: str
+            path to write metfile to.
         """
         if not path:
             raise MissingPathError
@@ -120,11 +129,13 @@ class TorrentFile:
         self.meta = {}
 
     def _assemble_infodict(self):
-        """Create info dictionary.
+        """
+        Create info dictionary.
 
-        Returns:
-
-            * dict: info dictionary.
+        Returns
+        --------------
+        dict:
+            info dictionary.
         """
         filelist, size, piece_length = path_stat(self.base)
 
@@ -167,15 +178,18 @@ class TorrentFile:
         return self.info
 
     def assemble(self):
-        """*assemble* Assemble components of torrent metafile.
+        """
+        Assemble components of torrent metafile.
 
         Raises:
-
-            * MissingTracker: Announce field is required for all torrents.
+        ---------------
+        MissingTracker:
+            Announce field is required for all torrents.
 
         Returns:
-
-            * `dict`: metadata dictionary for torrent file
+        ----------------------
+        `dict`:
+            metadata dictionary for torrent file
         """
         if self.announce:
             # if announce is a string assign it to announce key in meta dict
@@ -198,15 +212,18 @@ class TorrentFile:
         return self.meta
 
     def write(self, outfile=None):
-        """*self.write(outfile)* Write assembled data to .torrent file.
+        """
+        Write assembled data to .torrent file.
 
-        Args:
+        Args
+        ----------------
+        outfile: (`str`)
+            path to save location. default = None
 
-            * outfile (`str`): path to save location. default = None
-
-        Returns:
-
-            * `bytes`: data writtend to .torrent file
+        Returns
+        ---------------
+        `bytes`:
+            data writtend to .torrent file
         """
         if outfile:
             self.outfile = outfile
@@ -221,14 +238,18 @@ class TorrentFile:
 
 
 class Checker:
-    """Checks a given file or directory to see if it matches a torrentfile."""
+    """Check a given file or directory to see if it matches a torrentfile."""
 
     def __init__(self, metafile, location):
-        """__init__ Public constructor for Checker class instance.
+        """
+        Public constructor for Checker class instance.
 
-        Args:
-            metafile: path to ".torrent" file.
-            location: path where the content is located in filesystem.
+        Args
+        ------------
+        metafile: str
+            path to ".torrent" file.
+        location: str
+            path where the content is located in filesystem.
 
         Example:
             >> metafile = "/path/to/torrentfile/content_file_or_dir.torrent"
@@ -250,7 +271,7 @@ class Checker:
         self.fileinfo = {}
 
     def decode_metafile(self):
-        """decode_metafile Decode bencoded data inside .torrent file."""
+        """Decode bencoded data inside .torrent file."""
         fd = open(self.metafile, "rb").read()
         decoder = Bendecoder()
         dictt = decoder.decode(fd)
@@ -271,7 +292,7 @@ class Checker:
         return
 
     def get_paths(self):
-        """get_paths  Get list of paths from files list inside .torrent file."""
+        """Get list of paths from files list inside .torrent file."""
         if self.length is not None:
             self.paths.append(self.name)
             self.fileinfo[self.name] = self.length
@@ -324,13 +345,16 @@ class Feeder:
 
     def __init__(self, paths, piece_length, total):
         """
-        __init__ Constructor for the Feeder class.
+        Constructor for the Feeder class.
 
         Args:
-
-            * paths (list[str]): list of files.
-            * piece_length (int): Size of chuncks to split the data into.
-            * total (int): Sum of all files in file list.
+        -------------
+        paths: (list[str])
+            list of files.
+        piece_length: (int)
+            Size of chuncks to split the data into.
+        total: (int)
+            Sum of all files in file list.
         """
         self.piece_length = piece_length
         self.paths = paths
@@ -341,45 +365,53 @@ class Feeder:
         self.iterator = self.leaves()
 
     def __iter__(self):
-        """*__iter__* iterate through feed pieces.
+        """
+        Iterate through feed pieces.
 
         Returns:
-
-            * iterator: Iterator object
+        -------------
+        iterator:
+            Iterator object
         """
         self.iterator = self.leaves()
         return self.iterator
 
     def __next__(self):
-        """*__next__* returns the next element from iterator.
+        """Returns the next element from iterator.
 
         Returns:
-
-            * bytes-like: piece_length length pieces of data.
+        -----------
+        bytes-like:
+            piece_length length pieces of data.
         """
         return self.iterator.__next__()
 
     def total_pieces(self):
-        """*total_pieces* total size / piece length.
+        """
+        Total size / piece length.
 
-        Returns:
-
-            * int: number of pieces for entire torrrent
+        Returns
+        ---------------
+        int:
+            number of pieces for entire torrrent
         """
         return math.ceil(self.total // self.piece_length)
 
     def handle_partial(self, arr, partial):
         """
-        handle_partial seemlessly move to next file for input data.
+        Seemlessly move to next file for input data.
 
-        Args:
+        Args
+        -------------
+        arr: (bytes-like)
+            incomplete piece containing partial data
+        partial: (int)
+            size of incomplete piece_length
 
-            * arr (bytes-like): incomplete piece containing partial data
-            * partial (int): size of incomplete piece_length
-
-        Returns:
-
-            * bytes-like: final piece filled with data.
+        Returns
+        -------------
+        bytes-like:
+            final piece filled with data.
         """
         while partial < self.piece_length:
             temp = bytearray(self.piece_length - partial)
@@ -394,11 +426,12 @@ class Feeder:
 
     def next_file(self):
         """
-        next_file Seemlessly transition to next file in file list.
+        Seemlessly transition to next file in file list.
 
-        Returns:
-
-            * bool: returns false if no more files are left
+        Returns
+        ------------
+        bool:
+            returns false if no more files are left
         """
         self.index += 1
         if self.index < len(self.paths):
@@ -409,11 +442,12 @@ class Feeder:
 
     def leaves(self):
         """
-        leaves generator of piece-length pieces of data from input file list.
+        Leaves generator of piece-length pieces of data from input file list.
 
         Yields:
-
-            * bytes: hash values of chuncked data.
+        -----------
+        bytes:
+            hash values of chuncked data.
         """
         while True:
             piece = bytearray(self.piece_length)

@@ -12,15 +12,20 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-from torrentfile import utils
+from torrentfile import utils, metafile, metafileV2, torrentfile, exceptions
 from torrentfile.metafile import TorrentFile
 from torrentfile.metafileV2 import TorrentFileV2
 from torrentfile.torrentfile import main
+from torrentfile.utils import path_stat, path_size
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 __author__ = "alexpdev"
 
 __all__ = [
+    "metafile",
+    "metafileV2",
+    "torrentfile",
+    "exceptions",
     "main",
     "path_stat",
     "path_size",

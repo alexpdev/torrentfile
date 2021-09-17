@@ -22,10 +22,7 @@ class MissingArgError(Exception):
 
 
 class MissingTrackerError(MissingArgError):
-    """*MissingTracker* Announce parameter is required.
-
-    Subclass of builtin *Exception*.
-    """
+    """Announce parameter is required.""" ""
 
     def __init__(self, message=None):
         if not message:
@@ -34,10 +31,7 @@ class MissingTrackerError(MissingArgError):
 
 
 class MissingPathError(MissingArgError):
-    """*MissingPath* path parameter is required.
-
-    Subclass of builtin *Exception*.
-    """
+    """Path parameter is required."""
 
     def __init__(self, message=None):
         """Path arguement is missing and required"""

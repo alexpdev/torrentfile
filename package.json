@@ -1,6 +1,6 @@
 {
   "name": "torrentfile",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Bittorent v1 .torrent file creation.",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   "license": "GNU LGPL v3",
   "email": "alexpdev@protonmail.com",
   "url": "https://github.com/alexpdev",
-  "keywords": ["Bittorrent", "metadata", "torrent", "p2p"],
+  "keywords": ["Bittorrent", "metadata", "torrent", "p2p", "bittorrent-meta","torrent-meta", "torrent-metafiles", "bittorrent-metafiles", "metafile", "bittorrent-protocol"],
   "bugs": {
     "url": "https://github.com/alexpdev/torrentfile/issues"
   },

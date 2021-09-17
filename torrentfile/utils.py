@@ -38,30 +38,32 @@ class Bendecoder:
         """
         Initialize instance with optional pre compiled data.
 
-        Args:
-
-            * data (bytes-like, optional): target data for decoding.
+        Args
+        ------------
+        *bytes*:\n
+            target data for decoding.
         """
         self.data = data
 
-    def tojson(self, bits=None):
-        data, _ = self.decode(bits=bits)
-        return json.dumps(data)
-
-    def decode(self, bits=None):
+    def _decode(self, bits=None):
         if bits is None:
             bits = self.data
-        data, _ = self._decode(bits)
+        data, _ = self.__decode(bits)
         return data
 
-    def _decode(self, bits):
-        """Decode bencoded data.
+    def __decode(self, bits):
+        """
+        Decode bencoded data.
 
-        args:
-            bits (bytes): bencoded data for decoding.
+        Args
+        -------------
+        bits: bytes
+            bencoded data for decoding.
 
-        returns:
-            any: the decoded data.
+        Returns
+        ----------------
+        any:
+            the decoded data.
         """
         if bits is None:
             bits = self.data
@@ -90,11 +92,15 @@ class Bendecoder:
         """
         Decode keys and values in dictionary.
 
-        Args:
-            bits (bytearray): bytes of data for decoding.
+        Args
+        --------------
+        bits: bytearray
+            bytes of data for decoding.
 
-        Returns:
-            [dict]: dictionary and contents.
+        Returns
+        -------------
+        dict:
+            dictionary and contents.
         """
         dic, feed = {}, 1
         while not bits[feed:].startswith(b"e"):
@@ -110,11 +116,15 @@ class Bendecoder:
         """
         Decode list and its contents.
 
-        Args:
-            bits (bytearray): bencoded data.
+        Args
+        --------------
+        bits: bytearray
+            bencoded data.
 
-        Returns:
-            [list]: decoded list and contents
+        Returns
+        --------------
+        list:
+            decoded list and contents
         """
         lst, feed = [], 1
         while not bits[feed:].startswith(b"e"):
@@ -128,11 +138,15 @@ class Bendecoder:
         """
         Decode string.
 
-        Args:
-            bits (bytearray): bencoded string.
+        Args
+        --------------
+        bits: bytearray
+            bencoded string.
 
-        Returns:
-            [str]: decoded string.
+        Returns
+        -------------
+        str
+            decoded string.
         """
         match = re.match(rb"(\d+):", bits)
         word_len, start = int(match.groups()[0]), match.span()[1]
@@ -147,11 +161,15 @@ class Bendecoder:
         """
         Decode intiger.
 
-        Args:
-            bits (bytearray): bencoded intiger.
+        Args
+        --------------
+        bytearray
+            bencoded intiger.
 
-        Returns:
-            [int]: decoded intiger.
+        Returns
+        --------------
+        int
+            decoded intiger.
         """
         obj = re.match(rb"i(-?\d+)e", bits)
         return int(obj.group(1)), obj.end()
@@ -161,24 +179,29 @@ class Benencoder:
     """Encode collection of methods for Bencoding data."""
 
     def __init__(self, data=None):
-        """*__init__* Initialize Benencoder insance with optional pre compiled data.
+        """
+        Initialize Benencoder insance with optional pre compiled data.
 
-        Args:
-
-            * data (any, optional): Target data for encoding. Defaults to None.
+        Args
+        --------------
+        data : any (optional)
+            Target data for encoding. Defaults to None.
         """
         self.data = data
 
     def encode(self, val=None):
-        """*encode* Encode data with bencode protocol.
+        """
+        Encode data with bencode protocol.
 
-        args:
+        Args
+        --------------
+        val: bytes
+            bencoded data for decoding.
 
-            * `bits` (bytes): bencoded data for decoding.
-
-        returns:
-
-            * `any`: the decoded data.
+        Returns
+        --------------
+        any:
+            Decoded data
         """
         if val is None:
             val = self.data
@@ -207,42 +230,51 @@ class Benencoder:
         return size.encode("utf-8") + val
 
     def _encode_str(self, txt):
-        """Decode string.
+        """
+        Decode string.
 
-        Args:
+        Args
+        --------------
+        txt: str
+            Decoded string.
 
-           * txt (str): string.
-
-        Returns:
-
-           * bytes: bencoded string.
+        Returns
+        --------------
+        bytes:
+             bencoded string.
         """
         size = str(len(txt)).encode("utf-8")
         return size + b":" + txt.encode("utf-8")
 
     def _encode_int(self, i):
-        """Encode intiger.
+        """
+        Encode intiger.
 
-        Args:
+        Args
+        --------------
+        i: int
+            intiger.
 
-           * i (int): intiger.
-
-        Returns:
-
-            * bytes: bencoded intiger.
+        Returns
+        --------------
+        bytes:
+            bencoded intiger.
         """
         return b"i" + str(i).encode("utf-8") + b"e"
 
     def _encode_list(self, elems):
-        """Encode list and its contents.
+        """
+        Encode list and its contents.
 
-        Args:
+        Args
+        --------------
+        elems: list
+            List of content to be encoded.
 
-           * elems (list): List of content to be encoded.
-
-        Returns:
-
-            * bytes: bencoded data
+        Returns
+        --------------
+        bytes:
+            bencoded data
         """
         lst = [b"l"]
         for elem in elems:
@@ -253,15 +285,18 @@ class Benencoder:
         return bit_lst
 
     def _encode_dict(self, dic):
-        """Encode keys and values in dictionary.
+        """
+        Encode keys and values in dictionary.
 
-        Args:
+        Args
+        --------------
+        val: dict
+            dictionary of data for encoding.
 
-            * dic (dict): dictionary of data for encoding.
-
-        Returns:
-
-            * bytes: bencoded data.
+        Returns
+        --------------
+        bytes:
+            bencoded data.
         """
         result = b"d"
         for k, v in dic.items():
@@ -280,13 +315,15 @@ def get_piece_length(size):
     """
     Calculate the ideal piece length for bittorrent data.
 
-    Args:
+    Args
+    --------------
+    size: int
+        Total bits of all files incluided in .torrent file.
 
-        * size (int): total bits of all files incluided in .torrent file.
-
-    Returns:
-
-        * int: the ideal peace length calculated from the size arguement.
+    Returns
+    --------------
+    int
+       Ideal peace length calculated from the size arguement.
     """
     exp = 14
     while size / (2 ** exp) > 50 and exp < 20:
@@ -299,15 +336,18 @@ def get_piece_length(size):
 
 
 def sortfiles(path):
-    """*sortfiles* Generator function to sort and return files one at a time.
+    """
+    Generator function to sort and return files one at a time.
 
-    Args:
+    Args
+    --------------
+    path: path-like
+        directory path to get file list from.
 
-        * path (path-like): directory path to get file list from.
-
-    Yields:
-
-        * path-like: next path in filelist
+    Yields
+    -------------
+    path-like:
+        next path in filelist
     """
     filelist = sorted(os.listdir(path), key=str.lower)
     for item in filelist:
@@ -316,15 +356,17 @@ def sortfiles(path):
 
 def _dir_files_sizes(path):
     """
-    dir_files_sizes generates a file list and their sizes for given dir.
+    Generates a file list and their sizes for given dir.
 
-    Args:
+    Args
+    --------------
+    path: `str` or path-like
+        Directory to start FROM
 
-        * path (path-like): directory to start FROM
-
-    Returns:
-
-        * tuple: filelist and total size.
+    Returns
+    --------------
+    tuple:
+        Filelist and total size.
     """
     if os.path.isfile(path):
         return [path], os.path.getsize(path)
@@ -338,15 +380,18 @@ def _dir_files_sizes(path):
 
 
 def path_size(path):
-    """Calculate sum of all filesizes within directory.
+    """
+    Calculate sum of all filesizes within directory.
 
-    Args:
+    Args
+    --------------
+    path : str or path-like
+        The path to start calculating from.
 
-        * path (pathlike): The path to start calculating from.
-
-    Returns:
-
-        * int: total sum in bytes
+    Returns
+    --------------
+    int:
+        total sum in bytes
     """
     size = 0
     if os.path.isfile(path):
@@ -361,16 +406,20 @@ def path_size(path):
 
 
 def get_file_list(path, sort=False):
-    """Search directory tree for files.
+    """
+    Search directory tree for files.
 
-    Args:
+    Args
+    --------------
+    path: str or path-like
+        path to file or directory base
+    sort: bool
+        return list sorted. Defaults to False.
 
-        * path (pathlike): path to file or directory base
-        * sort (bool, optional): return list sorted. Defaults to False.
-
-    Returns:
-
-        * list: all file paths within directory tree.
+    Returns
+    --------------
+    list:
+        all file paths within directory tree.
     """
     if os.path.isfile(path):
         return [path]
@@ -391,12 +440,41 @@ def get_file_list(path, sort=False):
 
 
 def path_stat(path):
-    """combines a series of functions to work like a stat call for a directory and its contents."""
+    """
+    Calculate directory statistics
+
+    Args
+    --------------
+    path : str or path-like
+        The path to start calculating from.
+
+    Returns
+    --------------
+    filelist: list
+        List of all files contained in Directory
+    size: int
+        Total sum of bytes from all contents of dir
+    piece_length: int
+        The size of each transfered piece on the Bittorrent stream.
+    """
     filelist, size = _dir_files_sizes(path)
     piece_length = get_piece_length(size)
     return (filelist, size, piece_length)
 
 
 def path_piece_length(path):
+    """
+    Calculate piece length for input path and contents.
+
+    Args
+    ---------------
+    path: str or pathlike
+        The absolute path to directory and contents
+
+    Returns
+    -------------------
+    piece_length: int
+        The size of each transfered piece on the Bittorrent stream.
+    """
     psize = path_size(path)
     return get_piece_length(psize)

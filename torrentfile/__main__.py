@@ -13,9 +13,7 @@
 #####################################################################
 from torrentfile import main
 
-"""
-This file is here for convenience.  It makes it easier to activate the Command Line Interface.
-"""
+"""This file is necessary for CLI."""
 
 if __name__ == "__main__":
     main()

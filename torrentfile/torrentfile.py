@@ -20,10 +20,7 @@ from torrentfile.metafileV2 import TorrentFileV2
 
 
 class Cli:
-    """CLI.
-
-    Command Line Interface for torrentfile.
-    """
+    """Command Line Interface for torrentfile."""
 
     kwargs = {
         "announce": None,
@@ -37,12 +34,13 @@ class Cli:
     }
 
     def compile_kwargs(self):
-        """### compile_kwargs
+        """
+        Compile kwargs from command line flags.
 
         Returns
         -----------
-        - ckwargs: dict
-            - : keyword args for MetaFile Class Init.
+        ckwargs: dict
+            keyword args for MetaFile Class Init.
         """
         cdict, ckwargs = vars(self), self.kwargs
         for item in ckwargs:
@@ -71,18 +69,17 @@ class Parser(argparse.ArgumentParser):
     def __init__(
         self, prog="torrentfile", description="Torrentfile CLI", prefix_chars="-"
     ):
-        """__init__.
-
-        #### Initialize Parser class.
+        """
+        Initialize Parser class.
 
         Parameters
         ----------
-        - prog : str
-            - Name of the program
-        - description : str
-            - short summary of program functionality
-        - prefix_chars : str
-            - string containing all characters used as flag prefixes on command line
+        prog : str
+            Name of the program
+        description : str
+            short summary of program functionality
+        prefix_chars : str
+            string containing all characters used as flag prefixes on command line
         """
         super().__init__(self, prog, description=description, prefix_chars=prefix_chars)
         self.name = prog
@@ -91,19 +88,18 @@ class Parser(argparse.ArgumentParser):
         self.add_args()
 
     def parse_args(self, args):
-        """## parse_args.
-
-        #### Parse input arguments from command line.
+        """
+        Parse input arguments from command line.
 
         Parameters
         ----------
-        - args : list[str]
-            - List of arguments
+        args : list[str]
+            List of arguments
 
         Returns
         ---------
-        - output : tuple
-            - Path to torrentfile, and meta dictionary
+        output : tuple
+            Path to torrentfile, and meta dictionary
         """
         super().parse_args(args, self.namespace)
         output = self.namespace.create_torrentfile()
@@ -170,11 +166,11 @@ class Parser(argparse.ArgumentParser):
         self.add_argument(
             "-t",
             "-a",
-            action="extend",
+            action="append",
             nargs="+",
             dest="announce",
             metavar="url",
-            help='"--tracker [url1] [url2]..."  add torrent tracker(s).',
+            help='"-t url1 url2"  add torrent tracker(s).',
         )
         self.add_argument(
             "--v2",
@@ -191,13 +187,13 @@ def main(args):
 
     Parameters
     ----------
-    - args : list[str]
-        - sys.argv strings
+    args : list[str]
+        sys.argv strings
 
     Returns
     ---------
-    - tuple :
-        - outfile, dictionary
+    tuple :
+        outfile, dictionary
     """
     parser = Parser()
     outfile, meta = parser.parse_args(args)
