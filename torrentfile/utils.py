@@ -34,13 +34,12 @@ from torrentfile.exceptions import BendecodingError, BenencodingError
 
 
 class Bendecoder:
-    """
-    Bendecoder class contains all decode and convenience methods.
+    """Bendecoder class contains all decode and convenience methods.
 
     Initialize instance with optional pre compiled data.
 
     Args:
-    data(`bytes`): Target data for decoding.
+      data(`bytes`): Target data for decoding.
     """
 
     def __init__(self, data=None):
@@ -54,8 +53,7 @@ class Bendecoder:
         self.data = data
 
     def decode(self, bits=None):
-        """
-        Decode bencoded data.
+        """Decode bencoded data.
 
         Args:
           bits(`bytes`): Bencoded data for decoding.
@@ -63,13 +61,12 @@ class Bendecoder:
         Returns:
           `any`: The decoded data.
         """
-        bits = bits if bits else self.data
+        bits = bits if bits is not None else self.data
         data, _ = self._decode(bits)
         return data
 
     def _decode(self, bits):
-        """
-        Decode bencoded data.
+        """Decode bencoded data.
 
         Args:
           bits(`bytes`): Bencoded data for decoding.
@@ -77,7 +74,6 @@ class Bendecoder:
         Returns:
           `any`: The decoded data.
         """
-
         if bits.startswith(b"i"):
             match, feed = self._decode_int(bits)
             return match, feed
@@ -119,8 +115,7 @@ class Bendecoder:
         return dic, feed
 
     def _decode_list(self, bits):
-        """
-        Decode bencoded data `list`.
+        """Decode bencoded data `list`.
 
         Args:
           bits(`bytes`): Bencoded data for decoding.
@@ -136,16 +131,15 @@ class Bendecoder:
         feed += 1
         return lst, feed
 
-    def _decode_str(self, bits):
-        """
-        Decode bencoded data `str`.
+    @staticmethod
+    def _decode_str(bits):
+        """Decode bencoded data `str`.
 
         Args:
           bits(`bytes`): Bencoded data for decoding.
 
         Returns:
           `str`: The decoded data.
-
         """
         match = re.match(rb"(\d+):", bits)
         word_len, start = int(match.groups()[0]), match.span()[1]
@@ -156,9 +150,9 @@ class Bendecoder:
             word = word.hex()
         return word, start + word_len
 
-    def _decode_int(self, bits):
-        """
-        Decode bencoded data `int`.
+    @staticmethod
+    def _decode_int(bits):
+        """Decode bencoded data `int`.
 
         Args:
           bits(`bytes`): Bencoded data for decoding.
@@ -172,8 +166,7 @@ class Bendecoder:
 
 
 class Benencoder:
-    """
-    Encode collection of methods for Bencoding data.
+    """Encode collection of methods for Bencoding data.
 
     Initialize Benencoder insance with optional pre compiled data.
 
@@ -194,8 +187,7 @@ class Benencoder:
         self.data = data
 
     def encode(self, val=None):
-        """
-        Encode data with bencode encoding.
+        """Encode data with bencode encoding.
 
         Args:
           val(`any`): data to be encoded.
@@ -203,31 +195,31 @@ class Benencoder:
         Returns:
           `bytes`: Decoded data.
         """
-        val = val if val != None else self.data
+        val = val if val is not None else self.data
 
-        if type(val) == str:
+        if isinstance(val, str):
             return self._encode_str(val)
 
         if hasattr(val, "hex"):
             return self._encode_bytes(val)
 
-        if type(val) == int:
+        if isinstance(val, int):
             return self._encode_int(val)
 
-        if type(val) == list:
+        if isinstance(val, list):
             return self._encode_list(val)
 
-        if type(val) == dict:
+        if isinstance(val, dict):
             return self._encode_dict(val)
 
-        if type(val) == bool:
+        if isinstance(val, bool):
             return 1 if val else 0
 
         raise BenencodingError(val)
 
-    def _encode_bytes(self, val):
-        """
-        Encode data with bencode encoding.
+    @staticmethod
+    def _encode_bytes(val):
+        """Encode data with bencode encoding.
 
         Args:
           val(`bytes`): data to be encoded.
@@ -238,9 +230,9 @@ class Benencoder:
         size = str(len(val)) + ":"
         return size.encode("utf-8") + val
 
-    def _encode_str(self, txt):
-        """
-        Encode data with bencode encoding.
+    @staticmethod
+    def _encode_str(txt):
+        """Encode data with bencode encoding.
 
         Args:
           val(`str`): data to be encoded.
@@ -251,9 +243,9 @@ class Benencoder:
         size = str(len(txt)).encode("utf-8")
         return size + b":" + txt.encode("utf-8")
 
-    def _encode_int(self, i):
-        """
-        Encode data with bencode encoding.
+    @staticmethod
+    def _encode_int(i):
+        """Encode data with bencode encoding.
 
         Args:
           val(`int`): data to be encoded.
@@ -264,15 +256,13 @@ class Benencoder:
         return b"i" + str(i).encode("utf-8") + b"e"
 
     def _encode_list(self, elems):
-        """
-        Encode data with bencode encoding.
+        """Encode data with bencode encoding.
 
         Args:
           val(`list`): data to be encoded.
 
         Returns:
           `bytes`: Decoded data.
-
         """
         lst = [b"l"]
         for elem in elems:
@@ -283,27 +273,18 @@ class Benencoder:
         return bit_lst
 
     def _encode_dict(self, dic):
-        """
-        Encode data with bencode encoding.
+        """Encode data with bencode encoding.
 
         Args:
           val(`dict`): data to be encoded.
 
         Returns:
           `bytes`: Decoded data.
-
         """
         result = b"d"
         for k, v in dic.items():
             result += b"".join([self.encode(k), self.encode(v)])
         return result + b"e"
-
-
-KIB = 1 << 10
-MIB = KIB * KIB
-GIB = KIB ** 3
-MIN_BLOCK = 2 ** 14
-TOP_SIZE = 2 ** 18
 
 
 def get_piece_length(size):
@@ -314,12 +295,11 @@ def get_piece_length(size):
 
     Returns:
       `int`: Ideal peace length calculated from the size arguement.
-
     """
     exp = 14
     while size / (2 ** exp) > 50 and exp < 20:
         exp += 1
-    if exp == 20 and size / MIB > 1000:
+    if exp == 20 and size / (2 ** 20) > 1000:
         while 20 < (size / 2) ** exp > 2000 and exp <= 23:
             exp += 1
     return 2 ** exp
@@ -333,7 +313,6 @@ def sortfiles(path):
 
     Yields:
       (`str`) Next path in filelist.
-
     """
     filelist = sorted(os.listdir(path), key=str.lower)
     for item in filelist:
@@ -348,7 +327,6 @@ def _dir_files_sizes(path):
 
     Returns:
       `tuple`: Filelist and total size.
-
     """
     if os.path.isfile(path):
         return [path], os.path.getsize(path)
@@ -369,7 +347,6 @@ def path_size(path):
 
     Returns:
       `int`: Total sum in bytes.
-
     """
     size = 0
     if os.path.isfile(path):
@@ -392,7 +369,6 @@ def get_file_list(path, sort=False):
 
     Returns:
       `list`: All file paths within directory tree.
-
     """
     if os.path.isfile(path):
         return [path]
@@ -422,7 +398,6 @@ def path_stat(path):
       filelist(`list`):  List of all files contained in Directory
       size(`int`): Total sum of bytes from all contents of dir
       piece_length(`int`): The size of pieces of the torrent contents.
-
     """
     filelist, size = _dir_files_sizes(path)
     piece_length = get_piece_length(size)
@@ -430,15 +405,13 @@ def path_stat(path):
 
 
 def path_piece_length(path):
-    """
-    Calculate piece length for input path and contents.
+    """Calculate piece length for input path and contents.
 
     Args:
-    path(`str`): The absolute path to directory and contents.
+      path(`str`): The absolute path to directory and contents.
 
     Returns:
-    piece_length(`int`): The size of pieces of torrent content.
-
+      piece_length(`int`): The size of pieces of torrent content.
     """
     psize = path_size(path)
     return get_piece_length(psize)

@@ -14,17 +14,20 @@
 """Main script activated by calls from Command Line."""
 
 import sys
-import os
 import argparse
-import inspect
 import torrentfile
 from torrentfile.metafile import TorrentFile
 from torrentfile.metafileV2 import TorrentFileV2
 
 
 class Cli:
-    """
-    Command Line Interface for torrentfile.
+    """Command Line Interface for torrentfile.
+
+    Properties:
+        kwargs: Dictionary with all possible cli flags.
+
+    Attributes:
+        create_torrentfile: Self explanatory.
     """
 
     kwargs = {
@@ -64,8 +67,7 @@ class Cli:
 
 
 class Parser(argparse.ArgumentParser):
-    """
-    Parser Initialize command line argument parser.
+    """Parser Initialize command line argument parser.
 
     Args:
       prog(str): Name of the program
@@ -74,22 +76,20 @@ class Parser(argparse.ArgumentParser):
 
     Returns:
       parser obj: Parser instance with runtime information as attributes.
-
     """
 
-    def __init__(self, prog=sys.argv[0],
-                 prefix_chars="-", description="Torrentfile CLI"):
-        """
-        Parser Initialize command line argument parser.
+    def __init__(
+        self, prog=sys.argv[0], prefix_chars="-", description="Torrentfile CLI"
+    ):
+        """Parser Initialize command line argument parser.
 
         Args:
-        prog(str): Name of the program
-        description(str): Short summary of program functionality.
-        prefix_chars(str): Flag prefixes on command line.
+          prog(str): Name of the program
+          description(str): Short summary of program functionality.
+          prefix_chars(str): Flag prefixes on command line.
 
         Returns:
-        parser obj: Parser instance with runtime information as attributes.
-
+          parser obj: Parser instance with runtime information as attributes.
         """
         super().__init__(self, prog, prefix_chars=prefix_chars,
                          description=description)
@@ -99,12 +99,10 @@ class Parser(argparse.ArgumentParser):
         self.__add_args()
 
     def parse(self, args):
-        """
-        Parse input arguments from command line.
+        """Parse input arguments from command line.
 
         Args:
           args(list of str): List of user supplied arguments.
-
         """
         self.parse_args(args, self.namespace)
         self.namespace.create_torrentfile()
@@ -117,7 +115,7 @@ class Parser(argparse.ArgumentParser):
         return str(self.namespace)
 
     def __add_args(self):
-        """add_args."""
+        """Add arguments."""
         self.add_argument(
             "--version",
             action="version",
@@ -196,12 +194,7 @@ def main():
     args = sys.argv[1:]
     parser = Parser()
     parser.parse(args)
-    dirname = os.path.dirname(os.path.abspath(__file__))
-    cli = os.path.join(dirname, "__main__.py")
     return parser
-
-
-
 
 
 if __name__ == "__main__":

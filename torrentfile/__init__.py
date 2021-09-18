@@ -12,22 +12,37 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-"""
-Torrentfile can create Bittorrent metafiles for any content.
+"""Torrentfile can create Bittorrent metafiles for any content.
 
-Both Bittorrent v1 and v2 are fully supported.
+Both Bittorrent v1 and v2 are fully supported. Also included is a torrent
+torrent file checker, which can verify a .torrent file is formated correctly
+as well as validate files and folders against metadata.
+
+Modules:
+    metafile: Creation/Validation of v1 .torrent files.
+    metafileV2: Creation/Validation of v2 .torrent files.
+    torrentfile: torrentfile's Command Line Interface implementation.
+    exceptions: Custom Exceptions used in package.
+    utils: Utilities used throughout package.
 """
 
 from torrentfile import utils, metafile, metafileV2, torrentfile, exceptions
 from torrentfile.metafile import TorrentFile
 from torrentfile.metafileV2 import TorrentFileV2
 from torrentfile.torrentfile import main
-from torrentfile.utils import path_stat, path_size
+from torrentfile.utils import (
+    path_stat,
+    path_size,
+    get_piece_length,
+    path_piece_length,
+    Benencoder,
+    Bendecoder,
+)
 
 __version__ = "0.2.2"
 __author__ = "alexpdev"
 
-__all__ = [
+__all__ = (
     "metafile",
     "metafileV2",
     "torrentfile",
@@ -35,7 +50,11 @@ __all__ = [
     "main",
     "path_stat",
     "path_size",
+    "utils",
+    "get_piece_length",
+    "path_piece_length",
+    "Benencoder",
+    "Bendecoder",
     "TorrentFile",
     "TorrentFileV2",
-    "utils",
-]
+)
