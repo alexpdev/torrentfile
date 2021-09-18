@@ -14,11 +14,7 @@
 
 """Required file for CLI to function properly."""
 
-import sys
 from torrentfile import main
 
 if __name__ == "__main__":
-    print("script run from __main__")
-    sys.stdout.write("script run from __main__")
-    main()
-    print("success")
+    print(main())

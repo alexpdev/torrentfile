@@ -395,7 +395,7 @@ class Feeder:
         self.pieces = []
         self.index = 0
         self.current = open(self.paths[self.index], "rb")
-        self.iterator = self._leaves()
+        self.iterator = self.leaves()
 
     def __iter__(self):
         """
@@ -405,7 +405,7 @@ class Feeder:
           `iter(self)`: Iterator for leaves/hash pieces.
 
         """
-        self.iterator = self._leaves()
+        self.iterator = self.leaves()
         return self.iterator
 
     def __next__(self):

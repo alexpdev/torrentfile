@@ -14,7 +14,9 @@
 """Main script activated by calls from Command Line."""
 
 import sys
+import os
 import argparse
+import inspect
 import torrentfile
 from torrentfile.metafile import TorrentFile
 from torrentfile.metafileV2 import TorrentFileV2
@@ -191,19 +193,19 @@ class Parser(argparse.ArgumentParser):
 
 def main():
     """Initialize Command Line Interface."""
-    print("script skipped straight to main")
-    sys.stdout.write("script run from torrentfile")
     args = sys.argv[1:]
-    print(args)
     parser = Parser()
-    print(parser)
     parser.parse(args)
-    print(parser)
+    dirname = os.path.dirname(os.path.abspath(__file__))
+    cli = os.path.join(dirname, "__main__.py")
+    for i in inspect.stack():
+        if os.path.samefile(i.filename, cli):
+            return 0
     return parser
 
 
+
+
+
 if __name__ == "__main__":
-    print("script run from torrentfile")
-    sys.stdout.write("script run from torrentfile")
     main()
-    print("success")
