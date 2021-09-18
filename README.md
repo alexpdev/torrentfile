@@ -46,4 +46,3 @@ optional arguments:
 Distributed under the GNU LGPL v3 license. See `LICENSE` for more information.
 
 [https://github.com/alexpdev](https://github.com/alexpdev/)
-

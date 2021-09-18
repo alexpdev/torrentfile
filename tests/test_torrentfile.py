@@ -43,4 +43,3 @@ def test_torrentfile_file(tfile):
     torrent = TorrentFile(path=tfile, announce=announce, private=1)
     data = torrent.assemble()
     assert data is not None
-
