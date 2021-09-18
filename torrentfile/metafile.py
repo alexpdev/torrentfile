@@ -11,7 +11,8 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-""" Metainfo Files (.torrent)
+
+"""From Bittorrent.org Documentation pages.
 
 Metainfo files (also known as .torrent files) are bencoded dictionaries with
 the following keys:
@@ -41,7 +42,7 @@ which are all the same length except for possibly the last one which may be
 truncated. `piece length` is almost always a power of two, most commonly 2 18
 = 256 K (BitTorrent prior to version 3.2 uses 2 20 = 1 M as default).
 
-`pieces` maps to a string whose length is a multiple of 20\. It is to be
+`pieces` maps to a string whose length is a multiple of 20. It is to be
 subdivided into strings of length 20, each of which is the SHA1 hash of the
 piece at the corresponding index.
 
@@ -56,9 +57,9 @@ having a single file by concatenating the files in the order they appear in
 the files list. The files list is the value `files` maps to, and is a list of
 dictionaries containing the following keys:
 
-`length` \- The length of the file, in bytes.
+`length` - The length of the file, in bytes.
 
-`path` \- A list of UTF-8 encoded strings corresponding to subdirectory names,
+`path` - A list of UTF-8 encoded strings corresponding to subdirectory names,
 the last of which is the actual file name (a zero length list is an error
 case).
 
@@ -77,40 +78,45 @@ timestamp = lambda: int(datetime.timestamp(datetime.now()))
 
 
 class TorrentFile:
-    """Class for creating Bittorrent meta files."""
+    """Class for creating Bittorrent meta files.
 
-    def __init__(
-        self,
-        path=None,
-        piece_length=None,
-        announce=None,
-        private=None,
-        source=None,
-        comment=None,
-        outfile=None,
-        created_by=None,
-    ):
-        """
-        Constructor for *Torrentfile* class.
+    Construct *Torrentfile* class instance object.
 
-        Args
-        --------------------
-        path: str
-            path to torrent file or directory.
-        piece_length: (int)
-            size of each piece of torrent data.
-        created_by: str
-            creator.
-        announce: str
-            tracker url.
-        private: (int)
-            1 if private torrent else 0.
-        source: str
-            source tracker.
-        comment: str
-            comment string.
-        outfile: str
-            path to write metfile to.
+    Args:
+      path(`str`): Path to torrent file or directory.
+      piece_length(`int`): Size of each piece of torrent data.
+      created_by(`str`): For 'created by' field.
+      announce(`str`): Tracker URL.
+      private(`int`): 1 if private torrent else 0.
+      source(`str`): Source tracker.
+      comment(`str`): Comment string.
+      outfile(`str`): Path to write metfile to.
+
+    Returns:
+      `obj`: Instance of Metafile Class.
+
+    """
+
+    def __init__(self, path=None, piece_length=None,
+                announce=None, private=None, source=None,
+                comment=None, outfile=None, created_by=None):
+        """Class for creating Bittorrent meta files.
+
+        Construct *Torrentfile* class instance object.
+
+        Args:
+          path(`str`): Path to torrent file or directory.
+          piece_length(`int`): Size of each piece of torrent data.
+          created_by(`str`): For 'created by' field.
+          announce(`str`): Tracker URL.
+          private(`int`): 1 if private torrent else 0.
+          source(`str`): Source tracker.
+          comment(`str`): Comment string.
+          outfile(`str`): Path to write metfile to.
+
+        Returns:
+          `obj`: Instance of Metafile Class.
+
         """
         if not path:
             raise MissingPathError
@@ -129,14 +135,7 @@ class TorrentFile:
         self.meta = {}
 
     def _assemble_infodict(self):
-        """
-        Create info dictionary.
-
-        Returns
-        --------------
-        dict:
-            info dictionary.
-        """
+        """Create info dictionary."""
         filelist, size, piece_length = path_stat(self.base)
 
         if not self.piece_length:
@@ -162,7 +161,7 @@ class TorrentFile:
 
         self.info["name"] = self.name
 
-        self.info["piece_length"] = self.piece_length
+        self.info["piece length"] = self.piece_length
 
         pieces = bytearray()
         for piece in Feeder(filelist, self.piece_length, size):
@@ -178,20 +177,17 @@ class TorrentFile:
         return self.info
 
     def assemble(self):
-        """
-        Assemble components of torrent metafile.
-
-        Raises:
-        ---------------
-        MissingTracker:
-            Announce field is required for all torrents.
+        """Assemble components of torrent metafile.
 
         Returns:
-        ----------------------
-        `dict`:
-            metadata dictionary for torrent file
+          `dict`: metadata dictionary for torrent file
+
+        Raises:
+          `MissingTrackerError`: Announce field is required for all torrents.
+
         """
         if self.announce:
+            print(self.announce)
             # if announce is a string assign it to announce key in meta dict
             if isinstance(self.announce, str):
                 self.meta["announce"] = self.announce
@@ -212,18 +208,14 @@ class TorrentFile:
         return self.meta
 
     def write(self, outfile=None):
-        """
-        Write assembled data to .torrent file.
+        """Write assembled data to .torrent file.
 
-        Args
-        ----------------
-        outfile: (`str`)
-            path to save location. default = None
+        Args:
+          outfile: (Default value = None)
 
-        Returns
-        ---------------
-        `bytes`:
-            data writtend to .torrent file
+        Returns:
+          `tuple`: Path to output file, Pre-encoded metadata.
+
         """
         if outfile:
             self.outfile = outfile
@@ -238,25 +230,31 @@ class TorrentFile:
 
 
 class Checker:
-    """Check a given file or directory to see if it matches a torrentfile."""
+    """Check a given file or directory to see if it matches a torrentfile.
+
+    Public constructor for Checker class instance.
+
+    Args:
+      metafile:(`str`): Path to ".torrent" file.
+      location(`str`): Path where the content is located in filesystem.
+
+    Example:
+        >> metafile = "/path/to/torrentfile/content_file_or_dir.torrent"
+        >> location = "/path/to/location"
+        >> os.path.exists("/path/to/location/content_file_or_dir")
+        Out: True
+        >> checker = Checker(metafile, location)
+    """
 
     def __init__(self, metafile, location):
-        """
+        """Check a given file or directory to see if it matches a torrentfile.
+
         Public constructor for Checker class instance.
 
-        Args
-        ------------
-        metafile: str
-            path to ".torrent" file.
-        location: str
-            path where the content is located in filesystem.
+        Args:
+          metafile:(`str`): Path to ".torrent" file.
+          location(`str`): Path where the content is located in filesystem.
 
-        Example:
-            >> metafile = "/path/to/torrentfile/content_file_or_dir.torrent"
-            >> location = "/path/to/location"
-            >> os.path.exists("/path/to/location/content_file_or_dir")
-            Out: True
-            >> checker = Checker(metafile, location)
         """
         self.metafile = metafile
         self.location = location
@@ -307,6 +305,15 @@ class Checker:
         return self.paths
 
     def _check_path(self, paths):
+        """Check if paths exist.
+
+        Args:
+          paths(`list`): Paths to torrent files contents.
+
+        Returns:
+          `str`: "Complete" after finishing.
+
+        """
         feeder = Feeder(paths, self.piece_length, self.total, sha256=False)
         pieces = bytes.fromhex(self.pieces)
         counter = 0
@@ -321,6 +328,12 @@ class Checker:
         return "complete"
 
     def check_path(self):
+        """Check if path exists and is the correct size and hash.
+
+        Returns:
+            `str`: Indicating process has completed.
+
+        """
         base = os.path.join(self.location, self.name)
 
         if os.path.isfile(base):
@@ -332,6 +345,7 @@ class Checker:
         return self._check_path(paths)
 
     def check(self):
+        """Check if all components work as expected."""
         self.decode_metafile()
 
         self.get_paths()
@@ -341,20 +355,25 @@ class Checker:
 
 
 class Feeder:
-    """Seemlesly generate hashes of piece length data from filelist contents."""
+    """Seemlesly generate hashes of piece length data from filelist contents.
+
+    Constructor for the Feeder class.
+
+    Args:
+      paths(`list`): List of files.
+      piece_length(`int`): Size of chuncks to split the data into.
+      total(`int`): Sum of all files in file list.
+    """
 
     def __init__(self, paths, piece_length, total):
-        """
+        """Seemlesly generate hashes of piece length data from filelist contents.
+
         Constructor for the Feeder class.
 
         Args:
-        -------------
-        paths: (list[str])
-            list of files.
-        piece_length: (int)
-            Size of chuncks to split the data into.
-        total: (int)
-            Sum of all files in file list.
+          paths(`list`): List of files.
+          piece_length(`int`): Size of chuncks to split the data into.
+          total(`int`): Sum of all files in file list.
         """
         self.piece_length = piece_length
         self.paths = paths
@@ -362,56 +381,41 @@ class Feeder:
         self.pieces = []
         self.index = 0
         self.current = open(self.paths[self.index], "rb")
-        self.iterator = self.leaves()
+        self.iterator = self._leaves()
 
     def __iter__(self):
-        """
-        Iterate through feed pieces.
+        """Iterate through feed pieces.
 
         Returns:
-        -------------
-        iterator:
-            Iterator object
+          `iter(self)`: Iterator for leaves/hash pieces.
+
         """
-        self.iterator = self.leaves()
+        self.iterator = self._leaves()
         return self.iterator
 
     def __next__(self):
-        """Returns the next element from iterator.
+        """Return the next element from iterator.
 
         Returns:
-        -----------
-        bytes-like:
-            piece_length length pieces of data.
+          `bytes`: Piece_length length pieces of data.
+
         """
         return self.iterator.__next__()
 
     def total_pieces(self):
-        """
-        Total size / piece length.
-
-        Returns
-        ---------------
-        int:
-            number of pieces for entire torrrent
-        """
+        """Total size / piece length."""
         return math.ceil(self.total // self.piece_length)
 
     def handle_partial(self, arr, partial):
-        """
-        Seemlessly move to next file for input data.
+        """Seemlessly move to next file for input data.
 
-        Args
-        -------------
-        arr: (bytes-like)
-            incomplete piece containing partial data
-        partial: (int)
-            size of incomplete piece_length
+        Args:
+          arr(`bytearray`): Incomplete piece containing partial data
+          partial(`int`): Size of incomplete piece_length
 
-        Returns
-        -------------
-        bytes-like:
-            final piece filled with data.
+        Returns:
+          `bytes`: SHA1 digest of the complete piece.
+
         """
         while partial < self.piece_length:
             temp = bytearray(self.piece_length - partial)
@@ -425,14 +429,7 @@ class Feeder:
         return sha1(arr).digest()
 
     def next_file(self):
-        """
-        Seemlessly transition to next file in file list.
-
-        Returns
-        ------------
-        bool:
-            returns false if no more files are left
-        """
+        """Seemlessly transition to next file in file list."""
         self.index += 1
         if self.index < len(self.paths):
             self.current.close()
@@ -441,14 +438,7 @@ class Feeder:
         return False
 
     def leaves(self):
-        """
-        Leaves generator of piece-length pieces of data from input file list.
-
-        Yields:
-        -----------
-        bytes:
-            hash values of chuncked data.
-        """
+        """Leaves generator of piece-length pieces of data from input file list."""
         while True:
             piece = bytearray(self.piece_length)
             size = self.current.readinto(piece)

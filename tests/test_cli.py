@@ -1,4 +1,5 @@
 import os
+import sys
 import pytest
 from torrentfile import main
 from torrentfile.exceptions import MissingPathError
@@ -52,44 +53,50 @@ def tmeta(testdir):
         "--comment",
         "some comment",
     ]
-    outfile, meta = main(args)
-    yield meta
-    rmpath(outfile)
+    sys.argv = [sys.argv[0]] + args
+    parser = main()
+    yield parser
+    rmpath(parser.outfile)
     rmpath(testdir)
 
 
 def test_cli_args_dir(tdir):
     args = ["--path", tdir]
-    outfile, _ = main(args)
-    assert os.path.exists(outfile)
-    os.remove(outfile)
+    sys.argv = [sys.argv[0]] + args
+    parser = main()
+    assert os.path.exists(parser.outfile)
+    os.remove(parser.outfile)
 
 
 def test_cli_args_dir_v2(tdir):
     args = ["--path", tdir, "--v2"]
-    outfile, _ = main(args)
-    assert os.path.exists(outfile)
-    os.remove(outfile)
+    sys.argv = [sys.argv[0]] + args
+    parser = main()
+    assert os.path.exists(parser.outfile)
+    os.remove(parser.outfile)
 
 
 def test_cli_args_file(tfile):
     args = ["--path", tfile]
-    outfile, _ = main(args)
-    assert os.path.exists(outfile)
-    os.remove(outfile)
+    sys.argv = [sys.argv[0]] + args
+    parser = main()
+    assert os.path.exists(parser.outfile)
+    os.remove(parser.outfile)
 
 
 def test_cli_args_file_v2(tfile):
     args = ["--path", tfile, "--v2"]
-    outfile, _ = main(args)
-    assert os.path.exists(outfile)
-    os.remove(outfile)
+    sys.argv = [sys.argv[0]] + args
+    parser = main()
+    assert os.path.exists(parser.outfile)
+    os.remove(parser.outfile)
 
 
 def test_cli_no_args():
     args = []
     try:
-        assert main(args)
+        sys.argv = [sys.argv[0]]
+        assert main()
     except MissingPathError:
         assert True
 
@@ -97,11 +104,12 @@ def test_cli_no_args():
 def test_cli_no_args_v2():
     args = ["--v2"]
     try:
-        assert main(args)
+        sys.argv = [sys.argv[0]] + args
+        assert main()
     except MissingPathError:
         assert True
 
 
 def test_cli_meta_source_dir(tmeta):
-    assert "source" in tmeta["info"]
-    assert tmeta["info"]["source"] == "Alpha"
+    assert "source" in tmeta.meta["info"]
+    assert tmeta.meta["info"]["source"] == "Alpha"

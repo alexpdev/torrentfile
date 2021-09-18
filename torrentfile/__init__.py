@@ -18,7 +18,7 @@ from torrentfile.metafileV2 import TorrentFileV2
 from torrentfile.torrentfile import main
 from torrentfile.utils import path_stat, path_size
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 __author__ = "alexpdev"
 
 __all__ = [

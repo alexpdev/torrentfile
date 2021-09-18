@@ -11,9 +11,14 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
+import sys
 from torrentfile import main
 
 """This file is necessary for CLI."""
 
+
 if __name__ == "__main__":
+    print("script run from __main__")
+    sys.stdout.write("script run from __main__")
     main()
+    print("success")
