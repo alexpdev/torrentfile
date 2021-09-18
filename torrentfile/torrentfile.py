@@ -198,9 +198,6 @@ def main():
     parser.parse(args)
     dirname = os.path.dirname(os.path.abspath(__file__))
     cli = os.path.join(dirname, "__main__.py")
-    for i in inspect.stack():
-        if os.path.samefile(i.filename, cli):
-            return 0
     return parser
 
 
