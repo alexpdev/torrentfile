@@ -5,17 +5,17 @@ from torrentfile import main
 from torrentfile.exceptions import MissingPathError
 from tests.context import tempfile, tempdir, rmpath
 
-"""
-List of flags for the Command Line Interface.
 
-Options = [
-    "--source", "--comment", "--private",
-    "--created-by", "--piece-length",
-    ("--v2","-v"),
-    ("--path", "-p"),
-    ("-t", "-a",),
-    ("-o", "--outfile",)]
-"""
+# List of flags for the Command Line Interface.
+
+# Options = [
+#     "--source", "--comment", "--private",
+#     "--created-by", "--piece-length",
+#     ("--v2","-v"),
+#     ("--path", "-p"),
+#     ("-t", "-a",),
+#     ("-o", "--outfile",)]
+
 
 
 @pytest.fixture(scope="module")
@@ -93,7 +93,6 @@ def test_cli_args_file_v2(tfile):
 
 
 def test_cli_no_args():
-    args = []
     try:
         sys.argv = [sys.argv[0]]
         assert main()

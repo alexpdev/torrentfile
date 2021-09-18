@@ -14,7 +14,9 @@
 """Main script activated by calls from Command Line."""
 
 import sys
+import os
 import argparse
+import inspect
 import torrentfile
 from torrentfile.metafile import TorrentFile
 from torrentfile.metafileV2 import TorrentFileV2
@@ -96,7 +98,7 @@ class Parser(argparse.ArgumentParser):
         self.namespace = Cli()
         self.__add_args()
 
-    def parse_args(self, args):
+    def parse(self, args):
         """
         Parse input arguments from command line.
 
@@ -104,7 +106,7 @@ class Parser(argparse.ArgumentParser):
           args(list of str): List of user supplied arguments.
 
         """
-        super().parse_args(args, self.namespace)
+        self.parse_args(args, self.namespace)
         self.namespace.create_torrentfile()
         outfile, meta = self.namespace.output
         self.outfile = outfile
@@ -191,19 +193,19 @@ class Parser(argparse.ArgumentParser):
 
 def main():
     """Initialize Command Line Interface."""
-    print("script skipped straight to main")
-    sys.stdout.write("script run from torrentfile")
     args = sys.argv[1:]
-    print(args)
     parser = Parser()
-    print(parser)
-    parser.parse_args(args)
-    print(parser)
+    parser.parse(args)
+    dirname = os.path.dirname(os.path.abspath(__file__))
+    cli = os.path.join(dirname, "__main__.py")
+    for i in inspect.stack():
+        if os.path.samefile(i.filename, cli):
+            return 0
     return parser
 
 
+
+
+
 if __name__ == "__main__":
-    print("script run from torrentfile")
-    sys.stdout.write("script run from torrentfile")
     main()
-    print("success")

@@ -283,7 +283,7 @@ class TorrentFileV2:
                              "pieces root": filehash.root_hash}}
         elif os.path.isdir(path):
             for base, full in sortfiles(path):
-                file_tree[base] = self.traverse(full)
+                file_tree[base] = self._traverse(full)
         return file_tree
 
     def write(self, outfile=None):

@@ -203,7 +203,7 @@ class Benencoder:
         Returns:
           `bytes`: Decoded data.
         """
-        val = val if val else self.val
+        val = val if val != None else self.data
 
         if type(val) == str:
             return self._encode_str(val)
