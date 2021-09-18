@@ -12,9 +12,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-import os
 import pytest
-import subprocess
 from torrentfile import TorrentFile
 from tests.context import tempfile, tempdir, rmpath
 
