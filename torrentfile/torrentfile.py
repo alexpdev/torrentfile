@@ -21,8 +21,9 @@ from torrentfile.metafileV2 import TorrentFileV2
 
 
 class Cli:
-
-    """Command Line Interface for torrentfile."""
+    """
+    Command Line Interface for torrentfile.
+    """
 
     kwargs = {
         "announce": None,
@@ -61,8 +62,8 @@ class Cli:
 
 
 class Parser(argparse.ArgumentParser):
-    
-    """Parser Initialize command line argument parser.
+    """
+    Parser Initialize command line argument parser.
 
     Args:
       prog(str): Name of the program

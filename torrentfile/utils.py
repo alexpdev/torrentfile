@@ -12,7 +12,8 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-"""Examples for decoders.
+"""
+Examples for decoders.
 
 >> data = b'l18:Some Bencoded Datai15ee'
 >> decoder = Bendecoder(data)
@@ -33,13 +34,13 @@ from torrentfile.exceptions import BendecodingError, BenencodingError
 
 
 class Bendecoder:
-    """Bendecoder class contains all decode and convenience methods.
+    """
+    Bendecoder class contains all decode and convenience methods.
 
     Initialize instance with optional pre compiled data.
 
     Args:
     data(`bytes`): Target data for decoding.
-
     """
 
     def __init__(self, data=None):
@@ -48,29 +49,35 @@ class Bendecoder:
         Initialize instance with optional pre compiled data.
 
         Args:
-        data(`bytes`): Target data for decoding.
-
+          data(`bytes`): Target data for decoding.
         """
         self.data = data
 
-    def _decode(self, bits=None):
-        if bits is None:
-            bits = self.data
-        data, _ = self.__decode(bits)
-        return data
-
-    def __decode(self, bits):
-        """Decode bencoded data.
+    def decode(self, bits=None):
+        """
+        Decode bencoded data.
 
         Args:
           bits(`bytes`): Bencoded data for decoding.
 
         Returns:
           `any`: The decoded data.
-
         """
-        if bits is None:
-            bits = self.data
+        bits = bits if bits else self.data
+        data, _ = self._decode(bits)
+        return data
+
+    def _decode(self, bits):
+        """
+        Decode bencoded data.
+
+        Args:
+          bits(`bytes`): Bencoded data for decoding.
+
+        Returns:
+          `any`: The decoded data.
+        """
+
         if bits.startswith(b"i"):
             match, feed = self._decode_int(bits)
             return match, feed
@@ -100,7 +107,6 @@ class Bendecoder:
 
         Returns:
           `dict`: The decoded data.
-
         """
         dic, feed = {}, 1
         while not bits[feed:].startswith(b"e"):
@@ -121,7 +127,6 @@ class Bendecoder:
 
         Returns:
           `list`: The decoded data.
-
         """
         lst, feed = [], 1
         while not bits[feed:].startswith(b"e"):
@@ -174,7 +179,6 @@ class Benencoder:
 
     Args:
       data(`any`, optional) Target data for encoding. Defaults to None.
-
     """
 
     def __init__(self, data=None):
@@ -198,26 +202,25 @@ class Benencoder:
 
         Returns:
           `bytes`: Decoded data.
-
         """
-        if val is None:
-            val = self.data
+        val = val if val else self.val
+
         if type(val) == str:
             return self._encode_str(val)
 
         if hasattr(val, "hex"):
             return self._encode_bytes(val)
 
-        elif type(val) == int:
+        if type(val) == int:
             return self._encode_int(val)
 
-        elif type(val) == list:
+        if type(val) == list:
             return self._encode_list(val)
 
-        elif type(val) == dict:
+        if type(val) == dict:
             return self._encode_dict(val)
 
-        elif type(val) == bool:
+        if type(val) == bool:
             return 1 if val else 0
 
         raise BenencodingError(val)
@@ -231,7 +234,6 @@ class Benencoder:
 
         Returns:
           `bytes`: Decoded data.
-
         """
         size = str(len(val)) + ":"
         return size.encode("utf-8") + val
@@ -245,7 +247,6 @@ class Benencoder:
 
         Returns:
           `bytes`: Decoded data.
-
         """
         size = str(len(txt)).encode("utf-8")
         return size + b":" + txt.encode("utf-8")
@@ -259,7 +260,6 @@ class Benencoder:
 
         Returns:
           `bytes`: Decoded data.
-
         """
         return b"i" + str(i).encode("utf-8") + b"e"
 

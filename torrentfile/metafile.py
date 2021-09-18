@@ -238,7 +238,8 @@ class TorrentFile:
 
 
 class Checker:
-    """Check a given file or directory to see if it matches a torrentfile.
+    """
+    Check a given file or directory to see if it matches a torrentfile.
 
     Public constructor for Checker class instance.
 
@@ -366,7 +367,8 @@ class Checker:
 
 
 class Feeder:
-    """Seemlesly generate hashes of piece length data from filelist contents.
+    """
+    Seemlesly generate hashes of piece length data from filelist contents.
 
     Constructor for the Feeder class.
 

@@ -11,7 +11,8 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-"""#Bittorrent Protocol v2 Metafiles.
+"""
+Bittorrent Protocol v2 Metafiles.
 
 Metainfo files (also known as .torrent files) are bencoded dictionaries
 with the following keys:
@@ -136,7 +137,6 @@ optionally prepend the torrent name as root to avoid file name collisions.
                     nameB.ext: {"": {length: ...}}}}
 ```
 > multiple files rooted in a single directory.
-
 """
 
 import hashlib
@@ -159,6 +159,7 @@ class TorrentFileV2:
     """
     Bittorrent Protocol v2 metafile creator.
 
+    ...
     Args:
       path(`str`): (Optional) Path to torrentfile content.
       announce(`str`): (Optional) Tracker(s) to broadcast info.
