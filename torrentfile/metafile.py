@@ -74,7 +74,10 @@ from datetime import datetime
 from torrentfile.exceptions import MissingPathError
 from torrentfile.utils import Bendecoder, Benencoder, path_stat
 
-timestamp = lambda: int(datetime.timestamp(datetime.now()))
+
+def timestamp():
+    """Generate integer representation of current time."""
+    return int(datetime.timestamp(datetime.now()))
 
 
 class TorrentFile:
@@ -98,8 +101,8 @@ class TorrentFile:
     """
 
     def __init__(self, path=None, piece_length=None,
-                announce=None, private=None, source=None,
-                comment=None, outfile=None, created_by=None):
+                 announce=None, private=None, source=None,
+                 comment=None, outfile=None, created_by=None):
         """Class for creating Bittorrent meta files.
 
         Construct *Torrentfile* class instance object.
@@ -320,7 +323,7 @@ class Checker:
 
         for digest in feeder:
             if pieces[: len(digest)] == digest:
-                pieces = pieces[len(digest) :]
+                pieces = pieces[len(digest):]
                 counter += 1
             else:
                 print("Number of matching pieces = ", counter)
@@ -366,7 +369,7 @@ class Feeder:
     """
 
     def __init__(self, paths, piece_length, total):
-        """Seemlesly generate hashes of piece length data from filelist contents.
+        """Generate hashes of piece length data from filelist contents.
 
         Constructor for the Feeder class.
 
@@ -420,7 +423,7 @@ class Feeder:
         while partial < self.piece_length:
             temp = bytearray(self.piece_length - partial)
             size = self.current.readinto(temp)
-            arr[partial : partial + size] = temp[:size]
+            arr[partial: partial + size] = temp[: size]
             partial += size
             if partial < self.piece_length:
                 if not self.next_file():
@@ -438,7 +441,7 @@ class Feeder:
         return False
 
     def leaves(self):
-        """Leaves generator of piece-length pieces of data from input file list."""
+        """Generate piece-length pieces of data from input file list."""
         while True:
             piece = bytearray(self.piece_length)
             size = self.current.readinto(piece)

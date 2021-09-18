@@ -12,6 +12,11 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
+"""Torrentfile can create Bittorrent metafiles for any content.
+
+Both Bittorrent v1 and v2 are fully supported.
+"""
+
 from torrentfile import utils, metafile, metafileV2, torrentfile, exceptions
 from torrentfile.metafile import TorrentFile
 from torrentfile.metafileV2 import TorrentFileV2

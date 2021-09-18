@@ -35,6 +35,7 @@ class Cli:
     }
 
     def __str__(self):
+        """Return string representation of object."""
         return str(self.kwargs)
 
     def __compile_kwargs(self):
@@ -71,11 +72,21 @@ class Parser(argparse.ArgumentParser):
 
     """
 
-    def __init__(
-        self, prog="torrentfile", prefix_chars="-", description="Torrentfile CLI"
-    ):
-        """Construct Parser class."""
-        super().__init__(self, prog, prefix_chars=prefix_chars, description=description)
+    def __init__(self, prog=sys.argv[0],
+                 prefix_chars="-", description="Torrentfile CLI"):
+        """Parser Initialize command line argument parser.
+
+        Args:
+        prog(str): Name of the program
+        description(str): Short summary of program functionality.
+        prefix_chars(str): Flag prefixes on command line.
+
+        Returns:
+        parser obj: Parser instance with runtime information as attributes.
+
+        """
+        super().__init__(self, prog, prefix_chars=prefix_chars,
+                         description=description)
         self.name = prog
         self.version = torrentfile.__version__
         self.namespace = Cli()
@@ -85,7 +96,7 @@ class Parser(argparse.ArgumentParser):
         """Parse input arguments from command line.
 
         Args:
-          args(list of str): List of arguments supplied by user at command line.
+          args(list of str): List of user supplied arguments.
 
         """
         super().parse_args(args, self.namespace)
@@ -95,6 +106,7 @@ class Parser(argparse.ArgumentParser):
         self.meta = meta
 
     def __str__(self):
+        """Return string representation of object."""
         return str(self.namespace)
 
     def __add_args(self):
