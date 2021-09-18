@@ -1,7 +1,7 @@
 import os
 import sys
 import pytest
-from torrentfile import main
+from torrentfile.torrentfile import main
 from torrentfile.exceptions import MissingPathError
 from tests.context import tempfile, tempdir, rmpath
 
