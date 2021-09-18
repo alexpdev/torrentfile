@@ -16,9 +16,12 @@
 
 
 class BendecodingError(Exception):
-
     """
     Error occured during decode process.
+
+    Args:
+        val(`any`): Value that cannot be interpreted by decoder.
+
     """
 
     def __init__(self, val=None):
@@ -34,14 +37,18 @@ class BendecodingError(Exception):
 
 
 class BenencodingError(Exception):
-
     """
     Error occured during encoding process.
+
+    Construct Exception.
+
+    Args:
+        val(`any`): Value that cannot be interpreted by decoder.
+
     """
 
     def __init__(self, val=None):
-        """
-        Construct Exception.
+        """Construct Exception.
 
         Args:
             val(`any`): Value that cannot be interpreted by decoder.
@@ -56,8 +63,7 @@ class MissingArgError(Exception):
     """Missing argument required by program."""
 
     def __init__(self, message=None):
-        """
-        Construct Exception.
+        """Construct Exception.
 
         Args:
           message(`any`, optional): Value cannot be interpreted by decoder.
@@ -69,16 +75,18 @@ class MissingArgError(Exception):
 
 
 class MissingTrackerError(MissingArgError):
+    """
+    Announce parameter is required.
 
-    """Announce parameter is required."""
+    Args:
+      message(`any`, optional): Value cannot be interpreted by decoder.
+    """
 
     def __init__(self, message=None):
-        """
-        Construct Exception.
+        """Construct Exception.
 
         Args:
           message(`any`, optional): Value cannot be interpreted by decoder.
-
         """
         if not message:
             self.message = "Tracker arguement is missing and required"
@@ -86,16 +94,18 @@ class MissingTrackerError(MissingArgError):
 
 
 class MissingPathError(MissingArgError):
+    """
+    Path parameter is required.
 
-    """Path parameter is required."""
+    Args:
+      message(`any`, optional): Value cannot be interpreted by decoder.
+    """
 
     def __init__(self, message=None):
-        """
-        Construct Exception.
+        """Construct Exception.
 
         Args:
           message(`any`, optional): Value cannot be interpreted by decoder.
-
         """
         if not message:
             self.message = "Path arguement is missing and required"
@@ -103,17 +113,20 @@ class MissingPathError(MissingArgError):
 
 
 class PieceLengthError(Exception):
+    """
+    Piece length must be a power of 2.
 
-    """Piece length must be a power of 2."""
+    Args:
+      val(`int`): Incorrect piece length value.
+      message(`any`, optional): Value cannot be interpreted by decoder.
+    """
 
     def __init__(self, val, message=None):
-        """
-        Construct Exception.
+        """Construct Exception.
 
         Args:
           val(`int`): Incorrect piece length value.
           message(`any`, optional): Value cannot be interpreted by decoder.
-
         """
         if not message:
             message = f"{val} is not a power of 2"
