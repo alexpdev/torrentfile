@@ -12,7 +12,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-"""This file is necessary for CLI to function properly."""
+"""Required file for CLI to function properly."""
 
 import sys
 from torrentfile import main

@@ -16,6 +16,7 @@
 
 
 class BendecodingError(Exception):
+
     """Error occured during decode process."""
 
     def __init__(self, val=None):
@@ -24,12 +25,14 @@ class BendecodingError(Exception):
 
         Args:
             val(`any`): Value that cannot be interpreted by decoder.
+
         """
         message = f"{type(val)} : {val} is of unknown value or type"
         super().__init__(message)
 
 
 class BenencodingError(Exception):
+
     """Error occured during encoding process."""
 
     def __init__(self, val=None):
@@ -38,12 +41,14 @@ class BenencodingError(Exception):
 
         Args:
             val(`any`): Value that cannot be interpreted by decoder.
+
         """
         message = f"{type(val)} : {val} is of unknown value or type"
         super().__init__(message)
 
 
 class MissingArgError(Exception):
+
     """Missing argument required by program."""
 
     def __init__(self, message=None):
@@ -52,6 +57,7 @@ class MissingArgError(Exception):
 
         Args:
           message(`any`, optional): Value cannot be interpreted by decoder.
+
         """
         if not message:
             message = "Missing Required Function Arguement"
@@ -59,6 +65,7 @@ class MissingArgError(Exception):
 
 
 class MissingTrackerError(MissingArgError):
+
     """Announce parameter is required."""
 
     def __init__(self, message=None):
@@ -67,6 +74,7 @@ class MissingTrackerError(MissingArgError):
 
         Args:
           message(`any`, optional): Value cannot be interpreted by decoder.
+
         """
         if not message:
             self.message = "Tracker arguement is missing and required"
@@ -74,6 +82,7 @@ class MissingTrackerError(MissingArgError):
 
 
 class MissingPathError(MissingArgError):
+
     """Path parameter is required."""
 
     def __init__(self, message=None):
@@ -82,6 +91,7 @@ class MissingPathError(MissingArgError):
 
         Args:
           message(`any`, optional): Value cannot be interpreted by decoder.
+
         """
         if not message:
             self.message = "Path arguement is missing and required"
@@ -89,6 +99,7 @@ class MissingPathError(MissingArgError):
 
 
 class PieceLengthError(Exception):
+
     """Piece length must be a power of 2."""
 
     def __init__(self, val, message=None):
@@ -98,6 +109,7 @@ class PieceLengthError(Exception):
         Args:
           val(`int`): Incorrect piece length value.
           message(`any`, optional): Value cannot be interpreted by decoder.
+
         """
         if not message:
             message = f"{val} is not a power of 2"

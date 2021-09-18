@@ -12,7 +12,8 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-"""Torrentfile can create Bittorrent metafiles for any content.
+"""
+Torrentfile can create Bittorrent metafiles for any content.
 
 Both Bittorrent v1 and v2 are fully supported.
 """

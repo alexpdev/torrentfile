@@ -37,13 +37,6 @@ def tfile():
     yield fd
     rmpath(fd)
 
-
-def test_get_piece_len(tfile):
-    s = os.path.getsize(tfile)
-    result = get_piece_length(s)
-    assert result > 0
-
-
 def test_get_piece_length_min(tfile):
     s = os.path.getsize(tfile)
     result = get_piece_length(s)
