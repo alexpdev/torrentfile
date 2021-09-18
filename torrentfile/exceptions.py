@@ -59,8 +59,12 @@ class BenencodingError(Exception):
 
 
 class MissingArgError(Exception):
+    """
+    Missing argument required by program.
 
-    """Missing argument required by program."""
+    Args:
+          message(`any`, optional): Value cannot be interpreted by decoder.
+    """
 
     def __init__(self, message=None):
         """Construct Exception.

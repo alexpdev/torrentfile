@@ -110,9 +110,9 @@ class Bendecoder:
         """
         dic, feed = {}, 1
         while not bits[feed:].startswith(b"e"):
-            match1, rest = self.decode(bits[feed:])
+            match1, rest = self._decode(bits[feed:])
             feed += rest
-            match2, rest = self.decode(bits[feed:])
+            match2, rest = self._decode(bits[feed:])
             feed += rest
             dic[match1] = match2
         feed += 1
@@ -151,7 +151,7 @@ class Bendecoder:
         word_len, start = int(match.groups()[0]), match.span()[1]
         word = bits[start: start + word_len]
         try:
-            word = word._decode("utf-8")
+            word = word.decode("utf-8")
         except Exception:
             word = word.hex()
         return word, start + word_len
@@ -319,7 +319,7 @@ def get_piece_length(size):
     exp = 14
     while size / (2 ** exp) > 50 and exp < 20:
         exp += 1
-    if exp == 20 and size / MIB > 2000:
+    if exp == 20 and size / MIB > 1000:
         while 20 < (size / 2) ** exp > 2000 and exp <= 23:
             exp += 1
     return 2 ** exp

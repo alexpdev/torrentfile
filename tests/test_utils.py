@@ -14,7 +14,10 @@
 
 import os
 import pytest
-from torrentfile.utils import get_file_list, get_piece_length, path_size, path_stat
+from torrentfile.utils import (get_file_list, get_piece_length,
+                               path_size, path_stat,
+                               path_piece_length, Bendecoder,
+                               Benencoder)
 from tests.context import tempfile, tempdir, rmpath
 
 KIB = 2 ** 10
@@ -37,6 +40,24 @@ def tfile():
     yield fd
     rmpath(fd)
 
+@pytest.fixture
+def metadata():
+    meta = {"announce": "https://tracker.com:2017/announce",
+            "created by": "torrentfile",
+            "piece length": MAX_BLOCK,
+            "info": {"name": "torrentname.bin",
+            "files": [{"length": 2**28, "path": ["path", "to", "content"]},
+                    {"length": 2**28, "path": ["path", "more","content"]}],
+            "pieces": b'some bytes of data',
+            "source": "tracker", "private": 1}}
+    return meta
+
+@pytest.fixture
+def bencode(metadata):
+    encoder = Benencoder(metadata)
+    data = encoder.encode()
+    return data
+
 def test_get_piece_length_min(tfile):
     s = os.path.getsize(tfile)
     result = get_piece_length(s)
@@ -54,6 +75,10 @@ def test_get_piece_len_power_2(tfile):
     result = get_piece_length(s)
     assert result % MIN_BLOCK == 0
 
+def test_get_piece_len_large():
+    s = 2**31
+    result = get_piece_length(s)
+    assert result <= MAX_BLOCK
 
 def test_path_size_file(tfile):
     s = os.path.getsize(tfile)
@@ -73,6 +98,10 @@ def test_get_file_list_file(tfile):
 
 def test_get_file_list_dir(tdir):
     results = get_file_list(tdir)
+    assert len(results) > 1
+
+def test_get_file_list_dir_sort(tdir):
+    results = get_file_list(tdir, sort=True)
     assert len(results) > 1
 
 
@@ -109,3 +138,55 @@ def test_path_stat_base2_plen(tdir):
 def test_path_stat_gtsize_plen(tdir):
     _, size, piece_length = path_stat(tdir)
     assert size > piece_length
+
+def test_path_piece_length_pow2(tdir):
+    result = path_piece_length(tdir)
+    assert result % MIN_BLOCK == 0
+
+def test_path_piece_length_min(tdir):
+    result = path_piece_length(tdir)
+    assert result >= MIN_BLOCK
+
+def test_path_piece_length_max(tdir):
+    result = path_piece_length(tdir)
+    assert result <= MAX_BLOCK
+
+def test_encode(metadata):
+    encoder = Benencoder(metadata)
+    data = encoder.encode()
+    assert data is not None
+
+def test_encode_type(metadata):
+    encoder = Benencoder(metadata)
+    data = encoder.encode()
+    assert isinstance(data, bytes)
+
+def test_decode(bencode):
+    decoder = Bendecoder(bencode)
+    data = decoder.decode()
+    assert data is not None
+
+def test_decode_type(bencode):
+    decoder = Bendecoder(bencode)
+    data = decoder.decode()
+    assert isinstance(data, dict)
+
+def test_decode_type_info(bencode):
+    decoder = Bendecoder(bencode)
+    data = decoder.decode()
+    assert "info" in data
+
+def test_decode_type_announce(bencode):
+    decoder = Bendecoder(bencode)
+    data = decoder.decode()
+    assert "announce" in data
+
+def test_decode_type_piecelength(bencode):
+    decoder = Bendecoder(bencode)
+    data = decoder.decode()
+    assert "piece length" in data
+
+def test_decode_type_created_by(bencode):
+    decoder = Bendecoder(bencode)
+    data = decoder.decode()
+    assert "created by" in data
