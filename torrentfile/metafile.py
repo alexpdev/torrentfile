@@ -12,7 +12,8 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-"""From Bittorrent.org Documentation pages.
+"""
+From Bittorrent.org Documentation pages.
 
 Metainfo files (also known as .torrent files) are bencoded dictionaries with
 the following keys:
@@ -81,7 +82,8 @@ def timestamp():
 
 
 class TorrentFile:
-    """Class for creating Bittorrent meta files.
+    """
+    Class for creating Bittorrent meta files.
 
     Construct *Torrentfile* class instance object.
 
@@ -103,7 +105,8 @@ class TorrentFile:
     def __init__(self, path=None, piece_length=None,
                  announce=None, private=None, source=None,
                  comment=None, outfile=None, created_by=None):
-        """Class for creating Bittorrent meta files.
+        """
+        Class for creating Bittorrent meta files.
 
         Construct *Torrentfile* class instance object.
 
@@ -180,7 +183,8 @@ class TorrentFile:
         return self.info
 
     def assemble(self):
-        """Assemble components of torrent metafile.
+        """
+        Assemble components of torrent metafile.
 
         Returns:
           `dict`: metadata dictionary for torrent file
@@ -211,7 +215,8 @@ class TorrentFile:
         return self.meta
 
     def write(self, outfile=None):
-        """Write assembled data to .torrent file.
+        """
+        Write assembled data to .torrent file.
 
         Args:
           outfile: (Default value = None)
@@ -250,7 +255,8 @@ class Checker:
     """
 
     def __init__(self, metafile, location):
-        """Check a given file or directory to see if it matches a torrentfile.
+        """
+        Check a given file or directory to see if it matches a torrentfile.
 
         Public constructor for Checker class instance.
 
@@ -308,7 +314,8 @@ class Checker:
         return self.paths
 
     def _check_path(self, paths):
-        """Check if paths exist.
+        """
+        Check if paths exist.
 
         Args:
           paths(`list`): Paths to torrent files contents.
@@ -331,7 +338,8 @@ class Checker:
         return "complete"
 
     def check_path(self):
-        """Check if path exists and is the correct size and hash.
+        """
+        Check if path exists and is the correct size and hash.
 
         Returns:
             `str`: Indicating process has completed.
@@ -369,7 +377,8 @@ class Feeder:
     """
 
     def __init__(self, paths, piece_length, total):
-        """Generate hashes of piece length data from filelist contents.
+        """
+        Generate hashes of piece length data from filelist contents.
 
         Constructor for the Feeder class.
 
@@ -387,7 +396,8 @@ class Feeder:
         self.iterator = self._leaves()
 
     def __iter__(self):
-        """Iterate through feed pieces.
+        """
+        Iterate through feed pieces.
 
         Returns:
           `iter(self)`: Iterator for leaves/hash pieces.
@@ -397,7 +407,8 @@ class Feeder:
         return self.iterator
 
     def __next__(self):
-        """Return the next element from iterator.
+        """
+        Return the next element from iterator.
 
         Returns:
           `bytes`: Piece_length length pieces of data.
@@ -410,7 +421,8 @@ class Feeder:
         return math.ceil(self.total // self.piece_length)
 
     def handle_partial(self, arr, partial):
-        """Seemlessly move to next file for input data.
+        """
+        Seemlessly move to next file for input data.
 
         Args:
           arr(`bytearray`): Incomplete piece containing partial data

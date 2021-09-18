@@ -60,7 +60,8 @@ class Cli:
 
 
 class Parser(argparse.ArgumentParser):
-    """Parser Initialize command line argument parser.
+    """
+    Parser Initialize command line argument parser.
 
     Args:
       prog(str): Name of the program
@@ -74,7 +75,8 @@ class Parser(argparse.ArgumentParser):
 
     def __init__(self, prog=sys.argv[0],
                  prefix_chars="-", description="Torrentfile CLI"):
-        """Parser Initialize command line argument parser.
+        """
+        Parser Initialize command line argument parser.
 
         Args:
         prog(str): Name of the program
@@ -93,7 +95,8 @@ class Parser(argparse.ArgumentParser):
         self.__add_args()
 
     def parse_args(self, args):
-        """Parse input arguments from command line.
+        """
+        Parse input arguments from command line.
 
         Args:
           args(list of str): List of user supplied arguments.

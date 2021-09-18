@@ -113,7 +113,8 @@ class Bendecoder:
         return dic, feed
 
     def _decode_list(self, bits):
-        """Decode bencoded data `list`.
+        """
+        Decode bencoded data `list`.
 
         Args:
           bits(`bytes`): Bencoded data for decoding.
@@ -131,7 +132,8 @@ class Bendecoder:
         return lst, feed
 
     def _decode_str(self, bits):
-        """Decode bencoded data `str`.
+        """
+        Decode bencoded data `str`.
 
         Args:
           bits(`bytes`): Bencoded data for decoding.
@@ -150,7 +152,8 @@ class Bendecoder:
         return word, start + word_len
 
     def _decode_int(self, bits):
-        """Decode bencoded data `int`.
+        """
+        Decode bencoded data `int`.
 
         Args:
           bits(`bytes`): Bencoded data for decoding.
@@ -164,7 +167,8 @@ class Bendecoder:
 
 
 class Benencoder:
-    """Encode collection of methods for Bencoding data.
+    """
+    Encode collection of methods for Bencoding data.
 
     Initialize Benencoder insance with optional pre compiled data.
 
@@ -174,7 +178,8 @@ class Benencoder:
     """
 
     def __init__(self, data=None):
-        """Encode collection of methods for Bencoding data.
+        """
+        Encode collection of methods for Bencoding data.
 
         Initialize Benencoder insance with optional pre compiled data.
 
@@ -185,7 +190,8 @@ class Benencoder:
         self.data = data
 
     def encode(self, val=None):
-        """Encode data with bencode encoding.
+        """
+        Encode data with bencode encoding.
 
         Args:
           val(`any`): data to be encoded.
@@ -217,7 +223,8 @@ class Benencoder:
         raise BenencodingError(val)
 
     def _encode_bytes(self, val):
-        """Encode data with bencode encoding.
+        """
+        Encode data with bencode encoding.
 
         Args:
           val(`bytes`): data to be encoded.
@@ -230,7 +237,8 @@ class Benencoder:
         return size.encode("utf-8") + val
 
     def _encode_str(self, txt):
-        """Encode data with bencode encoding.
+        """
+        Encode data with bencode encoding.
 
         Args:
           val(`str`): data to be encoded.
@@ -243,7 +251,8 @@ class Benencoder:
         return size + b":" + txt.encode("utf-8")
 
     def _encode_int(self, i):
-        """Encode data with bencode encoding.
+        """
+        Encode data with bencode encoding.
 
         Args:
           val(`int`): data to be encoded.
@@ -255,7 +264,8 @@ class Benencoder:
         return b"i" + str(i).encode("utf-8") + b"e"
 
     def _encode_list(self, elems):
-        """Encode data with bencode encoding.
+        """
+        Encode data with bencode encoding.
 
         Args:
           val(`list`): data to be encoded.
@@ -273,7 +283,8 @@ class Benencoder:
         return bit_lst
 
     def _encode_dict(self, dic):
-        """Encode data with bencode encoding.
+        """
+        Encode data with bencode encoding.
 
         Args:
           val(`dict`): data to be encoded.

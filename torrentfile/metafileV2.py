@@ -156,7 +156,8 @@ def timestamp():
 
 
 class TorrentFileV2:
-    """Bittorrent Protocol v2 metafile creator.
+    """
+    Bittorrent Protocol v2 metafile creator.
 
     Args:
       path(`str`): (Optional) Path to torrentfile content.
@@ -172,7 +173,8 @@ class TorrentFileV2:
     def __init__(self, path=None, announce=None, piece_length=None,
                  private=False, source=None, comment=None, outfile=None,
                  created_by=None):
-        """Bittorrent Protocol v2 metafile creator.
+        """
+        Bittorrent Protocol v2 metafile creator.
 
         Args:
           path(`str`): (Optional) Path to torrentfile content.
@@ -204,7 +206,8 @@ class TorrentFileV2:
         self.meta = {}
 
     def _assemble_infodict(self):
-        """Create info dictionary for metafile v2.
+        """
+        Create info dictionary for metafile v2.
 
         Returns:
           `dict`: Info dictionary.
@@ -230,7 +233,8 @@ class TorrentFileV2:
             self.info["source"] = self.source
 
     def assemble(self):
-        """Assemble components of torrent metafile v2.
+        """
+        Assemble components of torrent metafile v2.
 
         Returns:
           `dict`: Metadata dictionary for torrent file.
@@ -282,7 +286,8 @@ class TorrentFileV2:
         return file_tree
 
     def write(self, outfile=None):
-        """Write assembled data to .torrent file.
+        """
+        Write assembled data to .torrent file.
 
         Args:
           outfile(`str`): Path to save location.
@@ -314,7 +319,8 @@ def merkle_root(pieces):
 
 
 class FileHash:
-    """Calculate and store hash information for specific file.
+    """
+    Calculate and store hash information for specific file.
 
     Args:
       path(`str`): Absolute path to file.
@@ -325,7 +331,8 @@ class FileHash:
     """
 
     def __init__(self, path, piece_length):
-        """Calculate and store hash information for specific file.
+        """
+        Calculate and store hash information for specific file.
 
         Args:
           path(`str`): Absolute path to file.
