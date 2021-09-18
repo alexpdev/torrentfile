@@ -297,7 +297,6 @@ class Checker:
             self.length = self.info["length"]
         else:
             self.files = self.info["files"]
-        return
 
     def get_paths(self):
         """Get list of paths from files list inside .torrent file."""
