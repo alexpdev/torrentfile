@@ -47,6 +47,10 @@ def test_torrentfile_file(tfile):
 
 
 def test_commandline():
-    args = ["torrentfile", "-p", "C:/Users/asp/Desktop/Glarysoft.File.Recovery.Pro.v1.7.0.9-LAXiTY", "-t", "http://tracker.alpharatio.cc:2710/e58edf10d16de0ac59becf0fe45e3adc/announce", "--private", "--source", "AlphaRatio"]
-    a = subprocess.run(args, capture_output=True)
+    a = subprocess.run(
+        " ".join(["torrentfile", "-p",
+        "C:/Users/asp/Desktop/Glarysoft.File.Recovery.Pro.v1.7.0.9-LAXiTY",
+        "-t", "http://tracker.alpharatio.cc:2710/" +
+        "e58edf10d16de0ac59becf0fe45e3adc/announce",
+        "--private", "--source", "AlphaRatio"]), capture_output=True)
     assert a is not None
