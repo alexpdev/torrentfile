@@ -96,7 +96,7 @@ class Parser(argparse.ArgumentParser):
         self.namespace = Cli()
         self.__add_args()
 
-    def parse_args(self, args):
+    def parse(self, args):
         """
         Parse input arguments from command line.
 
@@ -104,7 +104,7 @@ class Parser(argparse.ArgumentParser):
           args(list of str): List of user supplied arguments.
 
         """
-        super().parse_args(args, self.namespace)
+        self.parse_args(args, self.namespace)
         self.namespace.create_torrentfile()
         outfile, meta = self.namespace.output
         self.outfile = outfile
@@ -197,7 +197,7 @@ def main():
     print(args)
     parser = Parser()
     print(parser)
-    parser.parse_args(args)
+    parser.parse(args)
     print(parser)
     return parser
 

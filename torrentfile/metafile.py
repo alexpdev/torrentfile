@@ -325,7 +325,7 @@ class Checker:
           `str`: "Complete" after finishing.
 
         """
-        feeder = Feeder(paths, self.piece_length, self.total, sha256=False)
+        feeder = Feeder(paths, self.piece_length, self.total)
         pieces = bytes.fromhex(self.pieces)
         counter = 0
 
