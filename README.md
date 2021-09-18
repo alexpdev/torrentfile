@@ -23,17 +23,17 @@ Supports Bittorrent version 1 & 2 metafile creation.
 
 ## Release History
 
-- 0.2.0
+-   0.2.0
 
-  - Support for creating Bittorrent Protocol V2 metafiles
+    -   Support for creating Bittorrent Protocol V2 metafiles
 
-- 0.1.0
+-   0.1.0
 
-  - Added CLI and Testing Suit
+    -   Added CLI and Testing Suit
 
-- 0.0.1
+-   0.0.1
 
-  - Initial Commit
+    -   Initial Commit
 
 ## Meta
 
