@@ -71,37 +71,37 @@ text are UTF-8 encoded.
 The file tree root dictionary itself must not be a file, i.e. it must not
 contain a zero-length key with a dictionary containing a length key.
 
-### File tree layout Example:
+File tree layout Example:
 
-```python
-{
-  info: {
-    file tree: {
-      dir1: {
-        dir2: {
-          fileA.txt: {
-            "": {
-              length: <length of file in bytes (integer)>,
-              pieces root: <optional, merkle tree root (string)>,
-              ...
+    ```python
+    {
+    info: {
+        file tree: {
+        dir1: {
+            dir2: {
+            fileA.txt: {
+                "": {
+                length: <length of file in bytes (integer)>,
+                pieces root: <optional, merkle tree root (string)>,
+                ...
+                }
+            },
+            fileB.txt: {
+                "": {
+                ...
+                }
             }
-          },
-          fileB.txt: {
-            "": {
-              ...
+            },
+            dir3: {
+            ...
             }
-          }
-        },
-        dir3: {
-          ...
         }
-      }
+        }
     }
-  }
-}
-```
+    }
+    ```
 
-### Bencoded for fileA only:
+Bencoded for fileA only:
 `d4:infod9:file treed4:dir1d4:dir2d9:fileA.txtd0:d5:lengthi1024e11:
 pieces root32:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeeeeeee`
 
@@ -116,27 +116,31 @@ pieces root32:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeeeeeee`
     digest function for the merkle tree. The hash is stored in its binary
     form, not as human-readable string.
 
-> Note that identical files always result in the same root hash.
+Note that identical files always result in the same root hash.
 
-### Interpreting paths:
+Interpreting paths:
 
-`"file tree": {name.ext: {"": {length: ...}}}`
-> a single-file torrent
+    `"file tree": {name.ext: {"": {length: ...}}}`
 
-```python
-"file tree": {nameA.ext:{"": {length: ...}},
-              nameB.ext: {"": {length: ...}},
-              dir: {...}}
-```
-> a rootless multifile torrent, i.e. a list of files and directories without a
+a single-file torrent
+
+    ```python
+    "file tree": {nameA.ext:{"": {length: ...}},
+                  nameB.ext: {"": {length: ...}},
+                  dir: {...}}
+    ```
+
+a rootless multifile torrent, i.e. a list of files and directories without a
 named common directory containing them. implementations may offer users to
 optionally prepend the torrent name as root to avoid file name collisions.
 
-```python
-"file tree": {dir: {nameA.ext: {"": {length: ...}},
-                    nameB.ext: {"": {length: ...}}}}
-```
-> multiple files rooted in a single directory.
+    ```python
+    "file tree": {dir: {nameA.ext: {"": {length: ...}},
+                        nameB.ext: {"": {length: ...}}}}
+    ```
+
+multiple files rooted in a single directory.
+
 """
 
 import hashlib
