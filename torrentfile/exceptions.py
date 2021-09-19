@@ -16,6 +16,7 @@
 
 
 class BendecodingError(Exception):
+
     """Error occured during decode process.
 
     Args:
@@ -23,7 +24,8 @@ class BendecodingError(Exception):
     """
 
     def __init__(self, val=None):
-        """Construct Exception.
+        """
+        Construct Exception.
 
         Args:
             val(`any`): Value that cannot be interpreted by decoder.
@@ -33,6 +35,7 @@ class BendecodingError(Exception):
 
 
 class BenencodingError(Exception):
+
     """Error occured during encoding process.
 
     Construct Exception.
@@ -42,7 +45,8 @@ class BenencodingError(Exception):
     """
 
     def __init__(self, val=None):
-        """Construct Exception.
+        """
+        Construct Exception.
 
         Args:
           val(`any`): Value that cannot be interpreted by decoder.
@@ -52,6 +56,7 @@ class BenencodingError(Exception):
 
 
 class MissingArgError(Exception):
+
     """Missing argument required by program.
 
     Args:
@@ -59,7 +64,8 @@ class MissingArgError(Exception):
     """
 
     def __init__(self, message=None):
-        """Construct Exception.
+        """
+        Construct Exception.
 
         Args:
           message(`any`, optional): Value cannot be interpreted by decoder.
@@ -70,6 +76,7 @@ class MissingArgError(Exception):
 
 
 class MissingTrackerError(MissingArgError):
+
     """Announce parameter is required.
 
     Args:
@@ -77,7 +84,8 @@ class MissingTrackerError(MissingArgError):
     """
 
     def __init__(self, message=None):
-        """Construct Exception.
+        """
+        Construct Exception.
 
         Args:
           message(`any`, optional): Value cannot be interpreted by decoder.
@@ -88,6 +96,7 @@ class MissingTrackerError(MissingArgError):
 
 
 class MissingPathError(MissingArgError):
+
     """Path parameter is required.
 
     Args:
@@ -95,7 +104,8 @@ class MissingPathError(MissingArgError):
     """
 
     def __init__(self, message=None):
-        """Construct Exception.
+        """
+        Construct Exception.
 
         Args:
           message(`any`, optional): Value cannot be interpreted by decoder.
@@ -106,6 +116,7 @@ class MissingPathError(MissingArgError):
 
 
 class PieceLengthError(Exception):
+
     """Piece length must be a power of 2.
 
     Args:
@@ -114,7 +125,8 @@ class PieceLengthError(Exception):
     """
 
     def __init__(self, val, message=None):
-        """Construct Exception.
+        """
+        Construct Exception.
 
         Args:
           val(`int`): Incorrect piece length value.
