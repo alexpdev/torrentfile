@@ -102,9 +102,17 @@ class TorrentFile:
 
     """
 
-    def __init__(self, path=None, piece_length=None,
-                 announce=None, private=None, source=None,
-                 comment=None, outfile=None, created_by=None):
+    def __init__(
+        self,
+        path=None,
+        piece_length=None,
+        announce=None,
+        private=None,
+        source=None,
+        comment=None,
+        outfile=None,
+        created_by=None,
+    ):
         """
         Class for creating Bittorrent meta files.
 
@@ -436,7 +444,7 @@ class Feeder:
         while partial < self.piece_length:
             temp = bytearray(self.piece_length - partial)
             size = self.current.readinto(temp)
-            arr[partial: partial + size] = temp[: size]
+            arr[partial: partial + size] = temp[:size]
             partial += size
             if partial < self.piece_length:
                 if not self.next_file():

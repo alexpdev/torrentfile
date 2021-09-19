@@ -16,35 +16,10 @@
 
 
 class BendecodingError(Exception):
-    """
-    Error occured during decode process.
+    """Error occured during decode process.
 
     Args:
         val(`any`): Value that cannot be interpreted by decoder.
-
-    """
-
-    def __init__(self, val=None):
-        """
-        Construct Exception.
-
-        Args:
-            val(`any`): Value that cannot be interpreted by decoder.
-
-        """
-        message = f"{type(val)} : {val} is of unknown value or type"
-        super().__init__(message)
-
-
-class BenencodingError(Exception):
-    """
-    Error occured during encoding process.
-
-    Construct Exception.
-
-    Args:
-        val(`any`): Value that cannot be interpreted by decoder.
-
     """
 
     def __init__(self, val=None):
@@ -52,18 +27,35 @@ class BenencodingError(Exception):
 
         Args:
             val(`any`): Value that cannot be interpreted by decoder.
+        """
+        message = f"{type(val)} : {val} is of unknown value or type"
+        super().__init__(message)
 
+
+class BenencodingError(Exception):
+    """Error occured during encoding process.
+
+    Construct Exception.
+
+    Args:
+      val(`any`): Value that cannot be interpreted by decoder.
+    """
+
+    def __init__(self, val=None):
+        """Construct Exception.
+
+        Args:
+          val(`any`): Value that cannot be interpreted by decoder.
         """
         message = f"{type(val)} : {val} is of unknown value or type"
         super().__init__(message)
 
 
 class MissingArgError(Exception):
-    """
-    Missing argument required by program.
+    """Missing argument required by program.
 
     Args:
-          message(`any`, optional): Value cannot be interpreted by decoder.
+      message(`any`, optional): Value cannot be interpreted by decoder.
     """
 
     def __init__(self, message=None):
@@ -71,7 +63,6 @@ class MissingArgError(Exception):
 
         Args:
           message(`any`, optional): Value cannot be interpreted by decoder.
-
         """
         if not message:
             message = "Missing Required Function Arguement"
@@ -79,8 +70,7 @@ class MissingArgError(Exception):
 
 
 class MissingTrackerError(MissingArgError):
-    """
-    Announce parameter is required.
+    """Announce parameter is required.
 
     Args:
       message(`any`, optional): Value cannot be interpreted by decoder.
@@ -98,8 +88,7 @@ class MissingTrackerError(MissingArgError):
 
 
 class MissingPathError(MissingArgError):
-    """
-    Path parameter is required.
+    """Path parameter is required.
 
     Args:
       message(`any`, optional): Value cannot be interpreted by decoder.
@@ -117,8 +106,7 @@ class MissingPathError(MissingArgError):
 
 
 class PieceLengthError(Exception):
-    """
-    Piece length must be a power of 2.
+    """Piece length must be a power of 2.
 
     Args:
       val(`int`): Incorrect piece length value.

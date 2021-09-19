@@ -140,7 +140,6 @@ optionally prepend the torrent name as root to avoid file name collisions.
     ```
 
 multiple files rooted in a single directory.
-
 """
 
 import hashlib
@@ -151,7 +150,7 @@ from datetime import datetime
 from torrentfile.exceptions import MissingPathError, PieceLengthError
 from torrentfile.utils import Benencoder, path_piece_length, sortfiles
 
-BLOCK_SIZE = 2 ** 14  # 16KB
+BLOCK_SIZE = 2 ** 14  # 16KiB
 
 
 def timestamp():
@@ -175,9 +174,17 @@ class TorrentFileV2:
       created_by(`str`): (Optional) Program that created file.
     """
 
-    def __init__(self, path=None, announce=None, piece_length=None,
-                 private=False, source=None, comment=None, outfile=None,
-                 created_by=None):
+    def __init__(
+        self,
+        path=None,
+        announce=None,
+        piece_length=None,
+        private=False,
+        source=None,
+        comment=None,
+        outfile=None,
+        created_by=None,
+    ):
         """
         Bittorrent Protocol v2 metafile creator.
 
@@ -281,10 +288,9 @@ class TorrentFileV2:
             if size == 0:
                 return {"": {"length": size}}
             else:
-                filehash = FileHash(path, self.piece_length)
-                self.hashes.append(filehash)
-                return {"": {"length": size,
-                             "pieces root": filehash.root_hash}}
+                fhash = FileHash(path, self.piece_length)
+                self.hashes.append(fhash)
+                return {"": {"length": size, "pieces root": fhash.root_hash}}
         elif os.path.isdir(path):
             for base, full in sortfiles(path):
                 file_tree[base] = self._traverse(full)
@@ -379,9 +385,8 @@ class FileHash:
 
     def _pad_remaining(self, total, blocklen):
 
-        remaining = (((1 << int(
-                    math.log2(total) + 1
-                    )) - total) // BLOCK_SIZE) + 1
+        remaining = (((1 << int(math.log2(
+                    total) + 1)) - total) // BLOCK_SIZE) + 1
 
         if len(self.layer_hashes):
             remaining = self.piece_blocks - blocklen
