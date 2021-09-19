@@ -14,7 +14,7 @@
 
 import pytest
 from torrentfile import TorrentFile
-from tests.context import tempfile, tempdir, rmpath
+from tests.context import tempfile, tempdir, rmpath, Flags
 
 
 @pytest.fixture(scope="module")
@@ -31,15 +31,20 @@ def tfile():
     rmpath(fd)
 
 
-def test_torrentfile_dir(tdir):
-    announce = "http://example.com/announce"
-    torrent = TorrentFile(path=tdir, announce=announce, private=1)
+def test_torrentfile_dir_minimal(tdir):
+    flags = Flags()
+    flags.path = tdir
+    flags.announce = "http://example.com/announce"
+    torrent = TorrentFile(flags)
     data = torrent.assemble()
     assert data is not None
 
 
-def test_torrentfile_file(tfile):
-    announce = "http://example.com/announce"
-    torrent = TorrentFile(path=tfile, announce=announce, private=1)
+def test_torrentfile_file_minimal(tfile):
+    flags = Flags()
+    flags.path = tfile
+    flags.announce = "http://example.com/announce"
+    torrent = TorrentFile(flags)
     data = torrent.assemble()
     assert data is not None
+

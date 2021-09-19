@@ -18,29 +18,22 @@ Metainfo files (also known as .torrent files) are bencoded dictionaries
 with the following keys:
 
 - "announce": The URL of the tracker.
+
 - "info": This maps to a dictionary, with keys described below.
+
 - "piece layers": A dictionary of strings. For each file in the file tree that
     is larger than the piece size it contains one string value.
-
-> The keys are the merkle roots while the values consist of concatenated
-> hashes of one layer within that merkle tree. The layer is chosen so that one
-> hash covers piece length bytes. For example if the piece size is 16KiB then
-> the leaf hashes are used. If a piece size of 128KiB is used then 3rd layer
-> up from the leaf hashes is used. Layer hashes which exclusively cover data
-> beyond the end of file, i.e. are only needed to balance the tree, are
-> omitted. All hashes are stored in their binary format. A torrent is not
-> valid if this field is absent, the contained hashes do not match the merkle
-> roots or are not from the correct layer.
-
-All strings in a .torrent file defined by this BEP that contain human-readable
-text are UTF-8 encoded.
+    (See below for more details.)
 
 - "info" dictionary:
+
     - "name": A display name for the torrent. It is purely advisory.
+
     - "piece length":  The number of bytes that each logical piece in the peer
         protocol refers to. I.e. it sets the granularity of piece, request,
         bitfield and have messages. It must be a power of two and at least
         6KiB.
+
     - "meta version": An integer value, set to 2 to indicate compatibility
         with the current revision of this specification. Version 1 is not
         assigned to avoid confusion with BEP3. Future revisions will only
@@ -51,6 +44,7 @@ text are UTF-8 encoded.
         performing other idations which may result in more general messages
         about invalid files. Files are mapped into this piece address space so
         that each non-empty
+
     - "file tree": A tree of dictionaries where dictionary keys represent UTF-8
         encoded path elements. Entries with zero-length keys describe the
         properties of the composed path at that point. 'UTF-8 encoded' in this
@@ -64,82 +58,97 @@ text are UTF-8 encoded.
         path components this sanitizing step must happen after normalizing
         overlong UTF-8 encodings.
 
+    - "length": Length of the file in bytes. Presence of this field indicates
+        that the dictionary describes a file, not a directory. Which means
+        it must not have any sibling entries.
+
+     - "pieces root": For non-empty files this is the the root hash of a merkle
+        tree with a branching factor of 2, constructed from 16KiB blocks of the
+        file. The last block may be shorter than 16KiB. The remaining leaf
+        hashes beyond the end of the file required to construct upper layers
+        of the merkle tree are set to zero. As of meta version 2 SHA2-256 is
+        used as digest function for the merkle tree. The hash is stored in its
+        binary form, not as human-readable string.
+
+
 > file is aligned to a piece boundary and occurs in the same order as in
 > the file tree. The last piece of each file may be shorter than the
 > specified piece length, resulting in an alignment gap.
+
+piece layers
+------------
+
+> The keys are the merkle roots while the values consist of concatenated
+> hashes of one layer within that merkle tree. The layer is chosen so that one
+> hash covers piece length bytes. For example if the piece size is 16KiB then
+> the leaf hashes are used. If a piece size of 128KiB is used then 3rd layer
+> up from the leaf hashes is used. Layer hashes which exclusively cover data
+> beyond the end of file, i.e. are only needed to balance the tree, are
+> omitted. All hashes are stored in their binary format. A torrent is not
+> valid if this field is absent, the contained hashes do not match the merkle
+> roots or are not from the correct layer.
+
 
 The file tree root dictionary itself must not be a file, i.e. it must not
 contain a zero-length key with a dictionary containing a length key.
 
 File tree layout Example:
 
-    ```python
-    {
-    info: {
-        file tree: {
-        dir1: {
-            dir2: {
-            fileA.txt: {
-                "": {
-                length: <length of file in bytes (integer)>,
-                pieces root: <optional, merkle tree root (string)>,
-                ...
-                }
-            },
-            fileB.txt: {
-                "": {
-                ...
-                }
+```python
+{
+info: {
+    file tree: {
+    dir1: {
+        dir2: {
+        fileA.txt: {
+            "": {
+            length: <length of file in bytes (integer)>,
+            pieces root: <optional, merkle tree root (string)>,
+            ...
             }
-            },
-            dir3: {
+        },
+        fileB.txt: {
+            "": {
             ...
             }
         }
+        },
+        dir3: {
+        ...
         }
     }
     }
-    ```
-
-Bencoded for fileA only:
-`d4:infod9:file treed4:dir1d4:dir2d9:fileA.txtd0:d5:lengthi1024e11:
-pieces root32:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeeeeeee`
-
-- "length": Length of the file in bytes. Presence of this field indicates that
-    the dictionary describes a file, not a directory. Which means it must not
-    have any sibling entries.
-- "pieces root": For non-empty files this is the the root hash of a merkle
-    tree with a branching factor of 2, constructed from 16KiB blocks of the
-    file. The last block may be shorter than 16KiB. The remaining leaf hashes
-    beyond the end of the file required to construct upper layers of the
-    merkle tree are set to zero. As of meta version 2 SHA2-256 is used as
-    digest function for the merkle tree. The hash is stored in its binary
-    form, not as human-readable string.
+}
+}
+```
 
 Note that identical files always result in the same root hash.
+All strings in a .torrent file defined by this BEP that contain human-readable
+text are UTF-8 encoded.
 
 Interpreting paths:
 
-    `"file tree": {name.ext: {"": {length: ...}}}`
+`"file tree": {name.ext: {"": {length: ...}}}`
 
-a single-file torrent
+>single-file torrent
 
-    ```python
-    "file tree": {nameA.ext:{"": {length: ...}},
-                  nameB.ext: {"": {length: ...}},
-                  dir: {...}}
-    ```
+```python
+"file tree": {nameA.ext:{"": {length: ...}},
+              nameB.ext: {"": {length: ...}},
+              dir: {...}}
+```
 
-a rootless multifile torrent, i.e. a list of files and directories without a
-named common directory containing them. implementations may offer users to
-optionally prepend the torrent name as root to avoid file name collisions.
+>rootless multifile torrent, i.e. a list of files and directories without a
+>named common directory containing them. implementations may offer users to
+>optionally prepend the torrent name as root to avoid file name collisions.
 
-    ```python
-    "file tree": {dir: {nameA.ext: {"": {length: ...}},
-                        nameB.ext: {"": {length: ...}}}}
-    ```
+```python
+"file tree": {dir: {nameA.ext: {"": {length: ...}},
+                    nameB.ext: {"": {length: ...}}}}
+```
 
-multiple files rooted in a single directory.
+>multiple files rooted in a single directory.
+
 """
 
 import hashlib
@@ -160,57 +169,63 @@ def timestamp():
 
 class TorrentFileV2:
     """
-    Bittorrent Protocol v2 metafile creator.
+    Class for creating Bittorrent meta v2 files.
 
-    ...
+    Construct `TorrentFileV2` instance.
+
     Args:
-      path(`str`): (Optional) Path to torrentfile content.
-      announce(`str`): (Optional) Tracker(s) to broadcast info.
-      piece_length(`int`): (Optional) Size in bytes of each block of data.
-      private(`bool`): (Optional) True if tracker is private.
-      source(`str`): (Optional) Private trackers source.
-      comment(`str`): (Optional) Text comment.
-      outfile(`str`): (Optional) Path to write output too.
-      created_by(`str`): (Optional) Program that created file.
+        flags('obj'): has all the following properties.
+
+    `flags` Attributes:
+        path(`str`): Path to torrent file or directory.
+        piece_length(`int`): Size of each piece of torrent data.
+        created_by(`str`): For 'created by' field.
+        announce(`str`): Tracker URL.
+        private(`int`): 1 if private torrent else 0.
+        source(`str`): Source tracker.
+        comment(`str`): Comment string.
+        outfile(`str`): Path to write metfile to.
+
+    Returns:
+        `obj`: Instance of Metafile Class.
     """
 
-    def __init__(
-        self,
-        path=None,
-        announce=None,
-        piece_length=None,
-        private=False,
-        source=None,
-        comment=None,
-        outfile=None,
-        created_by=None,
-    ):
+    def __init__(self, flags):
         """
-        Bittorrent Protocol v2 metafile creator.
+        Class for creating Bittorrent meta v2 files.
+
+        Construct `TorrentFileV2` instance.
 
         Args:
-          path(`str`): (Optional) Path to torrentfile content.
-          announce(`str`): (Optional) Tracker(s) to broadcast info.
-          piece_length(`int`): (Optional) Size in bytes of each block of data.
-          private(`bool`): (Optional) True if tracker is private.
-          source(`str`): (Optional) Private trackers source.
-          comment(`str`): (Optional) Text comment.
-          outfile(`str`): (Optional) Path to write output too.
-          created_by(`str`): (Optional) Program that created file.
+          flags('obj'): has all the following properties.
+
+        `flags` Attributes:
+          path(`str`): Path to torrent file or directory.
+          piece_length(`int`): Size of each piece of torrent data.
+          created_by(`str`): For 'created by' field.
+          announce(`str`): Tracker URL.
+          private(`int`): 1 if private torrent else 0.
+          source(`str`): Source tracker.
+          comment(`str`): Comment string.
+          outfile(`str`): Path to write metfile to.
+
+        Returns:
+          `obj`: Instance of Metafile Class.
         """
-        if not path:
+        if not flags.path:
             raise MissingPathError
-        self.name = os.path.basename(path)
-        self.path = path
-        self.comment = comment
-        self.piece_length = piece_length
-        if piece_length and piece_length % BLOCK_SIZE == 0:
-            raise PieceLengthError(piece_length)
-        self.private = private
-        self.source = source
-        self.announce = announce
-        self.outfile = outfile
-        self.created_by = created_by
+        self.name = os.path.basename(flags.path)
+        self.path = flags.path
+        self.comment = flags.comment
+        if flags.piece_length:
+            self.piece_length = int(flags.piece_length)
+        else:
+            self.piece_length = None
+        self.private = flags.private
+        self.source = flags.source
+        self.announce = flags.announce
+        self.outfile = flags.outfile
+        self.created_by = flags.created_by
         self.length = None
         self.hashes = []
         self.piece_layers = {}

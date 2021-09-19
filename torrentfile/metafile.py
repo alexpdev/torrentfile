@@ -88,37 +88,33 @@ class TorrentFile:
     Construct *Torrentfile* class instance object.
 
     Args:
-      path(`str`): Path to torrent file or directory.
-      piece_length(`int`): Size of each piece of torrent data.
-      created_by(`str`): For 'created by' field.
-      announce(`str`): Tracker URL.
-      private(`int`): 1 if private torrent else 0.
-      source(`str`): Source tracker.
-      comment(`str`): Comment string.
-      outfile(`str`): Path to write metfile to.
+        flags('obj'): has all the following properties.
+
+    `flags` Attributes:
+        path(`str`): Path to torrent file or directory.
+        piece_length(`int`): Size of each piece of torrent data.
+        created_by(`str`): For 'created by' field.
+        announce(`str`): Tracker URL.
+        private(`int`): 1 if private torrent else 0.
+        source(`str`): Source tracker.
+        comment(`str`): Comment string.
+        outfile(`str`): Path to write metfile to.
 
     Returns:
-      `obj`: Instance of Metafile Class.
+        `obj`: Instance of Metafile Class.
 
     """
 
-    def __init__(
-        self,
-        path=None,
-        piece_length=None,
-        announce=None,
-        private=None,
-        source=None,
-        comment=None,
-        outfile=None,
-        created_by=None,
-    ):
+    def __init__(self, flags):
         """
         Class for creating Bittorrent meta files.
 
         Construct *Torrentfile* class instance object.
 
         Args:
+          flags('obj'): has all the following properties.
+
+        `flags` Attributes:
           path(`str`): Path to torrent file or directory.
           piece_length(`int`): Size of each piece of torrent data.
           created_by(`str`): For 'created by' field.
@@ -132,18 +128,21 @@ class TorrentFile:
           `obj`: Instance of Metafile Class.
 
         """
-        if not path:
+        if not flags.path:
             raise MissingPathError
-        self.base = path
-        self.name = os.path.basename(path)
-        self.piece_length = piece_length
-        self.announce = announce
-        self.private = private
-        self.source = source
+        self.base = flags.path
+        self.name = os.path.basename(flags.path)
+        if flags.piece_length:
+            self.piece_length = int(flags.piece_length)
+        else:
+            self.piece_length = None
+        self.announce = flags.announce
+        self.private = flags.private
+        self.source = flags.source
         self.length = None
-        self.comment = comment
-        self.outfile = outfile
-        self.created_by = created_by
+        self.comment = flags.comment
+        self.outfile = flags.outfile
+        self.created_by = flags.created_by
         self.files = []
         self.info = {}
         self.meta = {}

@@ -1,7 +1,7 @@
 import os
 import pytest
 from torrentfile.metafileV2 import TorrentFileV2
-from tests.context import tempdir, tempfile, rmpath
+from tests.context import tempdir, tempfile, rmpath, Flags
 
 
 @pytest.fixture(scope="module")
@@ -21,7 +21,8 @@ def tdir():
 @pytest.fixture(scope="module")
 def metav2f(tfile):
     args = {"private": True, "path": tfile, "announce": "http://announce.com/announce"}
-    torrent = TorrentFileV2(**args)
+    flags = Flags(**args)
+    torrent = TorrentFileV2(flags)
     torrent.assemble()
     outfile, meta = torrent.write()
     yield outfile, meta
@@ -37,7 +38,8 @@ def metav2d(tdir):
         "source": "tracker",
         "comment": "content details and purpose",
     }
-    torrent = TorrentFileV2(**args)
+    flags = Flags(**args)
+    torrent = TorrentFileV2(flags)
     torrent.assemble()
     outfile, meta = torrent.write()
     yield outfile, meta
