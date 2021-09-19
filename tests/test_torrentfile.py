@@ -83,5 +83,3 @@ def test_torrentfile_dir_comment(tdir):
     torrent = TorrentFile(flags)
     data = torrent.assemble()
     assert "private" in data["info"] and "comment" in data["info"]
-
-
