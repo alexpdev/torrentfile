@@ -41,8 +41,6 @@ def tfile():
 @pytest.fixture(scope="function")
 def tmeta(testdir):
     args = [
-        "--path",
-        testdir,
         "-t",
         "http://anounce.com/announce",
         "--source",
@@ -52,6 +50,8 @@ def tmeta(testdir):
         "--private",
         "--comment",
         "some comment",
+        "--path",
+        testdir
     ]
     sys.argv = [sys.argv[0]] + args
     parser = main()
@@ -61,7 +61,7 @@ def tmeta(testdir):
 
 
 def test_cli_args_dir(tdir):
-    args = ["--path", tdir]
+    args = ["--path",tdir]
     sys.argv = [sys.argv[0]] + args
     parser = main()
     assert os.path.exists(parser.outfile)
@@ -69,7 +69,7 @@ def test_cli_args_dir(tdir):
 
 
 def test_cli_args_dir_v2(tdir):
-    args = ["--path", tdir, "--v2"]
+    args = ["-p", tdir, "--v2"]
     sys.argv = [sys.argv[0]] + args
     parser = main()
     assert os.path.exists(parser.outfile)
@@ -85,7 +85,7 @@ def test_cli_args_file(tfile):
 
 
 def test_cli_args_file_v2(tfile):
-    args = ["--path", tfile, "--v2"]
+    args = ["-p", tfile, "--v2"]
     sys.argv = [sys.argv[0]] + args
     parser = main()
     assert os.path.exists(parser.outfile)

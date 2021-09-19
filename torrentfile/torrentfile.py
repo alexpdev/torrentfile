@@ -16,15 +16,23 @@
 import sys
 from argparse import ArgumentParser
 import torrentfile
+from torrentfile.exceptions import MissingPathError
 from torrentfile.metafile import TorrentFile
 from torrentfile.metafileV2 import TorrentFileV2
 
 
-def main():
-    """Initialize Command Line Interface."""
-    args = sys.argv[1:]
+def main_script(args=None):
+    """Initialize Command Line Interface for torrentfile.
+
+    usage: ```torrentfile --path /path/to/content [-o /path/to/output.torrent]
+            [--piece-length 0000] [--private] [-t https://tracker.url/announce]
+            [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]```
+
+    """
+    args = sys.argv[1:] if not args else args
     d = "Tool for creating, inspecting, or checking Bittorrent metafiles. Both .torrent v1 and v2 files are supported."
-    parser = ArgumentParser(sys.argv[0],description=d,prefix_chars="-")
+    parser = ArgumentParser(sys.argv[0], description=d,
+                            prefix_chars="-", exit_on_error=False)
 
     parser.add_argument(
         "--version",
@@ -63,9 +71,8 @@ def main():
         "--path",
         action="store",
         dest="path",
-        metavar="~/X",
-        required=True,
-        help="Path to file of directory of torrent contents.",
+        metavar="path",
+        help="Path to file or directory of torrent contents.",
     )
 
     parser.add_argument(
@@ -104,7 +111,7 @@ def main():
     parser.add_argument(
         "--announce-list",
         "--tracker-list",
-        action="extend",
+        action="append",
         dest="announce_list",
         help="(optional) Additional tracker announce urls."
     )
@@ -118,6 +125,9 @@ def main():
     )
 
     flags = parser.parse_args(args)
+
+    if not flags.path:
+        raise MissingPathError(flags)
 
     kwargs = {
     "flags": flags,
@@ -141,6 +151,10 @@ def main():
     parser.meta = meta
     parser.outfile = outfile
     return parser
+
+def main():
+    args = sys.argv[1:]
+    return main_script(args)
 
 
 if __name__ == "__main__":
