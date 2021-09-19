@@ -71,30 +71,28 @@ with the following keys:
         binary form, not as human-readable string.
 
 
-> file is aligned to a piece boundary and occurs in the same order as in
-> the file tree. The last piece of each file may be shorter than the
-> specified piece length, resulting in an alignment gap.
+file is aligned to a piece boundary and occurs in the same order as in
+    the file tree. The last piece of each file may be shorter than the
+    specified piece length, resulting in an alignment gap.
 
 piece layers
-------------
 
-> The keys are the merkle roots while the values consist of concatenated
-> hashes of one layer within that merkle tree. The layer is chosen so that one
-> hash covers piece length bytes. For example if the piece size is 16KiB then
-> the leaf hashes are used. If a piece size of 128KiB is used then 3rd layer
-> up from the leaf hashes is used. Layer hashes which exclusively cover data
-> beyond the end of file, i.e. are only needed to balance the tree, are
-> omitted. All hashes are stored in their binary format. A torrent is not
-> valid if this field is absent, the contained hashes do not match the merkle
-> roots or are not from the correct layer.
+The keys are the merkle roots while the values consist of concatenated
+    hashes of one layer within that merkle tree. The layer is chosen so
+    that one hash covers piece length bytes. For example if the piece size is
+    16KiB then the leaf hashes are used. If a piece size of 128KiB is used
+    then 3rd layer up from the leaf hashes is used. Layer hashes which
+    exclusively cover data beyond the end of file, i.e. are only needed to
+    balance the tree, are omitted. All hashes are stored in their binary
+    format. A torrent is not valid if this field is absent, the contained
+    hashes do not match the merkle roots or are not from the correct layer.
 
 
 The file tree root dictionary itself must not be a file, i.e. it must not
-contain a zero-length key with a dictionary containing a length key.
+    contain a zero-length key with a dictionary containing a length key.
 
 File tree layout Example:
 
-```python
 {
 info: {
     file tree: {
@@ -104,23 +102,19 @@ info: {
             "": {
             length: <length of file in bytes (integer)>,
             pieces root: <optional, merkle tree root (string)>,
-            ...
             }
         },
         fileB.txt: {
             "": {
-            ...
             }
         }
         },
         dir3: {
-        ...
         }
     }
     }
 }
 }
-```
 
 Note that identical files always result in the same root hash.
 All strings in a .torrent file defined by this BEP that contain human-readable
@@ -128,26 +122,23 @@ text are UTF-8 encoded.
 
 Interpreting paths:
 
-`"file tree": {name.ext: {"": {length: ...}}}`
+"file tree": {name.ext: {"": {length: ...}}}
 
->single-file torrent
 
-```python
+single-file torrent
+
 "file tree": {nameA.ext:{"": {length: ...}},
               nameB.ext: {"": {length: ...}},
               dir: {...}}
-```
 
->rootless multifile torrent, i.e. a list of files and directories without a
->named common directory containing them. implementations may offer users to
->optionally prepend the torrent name as root to avoid file name collisions.
+rootless multifile torrent, i.e. a list of files and directories without a
+named common directory containing them. implementations may offer users to
+optionally prepend the torrent name as root to avoid file name collisions.
 
-```python
 "file tree": {dir: {nameA.ext: {"": {length: ...}},
                     nameB.ext: {"": {length: ...}}}}
-```
 
->multiple files rooted in a single directory.
+multiple files rooted in a single directory.
 
 """
 
