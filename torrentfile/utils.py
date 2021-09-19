@@ -12,19 +12,19 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-"""
-Examples for decoders.
+"""Utility functions and classes used throughout package.
 
->> data = b'l18:Some Bencoded Datai15ee'
->> decoder = Bendecoder(data)
->> decoder.decode()
-['Some Bencoded Data', 15]
->> results = bendecode(data)
-['Some Bencoded Data', 15]
->> encoder = Benencoder(results).encode()
-b'l18:Some Bencoded Datai15ee'
->> benencode(results)
-b'l18:Some Bencoded Datai15ee'
+Classes:
+  Bendecoder: Decoder for bencode data.
+  Benencoder: Encode data to bencode data.
+
+Functions:
+  get_piece_length: calculate ideal piece length for torrent file.
+  sortfiles: traverse directory in sorted order yielding paths encountered.
+  path_size: Sum the sizes of each file in path.
+  get_file_list: Return list of all files contained in directory.
+  path_stat: Get ideal piece length, total size, and file list for directory.
+  path_piece_length: Get ideal piece length based on size of directory.
 """
 
 import os
@@ -353,7 +353,7 @@ def path_size(path):
         return os.path.getsize(path)
 
     # recursive sum for all files in folder
-    elif os.path.isdir(path):
+    if os.path.isdir(path):
         for name in os.listdir(path):
             fullpath = os.path.join(path, name)
             size += path_size(fullpath)

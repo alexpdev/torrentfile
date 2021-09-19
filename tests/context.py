@@ -74,4 +74,3 @@ def sizedfile(num=28):
     path = os.path.join(TD, "tempfile.bin")
     fill_file(path, num)
     return path
-
