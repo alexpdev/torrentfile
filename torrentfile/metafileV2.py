@@ -156,7 +156,7 @@ import math
 import os
 from datetime import datetime
 
-from torrentfile.exceptions import MissingPathError, PieceLengthError
+from torrentfile.exceptions import MissingPathError
 from torrentfile.utils import Benencoder, path_piece_length, sortfiles
 
 BLOCK_SIZE = 2 ** 14  # 16KiB
@@ -213,7 +213,7 @@ class TorrentFileV2:
           `obj`: Instance of Metafile Class.
         """
         if not flags.path:
-            raise MissingPathError
+            raise MissingPathError(flags)
         self.name = os.path.basename(flags.path)
         self.path = flags.path
         self.comment = flags.comment
@@ -302,10 +302,9 @@ class TorrentFileV2:
             size = os.path.getsize(path)
             if size == 0:
                 return {"": {"length": size}}
-            else:
-                fhash = FileHash(path, self.piece_length)
-                self.hashes.append(fhash)
-                return {"": {"length": size, "pieces root": fhash.root_hash}}
+            fhash = FileHash(path, self.piece_length)
+            self.hashes.append(fhash)
+            return {"": {"length": size, "pieces root": fhash.root_hash}}
         elif os.path.isdir(path):
             for base, full in sortfiles(path):
                 file_tree[base] = self._traverse(full)
@@ -389,7 +388,7 @@ class FileHash:
                     break
                 blocks.append(sha256(leaf[:size]))
 
-            if not len(blocks):
+            if not blocks:
                 break
 
             if len(blocks) < self.piece_blocks:
@@ -403,7 +402,7 @@ class FileHash:
         remaining = (((1 << int(math.log2(
                     total) + 1)) - total) // BLOCK_SIZE) + 1
 
-        if len(self.layer_hashes):
+        if self.layer_hashes:
             remaining = self.piece_blocks - blocklen
 
         return [bytes(32) for _ in range(remaining)]

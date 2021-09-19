@@ -129,7 +129,7 @@ class TorrentFile:
 
         """
         if not flags.path:
-            raise MissingPathError
+            raise MissingPathError(flags)
         self.base = flags.path
         self.name = os.path.basename(flags.path)
         if flags.piece_length:
@@ -182,7 +182,7 @@ class TorrentFile:
         self.info["pieces"] = pieces
 
         if self.private:
-            self.info["private"] = self.private
+            self.info["private"] = 1
 
         if self.source:
             self.info["source"] = self.source
@@ -284,6 +284,7 @@ class Checker:
         self.name = None
         self.paths = []
         self.fileinfo = {}
+        self.status = 0
 
     def decode_metafile(self):
         """Decode bencoded data inside .torrent file."""
@@ -333,6 +334,7 @@ class Checker:
         """
         feeder = Feeder(paths, self.piece_length, self.total)
         pieces = bytes.fromhex(self.pieces)
+        total = len(pieces) // 20
         counter = 0
 
         for digest in feeder:
@@ -342,7 +344,7 @@ class Checker:
             else:
                 print("Number of matching pieces = ", counter)
 
-        return "complete"
+        return str(int(counter / total) * 100) + "%"
 
     def check_path(self):
         """
@@ -352,13 +354,11 @@ class Checker:
             `str`: Indicating process has completed.
 
         """
-        base = os.path.join(self.location, self.name)
-
-        if os.path.isfile(base):
-            paths = [base]
+        if os.path.isfile(self.location) and os.path.basename(self.location) == self.name:
+            paths = [self.location]
 
         else:
-            paths = [os.path.join(base, i) for i in self.paths]
+            paths = [os.path.join(self.location, i) for i in self.paths]
 
         return self._check_path(paths)
 
@@ -370,6 +370,7 @@ class Checker:
 
         status = self.check_path()
         print(status)
+        return status
 
 
 class Feeder:

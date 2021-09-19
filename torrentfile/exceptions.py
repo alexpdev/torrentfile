@@ -24,8 +24,7 @@ class BendecodingError(Exception):
     """
 
     def __init__(self, val=None):
-        """
-        Construct Exception.
+        """Construct Exception.
 
         Args:
             val(`any`): Value that cannot be interpreted by decoder.
@@ -45,8 +44,7 @@ class BenencodingError(Exception):
     """
 
     def __init__(self, val=None):
-        """
-        Construct Exception.
+        """Construct Exception.
 
         Args:
           val(`any`): Value that cannot be interpreted by decoder.
@@ -55,47 +53,7 @@ class BenencodingError(Exception):
         super().__init__(message)
 
 
-class MissingArgError(Exception):
-
-    """Missing argument required by program.
-
-    Args:
-      message(`any`, optional): Value cannot be interpreted by decoder.
-    """
-
-    def __init__(self, message=None):
-        """
-        Construct Exception.
-
-        Args:
-          message(`any`, optional): Value cannot be interpreted by decoder.
-        """
-        if not message:
-            message = "Missing Required Function Arguement"
-        super().__init__(message)
-
-
-class MissingTrackerError(MissingArgError):
-
-    """Announce parameter is required.
-
-    Args:
-      message(`any`, optional): Value cannot be interpreted by decoder.
-    """
-
-    def __init__(self, message=None):
-        """
-        Construct Exception.
-
-        Args:
-          message(`any`, optional): Value cannot be interpreted by decoder.
-        """
-        if not message:
-            self.message = "Tracker arguement is missing and required"
-        super().__init__(message)
-
-
-class MissingPathError(MissingArgError):
+class MissingPathError(Exception):
 
     """Path parameter is required.
 
@@ -112,26 +70,4 @@ class MissingPathError(MissingArgError):
         """
         if not message:
             self.message = "Path arguement is missing and required"
-        super().__init__(message)
-
-
-class PieceLengthError(Exception):
-
-    """Piece length must be a power of 2.
-
-    Args:
-      val(`int`): Incorrect piece length value.
-      message(`any`, optional): Value cannot be interpreted by decoder.
-    """
-
-    def __init__(self, val, message=None):
-        """
-        Construct Exception.
-
-        Args:
-          val(`int`): Incorrect piece length value.
-          message(`any`, optional): Value cannot be interpreted by decoder.
-        """
-        if not message:
-            message = f"{val} is not a power of 2"
         super().__init__(message)

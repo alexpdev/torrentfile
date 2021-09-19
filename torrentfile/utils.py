@@ -79,21 +79,21 @@ class Bendecoder:
             return match, feed
 
         # decode string
-        elif chr(bits[0]).isdigit():
+        if chr(bits[0]).isdigit():
             num, feed = self._decode_str(bits)
             return num, feed
 
         # decode list and contents
-        elif bits.startswith(b"l"):
+        if bits.startswith(b"l"):
             lst, feed = self._decode_list(bits)
             return lst, feed
 
         # decode dictionary and contents
-        elif bits.startswith(b"d"):
+        if bits.startswith(b"d"):
             dic, feed = self._decode_dict(bits)
             return dic, feed
         else:
-            raise BendecodingError
+            raise BendecodingError(bits)
 
     def _decode_dict(self, bits):
         """Decode bencoded data dictionary.
