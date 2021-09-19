@@ -64,6 +64,7 @@ def main():
         action="store",
         dest="path",
         metavar="~/X",
+        required=True,
         help="Path to file of directory of torrent contents.",
     )
 
@@ -96,8 +97,8 @@ def main():
         "--tracker",
         action="store",
         dest="announce",
-        help='{torrentfile --tracker https://torrent.ubuntu.com/announce} \
-                add torrent tracker announce url.',
+        metavar="url",
+        help='Primary trackers announce url.',
     )
 
     parser.add_argument(
@@ -105,7 +106,7 @@ def main():
         "--tracker-list",
         action="extend",
         dest="announce_list",
-        help="{--tracker-list url1 url2...} (optional) additional trackers."
+        help="(optional) Additional tracker announce urls."
     )
 
     parser.add_argument(
