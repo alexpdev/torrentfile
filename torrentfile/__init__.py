@@ -39,7 +39,7 @@ from torrentfile.utils import (
     Bendecoder,
 )
 
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 __author__ = "alexpdev"
 
 __all__ = (

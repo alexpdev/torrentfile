@@ -20,13 +20,6 @@ tests.test\_cli module
    :undoc-members:
    :show-inheritance:
 
-tests.test\_metav2 module
--------------------------
-
-.. automodule:: tests.test_metav2
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 tests.test\_torrentfile module
 ------------------------------
