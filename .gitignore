@@ -16,6 +16,7 @@ repos/
 *.bin
 
 # temp files
+codacyupload.sh
 bep*
 /tests/tempdir
 testing.py
