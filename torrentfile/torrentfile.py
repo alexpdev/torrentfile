@@ -30,41 +30,15 @@ def main_script(args=None):
 
     """
     args = sys.argv[1:] if not args else args
-    d = "Tool for creating, inspecting, or checking Bittorrent metafiles." \
-        "Both .torrent v1 and v2 files are supported."
-    parser = ArgumentParser(sys.argv[0], description=d,
+    d = "Create .torrent files for Bittorrent v1 or v2."
+    parser = ArgumentParser("torrentfile", description=d,
                             prefix_chars="-")
 
     parser.add_argument(
         "--version",
         action="version",
         version=f"torrentfile v{torrentfile.__version__}",
-        help="Display program version then exit immediately.",
-    )
-
-    parser.add_argument(
-        "--created-by",
-        action="store",
-        dest="created_by",
-        metavar="X",
-        help="(optional) Leave out unless specifically instructed otherwise.",
-    )
-
-    parser.add_argument(
-        "--comment",
-        action="store",
-        dest="comment",
-        metavar="X",
-        help="(optional) Include comment in binary data.",
-    )
-
-    parser.add_argument(
-        "-o",
-        "--outfile",
-        action="store",
-        help="(optional) save output to file.",
-        dest="outfile",
-        metavar="~/X.torrent",
+        help="show program version and exit\n",
     )
 
     parser.add_argument(
@@ -72,49 +46,39 @@ def main_script(args=None):
         "--path",
         action="store",
         dest="path",
-        metavar="path",
-        help="Path to file or directory of torrent contents.",
+        metavar="<path>",
+        help="(required) path to torrent content",
+    )
+
+    parser.add_argument(
+        "-a",
+        "--announce",
+        action="store",
+        dest="announce",
+        metavar="<url>",
+        help="tracker's announce url",
     )
 
     parser.add_argument(
         "--piece-length",
         action="store",
         dest="piece_length",
-        metavar="X",
-        help="(optional) Size of individual pieces of the torrent data.",
+        metavar="<number>",
+        help="specify size in bytes of packets of data to transfer",
     )
 
     parser.add_argument(
         "--private",
         action="store_true",
         dest="private",
-        help="(optional) Torrent will be distributed on a private tracker.",
+        help="use if torrent is for private tracker",
     )
-
     parser.add_argument(
-        "--source",
+        "-o", "--out",
         action="store",
-        dest="source",
-        metavar="X",
-        help="(optional) Leave out unless specifically instructed otherwise",
-    )
-
-    parser.add_argument(
-        "-t",
-        "--announce",
-        "--tracker",
-        action="store",
-        dest="announce",
-        metavar="url",
-        help='Primary trackers announce url.',
-    )
-
-    parser.add_argument(
-        "--announce-list",
-        "--tracker-list",
-        action="append",
-        dest="announce_list",
-        help="(optional) Additional tracker announce urls."
+        help="specify path for .torrent file",
+        dest="outfile",
+        metavar="<path>",
     )
 
     parser.add_argument(
@@ -122,8 +86,41 @@ def main_script(args=None):
         "--meta-version2",
         action="store_true",
         dest="v2",
-        help="(optional) work with Bittorrent V2 torrent file.",
+        help="use if bittorrent v2 file is wanted",
     )
+
+    parser.add_argument(
+        "--created-by",
+        action="store",
+        metavar="<app>",
+        dest="created_by",
+    )
+
+    parser.add_argument(
+        "--comment",
+        action="store",
+        dest="comment",
+        metavar="<comment>",
+        help="include a comment in .torrent file",
+    )
+
+    parser.add_argument(
+        "--source",
+        action="store",
+        dest="source",
+        metavar="<source>",
+        help="ignore unless instructed otherwise",
+    )
+
+    parser.add_argument(
+        "--announce-list",
+        action="append",
+        dest="announce_list",
+        nargs="*",
+        metavar="<url>",
+        help="for any additional trackers"
+    )
+
 
     flags = parser.parse_args(args)
 

@@ -16,17 +16,11 @@ def maketorrent(args, v2=False):
 
 @pytest.fixture(scope="module")
 def tdir():
-    tmpdir = tempdir()
-    yield tmpdir
-    rmpath(tmpdir)
-
+    return tempdir()
 
 @pytest.fixture(scope="module")
 def tfile():
-    tmpfile = tempfile()
-    yield tmpfile
-    rmpath(tmpfile)
-
+    return tempfile()
 
 @pytest.fixture(scope="module")
 def metav2f(tfile):
@@ -34,6 +28,7 @@ def metav2f(tfile):
             "path": tfile,
             "announce": "http://announce.com/announce"}
     yield maketorrent(args, True)
+    rmpath(tfile)
 
 
 @pytest.fixture(scope="module")
@@ -46,6 +41,7 @@ def metav2d(tdir):
         "comment": "content details and purpose",
     }
     yield maketorrent(args, True)
+    rmpath(tdir)
 
 @pytest.fixture(scope="module")
 def metav1d(tdir):
@@ -57,6 +53,7 @@ def metav1d(tdir):
         "comment": "content details and purpose",
     }
     yield maketorrent(args)
+    rmpath(tdir)
 
 @pytest.fixture(scope="module")
 def metav1f(tfile):
@@ -64,6 +61,7 @@ def metav1f(tfile):
             "path": tfile,
             "announce": "http://announce.com/announce"}
     yield maketorrent(args)
+    rmpath(tfile)
 
 
 @pytest.fixture(scope="module")
@@ -73,6 +71,7 @@ def tfilemeta(tfile):
             "announce": "http://announce.com/announce"}
     outfile, _ = maketorrent(args)
     yield outfile, tfile
+    rmpath(tfile)
 
 @pytest.fixture(scope="module")
 def tdirmeta(tdir):
@@ -81,6 +80,7 @@ def tdirmeta(tdir):
             "announce": "http://announce.com/announce"}
     outfile, _ = maketorrent(args)
     yield outfile, tdir
+    rmpath(tdir)
 
 
 def test_v2_meta_keys(metav2f):
