@@ -12,10 +12,11 @@
 #
 import os
 import sys
-from os.path import dirname
-projectdir = dirname(dirname(dirname(os.path.abspath(__file__))))
-sys.path.insert(0, projectdir)
+import better
 
+docsdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+projectdir = os.path.dirname(docsdir)
+sys.path.insert(0, projectdir)
 
 # -- Project information -----------------------------------------------------
 
@@ -48,7 +49,8 @@ exclude_patterns = ['setup.py']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'better'
+html_theme_path = [better.better_theme_path]
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -59,7 +61,7 @@ html_static_path = ['_static']
 napoleon_google_docstring = True
 napoleon_numpy_docstring = False
 napoleon_include_init_with_doc = False
-napoleon_include_private_with_doc = False
+napoleon_include_private_with_doc = True
 napoleon_include_special_with_doc = True
 napoleon_use_admonition_for_examples = False
 napoleon_use_admonition_for_notes = False
