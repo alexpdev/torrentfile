@@ -4,21 +4,40 @@ from torrentfile.metafileV2 import TorrentFileV2
 from torrentfile.metafile import TorrentFile, Checker
 from tests.context import tempdir, tempfile, rmpath, Flags
 
-@pytest.fixture(scope="module")
-def metav2f():
-    tfile = tempfile()
-    args = {"private": True, "path": tfile, "announce": "http://announce.com/announce"}
+
+def maketorrent(args, v2=False):
     flags = Flags(**args)
-    torrent = TorrentFileV2(flags)
+    if v2:
+        torrent = TorrentFileV2(flags)
+    else:
+        torrent = TorrentFile(flags)
     torrent.assemble()
-    outfile, meta = torrent.write()
-    yield outfile, meta
-    rmpath(outfile)
+    return torrent.write()
+
+@pytest.fixture(scope="module")
+def tdir():
+    tmpdir = tempdir()
+    yield tmpdir
+    rmpath(tmpdir)
 
 
 @pytest.fixture(scope="module")
-def metav2d():
-    tdir = tempdir()
+def tfile():
+    tmpfile = tempfile()
+    yield tmpfile
+    rmpath(tmpfile)
+
+
+@pytest.fixture(scope="module")
+def metav2f(tfile):
+    args = {"private": True,
+            "path": tfile,
+            "announce": "http://announce.com/announce"}
+    yield maketorrent(args, True)
+
+
+@pytest.fixture(scope="module")
+def metav2d(tdir):
     args = {
         "private": True,
         "path": tdir,
@@ -26,17 +45,10 @@ def metav2d():
         "source": "tracker",
         "comment": "content details and purpose",
     }
-    flags = Flags(**args)
-    torrent = TorrentFileV2(flags)
-    torrent.assemble()
-    outfile, meta = torrent.write()
-    yield outfile, meta
-    rmpath(outfile)
-
+    yield maketorrent(args, True)
 
 @pytest.fixture(scope="module")
-def metav1d():
-    tdir = tempdir()
+def metav1d(tdir):
     args = {
         "private": True,
         "path": tdir,
@@ -44,49 +56,31 @@ def metav1d():
         "source": "tracker",
         "comment": "content details and purpose",
     }
-    flags = Flags(**args)
-    torrent = TorrentFile(flags)
-    torrent.assemble()
-    outfile, meta = torrent.write()
-    yield outfile, meta
-    rmpath(outfile)
+    yield maketorrent(args)
+
+@pytest.fixture(scope="module")
+def metav1f(tfile):
+    args = {"private": True,
+            "path": tfile,
+            "announce": "http://announce.com/announce"}
+    yield maketorrent(args)
 
 
 @pytest.fixture(scope="module")
-def metav1f():
-    tfile = tempfile()
-    args = {"private": True, "path": tfile,
+def tfilemeta(tfile):
+    args = {"private": True,
+            "path": tfile,
             "announce": "http://announce.com/announce"}
-    flags = Flags(**args)
-    torrent = TorrentFile(flags)
-    torrent.assemble()
-    outfile, meta = torrent.write()
-    yield outfile, meta
-    rmpath(outfile)
-
-@pytest.fixture(scope="module")
-def tfilemeta():
-    tfile = tempfile()
-    args = {"private": True, "path": tfile,
-            "announce": "http://announce.com/announce"}
-    flags = Flags(**args)
-    torrent = TorrentFile(flags)
-    torrent.assemble()
-    outfile, _ = torrent.write()
+    outfile, _ = maketorrent(args)
     yield outfile, tfile
-    rmpath(outfile)
 
 @pytest.fixture(scope="module")
-def tdirmeta():
-    tdir = tempdir()
-    args = {"private": True, "path": tdir,
+def tdirmeta(tdir):
+    args = {"private": True,
+            "path": tdir,
             "announce": "http://announce.com/announce"}
-    flags = Flags(**args)
-    torrent = TorrentFile(flags)
-    torrent.assemble()
-    outfile, _ = torrent.write()
+    outfile, _ = maketorrent(args)
     yield outfile, tdir
-    rmpath(outfile)
 
 
 def test_v2_meta_keys(metav2f):

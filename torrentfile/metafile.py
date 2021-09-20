@@ -72,7 +72,6 @@ import math
 from hashlib import sha1
 from datetime import datetime
 
-from torrentfile.exceptions import MissingPathError
 from torrentfile.utils import Bendecoder, Benencoder, path_stat
 
 
@@ -102,7 +101,6 @@ class TorrentFile:
 
     Returns:
         `obj`: Instance of Metafile Class.
-
     """
 
     def __init__(self, flags):
@@ -126,10 +124,7 @@ class TorrentFile:
 
         Returns:
           `obj`: Instance of Metafile Class.
-
         """
-        if not flags.path:
-            raise MissingPathError(flags)
         self.base = flags.path
         self.name = os.path.basename(flags.path)
         if flags.piece_length:
@@ -201,16 +196,9 @@ class TorrentFile:
 
         """
         if self.announce:
-            print(self.announce)
-            # if announce is a string assign it to announce key in meta dict
-            if isinstance(self.announce, str):
-                self.meta["announce"] = self.announce
-            # otherwise it must be a iterable then assign first item to
-            # announce key and the rest to announce_list key in info dict
-            else:
-                self.meta["announce"] = self.announce[0]
-                if len(self.announce) > 1:
-                    self.info["announce list"] = self.announce[1:]
+            self.meta["announce"] = self.announce
+        else:
+            self.meta["announce"] = ""
 
         self.meta["created by"] = "torrentfile"
         self.meta["creation date"] = timestamp()
@@ -290,8 +278,8 @@ class Checker:
         """Decode bencoded data inside .torrent file."""
         fd = open(self.metafile, "rb").read()
         decoder = Bendecoder()
-        dictt = decoder.decode(fd)
-        for k, v in dictt.items():
+        terms = decoder.decode(fd)
+        for k, v in terms.items():
             self.meta[k] = v
             if k == "info":
                 for k1, v1 in v.items():
@@ -330,7 +318,6 @@ class Checker:
 
         Returns:
           `str`: "Complete" after finishing.
-
         """
         feeder = Feeder(paths, self.piece_length, self.total)
         pieces = bytes.fromhex(self.pieces)
@@ -352,7 +339,6 @@ class Checker:
 
         Returns:
             `str`: Indicating process has completed.
-
         """
         if os.path.isfile(self.location) and os.path.basename(self.location) == self.name:
             paths = [self.location]
@@ -410,7 +396,6 @@ class Feeder:
 
         Returns:
           `iter(self)`: Iterator for leaves/hash pieces.
-
         """
         self.iterator = self.leaves()
         return self.iterator
@@ -421,7 +406,6 @@ class Feeder:
 
         Returns:
           `bytes`: Piece_length length pieces of data.
-
         """
         return self.iterator.__next__()
 
@@ -439,7 +423,6 @@ class Feeder:
 
         Returns:
           `bytes`: SHA1 digest of the complete piece.
-
         """
         while partial < self.piece_length:
             temp = bytearray(self.piece_length - partial)

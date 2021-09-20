@@ -30,7 +30,8 @@ def main_script(args=None):
 
     """
     args = sys.argv[1:] if not args else args
-    d = "Tool for creating, inspecting, or checking Bittorrent metafiles. Both .torrent v1 and v2 files are supported."
+    d = "Tool for creating, inspecting, or checking Bittorrent metafiles." \
+        "Both .torrent v1 and v2 files are supported."
     parser = ArgumentParser(sys.argv[0], description=d,
                             prefix_chars="-")
 

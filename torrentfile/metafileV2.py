@@ -147,8 +147,7 @@ import math
 import os
 from datetime import datetime
 
-from torrentfile.exceptions import MissingPathError
-from torrentfile.utils import Benencoder, path_piece_length, sortfiles
+from .utils import Benencoder, path_piece_length, sortfiles
 
 BLOCK_SIZE = 2 ** 14  # 16KiB
 
@@ -203,8 +202,6 @@ class TorrentFileV2:
         Returns:
           `obj`: Instance of Metafile Class.
         """
-        if not flags.path:
-            raise MissingPathError(flags)
         self.name = os.path.basename(flags.path)
         self.path = flags.path
         self.comment = flags.comment
@@ -260,13 +257,10 @@ class TorrentFileV2:
         # if no tracker url was provided, place dummy string in its place
         # which can be later replaced by some Bittorrent clients
         if not self.announce:
-            self.meta["announce"] = "UnkownTrackerGoesHere"
+            self.meta["announce"] = ""
 
         elif isinstance(self.announce, str):
             self.meta["announce"] = self.announce
-        else:
-            # if announce is iterable, only first url is used
-            self.meta["announce"] = self.announce[0]
 
         if not self.piece_length:
             self.piece_length = path_piece_length(self.path)
@@ -291,12 +285,10 @@ class TorrentFileV2:
         file_tree = {}
         if os.path.isfile(path):
             size = os.path.getsize(path)
-            if size == 0:
-                return {"": {"length": size}}
             fhash = FileHash(path, self.piece_length)
             self.hashes.append(fhash)
             return {"": {"length": size, "pieces root": fhash.root_hash}}
-        elif os.path.isdir(path):
+        if os.path.isdir(path):
             for base, full in sortfiles(path):
                 file_tree[base] = self._traverse(full)
         return file_tree
@@ -310,7 +302,6 @@ class TorrentFileV2:
 
         Returns:
           `bytes`: Data writtend to .torrent file.
-
         """
         if outfile:
             self.outfile = outfile
@@ -382,6 +373,7 @@ class FileHash:
             if not blocks:
                 break
 
+            # if the file is smaller than piece length
             if len(blocks) < self.piece_blocks:
                 blocks += self._pad_remaining(total, len(blocks))
 

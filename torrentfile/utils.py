@@ -62,7 +62,10 @@ class Bendecoder:
           `any`: The decoded data.
         """
         bits = bits if bits is not None else self.data
-        data, _ = self._decode(bits)
+        try:
+            data, _ = self._decode(bits)
+        except AttributeError:
+            raise BendecodingError(bits)
         return data
 
     def _decode(self, bits):

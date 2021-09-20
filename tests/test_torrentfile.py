@@ -14,6 +14,7 @@
 
 import pytest
 from torrentfile import TorrentFile
+from torrentfile import exceptions, utils
 from tests.context import tempfile, tempdir, rmpath, Flags
 
 
@@ -83,3 +84,28 @@ def test_torrentfile_dir_comment(tdir):
     torrent = TorrentFile(flags)
     data = torrent.assemble()
     assert "private" in data["info"] and "comment" in data["info"]
+
+
+def test_exception_encoding_error():
+    try:
+        val = set([1,2,3,4,5])
+        encoder = utils.Benencoder()
+        val = encoder.encode(val)
+        assert False
+    except exceptions.BenencodingError:
+        assert True
+
+def test_exception_decoding_error():
+    try:
+        val = b'i:alphabet'
+        decoder = utils.Bendecoder()
+        val = decoder.decode(val)
+        assert False
+    except exceptions.BendecodingError:
+        assert True
+
+def test_exception_missing_path_error():
+    try:
+        raise exceptions.MissingPathError("this is a message")
+    except exceptions.MissingPathError:
+        assert True

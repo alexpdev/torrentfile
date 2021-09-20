@@ -26,33 +26,16 @@ Modules:
     utils: Utilities used throughout package.
 """
 
-from torrentfile import utils, metafile, metafileV2, torrentfile, exceptions
-from torrentfile.metafile import TorrentFile
-from torrentfile.metafileV2 import TorrentFileV2
-from torrentfile.torrentfile import main
-from torrentfile.utils import (
-    path_stat,
-    path_size,
-    get_piece_length,
-    path_piece_length,
-    Benencoder,
-    Bendecoder,
-)
+from .metafile import TorrentFile
+from .metafileV2 import TorrentFileV2
+from .torrentfile import main
+from .utils import (Benencoder, Bendecoder)
 
 __version__ = "0.2.5"
 __author__ = "alexpdev"
 
 __all__ = (
-    "metafile",
-    "metafileV2",
-    "torrentfile",
-    "exceptions",
     "main",
-    "path_stat",
-    "path_size",
-    "utils",
-    "get_piece_length",
-    "path_piece_length",
     "Benencoder",
     "Bendecoder",
     "TorrentFile",
