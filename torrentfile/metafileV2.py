@@ -97,27 +97,24 @@ with the following keys:
 File tree layout Example:
 
 ```python:
-{info:
-    {file tree:
-        {dir1:
-            {dir2:
-                {fileA.txt: {
+    {info:
+        {file tree:
+            {dir1:
+                {dir2:
+                    {fileA.txt: {
                     "": {
                         length: <length of file in bytes (integer)>,
                         pieces root: <optional, merkle tree root (string)>,
-                        }
-                    },
-                fileB.txt: {
+                    }},
+                    fileB.txt: {
                     "": {
                         length: `int`,
                         pieces root: `string`
-                        }
-                    }
+                    }}}
                 }
             }
         }
     }
-}
 ```
 
 > Note that identical files always result in the same root hash.
@@ -131,7 +128,7 @@ Single-file torrent:
 Multiple files rooted in a single directory:
 
 ```python:
-"file tree": {dir: {
+    "file tree": {dir: {
         nameA.ext: {"": {length: ...}},
         nameB.ext: {"": {length: ...}}}
     }
