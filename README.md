@@ -11,59 +11,67 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile?style=plastic)
 ![GitHub](https://img.shields.io/github/license/alexpdev/torrentfile?style=plastic)
 
-`torrentfile` is a command line application for creating .torrent files for use with bittorrent clients.
+*Torrentfile* is a command line application for creating .torrent files for use with bittorrent clients.
 
 ## Features
 
-* Simple interface
-* Create files for Bittorrent v1
-* Create files for Bittorrent v2
-* Create files with multiple trackers
-* Optionally specify size of individual packets of data for transfer
-* Flag torrent file as private for private trackers.
+    * Simple interface
+
+    * Create files for Bittorrent v1
+
+    * Create files for Bittorrent v2
+
+    * Create files with multiple trackers
+
+    * Optionally specify size of individual packets of data for transfer
+
+    * Flag torrent file as private for private trackers.
+
+    * Check torrentfile against file or directory for match.
 
 ## Installation
 
 ### via PyPi
 
-```bash
->> pip install torrentfile
-```
+    ```bash
+    >> pip install torrentfile
+    ```
 
 ### via Git
 
-```bash
->> git clone https://github.com/alexpdev/torrentfile.git
-```
+    ```bash
+    >> git clone https://github.com/alexpdev/torrentfile.git
+    ```
 
 ## Command Line Options
 
-```bash
-usage: torrentfile [-h] [--version] [-p <path>] [-a <url>] [--piece-length <number>] [--private] [-o <path>] [--v2] [--created-by <app>] [--comment <comment>] [--source <source>]
-                   [--announce-list [<url> ...]]
+    ```bash:
+    usage: torrentfile -p <path> [-h] [--version] [-a <url>] [--piece-length <number>]
+                        [--private] [-o <path>] [--v2] [--created-by <app>] [--comment <comment>]
+                        [--source <source>] [--announce-list [<url> ...]]
 
-Create .torrent files for Bittorrent v1 or v2.
+    Create .torrent files for Bittorrent v1 or v2.
 
-arguments:
-  -h, --help            show this help message and exit
-  --version             show program version and exit
-  -p <path>, --path <path>
-                        (required) path to torrent content
-  -a <url>, --announce <url>
-                        announce url for tracker
-  --piece-length <number>
-                        specify size in bytes of packets of data to transfer
-  --private             use if torrent is for private tracker
-  -o <path>, --out <path>
-                        specify path for .torrent file
-  --v2, --meta-version2
-                        use if bittorrent v2 file is wanted
-  --created-by <app>
-  --comment <comment>   include a comment in .torrent file
-  --source <source>     ignore unless instructed otherwise
-  --announce-list [<url> ...]
-                        for any additional trackers
-```
+    arguments:
+    -h, --help            show this help message and exit
+    --version             show program version and exit
+    -p <path>, --path <path>
+                            (required) path to torrent content
+    -a <url>, --announce <url>
+                            announce url for tracker
+    --piece-length <number>
+                            specify size in bytes of packets of data to transfer
+    --private             use if torrent is for private tracker
+    -o <path>, --out <path>
+                            specify path for .torrent file
+    --v2, --meta-version2
+                            use if bittorrent v2 file is wanted
+    --created-by <app>
+    --comment <comment>   include a comment in .torrent file
+    --source <source>     ignore unless instructed otherwise
+    --announce-list [<url> ...]
+                            for any additional trackers
+    ```
 
 ## License
 

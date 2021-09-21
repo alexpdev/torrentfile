@@ -1,7 +1,7 @@
 import os
 import sys
 import pytest
-from torrentfile.torrentfile import main
+from torrentfile import main
 from torrentfile.exceptions import MissingPathError
 from tests.context import tempfile, tempdir, rmpath
 
@@ -107,4 +107,3 @@ def test_cli_no_args_v2():
         assert main()
     except MissingPathError:
         assert True
-

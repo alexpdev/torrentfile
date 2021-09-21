@@ -47,6 +47,7 @@ WinRAR*/
 # Distribution / packaging
 .Python
 env/
+codacy.sh
 build/
 develop-eggs/
 dist/
