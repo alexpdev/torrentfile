@@ -115,6 +115,9 @@ target/
 # pyenv
 .python-version
 
+# coverage codacy
+.codacy-coverage/
+
 # celery beat schedule file
 celerybeat-schedule
 

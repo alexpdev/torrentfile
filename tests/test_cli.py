@@ -24,44 +24,14 @@ def tdir():
     yield folder
     rmpath(folder)
 
-
-@pytest.fixture(scope="module")
-def testdir():
-    folder = tempdir()
-    return folder
-
-
 @pytest.fixture(scope="module")
 def tfile():
     fd = tempfile()
     yield fd
     rmpath(fd)
 
-
-@pytest.fixture(scope="function")
-def tmeta(testdir):
-    args = [
-        "-t",
-        "http://anounce.com/announce",
-        "--source",
-        "Alpha",
-        "--piece-length",
-        str(2 ** 20),
-        "--private",
-        "--comment",
-        "some comment",
-        "--path",
-        testdir
-    ]
-    sys.argv = [sys.argv[0]] + args
-    parser = main()
-    yield parser
-    rmpath(parser.outfile)
-    rmpath(testdir)
-
-
 def test_cli_args_dir(tdir):
-    args = ["--path",tdir]
+    args = ["--path", tdir]
     sys.argv = [sys.argv[0]] + args
     parser = main()
     assert os.path.exists(parser.outfile)
@@ -107,3 +77,19 @@ def test_cli_no_args_v2():
         assert main()
     except MissingPathError:
         assert True
+
+def test_cli_with_all_args(tfile):
+    sys.argv.extend(["torrentfile", "-p", tfile, "--v2", "-a",
+                     "https://tracker-url.com/announce", "--comment",
+                     "some comment", "--piece-length", str(2**14), "--private",
+                     "--source", "TRACKER", "--created-by", "PROGGRAM"])
+    parser = main()
+    assert os.path.exists(parser.outfile)
+
+def test_cli_with_all_args(tdir):
+    sys.argv = (["torrentfile", "-p", tdir, "--v2", "-a",
+                 "https://tracker-url.com/announce", "--comment", "some comment",
+                 "--piece-length", str(2**14), "--private", "--source", "TRACKER",
+                 "--created-by", "PROGGRAM"])
+    parser = main()
+    assert os.path.exists(parser.outfile)
