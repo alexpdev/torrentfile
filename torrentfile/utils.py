@@ -185,7 +185,6 @@ class Benencoder:
 
         Args:
         data(`any`, optional) Target data for encoding. Defaults to None.
-
         """
         self.data = data
 
@@ -291,7 +290,8 @@ class Benencoder:
 
 
 def get_piece_length(size):
-    """Calculate the ideal piece length for bittorrent data.
+    """
+    Calculate the ideal piece length for bittorrent data.
 
     Args:
       size(`int`): Total bits of all files incluided in .torrent file.
@@ -306,7 +306,8 @@ def get_piece_length(size):
 
 
 def sortfiles(path):
-    """Generate files one at a time in sorted order.
+    """
+    Generate files one at a time in sorted order.
 
     Args:
       path(`str`): Directory path to get file list from.
@@ -320,7 +321,8 @@ def sortfiles(path):
 
 
 def _dir_files_sizes(path):
-    """Generate a file list and their sizes for given directory.
+    """
+    Generate a file list and their sizes for given directory.
 
     Args:
       path(`str`): Top level directory.
@@ -340,7 +342,8 @@ def _dir_files_sizes(path):
 
 
 def path_size(path):
-    """Calculate sum of all filesizes within directory.
+    """
+    Calculate sum of all filesizes within directory.
 
     Args:
     path(`str`): The path to start calculating from.
@@ -361,7 +364,8 @@ def path_size(path):
 
 
 def get_file_list(path, sort=False):
-    """Search directory tree for files.
+    """
+    Search directory tree for files.
 
     Args:
       path(`str`): Path to file or directory base
@@ -389,7 +393,8 @@ def get_file_list(path, sort=False):
 
 
 def path_stat(path):
-    """Calculate directory statistics.
+    """
+    Calculate directory statistics.
 
     Args:
       path(`str`): The path to start calculating from.
@@ -405,7 +410,8 @@ def path_stat(path):
 
 
 def path_piece_length(path):
-    """Calculate piece length for input path and contents.
+    """
+    Calculate piece length for input path and contents.
 
     Args:
       path(`str`): The absolute path to directory and contents.

@@ -48,6 +48,7 @@ coverage: environment ## check code coverage quickly with the default Python
 	coverage run -m pytest tests
 	coverage xml -o corbertura.xml
 	bash codacy.sh report -r corbertura.xml
+	rm -f corbertura.xml
 
 release: ## package and upload a release
 	python setup.py sdist bdist_egg bdist_wheel
@@ -65,4 +66,4 @@ start: clean ## start new branch
 	git push --set-upstream origin development
 
 
-full: clean test checkout coverage 
+full: clean test checkout coverage

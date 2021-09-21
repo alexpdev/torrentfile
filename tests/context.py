@@ -21,6 +21,7 @@ TD = os.path.abspath(os.path.dirname(__file__))
 
 
 class Flags:
+
     """Dummy class for testing purposes.
 
     Minimally emulates the argparse.Namespace class.
@@ -39,6 +40,20 @@ class Flags:
     """
 
     def __init__(self, **kwargs):
+        """Dummy class for testing purposes.
+
+        Kwargs:
+            path(`any`): path to contents of torrent
+            announce(`any`, Optional): url for tracker.
+            piece_length(`any`, Optional): size of each transmitable content
+            source(`any`, Optional): leave blank.
+            private(`any`, Optional): for private tracker?
+            outfile(`any`, Optional): path to write .torrent file.
+            created_by(`any`, Optional): program creator... leave blank.
+            comment(`any`, Optional): any comment.
+            v2(`any`, Optional): Meta Version 2 .torrentfile
+            announce_list(`any`, Optional): additional trackers
+        """
         self.path = None
         self.announce = None
         self.piece_length = None
