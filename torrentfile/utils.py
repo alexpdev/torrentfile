@@ -95,8 +95,8 @@ class Bendecoder:
         if bits.startswith(b"d"):
             dic, feed = self._decode_dict(bits)
             return dic, feed
-        else:
-            raise BendecodingError(bits)
+
+        raise BendecodingError(bits)
 
     def _decode_dict(self, bits):
         """Decode bencoded data dictionary.

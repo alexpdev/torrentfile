@@ -1,4 +1,4 @@
-.PHONY: clean clean-test clean-pyc clean-build help full
+.PHONY: clean help full
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -26,7 +26,7 @@ BROWSER := python -c "$$BROWSER_PYSCRIPT"
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
+clean: clean-build ## remove all build, test, coverage and Python artifacts
 
 environment:
 	.\env\Scripts\activate
@@ -35,16 +35,6 @@ clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
-	find . -name '*.egg-info' -exec rm -fr {} +
-	find . -name '*.egg' -exec rm -f {} +
-
-clean-pyc: ## remove Python file artifacts
-	find . -name '*.pyc' -exec rm -f {} +
-	find . -name '*.pyo' -exec rm -f {} +
-	find . -name '*~' -exec rm -f {} +
-	find . -name '__pycache__' -exec rm -fr {} +
-
-clean-test: ## remove test and coverage artifacts
 	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
@@ -52,13 +42,12 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 test: environment ## run tests quickly with the default Python
-	pytest ./tests
+	pytest tests
 
 coverage: environment ## check code coverage quickly with the default Python
 	coverage run -m pytest tests
 	coverage xml -o corbertura.xml
-	bash < (curl -Ls https://coverage.codacy.com/get.sh) report -r corbertura.xml
-
+	bash codacy.sh
 
 release: ## package and upload a release
 	python setup.py sdist bdist_egg bdist_wheel
@@ -70,10 +59,9 @@ checkout: ## push to remote
 	git commit -m "auto commit and publish"
 	git push
 
-
 start: clean ## start new branch
 	git branch development
 	git checkout development
 
 
-full: clean clean-pyc clean-build test checkout coverage start
+full: clean test checkout coverage start
