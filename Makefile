@@ -47,8 +47,10 @@ test: environment ## run tests quickly with the default Python
 coverage: environment ## check code coverage quickly with the default Python
 	coverage run -m pytest tests
 	coverage xml -o corbertura.xml
+	git add .
+	git commit -m "auto push coverage"
+	git push
 	bash codacy.sh report -r corbertura.xml
-	rm -f corbertura.xml
 
 release: ## package and upload a release
 	python setup.py sdist bdist_egg bdist_wheel

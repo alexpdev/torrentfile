@@ -27,7 +27,6 @@ def main_script(args=None):
     usage: ```torrentfile --path /path/to/content [-o /path/to/output.torrent]
             [--piece-length 0000] [--private] [-t https://tracker.url/announce]
             [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]```
-
     """
     args = sys.argv[1:] if not args else args
     d = "Create .torrent files for Bittorrent v1 or v2."
