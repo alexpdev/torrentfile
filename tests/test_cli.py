@@ -108,7 +108,3 @@ def test_cli_no_args_v2():
     except MissingPathError:
         assert True
 
-
-def test_cli_meta_source_dir(tmeta):
-    assert "source" in tmeta.meta["info"]
-    assert tmeta.meta["info"]["source"] == "Alpha"
