@@ -84,6 +84,9 @@ def rmpath(path):
     else:
         os.remove(path)
 
+def rmpaths(paths):
+    for path in paths:
+        rmpath(path)
 
 def tempdir():
     tdir = os.path.join(TD, "tempdir")

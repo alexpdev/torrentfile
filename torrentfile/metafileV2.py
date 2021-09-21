@@ -12,29 +12,31 @@
 #####################################################################
 
 """
+Notes
+-----------------------------------
+
 Bittorrent Protocol v2 Metafiles.
 
 Metainfo files (also known as .torrent files) are bencoded dictionaries
 with the following keys:
 
-- "announce": The URL of the tracker.
+"announce":
+    The URL of the tracker.
 
-- "info": This maps to a dictionary, with keys described below.
+"info":
+    This maps to a dictionary, with keys described below.
 
-- "piece layers": A dictionary of strings. For each file in the file tree that
-    is larger than the piece size it contains one string value.
-    (See below for more details.)
+    "name":
+        A display name for the torrent. It is purely advisory.
 
-- "info" dictionary:
-
-    - "name": A display name for the torrent. It is purely advisory.
-
-    - "piece length":  The number of bytes that each logical piece in the peer
+    "piece length":
+        The number of bytes that each logical piece in the peer
         protocol refers to. I.e. it sets the granularity of piece, request,
         bitfield and have messages. It must be a power of two and at least
         6KiB.
 
-    - "meta version": An integer value, set to 2 to indicate compatibility
+    "meta version":
+        An integer value, set to 2 to indicate compatibility
         with the current revision of this specification. Version 1 is not
         assigned to avoid confusion with BEP3. Future revisions will only
         increment this issue to indicate an incompatible change has been made,
@@ -45,7 +47,8 @@ with the following keys:
         about invalid files. Files are mapped into this piece address space so
         that each non-empty
 
-    - "file tree": A tree of dictionaries where dictionary keys represent UTF-8
+    "file tree":
+        A tree of dictionaries where dictionary keys represent UTF-8
         encoded path elements. Entries with zero-length keys describe the
         properties of the composed path at that point. 'UTF-8 encoded' in this
         context only means that if the native encoding is known at creation
@@ -57,12 +60,17 @@ with the following keys:
         conflicting path descriptions. On platforms that require valid UTF-8
         path components this sanitizing step must happen after normalizing
         overlong UTF-8 encodings.
+        File is aligned to a piece boundary and occurs in the same order as in
+        the file tree. The last piece of each file may be shorter than the
+        specified piece length, resulting in an alignment gap.
 
-    - "length": Length of the file in bytes. Presence of this field indicates
+    "length":
+        Length of the file in bytes. Presence of this field indicates
         that the dictionary describes a file, not a directory. Which means
         it must not have any sibling entries.
 
-     - "pieces root": For non-empty files this is the the root hash of a merkle
+    "pieces root":
+        For non-empty files this is the the root hash of a merkle
         tree with a branching factor of 2, constructed from 16KiB blocks of the
         file. The last block may be shorter than 16KiB. The remaining leaf
         hashes beyond the end of the file required to construct upper layers
@@ -70,14 +78,10 @@ with the following keys:
         used as digest function for the merkle tree. The hash is stored in its
         binary form, not as human-readable string.
 
-
-file is aligned to a piece boundary and occurs in the same order as in
-    the file tree. The last piece of each file may be shorter than the
-    specified piece length, resulting in an alignment gap.
-
-piece layers
-
-The keys are the merkle roots while the values consist of concatenated
+"piece layers":
+    A dictionary of strings. For each file in the file tree that
+    is larger than the piece size it contains one string value.
+    The keys are the merkle roots while the values consist of concatenated
     hashes of one layer within that merkle tree. The layer is chosen so
     that one hash covers piece length bytes. For example if the piece size is
     16KiB then the leaf hashes are used. If a piece size of 128KiB is used
@@ -87,59 +91,51 @@ The keys are the merkle roots while the values consist of concatenated
     format. A torrent is not valid if this field is absent, the contained
     hashes do not match the merkle roots or are not from the correct layer.
 
-
-The file tree root dictionary itself must not be a file, i.e. it must not
-    contain a zero-length key with a dictionary containing a length key.
+> The file tree root dictionary itself must not be a file, i.e. it must not
+> contain a zero-length key with a dictionary containing a length key.
 
 File tree layout Example:
 
-{
-info: {
-    file tree: {
-    dir1: {
-        dir2: {
-        fileA.txt: {
-            "": {
-            length: <length of file in bytes (integer)>,
-            pieces root: <optional, merkle tree root (string)>,
-            }
-        },
-        fileB.txt: {
-            "": {
+```python:
+{info:
+    {file tree:
+        {dir1:
+            {dir2:
+                {fileA.txt: {
+                    "": {
+                        length: <length of file in bytes (integer)>,
+                        pieces root: <optional, merkle tree root (string)>,
+                        }
+                    },
+                fileB.txt: {
+                    "": {
+                        length: `int`,
+                        pieces root: `string`
+                        }
+                    }
+                }
             }
         }
-        },
-        dir3: {
-        }
-    }
     }
 }
-}
+```
 
-Note that identical files always result in the same root hash.
-All strings in a .torrent file defined by this BEP that contain human-readable
-text are UTF-8 encoded.
+> Note that identical files always result in the same root hash.
+> All strings in a .torrent file defined by this BEP that contain human-readable
+> text are UTF-8 encoded.
 
-Interpreting paths:
+Single-file torrent:
 
-"file tree": {name.ext: {"": {length: ...}}}
+`"file tree": {name.ext: {"": {length: ...}}}`
 
+Multiple files rooted in a single directory:
 
-single-file torrent
-
-"file tree": {nameA.ext:{"": {length: ...}},
-              nameB.ext: {"": {length: ...}},
-              dir: {...}}
-
-rootless multifile torrent, i.e. a list of files and directories without a
-named common directory containing them. implementations may offer users to
-optionally prepend the torrent name as root to avoid file name collisions.
-
-"file tree": {dir: {nameA.ext: {"": {length: ...}},
-                    nameB.ext: {"": {length: ...}}}}
-
-multiple files rooted in a single directory.
-
+```python:
+"file tree": {dir: {
+        nameA.ext: {"": {length: ...}},
+        nameB.ext: {"": {length: ...}}}
+    }
+```
 """
 
 import hashlib
@@ -161,8 +157,6 @@ class TorrentFileV2:
     """
     Class for creating Bittorrent meta v2 files.
 
-    Construct `TorrentFileV2` instance.
-
     Args:
         flags('obj'): has all the following properties.
 
@@ -182,8 +176,6 @@ class TorrentFileV2:
 
     def __init__(self, flags):
         """
-        Class for creating Bittorrent meta v2 files.
-
         Construct `TorrentFileV2` instance.
 
         Args:

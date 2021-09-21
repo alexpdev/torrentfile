@@ -2,7 +2,7 @@ import os
 import pytest
 from torrentfile.metafileV2 import TorrentFileV2
 from torrentfile.metafile import TorrentFile, Checker
-from tests.context import tempdir, tempfile, rmpath, Flags
+from tests.context import tempdir, tempfile, rmpaths, Flags
 
 
 def maketorrent(args, v2=False):
@@ -27,8 +27,9 @@ def metav2f(tfile):
     args = {"private": True,
             "path": tfile,
             "announce": "http://announce.com/announce"}
-    yield maketorrent(args, True)
-    rmpath(tfile)
+    outfile, meta = maketorrent(args, v2 = True)
+    yield outfile, meta
+    rmpaths([tfile, outfile])
 
 
 @pytest.fixture(scope="module")
@@ -40,8 +41,9 @@ def metav2d(tdir):
         "source": "tracker",
         "comment": "content details and purpose",
     }
-    yield maketorrent(args, True)
-    rmpath(tdir)
+    outfile, meta = maketorrent(args, v2=True)
+    yield outfile, meta
+    rmpaths([tdir, outfile])
 
 @pytest.fixture(scope="module")
 def metav1d(tdir):
@@ -52,16 +54,19 @@ def metav1d(tdir):
         "source": "tracker",
         "comment": "content details and purpose",
     }
-    yield maketorrent(args)
-    rmpath(tdir)
+    outfile, meta = maketorrent(args)
+    yield outfile, meta
+    rmpaths([tdir, outfile])
+
 
 @pytest.fixture(scope="module")
 def metav1f(tfile):
     args = {"private": True,
             "path": tfile,
             "announce": "http://announce.com/announce"}
-    yield maketorrent(args)
-    rmpath(tfile)
+    outfile, meta = maketorrent(args)
+    yield outfile, meta
+    rmpaths([tfile, outfile])
 
 
 @pytest.fixture(scope="module")
@@ -71,7 +76,8 @@ def tfilemeta(tfile):
             "announce": "http://announce.com/announce"}
     outfile, _ = maketorrent(args)
     yield outfile, tfile
-    rmpath(tfile)
+    rmpaths([tfile, outfile])
+
 
 @pytest.fixture(scope="module")
 def tdirmeta(tdir):
@@ -80,7 +86,7 @@ def tdirmeta(tdir):
             "announce": "http://announce.com/announce"}
     outfile, _ = maketorrent(args)
     yield outfile, tdir
-    rmpath(tdir)
+    rmpaths([tdir, outfile])
 
 
 def test_v2_meta_keys(metav2f):

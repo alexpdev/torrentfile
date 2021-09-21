@@ -1,4 +1,4 @@
-.PHONY: clean clean-test clean-pyc clean-build docs help
+.PHONY: clean clean-test clean-pyc clean-build help full
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -28,6 +28,9 @@ help:
 
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
+environment:
+	.\env\Scripts\activate
+
 clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
@@ -45,41 +48,32 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
+	rm -f corbertura.xml
 	rm -fr .pytest_cache
 
-lint: ## check style with flake8
-	flake8 qtc tests
+test: environment ## run tests quickly with the default Python
+	pytest ./tests
 
-test: ## run tests quickly with the default Python
-	python setup.py test
+coverage: environment ## check code coverage quickly with the default Python
+	coverage run -m pytest tests
+	coverage xml -o corbertura.xml
+	bash < (curl -Ls https://coverage.codacy.com/get.sh) report -r corbertura.xml
 
-test-all: ## run tests on every Python version with tox
-	tox
 
-coverage: ## check code coverage quickly with the default Python
-	coverage run --source qtc setup.py test
-	coverage report -m
-	coverage html
-	$(BROWSER) htmlcov/index.html
-
-docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/qtc.rst
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ qtc
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
-	$(BROWSER) docs/_build/html/index.html
-
-servedocs: docs ## compile the docs watching for changes
-	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
-
-release: dist ## package and upload a release
+release: ## package and upload a release
+	python setup.py sdist bdist_egg bdist_wheel
 	twine upload dist/*
-
-dist: clean ## builds source and wheel package
-	python setup.py sdist
-	python setup.py bdist_wheel
 	ls -l dist
 
-install: clean ## install the package to the active Python's site-packages
-	python setup.py install
+checkout: ## push to remote
+	git add .
+	git commit -m "auto commit and publish"
+	git push
+
+
+start: clean ## start new branch
+	git branch development
+	git checkout development
+
+
+full: clean clean-pyc clean-build test checkout coverage start
