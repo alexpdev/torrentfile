@@ -146,6 +146,6 @@ ENV/
 
 # mypy
 .mypy_cache/
-
+docs_/
 # IDE settings
 .vscode/
