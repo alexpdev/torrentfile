@@ -29,7 +29,7 @@ help:
 clean: clean-build ## remove all build, test, coverage and Python artifacts
 
 environment:
-	.\env\Scripts\activate
+	.\env\Scripts\activate.bat
 
 clean-build: ## remove build artifacts
 	rm -fr build/
@@ -42,9 +42,9 @@ clean-build: ## remove build artifacts
 	rm -fr .pytest_cache
 
 test: environment ## run tests quickly with the default Python
-	pytest tests
+	pytest --cov tests
 
-coverage: environment ## check code coverage quickly with the default Python
+coverage: clean environment test ## check code coverage with the default Python
 	coverage run -m pytest tests
 	coverage xml -o corbertura.xml
 	git add .
@@ -67,5 +67,7 @@ start: clean ## start new branch
 	git checkout development
 	git push --set-upstream origin development
 
+lint: ## lint errors
+	pylama torrentfile tests
 
 full: clean test checkout coverage

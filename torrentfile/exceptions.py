@@ -17,7 +17,8 @@
 
 class BendecodingError(Exception):
 
-    """Error occured during decode process.
+    """
+    Error occured during decode process.
 
     Args:
         val(`any`): Value that cannot be interpreted by decoder.

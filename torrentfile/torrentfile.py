@@ -28,10 +28,13 @@ def main_script(args=None):
             [--piece-length 0000] [--private] [-t https://tracker.url/announce]
             [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]```
     """
+    usage = """torrentfile --path /path/to/content [-o /path/to/output.torrent]
+            [--piece-length 0000] [--private] [-t https://tracker.url/announce]
+            [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]"""
     args = sys.argv[1:] if not args else args
     d = "Create .torrent files for Bittorrent v1 or v2."
-    parser = ArgumentParser("torrentfile", description=d,
-                            prefix_chars="-")
+    parser = ArgumentParser("torrentfile", description=d, prefix_chars="-",
+                            usage=usage, add_help=True, allow_abbrev=False)
 
     parser.add_argument(
         "--version",
@@ -120,22 +123,21 @@ def main_script(args=None):
         help="for any additional trackers"
     )
 
-
     flags = parser.parse_args(args)
 
     if not flags.path:
         raise MissingPathError(flags)
 
     kwargs = {
-    "flags": flags,
-    "path": flags.path,
-    "announce": flags.announce,
-    "piece_length": flags.piece_length,
-    "source": flags.source,
-    "private": flags.private,
-    "outfile": flags.outfile,
-    "created_by": flags.created_by,
-    "comment": flags.comment,
+        "flags": flags,
+        "path": flags.path,
+        "announce": flags.announce,
+        "piece_length": flags.piece_length,
+        "source": flags.source,
+        "private": flags.private,
+        "outfile": flags.outfile,
+        "created_by": flags.created_by,
+        "comment": flags.comment,
     }
 
     if flags.v2:
@@ -149,7 +151,9 @@ def main_script(args=None):
     parser.outfile = outfile
     return parser
 
+
 def main():
+    """Initiate main function for CLI script."""
     args = sys.argv[1:]
     return main_script(args)
 

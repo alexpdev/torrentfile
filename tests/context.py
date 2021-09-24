@@ -12,6 +12,8 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
+"""Context Functions used throughout testing suite."""
+
 import os
 import random
 import shutil
@@ -21,8 +23,8 @@ TD = os.path.abspath(os.path.dirname(__file__))
 
 
 class Flags:
-
-    """Dummy class for testing purposes.
+    """
+    Dummy class for testing purposes.
 
     Minimally emulates the argparse.Namespace class.
 
@@ -40,9 +42,10 @@ class Flags:
     """
 
     def __init__(self, **kwargs):
-        """Dummy class for testing purposes.
+        """
+        Initialize Flags class.
 
-        Kwargs:
+        Args:
             path(`any`): path to contents of torrent
             announce(`any`, Optional): url for tracker.
             piece_length(`any`, Optional): size of each transmitable content
@@ -64,27 +67,31 @@ class Flags:
         self.comment = None
         self.v2 = None
         self.announce_list = None
-        for k,v in kwargs.items():
+
+        for k, v in kwargs.items():
             if hasattr(self, k):
                 self.__setattr__(k, v)
 
 
 def seq():
+    """Generate random sequence of characters."""
     text = string.printable + string.punctuation + string.hexdigits
     random.shuffle(list(text))
     return "".join(text)
 
 
 def fill_file(path, exp):
+    """Fill file with random bytes."""
     bits = seq().encode("utf8")
-    filesize = l = len(bits)
+    filesize = bitlen = len(bits)
     with open(path, "wb") as fd:
         while filesize < 2 ** exp:
             fd.write(bits)
-            filesize += l
+            filesize += bitlen
 
 
 def fill_folder(folder):
+    """Fill temporary folder with meaningless data."""
     files = {"file1.bin": 25, "file2.bin": 26}
     for k, v in files.items():
         path = os.path.join(folder, k)
@@ -92,6 +99,7 @@ def fill_folder(folder):
 
 
 def rmpath(path):
+    """Recursively remove path."""
     if not os.path.exists(path):
         return
     if os.path.isdir(path):
@@ -99,11 +107,15 @@ def rmpath(path):
     else:
         os.remove(path)
 
+
 def rmpaths(paths):
+    """Recursively remove all paths."""
     for path in paths:
         rmpath(path)
 
+
 def tempdir():
+    """Generate temporary directory filled with meaningless data."""
     tdir = os.path.join(TD, "tempdir")
     tdir_1 = os.path.join(tdir, "directory1")
     for folder in [tdir, tdir_1]:
@@ -114,11 +126,14 @@ def tempdir():
 
 
 def tempfile():
+    """Generate temporary file filled with meaningless data."""
     path = os.path.join(TD, "tempfile.bin")
     fill_file(path, 28)
     return path
 
+
 def sizedfile(num=28):
+    """Generate a specifically sized file with meaningless data."""
     path = os.path.join(TD, "tempfile.bin")
     fill_file(path, num)
     return path

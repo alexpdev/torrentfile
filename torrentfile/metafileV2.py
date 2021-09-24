@@ -12,10 +12,7 @@
 #####################################################################
 
 """
-Notes
------------------------------------
-
-Bittorrent Protocol v2 Metafiles.
+Implementation details for Bittorrent Protocol v2.
 
 Metainfo files (also known as .torrent files) are bencoded dictionaries
 with the following keys:
@@ -118,8 +115,8 @@ File tree layout Example:
 ```
 
 > Note that identical files always result in the same root hash.
-> All strings in a .torrent file defined by this BEP that contain human-readable
-> text are UTF-8 encoded.
+> All strings in a .torrent file defined by this BEP that contain
+> human-readable text are UTF-8 encoded.
 
 Single-file torrent:
 

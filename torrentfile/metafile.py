@@ -323,8 +323,6 @@ class Checker:
             if pieces[: len(digest)] == digest:
                 pieces = pieces[len(digest):]
                 counter += 1
-            else:
-                print("Number of matching pieces = ", counter)
 
         return str(int(counter / total) * 100) + "%"
 
@@ -335,8 +333,9 @@ class Checker:
         Returns:
             `str`: Indicating process has completed.
         """
-        if os.path.isfile(self.location) and os.path.basename(self.location) == self.name:
-            paths = [self.location]
+        if os.path.isfile(self.location):
+            if os.path.basename(self.location) == self.name:
+                paths = [self.location]
 
         else:
             paths = [os.path.join(self.location, i) for i in self.paths]
@@ -350,7 +349,6 @@ class Checker:
         self.get_paths()
 
         status = self.check_path()
-        print(status)
         return status
 
 
@@ -427,7 +425,6 @@ class Feeder:
             if partial < self.piece_length:
                 if not self.next_file():
                     return sha1(arr[:partial]).digest()
-        assert partial == self.piece_length
         return sha1(arr).digest()
 
     def next_file(self):
