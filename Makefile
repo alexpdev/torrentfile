@@ -37,7 +37,9 @@ clean-build: ## remove build artifacts
 	rm -fr .eggs/
 	rm -fr .tox/
 	rm -f .coverage
+	rm -rf */__pycache__
 	rm -fr htmlcov/
+	rm -rf *.egg-info
 	rm -f corbertura.xml
 	rm -fr .pytest_cache
 

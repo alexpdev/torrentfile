@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>torrentfile package &#8212; Torrentfile 0.2.6 documentation</title>
+    <title>torrentfile package &#8212; torrentfile 0.2.6 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -14,6 +14,7 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="tests package" href="tests.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -183,34 +184,6 @@ Out: True
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="torrentfile.metafile.Feeder.__iter__">
-<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafile.Feeder.__iter__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iterate through feed pieces.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Iterator for leaves/hash pieces.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><cite>iter(self)</cite></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="torrentfile.metafile.Feeder.__next__">
-<span class="sig-name descname"><span class="pre">__next__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafile.Feeder.__next__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the next element from iterator.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Piece_length length pieces of data.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><cite>bytes</cite></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="torrentfile.metafile.Feeder.handle_partial">
 <span class="sig-name descname"><span class="pre">handle_partial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafile.Feeder.handle_partial" title="Permalink to this definition">¶</a></dt>
 <dd><p>Seemlessly move to next file for input data.</p>
@@ -325,8 +298,7 @@ outfile(<cite>str</cite>): Path to write metfile to.</p>
 </div>
 <div class="section" id="module-torrentfile.metafileV2">
 <span id="torrentfile-metafilev2-module"></span><h2>torrentfile.metafileV2 module<a class="headerlink" href="#module-torrentfile.metafileV2" title="Permalink to this headline">¶</a></h2>
-<p class="rubric">Notes</p>
-<p>Bittorrent Protocol v2 Metafiles.</p>
+<p>Implementation details for Bittorrent Protocol v2.</p>
 <p>Metainfo files (also known as .torrent files) are bencoded dictionaries
 with the following keys:</p>
 <dl>
@@ -433,8 +405,8 @@ pieces root: <cite>string</cite></p>
 </dl>
 <p><a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
 <p>&gt; Note that identical files always result in the same root hash.
-&gt; All strings in a .torrent file defined by this BEP that contain human-readable
-&gt; text are UTF-8 encoded.</p>
+&gt; All strings in a .torrent file defined by this BEP that contain
+&gt; human-readable text are UTF-8 encoded.</p>
 <p>Single-file torrent:</p>
 <p><cite>“file tree”: {name.ext: {“”: {length: …}}}</cite></p>
 <p>Multiple files rooted in a single directory:</p>
@@ -556,7 +528,8 @@ outfile(<cite>str</cite>): Path to write metfile to.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="torrentfile.torrentfile.main">
 <span class="sig-prename descclassname"><span class="pre">torrentfile.torrentfile.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.torrentfile.main" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Initiate main function for CLI script.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="torrentfile.torrentfile.main_script">
@@ -954,7 +927,8 @@ outfile(<cite>str</cite>): Path to write metfile to.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="torrentfile.main">
 <span class="sig-prename descclassname"><span class="pre">torrentfile.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.main" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Initiate main function for CLI script.</p>
+</dd></dl>
 
 </div>
 </div>
@@ -966,7 +940,7 @@ outfile(<cite>str</cite>): Path to write metfile to.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Torrentfile</a></h1>
+<h1 class="logo"><a href="index.html">torrentfile</a></h1>
 
 
 
@@ -976,11 +950,22 @@ outfile(<cite>str</cite>): Path to write metfile to.</p>
 
 
 <h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">torrentfile</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">torrentfile package</a></li>
+</ul>
+</li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">torrentfile</a><ul>
+      <li>Previous: <a href="tests.html" title="previous chapter">tests package</a></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
