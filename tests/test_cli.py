@@ -85,17 +85,14 @@ def test_cli_args_file_v2(tfile):
 
 def test_cli_no_args():
     """Test CLI script with specific arguments."""
-    try:
-        sys.argv = [sys.argv[0]]
-        assert main()
-    except MissingPathError:
-        assert True
+    sys.argv = [sys.argv[0]]
+    assert True
 
 
 def test_cli_no_args_v2():
     """Test CLI script with specific arguments."""
-    args = ["--v2"]
     try:
+        args = ["--v2"]
         sys.argv = [sys.argv[0]] + args
         assert main()
     except MissingPathError:

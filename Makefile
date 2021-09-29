@@ -42,9 +42,10 @@ clean-build: ## remove build artifacts
 	rm -rf *.egg-info
 	rm -f corbertura.xml
 	rm -fr .pytest_cache
+	rm -f *.spec
 
 test: environment ## run tests quickly with the default Python
-	pytest --cov tests
+	pytest tests
 
 coverage: clean environment test ## check code coverage with the default Python
 	coverage run -m pytest tests
@@ -54,10 +55,14 @@ coverage: clean environment test ## check code coverage with the default Python
 	git push
 	bash codacy.sh report -r corbertura.xml
 
-release: ## package and upload a release
+release: install ## package and upload a release
+	rm -rf ..\tfilexe
+	mkdir ..\tfilexe
+	cp -f env\scripts\tfile ..\tfilexe
+	pyinstaller -c -n torrentfile --workpath ..\tfilexe\build --distpath ..\tfilexe\dist -i .\assets\torrentfile.ico -F ..\tfilexe\tfile
 	python setup.py sdist bdist_egg bdist_wheel
 	twine upload dist/*
-	ls -l dist
+	make coverage
 
 checkout: ## push to remote
 	git add .
@@ -71,5 +76,11 @@ start: clean ## start new branch
 
 lint: ## lint errors
 	pylama torrentfile tests
+
+install: environment clean test ## Install Locally
+	python setup.py install
+
+
+
 
 full: clean test checkout coverage

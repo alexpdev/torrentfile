@@ -25,16 +25,19 @@ def main_script(args=None):
     """Initialize Command Line Interface for torrentfile.
 
     usage: ```torrentfile --path /path/to/content [-o /path/to/output.torrent]
-            [--piece-length 0000] [--private] [-t https://tracker.url/announce]
-            [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]```
+            [--piece-length n] [--private] [-t https://tracker.url/announce]
+            [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]
+            [-h]```
     """
+    if not args:
+        args = sys.argv[1:]
     usage = """torrentfile --path /path/to/content [-o /path/to/output.torrent]
             [--piece-length 0000] [--private] [-t https://tracker.url/announce]
             [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]"""
-    args = sys.argv[1:] if not args else args
+
     d = "Create .torrent files for Bittorrent v1 or v2."
     parser = ArgumentParser("torrentfile", description=d, prefix_chars="-",
-                            usage=usage, add_help=True, allow_abbrev=False)
+                            usage=usage, allow_abbrev=False)
 
     parser.add_argument(
         "--version",
@@ -122,6 +125,8 @@ def main_script(args=None):
         metavar="<url>",
         help="for any additional trackers"
     )
+    if not args:
+        args = ["-h"]
 
     flags = parser.parse_args(args)
 
@@ -154,8 +159,7 @@ def main_script(args=None):
 
 def main():
     """Initiate main function for CLI script."""
-    args = sys.argv[1:]
-    return main_script(args)
+    return main_script()
 
 
 if __name__ == "__main__":
