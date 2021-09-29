@@ -19,12 +19,15 @@ class BendecodingError(Exception):
     """
     Error occured during decode process.
 
+    Some value cannot be interpreted by decoder.
+
     Args:
         val(`any`): Value that cannot be interpreted by decoder.
     """
 
     def __init__(self, val=None):
-        """Construct Exception.
+        """
+        Construct Exception.
 
         Args:
             val(`any`): Value that cannot be interpreted by decoder.
@@ -34,9 +37,10 @@ class BendecodingError(Exception):
 
 
 class BenencodingError(Exception):
-    """Error occured during encoding process.
+    """
+    Error occured during encoding process.
 
-    Construct Exception.
+    A value was discovered that could not be interpreted by encoder.
 
     Args:
       val(`any`): Value that cannot be interpreted by decoder.
@@ -55,6 +59,8 @@ class BenencodingError(Exception):
 class MissingPathError(Exception):
     """Path parameter is required.
 
+    Creating a .torrent file with no contents seems rather silly.
+
     Args:
       message(`any`, optional): Value cannot be interpreted by decoder.
     """
@@ -64,8 +70,7 @@ class MissingPathError(Exception):
         Construct Exception.
 
         Args:
-          message(`any`, optional): Value cannot be interpreted by decoder.
+          message(`str`, optional): Value cannot be interpreted by decoder.
         """
-        if not message:
-            self.message = "Path arguement is missing and required"
+        self.message = f"Path arguement is missing and required {str(message)}"
         super().__init__(message)

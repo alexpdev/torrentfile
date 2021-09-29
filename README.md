@@ -16,18 +16,18 @@
 ## Features
 
 * Simple interface
-
 * Create files for Bittorrent v1
-
 * Create files for Bittorrent v2
-
 * Create files with multiple trackers
-
 * Optionally specify size of individual packets of data for transfer
-
 * Flag torrent file as private for private trackers.
-
 * Check torrentfile against file or directory for match.
+* Optional GUI can be found at [https://github.com/Torrentfile-GUI](https://github.com/Torrentfile-GUI)
+
+## Documentation
+
+Documentation can be found by opening your webrowser in the `docs` directory
+or by visiting [https://alexpdev.github.io/torrentfile](https://alexpdev.github.io/torrentfile).
 
 ## Installation
 
@@ -39,7 +39,12 @@
 
 `> git clone https://github.com/alexpdev/torrentfile.git`
 
-## Command Line Options
+### download
+
+Or download the latest release from the Release page on github.
+[https://github.com/alexpdev/torrentfile/releases](https://github.com/alexpdev/torrentfile/releases)
+
+## Using
 
     usage: torrentfile -p <path> [-h] [--version] [-a <url>]
         [--piece-length <number>] [--private] [-o <path>] [--v2]
