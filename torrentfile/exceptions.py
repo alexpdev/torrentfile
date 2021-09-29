@@ -16,7 +16,6 @@
 
 
 class BendecodingError(Exception):
-
     """
     Error occured during decode process.
 
@@ -35,7 +34,6 @@ class BendecodingError(Exception):
 
 
 class BenencodingError(Exception):
-
     """Error occured during encoding process.
 
     Construct Exception.
@@ -55,7 +53,6 @@ class BenencodingError(Exception):
 
 
 class MissingPathError(Exception):
-
     """Path parameter is required.
 
     Args:
