@@ -107,16 +107,6 @@ class TorrentFile:
         Args:
           flags('obj'): has all the following properties.
 
-        `flags` Attributes:
-          path(`str`): Path to torrent file or directory.
-          piece_length(`int`): Size of each piece of torrent data.
-          created_by(`str`): For 'created by' field.
-          announce(`str`): Tracker URL.
-          private(`int`): 1 if private torrent else 0.
-          source(`str`): Source tracker.
-          comment(`str`): Comment string.
-          outfile(`str`): Path to write metfile to.
-
         Returns:
           `obj`: Instance of Metafile Class.
         """
@@ -188,7 +178,6 @@ class TorrentFile:
 
         Raises:
           `MissingTrackerError`: Announce field is required for all torrents.
-
         """
         if self.announce:
             self.meta["announce"] = self.announce
@@ -213,7 +202,6 @@ class TorrentFile:
 
         Returns:
           `tuple`: Path to output file, Pre-encoded metadata.
-
         """
         if outfile:
             self.outfile = outfile
@@ -254,7 +242,6 @@ class Checker:
         Args:
           metafile:(`str`): Path to ".torrent" file.
           location(`str`): Path where the content is located in filesystem.
-
         """
         self.metafile = metafile
         self.location = location
@@ -354,9 +341,9 @@ class Checker:
 
 class Feeder:
     """
-    Seemlesly generate hashes of piece length data from filelist contents.
+    Construct the Feeder class.
 
-    Constructor for the Feeder class.
+    Seemlesly generate hashes of piece length data from filelist contents.
 
     Args:
       paths(`list`): List of files.
@@ -366,9 +353,9 @@ class Feeder:
 
     def __init__(self, paths, piece_length, total):
         """
-        Generate hashes of piece length data from filelist contents.
+        Construct the Feeder class.
 
-        Constructor for the Feeder class.
+        Generate hashes of piece length data from filelist contents.
 
         Args:
           paths(`list`): List of files.

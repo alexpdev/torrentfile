@@ -107,11 +107,8 @@ File tree layout Example:
                     "": {
                         length: `int`,
                         pieces root: `string`
-                    }}}
-                }
-            }
-        }
-    }
+                    }
+}}}}}}
 ```
 
 > Note that identical files always result in the same root hash.
@@ -127,9 +124,11 @@ Multiple files rooted in a single directory:
 ```python:
     "file tree": {dir: {
         nameA.ext: {"": {length: ...}},
-        nameB.ext: {"": {length: ...}}}
-    }
+        nameB.ext: {"": {length: ...}}}}
 ```
+
+--------------------------------------------
+
 """
 
 import hashlib
@@ -174,16 +173,6 @@ class TorrentFileV2:
 
         Args:
           flags('obj'): has all the following properties.
-
-        `flags` Attributes:
-          path(`str`): Path to torrent file or directory.
-          piece_length(`int`): Size of each piece of torrent data.
-          created_by(`str`): For 'created by' field.
-          announce(`str`): Tracker URL.
-          private(`int`): 1 if private torrent else 0.
-          source(`str`): Source tracker.
-          comment(`str`): Comment string.
-          outfile(`str`): Path to write metfile to.
 
         Returns:
           `obj`: Instance of Metafile Class.
