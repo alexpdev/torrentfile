@@ -2,27 +2,27 @@
 
 ![torrentfile](https://github.com/alexpdev/torrentfile/blob/master/assets/torrentfile.png?raw=true)
 
-----------------------------------------------------
+------
 
 ## Bittorrent File Creator (.torrent)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/2da47ec1b5904538a40230f049a02be4)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/2da47ec1b5904538a40230f049a02be4)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/2da47ec1b5904538a40230f049a02be4)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Coverage)
 ![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile?style=plastic)
 ![GitHub](https://img.shields.io/github/license/alexpdev/torrentfile?style=plastic)
 
-*Torrentfile* is a CLI for creating .torrent files for bittorrent clients.
+_Torrentfile_ is a CLI for creating .torrent files for bittorrent clients.
 
 ## Features
 
-* Simple interface
-* Create files for Bittorrent v1
-* Create files for Bittorrent v2
-* Create files with multiple trackers
-* Optionally specify size of individual packets of data for transfer
-* Flag torrent file as private for private trackers.
-* Check torrentfile against file or directory for match.
-* Optional GUI can be found at [https://github.com/Torrentfile-GUI](https://github.com/Torrentfile-GUI)
+- Simple interface
+- Create files for Bittorrent v1
+- Create files for Bittorrent v2
+- Create files with multiple trackers
+- Optionally specify size of individual packets of data for transfer
+- Flag torrent file as private for private trackers.
+- Check torrentfile against file or directory for match.
+- Optional GUI can be found at [https://github.com/Torrentfile-GUI](https://github.com/Torrentfile-GUI)
 
 ## Documentation
 

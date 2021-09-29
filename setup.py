@@ -20,12 +20,9 @@
 
 """Setup for Torrentfile package."""
 
-import sys
 import json
 from setuptools import find_packages, setup
 
-# if len(sys.argv) > 1 and sys.argv[1] == "freeze":
-#     from cx_Freeze import setup, Executable
 
 INFO = json.load(open("package.json"))
 long_description = open("README.md").read()
@@ -45,7 +42,8 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Topic :: Software Development :: Libraries :: Python Modules",
-        "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+        "License :: OSI Approved :: GNU Lesser General Public License v3"
+        " (LGPLv3)",
     ],
     keywords=INFO["keywords"],
     author=INFO["author"],

@@ -51,7 +51,7 @@ coverage: clean environment test ## check code coverage with the default Python
 	coverage run -m pytest tests
 	coverage xml -o corbertura.xml
 	git add .
-	git commit -m "auto push coverage"
+	git commit -m "coverage report bug and linting adjustments pass all tests"
 	git push
 	bash codacy.sh report -r corbertura.xml
 
