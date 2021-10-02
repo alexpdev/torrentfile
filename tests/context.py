@@ -83,16 +83,21 @@ def seq():
 def fill_file(path, exp):
     """Fill file with random bytes."""
     bits = seq().encode("utf8")
-    filesize = bitlen = len(bits)
+    bitlen = len(bits)
+    filesize = 0
     with open(path, "wb") as fd:
-        while filesize < 2 ** exp:
+        while filesize + bitlen < 2 ** exp:
             fd.write(bits)
             filesize += bitlen
+        diff = 2 ** exp - filesize
+        fd.write(bits[:diff+1])
 
 
 def fill_folder(folder):
     """Fill temporary folder with meaningless data."""
     files = {"file1.bin": 25, "file2.bin": 26}
+    if not os.path.exists(folder):
+        os.mkdir(folder)
     for k, v in files.items():
         path = os.path.join(folder, k)
         fill_file(path, v)
