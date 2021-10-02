@@ -64,6 +64,7 @@ file case, it's the name of a directory.
 """
 import os
 import math
+import re
 from hashlib import sha1
 from datetime import datetime
 
@@ -89,6 +90,7 @@ class TorrentFile:
         piece_length(`int`): Size of each piece of torrent data.
         created_by(`str`): For 'created by' field.
         announce(`str`): Tracker URL.
+        announce_list(`str` or `list`): Additional Tracker URLs.
         private(`int`): 1 if private torrent else 0.
         source(`str`): Source tracker.
         comment(`str`): Comment string.
@@ -110,19 +112,33 @@ class TorrentFile:
         Returns:
           `obj`: Instance of Metafile Class.
         """
+        # fs path attributes.
         self.base = flags.path
         self.name = os.path.basename(flags.path)
+        self.outfile = flags.outfile
+
+        # if `piece_length` is a `str` turn it into an `int`.
         if flags.piece_length:
             self.piece_length = int(flags.piece_length)
         else:
             self.piece_length = None
         self.announce = flags.announce
+
+        # If announce `list` is a `str` split it up.
+        if isinstance(flags.announce_list, str):
+            self.announce_list = re.split(r"[\s,]", flags.announce_list)
+        else:
+            self.announce_list = flags.announce_list
+
+        # for private trackers.
         self.private = flags.private
         self.source = flags.source
-        self.length = None
+
+        # other less common flags.
         self.comment = flags.comment
-        self.outfile = flags.outfile
         self.created_by = flags.created_by
+
+        self.length = None
         self.files = []
         self.info = {}
         self.meta = {}
@@ -131,14 +147,21 @@ class TorrentFile:
         """Create info dictionary."""
         filelist, size, piece_length = path_stat(self.base)
 
-        if not self.piece_length:
-            self.piece_length = piece_length
-
-        # create dictionary keys for available fields.
-        # add comment
-
+        # set name of torrentfile
+        self.info["name"] = self.name
+        # If a comment was provided place in Info dictionary.
         if self.comment:
             self.info["comment"] = self.comment
+
+        # create announce list for additional trackers.
+        if self.announce_list:
+            if isinstance(self.announce_list, list):
+                if isinstance(self.announce_list[0], list):
+                    self.info["announce list"] = self.announce_list[0]
+                else:
+                    self.info["announce list"] = self.announce_list
+            else:
+                self.info["announce list"] = list(self.announce_list)
 
         # if single file, add 'length' key otherwise
         if os.path.isfile(self.base):
@@ -152,10 +175,14 @@ class TorrentFile:
                 for p in filelist
             ]
 
-        self.info["name"] = self.name
+        # set torrent piecelength.
+        if self.piece_length:
+            self.info["piece length"] = self.piece_length
+        else:
+            self.piece_length = piece_length
+            self.info["piece length"] = piece_length
 
-        self.info["piece length"] = self.piece_length
-
+        # apply chuncks of hashed data to pieces key.
         pieces = bytearray()
         for piece in Feeder(filelist, self.piece_length, size):
             pieces.extend(piece)
@@ -163,7 +190,6 @@ class TorrentFile:
 
         if self.private:
             self.info["private"] = 1
-
         if self.source:
             self.info["source"] = self.source
 
