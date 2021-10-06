@@ -24,20 +24,30 @@ import json
 from setuptools import find_packages, setup
 
 
-INFO = json.load(open("package.json"))
-long_description = open("README.md").read()
+def load_info():
+    """Extract information from package.json."""
+    return json.load(open("package.json"))
+
+
+def load_description():
+    """Load readme into long description parameter."""
+    with open("README.md", "rt", encoding="utf-8") as readme:
+        long_description = readme.read()
+    return long_description
+
+
+INFO = load_info()
+
 
 setup(
     name=INFO["name"],
     version=INFO["version"],
     description=INFO["description"],
-    long_description=long_description,
+    long_description=load_description(),
     long_description_content_type="text/markdown",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
@@ -55,7 +65,7 @@ setup(
     include_package_data=True,
     entry_points={"console_scripts": ["torrentfile = torrentfile:main"]},
     tests_require=["pytest"],
-    setup_requires=["setuptools"],
+    setup_requires=["setuptools","wheel"],
     zip_safe=False,
     test_suite="complete",
 )

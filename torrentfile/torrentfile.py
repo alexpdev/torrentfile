@@ -11,26 +11,37 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Main script activated by calls from Command Line."""
+
+"""
+Main script entrypoint for creating .torrent files.
+
+This module provides the primary command line argument parser for
+the torrentfile package.  The main_script function is automatically
+invoked when called from command line, and parses accompanying arguments.
+
+Functions:
+    main_script: process command line arguments and run program.
+"""
 
 import sys
 from argparse import ArgumentParser
 import torrentfile
-from torrentfile.exceptions import MissingPathError
-from torrentfile.metafile import TorrentFile
-from torrentfile.metafileV2 import TorrentFileV2
+from .exceptions import MissingPathError
+from .metafile import TorrentFile
+from .metafileV2 import TorrentFileV2
 
 
 def main_script(args=None):
     """Initialize Command Line Interface for torrentfile.
 
-    usage: ```torrentfile --path /path/to/content [-o /path/to/output.torrent]
-            [--piece-length n] [--private] [-t https://tracker.url/announce]
-            [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]
-            [-h]```
+    usage: torrentfile --path /path/to/content [-o /path/to/output.torrent]
+           [--piece-length n] [--private] [-t https://tracker.url/announce]
+           [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]
+           [-h]
     """
     if not args:
         args = sys.argv[1:]
+
     usage = """torrentfile --path /path/to/content [-o /path/to/output.torrent]
             [--piece-length 0000] [--private] [-t https://tracker.url/announce]
             [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]"""
@@ -78,6 +89,7 @@ def main_script(args=None):
         dest="private",
         help="use if torrent is for private tracker",
     )
+
     parser.add_argument(
         "-o", "--out",
         action="store",
@@ -92,13 +104,6 @@ def main_script(args=None):
         action="store_true",
         dest="v2",
         help="use if bittorrent v2 file is wanted",
-    )
-
-    parser.add_argument(
-        "--created-by",
-        action="store",
-        metavar="<app>",
-        dest="created_by",
     )
 
     parser.add_argument(
@@ -137,11 +142,11 @@ def main_script(args=None):
         "flags": flags,
         "path": flags.path,
         "announce": flags.announce,
+        "announce_list": flags.announce_list,
         "piece_length": flags.piece_length,
         "source": flags.source,
         "private": flags.private,
         "outfile": flags.outfile,
-        "created_by": flags.created_by,
         "comment": flags.comment,
     }
 
