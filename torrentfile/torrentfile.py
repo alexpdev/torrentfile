@@ -139,7 +139,6 @@ def main_script(args=None):
         raise MissingPathError(flags)
 
     kwargs = {
-        "flags": flags,
         "path": flags.path,
         "announce": flags.announce,
         "announce_list": flags.announce_list,
@@ -151,9 +150,9 @@ def main_script(args=None):
     }
 
     if flags.v2:
-        torrent = TorrentFileV2(flags)
+        torrent = TorrentFileV2(**kwargs)
     else:
-        torrent = TorrentFile(flags)
+        torrent = TorrentFile(**kwargs)
     torrent.assemble()
     outfile, meta = torrent.write()
     parser.kwargs = kwargs

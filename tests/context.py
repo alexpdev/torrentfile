@@ -22,57 +22,6 @@ import string
 TD = os.path.abspath(os.path.dirname(__file__))
 
 
-class Flags:
-    """
-    Dummy class for testing purposes.
-
-    Minimally emulates the argparse.Namespace class.
-
-    Attributes:
-        path(`any`, Optional): path to contents of torrent
-        announce(`any`, Optional): url for tracker.
-        piece_length(`any`, Optional): size of each transmitable content
-        source(`any`, Optional): leave blank.
-        private(`any`, Optional): for private tracker?
-        outfile(`any`, Optional): path to write .torrent file.
-        created_by(`any`, Optional): program creator... leave blank.
-        comment(`any`, Optional): any comment.
-        v2(`any`, Optional): Meta Version 2 .torrentfile
-        announce_list(`any`, Optional): additional trackers
-    """
-
-    def __init__(self, **kwargs):
-        """
-        Initialize Flags class.
-
-        Args:
-            path(`any`): path to contents of torrent
-            announce(`any`, Optional): url for tracker.
-            piece_length(`any`, Optional): size of each transmitable content
-            source(`any`, Optional): leave blank.
-            private(`any`, Optional): for private tracker?
-            outfile(`any`, Optional): path to write .torrent file.
-            created_by(`any`, Optional): program creator... leave blank.
-            comment(`any`, Optional): any comment.
-            v2(`any`, Optional): Meta Version 2 .torrentfile
-            announce_list(`any`, Optional): additional trackers
-        """
-        self.path = None
-        self.announce = None
-        self.piece_length = None
-        self.source = None
-        self.private = None
-        self.outfile = None
-        self.created_by = None
-        self.comment = None
-        self.v2 = None
-        self.announce_list = None
-
-        for k, v in kwargs.items():
-            if hasattr(self, k):
-                self.__setattr__(k, v)
-
-
 def seq():
     """Generate random sequence of characters."""
     text = string.printable + string.punctuation + string.hexdigits

@@ -17,16 +17,15 @@ import os
 import pytest
 from torrentfile.metafileV2 import TorrentFileV2
 from torrentfile.metafile import TorrentFile, Checker
-from tests.context import tempdir, tempfile, rmpaths, Flags
+from tests.context import tempdir, tempfile, rmpaths
 
 
 def maketorrent(args, v2=False):
     """Torrent making factory."""
-    flags = Flags(**args)
     if v2:
-        torrent = TorrentFileV2(flags)
+        torrent = TorrentFileV2(**args)
     else:
-        torrent = TorrentFile(flags)
+        torrent = TorrentFile(**args)
     torrent.assemble()
     return torrent.write()
 

@@ -23,7 +23,6 @@ from tests.context import tempfile, tempdir, rmpath
 
 KIB = 2 ** 10
 MIB = KIB ** 2
-GIB = KIB ** 3
 MIN_BLOCK = 2 ** 14
 MAX_BLOCK = MIB * 16
 

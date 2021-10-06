@@ -21,7 +21,7 @@ as well as validate files and folders against metadata.
 Modules:
     metafile: Creation/Validation of v1 .torrent files.
     metafileV2: Creation/Validation of v2 .torrent files.
-    torrentfile: torrentfile's Command Line Interface implementation.
+    torrentfile: torrentfiles Command Line Interface implementation.
     exceptions: Custom Exceptions used in package.
     utils: Utilities used throughout package.
 """

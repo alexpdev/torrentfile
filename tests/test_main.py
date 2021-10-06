@@ -17,24 +17,9 @@
 import sys
 import pytest
 from tests.context import tempfile, rmpath
-from torrentfile import TorrentFile
+from torrentfile import TorrentFile, TorrentFileV2
 from torrentfile import __main__ as entry
 from torrentfile import main
-
-
-class Flags:
-    """Dummy Class with no functionality."""
-
-    def __init__(self):
-        """Construct flags class instance."""
-        self.piece_length = None
-        self.announce = None
-        self.path = None
-        self.announce_list = None
-        self.source = None
-        self.comment = None
-        self.outfile = None
-        self.private = None
 
 
 @pytest.fixture(scope="module")
@@ -80,13 +65,14 @@ def test_main_with_announce_list_with_just_1_arg(tfile):
 def test_torrentfile_class_with_announce_list(tfile):
     """Test TorrentFile Class with announce list arguement."""
     _, path = tfile
-    flags = Flags()
-    flags.announce = "https://tracker1.to/announce"
-    flags.path = path
-    flags.announce_list = ("https://tracker2/announce"
-                           " https://tracker3/announce"
-                           " https://tracker4/announce")
-    torfile = TorrentFile(flags)
+    kwargs = {
+        "announce": "https://tracker1.to/announce",
+        "path": path,
+        "announce_list": ("https://tracker2/announce"
+                          " https://tracker3/announce"
+                          " https://tracker4/announce")
+    }
+    torfile = TorrentFile(**kwargs)
     meta = torfile.assemble()
     assert "https://tracker2/announce" in meta["info"]["announce list"]
 
@@ -94,13 +80,14 @@ def test_torrentfile_class_with_announce_list(tfile):
 def test_torrentfile_class_with_tuple_announce_list(tfile):
     """Test TorrentFile Class with tuple announce list arguement."""
     _, path = tfile
-    flags = Flags()
-    flags.announce = "https://tracker1.to/announce"
-    flags.path = path
-    flags.announce_list = (("https://tracker2/announce",
-                            "https://tracker3/announce",
-                            "https://tracker4/announce"))
-    torfile = TorrentFile(flags)
+    kwargs = {
+        "announce": "https://tracker1.to/announce",
+        "path": path,
+        "announce_list": ("https://tracker2/announce",
+                          "https://tracker3/announce",
+                          "https://tracker4/announce")
+    }
+    torfile = TorrentFile(**kwargs)
     meta = torfile.assemble()
     assert "https://tracker2/announce" in meta["info"]["announce list"]
 
@@ -108,12 +95,81 @@ def test_torrentfile_class_with_tuple_announce_list(tfile):
 def test_torrentfile_class_with_list_announce_list(tfile):
     """Test TorrentFile Class with tuple announce list arguement."""
     _, path = tfile
-    flags = Flags()
-    flags.announce = "https://tracker1.to/announce"
-    flags.path = path
-    flags.announce_list = (["https://tracker2/announce",
-                            "https://tracker3/announce",
-                            "https://tracker4/announce"])
-    torfile = TorrentFile(flags)
+    kwargs = {
+        "announce": "https://tracker1.to/announce",
+        "path": path,
+        "announce_list": ["https://tracker2/announce",
+                          "https://tracker3/announce",
+                          "https://tracker4/announce"]
+    }
+    torfile = TorrentFile(**kwargs)
+    meta = torfile.assemble()
+    assert "https://tracker2/announce" in meta["info"]["announce list"]
+
+
+def test_main_with_announce_list_v2(tfile):
+    """Test main function with announce list flag."""
+    args, path = tfile
+    sys.argv = args + [
+        "--path", path, "--announce-list", "https://tracker2/announce",
+        "https://tracker3/announce", "https://tracker4/announce", "--v2"
+    ]
+    parser = main()
+    assert "https://tracker2/announce" in parser.meta["info"]["announce list"]
+    rmpath(parser.outfile)
+
+
+def test_main_with_announce_list_with_just_1_arg_v2(tfile):
+    """Test main function with announce list flag."""
+    args, path = tfile
+    sys.argv = args + [
+        "--path", path, "--announce-list", "https://tracker2/announce", "--v2"
+    ]
+    parser = main()
+    assert "https://tracker2/announce" in parser.meta["info"]["announce list"]
+    rmpath(parser.outfile)
+
+
+def test_torrentfile_class_with_announce_list_v2(tfile):
+    """Test TorrentFile Class with announce list arguement."""
+    _, path = tfile
+    kwargs = {
+        "announce": "https://tracker1.to/announce",
+        "path": path,
+        "announce_list": ("https://tracker2/announce"
+                          " https://tracker3/announce"
+                          " https://tracker4/announce"),
+    }
+    torfile = TorrentFileV2(**kwargs)
+    meta = torfile.assemble()
+    assert "https://tracker2/announce" in meta["info"]["announce list"]
+
+
+def test_torrentfile_class_with_tuple_announce_list_v2(tfile):
+    """Test TorrentFile Class with tuple announce list arguement."""
+    _, path = tfile
+    kwargs = {
+        "announce": "https://tracker1.to/announce",
+        "path": path,
+        "announce_list": ("https://tracker2/announce",
+                          "https://tracker3/announce",
+                          "https://tracker4/announce")
+    }
+    torfile = TorrentFileV2(**kwargs)
+    meta = torfile.assemble()
+    assert "https://tracker2/announce" in meta["info"]["announce list"]
+
+
+def test_torrentfile_class_with_list_announce_list_v2(tfile):
+    """Test TorrentFile Class with tuple announce list arguement."""
+    _, path = tfile
+    kwargs = {
+        "announce": "https://tracker1.to/announce",
+        "path": path,
+        "announce_list": ["https://tracker2/announce",
+                          "https://tracker3/announce",
+                          "https://tracker4/announce"]
+    }
+    torfile = TorrentFileV2(**kwargs)
     meta = torfile.assemble()
     assert "https://tracker2/announce" in meta["info"]["announce list"]

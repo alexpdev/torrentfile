@@ -86,7 +86,10 @@ def test_cli_args_file_v2(tfile):
 def test_cli_no_args():
     """Test CLI script with specific arguments."""
     sys.argv = [sys.argv[0]]
-    assert True
+    try:
+        main()
+    except SystemExit:
+        assert True
 
 
 def test_cli_no_args_v2():
