@@ -11,57 +11,8 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
+"""Creating and verfying Bittorrent v1 metafiles (.torrent)."""
 
-"""
-From Bittorrent.org Documentation pages.
-
-Metainfo files (also known as .torrent files) are bencoded dictionaries with
-the following keys:
-
-announce
-    The URL of the tracker.
-
-info
-
-This maps to a dictionary, with keys described below.
-
-All strings in a .torrent file that contains text must be UTF-8 encoded.
-
-## info dictionary
-
-The `name` key maps to a UTF-8 encoded string which is the suggested name to
-save the file (or directory) as. It is purely advisory.
-
-`piece length` maps to the number of bytes in each piece the file is split
-into. For the purposes of transfer, files are split into fixed-size pieces
-which are all the same length except for possibly the last one which may be
-truncated. `piece length` is almost always a power of two, most commonly 2 18
-= 256 K (BitTorrent prior to version 3.2 uses 2 20 = 1 M as default).
-
-`pieces` maps to a string whose length is a multiple of 20. It is to be
-subdivided into strings of length 20, each of which is the SHA1 hash of the
-piece at the corresponding index.
-
-There is also a key `length` or a key `files`, but not both or neither. If
-`length` is present then the download represents a single file, otherwise it
-represents a set of files which go in a directory structure.
-
-In the single file case, `length` maps to the length of the file in bytes.
-
-For the purposes of the other keys, the multi-file case is treated as only
-having a single file by concatenating the files in the order they appear in
-the files list. The files list is the value `files` maps to, and is a list of
-dictionaries containing the following keys:
-
-`length` - The length of the file, in bytes.
-
-`path` - A list of UTF-8 encoded strings corresponding to subdirectory names,
-the last of which is the actual file name (a zero length list is an error
-case).
-
-In the single file case, the name key is the name of a file, in the muliple
-file case, it's the name of a directory.
-"""
 import os
 import math
 import re
@@ -71,11 +22,6 @@ from datetime import datetime
 from .utils import Bendecoder, Benencoder, path_stat
 
 
-def timestamp():
-    """Generate integer representation of current time."""
-    return
-
-
 class TorrentFile:
     """
     Class for creating Bittorrent meta files.
@@ -83,9 +29,6 @@ class TorrentFile:
     Construct *Torrentfile* class instance object.
 
     Args:
-        flags('obj'): has all the following properties.
-
-    `flags` Attributes:
         path(`str`): Path to torrent file or directory.
         piece_length(`int`): Size of each piece of torrent data.
         announce(`str`): Tracker URL.
@@ -99,7 +42,9 @@ class TorrentFile:
         `obj`: Instance of Metafile Class.
     """
 
-    def __init__(self, flags):
+    def __init__(self, path=None, announce=None, announce_list=None,
+                 private=False, source=None, piece_length=None, comment=None,
+                 outfile=None):
         """
         Class for creating Bittorrent meta files.
 
@@ -112,29 +57,29 @@ class TorrentFile:
           `Torrentfile`: Instance of Metafile Class.
         """
         # fs path attributes.
-        self.path = flags.path
-        self.name = os.path.basename(flags.path)
-        self.outfile = flags.outfile
+        self.path = path
+        self.name = os.path.basename(path)
+        self.outfile = outfile
 
         # if `piece_length` is a `str` turn it into an `int`.
-        if flags.piece_length:
-            self.piece_length = int(flags.piece_length)
+        if piece_length:
+            self.piece_length = int(piece_length)
         else:
             self.piece_length = None
-        self.announce = flags.announce
+        self.announce = announce
 
         # If announce `list` is a `str` split it up.
-        if isinstance(flags.announce_list, str):
-            self.announce_list = re.split(r"[\s,]", flags.announce_list)
+        if isinstance(announce_list, str):
+            self.announce_list = re.split(r"[\s,]", announce_list)
         else:
-            self.announce_list = flags.announce_list
+            self.announce_list = announce_list
 
         # for private trackers.
-        self.private = flags.private
-        self.source = flags.source
+        self.private = private
+        self.source = source
 
         # other less common flags.
-        self.comment = flags.comment
+        self.comment = comment
         self.meta = {}
 
     def _assemble_infodict(self):
@@ -194,9 +139,6 @@ class TorrentFile:
 
         Returns:
           `dict`: metadata dictionary for torrent file
-
-        Raises:
-          `MissingTrackerError`: Announce field is required for all torrents.
         """
         if self.announce:
             self.meta["announce"] = self.announce
@@ -450,3 +392,56 @@ class Feeder:
                 yield self.handle_partial(piece, size)
             else:
                 yield sha1(piece).digest()
+
+"""
+Notes:
+-------------------------------------------------------
+From Bittorrent.org Documentation pages.
+
+Metainfo files (also known as .torrent files) are bencoded dictionaries with
+the following keys:
+
+announce
+    The URL of the tracker.
+
+info
+
+This maps to a dictionary, with keys described below.
+
+All strings in a .torrent file that contains text must be UTF-8 encoded.
+
+## info dictionary
+
+The `name` key maps to a UTF-8 encoded string which is the suggested name to
+save the file (or directory) as. It is purely advisory.
+
+`piece length` maps to the number of bytes in each piece the file is split
+into. For the purposes of transfer, files are split into fixed-size pieces
+which are all the same length except for possibly the last one which may be
+truncated. `piece length` is almost always a power of two, most commonly 2 18
+= 256 K (BitTorrent prior to version 3.2 uses 2 20 = 1 M as default).
+
+`pieces` maps to a string whose length is a multiple of 20. It is to be
+subdivided into strings of length 20, each of which is the SHA1 hash of the
+piece at the corresponding index.
+
+There is also a key `length` or a key `files`, but not both or neither. If
+`length` is present then the download represents a single file, otherwise it
+represents a set of files which go in a directory structure.
+
+In the single file case, `length` maps to the length of the file in bytes.
+
+For the purposes of the other keys, the multi-file case is treated as only
+having a single file by concatenating the files in the order they appear in
+the files list. The files list is the value `files` maps to, and is a list of
+dictionaries containing the following keys:
+
+`length` - The length of the file, in bytes.
+
+`path` - A list of UTF-8 encoded strings corresponding to subdirectory names,
+the last of which is the actual file name (a zero length list is an error
+case).
+
+In the single file case, the name key is the name of a file, in the muliple
+file case, it's the name of a directory.
+"""

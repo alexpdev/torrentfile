@@ -16,86 +16,77 @@
 import pytest
 from torrentfile import TorrentFile
 from torrentfile import exceptions, utils
-from tests.context import tempfile, tempdir, rmpath, Flags
+from tests.context import tempfile, tempdir, rmpath
 
 
 @pytest.fixture(scope="module")
-def flag():
-    """Return meta flags."""
-    def func(path):
-        return Flags(**{"announce": "http://example.com/announce",
-                        "path": path})
-    return func
-
-
-@pytest.fixture(scope="module")
-def tdir(flag):
+def tdir():
     """Return temporary directory."""
     folder = tempdir()
-    flags = flag(folder)
-    yield (folder, flags)
+    args = {"path": folder, "announce": "https://tracker.com/announce"}
+    yield (folder, args)
     rmpath(folder)
 
 
 @pytest.fixture(scope="module")
-def tfile(flag):
+def tfile():
     """Return temporary file."""
     fd = tempfile()
-    flags = flag(fd)
-    yield (fd, flags)
+    args = {"path": fd, "announce": "https://tracker.com/announce"}
+    yield (fd, args)
     rmpath(fd)
 
 
 def test_torrentfile_dir(tdir):
     """Test temporary directory."""
-    _, flags = tdir
-    torrent = TorrentFile(flags)
+    _, args = tdir
+    torrent = TorrentFile(**args)
     data = torrent.assemble()
     assert data is not None
 
 
 def test_torrentfile_file(tfile):
     """Test temporary file."""
-    _, flags = tfile
-    torrent = TorrentFile(flags)
+    _, args = tfile
+    torrent = TorrentFile(**args)
     data = torrent.assemble()
     assert data is not None
 
 
 def test_torrentfile_file_private(tfile):
     """Test temporary file with arguments."""
-    _, flags = tfile
-    flags.private = True
-    torrent = TorrentFile(flags)
+    _, args = tfile
+    args["private"] = True
+    torrent = TorrentFile(**args)
     data = torrent.assemble()
     assert "private" in data["info"]
 
 
 def test_torrentfile_dir_private(tdir):
     """Test temporary dir with arguments."""
-    _, flags = tdir
-    flags.private = True
-    torrent = TorrentFile(flags)
+    _, args = tdir
+    args["private"] = True
+    torrent = TorrentFile(**args)
     data = torrent.assemble()
     assert "private" in data["info"]
 
 
 def test_torrentfile_file_comment(tfile):
     """Test temporary file with arguments."""
-    _, flags = tfile
-    flags.private = True
-    flags.comment = "This is a comment"
-    torrent = TorrentFile(flags)
+    _, args = tfile
+    args["private"] = True
+    args["comment"] = "This is a comment"
+    torrent = TorrentFile(**args)
     data = torrent.assemble()
     assert "private" in data["info"] and "comment" in data["info"]
 
 
 def test_torrentfile_dir_comment(tdir):
     """Test temporary dir with arguments."""
-    _, flags = tdir
-    flags.private = True
-    flags.comment = "This is a comment"
-    torrent = TorrentFile(flags)
+    _, args = tdir
+    args["private"] = True
+    args["comment"] = "This is a comment"
+    torrent = TorrentFile(**args)
     data = torrent.assemble()
     assert "private" in data["info"] and "comment" in data["info"]
 

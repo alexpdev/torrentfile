@@ -40,12 +40,8 @@ class TorrentFileV2:
     Class for creating Bittorrent meta v2 files.
 
     Args:
-        flags('obj'): has all the following properties.
-
-    `flags` Attributes:
         path(`str`): Path to torrent file or directory.
         piece_length(`int`): Size of each piece of torrent data.
-
         announce(`str`): Tracker URL.
         announce_list('list`): List of additional trackers.
         private(`int`): 1 if private torrent else 0.
@@ -57,32 +53,41 @@ class TorrentFileV2:
         `obj`: Instance of Metafile Class.
     """
 
-    def __init__(self, flags):
+    def __init__(self, path=None, announce=None, announce_list=None,
+                 comment=None, source=None, outfile=None, private=None,
+                 piece_length=None):
         """
         Construct `TorrentFileV2` instance.
 
         Args:
-          flags('obj'): has all the following properties.
+            path(`str`): Path to torrent file or directory.
+            piece_length(`int`): Size of each piece of torrent data.
+            announce(`str`): Tracker URL.
+            announce_list('list`): List of additional trackers.
+            private(`int`): 1 if private torrent else 0.
+            source(`str`): Source tracker.
+            comment(`str`): Comment string.
+            outfile(`str`): Path to write metfile to.
 
         Returns:
           `obj`: Instance of Metafile Class.
         """
-        self.name = os.path.basename(flags.path)
-        self.path = flags.path
-        self.comment = flags.comment
-        if flags.piece_length:
-            self.piece_length = int(flags.piece_length)
+        self.name = os.path.basename(path)
+        self.path = path
+        self.comment = comment
+        if piece_length:
+            self.piece_length = int(piece_length)
         else:
             self.piece_length = None
-        self.private = flags.private
-        self.source = flags.source
-        self.announce = flags.announce
-        if isinstance(flags.announce_list, str):
-            self.announce_list = re.split(r"\s", flags.announce_list)
+        self.private = private
+        self.source = source
+        self.announce = announce
+        if isinstance(announce_list, str):
+            self.announce_list = re.split(r"\s", announce_list)
         else:
-            self.announce_list = flags.announce_list
+            self.announce_list = announce_list
 
-        self.outfile = flags.outfile
+        self.outfile = outfile
         self.hashes = []
         self.piece_layers = {}
         self.meta = {}
@@ -150,6 +155,7 @@ class TorrentFileV2:
                 self.piece_layers[hasher.root_hash] = hasher.piece_layers
 
         self.meta["piece layers"] = self.piece_layers
+        return self.meta
 
     def _traverse(self, path):
         file_tree = {}
