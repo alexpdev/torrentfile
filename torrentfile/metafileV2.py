@@ -1,5 +1,6 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
+
 #####################################################################
 # THE SOFTWARE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
@@ -10,6 +11,269 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
+
+import math
+import os
+import re
+from hashlib import sha256
+from datetime import datetime
+from .utils import Benencoder, path_piece_length, sortfiles
+
+"""
+Metafile procedures for Bittorrent v2.
+
+This module `metafileV2` contains classes and functions related
+to constructing .torrent files using Bittorrent v2 Protocol
+
+Classes:
+    `TorrentFileV2`: construct .torrent files using provided data.
+    `FileHash`: Calculates leaf hashes and root hashes for torrent contents.
+
+Constants:
+    BLOCK_SIZE(`int`): size of leaf hashes for merkle tree.
+"""
+
+BLOCK_SIZE = 2 ** 14  # 16KiB
+
+class TorrentFileV2:
+    """
+    Class for creating Bittorrent meta v2 files.
+
+    Args:
+        flags('obj'): has all the following properties.
+
+    `flags` Attributes:
+        path(`str`): Path to torrent file or directory.
+        piece_length(`int`): Size of each piece of torrent data.
+
+        announce(`str`): Tracker URL.
+        announce_list('list`): List of additional trackers.
+        private(`int`): 1 if private torrent else 0.
+        source(`str`): Source tracker.
+        comment(`str`): Comment string.
+        outfile(`str`): Path to write metfile to.
+
+    Returns:
+        `obj`: Instance of Metafile Class.
+    """
+
+    def __init__(self, flags):
+        """
+        Construct `TorrentFileV2` instance.
+
+        Args:
+          flags('obj'): has all the following properties.
+
+        Returns:
+          `obj`: Instance of Metafile Class.
+        """
+        self.name = os.path.basename(flags.path)
+        self.path = flags.path
+        self.comment = flags.comment
+        if flags.piece_length:
+            self.piece_length = int(flags.piece_length)
+        else:
+            self.piece_length = None
+        self.private = flags.private
+        self.source = flags.source
+        self.announce = flags.announce
+        if isinstance(flags.announce_list, str):
+            self.announce_list = re.split(r"\s", flags.announce_list)
+        else:
+            self.announce_list = flags.announce_list
+
+        self.outfile = flags.outfile
+        self.hashes = []
+        self.piece_layers = {}
+        self.meta = {}
+
+    def _assemble_infodict(self):
+        """
+        Create info dictionary for metafile v2.
+
+        Returns:
+          `dict`: Info dictionary.
+        """
+        info = {"name": self.name}
+        if self.comment:
+            info["comment"] = self.comment
+
+        if self.announce_list:
+            if isinstance(self.announce_list[0], list):
+                info["announce list"] = self.announce_list[0]
+            else:
+                info["announce list"] = self.announce_list
+
+        if os.path.isfile(self.path):
+            info["length"] = os.path.getsize(self.path)
+
+        info["file tree"] = self._traverse(self.path)
+
+        # Bittorrent Protocol v2
+        info["meta version"] = 2
+
+        # calculate best piece length if not provided by user
+        info["piece length"] = self.piece_length
+
+        if self.private:
+            info["private"] = 1
+
+        if self.source:
+            info["source"] = self.source
+        return info
+
+    def assemble(self):
+        """
+        Assemble components of torrent metafile v2.
+
+        Returns:
+          `dict`: Metadata dictionary for torrent file.
+        """
+        # if no tracker url was provided, place dummy string in its place
+        # which can be later replaced by some Bittorrent clients
+        if not self.announce:
+            self.meta["announce"] = ""
+        else:
+            self.meta["announce"] = self.announce
+
+        if not self.piece_length:
+            self.piece_length = path_piece_length(self.path)
+
+        self.meta["created by"] = "torrentfile"
+        self.meta["creation date"] = int(datetime.timestamp(datetime.now()))
+
+        # assemble info dictionary and assign it to info key in meta
+        self.meta["info"] = self._assemble_infodict()
+
+        for hasher in self.hashes:
+            if hasher.piece_layers:
+                self.piece_layers[hasher.root_hash] = hasher.piece_layers
+
+        self.meta["piece layers"] = self.piece_layers
+
+    def _traverse(self, path):
+        file_tree = {}
+        if os.path.isfile(path):
+            size = os.path.getsize(path)
+            fhash = FileHash(path, self.piece_length)
+            self.hashes.append(fhash)
+            return {"": {"length": size, "pieces root": fhash.root_hash}}
+        if os.path.isdir(path):
+            for base, full in sortfiles(path):
+                file_tree[base] = self._traverse(full)
+        return file_tree
+
+    def write(self, outfile=None):
+        """
+        Write assembled data to .torrent file.
+
+        Args:
+          outfile(`str`): Path to save location.
+
+        Returns:
+          `bytes`: Data writtend to .torrent file.
+        """
+        encoder = Benencoder()
+        self.data = encoder.encode(self.meta)
+        if outfile:
+            self.outfile = outfile
+        elif not self.outfile:
+            self.outfile = self.meta["info"]["name"] + ".torrent"
+        with open(self.outfile, "wb") as fd:
+            fd.write(self.data)
+        return self.outfile, self.meta
+
+
+def merkle_root(pieces):
+    """Generate root hash of a merkle Tree with input as leaves."""
+    while len(pieces) > 1:
+        pieces = [sha256(x + y).digest() for x, y in zip(*[iter(pieces)] * 2)]
+    return pieces[0]
+
+
+class FileHash:
+    """
+    Calculate and store hash information for specific file.
+
+    Args:
+      path(`str`): Absolute path to file.
+      piece_length(`int`): Size of each metfile piece.
+
+    Returns:
+      `obj`: Instance of FileHash.
+    """
+
+    def __init__(self, path, piece_length):
+        """
+        Calculate and store hash information for specific file.
+
+        Args:
+          path(`str`): Absolute path to file.
+          piece_length(`int`): Size of each metfile piece.
+
+        Returns:
+          `obj`: Instance of FileHash.
+        """
+        self.path = path
+        self.root_hash = None
+        self.piece_layers = None
+        self.layer_hashes = []
+        self.piece_length = piece_length
+        self.piece_blocks = piece_length // BLOCK_SIZE
+        with open(self.path, "rb") as fd:
+            self._process_file(fd)
+
+    def _process_file(self, fd):
+        while True:
+            total = 0
+            blocks = []
+            leaf = bytearray(BLOCK_SIZE)
+
+            for _ in range(self.piece_blocks):
+                size = fd.readinto(leaf)
+                total += size
+                if not size:
+                    break
+                blocks.append(sha256(leaf[:size]).digest())
+
+            if not blocks:
+                break
+
+            # if the file is smaller than piece length
+            if len(blocks) < self.piece_blocks:
+                blocks += self._pad_remaining(total, len(blocks))
+
+            self.layer_hashes.append(merkle_root(blocks))
+        self._calculate_root()
+
+    def _pad_remaining(self, total, blocklen):
+
+        remaining = (((1 << int(math.log2(
+                    total) + 1)) - total) // BLOCK_SIZE) + 1
+
+        if self.layer_hashes:
+            remaining = self.piece_blocks - blocklen
+
+        return [bytes(32) for _ in range(remaining)]
+
+    def _calculate_root(self):
+
+        self.piece_layers = b"".join(self.layer_hashes)
+
+        if len(self.layer_hashes) > 1:
+
+            self.layer_hashes.extend(
+                [
+                    merkle_root([bytes(32) for _ in range(self.piece_blocks)])
+                    for _ in range(
+                        (1 << int(math.log2(len(self.layer_hashes)) + 1))
+                        - len(self.layer_hashes)
+                    )
+                ]
+            )
+
+        self.root_hash = merkle_root(self.layer_hashes)
+
 
 """
 Implementation details for Bittorrent Protocol v2.
@@ -91,6 +355,8 @@ with the following keys:
 > The file tree root dictionary itself must not be a file, i.e. it must not
 > contain a zero-length key with a dictionary containing a length key.
 
+-------------
+
 File tree layout Example:
 
 ```python:
@@ -126,259 +392,4 @@ Multiple files rooted in a single directory:
         nameA.ext: {"": {length: ...}},
         nameB.ext: {"": {length: ...}}}}
 ```
-
---------------------------------------------
-
 """
-
-import hashlib
-import math
-import os
-from datetime import datetime
-
-from .utils import Benencoder, path_piece_length, sortfiles
-
-BLOCK_SIZE = 2 ** 14  # 16KiB
-
-
-def timestamp():
-    """Generate integer representation of current time."""
-    return int(datetime.timestamp(datetime.now()))
-
-
-class TorrentFileV2:
-    """
-    Class for creating Bittorrent meta v2 files.
-
-    Args:
-        flags('obj'): has all the following properties.
-
-    `flags` Attributes:
-        path(`str`): Path to torrent file or directory.
-        piece_length(`int`): Size of each piece of torrent data.
-        created_by(`str`): For 'created by' field.
-        announce(`str`): Tracker URL.
-        private(`int`): 1 if private torrent else 0.
-        source(`str`): Source tracker.
-        comment(`str`): Comment string.
-        outfile(`str`): Path to write metfile to.
-
-    Returns:
-        `obj`: Instance of Metafile Class.
-    """
-
-    def __init__(self, flags):
-        """
-        Construct `TorrentFileV2` instance.
-
-        Args:
-          flags('obj'): has all the following properties.
-
-        Returns:
-          `obj`: Instance of Metafile Class.
-        """
-        self.name = os.path.basename(flags.path)
-        self.path = flags.path
-        self.comment = flags.comment
-        if flags.piece_length:
-            self.piece_length = int(flags.piece_length)
-        else:
-            self.piece_length = None
-        self.private = flags.private
-        self.source = flags.source
-        self.announce = flags.announce
-        self.outfile = flags.outfile
-        self.created_by = flags.created_by
-        self.length = None
-        self.hashes = []
-        self.piece_layers = {}
-        self.info = {}
-        self.meta = {}
-
-    def _assemble_infodict(self):
-        """
-        Create info dictionary for metafile v2.
-
-        Returns:
-          `dict`: Info dictionary.
-        """
-        if self.comment:
-            self.info["comment"] = self.comment
-
-        if os.path.isfile(self.path):
-            self.info["length"] = os.path.getsize(self.path)
-
-        self.info["file tree"] = self._traverse(self.path)
-
-        # Bittorrent Protocol v2
-        self.info["meta version"] = 2
-        # ---------------------------------------------
-        self.info["name"] = self.name
-
-        # calculate best piece length if not provided by user
-        self.info["piece length"] = self.piece_length
-        if self.private:
-            self.info["private"] = 1
-        if self.source:
-            self.info["source"] = self.source
-
-    def assemble(self):
-        """
-        Assemble components of torrent metafile v2.
-
-        Returns:
-          `dict`: Metadata dictionary for torrent file.
-        """
-        # if no tracker url was provided, place dummy string in its place
-        # which can be later replaced by some Bittorrent clients
-        if not self.announce:
-            self.meta["announce"] = ""
-
-        elif isinstance(self.announce, str):
-            self.meta["announce"] = self.announce
-
-        if not self.piece_length:
-            self.piece_length = path_piece_length(self.path)
-
-        self.meta["created by"] = "torrentfile"
-        self.meta["creation date"] = timestamp()
-
-        # assemble info dictionary and assign it to info key in meta
-        self._assemble_infodict()
-
-        for hasher in self.hashes:
-            if hasher.piece_layers:
-                self.piece_layers[hasher.root_hash] = hasher.piece_layers
-
-        self.meta["info"] = self.info
-        self.meta["piece layers"] = self.piece_layers
-
-        encoder = Benencoder()
-        self.data = encoder.encode(self.meta)
-
-    def _traverse(self, path):
-        file_tree = {}
-        if os.path.isfile(path):
-            size = os.path.getsize(path)
-            fhash = FileHash(path, self.piece_length)
-            self.hashes.append(fhash)
-            return {"": {"length": size, "pieces root": fhash.root_hash}}
-        if os.path.isdir(path):
-            for base, full in sortfiles(path):
-                file_tree[base] = self._traverse(full)
-        return file_tree
-
-    def write(self, outfile=None):
-        """
-        Write assembled data to .torrent file.
-
-        Args:
-          outfile(`str`): Path to save location.
-
-        Returns:
-          `bytes`: Data writtend to .torrent file.
-        """
-        if outfile:
-            self.outfile = outfile
-        elif not self.outfile:
-            self.outfile = self.info["name"] + ".torrent"
-        with open(self.outfile, "wb") as fd:
-            fd.write(self.data)
-        return self.outfile, self.meta
-
-
-def sha256(data):
-    """Generate the sha256 hash digest of input data."""
-    _hash = hashlib.sha256(data)
-    return _hash.digest()
-
-
-def merkle_root(pieces):
-    """Generate root hash of a merkle Tree with input as leaves."""
-    while len(pieces) > 1:
-        pieces = [sha256(x + y) for x, y in zip(*[iter(pieces)] * 2)]
-    return pieces[0]
-
-
-class FileHash:
-    """
-    Calculate and store hash information for specific file.
-
-    Args:
-      path(`str`): Absolute path to file.
-      piece_length(`int`): Size of each metfile piece.
-
-    Returns:
-      `obj`: Instance of FileHash.
-    """
-
-    def __init__(self, path, piece_length):
-        """
-        Calculate and store hash information for specific file.
-
-        Args:
-          path(`str`): Absolute path to file.
-          piece_length(`int`): Size of each metfile piece.
-
-        Returns:
-          `obj`: Instance of FileHash.
-        """
-        self.path = path
-        self.root_hash = None
-        self.piece_layers = None
-        self.layer_hashes = []
-        self.piece_length = piece_length
-        self.piece_blocks = piece_length // BLOCK_SIZE
-        with open(self.path, "rb") as fd:
-            self._process_file(fd)
-
-    def _process_file(self, fd):
-        while True:
-            total = 0
-            blocks = []
-            leaf = bytearray(BLOCK_SIZE)
-
-            for _ in range(self.piece_blocks):
-                size = fd.readinto(leaf)
-                total += size
-                if not size:
-                    break
-                blocks.append(sha256(leaf[:size]))
-
-            if not blocks:
-                break
-
-            # if the file is smaller than piece length
-            if len(blocks) < self.piece_blocks:
-                blocks += self._pad_remaining(total, len(blocks))
-
-            self.layer_hashes.append(merkle_root(blocks))
-        self._calculate_root()
-
-    def _pad_remaining(self, total, blocklen):
-
-        remaining = (((1 << int(math.log2(
-                    total) + 1)) - total) // BLOCK_SIZE) + 1
-
-        if self.layer_hashes:
-            remaining = self.piece_blocks - blocklen
-
-        return [bytes(32) for _ in range(remaining)]
-
-    def _calculate_root(self):
-
-        self.piece_layers = b"".join(self.layer_hashes)
-
-        if len(self.layer_hashes) > 1:
-
-            self.layer_hashes.extend(
-                [
-                    merkle_root([bytes(32) for _ in range(self.piece_blocks)])
-                    for _ in range(
-                        (1 << int(math.log2(len(self.layer_hashes)) + 1))
-                        - len(self.layer_hashes)
-                    )
-                ]
-            )
-
-        self.root_hash = merkle_root(self.layer_hashes)

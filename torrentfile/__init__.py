@@ -31,7 +31,7 @@ from .metafileV2 import TorrentFileV2
 from .torrentfile import main
 from .utils import (Benencoder, Bendecoder)
 
-__version__ = "0.2.7"
+__version__ = "0.2.8"
 
 __author__ = "alexpdev"
 

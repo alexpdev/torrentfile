@@ -24,7 +24,7 @@ from tests.context import tempfile, tempdir, rmpath
 
 # Options = [
 #     "--source", "--comment", "--private",
-#     "--created-by", "--piece-length",
+#     "--piece-length",
 #     ("--v2","-v"),
 #     ("--path", "-p"),
 #     ("-t", "-a",),
@@ -104,7 +104,7 @@ def test_cli_with_all_args_file(tfile):
     sys.argv = ["torrentfile", "-p", tfile, "--v2", "-a",
                 "https://tracker-url.com/announce", "--comment",
                 "some comment", "--piece-length", str(2**14), "--private",
-                "--source", "TRACKER", "--created-by", "PROGGRAM"]
+                "--source", "TRACKER"]
     parser = main()
     assert os.path.exists(parser.outfile)
 
@@ -114,6 +114,6 @@ def test_cli_with_all_args_dir(tdir):
     sys.argv = (["torrentfile", "-p", tdir, "--v2", "-a",
                  "https://tracker-url.com/announce", "--comment",
                  "some comment", "--piece-length", str(2**14), "--private",
-                 "--source", "TRACKER", "--created-by", "PROGGRAM"])
+                 "--source", "TRACKER"])
     parser = main()
     assert os.path.exists(parser.outfile)

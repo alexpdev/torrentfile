@@ -13,11 +13,8 @@ jobs:
           python-version: 3.9
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip setuptools coverage pytest
-          pip install pycodestyle pydocstyle pyroma
-          pycodestyle torrentfile
-          pydocstyle torrentfile
-          pyroma .
+          python -m pip install --upgrade pip
+          pip install coverage pytest pytest-cov
 
       - name: Run tests and collect coverage
         run: |

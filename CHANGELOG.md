@@ -1,5 +1,19 @@
 # torrentfile
 
+## Version 0.2.7
+
+### Added v0.2.7
+
+    - major imporvements to torrentfile-GUI.
+    - minor adjustments to this package for integration.
+
+### Fixes v0.2.7
+
+    - Code consolidation
+    - Bug Fixes
+
+---------------------
+
 ## Version 0.2.6
 
 ### Added v0.2.6

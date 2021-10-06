@@ -34,7 +34,6 @@ class Flags:
         self.source = None
         self.comment = None
         self.outfile = None
-        self.created_by = None
         self.private = None
 
 

@@ -121,7 +121,7 @@ def test_v2_meta_keys(metav2f):
     """Test metadata."""
     outfile, meta = metav2f
     for key in ["announce", "info", "piece layers",
-                "creation date", "created by"]:
+                "creation date"]:
         assert key in meta
     assert os.path.exists(outfile)
 
@@ -160,7 +160,7 @@ def test_v2_info_keys_dir(metav2d):
 def test_v1_meta_keys(metav1f):
     """Test metadata."""
     outfile, meta = metav1f
-    for key in ["announce", "info", "creation date", "created by"]:
+    for key in ["announce", "info", "creation date"]:
         assert key in meta
     assert os.path.exists(outfile)
 

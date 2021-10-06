@@ -68,12 +68,12 @@ import re
 from hashlib import sha1
 from datetime import datetime
 
-from torrentfile.utils import Bendecoder, Benencoder, path_stat
+from .utils import Bendecoder, Benencoder, path_stat
 
 
 def timestamp():
     """Generate integer representation of current time."""
-    return int(datetime.timestamp(datetime.now()))
+    return
 
 
 class TorrentFile:
@@ -88,7 +88,6 @@ class TorrentFile:
     `flags` Attributes:
         path(`str`): Path to torrent file or directory.
         piece_length(`int`): Size of each piece of torrent data.
-        created_by(`str`): For 'created by' field.
         announce(`str`): Tracker URL.
         announce_list(`str` or `list`): Additional Tracker URLs.
         private(`int`): 1 if private torrent else 0.
@@ -110,10 +109,10 @@ class TorrentFile:
           flags('obj'): has all the following properties.
 
         Returns:
-          `obj`: Instance of Metafile Class.
+          `Torrentfile`: Instance of Metafile Class.
         """
         # fs path attributes.
-        self.base = flags.path
+        self.path = flags.path
         self.name = os.path.basename(flags.path)
         self.outfile = flags.outfile
 
@@ -136,64 +135,58 @@ class TorrentFile:
 
         # other less common flags.
         self.comment = flags.comment
-        self.created_by = flags.created_by
-
-        self.length = None
-        self.files = []
-        self.info = {}
         self.meta = {}
 
     def _assemble_infodict(self):
         """Create info dictionary."""
-        filelist, size, piece_length = path_stat(self.base)
+        filelist, size, piece_length = path_stat(self.path)
 
         # set name of torrentfile
-        self.info["name"] = self.name
+        info = {"name": self.name}
         # If a comment was provided place in Info dictionary.
         if self.comment:
-            self.info["comment"] = self.comment
+            info["comment"] = self.comment
 
         # create announce list for additional trackers.
         if self.announce_list:
             if isinstance(self.announce_list, list):
                 if isinstance(self.announce_list[0], list):
-                    self.info["announce list"] = self.announce_list[0]
+                    info["announce list"] = self.announce_list[0]
                 else:
-                    self.info["announce list"] = self.announce_list
+                    info["announce list"] = self.announce_list
             else:
-                self.info["announce list"] = list(self.announce_list)
+                info["announce list"] = list(self.announce_list)
 
         # if single file, add 'length' key otherwise
-        if os.path.isfile(self.base):
-            self.info["length"] = size
+        if os.path.isfile(self.path):
+            info["length"] = size
         else:
-            self.files = self.info["files"] = [
+            info["files"] = [
                 {
                     "length": os.path.getsize(p),
-                    "path": os.path.relpath(p, self.base).split(os.sep),
+                    "path": os.path.relpath(p, self.path).split(os.sep),
                 }
                 for p in filelist
             ]
 
         # set torrent piecelength.
         if self.piece_length:
-            self.info["piece length"] = self.piece_length
+            info["piece length"] = self.piece_length
         else:
-            self.piece_length = piece_length
-            self.info["piece length"] = piece_length
+            self.piece_length = info["piece length"] = piece_length
 
         # apply chuncks of hashed data to pieces key.
         pieces = bytearray()
         for piece in Feeder(filelist, self.piece_length, size):
             pieces.extend(piece)
-        self.info["pieces"] = pieces
+        info["pieces"] = pieces
 
         if self.private:
-            self.info["private"] = 1
+            info["private"] = 1
         if self.source:
-            self.info["source"] = self.source
+            info["source"] = self.source
 
-        return self.info
+        return info
 
     def assemble(self):
         """
@@ -211,12 +204,8 @@ class TorrentFile:
             self.meta["announce"] = ""
 
         self.meta["created by"] = "torrentfile"
-        self.meta["creation date"] = timestamp()
+        self.meta["creation date"] = int(datetime.timestamp(datetime.now()))
         self.meta["info"] = self._assemble_infodict()
-
-        encoder = Benencoder()
-        self.data = encoder.encode(self.meta)
-
         return self.meta
 
     def write(self, outfile=None):
@@ -229,14 +218,16 @@ class TorrentFile:
         Returns:
           `tuple`: Path to output file, Pre-encoded metadata.
         """
+        encoder = Benencoder()
+        data = encoder.encode(self.meta)
         if outfile:
             self.outfile = outfile
 
         elif not self.outfile:
-            self.outfile = self.info["name"] + ".torrent"
+            self.outfile = self.meta["info"]["name"] + ".torrent"
 
         with open(self.outfile, "wb") as fd:
-            fd.write(self.data)
+            fd.write(data)
 
         return (self.outfile, self.meta)
 
@@ -276,7 +267,6 @@ class Checker:
         self.total = 0
         self.piece_length = None
         self.files = None
-        self.length = None
         self.name = None
         self.paths = []
         self.fileinfo = {}
@@ -287,26 +277,24 @@ class Checker:
         fd = open(self.metafile, "rb").read()
         decoder = Bendecoder()
         terms = decoder.decode(fd)
-        for k, v in terms.items():
-            self.meta[k] = v
-            if k == "info":
-                for k1, v1 in v.items():
-                    self.info[k1] = v1
+        for key, val in terms.items():
+            self.meta[key] = val
+            if key == "info":
+                for key1, val1 in val.items():
+                    self.info[key1] = val1
 
         self.piece_length = self.info["piece length"]
         self.pieces = self.info["pieces"]
         self.name = self.info["name"]
 
-        if "length" in self.info:
-            self.length = self.info["length"]
-        else:
+        if "length" not in self.info:
             self.files = self.info["files"]
 
     def get_paths(self):
         """Get list of paths from files list inside .torrent file."""
-        if self.length is not None:
+        if not self.files:
             self.paths.append(self.name)
-            self.fileinfo[self.name] = self.length
+            self.fileinfo[self.name] = self.info["length"]
 
         else:
             for item in self.files:

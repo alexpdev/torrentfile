@@ -30,7 +30,7 @@ Functions:
 import os
 import re
 
-from torrentfile.exceptions import BendecodingError, BenencodingError
+from .exceptions import BendecodingError, BenencodingError
 
 
 class Bendecoder:
