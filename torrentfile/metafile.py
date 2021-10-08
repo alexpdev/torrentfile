@@ -42,9 +42,17 @@ class TorrentFile:
         `obj`: Instance of Metafile Class.
     """
 
-    def __init__(self, path=None, announce=None, announce_list=None,
-                 private=False, source=None, piece_length=None, comment=None,
-                 outfile=None):
+    def __init__(
+        self,
+        path=None,
+        announce=None,
+        announce_list=None,
+        private=False,
+        source=None,
+        piece_length=None,
+        comment=None,
+        outfile=None,
+    ):
         """
         Class for creating Bittorrent meta files.
 
@@ -258,7 +266,7 @@ class Checker:
 
         for digest in feeder:
             if pieces[: len(digest)] == digest:
-                pieces = pieces[len(digest):]
+                pieces = pieces[len(digest) :]
                 counter += 1
 
         return str(int(counter / total) * 100) + "%"
@@ -357,7 +365,7 @@ class Feeder:
         while partial < self.piece_length:
             temp = bytearray(self.piece_length - partial)
             size = self.current.readinto(temp)
-            arr[partial: partial + size] = temp[:size]
+            arr[partial : partial + size] = temp[:size]
             partial += size
             if partial < self.piece_length:
                 if not self.next_file():
@@ -386,6 +394,7 @@ class Feeder:
                 yield self.handle_partial(piece, size)
             else:
                 yield sha1(piece).digest()
+
 
 """
 Notes:

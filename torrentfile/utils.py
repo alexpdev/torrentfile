@@ -146,7 +146,7 @@ class Bendecoder:
         """
         match = re.match(rb"(\d+):", bits)
         word_len, start = int(match.groups()[0]), match.span()[1]
-        word = bits[start: start + word_len]
+        word = bits[start : start + word_len]
         try:
             word = word.decode("utf-8")
         except Exception:

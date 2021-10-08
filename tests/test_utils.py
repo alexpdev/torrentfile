@@ -15,10 +15,15 @@
 
 import os
 import pytest
-from torrentfile.utils import (get_file_list, get_piece_length,
-                               path_size, path_stat,
-                               path_piece_length, Bendecoder,
-                               Benencoder)
+from torrentfile.utils import (
+    get_file_list,
+    get_piece_length,
+    path_size,
+    path_stat,
+    path_piece_length,
+    Bendecoder,
+    Benencoder,
+)
 from tests.context import tempfile, tempdir, rmpath
 
 KIB = 2 ** 10
@@ -53,19 +58,13 @@ def metadata():
         "info": {
             "name": "torrentname.bin",
             "files": [
-                {
-                    "length": 2**28,
-                    "path": ["path", "to", "content"]
-                },
-                {
-                    "length": 2**28,
-                    "path": ["path", "more", "content"]
-                }
+                {"length": 2 ** 28, "path": ["path", "to", "content"]},
+                {"length": 2 ** 28, "path": ["path", "more", "content"]},
             ],
-            "pieces": b'some bytes of data',
+            "pieces": b"some bytes of data",
             "source": "tracker",
-            "private": 1
-        }
+            "private": 1,
+        },
     }
     return meta
 
@@ -101,7 +100,7 @@ def test_get_piece_len_power_2(tfile):
 
 def test_get_piece_len_large():
     """Test get_piece_length function does not exceed maximum."""
-    s = 2**31
+    s = 2 ** 31
     result = get_piece_length(s)
     assert result <= MAX_BLOCK
 

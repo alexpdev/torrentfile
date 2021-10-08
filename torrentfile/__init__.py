@@ -30,7 +30,7 @@ from .metafile import TorrentFile
 from .metafileV2 import TorrentFileV2
 from .hybrid import TorrentFileHybrid
 from .torrentfile import main
-from .utils import (Benencoder, Bendecoder)
+from .utils import Benencoder, Bendecoder
 
 __version__ = "0.2.9"
 
@@ -42,5 +42,5 @@ __all__ = (
     "Bendecoder",
     "TorrentFile",
     "TorrentFileV2",
-    "TorrentFileHybrid"
+    "TorrentFileHybrid",
 )

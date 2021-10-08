@@ -35,6 +35,7 @@ Constants:
 
 BLOCK_SIZE = 2 ** 14  # 16KiB
 
+
 class TorrentFileV2:
     """
     Class for creating Bittorrent meta v2 files.
@@ -53,9 +54,17 @@ class TorrentFileV2:
         `obj`: Instance of Metafile Class.
     """
 
-    def __init__(self, path=None, announce=None, announce_list=None,
-                 comment=None, source=None, outfile=None, private=None,
-                 piece_length=None):
+    def __init__(
+        self,
+        path=None,
+        announce=None,
+        announce_list=None,
+        comment=None,
+        source=None,
+        outfile=None,
+        private=None,
+        piece_length=None,
+    ):
         """
         Construct `TorrentFileV2` instance.
 
@@ -251,8 +260,7 @@ class FileHash:
 
     def _pad_remaining(self, total, blocklen):
 
-        remaining = (((1 << int(math.log2(
-                    total) + 1)) - total) // BLOCK_SIZE) + 1
+        remaining = (((1 << int(math.log2(total) + 1)) - total) // BLOCK_SIZE) + 1
 
         if self.layer_hashes:
             remaining = self.piece_blocks - blocklen

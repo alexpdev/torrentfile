@@ -105,7 +105,7 @@ def test_exception_encoding_error():
 def test_exception_decoding_error():
     """Test temporary dir decoding with arguments."""
     try:
-        val = b'i:alphabet'
+        val = b"i:alphabet"
         decoder = utils.Bendecoder()
         val = decoder.decode(val)
         assert False

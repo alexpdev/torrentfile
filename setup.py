@@ -52,8 +52,7 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Topic :: Software Development :: Libraries :: Python Modules",
-        "License :: OSI Approved :: GNU Lesser General Public License v3"
-        " (LGPLv3)",
+        "License :: OSI Approved :: GNU Lesser General Public License v3" " (LGPLv3)",
     ],
     keywords=INFO["keywords"],
     author=INFO["author"],
@@ -65,7 +64,7 @@ setup(
     include_package_data=True,
     entry_points={"console_scripts": ["torrentfile = torrentfile:main"]},
     tests_require=["pytest"],
-    setup_requires=["setuptools","wheel"],
+    setup_requires=["setuptools", "wheel"],
     zip_safe=False,
     test_suite="complete",
 )

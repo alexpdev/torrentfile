@@ -6,8 +6,17 @@
 import os
 import string
 import pytest
-from tests.context import (seq, rmpath, rmpaths, tempfile, TD,
-                           tempdir, sizedfile, fill_file, fill_folder)
+from tests.context import (
+    seq,
+    rmpath,
+    rmpaths,
+    tempfile,
+    TD,
+    tempdir,
+    sizedfile,
+    fill_file,
+    fill_folder,
+)
 
 
 def test_seq():

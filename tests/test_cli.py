@@ -64,6 +64,7 @@ def test_cli_args_dir_v2(tdir):
     assert os.path.exists(parser.outfile)
     os.remove(parser.outfile)
 
+
 def test_cli_args_dir_v3(tdir):
     """Test CLI script with specific arguments."""
     args = ["-p", tdir, "--meta-version", "3"]
@@ -89,6 +90,7 @@ def test_cli_args_file_v2(tfile):
     parser = main()
     assert os.path.exists(parser.outfile)
     os.remove(parser.outfile)
+
 
 def test_cli_args_file_v3(tfile):
     """Test CLI script with specific arguments."""
@@ -120,19 +122,43 @@ def test_cli_no_args_v2():
 
 def test_cli_with_all_args_file(tfile):
     """Test CLI script with specific arguments."""
-    sys.argv = ["torrentfile", "-p", tfile, "--meta-version", "2", "-a",
-                "https://tracker-url.com/announce", "--comment",
-                "some comment", "--piece-length", str(2**14), "--private",
-                "--source", "TRACKER"]
+    sys.argv = [
+        "torrentfile",
+        "-p",
+        tfile,
+        "--meta-version",
+        "2",
+        "-a",
+        "https://tracker-url.com/announce",
+        "--comment",
+        "some comment",
+        "--piece-length",
+        str(2 ** 14),
+        "--private",
+        "--source",
+        "TRACKER",
+    ]
     parser = main()
     assert os.path.exists(parser.outfile)
 
 
 def test_cli_with_all_args_dir(tdir):
     """Test CLI script with specific arguments."""
-    sys.argv = (["torrentfile", "-p", tdir, "--meta-version", "3", "-a",
-                 "https://tracker-url.com/announce", "--comment",
-                 "some comment", "--piece-length", str(2**14), "--private",
-                 "--source", "TRACKER"])
+    sys.argv = [
+        "torrentfile",
+        "-p",
+        tdir,
+        "--meta-version",
+        "3",
+        "-a",
+        "https://tracker-url.com/announce",
+        "--comment",
+        "some comment",
+        "--piece-length",
+        str(2 ** 14),
+        "--private",
+        "--source",
+        "TRACKER",
+    ]
     parser = main()
     assert os.path.exists(parser.outfile)
