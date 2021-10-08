@@ -112,7 +112,21 @@ def test_main_with_announce_list_v2(tfile):
     args, path = tfile
     sys.argv = args + [
         "--path", path, "--announce-list", "https://tracker2/announce",
-        "https://tracker3/announce", "https://tracker4/announce", "--v2"
+        "https://tracker3/announce", "https://tracker4/announce",
+        "--meta-version", "2"
+    ]
+    parser = main()
+    assert "https://tracker2/announce" in parser.meta["info"]["announce list"]
+    rmpath(parser.outfile)
+
+
+def test_main_with_announce_list_v3(tfile):
+    """Test main function with announce list flag."""
+    args, path = tfile
+    sys.argv = args + [
+        "--path", path, "--announce-list", "https://tracker2/announce",
+        "https://tracker3/announce", "https://tracker4/announce",
+        "--meta-version", "3"
     ]
     parser = main()
     assert "https://tracker2/announce" in parser.meta["info"]["announce list"]
@@ -123,7 +137,27 @@ def test_main_with_announce_list_with_just_1_arg_v2(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--path", path, "--announce-list", "https://tracker2/announce", "--v2"
+        "--path", path, "--announce-list", "https://tracker2/announce", "--meta-version", "2"
+    ]
+    parser = main()
+    assert "https://tracker2/announce" in parser.meta["info"]["announce list"]
+    rmpath(parser.outfile)
+
+def test_main_with_announce_list_with_just_1_arg_v3(tfile):
+    """Test main function with announce list flag."""
+    args, path = tfile
+    sys.argv = args + [
+        "--path", path, "--announce-list", "https://tracker2/announce", "--meta-version", "3"
+    ]
+    parser = main()
+    assert "https://tracker2/announce" in parser.meta["info"]["announce list"]
+    rmpath(parser.outfile)
+
+def test_main_with_announce_list_with_just_1_arg_v1(tfile):
+    """Test main function with announce list flag."""
+    args, path = tfile
+    sys.argv = args + [
+        "--path", path, "--announce-list", "https://tracker2/announce", "--meta-version", "1"
     ]
     parser = main()
     assert "https://tracker2/announce" in parser.meta["info"]["announce list"]

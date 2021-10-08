@@ -94,13 +94,7 @@ class TorrentFile:
 
         # create announce list for additional trackers.
         if self.announce_list:
-            if isinstance(self.announce_list, list):
-                if isinstance(self.announce_list[0], list):
-                    info["announce list"] = self.announce_list[0]
-                else:
-                    info["announce list"] = self.announce_list
-            else:
-                info["announce list"] = list(self.announce_list)
+            info["announce list"] = self.announce_list
 
         # if single file, add 'length' key otherwise
         if os.path.isfile(self.path):

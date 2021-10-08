@@ -58,7 +58,15 @@ def test_cli_args_dir(tdir):
 
 def test_cli_args_dir_v2(tdir):
     """Test CLI script with specific arguments."""
-    args = ["-p", tdir, "--v2"]
+    args = ["-p", tdir, "--meta-version", "2"]
+    sys.argv = [sys.argv[0]] + args
+    parser = main()
+    assert os.path.exists(parser.outfile)
+    os.remove(parser.outfile)
+
+def test_cli_args_dir_v3(tdir):
+    """Test CLI script with specific arguments."""
+    args = ["-p", tdir, "--meta-version", "3"]
     sys.argv = [sys.argv[0]] + args
     parser = main()
     assert os.path.exists(parser.outfile)
@@ -76,7 +84,15 @@ def test_cli_args_file(tfile):
 
 def test_cli_args_file_v2(tfile):
     """Test CLI script with specific arguments."""
-    args = ["-p", tfile, "--v2"]
+    args = ["-p", tfile, "--meta-version", "2"]
+    sys.argv = [sys.argv[0]] + args
+    parser = main()
+    assert os.path.exists(parser.outfile)
+    os.remove(parser.outfile)
+
+def test_cli_args_file_v3(tfile):
+    """Test CLI script with specific arguments."""
+    args = ["-p", tfile, "--meta-version", "3"]
     sys.argv = [sys.argv[0]] + args
     parser = main()
     assert os.path.exists(parser.outfile)
@@ -95,7 +111,7 @@ def test_cli_no_args():
 def test_cli_no_args_v2():
     """Test CLI script with specific arguments."""
     try:
-        args = ["--v2"]
+        args = ["--meta-version", "2"]
         sys.argv = [sys.argv[0]] + args
         assert main()
     except MissingPathError:
@@ -104,7 +120,7 @@ def test_cli_no_args_v2():
 
 def test_cli_with_all_args_file(tfile):
     """Test CLI script with specific arguments."""
-    sys.argv = ["torrentfile", "-p", tfile, "--v2", "-a",
+    sys.argv = ["torrentfile", "-p", tfile, "--meta-version", "2", "-a",
                 "https://tracker-url.com/announce", "--comment",
                 "some comment", "--piece-length", str(2**14), "--private",
                 "--source", "TRACKER"]
@@ -114,7 +130,7 @@ def test_cli_with_all_args_file(tfile):
 
 def test_cli_with_all_args_dir(tdir):
     """Test CLI script with specific arguments."""
-    sys.argv = (["torrentfile", "-p", tdir, "--v2", "-a",
+    sys.argv = (["torrentfile", "-p", tdir, "--meta-version", "3", "-a",
                  "https://tracker-url.com/announce", "--comment",
                  "some comment", "--piece-length", str(2**14), "--private",
                  "--source", "TRACKER"])

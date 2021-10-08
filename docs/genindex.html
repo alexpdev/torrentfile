@@ -146,11 +146,9 @@
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="tests.html#tests.context.Flags.__init__">__init__() (tests.context.Flags method)</a>
+      <li><a href="torrentfile.html#torrentfile.Bendecoder.__init__">__init__() (torrentfile.Bendecoder method)</a>
 
       <ul>
-        <li><a href="torrentfile.html#torrentfile.Bendecoder.__init__">(torrentfile.Bendecoder method)</a>
-</li>
         <li><a href="torrentfile.html#torrentfile.Benencoder.__init__">(torrentfile.Benencoder method)</a>
 </li>
         <li><a href="torrentfile.html#torrentfile.exceptions.BendecodingError.__init__">(torrentfile.exceptions.BendecodingError method)</a>
@@ -170,6 +168,8 @@
         <li><a href="torrentfile.html#torrentfile.metafileV2.TorrentFileV2.__init__">(torrentfile.metafileV2.TorrentFileV2 method)</a>
 </li>
         <li><a href="torrentfile.html#torrentfile.TorrentFile.__init__">(torrentfile.TorrentFile method)</a>
+</li>
+        <li><a href="torrentfile.html#torrentfile.TorrentFileHybrid.__init__">(torrentfile.TorrentFileHybrid method)</a>
 </li>
         <li><a href="torrentfile.html#torrentfile.TorrentFileV2.__init__">(torrentfile.TorrentFileV2 method)</a>
 </li>
@@ -271,6 +271,8 @@
 </li>
         <li><a href="torrentfile.html#torrentfile.TorrentFile.assemble">(torrentfile.TorrentFile method)</a>
 </li>
+        <li><a href="torrentfile.html#torrentfile.TorrentFileHybrid.assemble">(torrentfile.TorrentFileHybrid method)</a>
+</li>
         <li><a href="torrentfile.html#torrentfile.TorrentFileV2.assemble">(torrentfile.TorrentFileV2 method)</a>
 </li>
       </ul></li>
@@ -352,15 +354,11 @@
 </li>
       <li><a href="torrentfile.html#torrentfile.metafileV2.FileHash">FileHash (class in torrentfile.metafileV2)</a>
 </li>
-      <li><a href="tests.html#tests.context.fill_file">fill_file() (in module tests.context)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="tests.html#tests.context.fill_file">fill_file() (in module tests.context)</a>
+</li>
       <li><a href="tests.html#tests.context.fill_folder">fill_folder() (in module tests.context)</a>
-</li>
-      <li><a href="tests.html#tests.test_torrentfile.flag">flag() (in module tests.test_torrentfile)</a>
-</li>
-      <li><a href="tests.html#tests.context.Flags">Flags (class in tests.context)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -525,9 +523,13 @@
 </li>
       <li><a href="tests.html#tests.test_cli.test_cli_args_dir_v2">test_cli_args_dir_v2() (in module tests.test_cli)</a>
 </li>
+      <li><a href="tests.html#tests.test_cli.test_cli_args_dir_v3">test_cli_args_dir_v3() (in module tests.test_cli)</a>
+</li>
       <li><a href="tests.html#tests.test_cli.test_cli_args_file">test_cli_args_file() (in module tests.test_cli)</a>
 </li>
       <li><a href="tests.html#tests.test_cli.test_cli_args_file_v2">test_cli_args_file_v2() (in module tests.test_cli)</a>
+</li>
+      <li><a href="tests.html#tests.test_cli.test_cli_args_file_v3">test_cli_args_file_v3() (in module tests.test_cli)</a>
 </li>
       <li><a href="tests.html#tests.test_cli.test_cli_no_args">test_cli_no_args() (in module tests.test_cli)</a>
 </li>
@@ -599,10 +601,10 @@
 </li>
       <li><a href="tests.html#tests.test_utils.test_path_stat_gt0_size">test_path_stat_gt0_size() (in module tests.test_utils)</a>
 </li>
-      <li><a href="tests.html#tests.test_utils.test_path_stat_gtsize_plen">test_path_stat_gtsize_plen() (in module tests.test_utils)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="tests.html#tests.test_utils.test_path_stat_gtsize_plen">test_path_stat_gtsize_plen() (in module tests.test_utils)</a>
+</li>
       <li><a href="tests.html#tests.test_torrentfile.test_torrentfile_dir">test_torrentfile_dir() (in module tests.test_torrentfile)</a>
 </li>
       <li><a href="tests.html#tests.test_torrentfile.test_torrentfile_dir_comment">test_torrentfile_dir_comment() (in module tests.test_torrentfile)</a>
@@ -681,8 +683,6 @@
       </ul></li>
       <li><a href="tests.html#tests.test_meta.tfilemeta">tfilemeta() (in module tests.test_meta)</a>
 </li>
-      <li><a href="torrentfile.html#torrentfile.metafile.timestamp">timestamp() (in module torrentfile.metafile)</a>
-</li>
       <li>
     torrentfile
 
@@ -731,6 +731,8 @@
         <li><a href="torrentfile.html#module-torrentfile.utils">module</a>
 </li>
       </ul></li>
+      <li><a href="torrentfile.html#torrentfile.TorrentFileHybrid">TorrentFileHybrid (class in torrentfile)</a>
+</li>
       <li><a href="torrentfile.html#torrentfile.TorrentFileV2">TorrentFileV2 (class in torrentfile)</a>
 
       <ul>
@@ -738,6 +740,8 @@
 </li>
       </ul></li>
       <li><a href="torrentfile.html#torrentfile.metafile.Feeder.total_pieces">total_pieces() (torrentfile.metafile.Feeder method)</a>
+</li>
+      <li><a href="torrentfile.html#torrentfile.TorrentFileHybrid.traverse">traverse() (torrentfile.TorrentFileHybrid method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -751,6 +755,8 @@
         <li><a href="torrentfile.html#torrentfile.metafileV2.TorrentFileV2.write">(torrentfile.metafileV2.TorrentFileV2 method)</a>
 </li>
         <li><a href="torrentfile.html#torrentfile.TorrentFile.write">(torrentfile.TorrentFile method)</a>
+</li>
+        <li><a href="torrentfile.html#torrentfile.TorrentFileHybrid.write">(torrentfile.TorrentFileHybrid method)</a>
 </li>
         <li><a href="torrentfile.html#torrentfile.TorrentFileV2.write">(torrentfile.TorrentFileV2 method)</a>
 </li>

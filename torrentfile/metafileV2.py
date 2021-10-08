@@ -104,10 +104,7 @@ class TorrentFileV2:
             info["comment"] = self.comment
 
         if self.announce_list:
-            if isinstance(self.announce_list[0], list):
-                info["announce list"] = self.announce_list[0]
-            else:
-                info["announce list"] = self.announce_list
+            info["announce list"] = self.announce_list
 
         if os.path.isfile(self.path):
             info["length"] = os.path.getsize(self.path)

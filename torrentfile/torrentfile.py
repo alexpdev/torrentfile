@@ -29,6 +29,7 @@ import torrentfile
 from .exceptions import MissingPathError
 from .metafile import TorrentFile
 from .metafileV2 import TorrentFileV2
+from .hybrid import TorrentFileHybrid
 
 
 def main_script(args=None):
@@ -42,9 +43,9 @@ def main_script(args=None):
     if not args:
         args = sys.argv[1:]
 
-    usage = """torrentfile --path /path/to/content [-o /path/to/output.torrent]
-            [--piece-length 0000] [--private] [-t https://tracker.url/announce]
-            [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]"""
+    usage = """torrentfile --path </path/to/content> [-o <output/path.torrent>]
+            [--piece-length <n>] [--private] [-a https://tracker.url/announce]
+            [--meta-version <n>] [--source <x>] [--announce-list <url2> <...>]"""
 
     d = "Create .torrent files for Bittorrent v1 or v2."
     parser = ArgumentParser("torrentfile", description=d, prefix_chars="-",
@@ -72,38 +73,41 @@ def main_script(args=None):
         action="store",
         dest="announce",
         metavar="<url>",
-        help="tracker's announce url",
+        help="Primary tracker url.",
     )
 
     parser.add_argument(
         "--piece-length",
         action="store",
         dest="piece_length",
-        metavar="<number>",
-        help="specify size in bytes of packets of data to transfer",
+        metavar="<n>",
+        help="Transmit size for pieces of torrent content.",
     )
 
     parser.add_argument(
         "--private",
         action="store_true",
         dest="private",
-        help="use if torrent is for private tracker",
+        help="For torrents distributed on private trackers.",
     )
 
     parser.add_argument(
         "-o", "--out",
         action="store",
-        help="specify path for .torrent file",
+        help="Specify path for .torrent file.",
         dest="outfile",
         metavar="<path>",
     )
 
     parser.add_argument(
-        "--v2",
-        "--meta-version2",
-        action="store_true",
-        dest="v2",
-        help="use if bittorrent v2 file is wanted",
+        "--meta-version",
+        choices=["1", "2", "3"],
+        action="store",
+        help=("Specify the version of torrent metafile to create."
+              "1 = v1, 2 = v2, 3 = 1 & 2 Hybrid"),
+        default="1",
+        dest="meta_version",
+        metavar="<n>",
     )
 
     parser.add_argument(
@@ -111,7 +115,7 @@ def main_script(args=None):
         action="store",
         dest="comment",
         metavar="<comment>",
-        help="include a comment in .torrent file",
+        help="Include a comment in file metadata.",
     )
 
     parser.add_argument(
@@ -124,11 +128,11 @@ def main_script(args=None):
 
     parser.add_argument(
         "--announce-list",
-        action="append",
+        action="extend",
         dest="announce_list",
-        nargs="*",
-        metavar="<url>",
-        help="for any additional trackers"
+        nargs="+",
+        metavar="[<url>, ...]",
+        help="Additional tracker url's"
     )
     if not args:
         args = ["-h"]
@@ -148,11 +152,15 @@ def main_script(args=None):
         "outfile": flags.outfile,
         "comment": flags.comment,
     }
-
-    if flags.v2:
+    print(flags)
+    if flags.meta_version == "2":
         torrent = TorrentFileV2(**kwargs)
-    else:
+    elif flags.meta_version == "1":
         torrent = TorrentFile(**kwargs)
+    elif flags.meta_version == "3":
+        torrent = TorrentFileHybrid(**kwargs)
+    else:
+        raise MissingPathError(flags)
     torrent.assemble()
     outfile, meta = torrent.write()
     parser.kwargs = kwargs

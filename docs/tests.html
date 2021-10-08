@@ -195,52 +195,6 @@
 <div class="section" id="module-tests.context">
 <span id="tests-context-module"></span><h2>tests.context module<a class="headerlink" href="#module-tests.context" title="Permalink to this headline">¶</a></h2>
 <p>Context Functions used throughout testing suite.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="tests.context.Flags">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tests.context.</span></span><span class="sig-name descname"><span class="pre">Flags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.context.Flags" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Dummy class for testing purposes.</p>
-<p>Minimally emulates the argparse.Namespace class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<cite>any</cite>, Optional) – path to contents of torrent</p></li>
-<li><p><strong>announce</strong> (<cite>any</cite>, Optional) – url for tracker.</p></li>
-<li><p><strong>piece_length</strong> (<cite>any</cite>, Optional) – size of each transmitable content</p></li>
-<li><p><strong>source</strong> (<cite>any</cite>, Optional) – leave blank.</p></li>
-<li><p><strong>private</strong> (<cite>any</cite>, Optional) – for private tracker?</p></li>
-<li><p><strong>outfile</strong> (<cite>any</cite>, Optional) – path to write .torrent file.</p></li>
-<li><p><strong>created_by</strong> (<cite>any</cite>, Optional) – program creator… leave blank.</p></li>
-<li><p><strong>comment</strong> (<cite>any</cite>, Optional) – any comment.</p></li>
-<li><p><strong>v2</strong> (<cite>any</cite>, Optional) – Meta Version 2 .torrentfile</p></li>
-<li><p><strong>announce_list</strong> (<cite>any</cite>, Optional) – additional trackers</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="tests.context.Flags.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.context.Flags.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize Flags class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<cite>any</cite>) – path to contents of torrent</p></li>
-<li><p><strong>announce</strong> (<cite>any</cite>, Optional) – url for tracker.</p></li>
-<li><p><strong>piece_length</strong> (<cite>any</cite>, Optional) – size of each transmitable content</p></li>
-<li><p><strong>source</strong> (<cite>any</cite>, Optional) – leave blank.</p></li>
-<li><p><strong>private</strong> (<cite>any</cite>, Optional) – for private tracker?</p></li>
-<li><p><strong>outfile</strong> (<cite>any</cite>, Optional) – path to write .torrent file.</p></li>
-<li><p><strong>created_by</strong> (<cite>any</cite>, Optional) – program creator… leave blank.</p></li>
-<li><p><strong>comment</strong> (<cite>any</cite>, Optional) – any comment.</p></li>
-<li><p><strong>v2</strong> (<cite>any</cite>, Optional) – Meta Version 2 .torrentfile</p></li>
-<li><p><strong>announce_list</strong> (<cite>any</cite>, Optional) – additional trackers</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.context.fill_file">
 <span class="sig-prename descclassname"><span class="pre">tests.context.</span></span><span class="sig-name descname"><span class="pre">fill_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.context.fill_file" title="Permalink to this definition">¶</a></dt>
@@ -312,6 +266,12 @@
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="tests.test_cli.test_cli_args_dir_v3">
+<span class="sig-prename descclassname"><span class="pre">tests.test_cli.</span></span><span class="sig-name descname"><span class="pre">test_cli_args_dir_v3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_cli.test_cli_args_dir_v3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test CLI script with specific arguments.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="tests.test_cli.test_cli_args_file">
 <span class="sig-prename descclassname"><span class="pre">tests.test_cli.</span></span><span class="sig-name descname"><span class="pre">test_cli_args_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_cli.test_cli_args_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test CLI script with specific arguments.</p>
@@ -320,6 +280,12 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.test_cli.test_cli_args_file_v2">
 <span class="sig-prename descclassname"><span class="pre">tests.test_cli.</span></span><span class="sig-name descname"><span class="pre">test_cli_args_file_v2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_cli.test_cli_args_file_v2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test CLI script with specific arguments.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_cli.test_cli_args_file_v3">
+<span class="sig-prename descclassname"><span class="pre">tests.test_cli.</span></span><span class="sig-name descname"><span class="pre">test_cli_args_file_v3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_cli.test_cli_args_file_v3" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test CLI script with specific arguments.</p>
 </dd></dl>
 
@@ -464,14 +430,8 @@
 <span id="tests-test-torrentfile-module"></span><h2>tests.test_torrentfile module<a class="headerlink" href="#module-tests.test_torrentfile" title="Permalink to this headline">¶</a></h2>
 <p>Testing functions for torrentfile module.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.test_torrentfile.flag">
-<span class="sig-prename descclassname"><span class="pre">tests.test_torrentfile.</span></span><span class="sig-name descname"><span class="pre">flag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_torrentfile.flag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return meta flags.</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="tests.test_torrentfile.tdir">
-<span class="sig-prename descclassname"><span class="pre">tests.test_torrentfile.</span></span><span class="sig-name descname"><span class="pre">tdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_torrentfile.tdir" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.test_torrentfile.</span></span><span class="sig-name descname"><span class="pre">tdir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_torrentfile.tdir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return temporary directory.</p>
 </dd></dl>
 
@@ -531,7 +491,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.test_torrentfile.tfile">
-<span class="sig-prename descclassname"><span class="pre">tests.test_torrentfile.</span></span><span class="sig-name descname"><span class="pre">tfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_torrentfile.tfile" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.test_torrentfile.</span></span><span class="sig-name descname"><span class="pre">tfile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_torrentfile.tfile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return temporary file.</p>
 </dd></dl>
 

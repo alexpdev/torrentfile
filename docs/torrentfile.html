@@ -271,41 +271,7 @@
 </div>
 <div class="section" id="module-torrentfile.metafile">
 <span id="torrentfile-metafile-module"></span><h2>torrentfile.metafile module<a class="headerlink" href="#module-torrentfile.metafile" title="Permalink to this headline">¶</a></h2>
-<p>From Bittorrent.org Documentation pages.</p>
-<p>Metainfo files (also known as .torrent files) are bencoded dictionaries with
-the following keys:</p>
-<dl class="simple">
-<dt>announce</dt><dd><p>The URL of the tracker.</p>
-</dd>
-</dl>
-<p>info</p>
-<p>This maps to a dictionary, with keys described below.</p>
-<p>All strings in a .torrent file that contains text must be UTF-8 encoded.</p>
-<p>## info dictionary</p>
-<p>The <cite>name</cite> key maps to a UTF-8 encoded string which is the suggested name to
-save the file (or directory) as. It is purely advisory.</p>
-<p><cite>piece length</cite> maps to the number of bytes in each piece the file is split
-into. For the purposes of transfer, files are split into fixed-size pieces
-which are all the same length except for possibly the last one which may be
-truncated. <cite>piece length</cite> is almost always a power of two, most commonly 2 18
-= 256 K (BitTorrent prior to version 3.2 uses 2 20 = 1 M as default).</p>
-<p><cite>pieces</cite> maps to a string whose length is a multiple of 20. It is to be
-subdivided into strings of length 20, each of which is the SHA1 hash of the
-piece at the corresponding index.</p>
-<p>There is also a key <cite>length</cite> or a key <cite>files</cite>, but not both or neither. If
-<cite>length</cite> is present then the download represents a single file, otherwise it
-represents a set of files which go in a directory structure.</p>
-<p>In the single file case, <cite>length</cite> maps to the length of the file in bytes.</p>
-<p>For the purposes of the other keys, the multi-file case is treated as only
-having a single file by concatenating the files in the order they appear in
-the files list. The files list is the value <cite>files</cite> maps to, and is a list of
-dictionaries containing the following keys:</p>
-<p><cite>length</cite> - The length of the file, in bytes.</p>
-<p><cite>path</cite> - A list of UTF-8 encoded strings corresponding to subdirectory names,
-the last of which is the actual file name (a zero length list is an error
-case).</p>
-<p>In the single file case, the name key is the name of a file, in the muliple
-file case, it’s the name of a directory.</p>
+<p>Creating and verfying Bittorrent v1 metafiles (.torrent).</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="torrentfile.metafile.Checker">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">torrentfile.metafile.</span></span><span class="sig-name descname"><span class="pre">Checker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metafile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafile.Checker" title="Permalink to this definition">¶</a></dt>
@@ -493,37 +459,33 @@ Out: True
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torrentfile.metafile.TorrentFile">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">torrentfile.metafile.</span></span><span class="sig-name descname"><span class="pre">TorrentFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flags</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafile.TorrentFile" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">torrentfile.metafile.</span></span><span class="sig-name descname"><span class="pre">TorrentFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piece_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafile.TorrentFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class for creating Bittorrent meta files.</p>
 <p>Construct <em>Torrentfile</em> class instance object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>flags</strong> (<em>'obj'</em>) – has all the following properties.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<cite>str</cite>) – Path to torrent file or directory.</p></li>
+<li><p><strong>piece_length</strong> (<cite>int</cite>) – Size of each piece of torrent data.</p></li>
+<li><p><strong>announce</strong> (<cite>str</cite>) – Tracker URL.</p></li>
+<li><p><strong>announce_list</strong> (<cite>str</cite> or <cite>list</cite>) – Additional Tracker URLs.</p></li>
+<li><p><strong>private</strong> (<cite>int</cite>) – 1 if private torrent else 0.</p></li>
+<li><p><strong>source</strong> (<cite>str</cite>) – Source tracker.</p></li>
+<li><p><strong>comment</strong> (<cite>str</cite>) – Comment string.</p></li>
+<li><p><strong>outfile</strong> (<cite>str</cite>) – Path to write metfile to.</p></li>
+</ul>
 </dd>
-</dl>
-<dl class="simple">
-<dt><cite>flags</cite> Attributes:</dt><dd><p>path(<cite>str</cite>): Path to torrent file or directory.
-piece_length(<cite>int</cite>): Size of each piece of torrent data.
-announce(<cite>str</cite>): Tracker URL.
-announce_list(<cite>str</cite> or <cite>list</cite>): Additional Tracker URLs.
-private(<cite>int</cite>): 1 if private torrent else 0.
-source(<cite>str</cite>): Source tracker.
-comment(<cite>str</cite>): Comment string.
-outfile(<cite>str</cite>): Path to write metfile to.</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Instance of Metafile Class.</p>
 </dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Instance of Metafile Class.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><cite>obj</cite></p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>obj</cite></p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="torrentfile.metafile.TorrentFile.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flags</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafile.TorrentFile.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piece_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafile.TorrentFile.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for creating Bittorrent meta files.</p>
 <p>Construct <em>Torrentfile</em> class instance object.</p>
 <dl class="field-list simple">
@@ -556,9 +518,6 @@ outfile(<cite>str</cite>): Path to write metfile to.</p>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><cite>dict</cite></p>
 </dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>MissingTrackerError</strong> – Announce field is required for all torrents.</p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -579,12 +538,6 @@ outfile(<cite>str</cite>): Path to write metfile to.</p>
 </dl>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="torrentfile.metafile.timestamp">
-<span class="sig-prename descclassname"><span class="pre">torrentfile.metafile.</span></span><span class="sig-name descname"><span class="pre">timestamp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafile.timestamp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate integer representation of current time.</p>
 </dd></dl>
 
 </div>
@@ -633,40 +586,45 @@ outfile(<cite>str</cite>): Path to write metfile to.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torrentfile.metafileV2.TorrentFileV2">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">torrentfile.metafileV2.</span></span><span class="sig-name descname"><span class="pre">TorrentFileV2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flags</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafileV2.TorrentFileV2" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">torrentfile.metafileV2.</span></span><span class="sig-name descname"><span class="pre">TorrentFileV2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piece_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafileV2.TorrentFileV2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class for creating Bittorrent meta v2 files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>flags</strong> (<em>'obj'</em>) – has all the following properties.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<cite>str</cite>) – Path to torrent file or directory.</p></li>
+<li><p><strong>piece_length</strong> (<cite>int</cite>) – Size of each piece of torrent data.</p></li>
+<li><p><strong>announce</strong> (<cite>str</cite>) – Tracker URL.</p></li>
+<li><p><strong>announce_list</strong> (<em>'list`</em>) – List of additional trackers.</p></li>
+<li><p><strong>private</strong> (<cite>int</cite>) – 1 if private torrent else 0.</p></li>
+<li><p><strong>source</strong> (<cite>str</cite>) – Source tracker.</p></li>
+<li><p><strong>comment</strong> (<cite>str</cite>) – Comment string.</p></li>
+<li><p><strong>outfile</strong> (<cite>str</cite>) – Path to write metfile to.</p></li>
+</ul>
 </dd>
-</dl>
-<dl>
-<dt><cite>flags</cite> Attributes:</dt><dd><p>path(<cite>str</cite>): Path to torrent file or directory.
-piece_length(<cite>int</cite>): Size of each piece of torrent data.</p>
-<p>announce(<cite>str</cite>): Tracker URL.
-announce_list(‘list`): List of additional trackers.
-private(<cite>int</cite>): 1 if private torrent else 0.
-source(<cite>str</cite>): Source tracker.
-comment(<cite>str</cite>): Comment string.
-outfile(<cite>str</cite>): Path to write metfile to.</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Instance of Metafile Class.</p>
 </dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Instance of Metafile Class.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><cite>obj</cite></p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>obj</cite></p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="torrentfile.metafileV2.TorrentFileV2.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flags</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafileV2.TorrentFileV2.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piece_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.metafileV2.TorrentFileV2.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct <cite>TorrentFileV2</cite> instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>flags</strong> (<em>'obj'</em>) – has all the following properties.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<cite>str</cite>) – Path to torrent file or directory.</p></li>
+<li><p><strong>piece_length</strong> (<cite>int</cite>) – Size of each piece of torrent data.</p></li>
+<li><p><strong>announce</strong> (<cite>str</cite>) – Tracker URL.</p></li>
+<li><p><strong>announce_list</strong> (<em>'list`</em>) – List of additional trackers.</p></li>
+<li><p><strong>private</strong> (<cite>int</cite>) – 1 if private torrent else 0.</p></li>
+<li><p><strong>source</strong> (<cite>str</cite>) – Source tracker.</p></li>
+<li><p><strong>comment</strong> (<cite>str</cite>) – Comment string.</p></li>
+<li><p><strong>outfile</strong> (<cite>str</cite>) – Path to write metfile to.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Instance of Metafile Class.</p>
@@ -1156,7 +1114,7 @@ as well as validate files and folders against metadata.</p>
 <dl class="simple">
 <dt>Modules:</dt><dd><p>metafile: Creation/Validation of v1 .torrent files.
 metafileV2: Creation/Validation of v2 .torrent files.
-torrentfile: torrentfile’s Command Line Interface implementation.
+torrentfile: torrentfiles Command Line Interface implementation.
 exceptions: Custom Exceptions used in package.
 utils: Utilities used throughout package.</p>
 </dd>
@@ -1414,37 +1372,33 @@ data(<cite>any</cite>, optional) Target data for encoding. Defaults to None.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="torrentfile.TorrentFile">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">torrentfile.</span></span><span class="sig-name descname"><span class="pre">TorrentFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flags</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFile" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">torrentfile.</span></span><span class="sig-name descname"><span class="pre">TorrentFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piece_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class for creating Bittorrent meta files.</p>
 <p>Construct <em>Torrentfile</em> class instance object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>flags</strong> (<em>'obj'</em>) – has all the following properties.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<cite>str</cite>) – Path to torrent file or directory.</p></li>
+<li><p><strong>piece_length</strong> (<cite>int</cite>) – Size of each piece of torrent data.</p></li>
+<li><p><strong>announce</strong> (<cite>str</cite>) – Tracker URL.</p></li>
+<li><p><strong>announce_list</strong> (<cite>str</cite> or <cite>list</cite>) – Additional Tracker URLs.</p></li>
+<li><p><strong>private</strong> (<cite>int</cite>) – 1 if private torrent else 0.</p></li>
+<li><p><strong>source</strong> (<cite>str</cite>) – Source tracker.</p></li>
+<li><p><strong>comment</strong> (<cite>str</cite>) – Comment string.</p></li>
+<li><p><strong>outfile</strong> (<cite>str</cite>) – Path to write metfile to.</p></li>
+</ul>
 </dd>
-</dl>
-<dl class="simple">
-<dt><cite>flags</cite> Attributes:</dt><dd><p>path(<cite>str</cite>): Path to torrent file or directory.
-piece_length(<cite>int</cite>): Size of each piece of torrent data.
-announce(<cite>str</cite>): Tracker URL.
-announce_list(<cite>str</cite> or <cite>list</cite>): Additional Tracker URLs.
-private(<cite>int</cite>): 1 if private torrent else 0.
-source(<cite>str</cite>): Source tracker.
-comment(<cite>str</cite>): Comment string.
-outfile(<cite>str</cite>): Path to write metfile to.</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Instance of Metafile Class.</p>
 </dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Instance of Metafile Class.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><cite>obj</cite></p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>obj</cite></p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="torrentfile.TorrentFile.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flags</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFile.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piece_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFile.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for creating Bittorrent meta files.</p>
 <p>Construct <em>Torrentfile</em> class instance object.</p>
 <dl class="field-list simple">
@@ -1477,9 +1431,6 @@ outfile(<cite>str</cite>): Path to write metfile to.</p>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><cite>dict</cite></p>
 </dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>MissingTrackerError</strong> – Announce field is required for all torrents.</p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -1503,41 +1454,101 @@ outfile(<cite>str</cite>): Path to write metfile to.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="torrentfile.TorrentFileHybrid">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">torrentfile.</span></span><span class="sig-name descname"><span class="pre">TorrentFileHybrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piece_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFileHybrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Create Bittorrent v1 v2 hybrid metafiles.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="torrentfile.TorrentFileHybrid.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piece_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFileHybrid.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor for the Hybrid torrent meta file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<cite>str</cite>) – path to torrentfile target.</p></li>
+<li><p><strong>announce</strong> (<cite>str</cite>) – Tracker URL.</p></li>
+<li><p><strong>announce_list</strong> (<cite>list</cite>) – Additional tracker URLs.</p></li>
+<li><p><strong>comment</strong> (<cite>str</cite>) – Some comment.</p></li>
+<li><p><strong>source</strong> (<cite>str</cite>) – Used for private trackers.</p></li>
+<li><p><strong>outfile</strong> (<cite>str</cite>) – target path to write output.</p></li>
+<li><p><strong>private</strong> (<cite>bool</cite>) – Used for private trackers.</p></li>
+<li><p><strong>piece_length</strong> (<cite>int</cite>) – torrentfile data piece length.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torrentfile.TorrentFileHybrid.assemble">
+<span class="sig-name descname"><span class="pre">assemble</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFileHybrid.assemble" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assemble info and meta dictionaries for torrent contents.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torrentfile.TorrentFileHybrid.traverse">
+<span class="sig-name descname"><span class="pre">traverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFileHybrid.traverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build meta dictionary while walking directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<cite>str</cite>) – Path to target file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="torrentfile.TorrentFileHybrid.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFileHybrid.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Hybrid metainfo dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>outfile</strong> (<cite>str</cite> or <cite>path-like</cite>) – where to write file to.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="torrentfile.TorrentFileV2">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">torrentfile.</span></span><span class="sig-name descname"><span class="pre">TorrentFileV2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flags</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFileV2" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">torrentfile.</span></span><span class="sig-name descname"><span class="pre">TorrentFileV2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piece_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFileV2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class for creating Bittorrent meta v2 files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>flags</strong> (<em>'obj'</em>) – has all the following properties.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<cite>str</cite>) – Path to torrent file or directory.</p></li>
+<li><p><strong>piece_length</strong> (<cite>int</cite>) – Size of each piece of torrent data.</p></li>
+<li><p><strong>announce</strong> (<cite>str</cite>) – Tracker URL.</p></li>
+<li><p><strong>announce_list</strong> (<em>'list`</em>) – List of additional trackers.</p></li>
+<li><p><strong>private</strong> (<cite>int</cite>) – 1 if private torrent else 0.</p></li>
+<li><p><strong>source</strong> (<cite>str</cite>) – Source tracker.</p></li>
+<li><p><strong>comment</strong> (<cite>str</cite>) – Comment string.</p></li>
+<li><p><strong>outfile</strong> (<cite>str</cite>) – Path to write metfile to.</p></li>
+</ul>
 </dd>
-</dl>
-<dl>
-<dt><cite>flags</cite> Attributes:</dt><dd><p>path(<cite>str</cite>): Path to torrent file or directory.
-piece_length(<cite>int</cite>): Size of each piece of torrent data.</p>
-<p>announce(<cite>str</cite>): Tracker URL.
-announce_list(‘list`): List of additional trackers.
-private(<cite>int</cite>): 1 if private torrent else 0.
-source(<cite>str</cite>): Source tracker.
-comment(<cite>str</cite>): Comment string.
-outfile(<cite>str</cite>): Path to write metfile to.</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Instance of Metafile Class.</p>
 </dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Instance of Metafile Class.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><cite>obj</cite></p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>obj</cite></p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="torrentfile.TorrentFileV2.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flags</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFileV2.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announce_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piece_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torrentfile.TorrentFileV2.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct <cite>TorrentFileV2</cite> instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>flags</strong> (<em>'obj'</em>) – has all the following properties.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<cite>str</cite>) – Path to torrent file or directory.</p></li>
+<li><p><strong>piece_length</strong> (<cite>int</cite>) – Size of each piece of torrent data.</p></li>
+<li><p><strong>announce</strong> (<cite>str</cite>) – Tracker URL.</p></li>
+<li><p><strong>announce_list</strong> (<em>'list`</em>) – List of additional trackers.</p></li>
+<li><p><strong>private</strong> (<cite>int</cite>) – 1 if private torrent else 0.</p></li>
+<li><p><strong>source</strong> (<cite>str</cite>) – Source tracker.</p></li>
+<li><p><strong>comment</strong> (<cite>str</cite>) – Comment string.</p></li>
+<li><p><strong>outfile</strong> (<cite>str</cite>) – Path to write metfile to.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Instance of Metafile Class.</p>
