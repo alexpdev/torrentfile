@@ -1,0 +1,8 @@
+{
+    "default": true,
+    "MD013": { "line_length": 80, "code_blocks": false, "tables": false },
+    "MD029": { "style": "ordered" },
+    "MD007": { "indent": 4 },
+    "MD046": false,
+    "MD033": false
+}

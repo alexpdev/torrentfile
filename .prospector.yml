@@ -1,0 +1,41 @@
+strictness: high
+autodetect: true
+doc-warnings: true
+test-warnings: true
+member-warnings: true
+
+pep257:
+  run: true
+  convention: google
+  disable:
+    - D203
+    - D212
+    - D213
+    - D407
+    - D406
+    - D413
+
+pydocstyle:
+  run: true
+  convention: google
+  disable:
+    - D203
+    - D212
+    - D213
+    - D413
+
+
+pep8:
+  run: true
+
+pylint:
+  run: true
+
+bandit:
+  run: true
+
+pyroma:
+  run: true
+
+pyflakes:
+  run: true

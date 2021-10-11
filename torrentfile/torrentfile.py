@@ -25,11 +25,13 @@ Functions:
 
 import sys
 from argparse import ArgumentParser
+
 import torrentfile
+
 from .exceptions import MissingPathError
-from .metafile import TorrentFile
-from .metafileV2 import TorrentFileV2
 from .hybrid import TorrentFileHybrid
+from .metafile import TorrentFile
+from .metafile2 import TorrentFileV2
 
 
 def main_script(args=None):
@@ -48,8 +50,9 @@ def main_script(args=None):
             [--meta-version <n>] [--source <x>] [--announce-list <url2> <...>]"""
 
     d = "Create .torrent files for Bittorrent v1 or v2."
-    parser = ArgumentParser("torrentfile", description=d, prefix_chars="-",
-                            usage=usage, allow_abbrev=False)
+    parser = ArgumentParser(
+        "torrentfile", description=d, prefix_chars="-", usage=usage, allow_abbrev=False
+    )
 
     parser.add_argument(
         "--version",
@@ -92,7 +95,8 @@ def main_script(args=None):
     )
 
     parser.add_argument(
-        "-o", "--out",
+        "-o",
+        "--out",
         action="store",
         help="Specify path for .torrent file.",
         dest="outfile",
@@ -103,8 +107,10 @@ def main_script(args=None):
         "--meta-version",
         choices=["1", "2", "3"],
         action="store",
-        help=("Specify the version of torrent metafile to create."
-              "1 = v1, 2 = v2, 3 = 1 & 2 Hybrid"),
+        help=(
+            "Specify the version of torrent metafile to create."
+            "1 = v1, 2 = v2, 3 = 1 & 2 Hybrid"
+        ),
         default="1",
         dest="meta_version",
         metavar="<n>",
@@ -132,7 +138,7 @@ def main_script(args=None):
         dest="announce_list",
         nargs="+",
         metavar="[<url>, ...]",
-        help="Additional tracker url's"
+        help="Additional tracker url's",
     )
     if not args:
         args = ["-h"]

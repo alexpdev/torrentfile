@@ -163,9 +163,9 @@
 </li>
         <li><a href="torrentfile.html#torrentfile.metafile.TorrentFile.__init__">(torrentfile.metafile.TorrentFile method)</a>
 </li>
-        <li><a href="torrentfile.html#torrentfile.metafileV2.FileHash.__init__">(torrentfile.metafileV2.FileHash method)</a>
+        <li><a href="torrentfile.html#torrentfile.metafile2.FileHash.__init__">(torrentfile.metafile2.FileHash method)</a>
 </li>
-        <li><a href="torrentfile.html#torrentfile.metafileV2.TorrentFileV2.__init__">(torrentfile.metafileV2.TorrentFileV2 method)</a>
+        <li><a href="torrentfile.html#torrentfile.metafile2.TorrentFileV2.__init__">(torrentfile.metafile2.TorrentFileV2 method)</a>
 </li>
         <li><a href="torrentfile.html#torrentfile.TorrentFile.__init__">(torrentfile.TorrentFile method)</a>
 </li>
@@ -185,9 +185,11 @@
       <li><a href="torrentfile.html#torrentfile.metafile.TorrentFile._assemble_infodict">_assemble_infodict() (torrentfile.metafile.TorrentFile method)</a>
 
       <ul>
-        <li><a href="torrentfile.html#torrentfile.metafileV2.TorrentFileV2._assemble_infodict">(torrentfile.metafileV2.TorrentFileV2 method)</a>
+        <li><a href="torrentfile.html#torrentfile.metafile2.TorrentFileV2._assemble_infodict">(torrentfile.metafile2.TorrentFileV2 method)</a>
 </li>
         <li><a href="torrentfile.html#torrentfile.TorrentFile._assemble_infodict">(torrentfile.TorrentFile method)</a>
+</li>
+        <li><a href="torrentfile.html#torrentfile.TorrentFileHybrid._assemble_infodict">(torrentfile.TorrentFileHybrid method)</a>
 </li>
         <li><a href="torrentfile.html#torrentfile.TorrentFileV2._assemble_infodict">(torrentfile.TorrentFileV2 method)</a>
 </li>
@@ -258,6 +260,8 @@
         <li><a href="torrentfile.html#torrentfile.utils.Benencoder._encode_str">(torrentfile.utils.Benencoder static method)</a>
 </li>
       </ul></li>
+      <li><a href="torrentfile.html#torrentfile.TorrentFileHybrid._traverse">_traverse() (torrentfile.TorrentFileHybrid method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -267,7 +271,7 @@
       <li><a href="torrentfile.html#torrentfile.metafile.TorrentFile.assemble">assemble() (torrentfile.metafile.TorrentFile method)</a>
 
       <ul>
-        <li><a href="torrentfile.html#torrentfile.metafileV2.TorrentFileV2.assemble">(torrentfile.metafileV2.TorrentFileV2 method)</a>
+        <li><a href="torrentfile.html#torrentfile.metafile2.TorrentFileV2.assemble">(torrentfile.metafile2.TorrentFileV2 method)</a>
 </li>
         <li><a href="torrentfile.html#torrentfile.TorrentFile.assemble">(torrentfile.TorrentFile method)</a>
 </li>
@@ -352,7 +356,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="torrentfile.html#torrentfile.metafile.Feeder">Feeder (class in torrentfile.metafile)</a>
 </li>
-      <li><a href="torrentfile.html#torrentfile.metafileV2.FileHash">FileHash (class in torrentfile.metafileV2)</a>
+      <li><a href="torrentfile.html#torrentfile.metafile2.FileHash">FileHash (class in torrentfile.metafile2)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -406,7 +410,7 @@
 </li>
       <li><a href="tests.html#tests.test_meta.maketorrent">maketorrent() (in module tests.test_meta)</a>
 </li>
-      <li><a href="torrentfile.html#torrentfile.metafileV2.merkle_root">merkle_root() (in module torrentfile.metafileV2)</a>
+      <li><a href="torrentfile.html#torrentfile.metafile2.merkle_root">merkle_root() (in module torrentfile.metafile2)</a>
 </li>
       <li><a href="tests.html#tests.test_utils.metadata">metadata() (in module tests.test_utils)</a>
 </li>
@@ -442,7 +446,7 @@
 </li>
         <li><a href="torrentfile.html#module-torrentfile.metafile">torrentfile.metafile</a>
 </li>
-        <li><a href="torrentfile.html#module-torrentfile.metafileV2">torrentfile.metafileV2</a>
+        <li><a href="torrentfile.html#module-torrentfile.metafile2">torrentfile.metafile2</a>
 </li>
         <li><a href="torrentfile.html#module-torrentfile.torrentfile">torrentfile.torrentfile</a>
 </li>
@@ -559,7 +563,7 @@
 </li>
       <li><a href="tests.html#tests.test_torrentfile.test_exception_encoding_error">test_exception_encoding_error() (in module tests.test_torrentfile)</a>
 </li>
-      <li><a href="tests.html#tests.test_torrentfile.test_exception_missing_path_error">test_exception_missing_path_error() (in module tests.test_torrentfile)</a>
+      <li><a href="tests.html#tests.test_torrentfile.test_exception_path_error">test_exception_path_error() (in module tests.test_torrentfile)</a>
 </li>
       <li><a href="tests.html#tests.test_utils.test_get_file_list_dir">test_get_file_list_dir() (in module tests.test_utils)</a>
 </li>
@@ -711,10 +715,10 @@
 </li>
       </ul></li>
       <li>
-    torrentfile.metafileV2
+    torrentfile.metafile2
 
       <ul>
-        <li><a href="torrentfile.html#module-torrentfile.metafileV2">module</a>
+        <li><a href="torrentfile.html#module-torrentfile.metafile2">module</a>
 </li>
       </ul></li>
       <li>
@@ -736,12 +740,10 @@
       <li><a href="torrentfile.html#torrentfile.TorrentFileV2">TorrentFileV2 (class in torrentfile)</a>
 
       <ul>
-        <li><a href="torrentfile.html#torrentfile.metafileV2.TorrentFileV2">(class in torrentfile.metafileV2)</a>
+        <li><a href="torrentfile.html#torrentfile.metafile2.TorrentFileV2">(class in torrentfile.metafile2)</a>
 </li>
       </ul></li>
       <li><a href="torrentfile.html#torrentfile.metafile.Feeder.total_pieces">total_pieces() (torrentfile.metafile.Feeder method)</a>
-</li>
-      <li><a href="torrentfile.html#torrentfile.TorrentFileHybrid.traverse">traverse() (torrentfile.TorrentFileHybrid method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -752,7 +754,7 @@
       <li><a href="torrentfile.html#torrentfile.metafile.TorrentFile.write">write() (torrentfile.metafile.TorrentFile method)</a>
 
       <ul>
-        <li><a href="torrentfile.html#torrentfile.metafileV2.TorrentFileV2.write">(torrentfile.metafileV2.TorrentFileV2 method)</a>
+        <li><a href="torrentfile.html#torrentfile.metafile2.TorrentFileV2.write">(torrentfile.metafile2.TorrentFileV2 method)</a>
 </li>
         <li><a href="torrentfile.html#torrentfile.TorrentFile.write">(torrentfile.TorrentFile method)</a>
 </li>

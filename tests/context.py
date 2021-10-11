@@ -39,7 +39,7 @@ def fill_file(path, exp):
             fd.write(bits)
             filesize += bitlen
         diff = 2 ** exp - filesize
-        fd.write(bits[:diff+1])
+        fd.write(bits[: diff + 1])
 
 
 def fill_folder(folder):

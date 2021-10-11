@@ -65,7 +65,7 @@ setup(
     include_package_data=True,
     entry_points={"console_scripts": ["torrentfile = torrentfile:main"]},
     tests_require=["pytest"],
-    setup_requires=["setuptools","wheel"],
+    setup_requires=["setuptools", "wheel"],
     zip_safe=False,
     test_suite="complete",
 )

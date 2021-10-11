@@ -62,10 +62,12 @@ class Bendecoder:
           `any`: The decoded data.
         """
         bits = bits if bits is not None else self.data
+
         try:
             data, _ = self._decode(bits)
-        except AttributeError:
-            raise BendecodingError(bits)
+        except AttributeError as excpt:
+            raise BendecodingError(bits) from excpt
+
         return data
 
     def _decode(self, bits):
@@ -146,12 +148,13 @@ class Bendecoder:
         """
         match = re.match(rb"(\d+):", bits)
         word_len, start = int(match.groups()[0]), match.span()[1]
-        word = bits[start: start + word_len]
+        next_pos = start + word_len
+        word = bits[start:next_pos]
         try:
             word = word.decode("utf-8")
-        except Exception:
-            word = word.hex()
-        return word, start + word_len
+        except UnicodeDecodeError:
+            pass
+        return word, next_pos
 
     @staticmethod
     def _decode_int(bits):
@@ -169,22 +172,21 @@ class Bendecoder:
 
 
 class Benencoder:
-    """Encode collection of methods for Bencoding data.
+    """
+    Encode collection of methods for Bencoding data.
 
     Initialize Benencoder insance with optional pre compiled data.
 
     Args:
-      data(`any`, optional) Target data for encoding. Defaults to None.
+        data(`any`, optional)
     """
 
     def __init__(self, data=None):
         """
-        Encode collection of methods for Bencoding data.
-
         Initialize Benencoder insance with optional pre compiled data.
 
         Args:
-        data(`any`, optional) Target data for encoding. Defaults to None.
+            data(`any`, optional): Target data for encoding. Defaults to None.
         """
         self.data = data
 
@@ -378,7 +380,7 @@ def get_file_list(path, sort=False):
         return [path]
 
     # put all files into filelist within directory
-    files = list()
+    files = []
     filelist = os.listdir(path)
 
     # optional canonical sort of filelist
