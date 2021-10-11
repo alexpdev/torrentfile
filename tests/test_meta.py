@@ -14,10 +14,12 @@
 """Test metafile generators functionality."""
 
 import os
+
 import pytest
+
+from tests.context import rmpaths, tempdir, tempfile
+from torrentfile.metafile import Checker, TorrentFile
 from torrentfile.metafile2 import TorrentFileV2
-from torrentfile.metafile import TorrentFile, Checker
-from tests.context import tempdir, tempfile, rmpaths
 
 
 def maketorrent(args, ver2=False):
@@ -112,8 +114,8 @@ def test_v2_meta_keys(metav2f):
     """Test metadata."""
     outfile, meta = metav2f
     for key in ["announce", "info", "piece layers", "creation date"]:
-        assert key in meta   # nosec
-    assert os.path.exists(outfile)   # nosec
+        assert key in meta  # nosec
+    assert os.path.exists(outfile)  # nosec
 
 
 def test_v2_info_keys_file(metav2f):
@@ -127,8 +129,8 @@ def test_v2_info_keys_file(metav2f):
         "name",
         "private",
     ]:
-        assert key in meta["info"]   # nosec
-    assert os.path.exists(outfile)   # nosec
+        assert key in meta["info"]  # nosec
+    assert os.path.exists(outfile)  # nosec
 
 
 def test_v2_info_keys_dir(metav2d):
@@ -143,16 +145,16 @@ def test_v2_info_keys_dir(metav2d):
         "source",
         "comment",
     ]:
-        assert key in meta["info"]   # nosec
-    assert os.path.exists(outfile)   # nosec
+        assert key in meta["info"]  # nosec
+    assert os.path.exists(outfile)  # nosec
 
 
 def test_v1_meta_keys(metav1f):
     """Test metadata."""
     outfile, meta = metav1f
     for key in ["announce", "info", "creation date"]:
-        assert key in meta   # nosec
-    assert os.path.exists(outfile)   # nosec
+        assert key in meta  # nosec
+    assert os.path.exists(outfile)  # nosec
 
 
 def test_v1_info_keys_file(metav1f):
@@ -165,8 +167,8 @@ def test_v1_info_keys_file(metav1f):
         "name",
         "private",
     ]:
-        assert key in meta["info"]   # nosec
-    assert os.path.exists(outfile)   # nosec
+        assert key in meta["info"]  # nosec
+    assert os.path.exists(outfile)  # nosec
 
 
 def test_v1_info_keys_dir(metav1d):
@@ -180,8 +182,8 @@ def test_v1_info_keys_dir(metav1d):
         "source",
         "comment",
     ]:
-        assert key in meta["info"]   # nosec
-    assert os.path.exists(outfile)   # nosec
+        assert key in meta["info"]  # nosec
+    assert os.path.exists(outfile)  # nosec
 
 
 def test_metafile_checker_v1_file(tfilemeta):
@@ -189,7 +191,7 @@ def test_metafile_checker_v1_file(tfilemeta):
     outfile, tfile = tfilemeta
     checker = Checker(outfile, tfile)
     status = checker.check()
-    assert status == "100%"   # nosec
+    assert status == "100%"  # nosec
 
 
 def test_metafile_checker_v1_dir(tdirmeta):
@@ -197,4 +199,4 @@ def test_metafile_checker_v1_dir(tdirmeta):
     outfile, tdir = tdirmeta
     checker = Checker(outfile, tdir)
     status = checker.check()
-    assert status == "100%"   # nosec
+    assert status == "100%"  # nosec

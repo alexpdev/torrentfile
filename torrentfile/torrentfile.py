@@ -25,11 +25,13 @@ Functions:
 
 import sys
 from argparse import ArgumentParser
+
 import torrentfile
+
 from .exceptions import MissingPathError
+from .hybrid import TorrentFileHybrid
 from .metafile import TorrentFile
 from .metafile2 import TorrentFileV2
-from .hybrid import TorrentFileHybrid
 
 
 def main_script(args=None):

@@ -26,11 +26,11 @@ Modules:
     utils: Utilities used throughout package.
 """
 
+from .hybrid import TorrentFileHybrid
 from .metafile import TorrentFile
 from .metafile2 import TorrentFileV2
-from .hybrid import TorrentFileHybrid
 from .torrentfile import main
-from .utils import Benencoder, Bendecoder
+from .utils import Bendecoder, Benencoder
 
 __version__ = "0.2.9"
 

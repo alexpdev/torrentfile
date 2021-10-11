@@ -67,11 +67,11 @@ file case, it's the name of a directory.
 
 """
 
-import os
 import math
+import os
 import re
-from hashlib import sha1
 from datetime import datetime
+from hashlib import sha1
 
 from .utils import Bendecoder, Benencoder, path_stat
 
@@ -433,8 +433,8 @@ class Feeder:
             partial += size
             if partial < self.piece_length:
                 if not self.next_file():
-                    return sha1(arr[:partial]).digest()   # nosec
-        return sha1(arr).digest()   # nosec
+                    return sha1(arr[:partial]).digest()  # nosec
+        return sha1(arr).digest()  # nosec
 
     def next_file(self):
         """Seemlessly transition to next file in file list."""

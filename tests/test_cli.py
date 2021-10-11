@@ -15,10 +15,12 @@
 
 import os
 import sys
+
 import pytest
+
+from tests.context import rmpath, tempdir, tempfile
 from torrentfile import main
 from torrentfile.exceptions import MissingPathError
-from tests.context import tempfile, tempdir, rmpath
 
 # List of flags for the Command Line Interface.
 
@@ -52,7 +54,7 @@ def test_cli_args_dir(tdir):
     args = ["--path", tdir]
     sys.argv = [sys.argv[0]] + args
     parser = main()
-    assert os.path.exists(parser.outfile)   # nosec
+    assert os.path.exists(parser.outfile)  # nosec
     os.remove(parser.outfile)
 
 
@@ -61,7 +63,7 @@ def test_cli_args_dir_v2(tdir):
     args = ["-p", tdir, "--meta-version", "2"]
     sys.argv = [sys.argv[0]] + args
     parser = main()
-    assert os.path.exists(parser.outfile)   # nosec
+    assert os.path.exists(parser.outfile)  # nosec
     os.remove(parser.outfile)
 
 
@@ -70,7 +72,7 @@ def test_cli_args_dir_v3(tdir):
     args = ["-p", tdir, "--meta-version", "3"]
     sys.argv = [sys.argv[0]] + args
     parser = main()
-    assert os.path.exists(parser.outfile)   # nosec
+    assert os.path.exists(parser.outfile)  # nosec
     os.remove(parser.outfile)
 
 
@@ -79,7 +81,7 @@ def test_cli_args_file(tfile):
     args = ["--path", tfile]
     sys.argv = [sys.argv[0]] + args
     parser = main()
-    assert os.path.exists(parser.outfile)   # nosec
+    assert os.path.exists(parser.outfile)  # nosec
     os.remove(parser.outfile)
 
 
@@ -88,7 +90,7 @@ def test_cli_args_file_v2(tfile):
     args = ["-p", tfile, "--meta-version", "2"]
     sys.argv = [sys.argv[0]] + args
     parser = main()
-    assert os.path.exists(parser.outfile)   # nosec
+    assert os.path.exists(parser.outfile)  # nosec
     os.remove(parser.outfile)
 
 
@@ -97,7 +99,7 @@ def test_cli_args_file_v3(tfile):
     args = ["-p", tfile, "--meta-version", "3"]
     sys.argv = [sys.argv[0]] + args
     parser = main()
-    assert os.path.exists(parser.outfile)   # nosec
+    assert os.path.exists(parser.outfile)  # nosec
     os.remove(parser.outfile)
 
 
@@ -107,7 +109,7 @@ def test_cli_no_args():
     try:
         main()
     except SystemExit:
-        assert True   # nosec
+        assert True  # nosec
 
 
 def test_cli_no_args_v2():
@@ -115,9 +117,9 @@ def test_cli_no_args_v2():
     try:
         args = ["--meta-version", "2"]
         sys.argv = [sys.argv[0]] + args
-        assert main()   # nosec
+        assert main()  # nosec
     except MissingPathError:
-        assert True   # nosec
+        assert True  # nosec
 
 
 def test_cli_with_all_args_file(tfile):
@@ -139,7 +141,7 @@ def test_cli_with_all_args_file(tfile):
         "TRACKER",
     ]
     parser = main()
-    assert os.path.exists(parser.outfile)   # nosec
+    assert os.path.exists(parser.outfile)  # nosec
 
 
 def test_cli_with_all_args_dir(tdir):
@@ -161,4 +163,4 @@ def test_cli_with_all_args_dir(tdir):
         "TRACKER",
     ]
     parser = main()
-    assert os.path.exists(parser.outfile)   # nosec
+    assert os.path.exists(parser.outfile)  # nosec

@@ -26,8 +26,9 @@ Classes:
 
 import os
 from datetime import datetime
-from hashlib import sha1, sha256   # nosec
-from .utils import path_piece_length, Benencoder
+from hashlib import sha1, sha256  # nosec
+
+from .utils import Benencoder, path_piece_length
 
 BLOCK_SIZE = 2 ** 14
 
@@ -92,7 +93,7 @@ class TorrentFileHybrid:
 
         if self.announce_list:
             info["announce list"] = self.announce_list
-            
+
         if os.path.isfile(self.path):
             info["file tree"] = {self.name: self._traverse(self.path)}
             info["length"] = os.path.getsize(self.path)
@@ -193,8 +194,9 @@ class TorrentFileHybrid:
 def merkle_root(blocks):
     """Calculate the merkle root for a seq of sha256 hash digests."""
     while len(blocks) > 1:
-        blocks = [sha256(left + right).digest() for
-                  left, right in zip(*[iter(blocks)] * 2)]
+        blocks = [
+            sha256(left + right).digest() for left, right in zip(*[iter(blocks)] * 2)
+        ]
     return blocks[0]
 
 
@@ -257,7 +259,7 @@ class Hasher:
                     self.padding_size = residue
                     self.padding_hash = v1blocks
                 else:
-                    self.piecesv1.append(sha1(v1blocks).digest())   # nosec
+                    self.piecesv1.append(sha1(v1blocks).digest())  # nosec
 
         if self.size > 0:
             layer_hashes = self.piecesv2
@@ -278,8 +280,8 @@ class Hasher:
     def with_pad_file(self):
         """Add padding to file tree to align with piece length."""
         self.padding_hash.extend(bytes(self.padding_size))
-        return sha1(self.padding_hash).digest()   # nosec
+        return sha1(self.padding_hash).digest()  # nosec
 
     def without_pad_file(self):
         """Remove residual padding files."""
-        return sha1(self.padding_hash).digest()   # nosec
+        return sha1(self.padding_hash).digest()  # nosec

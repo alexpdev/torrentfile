@@ -44,16 +44,24 @@ clean-build: ## remove build artifacts
 	rm -fr .pytest_cache
 	rm -f *.spec
 
+lint: environment ## Check for styling errors
+	black torrentfile
+	black tests
+	isort torrentfile
+	isort tests
+	pycodestyle 
+
+
 test: environment ## run tests quickly with the default Python
 	pytest tests
 
 coverage: clean environment test ## check code coverage with the default Python
 	coverage run -m pytest tests
-	coverage xml -o corbertura.xml
+	coverage xml -o coverage.xml
 	git add .
 	git commit -m "coverage report bug and linting adjustments pass all tests"
 	git push
-	bash codacy.sh report -r corbertura.xml
+	bash codacy.sh report -r coverage.xml
 
 release: install ## package and upload a release
 	rm -rf ..\tfilexe

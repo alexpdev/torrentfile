@@ -147,10 +147,10 @@ Multiple files rooted in a single directory:
 import math
 import os
 import re
-from hashlib import sha256
 from datetime import datetime
-from .utils import Benencoder, path_piece_length, sortfiles
+from hashlib import sha256
 
+from .utils import Benencoder, path_piece_length, sortfiles
 
 BLOCK_SIZE = 2 ** 14  # 16KiB
 HASH_SIZE = 32
@@ -383,8 +383,7 @@ class FileHash:
 
     def _pad_remaining(self, total, blocklen):
 
-        remaining = (
-            (((1 << int(math.log2(total) + 1)) - total) // BLOCK_SIZE) + 1)
+        remaining = (((1 << int(math.log2(total) + 1)) - total) // BLOCK_SIZE) + 1
 
         if self.layer_hashes:
             remaining = self.piece_blocks - blocklen
@@ -398,8 +397,11 @@ class FileHash:
         if len(self.layer_hashes) > 1:
             power_of_2 = 1 << int(math.log2(len(self.layer_hashes)) + 1)
             dif_remain = power_of_2 - len(self.layer_hashes)
-            self.layer_hashes.extend([merkle_root(
-                [bytes(HASH_SIZE) for _ in range(self.piece_blocks)]
-            ) for _ in range(dif_remain)])
+            self.layer_hashes.extend(
+                [
+                    merkle_root([bytes(HASH_SIZE) for _ in range(self.piece_blocks)])
+                    for _ in range(dif_remain)
+                ]
+            )
 
         self.root_hash = merkle_root(self.layer_hashes)
