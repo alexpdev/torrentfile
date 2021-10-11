@@ -42,7 +42,7 @@ def test_torrentfile_dir(tdir):
     _, args = tdir
     torrent = TorrentFile(**args)
     data = torrent.assemble()
-    assert data is not None
+    assert data is not None   # nosec
 
 
 def test_torrentfile_file(tfile):
@@ -50,7 +50,7 @@ def test_torrentfile_file(tfile):
     _, args = tfile
     torrent = TorrentFile(**args)
     data = torrent.assemble()
-    assert data is not None
+    assert data is not None   # nosec
 
 
 def test_torrentfile_file_private(tfile):
@@ -59,7 +59,7 @@ def test_torrentfile_file_private(tfile):
     args["private"] = True
     torrent = TorrentFile(**args)
     data = torrent.assemble()
-    assert "private" in data["info"]
+    assert "private" in data["info"]   # nosec
 
 
 def test_torrentfile_dir_private(tdir):
@@ -68,7 +68,7 @@ def test_torrentfile_dir_private(tdir):
     args["private"] = True
     torrent = TorrentFile(**args)
     data = torrent.assemble()
-    assert "private" in data["info"]
+    assert "private" in data["info"]   # nosec
 
 
 def test_torrentfile_file_comment(tfile):
@@ -78,7 +78,7 @@ def test_torrentfile_file_comment(tfile):
     args["comment"] = "This is a comment"
     torrent = TorrentFile(**args)
     data = torrent.assemble()
-    assert "private" in data["info"] and "comment" in data["info"]
+    assert "private" in data["info"] and "comment" in data["info"]   # nosec
 
 
 def test_torrentfile_dir_comment(tdir):
@@ -88,7 +88,7 @@ def test_torrentfile_dir_comment(tdir):
     args["comment"] = "This is a comment"
     torrent = TorrentFile(**args)
     data = torrent.assemble()
-    assert "private" in data["info"] and "comment" in data["info"]
+    assert "private" in data["info"] and "comment" in data["info"]   # nosec
 
 
 def test_exception_encoding_error():
@@ -97,9 +97,9 @@ def test_exception_encoding_error():
         val = set([1, 2, 3, 4, 5])
         encoder = utils.Benencoder()
         val = encoder.encode(val)
-        assert False
+        assert False   # nosec
     except exceptions.BenencodingError:
-        assert True
+        assert True   # nosec
 
 
 def test_exception_decoding_error():
@@ -108,14 +108,14 @@ def test_exception_decoding_error():
         val = b"i:alphabet"
         decoder = utils.Bendecoder()
         val = decoder.decode(val)
-        assert False
+        assert False   # nosec
     except exceptions.BendecodingError:
-        assert True
+        assert True   # nosec
 
 
-def test_exception_missing_path_error():
+def test_exception_path_error():
     """Test MissingPathError exception."""
     try:
         raise exceptions.MissingPathError("this is a message")
     except exceptions.MissingPathError:
-        assert True
+        assert True   # nosec

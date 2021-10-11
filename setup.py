@@ -52,7 +52,8 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Topic :: Software Development :: Libraries :: Python Modules",
-        "License :: OSI Approved :: GNU Lesser General Public License v3" " (LGPLv3)",
+        "License :: OSI Approved :: GNU Lesser General Public License v3"
+        " (LGPLv3)",
     ],
     keywords=INFO["keywords"],
     author=INFO["author"],

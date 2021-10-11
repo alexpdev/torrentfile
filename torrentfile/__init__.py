@@ -20,14 +20,14 @@ as well as validate files and folders against metadata.
 
 Modules:
     metafile: Creation/Validation of v1 .torrent files.
-    metafileV2: Creation/Validation of v2 .torrent files.
+    metafile2: Creation/Validation of v2 .torrent files.
     torrentfile: torrentfiles Command Line Interface implementation.
     exceptions: Custom Exceptions used in package.
     utils: Utilities used throughout package.
 """
 
 from .metafile import TorrentFile
-from .metafileV2 import TorrentFileV2
+from .metafile2 import TorrentFileV2
 from .hybrid import TorrentFileHybrid
 from .torrentfile import main
 from .utils import Benencoder, Bendecoder

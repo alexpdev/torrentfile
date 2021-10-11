@@ -28,7 +28,7 @@ from argparse import ArgumentParser
 import torrentfile
 from .exceptions import MissingPathError
 from .metafile import TorrentFile
-from .metafileV2 import TorrentFileV2
+from .metafile2 import TorrentFileV2
 from .hybrid import TorrentFileHybrid
 
 

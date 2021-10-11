@@ -79,174 +79,174 @@ def bencode(metadata):
 
 def test_get_piece_length_min(tfile):
     """Test get_piece_length function does not fall under minimum."""
-    s = os.path.getsize(tfile)
-    result = get_piece_length(s)
-    assert result >= MIN_BLOCK
+    size = os.path.getsize(tfile)
+    result = get_piece_length(size)
+    assert result >= MIN_BLOCK   # nosec
 
 
 def test_get_piece_len(tfile):
     """Test get_piece_length function does not exceed max."""
-    s = os.path.getsize(tfile)
-    result = get_piece_length(s)
-    assert result <= MAX_BLOCK
+    size = os.path.getsize(tfile)
+    result = get_piece_length(size)
+    assert result <= MAX_BLOCK   # nosec
 
 
 def test_get_piece_len_power_2(tfile):
     """Test get_piece_length function is a power of 2."""
-    s = os.path.getsize(tfile)
-    result = get_piece_length(s)
-    assert result % MIN_BLOCK == 0
+    size = os.path.getsize(tfile)
+    result = get_piece_length(size)
+    assert result % MIN_BLOCK == 0   # nosec
 
 
 def test_get_piece_len_large():
     """Test get_piece_length function does not exceed maximum."""
-    s = 2 ** 31
-    result = get_piece_length(s)
-    assert result <= MAX_BLOCK
+    size = 2 ** 31
+    result = get_piece_length(size)
+    assert result <= MAX_BLOCK   # nosec
 
 
 def test_path_size_file(tfile):
     """Test path_size function for tempfile."""
-    s = os.path.getsize(tfile)
+    size = os.path.getsize(tfile)
     val = path_size(tfile)
-    assert s == val
+    assert size == val   # nosec
 
 
 def test_path_size_file_gt0(tfile):
     """Test path_size function for tempfile is greater than zero."""
     val = path_size(tfile)
-    assert val > 0
+    assert val > 0   # nosec
 
 
 def test_get_file_list_file(tfile):
     """Test get_file_list function for tempfile."""
     results = get_file_list(tfile)
-    assert len(results) == 1
+    assert len(results) == 1   # nosec
 
 
 def test_get_file_list_dir(tdir):
     """Test get_file_list function for tempdir."""
     results = get_file_list(tdir)
-    assert len(results) > 1
+    assert len(results) > 1   # nosec
 
 
 def test_get_file_list_dir_sort(tdir):
     """Test get_file_list function for tempdir sorted."""
     results = get_file_list(tdir, sort=True)
-    assert len(results) > 1
+    assert len(results) > 1   # nosec
 
 
 def test_path_stat_gt0_filelist(tdir):
     """Test path_stat function for tempdir sorted > 0."""
     filelist, _, _ = path_stat(tdir)
-    assert len(filelist) > 0
+    assert len(filelist) > 0   # nosec
 
 
 def test_path_stat_eq_filelist(tdir):
     """Test path_stat function return filelist."""
     filelist, _, _ = path_stat(tdir)
-    assert len(filelist) > 1
+    assert len(filelist) > 1   # nosec
 
 
 def test_path_stat_gt0_size(tdir):
     """Test path_stat function return size > 0."""
     _, size, _ = path_stat(tdir)
-    assert size > 0
+    assert size > 0   # nosec
 
 
 def test_path_stat_eq_size(tdir):
     """Test path_stat function return identically correct size."""
     filelist, size, _ = path_stat(tdir)
-    assert size == sum([os.path.getsize(x) for x in filelist])
+    assert size == sum([os.path.getsize(x) for x in filelist])   # nosec
 
 
 def test_path_stat_gt0_plen(tdir):
     """Test path_stat function return piece length > 0."""
     _, _, piece_length = path_stat(tdir)
-    assert piece_length >= MIN_BLOCK
+    assert piece_length >= MIN_BLOCK   # nosec
 
 
 def test_path_stat_base2_plen(tdir):
     """Test path_stat function return piece length is power of 2."""
     _, _, piece_length = path_stat(tdir)
-    assert piece_length % MIN_BLOCK == 0
+    assert piece_length % MIN_BLOCK == 0   # nosec
 
 
 def test_path_stat_gtsize_plen(tdir):
     """Test path_stat function return size > piece length."""
     _, size, piece_length = path_stat(tdir)
-    assert size > piece_length
+    assert size > piece_length   # nosec
 
 
 def test_path_piece_length_pow2(tdir):
     """Test path_piece_length for file return piece_length is power of 2."""
     result = path_piece_length(tdir)
-    assert result % MIN_BLOCK == 0
+    assert result % MIN_BLOCK == 0   # nosec
 
 
 def test_path_piece_length_min(tdir):
     """Test path_piece_length for dir return piece_length is power of 2."""
     result = path_piece_length(tdir)
-    assert result >= MIN_BLOCK
+    assert result >= MIN_BLOCK   # nosec
 
 
 def test_path_piece_length_max(tdir):
     """Test path_piece_length for dir return piece_length < Maximum."""
     result = path_piece_length(tdir)
-    assert result <= MAX_BLOCK
+    assert result <= MAX_BLOCK   # nosec
 
 
 def test_encode(metadata):
     """Test Benencoder."""
     encoder = Benencoder(metadata)
     data = encoder.encode()
-    assert data is not None
+    assert data is not None   # nosec
 
 
 def test_encode_type(metadata):
     """Test Benencoder output type."""
     encoder = Benencoder(metadata)
     data = encoder.encode()
-    assert isinstance(data, bytes)
+    assert isinstance(data, bytes)   # nosec
 
 
 def test_decode(bencode):
     """Test Bendecoder."""
     decoder = Bendecoder(bencode)
     data = decoder.decode()
-    assert data is not None
+    assert data is not None   # nosec
 
 
 def test_decode_type(bencode):
     """Test Bendecoder output type."""
     decoder = Bendecoder(bencode)
     data = decoder.decode()
-    assert isinstance(data, dict)
+    assert isinstance(data, dict)   # nosec
 
 
 def test_decode_type_info(bencode):
     """Test Benencoder output contents type."""
     decoder = Bendecoder(bencode)
     data = decoder.decode()
-    assert "info" in data
+    assert "info" in data   # nosec
 
 
 def test_decode_type_announce(bencode):
     """Test Benencoder output contents."""
     decoder = Bendecoder(bencode)
     data = decoder.decode()
-    assert "announce" in data
+    assert "announce" in data   # nosec
 
 
 def test_decode_type_piecelength(bencode):
     """Test Bendecoder output contents."""
     decoder = Bendecoder(bencode)
     data = decoder.decode()
-    assert "piece length" in data
+    assert "piece length" in data   # nosec
 
 
 def test_decode_type_created_by(bencode):
     """Test Bendecoder output type."""
     decoder = Bendecoder(bencode)
     data = decoder.decode()
-    assert "created by" in data
+    assert "created by" in data   # nosec
