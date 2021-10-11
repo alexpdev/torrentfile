@@ -28,7 +28,7 @@ help:
 
 clean: clean-build ## remove all build, test, coverage and Python artifacts
 
-environment:
+environment: ## environment
 	.\env\Scripts\activate.bat
 
 clean-build: ## remove build artifacts
@@ -45,50 +45,31 @@ clean-build: ## remove build artifacts
 	rm -f *.spec
 
 lint: environment ## Check for styling errors
-	black torrentfile
-	black tests
-	isort torrentfile
-	isort tests
-	pycodestyle 
+	autopep8 --recursive torrentfile tests
+	isort torrentfile tests
+	pydocstyle torrentfile tests
+	pyroma .
+	pylint torrentfile tests
+	prospector torrentfile
+	prospector tests
 
 
 test: environment ## run tests quickly with the default Python
-	pytest tests
+	pytest --cov --pylint tests
 
-coverage: clean environment test ## check code coverage with the default Python
+coverage: environment ## check code coverage with the default Python
 	coverage run -m pytest tests
 	coverage xml -o coverage.xml
+
+push: clean lint test coverage docs ## push to remote repo
 	git add .
 	git commit -m "coverage report bug and linting adjustments pass all tests"
 	git push
 	bash codacy.sh report -r coverage.xml
 
-release: install ## package and upload a release
-	rm -rf ..\tfilexe
-	mkdir ..\tfilexe
-	cp -f env\scripts\tfile ..\tfilexe
-	pyinstaller -c -n torrentfile --workpath ..\tfilexe\build --distpath ..\tfilexe\dist -i .\assets\torrentfile.ico -F ..\tfilexe\tfile
-	python setup.py sdist bdist_egg bdist_wheel
-	twine upload dist/*
-	make coverage
-
-checkout: ## push to remote
-	git add .
-	git commit -m "auto commit and publish"
-	git push
-
-start: clean ## start new branch
-	git branch development
-	git checkout development
-	git push --set-upstream origin development
-
-lint: ## lint errors
-	pylama torrentfile tests
+docs: environment ## Regenerate docs from changes
+	rm -rf docs/*
+	mkdocs build
 
 install: environment clean test ## Install Locally
 	python setup.py install
-
-
-
-
-full: clean test checkout coverage

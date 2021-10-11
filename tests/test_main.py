@@ -65,7 +65,12 @@ def test_main_announce_list(tfile):
 def test_main_annlist_single(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
-    sys.argv = args + ["--path", path, "--announce-list", "https://tracker2/announce"]
+    sys.argv = args + [
+        "--path",
+        path,
+        "--announce-list",
+        "https://tracker2/announce",
+    ]
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec

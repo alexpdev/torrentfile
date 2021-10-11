@@ -10,6 +10,7 @@ activate
 tests/test_data/
 *.torrent
 repos/
+sites/
 
 # bite-code
 *.pyc

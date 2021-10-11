@@ -47,7 +47,11 @@ def tfile():
 @pytest.fixture(scope="module")
 def metav2f(tfile):
     """Return generated metadata v2 for file."""
-    args = {"private": True, "path": tfile, "announce": "http://announce.com/announce"}
+    args = {
+        "private": True,
+        "path": tfile,
+        "announce": "http://announce.com/announce",
+    }
     outfile, meta = maketorrent(args, ver2=True)
     yield outfile, meta
     rmpaths([tfile, outfile])
@@ -86,7 +90,11 @@ def metav1d(tdir):
 @pytest.fixture(scope="module")
 def metav1f(tfile):
     """Return generated metadata v1 for file."""
-    args = {"private": True, "path": tfile, "announce": "http://announce.com/announce"}
+    args = {
+        "private": True,
+        "path": tfile,
+        "announce": "http://announce.com/announce",
+    }
     outfile, meta = maketorrent(args)
     yield outfile, meta
     rmpaths([tfile, outfile])
@@ -95,7 +103,11 @@ def metav1f(tfile):
 @pytest.fixture(scope="module")
 def tfilemeta(tfile):
     """Test metadata."""
-    args = {"private": True, "path": tfile, "announce": "http://announce.com/announce"}
+    args = {
+        "private": True,
+        "path": tfile,
+        "announce": "http://announce.com/announce",
+    }
     outfile, _ = maketorrent(args)
     yield outfile, tfile
     rmpaths([tfile, outfile])
@@ -104,7 +116,11 @@ def tfilemeta(tfile):
 @pytest.fixture(scope="module")
 def tdirmeta(tdir):
     """Test metadata."""
-    args = {"private": True, "path": tdir, "announce": "http://announce.com/announce"}
+    args = {
+        "private": True,
+        "path": tdir,
+        "announce": "http://announce.com/announce",
+    }
     outfile, _ = maketorrent(args)
     yield outfile, tdir
     rmpaths([tdir, outfile])

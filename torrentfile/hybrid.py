@@ -36,19 +36,11 @@ BLOCK_SIZE = 2 ** 14
 class TorrentFileHybrid:
     """Create Bittorrent v1 v2 hybrid metafiles."""
 
-    def __init__(
-        self,
-        path=None,
-        announce=None,
-        announce_list=None,
-        comment=None,
-        source=None,
-        outfile=None,
-        private=None,
-        piece_length=None,
-    ):
+    def __init__(self, path=None, announce=None, announce_list=None,
+                 comment=None, source=None, outfile=None, private=None,
+                 piece_length=None):
         """
-        Constructor for the Hybrid torrent meta file.
+        Construct the Hybrid torrent meta file with provided parameters.
 
         Args:
             path (`str`): path to torrentfile target.
@@ -99,37 +91,24 @@ class TorrentFileHybrid:
             info["length"] = os.path.getsize(self.path)
         else:
             info["file tree"] = self._traverse(self.path)
-
-        if len(self.files) > 1:
-            self.pieces.append(self.residuals.with_pad_file())
-            self.files.append(
-                {
-                    "attr": "p",
-                    "length": self.residuals.padding_size,
-                    "path": [".pad", str(self.residuals.padding_size)],
-                }
-            )
-        else:
-            self.pieces.append(self.residuals.without_pad_file())
-        # self.pieces=bytes([byte for piece in self.pieces for byte in piece])
-        print(self.pieces)
-        # self.pieces = b"".join(self.pieces)
         info["files"] = self.files
         return info
 
     def assemble(self):
-        """Assemble info and meta dictionaries for torrent contents."""
-        if self.announce:
-            meta = {"announce": self.announce}
-        else:
+        """Assemble the parts of the torrentfile into meta dictionary."""
+        if not self.announce:
             meta = {"announce": ""}
+        else:
+            meta = {"announce": self.announce}
+
+        meta["created by"] = "torrentfile"
 
         meta["creation date"] = int(datetime.timestamp(datetime.now()))
-        meta["created by"] = "torrentfile"
 
         meta["info"] = self._assemble_infodict()
 
         meta["pieces"] = self.pieces
+
         meta["piece_layers"] = self.piece_layers
 
         return meta
@@ -143,27 +122,17 @@ class TorrentFileHybrid:
         """
         tree = {}
         if os.path.isfile(path):
-            if self.residuals:
-                self.pieces.append(self.residuals.with_pad_file())
-                self.files.append(
-                    {
-                        "attr": "p",
-                        "length": self.residuals.padding_size,
-                        "path": [".pad", str(self.residuals.padding_size)],
-                    }
-                )
-                self.residuals = None
             hashes = Hasher(path, self.piece_length)
-            self.residuals = hashes
             if hashes.size >= self.piece_length:
-                self.piece_layers.append({hashes.root: hashes.piecesv2})
-            self.pieces += [hashes.piecesv1]
+                self.piece_layers.append({hashes.root: hashes.hashv2})
+            self.pieces.extend([hashes.hashv1])
             self.files.append(
                 {
                     "length": hashes.size,
                     "path": os.path.relpath(path, self.path).split(os.sep),
                 }
             )
+
             if hashes.size == 0:
                 return {"": {"length": hashes.size}}
             return {"": {"length": hashes.size, "pieces root": hashes.root}}
@@ -194,9 +163,7 @@ class TorrentFileHybrid:
 def merkle_root(blocks):
     """Calculate the merkle root for a seq of sha256 hash digests."""
     while len(blocks) > 1:
-        blocks = [
-            sha256(left + right).digest() for left, right in zip(*[iter(blocks)] * 2)
-        ]
+        blocks = [sha256(l + r).digest() for l, r in zip(*[iter(blocks)] * 2)]
     return blocks[0]
 
 
@@ -211,7 +178,7 @@ class Hasher:
 
     def __init__(self, path, piece_length):
         """
-        Constructor for Hasher class.
+        Construct Hasher class instances for each file in torrent.
 
         Calculates sha1 and sha256 hashes for each version   # nosec
         of the Bittorrent protocols meta files.
@@ -222,8 +189,10 @@ class Hasher:
         """
         self.path = path
         self.size = 0
-        self.piecesv1 = []
-        self.piecesv2 = []
+        self.hashv1 = []
+        self.hashv2 = []
+        self.padding_hash = None
+        self.padding_file = None
         num_blocks = piece_length // BLOCK_SIZE
 
         with open(path, "rb") as data:
@@ -246,42 +215,33 @@ class Hasher:
                     break
 
                 if len(v2blocks) != num_blocks:
-                    leaves = (
-                        (1 << (len(v2blocks) - 1).bit_length())
-                        if not self.piecesv2
-                        else num_blocks
-                    )
+                    if not self.hashv2:
+                        leaves = 1 << (len(v2blocks) - 1).bit_length()
+                    else:
+                        leaves = num_blocks
 
-                    v2blocks.extend([bytes(32) for i in range(leaves - len(v2blocks))])
-                self.piecesv2.append(merkle_root(v2blocks))
+                    needed = leaves - len(v2blocks)
+                    v2blocks.extend([bytes(32) for _ in range(needed)])
+                    self._apply_padding(residue)
 
-                if residue > 0:
-                    self.padding_size = residue
-                    self.padding_hash = v1blocks
-                else:
-                    self.piecesv1.append(sha1(v1blocks).digest())  # nosec
+                self.hashv2.append(merkle_root(v2blocks))
+                self.hashv1.append(sha1(v1blocks).digest())  # nosec
 
         if self.size > 0:
-            layer_hashes = self.piecesv2
-            if len(self.piecesv2) > 1:
-                self.piecesv2 = b"".join(self.piecesv2)
+            layer_hashes = self.hashv2
+            if len(self.hashv2) > 1:
+                self.hashv2 = b"".join(self.hashv2)
                 pad_piece = merkle_root([bytes(32)] * num_blocks)
-                layer_hashes.extend(
-                    [
-                        pad_piece
-                        for _ in range(
-                            (1 << (len(layer_hashes) - 1).bit_length())
-                            - len(layer_hashes)
-                        )
-                    ]
-                )
+                power_two = 1 << (len(layer_hashes) - 1).bit_length()
+                remainder = power_two - len(layer_hashes)
+                layer_hashes.extend(pad_piece for _ in range(remainder))
+                self._apply_padding((BLOCK_SIZE * num_blocks) * remainder)
             self.root = merkle_root(layer_hashes)
 
-    def with_pad_file(self):
-        """Add padding to file tree to align with piece length."""
-        self.padding_hash.extend(bytes(self.padding_size))
-        return sha1(self.padding_hash).digest()  # nosec
-
-    def without_pad_file(self):
-        """Remove residual padding files."""
-        return sha1(self.padding_hash).digest()  # nosec
+    def _apply_padding(self, size):
+        self.padding_file = {
+            "attr": "p",
+            "length": size,
+            "path": [".pad", str(size)],
+        }
+        self.padding_hash = sha1(bytes(size)).digest()
