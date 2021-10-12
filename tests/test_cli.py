@@ -35,18 +35,18 @@ from torrentfile.exceptions import MissingPathError
 
 @pytest.fixture(scope="module")
 def tdir():
-    """Generate temporary directory."""
-    folder = tempdir()
-    yield folder
-    rmpath(folder)
+    """Generate temp testing directory."""
+    directory = tempdir()
+    yield directory
+    rmpath(directory)
 
 
 @pytest.fixture(scope="module")
 def tfile():
-    """Generate temporary file."""
-    fd = tempfile()
-    yield fd
-    rmpath(fd)
+    """Generate temp testing file."""
+    temp = tempfile()
+    yield temp
+    rmpath(temp)
 
 
 def test_cli_args_dir(tdir):

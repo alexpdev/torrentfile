@@ -174,19 +174,11 @@ class TorrentFileV2:
         `obj`: Instance of Metafile Class.
     """
 
-    def __init__(
-        self,
-        path=None,
-        announce=None,
-        announce_list=None,
-        comment=None,
-        source=None,
-        outfile=None,
-        private=None,
-        piece_length=None,
-    ):
+    def __init__(self, path=None, source=None, outfile=None, announce=None,
+                 announce_list=None, comment=None, private=None,
+                 piece_length=None,):
         """
-        Construct `TorrentFileV2` instance.
+        Construct `TorrentFileV2` Class instance from given parameters.
 
         Args:
             path(`str`): Path to torrent file or directory.
@@ -243,32 +235,33 @@ class TorrentFileV2:
         # calculate best piece length if not provided by user
         info["piece length"] = self.piece_length
 
-        if self.private:
-            info["private"] = 1
-
         if self.source:
             info["source"] = self.source
+
+        if self.private:
+            info["private"] = 1
 
         return info
 
     def assemble(self):
         """
-        Assemble components of torrent metafile v2.
+        Assemble then return the meta dictionary for encoding.
 
         Returns:
-          `dict`: Metadata dictionary for torrent file.
+          meta(`dict`): Metainformation about the torrent.
         """
         # if no tracker url was provided, place dummy string in its place
         # which can be later replaced by some Bittorrent clients
-        if not self.announce:
-            meta = {"announce": ""}
-        else:
-            meta = {"announce": self.announce}
 
         if not self.piece_length:
             self.piece_length = path_piece_length(self.path)
         elif isinstance(self.piece_length, str):
             self.piece_length = int(self.piece_length)
+
+        if self.announce:
+            meta = {"announce": self.announce}
+        else:
+            meta = {"announce": ""}
 
         meta["created by"] = "torrentfile"
         meta["creation date"] = int(datetime.timestamp(datetime.now()))
@@ -383,7 +376,9 @@ class FileHash:
 
     def _pad_remaining(self, total, blocklen):
 
-        remaining = (((1 << int(math.log2(total) + 1)) - total) // BLOCK_SIZE) + 1
+        remaining = (
+            ((1 << int(math.log2(total) + 1)) - total) // BLOCK_SIZE
+        ) + 1
 
         if self.layer_hashes:
             remaining = self.piece_blocks - blocklen
@@ -399,7 +394,9 @@ class FileHash:
             dif_remain = power_of_2 - len(self.layer_hashes)
             self.layer_hashes.extend(
                 [
-                    merkle_root([bytes(HASH_SIZE) for _ in range(self.piece_blocks)])
+                    merkle_root(
+                        [bytes(HASH_SIZE) for _ in range(self.piece_blocks)]
+                    )
                     for _ in range(dif_remain)
                 ]
             )

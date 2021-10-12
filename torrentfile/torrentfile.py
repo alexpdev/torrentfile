@@ -45,13 +45,14 @@ def main_script(args=None):
     if not args:
         args = sys.argv[1:]
 
-    usage = """torrentfile --path </path/to/content> [-o <output/path.torrent>]
-            [--piece-length <n>] [--private] [-a https://tracker.url/announce]
-            [--meta-version <n>] [--source <x>] [--announce-list <url2> <...>]"""
+    usage = """torrentfile -v -h --path </path/to/content>
+               [-o <output/path.torrent>] [--piece-length <n>] [--private]
+               [-a https://tracker.url/announce] [--meta-version <n>]
+               [--source <x>] [--announce-list <url2> <...>]"""
 
     d = "Create .torrent files for Bittorrent v1 or v2."
     parser = ArgumentParser(
-        "torrentfile", description=d, prefix_chars="-", usage=usage, allow_abbrev=False
+        "torrentfile", description=d, prefix_chars="-", usage=usage
     )
 
     parser.add_argument(

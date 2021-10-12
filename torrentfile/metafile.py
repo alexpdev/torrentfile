@@ -70,7 +70,7 @@ file case, it's the name of a directory.
 import math
 import os
 import re
-from datetime import datetime
+from datetime import datetime as dt
 from hashlib import sha1
 
 from .utils import Bendecoder, Benencoder, path_stat
@@ -97,19 +97,11 @@ class TorrentFile:
 
     """
 
-    def __init__(
-        self,
-        path=None,
-        announce=None,
-        announce_list=None,
-        private=False,
-        source=None,
-        piece_length=None,
-        comment=None,
-        outfile=None,
-    ):
+    def __init__(self, path=None, announce=None, announce_list=None,
+                 private=False, source=None, piece_length=None,
+                 comment=None, outfile=None):
         """
-        Class for creating Bittorrent meta files.
+        Class for creating Bittorrent meta files from given parameters.
 
         Construct *Torrentfile* class instance object.
 
@@ -137,6 +129,10 @@ class TorrentFile:
         else:
             self.piece_length = None
         self.announce = announce
+        if announce:
+            self.announce = announce
+        else:
+            self.announce = ""
 
         # If announce `list` is a `str` split it up.
         if isinstance(announce_list, str):
@@ -154,10 +150,10 @@ class TorrentFile:
 
     def _assemble_infodict(self):
         """Create info dictionary."""
-        filelist, size, piece_length = path_stat(self.path)
-
         # set name of torrentfile
         info = {"name": self.name}
+        filelist, size, piece_length = path_stat(self.path)
+
         # If a comment was provided place in Info dictionary.
         if self.comment:
             info["comment"] = self.comment
@@ -190,8 +186,10 @@ class TorrentFile:
             pieces.extend(piece)
         info["pieces"] = pieces
 
+        # This flag is for use with private trackers
         if self.private:
             info["private"] = 1
+        # Leave it off unless you know what you are doing.
         if self.source:
             info["source"] = self.source
 
@@ -204,13 +202,10 @@ class TorrentFile:
         Returns:
           `dict`: metadata dictionary for torrent file
         """
-        if self.announce:
-            meta = {"announce": self.announce}
-        else:
-            meta = {"announce": ""}
+        meta = {"announce": self.announce}
 
         meta["created by"] = "torrentfile"
-        meta["creation date"] = int(datetime.timestamp(datetime.now()))
+        meta["creation date"] = int(dt.timestamp(dt.now()))
         meta["info"] = self._assemble_infodict()
         return meta
 
@@ -226,11 +221,12 @@ class TorrentFile:
         """
         encoder = Benencoder()
         data = encoder.encode(self.meta)
-        if outfile:
-            self.outfile = outfile
 
-        elif not self.outfile:
-            self.outfile = self.meta["info"]["name"] + ".torrent"
+        if not outfile:
+            if not self.outfile:
+                self.outfile = self.meta["info"]["name"] + ".torrent"
+        else:
+            self.outfile = outfile
 
         with open(self.outfile, "wb") as fd:
             fd.write(data)

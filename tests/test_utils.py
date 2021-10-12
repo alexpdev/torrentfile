@@ -31,17 +31,17 @@ MAX_BLOCK = MIB * 16
 @pytest.fixture(scope="module")
 def tdir():
     """Return temporary directory."""
-    folder = tempdir()
-    yield folder
-    rmpath(folder)
+    drct = tempdir()
+    yield drct
+    rmpath(drct)
 
 
 @pytest.fixture(scope="module")
 def tfile():
     """Return temporary file."""
-    fd = tempfile()
-    yield fd
-    rmpath(fd)
+    testfile = tempfile()
+    yield testfile
+    rmpath(testfile)
 
 
 @pytest.fixture

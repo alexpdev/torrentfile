@@ -6,27 +6,23 @@ member-warnings: true
 
 pep257:
   run: true
-  convention: google
   disable:
-    - D203
+    - D210
     - D212
     - D213
+    - D413
     - D407
     - D406
-    - D413
-
-pydocstyle:
-  run: true
-  convention: google
-  disable:
     - D203
-    - D212
-    - D213
-    - D413
 
+pycodestyle:
+  disable:
+    - E741
 
 pep8:
   run: true
+  disable:
+    - E741
 
 pylint:
   run: true
