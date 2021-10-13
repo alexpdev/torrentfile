@@ -77,12 +77,67 @@
     
       
         <li class="toctree-l2">
-          <a class="toctree-l3" href="#commands">Commands</a>
+          <a class="toctree-l3" href="#project-layout">Project layout</a>
         </li>
     
       
         <li class="toctree-l2">
-          <a class="toctree-l3" href="#project-layout">Project layout</a>
+          <a class="toctree-l3" href="#bittorrent-file-creator-torrent">Bittorrent File Creator (.torrent)</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#features">Features</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#documentation">Documentation</a>
+        </li>
+    
+      
+          
+
+  <li class="toctree-l2">
+    <a href="#installation">
+      Installation
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l2">
+    <ul class="subnav-l2 toc-hidden">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#via-pypi">via PyPi</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#via-git">via Git</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#download">download</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#usage">Usage</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#license">License</a>
         </li>
     
     </ul>
@@ -148,26 +203,75 @@
             <div class="section">
               
                 <h1 id="welcome-to-torrentfile-documentation">Welcome to TorrentFile Documentation</h1>
-<p>The repo url is found on github at <a href="https://github.com/alexpdev/torrentfile">TorrentFile URL</a></p>
-<h2 id="commands">Commands</h2>
-<p>Command Line Usage:</p>
-<pre><code>"""Initialize Command Line Interface for torrentfile.
-
-usage: torrentfile --path /path/to/content [-o /path/to/output.torrent]
-       [--piece-length n] [--private] [-t https://tracker.url/announce]
-       [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]
-       [-h]
-"""
-</code></pre>
 <h2 id="project-layout">Project layout</h2>
-<pre><code>mkdocs.yml     # The configuration file.
+<pre><code>mkdocs.yml            # The configuration file.
 docs/
-    index.md   # The documentation homepage.
-    about.md   # About page.
-    LICENSE.md # License file.
-    api.md     # API Reference
-    ...        # Other markdown pages, images and other files.
+    index.md          # The documentation homepage.
+    about.md          # About page.
+    LICENSE.md        # License file.
+    api.md            # API Reference
+    tests.md          # Testing Suit API
 </code></pre>
+<p><img alt="torrentfile" src="https://github.com/alexpdev/torrentfile/blob/master/assets/torrentfile.png?raw=true" /></p>
+<hr />
+<h2 id="bittorrent-file-creator-torrent">Bittorrent File Creator (.torrent)</h2>
+<p><a href="https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Grade"><img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Grade/2da47ec1b5904538a40230f049a02be4" /></a>
+<a href="https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Coverage"><img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Coverage/2da47ec1b5904538a40230f049a02be4" /></a>
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/alexpdev/torrentfile?style=plastic" />
+<img alt="GitHub" src="https://img.shields.io/github/license/alexpdev/torrentfile?style=plastic" /></p>
+<p><em>Torrentfile</em> is a CLI for creating .torrent files for bittorrent clients.</p>
+<p>The repo url is found on github at <a href="https://github.com/alexpdev/torrentfile">TorrentFile URL</a></p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Simple interface</li>
+<li>Create files for Bittorrent v1</li>
+<li>Create files for Bittorrent v2</li>
+<li>Create files with multiple trackers</li>
+<li>Optionally specify size of individual packets of data for transfer</li>
+<li>Flag torrent file as private for private trackers.</li>
+<li>Check torrentfile against file or directory for match.</li>
+<li>Optional GUI can be found at <a href="https://github.com/Torrentfile-GUI">https://github.com/Torrentfile-GUI</a></li>
+</ul>
+<h2 id="documentation">Documentation</h2>
+<p>Documentation can be found by opening your webrowser in the <code>docs</code> directory
+or by visiting <a href="https://alexpdev.github.io/torrentfile">https://alexpdev.github.io/torrentfile</a>.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="via-pypi">via PyPi</h3>
+<p><code>&gt; pip install torrentfile</code></p>
+<h3 id="via-git">via Git</h3>
+<p><code>&gt; git clone https://github.com/alexpdev/torrentfile.git</code></p>
+<h3 id="download">download</h3>
+<p>Or download the latest release from the Release page on github.
+<a href="https://github.com/alexpdev/torrentfile/releases">https://github.com/alexpdev/torrentfile/releases</a></p>
+<h2 id="usage">Usage</h2>
+<pre><code>usage: torrentfile -p &lt;path&gt; [-h] [-v] [-a &lt;url&gt;] [--piece-length &lt;i&gt;]
+       [--private] [-o &lt;path&gt;] [--comment &lt;comment&gt;] [--source &lt;source&gt;]
+       [--announce-list [&lt;url&gt; ...]] [--meta-version &lt;v&gt;]
+
+Create .torrent files for Bittorrent v1 or v2.
+All flags are optional except -p[--path].
+
+arguments:
+-h, --help                     show this help message and exit
+-v, --version                  show version number and exit
+-p &lt;src&gt;, --path &lt;src&gt;         (REQUIRED) path to torrent content
+-a &lt;url&gt;, --announce &lt;url&gt;     Tracker announce url.
+--piece-length &lt;number&gt;        specify size in bytes for data transfer
+--private                      Use for private tracker only.
+-o &lt;dest&gt;, --out &lt;dest&gt;        Specify output '.torrent' file.
+                               (default: &lt;src&gt;.torrent)
+--meta-version &lt;version&gt;       OPTIONS: 1, 2 or 3
+                               1 = meta version 1
+                               2 = meta version 2
+                               3 = meta version 1 &amp; 2 hybrid
+                               (default: 1)
+--comment &lt;comment&gt;            Include a comment in .torrent file
+--source &lt;source&gt;              Source tracker.
+--announce-list [&lt;url&gt; ...]    additional tracker urls.
+</code></pre>
+<h2 id="license">License</h2>
+<p>Distributed under the GNU LGPL v3 license. See <code>LICENSE</code> for more information.</p>
+<p><a href="https://github.com/alexpdev/">https://github.com/alexpdev</a></p>
               
             </div>
           </div>
@@ -220,5 +324,5 @@ docs/
 
 <!--
 MkDocs version : 1.2.3
-Build Date UTC : 2021-10-13 07:03:22.156458+00:00
+Build Date UTC : 2021-10-13 10:13:17.182145+00:00
 -->

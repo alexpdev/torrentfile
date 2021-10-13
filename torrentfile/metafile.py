@@ -99,7 +99,7 @@ class TorrentFile(MetaFile):
         Construct TorrentFile class instance with given keyword args.
 
         Args:
-            kwargs(`dict`): dictionary of keyword args passed to superclass.
+            **kwargs (`dict`): dictionary of keyword args passed to superclass.
 
         Returns:
             Instance of TorrentFile.
@@ -112,7 +112,7 @@ class TorrentFile(MetaFile):
         Create info dictionary.
 
         Returns:
-            info(`dict`): .torrent info dictionary.
+            info (`dict`): .torrent info dictionary.
         """
         info = {"name": os.path.basename(self.path)}
 
@@ -172,7 +172,7 @@ class TorrentFile(MetaFile):
         Write assembled data to .torrent file.
 
         Args:
-          outfile: (Default value = None)
+          outfile (`str`, optional): Target destination path.
 
         Returns:
           `tuple`: Path to output file, Pre-encoded metadata.
@@ -194,8 +194,8 @@ class Checker:
     Public constructor for Checker class instance.
 
     Args:
-      metafile:(`str`): Path to ".torrent" file.
-      location(`str`): Path where the content is located in filesystem.
+      metafile (`str`): Path to ".torrent" file.
+      location (`str`): Path where the content is located in filesystem.
 
     Example:
         >> metafile = "/path/to/torrentfile/content_file_or_dir.torrent"
@@ -206,14 +206,9 @@ class Checker:
     """
 
     def __init__(self, metafile, location):
-        """
-        Check a given file or directory to see if it matches a torrentfile.
+        """Check a given file or directory to see if it matches a torrentfile.
 
-        Public constructor for Checker class instance.
-
-        Args:
-          metafile:(`str`): Path to ".torrent" file.
-          location(`str`): Path where the content is located in filesystem.
+        Constructor for the .torrent checker/validator.
         """
         self.metafile = metafile
         self.location = location
@@ -263,7 +258,7 @@ class Checker:
         Check if paths exist.
 
         Args:
-          paths(`list`): Paths to torrent files contents.
+          paths (`list`): Paths to torrent files contents.
 
         Returns:
           `str`: "Complete" after finishing.
@@ -314,22 +309,13 @@ class Feeder:
     Seemlesly generate hashes of piece length data from filelist contents.
 
     Args:
-      paths(`list`): List of files.
-      piece_length(`int`): Size of chuncks to split the data into.
-      total(`int`): Sum of all files in file list.
+      paths (`list`): List of files.
+      piece_length (`int`): Size of chuncks to split the data into.
+      total (`int`): Sum of all files in file list.
     """
 
     def __init__(self, paths, piece_length, total):
-        """
-        Construct the Feeder class.
-
-        Generate hashes of piece length data from filelist contents.
-
-        Args:
-          paths(`list`): List of files.
-          piece_length(`int`): Size of chuncks to split the data into.
-          total(`int`): Sum of all files in file list.
-        """
+        """Generate hashes of piece length data from filelist contents."""
         self.piece_length = piece_length
         self.paths = paths
         self.total = total
@@ -345,7 +331,7 @@ class Feeder:
         Iterate through feed pieces.
 
         Returns:
-          `iter(self)`: Iterator for leaves/hash pieces.
+          `iterator` : Iterator for leaves/hash pieces.
         """
         self.iterator = self.leaves()
         return self.iterator
@@ -364,8 +350,8 @@ class Feeder:
         Seemlessly move to next file for input data.
 
         Args:
-          arr(`bytearray`): Incomplete piece containing partial data
-          partial(`int`): Size of incomplete piece_length
+          arr (`bytearray`): Incomplete piece containing partial data
+          partial (`int`): Size of incomplete piece_length
 
         Returns:
           `bytes`: SHA1 digest of the complete piece.

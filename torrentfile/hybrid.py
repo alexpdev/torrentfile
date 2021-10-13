@@ -38,22 +38,21 @@ HASH_SIZE = 32
 
 
 class TorrentFileHybrid(MetaFile):
-    """Create Bittorrent v1 v2 hybrid metafiles."""
+    """Construct the Hybrid torrent meta file with provided parameters.
+
+    Args:
+        path (`str`): path to torrentfile target.
+        announce (`str`): Tracker URL.
+        announce_list (`list`): Additional tracker URLs.
+        comment (`str`): Some comment.
+        source (`str`): Used for private trackers.
+        outfile (`str`): target path to write output.
+        private (`bool`): Used for private trackers.
+        piece_length (`int`): torrentfile data piece length.
+    """
 
     def __init__(self, **kwargs):
-        """
-        Construct the Hybrid torrent meta file with provided parameters.
-
-        Args:
-            path (`str`): path to torrentfile target.
-            announce (`str`): Tracker URL.
-            announce_list (`list`): Additional tracker URLs.
-            comment (`str`): Some comment.
-            source (`str`): Used for private trackers.
-            outfile (`str`): target path to write output.
-            private (`bool`): Used for private trackers.
-            piece_length (`int`): torrentfile data piece length.
-        """
+        """Create Bittorrent v1 v2 hybrid metafiles."""
         super().__init__(**kwargs)
         self.name = os.path.basename(self.path)[-1]
         self.hashes = []
@@ -81,7 +80,7 @@ class TorrentFileHybrid(MetaFile):
         Assemble info dictionary contained in meta info.
 
         Returns:
-            info(`dict`): Info dictionary.
+            info (`dict`): Info dictionary.
         """
         if not self.piece_length:
             self.piece_length = path_piece_length(self.path)
@@ -147,11 +146,13 @@ class TorrentFileHybrid(MetaFile):
         return tree
 
     def write(self, outfile=None):
-        """
-        Create a Hybrid metainfo dictionary.
+        """Write assembled metadata to .torrent file.
 
         Args:
-            outfile(`str` or `path-like`): where to write file to.
+            outfile (`str`, optional): where to write file to.
+
+        Returns:
+            outfile, meta tuple[`str`, `dict`]: outfile, meta dictionary.
         """
         if outfile:
             pyben.dump(self.meta, outfile)
@@ -163,7 +164,7 @@ class TorrentFileHybrid(MetaFile):
         else:
             outfile = self.path + ".torrent"
             pyben.dump(self.meta, outfile)
-        return (outfile, self.meta)
+        return outfile, self.meta
 
 
 def merkle_root(blocks):
@@ -177,22 +178,16 @@ class FileHash:
     """
     Calculate hashes for Hybrid torrentfile.
 
+    Uses sha1 and sha256 hashes for each version  # nosec
+    of the Bittorrent protocols meta files respectively.
+
     Args:
-        path(`str` or pathlike): path to target file.
-        piece_length(`int`): piece length for data chunks.
+        path (`str`): path to target file.
+        piece_length (`int`): piece length for data chunks.
     """
 
     def __init__(self, path, piece_length):
-        """
-        Construct Hasher class instances for each file in torrent.
-
-        Calculates sha1 and sha256 hashes for each version   # nosec
-        of the Bittorrent protocols meta files.
-
-        Args:
-            path (`str`): Path to target file.
-            piece_length (`int`): Meta file piece length.
-        """
+        """Construct Hasher class instances for each file in torrent."""
         self.path = path
         self.piece_length = piece_length
         self.pieces = []
@@ -208,8 +203,8 @@ class FileHash:
         Generate Hash sized, 0 filled bytes for padding.
 
         Args:
-            total(`int`): length of bytes processed.
-            blocklen(`int`): number of blocks processed.
+            total (`int`): length of bytes processed.
+            blocklen (`int`): number of blocks processed.
 
         Returns:
             `int`: Padding to fill remaining portion of tree.
@@ -226,7 +221,7 @@ class FileHash:
         Calculate layer hashes for contents of file.
 
         Args:
-            data(`IOBufferReader`): file opened in read mode.
+            data (`IOBufferReader`): File opened in read mode.
         """
         while True:
             plength = self.piece_length

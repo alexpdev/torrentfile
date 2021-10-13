@@ -1,0 +1,3318 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Test Suit API - TorrentFile</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Test Suit API";
+    var mkdocs_page_input_path = "tests.md";
+    var mkdocs_page_url = "/torrentfile/tests/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> TorrentFile</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="..">Home</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../about/">About</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../LICENSE/">License</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../api/">API</a>
+  </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">TorrentFile</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Test Suit API</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/alexpdev/torrentfile/edit/master/docs/tests.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="test-suit-api">Test Suit API</h1>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="tests"></a>
+    <div class="doc doc-contents first">
+
+      <p>Torrentfile testing modules.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h2 id="tests.context" class="doc doc-heading">
+        <code>context</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Context Functions used throughout testing suite.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.context.fill_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">fill_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">exp</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Fill file with random bytes.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">fill_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">exp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fill file with random bytes.&quot;&quot;&quot;</span>
+    <span class="n">bits</span> <span class="o">=</span> <span class="n">seq</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
+    <span class="n">bitlen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
+    <span class="n">filesize</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="k">while</span> <span class="n">filesize</span> <span class="o">+</span> <span class="n">bitlen</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">exp</span><span class="p">:</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
+            <span class="n">filesize</span> <span class="o">+=</span> <span class="n">bitlen</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">exp</span> <span class="o">-</span> <span class="n">filesize</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">bits</span><span class="p">[:</span> <span class="n">diff</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.context.fill_folder" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">fill_folder</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Fill temporary folder with meaningless data.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">fill_folder</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fill temporary folder with meaningless data.&quot;&quot;&quot;</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;file1.bin&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="s2">&quot;file2.bin&quot;</span><span class="p">:</span> <span class="mi">26</span><span class="p">}</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">files</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="n">fill_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.context.rmpath" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Recursively remove path.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Recursively remove path.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.context.rmpaths" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">rmpaths</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Recursively remove all paths.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">rmpaths</span><span class="p">(</span><span class="n">paths</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Recursively remove all paths.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+        <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.context.seq" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">seq</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Generate random sequence of characters.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">seq</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Generate random sequence of characters.&quot;&quot;&quot;</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">printable</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">hexdigits</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.context.sizedfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">sizedfile</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="mi">28</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Generate a specifically sized file with meaningless data.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sizedfile</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="mi">28</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate a specifically sized file with meaningless data.&quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TD</span><span class="p">,</span> <span class="s2">&quot;tempfile.bin&quot;</span><span class="p">)</span>
+    <span class="n">fill_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.context.tempdir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tempdir</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Generate temporary directory filled with meaningless data.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">tempdir</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Generate temporary directory filled with meaningless data.&quot;&quot;&quot;</span>
+    <span class="n">tdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TD</span><span class="p">,</span> <span class="s2">&quot;tempdir&quot;</span><span class="p">)</span>
+    <span class="n">tdir_1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tdir</span><span class="p">,</span> <span class="s2">&quot;directory1&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="p">[</span><span class="n">tdir</span><span class="p">,</span> <span class="n">tdir_1</span><span class="p">]:</span>
+        <span class="n">rmpath</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+        <span class="n">fill_folder</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tdir</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.context.tempfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tempfile</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Generate temporary file filled with meaningless data.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">tempfile</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Generate temporary file filled with meaningless data.&quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TD</span><span class="p">,</span> <span class="s2">&quot;tempfile.bin&quot;</span><span class="p">)</span>
+    <span class="n">fill_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h2 id="tests.test_cli" class="doc doc-heading">
+        <code>test_cli</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script functionality.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.tdir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tdir</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Generate temp testing directory.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tdir</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Generate temp testing directory.&quot;&quot;&quot;</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">tempdir</span><span class="p">()</span>
+    <span class="k">yield</span> <span class="n">directory</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.test_cli_args_dir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_args_dir</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script with specific arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_args_dir</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test CLI script with specific arguments.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--path&quot;</span><span class="p">,</span> <span class="n">tdir</span><span class="p">]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">args</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.test_cli_args_dir_v2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_args_dir_v2</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script with specific arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_args_dir_v2</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test CLI script with specific arguments.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="n">tdir</span><span class="p">,</span> <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">args</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.test_cli_args_dir_v3" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_args_dir_v3</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script with specific arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_args_dir_v3</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test CLI script with specific arguments.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="n">tdir</span><span class="p">,</span> <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">args</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.test_cli_args_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_args_file</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script with specific arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_args_file</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test CLI script with specific arguments.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--path&quot;</span><span class="p">,</span> <span class="n">tfile</span><span class="p">]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">args</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.test_cli_args_file_v2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_args_file_v2</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script with specific arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_args_file_v2</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test CLI script with specific arguments.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="n">tfile</span><span class="p">,</span> <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">args</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.test_cli_args_file_v3" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_args_file_v3</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script with specific arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_args_file_v3</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test CLI script with specific arguments.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="n">tfile</span><span class="p">,</span> <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">args</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.test_cli_no_args" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_no_args</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script with specific arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_no_args</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test CLI script with specific arguments.&quot;&quot;&quot;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">main</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="kc">True</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.test_cli_no_args_v2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_no_args_v2</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script with specific arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_no_args_v2</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test CLI script with specific arguments.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">]</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">args</span>
+        <span class="k">assert</span> <span class="n">main</span><span class="p">()</span>  <span class="c1"># nosec</span>
+    <span class="k">except</span> <span class="n">MissingPathError</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="kc">True</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.test_cli_with_all_args_dir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_with_all_args_dir</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script with specific arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_with_all_args_dir</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test CLI script with specific arguments.&quot;&quot;&quot;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-p&quot;</span><span class="p">,</span>
+        <span class="n">tdir</span><span class="p">,</span>
+        <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;some comment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--piece-length&quot;</span><span class="p">,</span>
+        <span class="nb">str</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">14</span><span class="p">),</span>
+        <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TRACKER&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.test_cli_with_all_args_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_with_all_args_file</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script with specific arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_with_all_args_file</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test CLI script with specific arguments.&quot;&quot;&quot;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-p&quot;</span><span class="p">,</span>
+        <span class="n">tfile</span><span class="p">,</span>
+        <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;some comment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--piece-length&quot;</span><span class="p">,</span>
+        <span class="nb">str</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">14</span><span class="p">),</span>
+        <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TRACKER&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.tfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tfile</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Generate temp testing file.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tfile</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Generate temp testing file.&quot;&quot;&quot;</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">()</span>
+    <span class="k">yield</span> <span class="n">temp</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h2 id="tests.test_context" class="doc doc-heading">
+        <code>test_context</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Testing operation and coverage for context module in tests directory.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_context.test_fill_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_fill_file</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test fill_file function.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_fill_file</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test fill_file function.&quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TD</span><span class="p">,</span> <span class="s2">&quot;filledfile.bin&quot;</span><span class="p">)</span>
+    <span class="n">fill_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">16</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_context.test_fill_folder" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_fill_folder</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test fill_folder function.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_fill_folder</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test fill_folder function.&quot;&quot;&quot;</span>
+    <span class="n">folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TD</span><span class="p">,</span> <span class="s2">&quot;filledfolder&quot;</span><span class="p">)</span>
+    <span class="n">fill_folder</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_context.test_rmpath_rmpaths" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_rmpath_rmpaths</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test rmpath function and rmpaths function.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">last</span>
+<span class="k">def</span> <span class="nf">test_rmpath_rmpaths</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test rmpath function and rmpaths function.&quot;&quot;&quot;</span>
+    <span class="n">dirpath</span> <span class="o">=</span> <span class="n">tempdir</span><span class="p">()</span>
+    <span class="n">filepath</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">()</span>
+    <span class="n">sizedpath</span> <span class="o">=</span> <span class="n">sizedfile</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">fillfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TD</span><span class="p">,</span> <span class="s2">&quot;filledfile.bin&quot;</span><span class="p">)</span>
+    <span class="n">fillfolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TD</span><span class="p">,</span> <span class="s2">&quot;filledfolder&quot;</span><span class="p">)</span>
+    <span class="n">fill_file</span><span class="p">(</span><span class="n">fillfile</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="n">fill_folder</span><span class="p">(</span><span class="n">fillfolder</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">fillfile</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fillfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">pathlist</span> <span class="o">=</span> <span class="p">[</span><span class="n">sizedpath</span><span class="p">,</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">fillfolder</span><span class="p">]</span>
+    <span class="n">rmpaths</span><span class="p">(</span><span class="n">pathlist</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">pathlist</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_context.test_seq" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_seq</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test seq function for random string output.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_seq</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test seq function for random string output.&quot;&quot;&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">seq</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">output</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">printable</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_context.test_sizedfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_sizedfile</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test tempdir function.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_sizedfile</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test tempdir function.&quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">sizedfile</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">16</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_context.test_tempdir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_tempdir</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test tempdir function.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_tempdir</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test tempdir function.&quot;&quot;&quot;</span>
+    <span class="n">dirpath</span> <span class="o">=</span> <span class="n">tempdir</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dirpath</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">dirpath</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_context.test_tempfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_tempfile</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test tempfile function.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_tempfile</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test tempfile function.&quot;&quot;&quot;</span>
+    <span class="n">filepath</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h2 id="tests.test_main" class="doc doc-heading">
+        <code>test_main</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Test main module functionality.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_class_annlist_v2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_class_annlist_v2</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test TorrentFile Class with announce list arguement.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_class_annlist_v2</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test TorrentFile Class with announce list arguement.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;https://tracker1.to/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;announce_list&quot;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="s2">&quot;https://tracker2/announce&quot;</span>
+            <span class="s2">&quot; https://tracker3/announce&quot;</span>
+            <span class="s2">&quot; https://tracker4/announce&quot;</span>
+        <span class="p">),</span>
+    <span class="p">}</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileV2</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_class_list_annlist" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_class_list_annlist</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test TorrentFile Class with tuple announce list arguement.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_class_list_annlist</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test TorrentFile Class with tuple announce list arguement.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;https://tracker1.to/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;announce_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_class_list_annlist_v2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_class_list_annlist_v2</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test TorrentFile Class with tuple announce list arguement.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_class_list_annlist_v2</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test TorrentFile Class with tuple announce list arguement.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;https://tracker1.to/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;announce_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileV2</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_class_tuple_annlist" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_class_tuple_annlist</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test TorrentFile Class with tuple announce list arguement.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_class_tuple_annlist</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test TorrentFile Class with tuple announce list arguement.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;https://tracker1.to/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;announce_list&quot;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">}</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_class_tuple_annlist_v2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_class_tuple_annlist_v2</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test TorrentFile Class with tuple announce list arguement.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_class_tuple_annlist_v2</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test TorrentFile Class with tuple announce list arguement.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;https://tracker1.to/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;announce_list&quot;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">}</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileV2</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_class_with_annlist" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_class_with_annlist</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test TorrentFile Class with announce list arguement.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_class_with_annlist</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test TorrentFile Class with announce list arguement.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;https://tracker1.to/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;announce_list&quot;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="s2">&quot;https://tracker2/announce&quot;</span>
+            <span class="s2">&quot; https://tracker3/announce&quot;</span>
+            <span class="s2">&quot; https://tracker4/announce&quot;</span>
+        <span class="p">),</span>
+    <span class="p">}</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_main" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_main</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test <strong>maine</strong>.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test __maine__.&quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">entry</span><span class="o">.</span><span class="vm">__doc__</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_main_annlist_single" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_main_annlist_single</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test main function with announce list flag.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_main_annlist_single</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
+    <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s2">&quot;--path&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;--announce-list&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_main_annlist_single_v1" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_main_annlist_single_v1</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test main function with announce list flag.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_main_annlist_single_v1</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
+    <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s2">&quot;--path&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;--announce-list&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_main_annlist_single_v2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_main_annlist_single_v2</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test main function with announce list flag.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_main_annlist_single_v2</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
+    <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s2">&quot;--path&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;--announce-list&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_main_annlist_single_v3" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_main_annlist_single_v3</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test main function with announce list flag.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_main_annlist_single_v3</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
+    <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s2">&quot;--path&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;--announce-list&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;3&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_main_annlist_v2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_main_annlist_v2</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test main function with announce list flag.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_main_annlist_v2</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
+    <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s2">&quot;--path&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;--announce-list&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_main_annlist_v3" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_main_annlist_v3</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test main function with announce list flag.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_main_annlist_v3</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
+    <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s2">&quot;--path&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;--announce-list&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;3&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_main_announce_list" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_main_announce_list</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test main function with announce list flag.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_main_announce_list</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
+    <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s2">&quot;--path&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;--announce-list&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://tracker2/announce&quot;</span>
+    <span class="k">assert</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.test_main_func" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_main_func</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test <strong>maine</strong>.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_main_func</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test __maine__.&quot;&quot;&quot;</span>
+    <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">opath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;torrent.torrent&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="n">opath</span><span class="p">]</span>
+    <span class="n">entry</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">opath</span><span class="p">)</span>   <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">opath</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_main.tfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tfile</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Create fixture for tests.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_main.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tfile</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Create fixture for tests.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker1.to/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TFile&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">t_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">()</span>
+    <span class="k">yield</span> <span class="n">args</span><span class="p">,</span> <span class="n">t_file</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">t_file</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h2 id="tests.test_meta" class="doc doc-heading">
+        <code>test_meta</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Test metafile generators functionality.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.maketorrent" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">maketorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">ver2</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Torrent making factory.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">maketorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">ver2</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Torrent making factory.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">ver2</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileV2</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">torrent</span><span class="o">.</span><span class="n">assemble</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.metav1d" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">metav1d</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return generated metadata v1 for directory.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">metav1d</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return generated metadata v1 for directory.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tdir</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;http://announce.com/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;tracker&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;content details and purpose&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">maketorrent</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span>
+    <span class="n">rmpaths</span><span class="p">([</span><span class="n">tdir</span><span class="p">,</span> <span class="n">outfile</span><span class="p">])</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.metav1f" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">metav1f</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return generated metadata v1 for file.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">metav1f</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return generated metadata v1 for file.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tfile</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;http://announce.com/announce&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">maketorrent</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span>
+    <span class="n">rmpaths</span><span class="p">([</span><span class="n">tfile</span><span class="p">,</span> <span class="n">outfile</span><span class="p">])</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.metav2d" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">metav2d</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return generated metadata v2 for directory.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">metav2d</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return generated metadata v2 for directory.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tdir</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;http://announce.com/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;tracker&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;content details and purpose&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">maketorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">ver2</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span>
+    <span class="n">rmpaths</span><span class="p">([</span><span class="n">tdir</span><span class="p">,</span> <span class="n">outfile</span><span class="p">])</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.metav2f" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">metav2f</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return generated metadata v2 for file.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">metav2f</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return generated metadata v2 for file.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tfile</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;http://announce.com/announce&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">maketorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">ver2</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span>
+    <span class="n">rmpaths</span><span class="p">([</span><span class="n">tfile</span><span class="p">,</span> <span class="n">outfile</span><span class="p">])</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.tdir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tdir</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return temp directory.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tdir</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return temp directory.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">tempdir</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.tdirmeta" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tdirmeta</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test metadata.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tdirmeta</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test metadata.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tdir</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;http://announce.com/announce&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">maketorrent</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">tdir</span>
+    <span class="n">rmpaths</span><span class="p">([</span><span class="n">tdir</span><span class="p">,</span> <span class="n">outfile</span><span class="p">])</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.test_metafile_checker_v1_dir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_metafile_checker_v1_dir</span><span class="p">(</span><span class="n">tdirmeta</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test metadata.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_metafile_checker_v1_dir</span><span class="p">(</span><span class="n">tdirmeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test metadata.&quot;&quot;&quot;</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">tdir</span> <span class="o">=</span> <span class="n">tdirmeta</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">tdir</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;100%&quot;</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.test_metafile_checker_v1_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_metafile_checker_v1_file</span><span class="p">(</span><span class="n">tfilemeta</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test metadata.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_metafile_checker_v1_file</span><span class="p">(</span><span class="n">tfilemeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test metadata.&quot;&quot;&quot;</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">tfile</span> <span class="o">=</span> <span class="n">tfilemeta</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">tfile</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;100%&quot;</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.test_v1_info_keys_dir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_v1_info_keys_dir</span><span class="p">(</span><span class="n">metav1d</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test metadata.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_v1_info_keys_dir</span><span class="p">(</span><span class="n">metav1d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test metadata.&quot;&quot;&quot;</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">metav1d</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="s2">&quot;piece length&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pieces&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+    <span class="p">]:</span>
+        <span class="k">assert</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.test_v1_info_keys_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_v1_info_keys_file</span><span class="p">(</span><span class="n">metav1f</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test metadata.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_v1_info_keys_file</span><span class="p">(</span><span class="n">metav1f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test metadata.&quot;&quot;&quot;</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">metav1f</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="s2">&quot;length&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;piece length&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pieces&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">,</span>
+    <span class="p">]:</span>
+        <span class="k">assert</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.test_v1_meta_keys" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_v1_meta_keys</span><span class="p">(</span><span class="n">metav1f</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test metadata.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_v1_meta_keys</span><span class="p">(</span><span class="n">metav1f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test metadata.&quot;&quot;&quot;</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">metav1f</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="s2">&quot;creation date&quot;</span><span class="p">]:</span>
+        <span class="k">assert</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">meta</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.test_v2_info_keys_dir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_v2_info_keys_dir</span><span class="p">(</span><span class="n">metav2d</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test metadata.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_v2_info_keys_dir</span><span class="p">(</span><span class="n">metav2d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test metadata.&quot;&quot;&quot;</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">metav2d</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="s2">&quot;piece length&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;meta version&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;file tree&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+    <span class="p">]:</span>
+        <span class="k">assert</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.test_v2_info_keys_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_v2_info_keys_file</span><span class="p">(</span><span class="n">metav2f</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test metadata.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_v2_info_keys_file</span><span class="p">(</span><span class="n">metav2f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test metadata.&quot;&quot;&quot;</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">metav2f</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="s2">&quot;length&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;piece length&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;meta version&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;file tree&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">,</span>
+    <span class="p">]:</span>
+        <span class="k">assert</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.test_v2_meta_keys" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_v2_meta_keys</span><span class="p">(</span><span class="n">metav2f</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test metadata.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_v2_meta_keys</span><span class="p">(</span><span class="n">metav2f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test metadata.&quot;&quot;&quot;</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">metav2f</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="s2">&quot;piece layers&quot;</span><span class="p">,</span> <span class="s2">&quot;creation date&quot;</span><span class="p">]:</span>
+        <span class="k">assert</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">meta</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.tfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tfile</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return temp file.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tfile</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return temp file.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">tempfile</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_meta.tfilemeta" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tfilemeta</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test metadata.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_meta.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tfilemeta</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test metadata.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tfile</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;http://announce.com/announce&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">maketorrent</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">tfile</span>
+    <span class="n">rmpaths</span><span class="p">([</span><span class="n">tfile</span><span class="p">,</span> <span class="n">outfile</span><span class="p">])</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h2 id="tests.test_torrentfile" class="doc doc-heading">
+        <code>test_torrentfile</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Testing functions for torrentfile module.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_torrentfile.tdir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tdir</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return temporary directory.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tdir</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return temporary directory.&quot;&quot;&quot;</span>
+    <span class="n">folder</span> <span class="o">=</span> <span class="n">tempdir</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">folder</span><span class="p">,</span> <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;https://tracker.com/announce&quot;</span><span class="p">}</span>
+    <span class="k">yield</span> <span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_torrentfile.test_exception_path_error" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_exception_path_error</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test MissingPathError exception.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_exception_path_error</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test MissingPathError exception.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MissingPathError</span><span class="p">(</span><span class="s2">&quot;this is a message&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">MissingPathError</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="kc">True</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_torrentfile.test_torrentfile_dir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_torrentfile_dir</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test temporary directory.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_torrentfile_dir</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test temporary directory.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">tdir</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_torrentfile.test_torrentfile_dir_comment" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_torrentfile_dir_comment</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test temporary dir with arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_torrentfile_dir_comment</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test temporary dir with arguments.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">tdir</span>
+    <span class="n">args</span><span class="p">[</span><span class="s2">&quot;private&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">args</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;This is a comment&quot;</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span>
+    <span class="k">assert</span> <span class="s2">&quot;private&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="s2">&quot;comment&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_torrentfile.test_torrentfile_dir_private" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_torrentfile_dir_private</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test temporary dir with arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_torrentfile_dir_private</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test temporary dir with arguments.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">tdir</span>
+    <span class="n">args</span><span class="p">[</span><span class="s2">&quot;private&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span>
+    <span class="k">assert</span> <span class="s2">&quot;private&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_torrentfile.test_torrentfile_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_torrentfile_file</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test temporary file.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_torrentfile_file</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test temporary file.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_torrentfile.test_torrentfile_file_comment" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_torrentfile_file_comment</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test temporary file with arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_torrentfile_file_comment</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test temporary file with arguments.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">args</span><span class="p">[</span><span class="s2">&quot;private&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">args</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;This is a comment&quot;</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span>
+    <span class="k">assert</span> <span class="s2">&quot;private&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="s2">&quot;comment&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_torrentfile.test_torrentfile_file_private" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_torrentfile_file_private</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test temporary file with arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_torrentfile_file_private</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test temporary file with arguments.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">tfile</span>
+    <span class="n">args</span><span class="p">[</span><span class="s2">&quot;private&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s2">&quot;private&quot;</span> <span class="ow">in</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_torrentfile.tfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tfile</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return temporary file.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tfile</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return temporary file.&quot;&quot;&quot;</span>
+    <span class="n">fd</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">fd</span><span class="p">,</span> <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;https://tracker.com/announce&quot;</span><span class="p">}</span>
+    <span class="k">yield</span> <span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h2 id="tests.test_utils" class="doc doc-heading">
+        <code>test_utils</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Test functions for utils module.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.metadata" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">metadata</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return preconfigured metadata.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">metadata</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return preconfigured metadata.&quot;&quot;&quot;</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;https://tracker.com:2017/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;created by&quot;</span><span class="p">:</span> <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;piece length&quot;</span><span class="p">:</span> <span class="n">MAX_BLOCK</span><span class="p">,</span>
+        <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;torrentname.bin&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;files&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">28</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="s2">&quot;to&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">]},</span>
+                <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">28</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="s2">&quot;more&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">]},</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;pieces&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;some bytes of data&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;tracker&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">meta</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.tdir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tdir</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return temporary directory.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tdir</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return temporary directory.&quot;&quot;&quot;</span>
+    <span class="n">drct</span> <span class="o">=</span> <span class="n">tempdir</span><span class="p">()</span>
+    <span class="k">yield</span> <span class="n">drct</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">drct</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_get_piece_len" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_get_piece_len</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test get_piece_length function does not exceed max.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_piece_len</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test get_piece_length function does not exceed max.&quot;&quot;&quot;</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">get_piece_length</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">&lt;=</span> <span class="n">MAX_BLOCK</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_get_piece_len_large" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_get_piece_len_large</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test get_piece_length function does not exceed maximum.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_piece_len_large</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test get_piece_length function does not exceed maximum.&quot;&quot;&quot;</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">31</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">get_piece_length</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">&lt;=</span> <span class="n">MAX_BLOCK</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_get_piece_len_power_2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_get_piece_len_power_2</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test get_piece_length function is a power of 2.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_piece_len_power_2</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test get_piece_length function is a power of 2.&quot;&quot;&quot;</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">get_piece_length</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">%</span> <span class="n">MIN_BLOCK</span> <span class="o">==</span> <span class="mi">0</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_get_piece_length_min" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_get_piece_length_min</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test get_piece_length function does not fall under minimum.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_piece_length_min</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test get_piece_length function does not fall under minimum.&quot;&quot;&quot;</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">get_piece_length</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">&gt;=</span> <span class="n">MIN_BLOCK</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_path_piece_length_max" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_path_piece_length_max</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test path_piece_length for dir return piece_length &lt; Maximum.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_piece_length_max</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test path_piece_length for dir return piece_length &lt; Maximum.&quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">path_piece_length</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">&lt;=</span> <span class="n">MAX_BLOCK</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_path_piece_length_min" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_path_piece_length_min</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test path_piece_length for dir return piece_length is power of 2.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_piece_length_min</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test path_piece_length for dir return piece_length is power of 2.&quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">path_piece_length</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">&gt;=</span> <span class="n">MIN_BLOCK</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_path_piece_length_pow2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_path_piece_length_pow2</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test path_piece_length for file return piece_length is power of 2.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_piece_length_pow2</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test path_piece_length for file return piece_length is power of 2.&quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">path_piece_length</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">%</span> <span class="n">MIN_BLOCK</span> <span class="o">==</span> <span class="mi">0</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_path_size_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_path_size_file</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test path_size function for tempfile.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_size_file</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test path_size function for tempfile.&quot;&quot;&quot;</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">path_size</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">size</span> <span class="o">==</span> <span class="n">val</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_path_size_file_gt0" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_path_size_file_gt0</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test path_size function for tempfile is greater than zero.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_size_file_gt0</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test path_size function for tempfile is greater than zero.&quot;&quot;&quot;</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">path_size</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="mi">0</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_path_stat_base2_plen" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_path_stat_base2_plen</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test path_stat function return piece length is power of 2.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_stat_base2_plen</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test path_stat function return piece length is power of 2.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">piece_length</span> <span class="o">=</span> <span class="n">path_stat</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">piece_length</span> <span class="o">%</span> <span class="n">MIN_BLOCK</span> <span class="o">==</span> <span class="mi">0</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_path_stat_eq_filelist" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_path_stat_eq_filelist</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test path_stat function return filelist.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_stat_eq_filelist</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test path_stat function return filelist.&quot;&quot;&quot;</span>
+    <span class="n">filelist</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">path_stat</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filelist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_path_stat_eq_size" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_path_stat_eq_size</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test path_stat function return identically correct size.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_stat_eq_size</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test path_stat function return identically correct size.&quot;&quot;&quot;</span>
+    <span class="n">filelist</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">path_stat</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">size</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">filelist</span><span class="p">])</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_path_stat_gt0_filelist" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_path_stat_gt0_filelist</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test path_stat function for tempdir sorted &gt; 0.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_stat_gt0_filelist</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test path_stat function for tempdir sorted &gt; 0.&quot;&quot;&quot;</span>
+    <span class="n">filelist</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">path_stat</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filelist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_path_stat_gt0_plen" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_path_stat_gt0_plen</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test path_stat function return piece length &gt; 0.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_stat_gt0_plen</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test path_stat function return piece length &gt; 0.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">piece_length</span> <span class="o">=</span> <span class="n">path_stat</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">piece_length</span> <span class="o">&gt;=</span> <span class="n">MIN_BLOCK</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_path_stat_gt0_size" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_path_stat_gt0_size</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test path_stat function return size &gt; 0.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_stat_gt0_size</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test path_stat function return size &gt; 0.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">path_stat</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.test_path_stat_gtsize_plen" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_path_stat_gtsize_plen</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test path_stat function return size &gt; piece length.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_stat_gtsize_plen</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test path_stat function return size &gt; piece length.&quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">piece_length</span> <span class="o">=</span> <span class="n">path_stat</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="n">piece_length</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_utils.tfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tfile</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return temporary file.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tfile</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return temporary file.&quot;&quot;&quot;</span>
+    <span class="n">testfile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">()</span>
+    <span class="k">yield</span> <span class="n">testfile</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">testfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>alexpdev 2021</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/alexpdev/torrentfile/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

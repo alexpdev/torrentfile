@@ -27,6 +27,7 @@ Modules:
     utils: Utilities used throughout package.
 """
 
+from . import hybrid, metafile, metafile2, utils
 from .cli import main
 from .hybrid import TorrentFileHybrid
 from .metafile import TorrentFile

@@ -12,8 +12,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-"""
-Utility functions and classes used throughout package.
+"""Utility functions and classes used throughout package.
 
 Functions:
   get_piece_length: calculate ideal piece length for torrent file.
@@ -28,20 +27,19 @@ import os
 
 
 class MissingPathError(Exception):
-    """Path parameter is required.
+    """Path parameter is required to specify target content.
 
     Creating a .torrent file with no contents seems rather silly.
 
     Args:
-      message(`any`, optional): Value cannot be interpreted by decoder.
+      message (`any`, optional): Value cannot be interpreted by decoder.
     """
 
     def __init__(self, message=None):
         """
-        Construct Exception.
+        Raise when creating a meta file without specifying target content.
 
-        Args:
-          message(`str`, optional): Value cannot be interpreted by decoder.
+        The `message` argument is a message to pass to Exception base class.
         """
         self.message = f"Path arguement is missing and required {str(message)}"
         super().__init__(message)
@@ -52,14 +50,14 @@ class MetaFile:
     Base Class for all TorrentFile classes.
 
     Args:
-        path: `str`
-        announce: `str`
-        announce_list: `list`
-        comment: `str`
-        piece_length: `int`
-        private: `bool`
-        outfile: `str`
-        source: `str`
+        path (`str`): target path to torrent content.
+        announce (`str`): Tracker URL.
+        announce_list (`list`): Additional tracker URL's.
+        comment (`str`): A comment.
+        piece_length (`int`): Size of torrent pieces.
+        private (`bool`): For private trackers?
+        outfile (`str`): target path to write .torrent file.
+        source (`str`): Private tracker source.
     """
 
     def __init__(self, path=None, announce="", announce_list=None,
@@ -68,16 +66,8 @@ class MetaFile:
         """
         Construct MetaFile superclass and assign local attributes.
 
-        Args:
-            path(`str`): target path to torrent content.
-            announce(`str`): Tracker URL.
-            announce_list(`list`): Additional tracker URL's.
-            comment(`str`): A comment.
-            piece_length(`int`): Size of torrent pieces.
-            private(`bool`): For private trackers?
-            outfile(`str`): target path to write .torrent file.
-            source(`str`): Private tracker source.
-
+        Keyword parameters include path, announce, announce_list private,
+        source, piece_length, comment, outfile.
         """
         if not path:
             raise MissingPathError
@@ -99,7 +89,7 @@ class MetaFile:
         Overload in subclasses.
 
         Raises:
-            NotImplementedError(`Exception`)
+            NotImplementedError (`Exception`)
         """
         raise NotImplementedError
 
@@ -108,7 +98,7 @@ class MetaFile:
         Overload when subclassed.
 
         Raises:
-            NotImplementedError(`Exception`)
+            NotImplementedError (`Exception`)
         """
         raise NotImplementedError
 
@@ -118,10 +108,10 @@ def get_piece_length(size):
     Calculate the ideal piece length for bittorrent data.
 
     Args:
-      size(`int`): Total bits of all files incluided in .torrent file.
+      size (`int`): Total bits of all files incluided in .torrent file.
 
     Returns:
-      `int`: Ideal peace length calculated from the size arguement.
+      (`int`): Ideal peace length calculated from the size arguement.
     """
     exp = 14
     while size / (2 ** exp) > 200 and exp < 23:
@@ -134,10 +124,10 @@ def sortfiles(path):
     Sort entries in path.
 
     Args:
-        `path`(`str`): Target directory for sorting contents.
+        path (`str`): Target directory for sorting contents.
 
     Returns:
-        `iterator`: yield sorted content.
+        (`iterator`): yield sorted content.
     """
     items = sorted(os.listdir(path), key=str.lower)
     for item in items:
@@ -150,11 +140,11 @@ def filelist_total(path):
     Search directory tree for files.
 
     Args:
-      path(`str`): Path to file or directory base
-      sort(`bool`): Return list sorted. Defaults to False.
+      path (`str`): Path to file or directory base
+      sort (`bool`): Return list sorted. Defaults to False.
 
     Returns:
-      `list`: All file paths within directory tree.
+      (`list`): All file paths within directory tree.
     """
     if os.path.isfile(path):
         file_size = os.path.getsize(path)
@@ -180,10 +170,10 @@ def path_size(path):
     Return the total size of all files in path recursively.
 
     Args:
-        path(`str`): path to target file or directory.
+        path (`str`): path to target file or directory.
 
     Returns:
-        size(`int`): total size of files.
+        size (`int`): total size of files.
     """
     total_size, _ = filelist_total(path)
     return total_size
@@ -194,10 +184,10 @@ def get_file_list(path):
     Return a sorted list of file paths contained in directory.
 
     Args:
-        path(`str`): target file or directory.
+        path (`str`): target file or directory.
 
     Returns:
-        filelist(`list`): sorted list of file paths.
+        filelist (`list`): sorted list of file paths.
     """
     _, filelist = filelist_total(path)
     return filelist
@@ -208,12 +198,12 @@ def path_stat(path):
     Calculate directory statistics.
 
     Args:
-        path(`str`): The path to start calculating from.
+        path (`str`): The path to start calculating from.
 
     Returns:
-        filelist(`list`):  List of all files contained in Directory
-        size(`int`): Total sum of bytes from all contents of dir
-        piece_length(`int`): The size of pieces of the torrent contents.
+        filelist (`list`):  List of all files contained in Directory
+        size (`int`): Total sum of bytes from all contents of dir
+        piece_length (`int`): The size of pieces of the torrent contents.
     """
     total_size, filelist = filelist_total(path)
     piece_length = get_piece_length(total_size)
@@ -225,10 +215,10 @@ def path_piece_length(path):
     Calculate piece length for input path and contents.
 
     Args:
-      path(`str`): The absolute path to directory and contents.
+      path (`str`): The absolute path to directory and contents.
 
     Returns:
-      piece_length(`int`): The size of pieces of torrent content.
+      piece_length (`int`): The size of pieces of torrent content.
     """
     psize = path_size(path)
     return get_piece_length(psize)

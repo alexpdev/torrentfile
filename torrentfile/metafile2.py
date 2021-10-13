@@ -158,26 +158,24 @@ HASH_SIZE = 32
 
 
 class TorrentFileV2(MetaFile):
-    """
-    Class for creating Bittorrent meta v2 files.
+    """Class for creating Bittorrent meta v2 files.
 
     Args:
-        path(`str`): Path to torrent file or directory.
-        piece_length(`int`): Size of each piece of torrent data.
-        announce(`str`): Tracker URL.
-        announce_list('list`): List of additional trackers.
-        private(`int`): 1 if private torrent else 0.
-        source(`str`): Source tracker.
-        comment(`str`): Comment string.
-        outfile(`str`): Path to write metfile to.
+        path (`str`): Path to torrent file or directory.
+        piece_length (`int`): Size of each piece of torrent data.
+        announce (`str`): Tracker URL.
+        announce_list ('list`): List of additional trackers.
+        private (`int`): 1 if private torrent else 0.
+        source (`str`): Source tracker.
+        comment (`str`): Comment string.
+        outfile (`str`): Path to write metfile to.
     """
 
     def __init__(self, **kwargs):
-        """
-        Construct `TorrentFileV2` Class instance from given parameters.
+        """Construct `TorrentFileV2` Class instance from given parameters.
 
         Args:
-            kwargs(`dict`): keywword arguments to pass to superclass.
+            kwargs (`dict`): keywword arguments to pass to superclass.
 
         Returns:
           torrent: TorrentFileV2 instance.
@@ -192,7 +190,7 @@ class TorrentFileV2(MetaFile):
         Create info dictionary for .torrent meta v2 file.
 
         Returns:
-          info(`dict`): Info dictionary containing torrent metadata.
+          info (`dict`): Info dictionary containing torrent metadata.
         """
         info = {"name": os.path.basename(self.path)}
         # include comment in info dictionary.
@@ -228,7 +226,7 @@ class TorrentFileV2(MetaFile):
         Assemble then return the meta dictionary for encoding.
 
         Returns:
-          meta(`dict`): Metainformation about the torrent.
+          meta (`dict`): Metainformation about the torrent.
         """
         # if no tracker url was provided, place dummy string in its place
         # which can be later replaced by some Bittorrent clients
@@ -268,7 +266,7 @@ class TorrentFileV2(MetaFile):
         Write assembled data to .torrent file.
 
         Args:
-          outfile(`str`): Path to save location.
+          outfile (`str`): Path to save location.
 
         Returns:
           `bytes`: Data writtend to .torrent file.
@@ -309,11 +307,11 @@ class FileHash:
         Calculate and store hash information for specific file.
 
         Args:
-          path(`str`): Absolute path to file.
-          piece_length(`int`): Size of each metfile piece.
+          path (`str`): Absolute path to file.
+          piece_length (`int`): Size of each metfile piece.
 
         Returns:
-          `FileHash()`: instance of FileHash class.
+          `FileHash`: instance of FileHash class.
         """
         self.path = path
         self.root = None
@@ -329,7 +327,7 @@ class FileHash:
         Calculate hashes over 16KiB chuncks of file content.
 
         Args:
-            fd(`IOBufferReader`): opened file in read mode.
+            fd (`IOBufferReader`): opened file in read mode.
         """
         while True:
             total = 0
@@ -358,8 +356,8 @@ class FileHash:
         Generate Hash sized, 0 filled bytes for padding.
 
         Args:
-            total(`int`): length of bytes processed.
-            blocklen(`int`): number of blocks processed.
+            total (`int`): length of bytes processed.
+            blocklen (`int`): number of blocks processed.
 
         Returns:
             `int`: Padding to fill remaining portion of tree.

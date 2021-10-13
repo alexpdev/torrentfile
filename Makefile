@@ -32,6 +32,7 @@ environment: ## environment
 	.\env\Scripts\activate.bat
 
 clean-build: ## remove build artifacts
+	@echo Cleaning
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
@@ -45,6 +46,7 @@ clean-build: ## remove build artifacts
 	rm -f *.spec
 
 lint: environment ## Check for styling errors
+	@echo Linting
 	autopep8 --recursive torrentfile tests
 	isort torrentfile tests
 	pydocstyle torrentfile tests
@@ -55,21 +57,25 @@ lint: environment ## Check for styling errors
 
 
 test: environment ## run tests quickly with the default Python
+	@echo Testing
 	pytest tests --cov --pylint
 
 coverage: environment ## check code coverage with the default Python
+	@echo Generating Coverage Report
 	coverage run -m pytest tests
 	coverage xml -o coverage.xml
 
 push: clean lint test coverage docs ## push to remote repo
+	@echo pushing to remote
 	git add .
-	git commit -m "coverage report bug and linting adjustments pass all tests"
-	git push
+	git commit -m "$m"
+	git push -u dev master
 	bash codacy.sh report -r coverage.xml
 
 docs: environment ## Regenerate docs from changes
 	rm -rf docs/*
-	mkdocs build
+	mkdocs -q build
+	touch docs/.nojekyll
 
 install: environment clean test ## Install Locally
 	python setup.py install

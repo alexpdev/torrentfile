@@ -36,6 +36,9 @@ from .metafile2 import TorrentFileV2
 def main_script(args=None):
     """Initialize Command Line Interface for torrentfile.
 
+    Args:
+        args (`list`, default=None): Commandline arguments.
+
     usage: torrentfile --path /path/to/content [-o /path/to/output.torrent]
            [--piece-length n] [--private] [-t https://tracker.url/announce]
            [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]
@@ -44,17 +47,20 @@ def main_script(args=None):
     if not args:
         args = sys.argv[1:]
 
-    usage = """torrentfile -v -h --path </path/to/content>
-               [-o <output/path.torrent>] [--piece-length <n>] [--private]
-               [-a https://tracker.url/announce] [--meta-version <n>]
-               [--source <x>] [--announce-list <url2> <...>]"""
+    usage = """torrentfile -v or torrentfile --version
+               torrentfile -h or torrentfile --help
+               torrentfile --path <src> [-o <dest>] [-a <url>] [--private]
+               [--piece-length <n>]  [--meta-version <n>] [--source <x>]
+               [--announce-list <url2> <...>] [--comment <comment>]
+            """
 
-    d = "Create .torrent files for Bittorrent v1 or v2."
+    desc = "Create Bittorrent meta files for Bittorrent v1 and v2."
     parser = ArgumentParser(
-        "torrentfile", description=d, prefix_chars="-", usage=usage
+        "torrentfile", description=desc, prefix_chars="-", usage=usage
     )
 
     parser.add_argument(
+        "-v",
         "--version",
         action="version",
         version=f"torrentfile v{torrentfile.__version__}",
@@ -66,7 +72,7 @@ def main_script(args=None):
         "--path",
         action="store",
         dest="path",
-        metavar="<path>",
+        metavar="<src>",
         help="(required) path to torrent content",
     )
 
@@ -100,7 +106,7 @@ def main_script(args=None):
         action="store",
         help="Specify path for .torrent file.",
         dest="outfile",
-        metavar="<path>",
+        metavar="<dest>",
     )
 
     parser.add_argument(
@@ -108,8 +114,10 @@ def main_script(args=None):
         choices=["1", "2", "3"],
         action="store",
         help=(
-            "Specify the version of torrent metafile to create."
-            "1 = v1, 2 = v2, 3 = 1 & 2 Hybrid"
+            "Specify version of torrent metafile to create.\n"
+            "1 = version 1 (default)\n"
+            "2 = version 2\n"
+            "3 = 1 & 2 Hybrid"
         ),
         default="1",
         dest="meta_version",
@@ -129,7 +137,7 @@ def main_script(args=None):
         action="store",
         dest="source",
         metavar="<source>",
-        help="ignore unless instructed otherwise",
+        help="Specify source tracker.",
     )
 
     parser.add_argument(
@@ -138,7 +146,7 @@ def main_script(args=None):
         dest="announce_list",
         nargs="+",
         metavar="[<url>, ...]",
-        help="Additional tracker url's",
+        help="Additional tracker announce URLs.",
     )
     if not args:
         args = ["-h"]
@@ -155,16 +163,22 @@ def main_script(args=None):
         "outfile": flags.outfile,
         "comment": flags.comment,
     }
+
     if flags.meta_version == "2":
         torrent = TorrentFileV2(**kwargs)
+
     elif flags.meta_version == "3":
         torrent = TorrentFileHybrid(**kwargs)
+
     else:
         torrent = TorrentFile(**kwargs)
+
     outfile, meta = torrent.write()
+
     parser.kwargs = kwargs
     parser.meta = meta
     parser.outfile = outfile
+
     return parser
 
 
