@@ -55,7 +55,7 @@ lint: environment ## Check for styling errors
 
 
 test: environment ## run tests quickly with the default Python
-	pytest --cov --pylint tests
+	pytest tests --cov --pylint
 
 coverage: environment ## check code coverage with the default Python
 	coverage run -m pytest tests

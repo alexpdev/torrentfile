@@ -12,11 +12,8 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-"""Utility functions and classes used throughout package.
-
-Classes:
-  Bendecoder: Decoder for bencode data.
-  Benencoder: Encode data to bencode data.
+"""
+Utility functions and classes used throughout package.
 
 Functions:
   get_piece_length: calculate ideal piece length for torrent file.
@@ -28,267 +25,92 @@ Functions:
 """
 
 import os
-import re
-
-from .exceptions import BendecodingError, BenencodingError
 
 
-class Bendecoder:
-    """Bendecoder class contains all decode and convenience methods.
+class MissingPathError(Exception):
+    """Path parameter is required.
 
-    Initialize instance with optional pre compiled data.
+    Creating a .torrent file with no contents seems rather silly.
 
     Args:
-      data(`bytes`): Target data for decoding.
+      message(`any`, optional): Value cannot be interpreted by decoder.
     """
 
-    def __init__(self, data=None):
-        """Bendecoder class contains all decode and convenience methods.
-
-        Initialize instance with optional pre compiled data.
+    def __init__(self, message=None):
+        """
+        Construct Exception.
 
         Args:
-          data(`bytes`): Target data for decoding.
+          message(`str`, optional): Value cannot be interpreted by decoder.
         """
-        self.data = data
-
-    def decode(self, bits=None):
-        """Decode bencoded data.
-
-        Args:
-          bits(`bytes`): Bencoded data for decoding.
-
-        Returns:
-          `any`: The decoded data.
-        """
-        bits = bits if bits is not None else self.data
-
-        try:
-            data, _ = self._decode(bits)
-        except AttributeError as excpt:
-            raise BendecodingError(bits) from excpt
-
-        return data
-
-    def _decode(self, bits):
-        """Decode bencoded data.
-
-        Args:
-          bits(`bytes`): Bencoded data for decoding.
-
-        Returns:
-          `any`: The decoded data.
-        """
-        if bits.startswith(b"i"):
-            match, feed = self._decode_int(bits)
-            return match, feed
-
-        # decode string
-        if chr(bits[0]).isdigit():
-            num, feed = self._decode_str(bits)
-            return num, feed
-
-        # decode list and contents
-        if bits.startswith(b"l"):
-            lst, feed = self._decode_list(bits)
-            return lst, feed
-
-        # decode dictionary and contents
-        if bits.startswith(b"d"):
-            dic, feed = self._decode_dict(bits)
-            return dic, feed
-
-        raise BendecodingError(bits)
-
-    def _decode_dict(self, bits):
-        """Decode bencoded data dictionary.
-
-        Args:
-          bits(`bytes`): Bencoded data for decoding.
-
-        Returns:
-          `dict`: The decoded data.
-        """
-        dic, feed = {}, 1
-        while not bits[feed:].startswith(b"e"):
-            match1, rest = self._decode(bits[feed:])
-            feed += rest
-            match2, rest = self._decode(bits[feed:])
-            feed += rest
-            dic[match1] = match2
-        feed += 1
-        return dic, feed
-
-    def _decode_list(self, bits):
-        """Decode bencoded data `list`.
-
-        Args:
-          bits(`bytes`): Bencoded data for decoding.
-
-        Returns:
-          `list`: The decoded data.
-        """
-        lst, feed = [], 1
-        while not bits[feed:].startswith(b"e"):
-            match, rest = self._decode(bits[feed:])
-            lst.append(match)
-            feed += rest
-        feed += 1
-        return lst, feed
-
-    @staticmethod
-    def _decode_str(bits):
-        """Decode bencoded data `str`.
-
-        Args:
-          bits(`bytes`): Bencoded data for decoding.
-
-        Returns:
-          `str`: The decoded data.
-        """
-        match = re.match(rb"(\d+):", bits)
-        word_len, start = int(match.groups()[0]), match.span()[1]
-        next_pos = start + word_len
-        word = bits[start:next_pos]
-        try:
-            word = word.decode("utf-8")
-        except UnicodeDecodeError:
-            pass
-        return word, next_pos
-
-    @staticmethod
-    def _decode_int(bits):
-        """Decode bencoded data `int`.
-
-        Args:
-          bits(`bytes`): Bencoded data for decoding.
-
-        Returns:
-          `int`: The decoded data.
-
-        """
-        obj = re.match(rb"i(-?\d+)e", bits)
-        return int(obj.group(1)), obj.end()
+        self.message = f"Path arguement is missing and required {str(message)}"
+        super().__init__(message)
 
 
-class Benencoder:
+class MetaFile:
     """
-    Encode collection of methods for Bencoding data.
-
-    Initialize Benencoder insance with optional pre compiled data.
+    Base Class for all TorrentFile classes.
 
     Args:
-        data(`any`, optional)
+        path: `str`
+        announce: `str`
+        announce_list: `list`
+        comment: `str`
+        piece_length: `int`
+        private: `bool`
+        outfile: `str`
+        source: `str`
     """
 
-    def __init__(self, data=None):
+    def __init__(self, path=None, announce="", announce_list=None,
+                 private=False, source=None, piece_length=None,
+                 comment=None, outfile=None):
         """
-        Initialize Benencoder insance with optional pre compiled data.
+        Construct MetaFile superclass and assign local attributes.
 
         Args:
-            data(`any`, optional): Target data for encoding. Defaults to None.
+            path(`str`): target path to torrent content.
+            announce(`str`): Tracker URL.
+            announce_list(`list`): Additional tracker URL's.
+            comment(`str`): A comment.
+            piece_length(`int`): Size of torrent pieces.
+            private(`bool`): For private trackers?
+            outfile(`str`): target path to write .torrent file.
+            source(`str`): Private tracker source.
+
         """
-        self.data = data
+        if not path:
+            raise MissingPathError
+        self.path = path
+        if not announce:
+            announce = ""
+        self.announce = announce
+        self.announce_list = announce_list
+        self.private = private
+        self.source = source
+        if piece_length and isinstance(piece_length, str):
+            piece_length = int(piece_length)
+        self.piece_length = piece_length
+        self.comment = comment
+        self.outfile = outfile
 
-    def encode(self, val=None):
-        """Encode data with bencode encoding.
-
-        Args:
-          val(`any`): data to be encoded.
-
-        Returns:
-          `bytes`: Decoded data.
+    def assemble(self):
         """
-        val = val if val is not None else self.data
+        Overload in subclasses.
 
-        if isinstance(val, str):
-            return self._encode_str(val)
-
-        if hasattr(val, "hex"):
-            return self._encode_bytes(val)
-
-        if isinstance(val, int):
-            return self._encode_int(val)
-
-        if isinstance(val, list):
-            return self._encode_list(val)
-
-        if isinstance(val, dict):
-            return self._encode_dict(val)
-
-        if isinstance(val, bool):
-            return 1 if val else 0
-
-        raise BenencodingError(val)
-
-    @staticmethod
-    def _encode_bytes(val):
-        """Encode data with bencode encoding.
-
-        Args:
-          val(`bytes`): data to be encoded.
-
-        Returns:
-          `bytes`: Decoded data.
+        Raises:
+            NotImplementedError(`Exception`)
         """
-        size = str(len(val)) + ":"
-        return size.encode("utf-8") + val
+        raise NotImplementedError
 
-    @staticmethod
-    def _encode_str(txt):
-        """Encode data with bencode encoding.
-
-        Args:
-          val(`str`): data to be encoded.
-
-        Returns:
-          `bytes`: Decoded data.
+    def write(self, outfile=None):
         """
-        size = str(len(txt)).encode("utf-8")
-        return size + b":" + txt.encode("utf-8")
+        Overload when subclassed.
 
-    @staticmethod
-    def _encode_int(i):
-        """Encode data with bencode encoding.
-
-        Args:
-          val(`int`): data to be encoded.
-
-        Returns:
-          `bytes`: Decoded data.
+        Raises:
+            NotImplementedError(`Exception`)
         """
-        return b"i" + str(i).encode("utf-8") + b"e"
-
-    def _encode_list(self, elems):
-        """Encode data with bencode encoding.
-
-        Args:
-          val(`list`): data to be encoded.
-
-        Returns:
-          `bytes`: Decoded data.
-        """
-        lst = [b"l"]
-        for elem in elems:
-            encoded = self.encode(elem)
-            lst.append(encoded)
-        lst.append(b"e")
-        bit_lst = b"".join(lst)
-        return bit_lst
-
-    def _encode_dict(self, dic):
-        """Encode data with bencode encoding.
-
-        Args:
-          val(`dict`): data to be encoded.
-
-        Returns:
-          `bytes`: Decoded data.
-        """
-        result = b"d"
-        for k, v in dic.items():
-            result += b"".join([self.encode(k), self.encode(v)])
-        return result + b"e"
+        raise NotImplementedError
 
 
 def get_piece_length(size):
@@ -309,63 +131,21 @@ def get_piece_length(size):
 
 def sortfiles(path):
     """
-    Generate files one at a time in sorted order.
+    Sort entries in path.
 
     Args:
-      path(`str`): Directory path to get file list from.
-
-    Yields:
-      (`str`) Next path in filelist.
-    """
-    filelist = sorted(os.listdir(path), key=str.lower)
-    for item in filelist:
-        yield (item, os.path.join(path, item))
-
-
-def _dir_files_sizes(path):
-    """
-    Generate a file list and their sizes for given directory.
-
-    Args:
-      path(`str`): Top level directory.
+        `path`(`str`): Target directory for sorting contents.
 
     Returns:
-      `tuple`: Filelist and total size.
+        `iterator`: yield sorted content.
     """
-    if os.path.isfile(path):
-        return [path], os.path.getsize(path)
-    filelist, total = [], 0
-    if os.path.isdir(path):
-        for _, item in sortfiles(path):
-            files, size = _dir_files_sizes(item)
-            filelist.extend(files)
-            total += size
-    return filelist, total
+    items = sorted(os.listdir(path), key=str.lower)
+    for item in items:
+        full = os.path.join(path, item)
+        yield item, full
 
 
-def path_size(path):
-    """
-    Calculate sum of all filesizes within directory.
-
-    Args:
-    path(`str`): The path to start calculating from.
-
-    Returns:
-      `int`: Total sum in bytes.
-    """
-    size = 0
-    if os.path.isfile(path):
-        return os.path.getsize(path)
-
-    # recursive sum for all files in folder
-    if os.path.isdir(path):
-        for name in os.listdir(path):
-            fullpath = os.path.join(path, name)
-            size += path_size(fullpath)
-    return size
-
-
-def get_file_list(path, sort=False):
+def filelist_total(path):
     """
     Search directory tree for files.
 
@@ -377,21 +157,50 @@ def get_file_list(path, sort=False):
       `list`: All file paths within directory tree.
     """
     if os.path.isfile(path):
-        return [path]
+        file_size = os.path.getsize(path)
+        return file_size, [path]
 
     # put all files into filelist within directory
     files = []
-    filelist = os.listdir(path)
+    total_size = 0
+    filelist = sorted(os.listdir(path), key=str.lower)
 
-    # optional canonical sort of filelist
-    if sort:
-        filelist.sort(key=str.lower)
+    for name in filelist:
+        full = os.path.join(path, name)
 
-    # recursive for all folders
-    for item in filelist:
-        full = os.path.join(path, item)
-        files.extend(get_file_list(full, sort=sort))
-    return files
+        size, paths = filelist_total(full)
+
+        total_size += size
+        files.extend(paths)
+    return total_size, files
+
+
+def path_size(path):
+    """
+    Return the total size of all files in path recursively.
+
+    Args:
+        path(`str`): path to target file or directory.
+
+    Returns:
+        size(`int`): total size of files.
+    """
+    total_size, _ = filelist_total(path)
+    return total_size
+
+
+def get_file_list(path):
+    """
+    Return a sorted list of file paths contained in directory.
+
+    Args:
+        path(`str`): target file or directory.
+
+    Returns:
+        filelist(`list`): sorted list of file paths.
+    """
+    _, filelist = filelist_total(path)
+    return filelist
 
 
 def path_stat(path):
@@ -399,16 +208,16 @@ def path_stat(path):
     Calculate directory statistics.
 
     Args:
-      path(`str`): The path to start calculating from.
+        path(`str`): The path to start calculating from.
 
     Returns:
-      filelist(`list`):  List of all files contained in Directory
-      size(`int`): Total sum of bytes from all contents of dir
-      piece_length(`int`): The size of pieces of the torrent contents.
+        filelist(`list`):  List of all files contained in Directory
+        size(`int`): Total sum of bytes from all contents of dir
+        piece_length(`int`): The size of pieces of the torrent contents.
     """
-    filelist, size = _dir_files_sizes(path)
-    piece_length = get_piece_length(size)
-    return (filelist, size, piece_length)
+    total_size, filelist = filelist_total(path)
+    piece_length = get_piece_length(total_size)
+    return (filelist, total_size, piece_length)
 
 
 def path_piece_length(path):

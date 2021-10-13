@@ -16,7 +16,8 @@
 import pytest
 
 from tests.context import rmpath, tempdir, tempfile
-from torrentfile import TorrentFile, exceptions, utils
+from torrentfile import TorrentFile
+from torrentfile.utils import MissingPathError
 
 
 @pytest.fixture(scope="module")
@@ -41,16 +42,14 @@ def test_torrentfile_dir(tdir):
     """Test temporary directory."""
     _, args = tdir
     torrent = TorrentFile(**args)
-    data = torrent.assemble()
-    assert data is not None  # nosec
+    assert torrent.meta is not None  # nosec
 
 
 def test_torrentfile_file(tfile):
     """Test temporary file."""
     _, args = tfile
     torrent = TorrentFile(**args)
-    data = torrent.assemble()
-    assert data is not None  # nosec
+    assert torrent.meta is not None  # nosec
 
 
 def test_torrentfile_file_private(tfile):
@@ -58,8 +57,7 @@ def test_torrentfile_file_private(tfile):
     _, args = tfile
     args["private"] = True
     torrent = TorrentFile(**args)
-    data = torrent.assemble()
-    assert "private" in data["info"]  # nosec
+    assert "private" in torrent.meta["info"]  # nosec
 
 
 def test_torrentfile_dir_private(tdir):
@@ -67,8 +65,8 @@ def test_torrentfile_dir_private(tdir):
     _, args = tdir
     args["private"] = True
     torrent = TorrentFile(**args)
-    data = torrent.assemble()
-    assert "private" in data["info"]  # nosec
+    meta = torrent.meta
+    assert "private" in meta["info"]  # nosec
 
 
 def test_torrentfile_file_comment(tfile):
@@ -77,8 +75,8 @@ def test_torrentfile_file_comment(tfile):
     args["private"] = True
     args["comment"] = "This is a comment"
     torrent = TorrentFile(**args)
-    data = torrent.assemble()
-    assert "private" in data["info"] and "comment" in data["info"]  # nosec
+    meta = torrent.meta
+    assert "private" in meta["info"] and "comment" in meta["info"]  # nosec
 
 
 def test_torrentfile_dir_comment(tdir):
@@ -87,35 +85,13 @@ def test_torrentfile_dir_comment(tdir):
     args["private"] = True
     args["comment"] = "This is a comment"
     torrent = TorrentFile(**args)
-    data = torrent.assemble()
-    assert "private" in data["info"] and "comment" in data["info"]  # nosec
-
-
-def test_exception_encoding_error():
-    """Test temporary dir encoding with arguments."""
-    try:
-        val = set([1, 2, 3, 4, 5])
-        encoder = utils.Benencoder()
-        val = encoder.encode(val)
-        assert False  # nosec
-    except exceptions.BenencodingError:
-        assert True  # nosec
-
-
-def test_exception_decoding_error():
-    """Test temporary dir decoding with arguments."""
-    try:
-        val = b"i:alphabet"
-        decoder = utils.Bendecoder()
-        val = decoder.decode(val)
-        assert False  # nosec
-    except exceptions.BendecodingError:
-        assert True  # nosec
+    meta = torrent.meta
+    assert "private" in meta["info"] and "comment" in meta["info"]  # nosec
 
 
 def test_exception_path_error():
     """Test MissingPathError exception."""
     try:
-        raise exceptions.MissingPathError("this is a message")
-    except exceptions.MissingPathError:
+        raise MissingPathError("this is a message")
+    except MissingPathError:
         assert True  # nosec

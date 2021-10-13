@@ -146,17 +146,18 @@ Multiple files rooted in a single directory:
 
 import math
 import os
-import re
 from datetime import datetime
 from hashlib import sha256
 
-from .utils import Benencoder, path_piece_length, sortfiles
+import pyben
+
+from .utils import MetaFile, get_piece_length, path_size, sortfiles
 
 BLOCK_SIZE = 2 ** 14  # 16KiB
 HASH_SIZE = 32
 
 
-class TorrentFileV2:
+class TorrentFileV2(MetaFile):
     """
     Class for creating Bittorrent meta v2 files.
 
@@ -169,60 +170,42 @@ class TorrentFileV2:
         source(`str`): Source tracker.
         comment(`str`): Comment string.
         outfile(`str`): Path to write metfile to.
-
-    Returns:
-        `obj`: Instance of Metafile Class.
     """
 
-    def __init__(self, path=None, source=None, outfile=None, announce=None,
-                 announce_list=None, comment=None, private=None,
-                 piece_length=None,):
+    def __init__(self, **kwargs):
         """
         Construct `TorrentFileV2` Class instance from given parameters.
 
         Args:
-            path(`str`): Path to torrent file or directory.
-            piece_length(`int`): Size of each piece of torrent data.
-            announce(`str`): Tracker URL.
-            announce_list('list`): List of additional trackers.
-            private(`int`): 1 if private torrent else 0.
-            source(`str`): Source tracker.
-            comment(`str`): Comment string.
-            outfile(`str`): Path to write metfile to.
+            kwargs(`dict`): keywword arguments to pass to superclass.
 
         Returns:
-          `obj`: Instance of Metafile Class.
+          torrent: TorrentFileV2 instance.
         """
-        self.name = os.path.basename(path)
-        self.path = path
-        self.comment = comment
-        self.piece_length = piece_length
-        self.private = private
-        self.source = source
-        self.announce = announce
-        self.announce_list = announce_list
-        self.outfile = outfile
-        self.hashes = []
+        super().__init__(**kwargs)
         self.piece_layers = {}
+        self.hashes = []
         self.meta = self.assemble()
 
     def _assemble_infodict(self):
         """
-        Create info dictionary for metafile v2.
+        Create info dictionary for .torrent meta v2 file.
 
         Returns:
-          `dict`: Info dictionary.
-
+          info(`dict`): Info dictionary containing torrent metadata.
         """
-        info = {"name": self.name}
+        info = {"name": os.path.basename(self.path)}
         # include comment in info dictionary.
+        if self.announce_list:
+            info["announce list"] = self.announce_list
+
         if self.comment:
             info["comment"] = self.comment
 
-        if self.announce_list:
-            if isinstance(self.announce_list, str):
-                self.announce_list = re.split(r",?\s", self.announce_list)
-            info["announce list"] = self.announce_list
+        if not self.piece_length:
+            self.piece_length = get_piece_length(path_size(self.path))
+
+        info["piece length"] = self.piece_length
 
         if os.path.isfile(self.path):
             info["length"] = os.path.getsize(self.path)
@@ -231,9 +214,6 @@ class TorrentFileV2:
 
         # Bittorrent Protocol v2
         info["meta version"] = 2
-
-        # calculate best piece length if not provided by user
-        info["piece length"] = self.piece_length
 
         if self.source:
             info["source"] = self.source
@@ -252,16 +232,7 @@ class TorrentFileV2:
         """
         # if no tracker url was provided, place dummy string in its place
         # which can be later replaced by some Bittorrent clients
-
-        if not self.piece_length:
-            self.piece_length = path_piece_length(self.path)
-        elif isinstance(self.piece_length, str):
-            self.piece_length = int(self.piece_length)
-
-        if self.announce:
-            meta = {"announce": self.announce}
-        else:
-            meta = {"announce": ""}
+        meta = {"announce": self.announce}
 
         meta["created by"] = "torrentfile"
         meta["creation date"] = int(datetime.timestamp(datetime.now()))
@@ -269,23 +240,27 @@ class TorrentFileV2:
         # assemble info dictionary and assign it to info key in meta
         meta["info"] = self._assemble_infodict()
 
-        for hasher in self.hashes:
-            if hasher.piece_layers:
-                self.piece_layers[hasher.root_hash] = hasher.piece_layers
-
         meta["piece layers"] = self.piece_layers
         return meta
 
     def _traverse(self, path):
-        file_tree = {}
         if os.path.isfile(path):
             size = os.path.getsize(path)
             fhash = FileHash(path, self.piece_length)
-            self.hashes.append(fhash)
-            return {"": {"length": size, "pieces root": fhash.root_hash}}
+
+            if size >= self.piece_length:
+                self.piece_layers[fhash.root] = fhash.piece_layer
+
+            if size == 0:
+                return {"": {"length": size}}
+            return {"": {"length": size, "pieces root": fhash.root}}
+
+        file_tree = {}
         if os.path.isdir(path):
+
             for base, full in sortfiles(path):
                 file_tree[base] = self._traverse(full)
+
         return file_tree
 
     def write(self, outfile=None):
@@ -298,16 +273,14 @@ class TorrentFileV2:
         Returns:
           `bytes`: Data writtend to .torrent file.
         """
-        encoder = Benencoder()
-        self.data = encoder.encode(self.meta)
-
         if outfile:
             self.outfile = outfile
-        elif not self.outfile:
-            self.outfile = self.meta["info"]["name"] + ".torrent"
 
-        with open(self.outfile, "wb") as fd:
-            fd.write(self.data)
+        elif not self.outfile:
+            filename = self.meta["info"]["name"] + ".torrent"
+            self.outfile = os.path.join(os.path.dirname(self.path), filename)
+
+        pyben.dump(self.meta, self.outfile)
 
         return self.outfile, self.meta
 
@@ -324,11 +297,11 @@ class FileHash:
     Calculate and store hash information for specific file.
 
     Args:
-      path(`str`): Absolute path to file.
-      piece_length(`int`): Size of each metfile piece.
+      path: `str`
+      piece_length: `int`
 
-    Returns:
-      `obj`: Instance of FileHash.
+    Public Methods:
+        `process_file`
     """
 
     def __init__(self, path, piece_length):
@@ -340,24 +313,30 @@ class FileHash:
           piece_length(`int`): Size of each metfile piece.
 
         Returns:
-          `obj`: Instance of FileHash.
+          `FileHash()`: instance of FileHash class.
         """
         self.path = path
-        self.root_hash = None
-        self.piece_layers = None
+        self.root = None
+        self.piece_layer = None
         self.layer_hashes = []
         self.piece_length = piece_length
-        self.piece_blocks = piece_length // BLOCK_SIZE
+        self.num_blocks = piece_length // BLOCK_SIZE
         with open(self.path, "rb") as fd:
-            self._process_file(fd)
+            self.process_file(fd)
 
-    def _process_file(self, fd):
+    def process_file(self, fd):
+        """
+        Calculate hashes over 16KiB chuncks of file content.
+
+        Args:
+            fd(`IOBufferReader`): opened file in read mode.
+        """
         while True:
             total = 0
             blocks = []
             leaf = bytearray(BLOCK_SIZE)
 
-            for _ in range(self.piece_blocks):
+            for _ in range(self.num_blocks):
                 size = fd.readinto(leaf)
                 total += size
                 if not size:
@@ -368,37 +347,39 @@ class FileHash:
                 break
 
             # if the file is smaller than piece length
-            if len(blocks) < self.piece_blocks:
+            if len(blocks) < self.num_blocks:
                 blocks += self._pad_remaining(total, len(blocks))
 
             self.layer_hashes.append(merkle_root(blocks))
         self._calculate_root()
 
     def _pad_remaining(self, total, blocklen):
+        """
+        Generate Hash sized, 0 filled bytes for padding.
 
-        remaining = (
-            ((1 << int(math.log2(total) + 1)) - total) // BLOCK_SIZE
-        ) + 1
+        Args:
+            total(`int`): length of bytes processed.
+            blocklen(`int`): number of blocks processed.
 
-        if self.layer_hashes:
-            remaining = self.piece_blocks - blocklen
+        Returns:
+            `int`: Padding to fill remaining portion of tree.
+        """
+        pad = bytes(HASH_SIZE)
 
-        return [bytes(HASH_SIZE) for _ in range(remaining)]
+        if not self.layer_hashes:
+            next_pow_2 = 1 << int(math.log2(total) + 1)
+            remaining = ((next_pow_2 - total) // BLOCK_SIZE) + 1
+            return [pad for _ in range(remaining)]
+
+        return [pad for _ in range(self.num_blocks - blocklen)]
 
     def _calculate_root(self):
-
-        self.piece_layers = b"".join(self.layer_hashes)
-
+        """Calculate root hash for the target file."""
+        self.piece_layer = b"".join(self.layer_hashes)
         if len(self.layer_hashes) > 1:
-            power_of_2 = 1 << int(math.log2(len(self.layer_hashes)) + 1)
-            dif_remain = power_of_2 - len(self.layer_hashes)
-            self.layer_hashes.extend(
-                [
-                    merkle_root(
-                        [bytes(HASH_SIZE) for _ in range(self.piece_blocks)]
-                    )
-                    for _ in range(dif_remain)
-                ]
-            )
-
-        self.root_hash = merkle_root(self.layer_hashes)
+            next_pow_2 = 1 << int(math.log2(len(self.layer_hashes)) + 1)
+            remainder = next_pow_2 - len(self.layer_hashes)
+            pad_piece = [bytes(HASH_SIZE) for _ in range(self.num_blocks)]
+            for _ in range(remainder):
+                self.layer_hashes.append(merkle_root(pad_piece))
+        self.root = merkle_root(self.layer_hashes)
