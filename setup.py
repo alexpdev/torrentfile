@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ############################################################################
-
 """Setup for Torrentfile package."""
 
 import json
@@ -37,7 +36,6 @@ def load_description():
 
 
 INFO = load_info()
-
 
 setup(
     name=INFO["name"],
