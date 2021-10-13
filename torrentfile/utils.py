@@ -11,7 +11,6 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-
 """Utility functions and classes used throughout package.
 
 Functions:
@@ -60,9 +59,17 @@ class MetaFile:
         source (`str`): Private tracker source.
     """
 
-    def __init__(self, path=None, announce="", announce_list=None,
-                 private=False, source=None, piece_length=None,
-                 comment=None, outfile=None):
+    def __init__(
+        self,
+        path=None,
+        announce="",
+        announce_list=None,
+        private=False,
+        source=None,
+        piece_length=None,
+        comment=None,
+        outfile=None,
+    ):
         """
         Construct MetaFile superclass and assign local attributes.
 

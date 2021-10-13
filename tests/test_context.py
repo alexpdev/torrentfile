@@ -1,6 +1,5 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
-
 """Testing operation and coverage for context module in tests directory."""
 
 import os
@@ -8,8 +7,17 @@ import string
 
 import pytest
 
-from tests.context import (TD, fill_file, fill_folder, rmpath, rmpaths, seq,
-                           sizedfile, tempdir, tempfile)
+from tests.context import (
+    TD,
+    fill_file,
+    fill_folder,
+    rmpath,
+    rmpaths,
+    seq,
+    sizedfile,
+    tempdir,
+    tempfile,
+)
 
 
 def test_seq():

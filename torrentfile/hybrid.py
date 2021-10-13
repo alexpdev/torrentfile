@@ -11,7 +11,6 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-
 """
 Classes and procedures for making Bittorrent metafiles.
 
@@ -88,7 +87,7 @@ class TorrentFileHybrid(MetaFile):
         info = {
             "name": self.name,
             "meta version": 2,
-            "piece length": self.piece_length
+            "piece length": self.piece_length,
         }
 
         if self.announce_list:

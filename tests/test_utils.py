@@ -18,8 +18,12 @@ import os
 import pytest
 
 from tests.context import rmpath, tempdir, tempfile
-from torrentfile.utils import (get_piece_length, path_piece_length, path_size,
-                               path_stat)
+from torrentfile.utils import (
+    get_piece_length,
+    path_piece_length,
+    path_size,
+    path_stat,
+)
 
 KIB = 2 ** 10
 MIB = KIB ** 2
