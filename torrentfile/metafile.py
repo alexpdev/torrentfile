@@ -69,14 +69,15 @@ file case, it's the name of a directory.
 
 import math
 import os
-import re
 from datetime import datetime as dt
 from hashlib import sha1
 
-from .utils import Bendecoder, Benencoder, path_stat
+import pyben
+
+from .utils import MetaFile, path_stat
 
 
-class TorrentFile:
+class TorrentFile(MetaFile):
     """
     Class for creating Bittorrent meta files.
 
@@ -91,108 +92,66 @@ class TorrentFile:
         source(`str`): Source tracker.
         comment(`str`): Comment string.
         outfile(`str`): Path to write metfile to.
-
-    Returns:
-        `obj`: Instance of Metafile Class.
-
     """
 
-    def __init__(self, path=None, announce=None, announce_list=None,
-                 private=False, source=None, piece_length=None,
-                 comment=None, outfile=None):
+    def __init__(self, **kwargs):
         """
-        Class for creating Bittorrent meta files from given parameters.
-
-        Construct *Torrentfile* class instance object.
+        Construct TorrentFile class instance with given keyword args.
 
         Args:
-            path('str'): source path to torrent content.
-            announce('str'): tracker URL.
-            announce_list('list'): additional tracker URLS.
-            private('bool'): used for private trackers.
-            comment('str'): a comment.
-            outfile('str'): target destination path.
-            source('str'): used for private trackers.
+            kwargs(`dict`): dictionary of keyword args passed to superclass.
 
         Returns:
-          `Torrentfile`: Instance of Metafile Class.
-
+            Instance of TorrentFile.
         """
-        # fs path attributes.
-        self.path = path
-        self.name = os.path.basename(path)
-        self.outfile = outfile
-
-        # if `piece_length` is a `str` turn it into an `int`.
-        if piece_length:
-            self.piece_length = int(piece_length)
-        else:
-            self.piece_length = None
-        self.announce = announce
-        if announce:
-            self.announce = announce
-        else:
-            self.announce = ""
-
-        # If announce `list` is a `str` split it up.
-        if isinstance(announce_list, str):
-            self.announce_list = re.split(r"[\s,]", announce_list)
-        else:
-            self.announce_list = announce_list
-
-        # for private trackers.
-        self.private = private
-        self.source = source
-
-        # other less common flags.
-        self.comment = comment
+        super().__init__(**kwargs)
         self.meta = self.assemble()
 
     def _assemble_infodict(self):
-        """Create info dictionary."""
-        # set name of torrentfile
-        info = {"name": self.name}
+        """
+        Create info dictionary.
+
+        Returns:
+            info(`dict`): .torrent info dictionary.
+        """
+        info = {"name": os.path.basename(self.path)}
+
         filelist, size, piece_length = path_stat(self.path)
 
-        # If a comment was provided place in Info dictionary.
         if self.comment:
             info["comment"] = self.comment
 
-        # create announce list for additional trackers.
         if self.announce_list:
             info["announce list"] = self.announce_list
 
-        # if single file, add 'length' key otherwise
+        if not self.piece_length:
+            self.piece_length = piece_length
+
+        info["piece length"] = self.piece_length
+
         if os.path.isfile(self.path):
             info["length"] = size
         else:
             info["files"] = [
                 {
-                    "length": os.path.getsize(p),
-                    "path": os.path.relpath(p, self.path).split(os.sep),
+                    "length": os.path.getsize(path),
+                    "path": os.path.relpath(path, self.path).split(os.sep)
                 }
-                for p in filelist
+                for path in filelist
             ]
 
-        # set torrent piecelength.
-        if self.piece_length:
-            info["piece length"] = self.piece_length
-        else:
-            self.piece_length = info["piece length"] = piece_length
-
-        # apply chuncks of hashed data to pieces key.
         pieces = bytearray()
-        for piece in Feeder(filelist, self.piece_length, size):
+        feeder = Feeder(filelist, self.piece_length, size)
+        for piece in feeder:
             pieces.extend(piece)
+
         info["pieces"] = pieces
 
-        # This flag is for use with private trackers
         if self.private:
             info["private"] = 1
-        # Leave it off unless you know what you are doing.
+
         if self.source:
             info["source"] = self.source
-
         return info
 
     def assemble(self):
@@ -203,9 +162,8 @@ class TorrentFile:
           `dict`: metadata dictionary for torrent file
         """
         meta = {"announce": self.announce}
-
-        meta["created by"] = "torrentfile"
         meta["creation date"] = int(dt.timestamp(dt.now()))
+        meta["created by"] = "torrentfile"
         meta["info"] = self._assemble_infodict()
         return meta
 
@@ -219,19 +177,14 @@ class TorrentFile:
         Returns:
           `tuple`: Path to output file, Pre-encoded metadata.
         """
-        encoder = Benencoder()
-        data = encoder.encode(self.meta)
-
-        if not outfile:
-            if not self.outfile:
-                self.outfile = self.meta["info"]["name"] + ".torrent"
-        else:
+        if outfile:
             self.outfile = outfile
 
-        with open(self.outfile, "wb") as fd:
-            fd.write(data)
+        if not self.outfile:
+            self.outfile = self.path + ".torrent"
 
-        return (self.outfile, self.meta)
+        pyben.dump(self.meta, self.outfile)
+        return self.outfile, self.meta
 
 
 class Checker:
@@ -276,9 +229,7 @@ class Checker:
 
     def decode_metafile(self):
         """Decode bencoded data inside .torrent file."""
-        fd = open(self.metafile, "rb").read()
-        decoder = Bendecoder()
-        terms = decoder.decode(fd)
+        terms = pyben.load(self.metafile)
         for key, val in terms.items():
             self.meta[key] = val
             if key == "info":
@@ -384,8 +335,10 @@ class Feeder:
         self.total = total
         self.pieces = []
         self.index = 0
-        self.current = open(self.paths[self.index], "rb")
-        self.iterator = self.leaves()
+        self.piece_count = 0
+        self.num_pieces = math.ceil(self.total // self.piece_length)
+        self.current = open(self.paths[0], "rb")
+        self.iterator = None
 
     def __iter__(self):
         """
@@ -406,10 +359,6 @@ class Feeder:
         """
         return self.iterator.__next__()
 
-    def total_pieces(self):
-        """Total size / piece length."""
-        return math.ceil(self.total // self.piece_length)
-
     def handle_partial(self, arr, partial):
         """
         Seemlessly move to next file for input data.
@@ -421,16 +370,15 @@ class Feeder:
         Returns:
           `bytes`: SHA1 digest of the complete piece.
         """
-        while partial < self.piece_length:
-            temp = bytearray(self.piece_length - partial)
+        while partial < self.piece_length and self.next_file():
+            target = self.piece_length - partial
+            temp = bytearray(target)
             size = self.current.readinto(temp)
-            acc = partial + size
-            arr[partial:acc] = temp[:size]
+            arr.extend(temp[:size])
             partial += size
-            if partial < self.piece_length:
-                if not self.next_file():
-                    return sha1(arr[:partial]).digest()  # nosec
-        return sha1(arr).digest()  # nosec
+            if size == target:
+                break
+        return sha1(arr).digest()   # nosec
 
     def next_file(self):
         """Seemlessly transition to next file in file list."""
@@ -448,9 +396,9 @@ class Feeder:
             size = self.current.readinto(piece)
             if size == 0:
                 if not self.next_file():
-                    self.current.close()
                     break
             elif size < self.piece_length:
-                yield self.handle_partial(piece, size)
+                yield self.handle_partial(piece[:size], size)
             else:
-                yield sha1(piece).digest()  # nosec
+                yield sha1(piece).digest()   # nosec
+            self.piece_count += 1

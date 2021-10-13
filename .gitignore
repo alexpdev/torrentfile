@@ -1,4 +1,3 @@
-
 # enviornment packages
 node_modules/
 *.env
@@ -17,7 +16,6 @@ sites/
 *.bin
 
 # temp files
-codacyupload.sh
 bep*
 /tests/tempdir
 testing.py
@@ -25,7 +23,6 @@ temp/
 data/*.json
 data/
 formated.json
-*.txt
 *.pickle
 *.log
 *.db
@@ -47,7 +44,6 @@ WinRAR*/
 
 # Distribution / packaging
 .Python
-env/
 codacy.sh
 build/
 develop-eggs/
@@ -133,6 +129,7 @@ test_pydenv.py
 .venv
 venv/
 ENV/
+env/
 
 # Spyder project settings
 .spyderproject
@@ -146,7 +143,6 @@ ENV/
 
 # mypy
 .mypy_cache/
-docs_/
 
 # IDE settings
 .vscode/

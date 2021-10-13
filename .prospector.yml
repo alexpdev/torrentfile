@@ -35,3 +35,5 @@ pyroma:
 
 pyflakes:
   run: true
+  disable:
+    - F401

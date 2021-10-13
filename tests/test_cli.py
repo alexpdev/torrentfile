@@ -20,7 +20,7 @@ import pytest
 
 from tests.context import rmpath, tempdir, tempfile
 from torrentfile import main
-from torrentfile.exceptions import MissingPathError
+from torrentfile.utils import MissingPathError
 
 # List of flags for the Command Line Interface.
 
@@ -55,7 +55,7 @@ def test_cli_args_dir(tdir):
     sys.argv = [sys.argv[0]] + args
     parser = main()
     assert os.path.exists(parser.outfile)  # nosec
-    os.remove(parser.outfile)
+    rmpath(parser.outfile)
 
 
 def test_cli_args_dir_v2(tdir):
@@ -64,7 +64,7 @@ def test_cli_args_dir_v2(tdir):
     sys.argv = [sys.argv[0]] + args
     parser = main()
     assert os.path.exists(parser.outfile)  # nosec
-    os.remove(parser.outfile)
+    rmpath(parser.outfile)
 
 
 def test_cli_args_dir_v3(tdir):
@@ -73,7 +73,7 @@ def test_cli_args_dir_v3(tdir):
     sys.argv = [sys.argv[0]] + args
     parser = main()
     assert os.path.exists(parser.outfile)  # nosec
-    os.remove(parser.outfile)
+    rmpath(parser.outfile)
 
 
 def test_cli_args_file(tfile):
@@ -82,7 +82,7 @@ def test_cli_args_file(tfile):
     sys.argv = [sys.argv[0]] + args
     parser = main()
     assert os.path.exists(parser.outfile)  # nosec
-    os.remove(parser.outfile)
+    rmpath(parser.outfile)
 
 
 def test_cli_args_file_v2(tfile):
@@ -91,7 +91,7 @@ def test_cli_args_file_v2(tfile):
     sys.argv = [sys.argv[0]] + args
     parser = main()
     assert os.path.exists(parser.outfile)  # nosec
-    os.remove(parser.outfile)
+    rmpath(parser.outfile)
 
 
 def test_cli_args_file_v3(tfile):
@@ -100,7 +100,7 @@ def test_cli_args_file_v3(tfile):
     sys.argv = [sys.argv[0]] + args
     parser = main()
     assert os.path.exists(parser.outfile)  # nosec
-    os.remove(parser.outfile)
+    rmpath(parser.outfile)
 
 
 def test_cli_no_args():
@@ -142,6 +142,7 @@ def test_cli_with_all_args_file(tfile):
     ]
     parser = main()
     assert os.path.exists(parser.outfile)  # nosec
+    rmpath(parser.outfile)
 
 
 def test_cli_with_all_args_dir(tdir):
@@ -164,3 +165,4 @@ def test_cli_with_all_args_dir(tdir):
     ]
     parser = main()
     assert os.path.exists(parser.outfile)  # nosec
+    rmpath(parser.outfile)

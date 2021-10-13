@@ -18,8 +18,7 @@ import os
 import pytest
 
 from tests.context import rmpath, tempdir, tempfile
-from torrentfile.utils import (Bendecoder, Benencoder, get_file_list,
-                               get_piece_length, path_piece_length, path_size,
+from torrentfile.utils import (get_piece_length, path_piece_length, path_size,
                                path_stat)
 
 KIB = 2 ** 10
@@ -65,14 +64,6 @@ def metadata():
     return meta
 
 
-@pytest.fixture
-def bencode(metadata):
-    """Test encoding in bencode format."""
-    encoder = Benencoder(metadata)
-    data = encoder.encode()
-    return data
-
-
 def test_get_piece_length_min(tfile):
     """Test get_piece_length function does not fall under minimum."""
     size = os.path.getsize(tfile)
@@ -112,24 +103,6 @@ def test_path_size_file_gt0(tfile):
     """Test path_size function for tempfile is greater than zero."""
     val = path_size(tfile)
     assert val > 0  # nosec
-
-
-def test_get_file_list_file(tfile):
-    """Test get_file_list function for tempfile."""
-    results = get_file_list(tfile)
-    assert len(results) == 1  # nosec
-
-
-def test_get_file_list_dir(tdir):
-    """Test get_file_list function for tempdir."""
-    results = get_file_list(tdir)
-    assert len(results) > 1  # nosec
-
-
-def test_get_file_list_dir_sort(tdir):
-    """Test get_file_list function for tempdir sorted."""
-    results = get_file_list(tdir, sort=True)
-    assert len(results) > 1  # nosec
 
 
 def test_path_stat_gt0_filelist(tdir):
@@ -190,59 +163,3 @@ def test_path_piece_length_max(tdir):
     """Test path_piece_length for dir return piece_length < Maximum."""
     result = path_piece_length(tdir)
     assert result <= MAX_BLOCK  # nosec
-
-
-def test_encode(metadata):
-    """Test Benencoder."""
-    encoder = Benencoder(metadata)
-    data = encoder.encode()
-    assert data is not None  # nosec
-
-
-def test_encode_type(metadata):
-    """Test Benencoder output type."""
-    encoder = Benencoder(metadata)
-    data = encoder.encode()
-    assert isinstance(data, bytes)  # nosec
-
-
-def test_decode(bencode):
-    """Test Bendecoder."""
-    decoder = Bendecoder(bencode)
-    data = decoder.decode()
-    assert data is not None  # nosec
-
-
-def test_decode_type(bencode):
-    """Test Bendecoder output type."""
-    decoder = Bendecoder(bencode)
-    data = decoder.decode()
-    assert isinstance(data, dict)  # nosec
-
-
-def test_decode_type_info(bencode):
-    """Test Benencoder output contents type."""
-    decoder = Bendecoder(bencode)
-    data = decoder.decode()
-    assert "info" in data  # nosec
-
-
-def test_decode_type_announce(bencode):
-    """Test Benencoder output contents."""
-    decoder = Bendecoder(bencode)
-    data = decoder.decode()
-    assert "announce" in data  # nosec
-
-
-def test_decode_type_piecelength(bencode):
-    """Test Bendecoder output contents."""
-    decoder = Bendecoder(bencode)
-    data = decoder.decode()
-    assert "piece length" in data  # nosec
-
-
-def test_decode_type_created_by(bencode):
-    """Test Bendecoder output type."""
-    decoder = Bendecoder(bencode)
-    data = decoder.decode()
-    assert "created by" in data  # nosec

@@ -28,7 +28,6 @@ from argparse import ArgumentParser
 
 import torrentfile
 
-from .exceptions import MissingPathError
 from .hybrid import TorrentFileHybrid
 from .metafile import TorrentFile
 from .metafile2 import TorrentFileV2
@@ -146,9 +145,6 @@ def main_script(args=None):
 
     flags = parser.parse_args(args)
 
-    if not flags.path:
-        raise MissingPathError(flags)
-
     kwargs = {
         "path": flags.path,
         "announce": flags.announce,
@@ -159,16 +155,12 @@ def main_script(args=None):
         "outfile": flags.outfile,
         "comment": flags.comment,
     }
-    print(flags)
     if flags.meta_version == "2":
         torrent = TorrentFileV2(**kwargs)
-    elif flags.meta_version == "1":
-        torrent = TorrentFile(**kwargs)
     elif flags.meta_version == "3":
         torrent = TorrentFileHybrid(**kwargs)
     else:
-        raise MissingPathError(flags)
-    torrent.assemble()
+        torrent = TorrentFile(**kwargs)
     outfile, meta = torrent.write()
     parser.kwargs = kwargs
     parser.meta = meta

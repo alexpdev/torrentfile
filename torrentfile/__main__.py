@@ -14,7 +14,7 @@
 
 """Required file for CLI to function properly."""
 
-from torrentfile import main
+from . import main
 
 if __name__ == "__main__":
-    print(main())
+    main()

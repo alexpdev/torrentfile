@@ -14,6 +14,7 @@
 """Test main module functionality."""
 
 
+import os
 import sys
 
 import pytest
@@ -43,6 +44,16 @@ def tfile():
 def test_main():
     """Test __maine__."""
     assert entry.__doc__  # nosec
+
+
+def test_main_func(tfile):
+    """Test __maine__."""
+    args, path = tfile
+    opath = os.path.join(os.getcwd(), "torrent.torrent")
+    sys.argv = args + ["-p", path, "-o", opath]
+    entry.main()
+    assert os.path.exists(opath)   # nosec
+    rmpath(opath)
 
 
 def test_main_announce_list(tfile):
@@ -106,10 +117,9 @@ def test_class_tuple_annlist(tfile):
             "https://tracker4/announce",
         ),
     }
-    torfile = TorrentFile(**kwargs)
-    meta = torfile.assemble()
+    torrent = TorrentFile(**kwargs)
     url = "https://tracker2/announce"
-    assert url in meta["info"]["announce list"]  # nosec
+    assert url in torrent.meta["info"]["announce list"]  # nosec
 
 
 def test_class_list_annlist(tfile):
@@ -124,10 +134,9 @@ def test_class_list_annlist(tfile):
             "https://tracker4/announce",
         ],
     }
-    torfile = TorrentFile(**kwargs)
-    meta = torfile.assemble()
+    torrent = TorrentFile(**kwargs)
     url = "https://tracker2/announce"
-    assert url in meta["info"]["announce list"]  # nosec
+    assert url in torrent.meta["info"]["announce list"]  # nosec
 
 
 def test_main_annlist_v2(tfile):
@@ -231,10 +240,9 @@ def test_class_annlist_v2(tfile):
             " https://tracker4/announce"
         ),
     }
-    torfile = TorrentFileV2(**kwargs)
-    meta = torfile.assemble()
+    torrent = TorrentFileV2(**kwargs)
     url = "https://tracker2/announce"
-    assert url in meta["info"]["announce list"]  # nosec
+    assert url in torrent.meta["info"]["announce list"]  # nosec
 
 
 def test_class_tuple_annlist_v2(tfile):
@@ -249,10 +257,9 @@ def test_class_tuple_annlist_v2(tfile):
             "https://tracker4/announce",
         ),
     }
-    torfile = TorrentFileV2(**kwargs)
-    meta = torfile.assemble()
+    torrent = TorrentFileV2(**kwargs)
     url = "https://tracker2/announce"
-    assert url in meta["info"]["announce list"]  # nosec
+    assert url in torrent.meta["info"]["announce list"]  # nosec
 
 
 def test_class_list_annlist_v2(tfile):
@@ -267,7 +274,6 @@ def test_class_list_annlist_v2(tfile):
             "https://tracker4/announce",
         ],
     }
-    torfile = TorrentFileV2(**kwargs)
-    meta = torfile.assemble()
+    torrent = TorrentFileV2(**kwargs)
     url = "https://tracker2/announce"
-    assert url in meta["info"]["announce list"]  # nosec
+    assert url in torrent.meta["info"]["announce list"]  # nosec

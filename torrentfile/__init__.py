@@ -12,7 +12,8 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 
-"""Torrentfile can create Bittorrent metafiles for any content.
+"""
+Torrentfile can create Bittorrent metafiles for any content.
 
 Both Bittorrent v1 and v2 are fully supported. Also included is a torrent
 torrent file checker, which can verify a .torrent file is formated correctly
@@ -26,21 +27,10 @@ Modules:
     utils: Utilities used throughout package.
 """
 
+from .cli import main
 from .hybrid import TorrentFileHybrid
 from .metafile import TorrentFile
 from .metafile2 import TorrentFileV2
-from .torrentfile import main
-from .utils import Bendecoder, Benencoder
-
-__version__ = "0.2.9"
 
 __author__ = "alexpdev"
-
-__all__ = (
-    "main",
-    "Benencoder",
-    "Bendecoder",
-    "TorrentFile",
-    "TorrentFileV2",
-    "TorrentFileHybrid",
-)
+__version__ = "0.2.9"
