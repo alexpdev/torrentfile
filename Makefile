@@ -58,7 +58,7 @@ lint: environment ## Check for styling errors
 
 test: environment ## run tests quickly with the default Python
 	@echo Testing
-	pytest tests --cov --pylint
+	pytest tests --cov=torrentfile --pylint
 
 coverage: environment ## check code coverage with the default Python
 	@echo Generating Coverage Report
@@ -69,7 +69,7 @@ push: clean lint test coverage docs ## push to remote repo
 	@echo pushing to remote
 	git add .
 	git commit -m "$m"
-	git push -u dev master
+	git push -u https://github.com/alexpdev/torrentfile dev master
 	bash codacy.sh report -r coverage.xml
 
 docs: environment ## Regenerate docs from changes

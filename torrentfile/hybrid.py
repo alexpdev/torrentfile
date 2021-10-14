@@ -120,6 +120,9 @@ class TorrentFileHybrid(MetaFile):
                 }
             )
 
+            if fsize == 0:
+                return {"": {"length": fsize}}
+
             fhash = FileHash(path, self.piece_length)
 
             if fsize >= self.piece_length:
@@ -131,9 +134,6 @@ class TorrentFileHybrid(MetaFile):
             if fhash.padding_file:
                 self.files.append(fhash.padding_file)
                 self.pieces.append(fhash.padding_piece)
-
-            if fsize == 0:
-                return {"": {"length": fsize}}
 
             return {"": {"length": fsize, "pieces root": fhash.root}}
 

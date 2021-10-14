@@ -1,5 +1,34 @@
 # torrentfile
 
+## Version 0.3.0
+
+    - This version contains many breaking changes.
+
+### Added v0.3.0
+
+    - Added/Improved support for hybrid meta files.
+    - Many additions to testing suit including linting and coverage tests.
+
+### Fixes v0.3.0
+
+    - Styling fixes.
+    - Bug Fixes.
+
+---------------------
+
+## Version 0.2.8
+
+### Added v0.2.8
+
+    - Prelimenary support for bittorrent hybrid meta files.
+    - CI/CD integration.
+
+### Fixes v0.2.8
+
+    - Bug Fixes
+
+---------------------
+
 ## Version 0.2.7
 
 ### Added v0.2.7

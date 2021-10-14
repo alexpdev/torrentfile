@@ -11,7 +11,13 @@ nav:
   - Home: index.md
   - About: about.md
   - License: LICENSE.md
-  - API: api.md
+  - API: API.md
+  - Tests: tests.md
+  - CLI: CLI.md
+  - Hybrid: Hybrid.md
+  - TorrentFile: TorrentFile.md
+  - TorrentFileV2: TorrentFileV2.md
+  - Utils: utils.md
 
 
 plugins:

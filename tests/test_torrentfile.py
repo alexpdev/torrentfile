@@ -13,11 +13,14 @@
 #####################################################################
 """Testing functions for torrentfile module."""
 
+import os
+from pathlib import Path
+
 import pytest
 
 from tests.context import rmpath, tempdir, tempfile
-from torrentfile import TorrentFile
-from torrentfile.utils import MissingPathError
+from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2
+from torrentfile.utils import MetaFile, MissingPathError
 
 
 @pytest.fixture(scope="module")
@@ -95,3 +98,116 @@ def test_exception_path_error():
         raise MissingPathError("this is a message")
     except MissingPathError:
         assert True  # nosec
+
+
+def test_torrentfile_outfile(tfile):
+    """Test TorrentFile class with output as argument."""
+    path, args = tfile
+    outfile = path + ".torrent"
+    torrent = TorrentFile(**args)
+    torrent.write(outfile=outfile)
+    assert os.path.exists(outfile)  # nosec
+    rmpath(outfile)
+
+
+def test_torrentfile_with_outfile(tfile):
+    """Test TorrentFile class with output in kwargs."""
+    path, args = tfile
+    outfile = path + ".torrent"
+    args["outfile"] = outfile
+    torrent = TorrentFile(**args)
+    torrent.write()
+    assert os.path.exists(outfile)  # nosec
+    rmpath(outfile)
+
+
+def test_torrentfilev2_outfile(tfile):
+    """Test TorrentFile2 class with output as argument."""
+    path, args = tfile
+    outfile = path + ".torrent"
+    torrent = TorrentFileV2(**args)
+    torrent.write(outfile=outfile)
+    assert os.path.exists(outfile)  # nosec
+    rmpath(outfile)
+
+
+def test_torrentfilev2_with_outfile(tfile):
+    """Test TorrentFileV2 class with output in kwargs."""
+    path, args = tfile
+    outfile = path + ".torrent"
+    args["outfile"] = outfile
+    torrent = TorrentFileV2(**args)
+    torrent.write()
+    assert os.path.exists(outfile)  # nosec
+    rmpath(outfile)
+
+
+def test_hybrid_outfile(tfile):
+    """Test Hybrid class with output as argument."""
+    path, args = tfile
+    outfile = path + ".torrent"
+    torrent = TorrentFileHybrid(**args)
+    torrent.write(outfile=outfile)
+    assert os.path.exists(outfile)  # nosec
+    rmpath(outfile)
+
+
+def test_hybrid_with_outfile(tfile):
+    """Test Hybrid class with output in kwargs."""
+    path, args = tfile
+    outfile = path + ".torrent"
+    args["outfile"] = outfile
+    torrent = TorrentFileHybrid(**args)
+    torrent.write()
+    assert os.path.exists(outfile)  # nosec
+    rmpath(outfile)
+
+
+def test_hybrid_0_length():
+    """Test Hybrid with zero length file."""
+    pth = Path("tempfile")
+    pth.touch()
+    args = {
+        "path": str(pth),
+        "announce": "announce",
+    }
+    torrent = TorrentFileHybrid(**args)
+    torrent.write()
+    assert os.path.exists(pth.with_suffix(".torrent"))   # nosec
+    rmpath(pth)
+
+
+def test_v2_0_length():
+    """Test TorrentFileV2 with zero length file."""
+    pth = Path("tempfile")
+    pth.touch()
+    args = {
+        "path": str(pth),
+        "announce": "announce",
+    }
+    torrent = TorrentFileV2(**args)
+    torrent.write()
+    assert os.path.exists(pth.with_suffix(".torrent"))  # nosec
+    rmpath(pth)
+
+
+def test_metafile_assemble():
+    """Test MetaFile assemble file Exception."""
+    testfile = tempfile()
+    meta = MetaFile(path=testfile)
+    try:
+        meta.assemble()
+    except NotImplementedError:
+        assert True   # nosec
+    rmpath(testfile)
+
+
+def test_metafile_write():
+    """Test MetaFile write Exception."""
+    testfile = tempfile()
+    meta = MetaFile(path=testfile)
+    try:
+        meta.write()
+    except NotImplementedError:
+        assert True   # nosec
+    rmpath(testfile)
