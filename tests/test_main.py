@@ -20,9 +20,7 @@ import sys
 import pytest
 
 from tests.context import rmpath, tempfile
-from torrentfile import TorrentFile, TorrentFileV2
-from torrentfile import __main__ as entry
-from torrentfile import main
+from torrentfile import TorrentFile, TorrentFileV2, main
 
 
 @pytest.fixture(scope="module")
@@ -41,17 +39,12 @@ def tfile():
     rmpath(t_file)
 
 
-def test_main():
-    """Test __maine__."""
-    assert entry.__doc__  # nosec
-
-
 def test_main_func(tfile):
     """Test __maine__."""
     args, path = tfile
     opath = os.path.join(os.getcwd(), "torrent.torrent")
-    sys.argv = args + ["-p", path, "-o", opath]
-    entry.main()
+    sys.argv = args + [path, "-o", opath]
+    main()
     assert os.path.exists(opath)   # nosec
     rmpath(opath)
 
@@ -60,7 +53,6 @@ def test_main_announce_list(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--path",
         path,
         "--announce-list",
         "https://tracker2/announce",
@@ -77,11 +69,10 @@ def test_main_annlist_single(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--path",
-        path,
         "--announce-list",
         "https://tracker2/announce",
     ]
+    sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
@@ -143,8 +134,6 @@ def test_main_annlist_v2(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--path",
-        path,
         "--announce-list",
         "https://tracker2/announce",
         "https://tracker3/announce",
@@ -152,6 +141,7 @@ def test_main_annlist_v2(tfile):
         "--meta-version",
         "2",
     ]
+    sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
@@ -162,8 +152,6 @@ def test_main_annlist_v3(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--path",
-        path,
         "--announce-list",
         "https://tracker2/announce",
         "https://tracker3/announce",
@@ -171,6 +159,7 @@ def test_main_annlist_v3(tfile):
         "--meta-version",
         "3",
     ]
+    sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
@@ -181,13 +170,12 @@ def test_main_annlist_single_v2(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--path",
-        path,
         "--announce-list",
         "https://tracker2/announce",
         "--meta-version",
         "2",
     ]
+    sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
@@ -198,13 +186,12 @@ def test_main_annlist_single_v3(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--path",
-        path,
         "--announce-list",
         "https://tracker2/announce",
         "--meta-version",
         "3",
     ]
+    sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
@@ -215,13 +202,12 @@ def test_main_annlist_single_v1(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--path",
-        path,
         "--announce-list",
         "https://tracker2/announce",
         "--meta-version",
         "1",
     ]
+    sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec

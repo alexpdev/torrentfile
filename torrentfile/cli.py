@@ -24,7 +24,7 @@ Functions:
 """
 
 import sys
-from argparse import ArgumentParser
+from argparse import ArgumentParser, RawTextHelpFormatter
 
 import torrentfile
 
@@ -47,33 +47,32 @@ def main_script(args=None):
     if not args:
         args = sys.argv[1:]
 
-    usage = """torrentfile -v or torrentfile --version
-               torrentfile -h or torrentfile --help
-               torrentfile --path <src> [-o <dest>] [-a <url>] [--private]
-               [--piece-length <n>]  [--meta-version <n>] [--source <x>]
-               [--announce-list <url2> <...>] [--comment <comment>]
-            """
+    usage = (
+        """\t   torrentfile -v --version
+           torrentfile -h --help
+           torrentfile path [-o <dest>] [-a <url>] [--private]
+           [--piece-length <n>] [--meta-version <n>] [--source <x>]
+           [--announce-list <url2> <...>] [--comment <comment>]"""
+    )
 
     desc = "Create Bittorrent meta files for Bittorrent v1 and v2."
-    parser = ArgumentParser(
-        "torrentfile", description=desc, prefix_chars="-", usage=usage
-    )
+    parser = ArgumentParser("torrentfile", description=desc, prefix_chars="-",
+                            usage=usage, formatter_class=RawTextHelpFormatter,
+                            exit_on_error=False)
 
     parser.add_argument(
         "-v",
         "--version",
         action="version",
         version=f"torrentfile v{torrentfile.__version__}",
-        help="show program version and exit\n",
+        help="\t\tShow program version and exit\n",
     )
 
     parser.add_argument(
-        "-p",
-        "--path",
+        "path",
         action="store",
-        dest="path",
-        metavar="<src>",
-        help="(required) path to torrent content",
+        help="\t\tPath to content source file or directory.",
+        metavar="<path>",
     )
 
     parser.add_argument(
@@ -82,44 +81,56 @@ def main_script(args=None):
         action="store",
         dest="announce",
         metavar="<url>",
-        help="Primary tracker url.",
+        help="\t\tPrimary announce url for Bittorrent Tracker.",
+        default="127.0.0.1"
     )
 
     parser.add_argument(
+        "-p",
         "--piece-length",
         action="store",
         dest="piece_length",
-        metavar="<n>",
-        help="Transmit size for pieces of torrent content.",
+        metavar="<val>",
+        help="""
+            \tIntiger piece length for content used by Bittorrent Protocol.
+            \tAcceptable Input values include 14-35 which will be treated as
+            \tan exponent for 2^n power. Otherwise the value must be a
+            \tperfect power of 2 between 16KB and 16MB.
+            \ti.e. [--piece-length 14] is the same as [--piece-length  16384]
+            \tAlternatively, leave blank and let the program calulate the
+            \tappropriate piece length.
+            """,
     )
 
     parser.add_argument(
         "--private",
         action="store_true",
         dest="private",
-        help="For torrents distributed on private trackers.",
+        help="\t\tCreate file for use with private tracker.",
     )
 
     parser.add_argument(
         "-o",
         "--out",
         action="store",
-        help="Specify path for .torrent file.",
+        help="\t\tPath to the target destination for the output .torrent file.",
         dest="outfile",
         metavar="<dest>",
     )
 
     parser.add_argument(
         "--meta-version",
+        default="1",
         choices=["1", "2", "3"],
         action="store",
-        help=(
-            "Specify version of torrent metafile to create.\n"
-            "1 = version 1 (default)\n"
-            "2 = version 2\n"
-            "3 = 1 & 2 Hybrid"
-        ),
-        default="1",
+        help=("""
+            \tOptions = 1, 2 or 3.
+            \t(1) = Bittorrent v1;. (Default)
+            \t(2) = Bittorrent v2.
+            \t(3) = Bittorrent v1 & v2 hybrid.
+            \tSpecify the Bittorrent Protocol and
+            \tformatting version for .torrent file.
+        """),
         dest="meta_version",
         metavar="<n>",
     )
@@ -128,16 +139,16 @@ def main_script(args=None):
         "--comment",
         action="store",
         dest="comment",
-        metavar="<comment>",
-        help="Include a comment in file metadata.",
+        metavar="<text>",
+        help="\t\tInclude a comment in file metadata.",
     )
 
     parser.add_argument(
         "--source",
         action="store",
         dest="source",
-        metavar="<source>",
-        help="Specify source tracker.",
+        metavar="<text>",
+        help="\t\tSpecify source.",
     )
 
     parser.add_argument(
@@ -145,8 +156,8 @@ def main_script(args=None):
         action="extend",
         dest="announce_list",
         nargs="+",
-        metavar="[<url>, ...]",
-        help="Additional tracker announce URLs.",
+        metavar="<url>",
+        help="\t\tAdditional tracker announce URLs.",
     )
     if not args:
         args = ["-h"]

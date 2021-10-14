@@ -18,8 +18,8 @@ import os
 import pytest
 
 from tests.context import rmpath, tempdir, tempfile
-from torrentfile.utils import (get_piece_length, path_piece_length, path_size,
-                               path_stat)
+from torrentfile.utils import (get_file_list, get_piece_length,
+                               path_piece_length, path_size, path_stat)
 
 KIB = 2 ** 10
 MIB = KIB ** 2
@@ -163,3 +163,9 @@ def test_path_piece_length_max(tdir):
     """Test path_piece_length for dir return piece_length < Maximum."""
     result = path_piece_length(tdir)
     assert result <= MAX_BLOCK  # nosec
+
+
+def test_get_filelist(tdir):
+    """Test get_file_list function."""
+    result = get_file_list(tdir)
+    assert len(result) > 1  # nosec

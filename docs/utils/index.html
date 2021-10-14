@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Utils - TorrentFile</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Utils";
+    var mkdocs_page_input_path = "utils.md";
+    var mkdocs_page_url = "/torrentfile/utils/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> TorrentFile</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="..">Home</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../about/">About</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../LICENSE/">License</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../API/">API</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../tests/">Tests</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../CLI/">CLI</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../Hybrid/">Hybrid</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../TorrentFile/">TorrentFile</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../TorrentFileV2/">TorrentFileV2</a>
+  </li>
+    
+      
+
+
+  
+    
+    <li class="navtree toctree-l1 page current">
+      <a class="current" href="./">
+        Utils
+      </a>
+    </li>
+    
+      
+
+
+
+  <li class="toctree-l1 current">
+    <ul class="subnav-l1 current">
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#torrentfile.utils">torrentfile.utils</a>
+        </li>
+    
+      
+          
+
+  <li class="toctree-l2">
+    <a href="#torrentfile.utils.MetaFile">
+      MetaFile
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l2">
+    <ul class="subnav-l2 toc-hidden">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#torrentfile.utils.MetaFile.__init__">__init__()</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#torrentfile.utils.MetaFile.assemble">assemble()</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#torrentfile.utils.MetaFile.write">write()</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l2">
+    <a href="#torrentfile.utils.MissingPathError">
+      MissingPathError
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l2">
+    <ul class="subnav-l2 toc-hidden">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#torrentfile.utils.MissingPathError.__init__">__init__()</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#torrentfile.utils.filelist_total">filelist_total()</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#torrentfile.utils.get_file_list">get_file_list()</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#torrentfile.utils.get_piece_length">get_piece_length()</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#torrentfile.utils.path_piece_length">path_piece_length()</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#torrentfile.utils.path_size">path_size()</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#torrentfile.utils.path_stat">path_stat()</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#torrentfile.utils.sortfiles">sortfiles()</a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">TorrentFile</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Utils</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/alexpdev/torrentfile/edit/master/docs/utils.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="utils">Utils</h1>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="torrentfile.utils"></a>
+    <div class="doc doc-contents first">
+
+      <p>Utility functions and classes used throughout package.</p>
+<p>Functions:
+  get_piece_length: calculate ideal piece length for torrent file.
+  sortfiles: traverse directory in sorted order yielding paths encountered.
+  path_size: Sum the sizes of each file in path.
+  get_file_list: Return list of all files contained in directory.
+  path_stat: Get ideal piece length, total size, and file list for directory.
+  path_piece_length: Get ideal piece length based on size of directory.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="torrentfile.utils.MetaFile" class="doc doc-heading">
+        <code>
+MetaFile        </code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Base Class for all TorrentFile classes.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>target path to torrent content.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>announce</code></td>
+        <td><code>`str`</code></td>
+        <td><p>Tracker URL.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>announce_list</code></td>
+        <td><code>`list`</code></td>
+        <td><p>Additional tracker URL's.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>comment</code></td>
+        <td><code>`str`</code></td>
+        <td><p>A comment.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>piece_length</code></td>
+        <td><code>`int`</code></td>
+        <td><p>Size of torrent pieces.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>private</code></td>
+        <td><code>`bool`</code></td>
+        <td><p>For private trackers?</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>outfile</code></td>
+        <td><code>`str`</code></td>
+        <td><p>target path to write .torrent file.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>source</code></td>
+        <td><code>`str`</code></td>
+        <td><p>Private tracker source.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="torrentfile.utils.MetaFile.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">announce_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Construct MetaFile superclass and assign local attributes.</p>
+<p>Keyword parameters include path, announce, announce_list private,
+source, piece_length, comment, outfile.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">announce_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct MetaFile superclass and assign local attributes.</span>
+
+<span class="sd">    Keyword parameters include path, announce, announce_list private,</span>
+<span class="sd">    source, piece_length, comment, outfile.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MissingPathError</span>
+    <span class="c1"># base path to torrent content.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+
+    <span class="c1"># Format piece_length attribute.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">piece_length</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">path_piece_length</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+    <span class="c1"># Coming from CLI is most likely a string.</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="c1"># Under 36 means its used as exponent to 2**n.</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">36</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">piece_length</span>
+        <span class="c1"># Otherwise just cast to integer.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
+
+    <span class="c1"># Assign announce URL to empty string if none provided.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">announce</span><span class="p">:</span>
+        <span class="n">announce</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="c1"># Most torrent clients have editting trackers as a feature.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">announce</span> <span class="o">=</span> <span class="n">announce</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">announce_list</span> <span class="o">=</span> <span class="n">announce_list</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">private</span> <span class="o">=</span> <span class="n">private</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="torrentfile.utils.MetaFile.assemble" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Overload in subclasses.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Overload in subclasses.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        NotImplementedError (`Exception`)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="torrentfile.utils.MetaFile.write" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Overload when subclassed.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Overload when subclassed.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        NotImplementedError (`Exception`)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="torrentfile.utils.MissingPathError" class="doc doc-heading">
+        <code>
+MissingPathError            (<span title="Exception">Exception</span>)
+        </code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Path parameter is required to specify target content.</p>
+<p>Creating a .torrent file with no contents seems rather silly.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>message</code></td>
+        <td><code>`any`</code></td>
+        <td><p>Value cannot be interpreted by decoder.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="torrentfile.utils.MissingPathError.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Raise when creating a meta file without specifying target content.</p>
+<p>The <code>message</code> argument is a message to pass to Exception base class.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Raise when creating a meta file without specifying target content.</span>
+
+<span class="sd">    The `message` argument is a message to pass to Exception base class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Path arguement is missing and required </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="torrentfile.utils.filelist_total" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Search directory tree for files.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>Path to file or directory base</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>sort</code></td>
+        <td><code>`bool`</code></td>
+        <td><p>Return list sorted. Defaults to False.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(`list`)</code></td>
+      <td><p>All file paths within directory tree.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Search directory tree for files.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      path (`str`): Path to file or directory base</span>
+<span class="sd">      sort (`bool`): Return list sorted. Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      (`list`): All file paths within directory tree.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="n">file_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">file_size</span><span class="p">,</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span>
+
+    <span class="c1"># put all files into filelist within directory</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">total_size</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">filelist</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">filelist</span><span class="p">:</span>
+        <span class="n">full</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="n">size</span><span class="p">,</span> <span class="n">paths</span> <span class="o">=</span> <span class="n">filelist_total</span><span class="p">(</span><span class="n">full</span><span class="p">)</span>
+
+        <span class="n">total_size</span> <span class="o">+=</span> <span class="n">size</span>
+        <span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total_size</span><span class="p">,</span> <span class="n">files</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="torrentfile.utils.get_file_list" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_file_list</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Return a sorted list of file paths contained in directory.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>target file or directory.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>filelist (`list`)</code></td>
+      <td><p>sorted list of file paths.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_file_list</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a sorted list of file paths contained in directory.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (`str`): target file or directory.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        filelist (`list`): sorted list of file paths.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">filelist</span> <span class="o">=</span> <span class="n">filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filelist</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="torrentfile.utils.get_piece_length" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_piece_length</span><span class="p">(</span><span class="n">size</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the ideal piece length for bittorrent data.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>size</code></td>
+        <td><code>`int`</code></td>
+        <td><p>Total bits of all files incluided in .torrent file.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(`int`)</code></td>
+      <td><p>Ideal peace length calculated from the size arguement.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_piece_length</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the ideal piece length for bittorrent data.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      size (`int`): Total bits of all files incluided in .torrent file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      (`int`): Ideal peace length calculated from the size arguement.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="k">while</span> <span class="n">size</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">exp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">200</span> <span class="ow">and</span> <span class="n">exp</span> <span class="o">&lt;</span> <span class="mi">23</span><span class="p">:</span>
+        <span class="n">exp</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">exp</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="torrentfile.utils.path_piece_length" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">path_piece_length</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate piece length for input path and contents.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>The absolute path to directory and contents.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>piece_length (`int`)</code></td>
+      <td><p>The size of pieces of torrent content.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">path_piece_length</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate piece length for input path and contents.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      path (`str`): The absolute path to directory and contents.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      piece_length (`int`): The size of pieces of torrent content.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">psize</span> <span class="o">=</span> <span class="n">path_size</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">get_piece_length</span><span class="p">(</span><span class="n">psize</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="torrentfile.utils.path_size" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">path_size</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Return the total size of all files in path recursively.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>path to target file or directory.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>size (`int`)</code></td>
+      <td><p>total size of files.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">path_size</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the total size of all files in path recursively.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (`str`): path to target file or directory.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        size (`int`): total size of files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">total_size</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total_size</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="torrentfile.utils.path_stat" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">path_stat</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate directory statistics.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>The path to start calculating from.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>filelist (`list`)</code></td>
+      <td><p>List of all files contained in Directory
+size (<code>int</code>): Total sum of bytes from all contents of dir
+piece_length (<code>int</code>): The size of pieces of the torrent contents.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">path_stat</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate directory statistics.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (`str`): The path to start calculating from.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        filelist (`list`):  List of all files contained in Directory</span>
+<span class="sd">        size (`int`): Total sum of bytes from all contents of dir</span>
+<span class="sd">        piece_length (`int`): The size of pieces of the torrent contents.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">total_size</span><span class="p">,</span> <span class="n">filelist</span> <span class="o">=</span> <span class="n">filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">piece_length</span> <span class="o">=</span> <span class="n">get_piece_length</span><span class="p">(</span><span class="n">total_size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">filelist</span><span class="p">,</span> <span class="n">total_size</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="torrentfile.utils.sortfiles" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">sortfiles</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Sort entries in path.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>Target directory for sorting contents.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(`iterator`)</code></td>
+      <td><p>yield sorted content.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sortfiles</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sort entries in path.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (`str`): Target directory for sorting contents.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (`iterator`): yield sorted content.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+        <span class="n">full</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">item</span><span class="p">,</span> <span class="n">full</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../TorrentFileV2/" class="btn btn-neutral" title="TorrentFileV2"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>alexpdev 2021</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/alexpdev/torrentfile/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../TorrentFileV2/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

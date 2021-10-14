@@ -71,16 +71,32 @@ class MetaFile:
         """
         if not path:
             raise MissingPathError
+        # base path to torrent content.
         self.path = path
+
+        # Format piece_length attribute.
+        if not piece_length:
+            self.piece_length = path_piece_length(self.path)
+        # Coming from CLI is most likely a string.
+        elif isinstance(path, str):
+            # Under 36 means its used as exponent to 2**n.
+            if int(piece_length) <= 36:
+                self.piece_length = 2 ** piece_length
+            # Otherwise just cast to integer.
+            self.piece_length = int(piece_length)
+
+        else:
+            self.piece_length = piece_length
+
+        # Assign announce URL to empty string if none provided.
         if not announce:
             announce = ""
+        # Most torrent clients have editting trackers as a feature.
         self.announce = announce
         self.announce_list = announce_list
         self.private = private
         self.source = source
-        if piece_length and isinstance(piece_length, str):
-            piece_length = int(piece_length)
-        self.piece_length = piece_length
+
         self.comment = comment
         self.outfile = outfile
 

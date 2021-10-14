@@ -151,7 +151,7 @@ from hashlib import sha256
 
 import pyben
 
-from .utils import MetaFile, get_piece_length, path_size, sortfiles
+from .utils import MetaFile, sortfiles
 
 BLOCK_SIZE = 2 ** 14  # 16KiB
 HASH_SIZE = 32
@@ -200,15 +200,12 @@ class TorrentFileV2(MetaFile):
         if self.comment:
             info["comment"] = self.comment
 
-        if not self.piece_length:
-            self.piece_length = get_piece_length(path_size(self.path))
-
         info["piece length"] = self.piece_length
 
         if os.path.isfile(self.path):
             info["length"] = os.path.getsize(self.path)
 
-        info["file tree"] = self._traverse(self.path)
+        info["file tree"] = {info["name"]: self._traverse(self.path)}
 
         # Bittorrent Protocol v2
         info["meta version"] = 2
@@ -243,14 +240,17 @@ class TorrentFileV2(MetaFile):
 
     def _traverse(self, path):
         if os.path.isfile(path):
+            # Calculate Size and hashes for each file.
             size = os.path.getsize(path)
-            fhash = FileHash(path, self.piece_length)
-
-            if size >= self.piece_length:
-                self.piece_layers[fhash.root] = fhash.piece_layer
 
             if size == 0:
                 return {"": {"length": size}}
+
+            fhash = FileHash(path, self.piece_length)
+
+            if size > self.piece_length:
+                self.piece_layers[fhash.root] = fhash.piece_layer
+
             return {"": {"length": size, "pieces root": fhash.root}}
 
         file_tree = {}
@@ -319,6 +319,7 @@ class FileHash:
         self.layer_hashes = []
         self.piece_length = piece_length
         self.num_blocks = piece_length // BLOCK_SIZE
+
         with open(self.path, "rb") as fd:
             self.process_file(fd)
 
@@ -333,43 +334,20 @@ class FileHash:
             total = 0
             blocks = []
             leaf = bytearray(BLOCK_SIZE)
-
+            # generate leaves of merkle tree
             for _ in range(self.num_blocks):
                 size = fd.readinto(leaf)
                 total += size
                 if not size:
                     break
                 blocks.append(sha256(leaf[:size]).digest())
-
+            # blocks is empty mean eof
             if not blocks:
                 break
 
             # if the file is smaller than piece length
-            if len(blocks) < self.num_blocks:
-                blocks += self._pad_remaining(total, len(blocks))
-
             self.layer_hashes.append(merkle_root(blocks))
         self._calculate_root()
-
-    def _pad_remaining(self, total, blocklen):
-        """
-        Generate Hash sized, 0 filled bytes for padding.
-
-        Args:
-            total (`int`): length of bytes processed.
-            blocklen (`int`): number of blocks processed.
-
-        Returns:
-            `int`: Padding to fill remaining portion of tree.
-        """
-        pad = bytes(HASH_SIZE)
-
-        if not self.layer_hashes:
-            next_pow_2 = 1 << int(math.log2(total) + 1)
-            remaining = ((next_pow_2 - total) // BLOCK_SIZE) + 1
-            return [pad for _ in range(remaining)]
-
-        return [pad for _ in range(self.num_blocks - blocklen)]
 
     def _calculate_root(self):
         """Calculate root hash for the target file."""

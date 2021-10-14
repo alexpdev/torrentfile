@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>CLI - TorrentFile</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "CLI";
+    var mkdocs_page_input_path = "CLI.md";
+    var mkdocs_page_url = "/torrentfile/CLI/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> TorrentFile</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="..">Home</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../about/">About</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../LICENSE/">License</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../API/">API</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../tests/">Tests</a>
+  </li>
+    
+      
+
+
+  
+    
+    <li class="navtree toctree-l1 page current">
+      <a class="current" href="./">
+        CLI
+      </a>
+    </li>
+    
+      
+
+  <li class="toctree-l1 current with-children">
+    <a href="#command-line-interface">
+      Command Line Interface
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l1 current">
+    <ul class="subnav-l1 current">
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#torrentfile.cli">torrentfile.cli</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#torrentfile.cli.main">main()</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#torrentfile.cli.main_script">main_script()</a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../Hybrid/">Hybrid</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../TorrentFile/">TorrentFile</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../TorrentFileV2/">TorrentFileV2</a>
+  </li>
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../utils/">Utils</a>
+  </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">TorrentFile</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>CLI</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/alexpdev/torrentfile/edit/master/docs/CLI.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="command-line-interface">Command Line Interface</h1>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="torrentfile.cli"></a>
+    <div class="doc doc-contents first">
+
+      <p>Main script entrypoint for creating .torrent files.</p>
+<p>This module provides the primary command line argument parser for
+the torrentfile package.  The main_script function is automatically
+invoked when called from command line, and parses accompanying arguments.</p>
+<p>!!! functions
+    main_script: process command line arguments and run program.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="torrentfile.cli.main" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">main</span><span class="p">()</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Initiate main function for CLI script.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Initiate main function for CLI script.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">main_script</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="torrentfile.cli.main_script" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">main_script</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Initialize Command Line Interface for torrentfile.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>args</code></td>
+        <td><code>`list`, default=None</code></td>
+        <td><p>Commandline arguments.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>      <p>!!! usage "torrentfile --path /path/to/content [-o /path/to/output.torrent]"
+       [--piece-length n][--private] [-t https://tracker.url/announce]
+       [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]
+       [-h]</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">main_script</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Initialize Command Line Interface for torrentfile.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        args (`list`, default=None): Commandline arguments.</span>
+
+<span class="sd">    usage: torrentfile --path /path/to/content [-o /path/to/output.torrent]</span>
+<span class="sd">           [--piece-length n] [--private] [-t https://tracker.url/announce]</span>
+<span class="sd">           [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]</span>
+<span class="sd">           [-h]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="n">usage</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;\t   torrentfile -v --version</span>
+<span class="sd">           torrentfile -h --help</span>
+<span class="sd">           torrentfile path [-o &lt;dest&gt;] [-a &lt;url&gt;] [--private]</span>
+<span class="sd">           [--piece-length &lt;n&gt;] [--meta-version &lt;n&gt;] [--source &lt;x&gt;]</span>
+<span class="sd">           [--announce-list &lt;url2&gt; &lt;...&gt;] [--comment &lt;comment&gt;]&quot;&quot;&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Create Bittorrent meta files for Bittorrent v1 and v2.&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span><span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span> <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
+                            <span class="n">usage</span><span class="o">=</span><span class="n">usage</span><span class="p">,</span> <span class="n">formatter_class</span><span class="o">=</span><span class="n">RawTextHelpFormatter</span><span class="p">,</span>
+                            <span class="n">exit_on_error</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-v&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--version&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;torrentfile v</span><span class="si">{</span><span class="n">torrentfile</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">Show program version and exit</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">Path to content source file or directory.&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--announce&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">Primary announce url for Bittorrent Tracker.&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-p&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--piece-length&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;piece_length&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;val&gt;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">Intiger piece length for content used by Bittorrent Protocol.</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">Acceptable Input values include 14-35 which will be treated as</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">an exponent for 2^n power. Otherwise the value must be a</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">perfect power of 2 between 16KB and 16MB.</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">i.e. [--piece-length 14] is the same as [--piece-length  16384]</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">Alternatively, leave blank and let the program calulate the</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">appropriate piece length.</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;private&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">Create file for use with private tracker.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--out&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">Path to the target destination for the output .torrent file.&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;outfile&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;dest&gt;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">],</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">Options = 1, 2 or 3.</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">(1) = Bittorrent v1;. (Default)</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">(2) = Bittorrent v2.</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">(3) = Bittorrent v1 &amp; v2 hybrid.</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">Specify the Bittorrent Protocol and</span>
+<span class="s2">            </span><span class="se">\t</span><span class="s2">formatting version for .torrent file.</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">),</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;meta_version&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;n&gt;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;text&gt;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">Include a comment in file metadata.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;text&gt;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">Specify source.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--announce-list&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;extend&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;announce_list&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">Additional tracker announce URLs.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-h&quot;</span><span class="p">]</span>
+
+    <span class="n">flags</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">announce</span><span class="p">,</span>
+        <span class="s2">&quot;announce_list&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">announce_list</span><span class="p">,</span>
+        <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">private</span><span class="p">,</span>
+        <span class="s2">&quot;outfile&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">outfile</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileV2</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">flags</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileHybrid</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
+
+    <span class="k">return</span> <span class="n">parser</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Hybrid/" class="btn btn-neutral float-right" title="Hybrid">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../tests/" class="btn btn-neutral" title="Tests"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>alexpdev 2021</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/alexpdev/torrentfile/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../tests/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Hybrid/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

@@ -74,7 +74,9 @@ from hashlib import sha1
 
 import pyben
 
-from .utils import MetaFile, path_stat
+import torrentfile
+
+from .utils import MetaFile, filelist_total
 
 
 class TorrentFile(MetaFile):
@@ -116,16 +118,13 @@ class TorrentFile(MetaFile):
         """
         info = {"name": os.path.basename(self.path)}
 
-        filelist, size, piece_length = path_stat(self.path)
+        size, filelist = filelist_total(self.path)
 
         if self.comment:
             info["comment"] = self.comment
 
         if self.announce_list:
             info["announce list"] = self.announce_list
-
-        if not self.piece_length:
-            self.piece_length = piece_length
 
         info["piece length"] = self.piece_length
 
@@ -163,7 +162,7 @@ class TorrentFile(MetaFile):
         """
         meta = {"announce": self.announce}
         meta["creation date"] = int(dt.timestamp(dt.now()))
-        meta["created by"] = "torrentfile"
+        meta["created by"] = "torrentfile" + "/v" + torrentfile.__version__
         meta["info"] = self._assemble_infodict()
         return meta
 
@@ -335,15 +334,6 @@ class Feeder:
         """
         self.iterator = self.leaves()
         return self.iterator
-
-    def __next__(self):
-        """
-        Return the next element from iterator.
-
-        Returns:
-          `bytes`: Piece_length length pieces of data.
-        """
-        return self.iterator.__next__()
 
     def handle_partial(self, arr, partial):
         """

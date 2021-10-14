@@ -34,4 +34,4 @@ from .metafile import TorrentFile
 from .metafile2 import TorrentFileV2
 
 __author__ = "alexpdev"
-__version__ = "0.2.9"
+__version__ = "0.3.0"
