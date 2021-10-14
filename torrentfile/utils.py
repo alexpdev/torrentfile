@@ -36,8 +36,7 @@ class MissingPathError(Exception):
     """
 
     def __init__(self, message=None):
-        """
-        Raise when creating a meta file without specifying target content.
+        """Raise when creating a meta file without specifying target content.
 
         The `message` argument is a message to pass to Exception base class.
         """
@@ -46,8 +45,7 @@ class MissingPathError(Exception):
 
 
 class MetaFile:
-    """
-    Base Class for all TorrentFile classes.
+    """Base Class for all TorrentFile classes.
 
     Args:
         path (`str`): target path to torrent content.
@@ -60,11 +58,10 @@ class MetaFile:
         source (`str`): Private tracker source.
     """
 
-    def __init__(self, path=None, announce="", announce_list=None,
+    def __init__(self, path=None, announce=None, announce_list=None,
                  private=False, source=None, piece_length=None,
                  comment=None, outfile=None):
-        """
-        Construct MetaFile superclass and assign local attributes.
+        """Construct MetaFile superclass and assign local attributes.
 
         Keyword parameters include path, announce, announce_list private,
         source, piece_length, comment, outfile.
@@ -73,21 +70,17 @@ class MetaFile:
             raise MissingPathError
         # base path to torrent content.
         self.path = path
-
         # Format piece_length attribute.
         if not piece_length:
-            self.piece_length = path_piece_length(self.path)
+            piece_length = path_piece_length(self.path)
+        elif isinstance(piece_length, str):
+            piece_length = int(piece_length)
         # Coming from CLI is most likely a string.
-        elif isinstance(path, str):
+        if 13 < piece_length < 36:
             # Under 36 means its used as exponent to 2**n.
-            if int(piece_length) <= 36:
-                self.piece_length = 2 ** piece_length
+            piece_length = 2 ** piece_length
             # Otherwise just cast to integer.
-            self.piece_length = int(piece_length)
-
-        else:
-            self.piece_length = piece_length
-
+        self.piece_length = piece_length
         # Assign announce URL to empty string if none provided.
         if not announce:
             announce = ""
@@ -101,8 +94,7 @@ class MetaFile:
         self.outfile = outfile
 
     def assemble(self):
-        """
-        Overload in subclasses.
+        """Overload in subclasses.
 
         Raises:
             NotImplementedError (`Exception`)
@@ -110,8 +102,7 @@ class MetaFile:
         raise NotImplementedError
 
     def write(self, outfile=None):
-        """
-        Overload when subclassed.
+        """Overload when subclassed.
 
         Raises:
             NotImplementedError (`Exception`)
@@ -120,8 +111,7 @@ class MetaFile:
 
 
 def get_piece_length(size):
-    """
-    Calculate the ideal piece length for bittorrent data.
+    """Calculate the ideal piece length for bittorrent data.
 
     Args:
       size (`int`): Total bits of all files incluided in .torrent file.
@@ -136,8 +126,7 @@ def get_piece_length(size):
 
 
 def sortfiles(path):
-    """
-    Sort entries in path.
+    """Sort entries in path.
 
     Args:
         path (`str`): Target directory for sorting contents.
@@ -152,8 +141,7 @@ def sortfiles(path):
 
 
 def filelist_total(path):
-    """
-    Search directory tree for files.
+    """Search directory tree for files.
 
     Args:
       path (`str`): Path to file or directory base
@@ -182,8 +170,7 @@ def filelist_total(path):
 
 
 def path_size(path):
-    """
-    Return the total size of all files in path recursively.
+    """Return the total size of all files in path recursively.
 
     Args:
         path (`str`): path to target file or directory.
@@ -196,8 +183,7 @@ def path_size(path):
 
 
 def get_file_list(path):
-    """
-    Return a sorted list of file paths contained in directory.
+    """Return a sorted list of file paths contained in directory.
 
     Args:
         path (`str`): target file or directory.
@@ -210,8 +196,7 @@ def get_file_list(path):
 
 
 def path_stat(path):
-    """
-    Calculate directory statistics.
+    """Calculate directory statistics.
 
     Args:
         path (`str`): The path to start calculating from.
@@ -227,8 +212,7 @@ def path_stat(path):
 
 
 def path_piece_length(path):
-    """
-    Calculate piece length for input path and contents.
+    """Calculate piece length for input path and contents.
 
     Args:
       path (`str`): The absolute path to directory and contents.

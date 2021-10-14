@@ -539,8 +539,7 @@ FileHash        </code>
         <details class="quote">
           <summary>Source code in <code>torrentfile\metafile2.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate and store hash information for specific file.</span>
+    <span class="sd">&quot;&quot;&quot;Calculate and store hash information for specific file.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      path (`str`): Absolute path to file.</span>
@@ -602,8 +601,7 @@ FileHash        </code>
         <details class="quote">
           <summary>Source code in <code>torrentfile\metafile2.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate hashes over 16KiB chuncks of file content.</span>
+    <span class="sd">&quot;&quot;&quot;Calculate hashes over 16KiB chuncks of file content.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        fd (`IOBufferReader`): opened file in read mode.</span>
@@ -841,8 +839,7 @@ TorrentFileV2            (<a title="torrentfile.utils.MetaFile" href="../utils/#
         <details class="quote">
           <summary>Source code in <code>torrentfile\metafile2.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Assemble then return the meta dictionary for encoding.</span>
+    <span class="sd">&quot;&quot;&quot;Assemble then return the meta dictionary for encoding.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">      meta (`dict`): Metainformation about the torrent.</span>
@@ -918,8 +915,7 @@ TorrentFileV2            (<a title="torrentfile.utils.MetaFile" href="../utils/#
         <details class="quote">
           <summary>Source code in <code>torrentfile\metafile2.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Write assembled data to .torrent file.</span>
+    <span class="sd">&quot;&quot;&quot;Write assembled data to .torrent file.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      outfile (`str`): Path to save location.</span>

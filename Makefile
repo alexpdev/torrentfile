@@ -62,7 +62,7 @@ test: environment ## run tests quickly with the default Python
 
 coverage: environment ## check code coverage with the default Python
 	@echo Generating Coverage Report
-	coverage run -m pytest tests
+	coverage run --source torrentfile -m pytest tests
 	coverage xml -o coverage.xml
 
 push: clean lint test coverage docs ## push to remote repo
@@ -77,5 +77,15 @@ docs: environment ## Regenerate docs from changes
 	mkdocs -q build
 	touch docs/.nojekyll
 
+build: clean
+	python setup.py sdist bdist_wheel bdist_egg
+	# twine upload dist/*
+	make install
+	touch ../runner
+	cat "import torrentfile\n\ntorrentfile.main()" >> ../runner
+	python ../runner
+
 install: environment clean test ## Install Locally
+	pip uninstall torrentfile pyben
+	pip install -rrequirements.txt --no-cache-dir
 	python setup.py install

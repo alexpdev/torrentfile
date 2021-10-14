@@ -1,5 +1,13 @@
 # torrentfile
 
+## Version 0.3.1
+
+### Fixes v0.3.1
+
+    - Bug Fix that broke cli.
+
+---------------------
+
 ## Version 0.3.0
 
     - This version contains many breaking changes.

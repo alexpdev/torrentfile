@@ -6,70 +6,65 @@
 import os
 import string
 
-import pytest
-
-from tests.context import (TD, fill_file, fill_folder, rmpath, rmpaths, seq,
-                           sizedfile, tempdir, tempfile)
+from tests import context
 
 
 def test_seq():
     """Test seq function for random string output."""
-    output = seq()
+    output = context.seq()
     assert len([i for i in output if i in string.printable]) > 1  # nosec
 
 
 def test_fill_file():
     """Test fill_file function."""
-    path = os.path.join(TD, "filledfile.bin")
-    fill_file(path, 16)
+    path = os.path.join(context.TESTDIR, "filledfile.bin")
+    context.fill_file(path, 16)
     assert os.path.exists(path)  # nosec
     assert os.path.getsize(path) >= 2 ** 16  # nosec
-    rmpath(path)
+    context.rmpath(path)
 
 
-def test_fill_folder():
-    """Test fill_folder function."""
-    folder = os.path.join(TD, "filledfolder")
-    fill_folder(folder)
+def test_contextfill_folder():
+    """Test context.fill_folder function."""
+    folder = os.path.join(context.TESTDIR, "filledfolder")
+    context.fill_folder(folder)
     assert os.path.exists(folder)  # nosec
-    rmpath(folder)
+    context.rmpath(folder)
 
 
-def test_tempfile():
-    """Test tempfile function."""
-    filepath = tempfile()
+def test_contexttempfile():
+    """Test context.tempfile function."""
+    filepath = context.tempfile()
     assert os.path.exists(filepath)  # nosec
-    rmpath(filepath)
+    context.rmpath(filepath)
 
 
-def test_tempdir():
-    """Test tempdir function."""
-    dirpath = tempdir()
+def test_contexttempdir():
+    """Test context.tempdir function."""
+    dirpath = context.tempdir()
     assert os.path.exists(dirpath)  # nosec
-    rmpath(dirpath)
+    context.rmpath(dirpath)
 
 
-def test_sizedfile():
-    """Test tempdir function."""
-    path = sizedfile(16)
+def test_contextsizedfile():
+    """Test context.tempdir function."""
+    path = context.sizedfile(16)
     assert os.path.exists(path)  # nosec
     assert os.path.getsize(path) > 2 ** 16  # nosec
-    rmpath(path)
+    context.rmpath(path)
 
 
-@pytest.mark.last
-def test_rmpath_rmpaths():
-    """Test rmpath function and rmpaths function."""
-    dirpath = tempdir()
-    filepath = tempfile()
-    sizedpath = sizedfile(16)
-    fillfile = os.path.join(TD, "filledfile.bin")
-    fillfolder = os.path.join(TD, "filledfolder")
-    fill_file(fillfile, 16)
-    fill_folder(fillfolder)
-    rmpath(fillfile)
-    assert not os.path.exists(fillfile)  # nosec
-    pathlist = [sizedpath, dirpath, filepath, fillfolder]
-    rmpaths(pathlist)
-    for path in pathlist:
-        assert not os.path.exists(path)  # nosec
+def test_rmpath():
+    """Test rmpath function."""
+    path = context.tempdir()
+    assert os.path.exists(path)   # nosec
+    context.rmpath(path)
+    assert not os.path.exists(path)   # nosec
+
+
+def test_rmpaths():
+    """Test rmpath function."""
+    temppaths = [context.sizedfile(20), context.tempfile()]
+    assert [os.path.exists(path) for path in temppaths]   # nosec
+    context.rmpaths(temppaths)
+    assert not any([os.path.exists(path) for path in temppaths])   # nosec

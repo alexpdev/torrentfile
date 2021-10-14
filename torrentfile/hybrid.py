@@ -30,9 +30,9 @@ from hashlib import sha1, sha256  # nosec
 
 import pyben
 
-from .utils import MetaFile, path_piece_length, sortfiles
+from .utils import MetaFile, sortfiles
 
-BLOCK_SIZE = 2 ** 14
+BLOCK_SIZE = 16384
 HASH_SIZE = 32
 
 
@@ -75,15 +75,11 @@ class TorrentFileHybrid(MetaFile):
         return meta
 
     def _assemble_infodict(self):
-        """
-        Assemble info dictionary contained in meta info.
+        """Assemble info dictionary contained in meta info.
 
         Returns:
             info (`dict`): Info dictionary.
         """
-        if not self.piece_length:
-            self.piece_length = path_piece_length(self.path)
-
         info = {
             "name": self.name,
             "meta version": 2,
@@ -103,8 +99,7 @@ class TorrentFileHybrid(MetaFile):
         return info
 
     def _traverse(self, path):
-        """
-        Build meta dictionary while walking directory.
+        """Build meta dictionary while walking directory.
 
         Args:
             path (`str`): Path to target file.
@@ -169,13 +164,12 @@ class TorrentFileHybrid(MetaFile):
 def merkle_root(blocks):
     """Calculate the merkle root for a seq of sha256 hash digests."""
     while len(blocks) > 1:
-        blocks = [sha256(l + r).digest() for l, r in zip(*[iter(blocks)] * 2)]
+        blocks = [sha256(x + y).digest() for x, y in zip(*[iter(blocks)] * 2)]
     return blocks[0]
 
 
 class FileHash:
-    """
-    Calculate hashes for Hybrid torrentfile.
+    """Calculate hashes for Hybrid torrentfile.
 
     Uses sha1 and sha256 hashes for each version  # nosec
     of the Bittorrent protocols meta files respectively.
@@ -198,8 +192,7 @@ class FileHash:
             self._process_file(data)
 
     def _pad_remaining(self, total, blocklen):
-        """
-        Generate Hash sized, 0 filled bytes for padding.
+        """Generate Hash sized, 0 filled bytes for padding.
 
         Args:
             total (`int`): length of bytes processed.
@@ -216,8 +209,7 @@ class FileHash:
         return [bytes(HASH_SIZE) for _ in range(self.num_blocks - blocklen)]
 
     def _process_file(self, data):
-        """
-        Calculate layer hashes for contents of file.
+        """Calculate layer hashes for contents of file.
 
         Args:
             data (`IOBufferReader`): File opened in read mode.

@@ -18,6 +18,7 @@ import os
 import pytest
 
 from tests.context import rmpaths, tempdir, tempfile
+from torrentfile import utils
 from torrentfile.metafile import Checker, TorrentFile
 from torrentfile.metafile2 import TorrentFileV2
 
@@ -216,3 +217,19 @@ def test_metafile_checker_v1_dir(tdirmeta):
     checker = Checker(outfile, tdir)
     status = checker.check()
     assert status == "100%"  # nosec
+
+
+def test_meta_no_args_v2():
+    """Test construct TorrentFileV2 with no arguments."""
+    try:
+        assert TorrentFileV2(private=True)   # nosec
+    except utils.MissingPathError:
+        assert True  # nosec
+
+
+def test_meta_no_args_v1():
+    """Test construct TorrentFile with no arguments."""
+    try:
+        assert TorrentFile(announce="url")   # nosec
+    except utils.MissingPathError:
+        assert True  # nosec
