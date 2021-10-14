@@ -186,8 +186,7 @@ class TorrentFileV2(MetaFile):
         self.meta = self.assemble()
 
     def _assemble_infodict(self):
-        """
-        Create info dictionary for .torrent meta v2 file.
+        """Create info dictionary for .torrent meta v2 file.
 
         Returns:
           info (`dict`): Info dictionary containing torrent metadata.
@@ -219,8 +218,7 @@ class TorrentFileV2(MetaFile):
         return info
 
     def assemble(self):
-        """
-        Assemble then return the meta dictionary for encoding.
+        """Assemble then return the meta dictionary for encoding.
 
         Returns:
           meta (`dict`): Metainformation about the torrent.
@@ -239,6 +237,7 @@ class TorrentFileV2(MetaFile):
         return meta
 
     def _traverse(self, path):
+        """Walk directory tree."""
         if os.path.isfile(path):
             # Calculate Size and hashes for each file.
             size = os.path.getsize(path)
@@ -262,8 +261,7 @@ class TorrentFileV2(MetaFile):
         return file_tree
 
     def write(self, outfile=None):
-        """
-        Write assembled data to .torrent file.
+        """Write assembled data to .torrent file.
 
         Args:
           outfile (`str`): Path to save location.
@@ -291,8 +289,7 @@ def merkle_root(pieces):
 
 
 class FileHash:
-    """
-    Calculate and store hash information for specific file.
+    """Calculate and store hash information for specific file.
 
     Args:
       path: `str`
@@ -303,8 +300,7 @@ class FileHash:
     """
 
     def __init__(self, path, piece_length):
-        """
-        Calculate and store hash information for specific file.
+        """Calculate and store hash information for specific file.
 
         Args:
           path (`str`): Absolute path to file.
@@ -324,8 +320,7 @@ class FileHash:
             self.process_file(fd)
 
     def process_file(self, fd):
-        """
-        Calculate hashes over 16KiB chuncks of file content.
+        """Calculate hashes over 16KiB chuncks of file content.
 
         Args:
             fd (`IOBufferReader`): opened file in read mode.

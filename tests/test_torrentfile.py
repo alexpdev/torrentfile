@@ -18,7 +18,8 @@ from pathlib import Path
 
 import pytest
 
-from tests.context import rmpath, tempdir, tempfile
+from tests.context import (TESTDIR, rmpath, rmpaths, sizedfile, tempdir,
+                           tempfile)
 from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2
 from torrentfile.utils import MetaFile, MissingPathError
 
@@ -41,6 +42,16 @@ def tfile():
     rmpath(fd)
 
 
+@pytest.fixture
+def smallfile():
+    """Generate Sized file a tiny bit larger than BLOCK_SIZE."""
+    path = sizedfile(14)
+    with open(path, "ab") as fd:
+        fd.write(b"000000000000000")
+    yield path
+    rmpath(path)
+
+
 def test_torrentfile_dir(tdir):
     """Test temporary directory."""
     _, args = tdir
@@ -59,6 +70,7 @@ def test_torrentfile_file_private(tfile):
     """Test temporary file with arguments."""
     _, args = tfile
     args["private"] = True
+    args["piece_length"] = 18
     torrent = TorrentFile(**args)
     assert "private" in torrent.meta["info"]  # nosec
 
@@ -67,6 +79,7 @@ def test_torrentfile_dir_private(tdir):
     """Test temporary dir with arguments."""
     _, args = tdir
     args["private"] = True
+    args["piece_length"] = 1048576
     torrent = TorrentFile(**args)
     meta = torrent.meta
     assert "private" in meta["info"]  # nosec
@@ -165,49 +178,75 @@ def test_hybrid_with_outfile(tfile):
 
 def test_hybrid_0_length():
     """Test Hybrid with zero length file."""
-    pth = Path("tempfile")
-    pth.touch()
+    path = Path(TESTDIR) / "empty"
+    path.touch()
     args = {
-        "path": str(pth),
+        "path": str(path),
         "announce": "announce",
     }
     torrent = TorrentFileHybrid(**args)
+    assert torrent.meta["announce"] == "announce"  # nosec
     torrent.write()
-    assert os.path.exists(pth.with_suffix(".torrent"))   # nosec
-    rmpath(pth)
+    torpath = path.with_suffix(".torrent")
+    assert os.path.exists(torpath)   # nosec
+    rmpaths([path, torpath])
 
 
 def test_v2_0_length():
     """Test TorrentFileV2 with zero length file."""
-    pth = Path("tempfile")
-    pth.touch()
+    path = Path(TESTDIR) / "empty"
+    path.touch()
     args = {
-        "path": str(pth),
+        "path": str(path),
         "announce": "announce",
     }
     torrent = TorrentFileV2(**args)
     torrent.write()
-    assert os.path.exists(pth.with_suffix(".torrent"))  # nosec
-    rmpath(pth)
+    torpath = path.with_suffix(".torrent")
+    assert os.path.exists(torpath)  # nosec
+    rmpaths([path, torpath])
 
 
-def test_metafile_assemble():
+def test_metafile_assemble(tfile):
     """Test MetaFile assemble file Exception."""
-    testfile = tempfile()
-    meta = MetaFile(path=testfile)
+    fd, args = tfile
+    meta = MetaFile(**args)
     try:
         meta.assemble()
     except NotImplementedError:
         assert True   # nosec
-    rmpath(testfile)
+    rmpath(fd)
 
 
-def test_metafile_write():
+def test_metafile_write(tfile):
     """Test MetaFile write Exception."""
-    testfile = tempfile()
-    meta = MetaFile(path=testfile)
+    fd, args = tfile
+    meta = MetaFile(**args)
     try:
         meta.write()
     except NotImplementedError:
         assert True   # nosec
-    rmpath(testfile)
+    rmpath(fd)
+
+
+def test_hybrid_sized_file(smallfile):
+    """Test pad_remaining function in hybrid FileHash class."""
+    args = {"path": smallfile, "announce": "announce", "piece_length": 2**14}
+    torrent = TorrentFileHybrid(**args)
+    assert torrent.meta["announce"] == args["announce"]      # nosec
+    assert torrent.meta["info"]["piece length"] == 2 ** 14   # nosec
+
+
+def test_hybrid_under_block_sized():
+    """Test pad_remaining function in hybrid FileHash class."""
+    smallest = os.path.join(TESTDIR, "smallest")
+    with open(smallest, "wb") as fd:
+        letters = b"abcdefghijklmnopqrstuvwxyzABZDEFGHIJKLMNOPQRSTUVWXYZ"
+        size = len(letters)
+        while size < 16000:
+            fd.write(letters)
+            size += len(letters)
+    args = {"path": smallest, "piece_length": 2**14}
+    torrent = TorrentFileHybrid(**args)
+    assert torrent.meta["info"]["piece length"] == 2 ** 14   # nosec
+    rmpath(smallest)

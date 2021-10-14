@@ -80,8 +80,7 @@ from .utils import MetaFile, filelist_total
 
 
 class TorrentFile(MetaFile):
-    """
-    Class for creating Bittorrent meta files.
+    """Class for creating Bittorrent meta files.
 
     Construct *Torrentfile* class instance object.
 
@@ -97,8 +96,7 @@ class TorrentFile(MetaFile):
     """
 
     def __init__(self, **kwargs):
-        """
-        Construct TorrentFile class instance with given keyword args.
+        """Construct TorrentFile class instance with given keyword args.
 
         Args:
             **kwargs (`dict`): dictionary of keyword args passed to superclass.
@@ -110,8 +108,7 @@ class TorrentFile(MetaFile):
         self.meta = self.assemble()
 
     def _assemble_infodict(self):
-        """
-        Create info dictionary.
+        """Create info dictionary.
 
         Returns:
             info (`dict`): .torrent info dictionary.
@@ -154,8 +151,7 @@ class TorrentFile(MetaFile):
         return info
 
     def assemble(self):
-        """
-        Assemble components of torrent metafile.
+        """Assemble components of torrent metafile.
 
         Returns:
           `dict`: metadata dictionary for torrent file
@@ -167,8 +163,7 @@ class TorrentFile(MetaFile):
         return meta
 
     def write(self, outfile=None):
-        """
-        Write assembled data to .torrent file.
+        """Write assembled data to .torrent file.
 
         Args:
           outfile (`str`, optional): Target destination path.
@@ -187,8 +182,7 @@ class TorrentFile(MetaFile):
 
 
 class Checker:
-    """
-    Check a given file or directory to see if it matches a torrentfile.
+    """Check a given file or directory to see if it matches a torrentfile.
 
     Public constructor for Checker class instance.
 
@@ -253,8 +247,7 @@ class Checker:
         return self.paths
 
     def _check_path(self, paths):
-        """
-        Check if paths exist.
+        """Check if paths exist.
 
         Args:
           paths (`list`): Paths to torrent files contents.
@@ -276,8 +269,7 @@ class Checker:
         return str(int(counter / total) * 100) + "%"
 
     def check_path(self):
-        """
-        Check if path exists and is the correct size and hash.
+        """Check if path exists and is the correct size and hash.
 
         Returns:
             `str`: Indicating process has completed.
@@ -302,8 +294,7 @@ class Checker:
 
 
 class Feeder:
-    """
-    Construct the Feeder class.
+    """Construct the Feeder class.
 
     Seemlesly generate hashes of piece length data from filelist contents.
 
@@ -326,8 +317,7 @@ class Feeder:
         self.iterator = None
 
     def __iter__(self):
-        """
-        Iterate through feed pieces.
+        """Iterate through feed pieces.
 
         Returns:
           `iterator` : Iterator for leaves/hash pieces.
@@ -336,8 +326,7 @@ class Feeder:
         return self.iterator
 
     def handle_partial(self, arr, partial):
-        """
-        Seemlessly move to next file for input data.
+        """Seemlessly move to next file for input data.
 
         Args:
           arr (`bytearray`): Incomplete piece containing partial data

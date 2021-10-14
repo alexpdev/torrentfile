@@ -26,6 +26,8 @@ pep8:
 
 pylint:
   run: true
+  disable:
+    - R1729
 
 bandit:
   run: true

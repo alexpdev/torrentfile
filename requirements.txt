@@ -1,9 +1,1 @@
 pyben==0.2.3
-coverage
-prospector
-pylint
-pytest
-toml
-pydocstyle
-pycodestyle
-mkdocs

@@ -394,7 +394,7 @@ MetaFile        </code>
 
 
 <h3 id="torrentfile.utils.MetaFile.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">announce_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -410,11 +410,10 @@ source, piece_length, comment, outfile.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">announce_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Construct MetaFile superclass and assign local attributes.</span>
+    <span class="sd">&quot;&quot;&quot;Construct MetaFile superclass and assign local attributes.</span>
 
 <span class="sd">    Keyword parameters include path, announce, announce_list private,</span>
 <span class="sd">    source, piece_length, comment, outfile.</span>
@@ -423,21 +422,17 @@ source, piece_length, comment, outfile.</p>
         <span class="k">raise</span> <span class="n">MissingPathError</span>
     <span class="c1"># base path to torrent content.</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
-
     <span class="c1"># Format piece_length attribute.</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">piece_length</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">path_piece_length</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">piece_length</span> <span class="o">=</span> <span class="n">path_piece_length</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">piece_length</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">piece_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
     <span class="c1"># Coming from CLI is most likely a string.</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">if</span> <span class="mi">13</span> <span class="o">&lt;</span> <span class="n">piece_length</span> <span class="o">&lt;</span> <span class="mi">36</span><span class="p">:</span>
         <span class="c1"># Under 36 means its used as exponent to 2**n.</span>
-        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">36</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">piece_length</span>
+        <span class="n">piece_length</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">piece_length</span>
         <span class="c1"># Otherwise just cast to integer.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
-
-    <span class="k">else</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
-
+    <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
     <span class="c1"># Assign announce URL to empty string if none provided.</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">announce</span><span class="p">:</span>
         <span class="n">announce</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -474,8 +469,7 @@ source, piece_length, comment, outfile.</p>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Overload in subclasses.</span>
+    <span class="sd">&quot;&quot;&quot;Overload in subclasses.</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        NotImplementedError (`Exception`)</span>
@@ -506,8 +500,7 @@ source, piece_length, comment, outfile.</p>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Overload when subclassed.</span>
+    <span class="sd">&quot;&quot;&quot;Overload when subclassed.</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        NotImplementedError (`Exception`)</span>
@@ -602,8 +595,7 @@ MissingPathError            (<span title="Exception">Exception</span>)
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Raise when creating a meta file without specifying target content.</span>
+    <span class="sd">&quot;&quot;&quot;Raise when creating a meta file without specifying target content.</span>
 
 <span class="sd">    The `message` argument is a message to pass to Exception base class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -685,8 +677,7 @@ MissingPathError            (<span title="Exception">Exception</span>)
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Search directory tree for files.</span>
+    <span class="sd">&quot;&quot;&quot;Search directory tree for files.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      path (`str`): Path to file or directory base</span>
@@ -771,8 +762,7 @@ MissingPathError            (<span title="Exception">Exception</span>)
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_file_list</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return a sorted list of file paths contained in directory.</span>
+    <span class="sd">&quot;&quot;&quot;Return a sorted list of file paths contained in directory.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (`str`): target file or directory.</span>
@@ -841,8 +831,7 @@ MissingPathError            (<span title="Exception">Exception</span>)
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_piece_length</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate the ideal piece length for bittorrent data.</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the ideal piece length for bittorrent data.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      size (`int`): Total bits of all files incluided in .torrent file.</span>
@@ -913,8 +902,7 @@ MissingPathError            (<span title="Exception">Exception</span>)
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">path_piece_length</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate piece length for input path and contents.</span>
+    <span class="sd">&quot;&quot;&quot;Calculate piece length for input path and contents.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      path (`str`): The absolute path to directory and contents.</span>
@@ -983,8 +971,7 @@ MissingPathError            (<span title="Exception">Exception</span>)
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">path_size</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return the total size of all files in path recursively.</span>
+    <span class="sd">&quot;&quot;&quot;Return the total size of all files in path recursively.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (`str`): path to target file or directory.</span>
@@ -1055,8 +1042,7 @@ piece_length (<code>int</code>): The size of pieces of the torrent contents.</p>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">path_stat</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate directory statistics.</span>
+    <span class="sd">&quot;&quot;&quot;Calculate directory statistics.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (`str`): The path to start calculating from.</span>
@@ -1128,8 +1114,7 @@ piece_length (<code>int</code>): The size of pieces of the torrent contents.</p>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sortfiles</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Sort entries in path.</span>
+    <span class="sd">&quot;&quot;&quot;Sort entries in path.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (`str`): Target directory for sorting contents.</span>

@@ -556,8 +556,7 @@ checker = Checker(metafile, location)</p>
         <details class="quote">
           <summary>Source code in <code>torrentfile\metafile.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">check_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Check if path exists and is the correct size and hash.</span>
+    <span class="sd">&quot;&quot;&quot;Check if path exists and is the correct size and hash.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        `str`: Indicating process has completed.</span>
@@ -799,8 +798,7 @@ Feeder        </code>
         <details class="quote">
           <summary>Source code in <code>torrentfile\metafile.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Iterate through feed pieces.</span>
+    <span class="sd">&quot;&quot;&quot;Iterate through feed pieces.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">      `iterator` : Iterator for leaves/hash pieces.</span>
@@ -872,8 +870,7 @@ Feeder        </code>
         <details class="quote">
           <summary>Source code in <code>torrentfile\metafile.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">handle_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="n">partial</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Seemlessly move to next file for input data.</span>
+    <span class="sd">&quot;&quot;&quot;Seemlessly move to next file for input data.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      arr (`bytearray`): Incomplete piece containing partial data</span>
@@ -890,7 +887,7 @@ Feeder        </code>
         <span class="n">partial</span> <span class="o">+=</span> <span class="n">size</span>
         <span class="k">if</span> <span class="n">size</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
             <span class="k">break</span>
-    <span class="k">return</span> <span class="n">sha1</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>   <span class="c1"># nosec</span>
+    <span class="k">return</span> <span class="n">sha1</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>  <span class="c1"># nosec</span>
 </code></pre></div>
         </details>
     </div>
@@ -926,7 +923,7 @@ Feeder        </code>
         <span class="k">elif</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">:</span>
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_partial</span><span class="p">(</span><span class="n">piece</span><span class="p">[:</span><span class="n">size</span><span class="p">],</span> <span class="n">size</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">sha1</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>   <span class="c1"># nosec</span>
+            <span class="k">yield</span> <span class="n">sha1</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>  <span class="c1"># nosec</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span> <span class="o">+=</span> <span class="mi">1</span>
 </code></pre></div>
         </details>
@@ -1124,8 +1121,7 @@ TorrentFile            (<a title="torrentfile.utils.MetaFile" href="../utils/#to
         <details class="quote">
           <summary>Source code in <code>torrentfile\metafile.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Construct TorrentFile class instance with given keyword args.</span>
+    <span class="sd">&quot;&quot;&quot;Construct TorrentFile class instance with given keyword args.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        **kwargs (`dict`): dictionary of keyword args passed to superclass.</span>
@@ -1175,8 +1171,7 @@ TorrentFile            (<a title="torrentfile.utils.MetaFile" href="../utils/#to
         <details class="quote">
           <summary>Source code in <code>torrentfile\metafile.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Assemble components of torrent metafile.</span>
+    <span class="sd">&quot;&quot;&quot;Assemble components of torrent metafile.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">      `dict`: metadata dictionary for torrent file</span>
@@ -1245,8 +1240,7 @@ TorrentFile            (<a title="torrentfile.utils.MetaFile" href="../utils/#to
         <details class="quote">
           <summary>Source code in <code>torrentfile\metafile.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Write assembled data to .torrent file.</span>
+    <span class="sd">&quot;&quot;&quot;Write assembled data to .torrent file.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      outfile (`str`, optional): Target destination path.</span>

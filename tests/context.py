@@ -13,12 +13,14 @@
 #####################################################################
 """Context Functions used throughout testing suite."""
 
+import atexit
 import os
 import random
 import shutil
 import string
 
 TD = os.path.abspath(os.path.dirname(__file__))
+TESTDIR = os.path.join(TD, "TESTDIR")
 
 
 def seq():
@@ -69,7 +71,8 @@ def rmpaths(paths):
 
 def tempdir():
     """Generate temporary directory filled with meaningless data."""
-    tdir = os.path.join(TD, "tempdir")
+    datadir()
+    tdir = os.path.join(TESTDIR, "tempdir")
     tdir_1 = os.path.join(tdir, "directory1")
     for folder in [tdir, tdir_1]:
         rmpath(folder)
@@ -80,13 +83,26 @@ def tempdir():
 
 def tempfile():
     """Generate temporary file filled with meaningless data."""
-    path = os.path.join(TD, "tempfile.bin")
+    datadir()
+    path = os.path.join(TESTDIR, "tempfile.bin")
     fill_file(path, 28)
     return path
 
 
 def sizedfile(num=28):
     """Generate a specifically sized file with meaningless data."""
-    path = os.path.join(TD, "tempfile.bin")
+    path = os.path.join(TESTDIR, "tempfile.bin")
     fill_file(path, num)
     return path
+
+
+def datadir():
+    """Create testing directory for all temp and testfiles created."""
+    if not os.path.exists(TESTDIR):
+        os.mkdir(TESTDIR)
+
+
+@atexit.register
+def teardown():
+    """Teardown function for the end of testing."""
+    rmpath(TESTDIR)

@@ -113,16 +113,6 @@ def test_cli_no_args():
         assert True  # nosec
 
 
-# def test_cli_no_args_v2():
-#     """Test CLI script with specific arguments."""
-#     try:
-#         args = ["--meta-version", "2"]
-#         sys.argv = [sys.argv[0]] + args
-#         assert main()  # nosec
-#     except MissingPathError:
-#         assert True  # nosec
-
-
 def test_cli_with_all_args_file(tfile):
     """Test CLI script with specific arguments."""
     sys.argv = [
