@@ -11,7 +11,6 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-
 """Context Functions used throughout testing suite."""
 
 import os

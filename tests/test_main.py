@@ -13,7 +13,6 @@
 #####################################################################
 """Test main module functionality."""
 
-
 import os
 import sys
 
@@ -43,9 +42,15 @@ def test_main_func(tfile):
     """Test __maine__."""
     args, path = tfile
     opath = os.path.join(os.getcwd(), "torrent.torrent")
+<<<<<<< HEAD
     sys.argv = args + [path, "-o", opath]
     main()
     assert os.path.exists(opath)   # nosec
+=======
+    sys.argv = args + ["-p", path, "-o", opath]
+    entry.main()
+    assert os.path.exists(opath)  # nosec
+>>>>>>> 8f37ff35afd5e510dd79596e0a784e33c1e45415
     rmpath(opath)
 
 

@@ -134,7 +134,7 @@ class TorrentFile(MetaFile):
             info["files"] = [
                 {
                     "length": os.path.getsize(path),
-                    "path": os.path.relpath(path, self.path).split(os.sep)
+                    "path": os.path.relpath(path, self.path).split(os.sep),
                 }
                 for path in filelist
             ]
@@ -354,7 +354,7 @@ class Feeder:
             partial += size
             if size == target:
                 break
-        return sha1(arr).digest()   # nosec
+        return sha1(arr).digest()  # nosec
 
     def next_file(self):
         """Seemlessly transition to next file in file list."""
@@ -376,5 +376,5 @@ class Feeder:
             elif size < self.piece_length:
                 yield self.handle_partial(piece[:size], size)
             else:
-                yield sha1(piece).digest()   # nosec
+                yield sha1(piece).digest()  # nosec
             self.piece_count += 1
