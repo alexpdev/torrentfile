@@ -62,7 +62,7 @@ setup(
     packages=find_packages(exclude=["env"]),
     include_package_data=True,
     entry_points={"console_scripts": ["torrentfile = torrentfile.cli:main"]},
-    tests_require=["pytest", "coverage", "prospector"],
+    tests_require=["pytest", "coverage"],
     install_requires=["pyben"],
     setup_requires=["setuptools", "wheel"],
     zip_safe=False,

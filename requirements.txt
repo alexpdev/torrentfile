@@ -1,8 +1,7 @@
-pyben==0.2.3
+pyben
 coverage
 prospector
 pycodestyle
 pydocstyle
 pylint
 pytest
-pytest-cov

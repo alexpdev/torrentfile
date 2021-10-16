@@ -23,6 +23,7 @@ Functions:
 """
 
 import sys
+import logging
 from argparse import ArgumentParser, RawTextHelpFormatter
 
 import torrentfile
@@ -53,6 +54,8 @@ def main_script(args=None):
            [--piece-length <n>] [--meta-version <n>] [--source <x>]
            [--announce-list <url2> <...>] [--comment <comment>]"""
     )
+
+    logging.basicConfig(level=logging.DEBUG)
 
     desc = "Create Bittorrent meta files for Bittorrent v1 and v2."
     parser = ArgumentParser("torrentfile", description=desc, prefix_chars="-",
@@ -173,6 +176,8 @@ def main_script(args=None):
         "outfile": flags.outfile,
         "comment": flags.comment,
     }
+    logging.DEBUG("Meta Version: %s" % flags.meta_version)
+    logging.DEBUG("Input arguments: %s" % str(kwargs))
 
     if flags.meta_version == "2":
         torrent = TorrentFileV2(**kwargs)

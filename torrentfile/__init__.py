@@ -26,7 +26,9 @@ Modules:
     utils: Utilities used throughout package.
 """
 
-from . import hybrid, metafile, metafile2, utils
+import logging
+
+from . import utils
 from .cli import main
 from .hybrid import TorrentFileHybrid
 from .metafile import TorrentFile
@@ -34,3 +36,7 @@ from .metafile2 import TorrentFileV2
 
 __author__ = "alexpdev"
 __version__ = "0.3.1"
+
+__level__ = "DEBUG"
+
+logger = logging.getLogger(__name__)

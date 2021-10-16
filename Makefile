@@ -78,14 +78,18 @@ docs: environment ## Regenerate docs from changes
 	touch docs/.nojekyll
 
 build: clean
+	rm -rf ../installer
+	pip uninstall -rrequirements.txt -y
+	pip cache purge
+	make clean
+	pip install -rrequirements.txt
 	python setup.py sdist bdist_wheel bdist_egg
-	# twine upload dist/*
-	make install
-	touch ../runner
-	cat "import torrentfile\n\ntorrentfile.main()" >> ../runner
-	python ../runner
-
-install: environment clean test ## Install Locally
-	pip uninstall torrentfile pyben
-	pip install -rrequirements.txt --no-cache-dir
+	mkdir ../installer
+	cp assets/favicon.ico ../installer/
 	python setup.py install
+	touch ../installer/torrentfile
+	@echo "import torrentfile" >> ../installer/tfile
+	@echo "torrentfile.main()" >> ../installer/tfile
+	pip install pyinstaller
+	pyinstaller --distpath ../installer/dist --workpath ../installer/build -y -F --specpath ../installer -i ../installer/favicon.ico  ../installer/tfile
+	twine upload dist/*

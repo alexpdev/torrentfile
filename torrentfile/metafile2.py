@@ -146,6 +146,7 @@ Multiple files rooted in a single directory:
 
 import math
 import os
+import logging
 from datetime import datetime
 from hashlib import sha256
 
@@ -184,6 +185,7 @@ class TorrentFileV2(MetaFile):
         self.piece_layers = {}
         self.hashes = []
         self.meta = self.assemble()
+        logging.debug("Building torrent using meta version 2.")
 
     def _assemble_infodict(self):
         """Create info dictionary for .torrent meta v2 file.
@@ -191,19 +193,27 @@ class TorrentFileV2(MetaFile):
         Returns:
           info (`dict`): Info dictionary containing torrent metadata.
         """
+        logging.debug("Start info dict.")
         info = {"name": os.path.basename(self.path)}
         # include comment in info dictionary.
         if self.announce_list:
             info["announce list"] = self.announce_list
+            logging.debug("Info dict 'annc_list': %s" % info["announce lsit"])
+        logging.debug("Info dict 'name': %s" % info["name"])
 
         if self.comment:
             info["comment"] = self.comment
+            logging.debug("Info dict 'comment': %s" % info["comment"])
 
         info["piece length"] = self.piece_length
+        logging.debug("Info dict 'piece length': %s" % self.piece_length)
 
         if os.path.isfile(self.path):
+            logging.debug("Root path is a file.")
             info["length"] = os.path.getsize(self.path)
+            logging.debug("Info dict 'length': %s" % info["length"])
 
+        logging.debug("Begin walking file tree.")
         info["file tree"] = {info["name"]: self._traverse(self.path)}
 
         # Bittorrent Protocol v2
@@ -226,9 +236,11 @@ class TorrentFileV2(MetaFile):
         # if no tracker url was provided, place dummy string in its place
         # which can be later replaced by some Bittorrent clients
         meta = {"announce": self.announce}
-
+        logging.debug("Added key: %s to meta dict with %s as value",
+                      "announce", self.announce)
         meta["created by"] = "torrentfile"
         meta["creation date"] = int(datetime.timestamp(datetime.now()))
+        logging.debug("Added 'created by' and 'creation date' to meta dict.")
 
         # assemble info dictionary and assign it to info key in meta
         meta["info"] = self._assemble_infodict()
@@ -254,7 +266,7 @@ class TorrentFileV2(MetaFile):
 
         file_tree = {}
         if os.path.isdir(path):
-
+            logging.debug("%s is a directory." % path)
             for base, full in sortfiles(path):
                 file_tree[base] = self._traverse(full)
 
@@ -315,6 +327,8 @@ class FileHash:
         self.layer_hashes = []
         self.piece_length = piece_length
         self.num_blocks = piece_length // BLOCK_SIZE
+        logging.debug("Hashing %s" % self.path)
+
 
         with open(self.path, "rb") as fd:
             self.process_file(fd)
@@ -336,12 +350,14 @@ class FileHash:
                 if not size:
                     break
                 blocks.append(sha256(leaf[:size]).digest())
-            # blocks is empty mean eof
+            # if blocks is empty file has ended
             if not blocks:
                 break
 
             # if the file is smaller than piece length
             self.layer_hashes.append(merkle_root(blocks))
+            logging.debug("Piece %s root hash: %s", len(self.layer_hashes),
+                          self.layer_hashes[-1])
         self._calculate_root()
 
     def _calculate_root(self):
