@@ -42,6 +42,7 @@ def rmpaths(paths):
 def datadir(func):
     """Create testing directory for all temp and testfiles created."""
     def wrapper(*args, **kwargs):
+        """Wrap function for datadir."""
         if not os.path.exists(TESTDIR):
             os.mkdir(TESTDIR)
         return func(*args, **kwargs)
