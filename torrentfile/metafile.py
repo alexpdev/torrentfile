@@ -67,14 +67,12 @@ file case, it's the name of a directory.
 
 """
 
+import logging
 import math
 import os
-from datetime import datetime as dt
-from hashlib import sha1
+from hashlib import sha1  # nosec
 
 import pyben
-
-import torrentfile
 
 from .utils import MetaFile, filelist_total
 
@@ -105,6 +103,7 @@ class TorrentFile(MetaFile):
             Instance of TorrentFile.
         """
         super().__init__(**kwargs)
+        logging.info("Making .torrent v1 file.")
         self.meta = self.assemble()
 
     def _assemble_infodict(self):
@@ -156,9 +155,7 @@ class TorrentFile(MetaFile):
         Returns:
           `dict`: metadata dictionary for torrent file
         """
-        meta = {"announce": self.announce}
-        meta["creation date"] = int(dt.timestamp(dt.now()))
-        meta["created by"] = "torrentfile" + "/v" + torrentfile.__version__
+        meta = self.apply_constants()
         meta["info"] = self._assemble_infodict()
         return meta
 

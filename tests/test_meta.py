@@ -17,7 +17,7 @@ import os
 
 import pytest
 
-from tests.context import rmpaths, tempdir, tempfile
+from tests.context import rmpaths, tempdir1, tempfile
 from torrentfile import utils
 from torrentfile.metafile import Checker, TorrentFile
 from torrentfile.metafile2 import TorrentFileV2
@@ -36,7 +36,7 @@ def maketorrent(args, ver2=False):
 @pytest.fixture(scope="module")
 def tdir():
     """Return temp directory."""
-    return tempdir()
+    return tempdir1()
 
 
 @pytest.fixture(scope="module")

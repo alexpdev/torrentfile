@@ -158,6 +158,11 @@
     
       
         <li class="toctree-l3">
+          <a class="toctree-l4" href="#torrentfile.utils.MetaFile.apply_constants">apply_constants()</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
           <a class="toctree-l4" href="#torrentfile.utils.MetaFile.assemble">assemble()</a>
         </li>
     
@@ -444,6 +449,81 @@ source, piece_length, comment, outfile.</p>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="torrentfile.utils.MetaFile.apply_constants" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">apply_constants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Apply values to meta dict that are input independent.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>meta</code></td>
+        <td><code>`dict`,default=`None`</code></td>
+        <td><p>Meta dictionary.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>meta (`dict`)</code></td>
+      <td><p>Filled meta dictionary.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">apply_constants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Apply values to meta dict that are input independent.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        meta (`dict`,default=`None`): Meta dictionary.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        meta (`dict`): Filled meta dictionary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">announce</span><span class="p">,</span>
+        <span class="s2">&quot;created by&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;TorrentFile:v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;creation date&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">meta</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">meta</span> <span class="o">|</span> <span class="n">keys</span>
+    <span class="k">return</span> <span class="n">keys</span>
 </code></pre></div>
         </details>
     </div>

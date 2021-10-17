@@ -69,7 +69,7 @@ push: clean lint test coverage docs ## push to remote repo
 	@echo pushing to remote
 	git add .
 	git commit -m "$m"
-	git push -u https://github.com/alexpdev/torrentfile dev master
+	git push
 	bash codacy.sh report -r coverage.xml
 
 docs: environment ## Regenerate docs from changes
@@ -77,13 +77,17 @@ docs: environment ## Regenerate docs from changes
 	mkdocs -q build
 	touch docs/.nojekyll
 
-build: clean
+build: clean install
 	python setup.py sdist bdist_wheel bdist_egg
-	# twine upload dist/*
-	make install
-	touch ../runner
-	cat "import torrentfile\n\ntorrentfile.main()" >> ../runner
-	python ../runner
+	mkdir ../runner
+	touch ../runner/exe
+	@echo "import torrentfile" >> ../runner/exe
+	@echo "torrentfile.main()" >> ../runner/exe
+	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
+		-F -n torrentfile -c -i ./assets/favicon.ico \
+		../runner/exe
+	twine upload dist/*
+	cp -rfv ../runner/dist .
 
 install: environment clean test ## Install Locally
 	pip uninstall torrentfile pyben

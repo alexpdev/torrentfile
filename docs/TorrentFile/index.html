@@ -1130,6 +1130,7 @@ TorrentFile            (<a title="torrentfile.utils.MetaFile" href="../utils/#to
 <span class="sd">        Instance of TorrentFile.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Making .torrent v1 file.&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assemble</span><span class="p">()</span>
 </code></pre></div>
         </details>
@@ -1176,9 +1177,7 @@ TorrentFile            (<a title="torrentfile.utils.MetaFile" href="../utils/#to
 <span class="sd">    Returns:</span>
 <span class="sd">      `dict`: metadata dictionary for torrent file</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">announce</span><span class="p">}</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;creation date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;created by&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;torrentfile&quot;</span> <span class="o">+</span> <span class="s2">&quot;/v&quot;</span> <span class="o">+</span> <span class="n">torrentfile</span><span class="o">.</span><span class="n">__version__</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_constants</span><span class="p">()</span>
     <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_assemble_infodict</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">meta</span>
 </code></pre></div>

@@ -126,8 +126,8 @@
           
 
   <li class="toctree-l2">
-    <a href="#torrentfile.hybrid.FileHash">
-      FileHash
+    <a href="#torrentfile.hybrid.HybridHash">
+      HybridHash
       <span class="toctree-expand"></span>
     </a>
   </li>
@@ -139,12 +139,12 @@
     
       
         <li class="toctree-l3">
-          <a class="toctree-l4" href="#torrentfile.hybrid.FileHash.__init__">__init__()</a>
+          <a class="toctree-l4" href="#torrentfile.hybrid.HybridHash.__init__">__init__()</a>
         </li>
     
       
         <li class="toctree-l3">
-          <a class="toctree-l4" href="#torrentfile.hybrid.FileHash.calculate_root">calculate_root()</a>
+          <a class="toctree-l4" href="#torrentfile.hybrid.HybridHash.calculate_root">calculate_root()</a>
         </li>
     
     </ul>
@@ -286,9 +286,9 @@ influenced by "bep_0052_torrent_creator".</p>
 
 
 
-<h2 id="torrentfile.hybrid.FileHash" class="doc doc-heading">
+<h2 id="torrentfile.hybrid.HybridHash" class="doc doc-heading">
         <code>
-FileHash        </code>
+HybridHash        </code>
 
 
 
@@ -342,7 +342,7 @@ of the Bittorrent protocols meta files respectively.</p>
 
 
 
-<h3 id="torrentfile.hybrid.FileHash.__init__" class="doc doc-heading">
+<h3 id="torrentfile.hybrid.HybridHash.__init__" class="doc doc-heading">
 <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
@@ -365,7 +365,8 @@ of the Bittorrent protocols meta files respectively.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">padding_piece</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">padding_file</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">=</span> <span class="n">piece_length</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">piece_length</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Beginning file hashing: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
@@ -380,7 +381,7 @@ of the Bittorrent protocols meta files respectively.</p>
 
 
 
-<h3 id="torrentfile.hybrid.FileHash.calculate_root" class="doc doc-heading">
+<h3 id="torrentfile.hybrid.HybridHash.calculate_root" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">calculate_root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
@@ -396,7 +397,7 @@ of the Bittorrent protocols meta files respectively.</p>
     <span class="sd">&quot;&quot;&quot;Calculate the root hash for opened file.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_layer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">pad_piece</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">([</span><span class="nb">bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span><span class="p">)])</span>
+        <span class="n">pad_piece</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">([</span><span class="nb">bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">)])</span>
         <span class="n">next_pow_two</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span>
         <span class="n">remainder</span> <span class="o">=</span> <span class="n">next_pow_two</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span> <span class="o">+=</span> <span class="p">[</span><span class="n">pad_piece</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remainder</span><span class="p">)]</span>
@@ -532,7 +533,8 @@ TorrentFileHybrid            (<a title="torrentfile.utils.MetaFile" href="../uti
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Create Bittorrent v1 v2 hybrid metafiles.&quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Creating Hybrid torrent file.&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">hashes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span> <span class="o">=</span> <span class="p">[]</span>
@@ -564,16 +566,10 @@ TorrentFileHybrid            (<a title="torrentfile.utils.MetaFile" href="../uti
           <summary>Source code in <code>torrentfile\hybrid.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Assemble the parts of the torrentfile into meta dictionary.&quot;&quot;&quot;</span>
-    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">announce</span><span class="p">}</span>
-
-    <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;creation date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;created by&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;torrentfile&quot;</span>
-
+    <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_constants</span><span class="p">()</span>
     <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_assemble_infodict</span><span class="p">()</span>
-
     <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="p">)</span>
     <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;piece_layers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span>
-
     <span class="k">return</span> <span class="n">meta</span>
 </code></pre></div>
         </details>

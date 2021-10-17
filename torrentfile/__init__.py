@@ -26,11 +26,11 @@ Modules:
     utils: Utilities used throughout package.
 """
 
+__author__ = "alexpdev"
+__version__ = "0.3.1"
+
 from . import hybrid, metafile, metafile2, utils
 from .cli import main
 from .hybrid import TorrentFileHybrid
 from .metafile import TorrentFile
 from .metafile2 import TorrentFileV2
-
-__author__ = "alexpdev"
-__version__ = "0.3.1"
