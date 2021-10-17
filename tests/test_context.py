@@ -24,29 +24,36 @@ def test_fill_file():
     context.rmpath(path)
 
 
-def test_contextfill_folder():
+def test_fill_folder():
     """Test context.fill_folder function."""
     folder = os.path.join(context.TESTDIR, "filledfolder")
-    context.fill_folder(folder)
+    context.fill_folder([folder], [])
     assert os.path.exists(folder)  # nosec
     context.rmpath(folder)
 
 
-def test_contexttempfile():
-    """Test context.tempfile function."""
-    filepath = context.tempfile()
-    assert os.path.exists(filepath)  # nosec
-    context.rmpath(filepath)
-
-
-def test_contexttempdir():
+def test_tempdir1():
     """Test context.tempdir function."""
-    dirpath = context.tempdir()
+    dirpath = context.tempdir1()
     assert os.path.exists(dirpath)  # nosec
     context.rmpath(dirpath)
 
 
-def test_contextsizedfile():
+def test_tempdir2():
+    """Test context.tempdir function."""
+    dirpath = context.tempdir2()
+    assert os.path.exists(dirpath)  # nosec
+    context.rmpath(dirpath)
+
+
+def test_tempdir3():
+    """Test context.tempdir function."""
+    dirpath = context.tempdir3()
+    assert os.path.exists(dirpath)  # nosec
+    context.rmpath(dirpath)
+
+
+def test_sizedfile():
     """Test context.tempdir function."""
     path = context.sizedfile(16)
     assert os.path.exists(path)  # nosec
@@ -56,7 +63,7 @@ def test_contextsizedfile():
 
 def test_rmpath():
     """Test rmpath function."""
-    path = context.tempdir()
+    path = context.tempdir1()
     assert os.path.exists(path)   # nosec
     context.rmpath(path)
     assert not os.path.exists(path)   # nosec

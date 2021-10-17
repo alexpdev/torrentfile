@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-from tests.context import (TESTDIR, rmpath, rmpaths, sizedfile, tempdir,
+from tests.context import (TESTDIR, rmpath, rmpaths, sizedfile, tempdir1,
                            tempfile)
 from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2
 from torrentfile.utils import MetaFile, MissingPathError
@@ -27,7 +27,7 @@ from torrentfile.utils import MetaFile, MissingPathError
 @pytest.fixture(scope="module")
 def tdir():
     """Return temporary directory."""
-    folder = tempdir()
+    folder = tempdir1()
     args = {"path": folder, "announce": "https://tracker.com/announce"}
     yield (folder, args)
     rmpath(folder)

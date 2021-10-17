@@ -22,6 +22,7 @@ Functions:
     main_script: process command line arguments and run program.
 """
 
+import logging
 import sys
 from argparse import ArgumentParser, RawTextHelpFormatter
 
@@ -65,6 +66,14 @@ def main_script(args=None):
         action="version",
         version=f"torrentfile v{torrentfile.__version__}",
         help="\t\tShow program version and exit\n",
+    )
+
+    parser.add_argument(
+        "-d",
+        "--debug",
+        action="store_true",
+        dest="debug",
+        help="\t\tTurn on debug mode"
     )
 
     parser.add_argument(
@@ -112,7 +121,7 @@ def main_script(args=None):
         "-o",
         "--out",
         action="store",
-        help="\t\tPath to the target destination for the output .torrent file.",
+        help="\t\tPath to the destination for the output .torrent file.",
         dest="outfile",
         metavar="<dest>",
     )
@@ -173,6 +182,11 @@ def main_script(args=None):
         "outfile": flags.outfile,
         "comment": flags.comment,
     }
+
+    if flags.debug:
+        logging.basicConfig(level=logging.DEBUG,
+                            format='%(asctime)s %(message)s',
+                            datefmt='%m/%d/%Y %H:%M:%S')
 
     if flags.meta_version == "2":
         torrent = TorrentFileV2(**kwargs)

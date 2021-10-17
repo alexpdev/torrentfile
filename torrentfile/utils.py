@@ -24,6 +24,9 @@ Functions:
 """
 
 import os
+from datetime import datetime
+
+from . import __version__ as version
 
 
 class MissingPathError(Exception):
@@ -92,6 +95,24 @@ class MetaFile:
 
         self.comment = comment
         self.outfile = outfile
+
+    def apply_constants(self, meta=None):
+        """Apply values to meta dict that are input independent.
+
+        Args:
+            meta (`dict`,default=`None`): Meta dictionary.
+
+        Returns:
+            meta (`dict`): Filled meta dictionary.
+        """
+        keys = {
+            "announce": self.announce,
+            "created by": f"TorrentFile:v{version}",
+            "creation date": int(datetime.timestamp(datetime.now()))
+        }
+        if meta:
+            return meta | keys
+        return keys
 
     def assemble(self):
         """Overload in subclasses.

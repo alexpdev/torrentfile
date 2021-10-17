@@ -17,7 +17,7 @@ import os
 
 import pytest
 
-from tests.context import rmpath, tempdir, tempfile
+from tests.context import rmpath, tempdir1, tempfile
 from torrentfile import utils
 
 KIB = 2 ** 10
@@ -29,7 +29,7 @@ MAX_BLOCK = MIB * 16
 @pytest.fixture(scope="module")
 def tdir():
     """Return temporary directory."""
-    drct = tempdir()
+    drct = tempdir1()
     yield drct
     rmpath(drct)
 
@@ -105,7 +105,7 @@ def test_path_size_file_gt0(tfile):
 
 
 def test_path_stat_gt0_filelist(tdir):
-    """Test path_stat function for tempdir sorted > 0."""
+    """Test path_stat function for tempdir1 sorted > 0."""
     filelist, _, _ = utils.path_stat(tdir)
     assert len(filelist) > 0  # nosec
 

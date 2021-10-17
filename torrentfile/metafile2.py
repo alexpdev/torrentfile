@@ -144,9 +144,9 @@ Multiple files rooted in a single directory:
 
 """
 
+import logging
 import math
 import os
-from datetime import datetime
 from hashlib import sha256
 
 import pyben
@@ -181,6 +181,7 @@ class TorrentFileV2(MetaFile):
           torrent: TorrentFileV2 instance.
         """
         super().__init__(**kwargs)
+        logging.info("Create .torrent v2 file.")
         self.piece_layers = {}
         self.hashes = []
         self.meta = self.assemble()
@@ -191,7 +192,8 @@ class TorrentFileV2(MetaFile):
         Returns:
           info (`dict`): Info dictionary containing torrent metadata.
         """
-        info = {"name": os.path.basename(self.path)}
+        name = os.path.basename(self.path)
+        info = {}
         # include comment in info dictionary.
         if self.announce_list:
             info["announce list"] = self.announce_list
@@ -199,21 +201,25 @@ class TorrentFileV2(MetaFile):
         if self.comment:
             info["comment"] = self.comment
 
-        info["piece length"] = self.piece_length
-
         if os.path.isfile(self.path):
+            logging.info("'path' points to a single file.")
+            info["file tree"] = {name: self._traverse(self.path)}
             info["length"] = os.path.getsize(self.path)
+        else:
+            logging.info("'path' points to a directory.")
+            info["file tree"] = self._traverse(self.path)
 
-        info["file tree"] = {info["name"]: self._traverse(self.path)}
-
+        info["name"] = name
+        info["piece length"] = self.piece_length
         # Bittorrent Protocol v2
         info["meta version"] = 2
 
-        if self.source:
-            info["source"] = self.source
-
         if self.private:
             info["private"] = 1
+            logging.info("Torrent file will be marked as private.")
+        if self.source:
+            info["source"] = self.source
+        logging.info("Filled Info Dictionary.")
 
         return info
 
@@ -223,13 +229,8 @@ class TorrentFileV2(MetaFile):
         Returns:
           meta (`dict`): Metainformation about the torrent.
         """
-        # if no tracker url was provided, place dummy string in its place
-        # which can be later replaced by some Bittorrent clients
-        meta = {"announce": self.announce}
-
-        meta["created by"] = "torrentfile"
-        meta["creation date"] = int(datetime.timestamp(datetime.now()))
-
+        logging.info("Continue filling meta dictionary for .torrent file.")
+        meta = self.apply_constants()
         # assemble info dictionary and assign it to info key in meta
         meta["info"] = self._assemble_infodict()
 
@@ -315,6 +316,7 @@ class FileHash:
         self.layer_hashes = []
         self.piece_length = piece_length
         self.num_blocks = piece_length // BLOCK_SIZE
+        logging.info("Hashing v2: %s", self.path)
 
         with open(self.path, "rb") as fd:
             self.process_file(fd)

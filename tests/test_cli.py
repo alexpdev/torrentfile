@@ -18,7 +18,7 @@ import sys
 
 import pytest
 
-from tests.context import rmpath, tempdir, tempfile
+from tests.context import rmpath, tempdir1, tempfile
 from torrentfile import main
 
 # from torrentfile.utils import MissingPathError
@@ -37,7 +37,7 @@ from torrentfile import main
 @pytest.fixture(scope="module")
 def tdir():
     """Generate temp testing directory."""
-    directory = tempdir()
+    directory = tempdir1()
     yield directory
     rmpath(directory)
 

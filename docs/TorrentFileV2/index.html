@@ -554,6 +554,7 @@ FileHash        </code>
     <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">=</span> <span class="n">piece_length</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Hashing v2: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
@@ -796,6 +797,7 @@ TorrentFileV2            (<a title="torrentfile.utils.MetaFile" href="../utils/#
 <span class="sd">      torrent: TorrentFileV2 instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Create .torrent v2 file.&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">hashes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assemble</span><span class="p">()</span>
@@ -844,13 +846,8 @@ TorrentFileV2            (<a title="torrentfile.utils.MetaFile" href="../utils/#
 <span class="sd">    Returns:</span>
 <span class="sd">      meta (`dict`): Metainformation about the torrent.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># if no tracker url was provided, place dummy string in its place</span>
-    <span class="c1"># which can be later replaced by some Bittorrent clients</span>
-    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">announce</span><span class="p">}</span>
-
-    <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;created by&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;torrentfile&quot;</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;creation date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
-
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Continue filling meta dictionary for .torrent file.&quot;</span><span class="p">)</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_constants</span><span class="p">()</span>
     <span class="c1"># assemble info dictionary and assign it to info key in meta</span>
     <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_assemble_infodict</span><span class="p">()</span>
 
