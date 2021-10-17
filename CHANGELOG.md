@@ -1,5 +1,13 @@
 # torrentfile
 
+## Version 0.4.0
+
+### Fixed v0.4.0
+
+    - Fixed bugs in creating hybrid files.
+
+---------------------
+
 ## Version 0.3.1
 
 ### Fixes v0.3.1

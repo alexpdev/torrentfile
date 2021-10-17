@@ -18,28 +18,18 @@ from pathlib import Path
 
 import pytest
 
-from tests.context import (TESTDIR, rmpath, rmpaths, sizedfile, tempdir1,
-                           tempfile)
+from tests.context import TESTDIR, parameters, rmpath, rmpaths, sizedfile
 from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2
 from torrentfile.utils import MetaFile, MissingPathError
 
 
-@pytest.fixture(scope="module")
-def tdir():
+@pytest.fixture(scope="module", params=parameters())
+def tdir(request):
     """Return temporary directory."""
-    folder = tempdir1()
+    folder = request.param()
     args = {"path": folder, "announce": "https://tracker.com/announce"}
     yield (folder, args)
     rmpath(folder)
-
-
-@pytest.fixture(scope="module")
-def tfile():
-    """Return temporary file."""
-    fd = tempfile()
-    args = {"path": fd, "announce": "https://tracker.com/announce"}
-    yield (fd, args)
-    rmpath(fd)
 
 
 @pytest.fixture
@@ -59,22 +49,6 @@ def test_torrentfile_dir(tdir):
     assert torrent.meta is not None  # nosec
 
 
-def test_torrentfile_file(tfile):
-    """Test temporary file."""
-    _, args = tfile
-    torrent = TorrentFile(**args)
-    assert torrent.meta is not None  # nosec
-
-
-def test_torrentfile_file_private(tfile):
-    """Test temporary file with arguments."""
-    _, args = tfile
-    args["private"] = True
-    args["piece_length"] = 18
-    torrent = TorrentFile(**args)
-    assert "private" in torrent.meta["info"]  # nosec
-
-
 def test_torrentfile_dir_private(tdir):
     """Test temporary dir with arguments."""
     _, args = tdir
@@ -83,16 +57,6 @@ def test_torrentfile_dir_private(tdir):
     torrent = TorrentFile(**args)
     meta = torrent.meta
     assert "private" in meta["info"]  # nosec
-
-
-def test_torrentfile_file_comment(tfile):
-    """Test temporary file with arguments."""
-    _, args = tfile
-    args["private"] = True
-    args["comment"] = "This is a comment"
-    torrent = TorrentFile(**args)
-    meta = torrent.meta
-    assert "private" in meta["info"] and "comment" in meta["info"]  # nosec
 
 
 def test_torrentfile_dir_comment(tdir):
@@ -113,19 +77,9 @@ def test_exception_path_error():
         assert True  # nosec
 
 
-def test_torrentfile_outfile(tfile):
-    """Test TorrentFile class with output as argument."""
-    path, args = tfile
-    outfile = path + ".torrent"
-    torrent = TorrentFile(**args)
-    torrent.write(outfile=outfile)
-    assert os.path.exists(outfile)  # nosec
-    rmpath(outfile)
-
-
-def test_torrentfile_with_outfile(tfile):
+def test_torrentfile_with_outfile(tdir):
     """Test TorrentFile class with output in kwargs."""
-    path, args = tfile
+    path, args = tdir
     outfile = path + ".torrent"
     args["outfile"] = outfile
     torrent = TorrentFile(**args)
@@ -134,9 +88,9 @@ def test_torrentfile_with_outfile(tfile):
     rmpath(outfile)
 
 
-def test_torrentfilev2_outfile(tfile):
+def test_torrentfilev2_outfile(tdir):
     """Test TorrentFile2 class with output as argument."""
-    path, args = tfile
+    path, args = tdir
     outfile = path + ".torrent"
     torrent = TorrentFileV2(**args)
     torrent.write(outfile=outfile)
@@ -144,9 +98,9 @@ def test_torrentfilev2_outfile(tfile):
     rmpath(outfile)
 
 
-def test_torrentfilev2_with_outfile(tfile):
+def test_torrentfilev2_with_outfile(tdir):
     """Test TorrentFileV2 class with output in kwargs."""
-    path, args = tfile
+    path, args = tdir
     outfile = path + ".torrent"
     args["outfile"] = outfile
     torrent = TorrentFileV2(**args)
@@ -155,9 +109,9 @@ def test_torrentfilev2_with_outfile(tfile):
     rmpath(outfile)
 
 
-def test_hybrid_outfile(tfile):
+def test_hybrid_outfile(tdir):
     """Test Hybrid class with output as argument."""
-    path, args = tfile
+    path, args = tdir
     outfile = path + ".torrent"
     torrent = TorrentFileHybrid(**args)
     torrent.write(outfile=outfile)
@@ -165,9 +119,9 @@ def test_hybrid_outfile(tfile):
     rmpath(outfile)
 
 
-def test_hybrid_with_outfile(tfile):
+def test_hybrid_with_outfile(tdir):
     """Test Hybrid class with output in kwargs."""
-    path, args = tfile
+    path, args = tdir
     outfile = path + ".torrent"
     args["outfile"] = outfile
     torrent = TorrentFileHybrid(**args)
@@ -207,9 +161,9 @@ def test_v2_0_length():
     rmpaths([path, torpath])
 
 
-def test_metafile_assemble(tfile):
+def test_metafile_assemble(tdir):
     """Test MetaFile assemble file Exception."""
-    fd, args = tfile
+    fd, args = tdir
     meta = MetaFile(**args)
     try:
         meta.assemble()
@@ -218,9 +172,9 @@ def test_metafile_assemble(tfile):
     rmpath(fd)
 
 
-def test_metafile_write(tfile):
+def test_metafile_write(tdir):
     """Test MetaFile write Exception."""
-    fd, args = tfile
+    fd, args = tdir
     meta = MetaFile(**args)
     try:
         meta.write()

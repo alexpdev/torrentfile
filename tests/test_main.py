@@ -18,12 +18,12 @@ import sys
 
 import pytest
 
-from tests.context import TESTDIR, rmpath, tempfile
+from tests.context import TESTDIR, parameters, rmpath
 from torrentfile import TorrentFile, TorrentFileV2, main
 
 
-@pytest.fixture(scope="module")
-def tfile():
+@pytest.fixture(scope="module", params=parameters())
+def tfile(request):
     """Create fixture for tests."""
     args = [
         "torrentfile",
@@ -33,7 +33,7 @@ def tfile():
         "--source",
         "TFile",
     ]
-    t_file = tempfile()
+    t_file = request.param()
     yield args, t_file
     rmpath(t_file)
 

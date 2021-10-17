@@ -79,6 +79,7 @@ docs: environment ## Regenerate docs from changes
 
 build: clean install
 	python setup.py sdist bdist_wheel bdist_egg
+	rm -rfv ../runner
 	mkdir ../runner
 	touch ../runner/exe
 	@echo "import torrentfile" >> ../runner/exe
