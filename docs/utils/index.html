@@ -462,7 +462,7 @@ source, piece_length, comment, outfile.</p>
 
 
 <h3 id="torrentfile.utils.MetaFile.apply_constants" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">apply_constants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">apply_constants</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
 </h3>
@@ -486,7 +486,7 @@ source, piece_length, comment, outfile.</p>
         <td><code>meta</code></td>
         <td><code>`dict`,default=`None`</code></td>
         <td><p>Meta dictionary.</p></td>
-        <td><code>None</code></td>
+        <td><em>required</em></td>
       </tr>
   </tbody>
 </table>
@@ -507,7 +507,7 @@ source, piece_length, comment, outfile.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">apply_constants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">apply_constants</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Apply values to meta dict that are input independent.</span>
 
 <span class="sd">    Args:</span>
@@ -516,14 +516,11 @@ source, piece_length, comment, outfile.</p>
 <span class="sd">    Returns:</span>
 <span class="sd">        meta (`dict`): Filled meta dictionary.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">announce</span><span class="p">,</span>
         <span class="s2">&quot;created by&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;TorrentFile:v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="s2">&quot;creation date&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
     <span class="p">}</span>
-    <span class="k">if</span> <span class="n">meta</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">meta</span> <span class="o">|</span> <span class="n">keys</span>
-    <span class="k">return</span> <span class="n">keys</span>
 </code></pre></div>
         </details>
     </div>

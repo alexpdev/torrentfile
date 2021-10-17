@@ -42,6 +42,7 @@ def rmpaths(paths):
 def datadir(func):
     """Create testing directory for all temp and testfiles created."""
     def wrapper(*args, **kwargs):
+        """Wrap function for datadir."""
         if not os.path.exists(TESTDIR):
             os.mkdir(TESTDIR)
         return func(*args, **kwargs)
@@ -88,8 +89,8 @@ def fill_folder(dirs, files):
 
 @datadir
 def tempdir1():
-    """Multi nested directories with multi files in each dir."""
-    root = os.path.join(TESTDIR, "RootFolder")
+    """Configure multi nested directories with multi files in each dir."""
+    root = os.path.join(TESTDIR, "RootFolder1")
     dir1 = os.path.join(root, "directory1")
     dir2 = os.path.join(root, "directory2")
     dirs = [root, dir1, dir2]
@@ -104,8 +105,8 @@ def tempdir1():
 
 @datadir
 def tempdir2():
-    """Single file file structure with nested directories."""
-    root = os.path.join(TESTDIR, "RootFolder")
+    """Configure single file file structure with nested directories."""
+    root = os.path.join(TESTDIR, "RootFolder2")
     dir1 = os.path.join(root, "directory1")
     dirs = [root, dir1]
     file1 = (os.path.join(dir1, "file1"), 28)
@@ -116,13 +117,29 @@ def tempdir2():
 
 @datadir
 def tempdir3():
-    """Multi file directory structure with small file sizes."""
-    root = os.path.join(TESTDIR, "RootFolder")
+    """Configure multi file directory structure with small file sizes."""
+    root = os.path.join(TESTDIR, "RootFolder3")
     dirs = [root]
     file1 = (os.path.join(root, "file1"), 14)
     file2 = (os.path.join(root, "file2"), 14)
     file3 = (os.path.join(root, "file3"), 14)
     file4 = (os.path.join(root, "file4"), 14)
+    files = [file1, file2, file3, file4]
+    fill_folder(dirs, files)
+    return root
+
+
+@datadir
+def tempdir4():
+    """Configure multi file directory structure with small file sizes."""
+    root = os.path.join(TESTDIR, "RootFolder4")
+    dir1 = os.path.join(root, "directory1")
+    dir2 = os.path.join(root, "directory2")
+    dirs = [root, dir1, dir2]
+    file1 = (os.path.join(dir1, "file1"), 22)
+    file2 = (os.path.join(dir1, "file2"), 26)
+    file3 = (os.path.join(dir2, "file3"), 24)
+    file4 = (os.path.join(dir2, "file4"), 27)
     files = [file1, file2, file3, file4]
     fill_folder(dirs, files)
     return root
@@ -142,6 +159,11 @@ def sizedfile(num=28):
     path = os.path.join(TESTDIR, "tempfile.bin")
     fill_file(path, num)
     return path
+
+
+def parameters():
+    """Return a list of all tempdir configurations."""
+    return [tempdir1, tempdir2, tempdir3, tempdir4, tempfile]
 
 
 @atexit.register

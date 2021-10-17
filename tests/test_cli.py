@@ -18,7 +18,7 @@ import sys
 
 import pytest
 
-from tests.context import rmpath, tempdir1, tempfile
+from tests.context import parameters, rmpath
 from torrentfile import main
 
 # from torrentfile.utils import MissingPathError
@@ -34,20 +34,12 @@ from torrentfile import main
 #     ("-o", "--outfile",)]
 
 
-@pytest.fixture(scope="module")
-def tdir():
+@pytest.fixture(scope="module", params=parameters())
+def tdir(request):
     """Generate temp testing directory."""
-    directory = tempdir1()
+    directory = request.param()
     yield directory
     rmpath(directory)
-
-
-@pytest.fixture(scope="module")
-def tfile():
-    """Generate temp testing file."""
-    temp = tempfile()
-    yield temp
-    rmpath(temp)
 
 
 def test_cli_args_dir(tdir):
@@ -77,33 +69,6 @@ def test_cli_args_dir_v3(tdir):
     rmpath(parser.outfile)
 
 
-def test_cli_args_file(tfile):
-    """Test CLI script with specific arguments."""
-    args = [tfile]
-    sys.argv = [sys.argv[0]] + args
-    parser = main()
-    assert os.path.exists(parser.outfile)  # nosec
-    rmpath(parser.outfile)
-
-
-def test_cli_args_file_v2(tfile):
-    """Test CLI script with specific arguments."""
-    args = [tfile, "--meta-version", "2"]
-    sys.argv = [sys.argv[0]] + args
-    parser = main()
-    assert os.path.exists(parser.outfile)  # nosec
-    rmpath(parser.outfile)
-
-
-def test_cli_args_file_v3(tfile):
-    """Test CLI script with specific arguments."""
-    args = [tfile, "--meta-version", "3"]
-    sys.argv = [sys.argv[0]] + args
-    parser = main()
-    assert os.path.exists(parser.outfile)  # nosec
-    rmpath(parser.outfile)
-
-
 def test_cli_no_args():
     """Test CLI script with specific arguments."""
     sys.argv = [sys.argv[0]]
@@ -111,28 +76,6 @@ def test_cli_no_args():
         main()
     except SystemExit:
         assert True  # nosec
-
-
-def test_cli_with_all_args_file(tfile):
-    """Test CLI script with specific arguments."""
-    sys.argv = [
-        "torrentfile",
-        tfile,
-        "--meta-version",
-        "2",
-        "-a",
-        "https://tracker-url.com/announce",
-        "--comment",
-        "some comment",
-        "--piece-length",
-        str(2 ** 14),
-        "--private",
-        "--source",
-        "TRACKER",
-    ]
-    parser = main()
-    assert os.path.exists(parser.outfile)  # nosec
-    rmpath(parser.outfile)
 
 
 def test_cli_with_all_args_dir(tdir):
@@ -147,7 +90,29 @@ def test_cli_with_all_args_dir(tdir):
         "--comment",
         "some comment",
         "--piece-length",
-        str(2 ** 14),
+        str(2 ** 15),
+        "--private",
+        "--source",
+        "TRACKER",
+    ]
+    parser = main()
+    assert os.path.exists(parser.outfile)  # nosec
+    rmpath(parser.outfile)
+
+
+def test_cli_with_all_args_v2(tdir):
+    """Test CLI script with specific arguments."""
+    sys.argv = [
+        "torrentfile",
+        tdir,
+        "--meta-version",
+        "2",
+        "-a",
+        "https://tracker-url.com/announce",
+        "--comment",
+        "some comment",
+        "--piece-length",
+        str(2 ** 16),
         "--private",
         "--source",
         "TRACKER",
