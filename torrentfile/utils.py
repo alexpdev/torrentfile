@@ -96,7 +96,7 @@ class MetaFile:
         self.comment = comment
         self.outfile = outfile
 
-    def apply_constants(self, meta=None):
+    def apply_constants(self):
         """Apply values to meta dict that are input independent.
 
         Args:
@@ -105,14 +105,11 @@ class MetaFile:
         Returns:
             meta (`dict`): Filled meta dictionary.
         """
-        keys = {
+        return {
             "announce": self.announce,
             "created by": f"TorrentFile:v{version}",
             "creation date": int(datetime.timestamp(datetime.now()))
         }
-        if meta:
-            return meta | keys
-        return keys
 
     def assemble(self):
         """Overload in subclasses.

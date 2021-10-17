@@ -410,11 +410,6 @@
     
       
         <li class="toctree-l3">
-          <a class="toctree-l4" href="#tests.test_meta.metav1f">metav1f()</a>
-        </li>
-    
-      
-        <li class="toctree-l3">
           <a class="toctree-l4" href="#tests.test_meta.metav2d">metav2d()</a>
         </li>
     
@@ -461,11 +456,6 @@
       
         <li class="toctree-l3">
           <a class="toctree-l4" href="#tests.test_meta.test_v2_meta_keys">test_v2_meta_keys()</a>
-        </li>
-    
-      
-        <li class="toctree-l3">
-          <a class="toctree-l4" href="#tests.test_meta.tfilemeta">tfilemeta()</a>
         </li>
     
     </ul>
@@ -1105,11 +1095,6 @@
     
       
         <li class="toctree-l2">
-          <a class="toctree-l3" href="#tests.test_meta.metav1f">metav1f()</a>
-        </li>
-    
-      
-        <li class="toctree-l2">
           <a class="toctree-l3" href="#tests.test_meta.metav2d">metav2d()</a>
         </li>
     
@@ -1156,11 +1141,6 @@
       
         <li class="toctree-l2">
           <a class="toctree-l3" href="#tests.test_meta.test_v2_meta_keys">test_v2_meta_keys()</a>
-        </li>
-    
-      
-        <li class="toctree-l2">
-          <a class="toctree-l3" href="#tests.test_meta.tfilemeta">tfilemeta()</a>
         </li>
     
       
@@ -2967,41 +2947,6 @@
 
 
 
-<h3 id="tests.test_meta.metav1f" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">metav1f</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Return generated metadata v1 for file.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>tests\test_meta.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">metav1f</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return generated metadata v1 for file.&quot;&quot;&quot;</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tdir</span><span class="p">,</span>
-        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;http://announce.com/announce&quot;</span><span class="p">,</span>
-    <span class="p">}</span>
-    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">maketorrent</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">yield</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span>
-    <span class="n">rmpaths</span><span class="p">([</span><span class="n">tdir</span><span class="p">,</span> <span class="n">outfile</span><span class="p">])</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
 <h3 id="tests.test_meta.metav2d" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">metav2d</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
 
@@ -3312,41 +3257,6 @@
 
 
 
-  <div class="doc doc-object doc-function">
-
-
-
-<h3 id="tests.test_meta.tfilemeta" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">tfilemeta</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Test metadata.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>tests\test_meta.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">tfilemeta</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Test metadata.&quot;&quot;&quot;</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tdir</span><span class="p">,</span>
-        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;http://announce.com/announce&quot;</span><span class="p">,</span>
-    <span class="p">}</span>
-    <span class="n">outfile</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">maketorrent</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">yield</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">tdir</span>
-    <span class="n">rmpaths</span><span class="p">([</span><span class="n">tdir</span><span class="p">,</span> <span class="n">outfile</span><span class="p">])</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
 
 
 
@@ -3565,10 +3475,10 @@
           <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_hybrid_sized_file</span><span class="p">(</span><span class="n">smallfile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test pad_remaining function in hybrid FileHash class.&quot;&quot;&quot;</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">smallfile</span><span class="p">,</span> <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="o">**</span><span class="mi">14</span><span class="p">}</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">smallfile</span><span class="p">,</span> <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">}</span>
     <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileHybrid</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">]</span>      <span class="c1"># nosec</span>
-    <span class="k">assert</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">14</span>   <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">15</span>   <span class="c1"># nosec</span>
 </code></pre></div>
         </details>
     </div>
@@ -6631,10 +6541,10 @@
           <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_hybrid_sized_file</span><span class="p">(</span><span class="n">smallfile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test pad_remaining function in hybrid FileHash class.&quot;&quot;&quot;</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">smallfile</span><span class="p">,</span> <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="o">**</span><span class="mi">14</span><span class="p">}</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">smallfile</span><span class="p">,</span> <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">}</span>
     <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileHybrid</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">]</span>      <span class="c1"># nosec</span>
-    <span class="k">assert</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">14</span>   <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">15</span>   <span class="c1"># nosec</span>
 </code></pre></div>
         </details>
     </div>
@@ -7109,41 +7019,6 @@
 
 
 
-<h2 id="tests.test_meta.metav1f" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">metav1f</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
-
-
-</h2>
-
-    <div class="doc doc-contents ">
-
-      <p>Return generated metadata v1 for file.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>tests\test_meta.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">metav1f</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return generated metadata v1 for file.&quot;&quot;&quot;</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tdir</span><span class="p">,</span>
-        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;http://announce.com/announce&quot;</span><span class="p">,</span>
-    <span class="p">}</span>
-    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">maketorrent</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">yield</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span>
-    <span class="n">rmpaths</span><span class="p">([</span><span class="n">tdir</span><span class="p">,</span> <span class="n">outfile</span><span class="p">])</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
 <h2 id="tests.test_meta.metav2d" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">metav2d</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
 
@@ -7446,41 +7321,6 @@
     <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">metav2d</span>
     <span class="k">assert</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">meta</span>  <span class="c1"># nosec</span>
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
-<h2 id="tests.test_meta.tfilemeta" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">tfilemeta</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
-
-
-</h2>
-
-    <div class="doc doc-contents ">
-
-      <p>Test metadata.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>tests\test_meta.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">tfilemeta</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Test metadata.&quot;&quot;&quot;</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tdir</span><span class="p">,</span>
-        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;http://announce.com/announce&quot;</span><span class="p">,</span>
-    <span class="p">}</span>
-    <span class="n">outfile</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">maketorrent</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">yield</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">tdir</span>
-    <span class="n">rmpaths</span><span class="p">([</span><span class="n">tdir</span><span class="p">,</span> <span class="n">outfile</span><span class="p">])</span>
 </code></pre></div>
         </details>
     </div>

@@ -70,32 +70,6 @@ def metav1d(tdir):
 
 
 @pytest.fixture(scope="module")
-def metav1f(tdir):
-    """Return generated metadata v1 for file."""
-    args = {
-        "private": True,
-        "path": tdir,
-        "announce": "http://announce.com/announce",
-    }
-    outfile, meta = maketorrent(args)
-    yield outfile, meta
-    rmpaths([tdir, outfile])
-
-
-@pytest.fixture(scope="module")
-def tfilemeta(tdir):
-    """Test metadata."""
-    args = {
-        "private": True,
-        "path": tdir,
-        "announce": "http://announce.com/announce",
-    }
-    outfile, _ = maketorrent(args)
-    yield outfile, tdir
-    rmpaths([tdir, outfile])
-
-
-@pytest.fixture(scope="module")
 def tdirmeta(tdir):
     """Test metadata."""
     args = {

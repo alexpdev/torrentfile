@@ -185,10 +185,10 @@ def test_metafile_write(tdir):
 
 def test_hybrid_sized_file(smallfile):
     """Test pad_remaining function in hybrid FileHash class."""
-    args = {"path": smallfile, "announce": "announce", "piece_length": 2**14}
+    args = {"path": smallfile, "announce": "announce", "piece_length": 15}
     torrent = TorrentFileHybrid(**args)
     assert torrent.meta["announce"] == args["announce"]      # nosec
-    assert torrent.meta["info"]["piece length"] == 2 ** 14   # nosec
+    assert torrent.meta["info"]["piece length"] == 2 ** 15   # nosec
 
 
 def test_hybrid_under_block_sized():
