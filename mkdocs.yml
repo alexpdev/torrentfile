@@ -5,7 +5,7 @@ site_description: "Bittorrent Meta File Creator."
 copyright: alexpdev 2021
 
 theme:
-  name: 'rtd-dropdown'
+  name: material
 
 nav:
   - Home: index.md

@@ -21,18 +21,6 @@ import pytest
 from tests.context import parameters, rmpath
 from torrentfile import main
 
-# from torrentfile.utils import MissingPathError
-
-# List of flags for the Command Line Interface.
-
-# Options = [
-#     "--source", "--comment", "--private",
-#     "--piece-length",
-#     ("--v2","-v"),
-#     ("--path", "-p"),
-#     ("-t", "-a",),
-#     ("-o", "--outfile",)]
-
 
 @pytest.fixture(scope="module", params=parameters())
 def tdir(request):

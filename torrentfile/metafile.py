@@ -74,7 +74,8 @@ from hashlib import sha1  # nosec
 
 import pyben
 
-from .utils import MetaFile, filelist_total
+from .metabase import MetaFile
+from .utils import filelist_total
 
 
 class TorrentFile(MetaFile):
@@ -158,24 +159,6 @@ class TorrentFile(MetaFile):
         meta = self.apply_constants()
         meta["info"] = self._assemble_infodict()
         return meta
-
-    def write(self, outfile=None):
-        """Write assembled data to .torrent file.
-
-        Args:
-          outfile (`str`, optional): Target destination path.
-
-        Returns:
-          `tuple`: Path to output file, Pre-encoded metadata.
-        """
-        if outfile:
-            self.outfile = outfile
-
-        if not self.outfile:
-            self.outfile = self.path + ".torrent"
-
-        pyben.dump(self.meta, self.outfile)
-        return self.outfile, self.meta
 
 
 class Checker:

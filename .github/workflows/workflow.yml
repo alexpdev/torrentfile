@@ -18,6 +18,7 @@ jobs:
 
       - name: Run tests and collect coverage
         run: |
+          pytest --cov=torrentfile --pylint
           coverage run -m pytest tests
           coverage report
           coverage xml -o coverage.xml

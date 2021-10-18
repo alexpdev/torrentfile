@@ -48,11 +48,11 @@ def main_script(args=None):
         args = sys.argv[1:]
 
     usage = (
-        """\t   torrentfile -v --version
+        """torrentfile -v --version
            torrentfile -h --help
-           torrentfile path [-o <dest>] [-a <url>] [--private]
-           [--piece-length <n>] [--meta-version <n>] [--source <x>]
-           [--announce-list <url2> <...>] [--comment <comment>]"""
+           torrentfile path [-o <dest>] [-a <url>] [--private] [-d]
+           [--source <x>] [--piece-length <n>] [--meta-version <n>]
+           [--announce-list <url2> <...>]  [--comment <comment>]"""
     )
 
     desc = "Create Bittorrent meta files for Bittorrent v1 and v2."
