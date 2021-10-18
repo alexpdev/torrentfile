@@ -82,15 +82,18 @@ build: clean install
 	rm -rfv ../runner
 	mkdir ../runner
 	touch ../runner/exe
+	cp ./assets/torrentfile.ico ../runner/torrentfile.ico
 	@echo "import torrentfile" >> ../runner/exe
 	@echo "torrentfile.main()" >> ../runner/exe
 	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
-		-F -n torrentfile -c -i ./assets/favicon.ico \
-		../runner/exe
+		-F -n torrentfile -c -i ../runner/torrentfile.ico \
+		--specpath ../runner/ ../runner/exe
+	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
+		-D -n torrentfile -c -i ../runner/torrentfile.ico \
+		--specpath ../runner/ ../runner/exe
 	twine upload dist/*
 	cp -rfv ../runner/dist .
 
 install: environment clean test ## Install Locally
-	pip uninstall torrentfile pyben
-	pip install -rrequirements.txt --no-cache-dir
+	pip install --upgrade -rrequirements.txt --no-cache-dir
 	python setup.py install

@@ -4647,7 +4647,7 @@
     <span class="n">temppaths</span> <span class="o">=</span> <span class="p">[</span><span class="n">context</span><span class="o">.</span><span class="n">sizedfile</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="n">context</span><span class="o">.</span><span class="n">tempfile</span><span class="p">()]</span>
     <span class="k">assert</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">temppaths</span><span class="p">]</span>   <span class="c1"># nosec</span>
     <span class="n">context</span><span class="o">.</span><span class="n">rmpaths</span><span class="p">(</span><span class="n">temppaths</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">temppaths</span><span class="p">])</span>   <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">temppaths</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>   <span class="c1"># nosec</span>
 </code></pre></div>
         </details>
     </div>
@@ -4675,7 +4675,7 @@
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_seq</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Test seq function for random string output.&quot;&quot;&quot;</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">seq</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">output</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">printable</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>  <span class="c1"># nosec</span>
 </code></pre></div>
         </details>
     </div>
@@ -4704,7 +4704,7 @@
     <span class="sd">&quot;&quot;&quot;Test context.tempdir function.&quot;&quot;&quot;</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">sizedfile</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>  <span class="c1"># nosec</span>
-    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">16</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">16</span>  <span class="c1"># nosec</span>
     <span class="n">context</span><span class="o">.</span><span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </code></pre></div>
         </details>
@@ -7935,7 +7935,7 @@
     <span class="n">temppaths</span> <span class="o">=</span> <span class="p">[</span><span class="n">context</span><span class="o">.</span><span class="n">sizedfile</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="n">context</span><span class="o">.</span><span class="n">tempfile</span><span class="p">()]</span>
     <span class="k">assert</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">temppaths</span><span class="p">]</span>   <span class="c1"># nosec</span>
     <span class="n">context</span><span class="o">.</span><span class="n">rmpaths</span><span class="p">(</span><span class="n">temppaths</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">temppaths</span><span class="p">])</span>   <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">temppaths</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>   <span class="c1"># nosec</span>
 </code></pre></div>
         </details>
     </div>
@@ -7963,7 +7963,7 @@
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_seq</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Test seq function for random string output.&quot;&quot;&quot;</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">seq</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">output</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">printable</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>  <span class="c1"># nosec</span>
 </code></pre></div>
         </details>
     </div>
@@ -7992,7 +7992,7 @@
     <span class="sd">&quot;&quot;&quot;Test context.tempdir function.&quot;&quot;&quot;</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">sizedfile</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>  <span class="c1"># nosec</span>
-    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">16</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">16</span>  <span class="c1"># nosec</span>
     <span class="n">context</span><span class="o">.</span><span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </code></pre></div>
         </details>

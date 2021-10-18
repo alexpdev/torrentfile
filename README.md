@@ -48,7 +48,7 @@ Or download the latest release from the Release page on github.
 
     usage:    torrentfile -v --version
               torrentfile -h --help
-              torrentfile path [-o <dest>] [-a <url>] [--private]
+              torrentfile path [-o <dest>] [-a <url>] [--private] [-d]
               [--piece-length <n>] [--meta-version <n>] [--source <x>]
               [--announce-list <url2> <...>] [--comment <comment>]
 
