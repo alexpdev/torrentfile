@@ -1,5 +1,20 @@
 # torrentfile
 
+## Version 0.4.1
+
+### Added v0.4.1
+
+    - Added tests for hybrid class
+    - logging feature
+    - new cli flag to activate debug mode
+    - Documentation theme.
+
+### Fixed v0.4.1
+
+    - Bug that allowed improper piece length values.
+
+---------------------
+
 ## Version 0.4.0
 
 ### Fixed v0.4.0

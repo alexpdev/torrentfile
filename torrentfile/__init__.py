@@ -27,7 +27,7 @@ Modules:
 """
 
 __author__ = "alexpdev"
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 from . import hybrid, metafile, metafile2, utils
 from .cli import main
