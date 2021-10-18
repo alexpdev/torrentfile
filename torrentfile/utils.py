@@ -23,10 +23,8 @@ Functions:
   path_piece_length: Get ideal piece length based on size of directory.
 """
 
+import math
 import os
-from datetime import datetime
-
-from . import __version__ as version
 
 
 class MissingPathError(Exception):
@@ -35,7 +33,7 @@ class MissingPathError(Exception):
     Creating a .torrent file with no contents seems rather silly.
 
     Args:
-      message (`any`, optional): Value cannot be interpreted by decoder.
+      message (`any`, optional): Message for user.
     """
 
     def __init__(self, message=None):
@@ -47,85 +45,49 @@ class MissingPathError(Exception):
         super().__init__(message)
 
 
-class MetaFile:
-    """Base Class for all TorrentFile classes.
+class PieceLengthValueError(Exception):
+    """Piece Length parameter must equal a perfect power of 2.
 
     Args:
-        path (`str`): target path to torrent content.
-        announce (`str`): Tracker URL.
-        announce_list (`list`): Additional tracker URL's.
-        comment (`str`): A comment.
-        piece_length (`int`): Size of torrent pieces.
-        private (`bool`): For private trackers?
-        outfile (`str`): target path to write .torrent file.
-        source (`str`): Private tracker source.
+      message (`any`, optional): Message for user.
     """
 
-    def __init__(self, path=None, announce=None, announce_list=None,
-                 private=False, source=None, piece_length=None,
-                 comment=None, outfile=None):
-        """Construct MetaFile superclass and assign local attributes.
+    def __init__(self, message=None):
+        """Raise when creating a meta file with incorrect piece length value.
 
-        Keyword parameters include path, announce, announce_list private,
-        source, piece_length, comment, outfile.
+        The `message` argument is a message to pass to Exception base class.
         """
-        if not path:
-            raise MissingPathError
-        # base path to torrent content.
-        self.path = path
-        # Format piece_length attribute.
-        if not piece_length:
-            piece_length = path_piece_length(self.path)
-        elif isinstance(piece_length, str):
+        self.message = f"Incorrect value for piece length: {str(message)}"
+        super().__init__(message)
+
+
+def normalize_piece_length(piece_length):
+    """Verify input piece_length is valid and convert accordingly.
+
+    Args:
+        piece_length (`int` or `str`): The piece length provided by user.
+
+    Returns:
+        piece_length (`int`): normalized piece length.
+
+    Raises:
+        PieceLengthValueError: If piece length is improper value.
+    """
+    if isinstance(piece_length, str):
+        if piece_length.isnumeric():
             piece_length = int(piece_length)
-        # Coming from CLI is most likely a string.
-        if 13 < piece_length < 36:
-            # Under 36 means its used as exponent to 2**n.
-            piece_length = 2 ** piece_length
-            # Otherwise just cast to integer.
-        self.piece_length = piece_length
-        # Assign announce URL to empty string if none provided.
-        if not announce:
-            announce = ""
-        # Most torrent clients have editting trackers as a feature.
-        self.announce = announce
-        self.announce_list = announce_list
-        self.private = private
-        self.source = source
+        else:
+            raise PieceLengthValueError(piece_length)
 
-        self.comment = comment
-        self.outfile = outfile
+    if 13 < piece_length < 26:
+        return 2 ** piece_length
+    if piece_length <= 13:
+        raise PieceLengthValueError(piece_length)
 
-    def apply_constants(self):
-        """Apply values to meta dict that are input independent.
-
-        Args:
-            meta (`dict`,default=`None`): Meta dictionary.
-
-        Returns:
-            meta (`dict`): Filled meta dictionary.
-        """
-        return {
-            "announce": self.announce,
-            "created by": f"TorrentFile:v{version}",
-            "creation date": int(datetime.timestamp(datetime.now()))
-        }
-
-    def assemble(self):
-        """Overload in subclasses.
-
-        Raises:
-            NotImplementedError (`Exception`)
-        """
-        raise NotImplementedError
-
-    def write(self, outfile=None):
-        """Overload when subclassed.
-
-        Raises:
-            NotImplementedError (`Exception`)
-        """
-        raise NotImplementedError
+    log = int(math.log2(piece_length))
+    if 2 ** log == piece_length:
+        return piece_length
+    raise PieceLengthValueError
 
 
 def get_piece_length(size):

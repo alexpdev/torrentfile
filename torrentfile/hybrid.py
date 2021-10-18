@@ -28,9 +28,8 @@ import math
 import os
 from hashlib import sha1, sha256  # nosec
 
-import pyben
-
-from .utils import MetaFile, sortfiles
+from .metabase import MetaFile
+from .utils import sortfiles
 
 BLOCK_SIZE = 16384
 HASH_SIZE = 32
@@ -136,27 +135,6 @@ class TorrentFileHybrid(MetaFile):
 
         return tree
 
-    def write(self, outfile=None):
-        """Write assembled metadata to .torrent file.
-
-        Args:
-            outfile (`str`, optional): where to write file to.
-
-        Returns:
-            outfile, meta tuple[`str`, `dict`]: outfile, meta dictionary.
-        """
-        if outfile:
-            pyben.dump(self.meta, outfile)
-
-        elif self.outfile:
-            outfile = self.outfile
-            pyben.dump(self.meta, self.outfile)
-
-        else:
-            outfile = self.path + ".torrent"
-            pyben.dump(self.meta, outfile)
-        return outfile, self.meta
-
 
 def merkle_root(blocks):
     """Calculate the merkle root for a seq of sha256 hash digests."""
@@ -245,9 +223,12 @@ class HybridHash:
     def calculate_root(self):
         """Calculate the root hash for opened file."""
         self.piece_layer = b"".join(self.layer_hashes)
+
         if len(self.layer_hashes) > 1:
             pad_piece = merkle_root([bytes(32) for _ in range(self.amount)])
+
             next_pow_two = 1 << (len(self.layer_hashes) - 1).bit_length()
             remainder = next_pow_two - len(self.layer_hashes)
+
             self.layer_hashes += [pad_piece for _ in range(remainder)]
         self.root = merkle_root(self.layer_hashes)

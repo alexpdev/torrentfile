@@ -13,6 +13,7 @@
 #####################################################################
 """Test functions for utils module."""
 
+import math
 import os
 
 import pytest
@@ -183,3 +184,27 @@ def test_filelist_total_tfile(tfile):
     """Test Utility function filelist_total on single file."""
     _, filelist = utils.filelist_total(tfile)
     assert filelist[0] == tfile  # nosec
+
+
+@pytest.mark.parametrize("piece_length", [14, 20, 2**15, 2**19, "22", "21"])
+def test_normalize_plength_type(piece_length):
+    """Test normalize piece length function output type."""
+    value = utils.normalize_piece_length(piece_length)
+    assert isinstance(value, int)   # nosec
+
+
+@pytest.mark.parametrize("piece_length", [14, 20, 2**15, 2**19, "22", "21"])
+def test_normalize_plength_value(piece_length):
+    """Test normalize piece length output perfect power of 2."""
+    value = utils.normalize_piece_length(piece_length)
+    log = math.log2(value)
+    assert int(log) == log    # nosec
+
+
+@pytest.mark.parametrize("piece_length", [10, 1, 4425631, 35, "1111", "abc"])
+def test_normalize_plength_fails(piece_length):
+    """Test to ensure incorrect piece length values fail."""
+    try:
+        utils.normalize_piece_length(piece_length)
+    except utils.PieceLengthValueError:
+        assert True   # nosec

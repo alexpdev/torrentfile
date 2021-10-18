@@ -12,7 +12,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 """
-Metafile procedures for Bittorrent v2.
+Torrent meta file procedures for Bittorrent v2.
 
 This module `metafile2` contains classes and functions related
 to constructing .torrent files using Bittorrent v2 Protocol
@@ -22,7 +22,8 @@ Classes:
     `FileHash`: Calculates leaf hashes and root hashes for torrent contents.
 
 Constants:
-    BLOCK_SIZE(`int`): size of leaf hashes for merkle tree.
+    BLOCK_SIZE (`int`): size of leaf hashes for merkle tree.
+    HASH_SIZE (`int`): Length of a sha256 hash.
 
 ## Notes
 --------
@@ -104,44 +105,6 @@ with the following keys:
 
 > The file tree root dictionary itself must not be a file, i.e. it must not
 > contain a zero-length key with a dictionary containing a length key.
-
-### File tree layout Example:
-
-```
-    {info:
-        {file tree:
-            {dir1:
-                {dir2:
-                    {fileA.txt: {
-                    "": {length: <length of file in bytes (integer)>,
-                        pieces root: <optional, merkle tree root (string)>}
-                    },
-                    fileB.txt: {
-                    "": {length: `int`,
-                        pieces root: `string`}
-                    }}
-                }
-            }
-        }
-    }
-```
-
-> Note that identical files always result in the same root hash.
-> All strings in a .torrent file defined by this BEP that contain
-> human-readable text are UTF-8 encoded.
-
-Single-file torrent:
-
-`"file tree": {name.ext: {"": {length: ...}}}`
-
-Multiple files rooted in a single directory:
-
-```python:
-    "file tree": {dir: {
-        nameA.ext: {"": {length: ...}},
-        nameB.ext: {"": {length: ...}}}}
-```
-
 """
 
 import logging
@@ -149,9 +112,8 @@ import math
 import os
 from hashlib import sha256
 
-import pyben
-
-from .utils import MetaFile, sortfiles
+from .metabase import MetaFile
+from .utils import sortfiles
 
 BLOCK_SIZE = 2 ** 14  # 16KiB
 HASH_SIZE = 32
@@ -260,26 +222,6 @@ class TorrentFileV2(MetaFile):
                 file_tree[base] = self._traverse(full)
 
         return file_tree
-
-    def write(self, outfile=None):
-        """Write assembled data to .torrent file.
-
-        Args:
-          outfile (`str`): Path to save location.
-
-        Returns:
-          `bytes`: Data writtend to .torrent file.
-        """
-        if outfile:
-            self.outfile = outfile
-
-        elif not self.outfile:
-            filename = self.meta["info"]["name"] + ".torrent"
-            self.outfile = os.path.join(os.path.dirname(self.path), filename)
-
-        pyben.dump(self.meta, self.outfile)
-
-        return self.outfile, self.meta
 
 
 def merkle_root(pieces):

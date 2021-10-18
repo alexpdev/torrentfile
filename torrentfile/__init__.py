@@ -32,5 +32,5 @@ __version__ = "0.4.0"
 from . import hybrid, metafile, metafile2, utils
 from .cli import main
 from .hybrid import TorrentFileHybrid
-from .metafile import TorrentFile
+from .metafile import Checker, TorrentFile
 from .metafile2 import TorrentFileV2
