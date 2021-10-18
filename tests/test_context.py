@@ -32,6 +32,17 @@ def test_fill_folder():
     context.rmpath(folder)
 
 
+def test_fill_folder2():
+    """Test context.fill_folder function."""
+    folder = os.path.join(context.TESTDIR, "filledfolder")
+    os.mkdir(folder)
+    with open(os.path.join(folder, "file1"), "wb") as fd:
+        fd.write(b"afdsfdsa")
+    context.fill_folder([folder], [("file1", 14)])
+    assert os.path.exists(folder)  # nosec
+    context.rmpath(folder)
+
+
 def test_tempdir1():
     """Test context.tempdir function."""
     dirpath = context.tempdir1()

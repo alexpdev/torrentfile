@@ -17,7 +17,7 @@ import os
 
 import pytest
 
-from tests.context import rmpath, tempdir1, tempfile
+from tests.context import parameters, rmpath, tempfile
 from torrentfile import utils
 
 KIB = 2 ** 10
@@ -26,10 +26,10 @@ MIN_BLOCK = 2 ** 14
 MAX_BLOCK = MIB * 16
 
 
-@pytest.fixture(scope="module")
-def tdir():
+@pytest.fixture(scope="module", params=parameters())
+def tdir(request):
     """Return temporary directory."""
-    drct = tempdir1()
+    drct = request.param()
     yield drct
     rmpath(drct)
 
@@ -40,27 +40,6 @@ def tfile():
     testfile = tempfile()
     yield testfile
     rmpath(testfile)
-
-
-@pytest.fixture
-def metadata():
-    """Return preconfigured metadata."""
-    meta = {
-        "announce": "https://tracker.com:2017/announce",
-        "created by": "torrentfile",
-        "piece length": MAX_BLOCK,
-        "info": {
-            "name": "torrentname.bin",
-            "files": [
-                {"length": 2 ** 28, "path": ["path", "to", "content"]},
-                {"length": 2 ** 28, "path": ["path", "more", "content"]},
-            ],
-            "pieces": b"some bytes of data",
-            "source": "tracker",
-            "private": 1,
-        },
-    }
-    return meta
 
 
 def test_get_piece_length_min(tfile):
@@ -113,7 +92,7 @@ def test_path_stat_gt0_filelist(tdir):
 def test_path_stat_eq_filelist(tdir):
     """Test path_stat function return filelist."""
     filelist, _, _ = utils.path_stat(tdir)
-    assert len(filelist) > 1  # nosec
+    assert len(filelist) >= 1  # nosec
 
 
 def test_path_stat_gt0_size(tdir):
@@ -167,7 +146,7 @@ def test_path_piece_length_max(tdir):
 def test_get_filelist_tdir(tdir):
     """Test get_file_list function."""
     result = utils.get_file_list(tdir)
-    assert len(result) > 1  # nosec
+    assert len(result) >= 1  # nosec
 
 
 def test_get_filelist_tfile(tfile):

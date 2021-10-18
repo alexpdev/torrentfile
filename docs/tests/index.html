@@ -248,6 +248,11 @@
           <a class="toctree-l4" href="#tests.test_cli.test_cli_with_all_args_v2">test_cli_with_all_args_v2()</a>
         </li>
     
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#tests.test_cli.test_cli_with_all_args_v3">test_cli_with_all_args_v3()</a>
+        </li>
+    
     </ul>
   </li>
 
@@ -276,6 +281,11 @@
       
         <li class="toctree-l3">
           <a class="toctree-l4" href="#tests.test_context.test_fill_folder">test_fill_folder()</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#tests.test_context.test_fill_folder2">test_fill_folder2()</a>
         </li>
     
       
@@ -580,6 +590,11 @@
     
       
         <li class="toctree-l3">
+          <a class="toctree-l4" href="#tests.test_torrentfile.test_torrentfile_write_outfile">test_torrentfile_write_outfile()</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
           <a class="toctree-l4" href="#tests.test_torrentfile.test_torrentfilev2_outfile">test_torrentfilev2_outfile()</a>
         </li>
     
@@ -612,11 +627,6 @@
 
   <li class="toctree-l2">
     <ul class="subnav-l2 toc-hidden">
-    
-      
-        <li class="toctree-l3">
-          <a class="toctree-l4" href="#tests.test_utils.metadata">metadata()</a>
-        </li>
     
       
         <li class="toctree-l3">
@@ -840,6 +850,11 @@
     
       
         <li class="toctree-l2">
+          <a class="toctree-l3" href="#tests.test_context.test_fill_folder2">test_fill_folder2()</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
           <a class="toctree-l3" href="#tests.test_context.test_rmpath">test_rmpath()</a>
         </li>
     
@@ -915,12 +930,12 @@
     
       
         <li class="toctree-l2">
-          <a class="toctree-l3" href="#tests.test_utils">tests.test_utils</a>
+          <a class="toctree-l3" href="#tests.test_cli.test_cli_with_all_args_v3">test_cli_with_all_args_v3()</a>
         </li>
     
       
         <li class="toctree-l2">
-          <a class="toctree-l3" href="#tests.test_utils.metadata">metadata()</a>
+          <a class="toctree-l3" href="#tests.test_utils">tests.test_utils</a>
         </li>
     
       
@@ -1121,6 +1136,11 @@
       
         <li class="toctree-l2">
           <a class="toctree-l3" href="#tests.test_torrentfile.test_torrentfile_with_outfile">test_torrentfile_with_outfile()</a>
+        </li>
+    
+      
+        <li class="toctree-l2">
+          <a class="toctree-l3" href="#tests.test_torrentfile.test_torrentfile_write_outfile">test_torrentfile_write_outfile()</a>
         </li>
     
       
@@ -2133,6 +2153,52 @@
         <span class="n">tdir</span><span class="p">,</span>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;some comment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--piece-length&quot;</span><span class="p">,</span>
+        <span class="nb">str</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">16</span><span class="p">),</span>
+        <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TRACKER&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_cli.test_cli_with_all_args_v3" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_with_all_args_v3</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script with specific arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_with_all_args_v3</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test CLI script with specific arguments.&quot;&quot;&quot;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
+        <span class="n">tdir</span><span class="p">,</span>
+        <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
         <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
@@ -2242,6 +2308,39 @@
     <span class="sd">&quot;&quot;&quot;Test context.fill_folder function.&quot;&quot;&quot;</span>
     <span class="n">folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">TESTDIR</span><span class="p">,</span> <span class="s2">&quot;filledfolder&quot;</span><span class="p">)</span>
     <span class="n">context</span><span class="o">.</span><span class="n">fill_folder</span><span class="p">([</span><span class="n">folder</span><span class="p">],</span> <span class="p">[])</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">rmpath</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="tests.test_context.test_fill_folder2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_fill_folder2</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test context.fill_folder function.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_fill_folder2</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test context.fill_folder function.&quot;&quot;&quot;</span>
+    <span class="n">folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">TESTDIR</span><span class="p">,</span> <span class="s2">&quot;filledfolder&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s2">&quot;file1&quot;</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;afdsfdsa&quot;</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">fill_folder</span><span class="p">([</span><span class="n">folder</span><span class="p">],</span> <span class="p">[(</span><span class="s2">&quot;file1&quot;</span><span class="p">,</span> <span class="mi">14</span><span class="p">)])</span>
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>  <span class="c1"># nosec</span>
     <span class="n">context</span><span class="o">.</span><span class="n">rmpath</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
 </code></pre></div>
@@ -3982,6 +4081,38 @@
 
 
 
+<h3 id="tests.test_torrentfile.test_torrentfile_write_outfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_torrentfile_write_outfile</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test TorrentFile class with output in kwargs.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_torrentfile_write_outfile</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test TorrentFile class with output in kwargs.&quot;&quot;&quot;</span>
+    <span class="n">path</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">tdir</span>
+    <span class="n">outfile</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">outfile</span><span class="o">=</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h3 id="tests.test_torrentfile.test_torrentfilev2_outfile" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">test_torrentfilev2_outfile</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
 
@@ -4125,51 +4256,8 @@
 
 
 
-<h3 id="tests.test_utils.metadata" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">metadata</span><span class="p">()</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Return preconfigured metadata.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>tests\test_utils.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">metadata</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Return preconfigured metadata.&quot;&quot;&quot;</span>
-    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;https://tracker.com:2017/announce&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;created by&quot;</span><span class="p">:</span> <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;piece length&quot;</span><span class="p">:</span> <span class="n">MAX_BLOCK</span><span class="p">,</span>
-        <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;torrentname.bin&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;files&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">28</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="s2">&quot;to&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">]},</span>
-                <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">28</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="s2">&quot;more&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">]},</span>
-            <span class="p">],</span>
-            <span class="s2">&quot;pieces&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;some bytes of data&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;tracker&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">meta</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
 <h3 id="tests.test_utils.tdir" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">tdir</span><span class="p">()</span></code>
+<code class="highlight language-python"><span class="n">tdir</span><span class="p">(</span><span class="n">request</span><span class="p">)</span></code>
 
 
 </h3>
@@ -4180,10 +4268,10 @@
 
         <details class="quote">
           <summary>Source code in <code>tests\test_utils.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">tdir</span><span class="p">():</span>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">parameters</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">tdir</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return temporary directory.&quot;&quot;&quot;</span>
-    <span class="n">drct</span> <span class="o">=</span> <span class="n">tempdir1</span><span class="p">()</span>
+    <span class="n">drct</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">()</span>
     <span class="k">yield</span> <span class="n">drct</span>
     <span class="n">rmpath</span><span class="p">(</span><span class="n">drct</span><span class="p">)</span>
 </code></pre></div>
@@ -4353,7 +4441,7 @@
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_filelist_tdir</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test get_file_list function.&quot;&quot;&quot;</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span>  <span class="c1"># nosec</span>
 </code></pre></div>
         </details>
     </div>
@@ -4694,7 +4782,7 @@
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_stat_eq_filelist</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test path_stat function return filelist.&quot;&quot;&quot;</span>
     <span class="n">filelist</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">path_stat</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filelist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filelist</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span>  <span class="c1"># nosec</span>
 </code></pre></div>
         </details>
     </div>
@@ -5472,6 +5560,39 @@
 
 
 
+<h2 id="tests.test_context.test_fill_folder2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_fill_folder2</span><span class="p">()</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Test context.fill_folder function.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_context.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_fill_folder2</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test context.fill_folder function.&quot;&quot;&quot;</span>
+    <span class="n">folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">TESTDIR</span><span class="p">,</span> <span class="s2">&quot;filledfolder&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s2">&quot;file1&quot;</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;afdsfdsa&quot;</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">fill_folder</span><span class="p">([</span><span class="n">folder</span><span class="p">],</span> <span class="p">[(</span><span class="s2">&quot;file1&quot;</span><span class="p">,</span> <span class="mi">14</span><span class="p">)])</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">rmpath</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h2 id="tests.test_context.test_rmpath" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">test_rmpath</span><span class="p">()</span></code>
 
@@ -5923,6 +6044,52 @@
         <span class="n">tdir</span><span class="p">,</span>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;some comment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--piece-length&quot;</span><span class="p">,</span>
+        <span class="nb">str</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">16</span><span class="p">),</span>
+        <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TRACKER&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="tests.test_cli.test_cli_with_all_args_v3" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_with_all_args_v3</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Test CLI script with specific arguments.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_with_all_args_v3</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test CLI script with specific arguments.&quot;&quot;&quot;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
+        <span class="n">tdir</span><span class="p">,</span>
+        <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
         <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
@@ -5981,51 +6148,8 @@
 
 
 
-<h2 id="tests.test_utils.metadata" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">metadata</span><span class="p">()</span></code>
-
-
-</h2>
-
-    <div class="doc doc-contents ">
-
-      <p>Return preconfigured metadata.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>tests\test_utils.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">metadata</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Return preconfigured metadata.&quot;&quot;&quot;</span>
-    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;https://tracker.com:2017/announce&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;created by&quot;</span><span class="p">:</span> <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;piece length&quot;</span><span class="p">:</span> <span class="n">MAX_BLOCK</span><span class="p">,</span>
-        <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;torrentname.bin&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;files&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">28</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="s2">&quot;to&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">]},</span>
-                <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">28</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="s2">&quot;more&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">]},</span>
-            <span class="p">],</span>
-            <span class="s2">&quot;pieces&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;some bytes of data&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;tracker&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">meta</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
 <h2 id="tests.test_utils.tdir" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">tdir</span><span class="p">()</span></code>
+<code class="highlight language-python"><span class="n">tdir</span><span class="p">(</span><span class="n">request</span><span class="p">)</span></code>
 
 
 </h2>
@@ -6036,10 +6160,10 @@
 
         <details class="quote">
           <summary>Source code in <code>tests\test_utils.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">tdir</span><span class="p">():</span>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">parameters</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">tdir</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return temporary directory.&quot;&quot;&quot;</span>
-    <span class="n">drct</span> <span class="o">=</span> <span class="n">tempdir1</span><span class="p">()</span>
+    <span class="n">drct</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">()</span>
     <span class="k">yield</span> <span class="n">drct</span>
     <span class="n">rmpath</span><span class="p">(</span><span class="n">drct</span><span class="p">)</span>
 </code></pre></div>
@@ -6209,7 +6333,7 @@
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_get_filelist_tdir</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test get_file_list function.&quot;&quot;&quot;</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span>  <span class="c1"># nosec</span>
 </code></pre></div>
         </details>
     </div>
@@ -6550,7 +6674,7 @@
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_path_stat_eq_filelist</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test path_stat function return filelist.&quot;&quot;&quot;</span>
     <span class="n">filelist</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">path_stat</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filelist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>  <span class="c1"># nosec</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filelist</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span>  <span class="c1"># nosec</span>
 </code></pre></div>
         </details>
     </div>
@@ -7203,6 +7327,38 @@
     <span class="n">args</span><span class="p">[</span><span class="s2">&quot;outfile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">outfile</span>
     <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
     <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="tests.test_torrentfile.test_torrentfile_write_outfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_torrentfile_write_outfile</span><span class="p">(</span><span class="n">tdir</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Test TorrentFile class with output in kwargs.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrentfile.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_torrentfile_write_outfile</span><span class="p">(</span><span class="n">tdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test TorrentFile class with output in kwargs.&quot;&quot;&quot;</span>
+    <span class="n">path</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">tdir</span>
+    <span class="n">outfile</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">outfile</span><span class="o">=</span><span class="n">outfile</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>  <span class="c1"># nosec</span>
     <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
 </code></pre></div>

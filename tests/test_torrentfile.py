@@ -88,6 +88,16 @@ def test_torrentfile_with_outfile(tdir):
     rmpath(outfile)
 
 
+def test_torrentfile_write_outfile(tdir):
+    """Test TorrentFile class with output in kwargs."""
+    path, args = tdir
+    outfile = path + ".torrent"
+    torrent = TorrentFile(**args)
+    torrent.write(outfile=outfile)
+    assert os.path.exists(outfile)  # nosec
+    rmpath(outfile)
+
+
 def test_torrentfilev2_outfile(tdir):
     """Test TorrentFile2 class with output as argument."""
     path, args = tdir

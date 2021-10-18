@@ -57,8 +57,7 @@ def main_script(args=None):
 
     desc = "Create Bittorrent meta files for Bittorrent v1 and v2."
     parser = ArgumentParser("torrentfile", description=desc, prefix_chars="-",
-                            usage=usage, formatter_class=RawTextHelpFormatter,
-                            exit_on_error=False)
+                            usage=usage, formatter_class=RawTextHelpFormatter)
 
     parser.add_argument(
         "-v",

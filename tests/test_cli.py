@@ -107,6 +107,30 @@ def test_cli_with_all_args_v2(tdir):
         tdir,
         "--meta-version",
         "2",
+        "-d",
+        "-a",
+        "https://tracker-url.com/announce",
+        "--comment",
+        "some comment",
+        "--piece-length",
+        str(2 ** 16),
+        "--private",
+        "--source",
+        "TRACKER",
+    ]
+    parser = main()
+    assert os.path.exists(parser.outfile)  # nosec
+    rmpath(parser.outfile)
+
+
+def test_cli_with_all_args_v3(tdir):
+    """Test CLI script with specific arguments."""
+    sys.argv = [
+        "torrentfile",
+        tdir,
+        "--meta-version",
+        "3",
+        "-d",
         "-a",
         "https://tracker-url.com/announce",
         "--comment",
