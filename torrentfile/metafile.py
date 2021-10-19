@@ -72,8 +72,6 @@ import math
 import os
 from hashlib import sha1  # nosec
 
-import pyben
-
 from .metabase import MetaFile
 from .utils import filelist_total
 
@@ -159,118 +157,6 @@ class TorrentFile(MetaFile):
         meta = self.apply_constants()
         meta["info"] = self._assemble_infodict()
         return meta
-
-
-class Checker:
-    """Check a given file or directory to see if it matches a torrentfile.
-
-    Public constructor for Checker class instance.
-
-    Args:
-      metafile (`str`): Path to ".torrent" file.
-      location (`str`): Path where the content is located in filesystem.
-
-    Example:
-        >> metafile = "/path/to/torrentfile/content_file_or_dir.torrent"
-        >> location = "/path/to/location"
-        >> os.path.exists("/path/to/location/content_file_or_dir")
-        Out: True
-        >> checker = Checker(metafile, location)
-    """
-
-    def __init__(self, metafile, location):
-        """Check a given file or directory to see if it matches a torrentfile.
-
-        Constructor for the .torrent checker/validator.
-        """
-        self.metafile = metafile
-        self.location = location
-        self.meta = {}
-        self.info = {}
-        self.total = 0
-        self.piece_length = None
-        self.files = None
-        self.name = None
-        self.paths = []
-        self.fileinfo = {}
-        self.status = 0
-
-    def decode_metafile(self):
-        """Decode bencoded data inside .torrent file."""
-        terms = pyben.load(self.metafile)
-        for key, val in terms.items():
-            self.meta[key] = val
-            if key == "info":
-                for key1, val1 in val.items():
-                    self.info[key1] = val1
-
-        self.piece_length = self.info["piece length"]
-        self.pieces = self.info["pieces"]
-        self.name = self.info["name"]
-
-        if "length" not in self.info:
-            self.files = self.info["files"]
-
-    def get_paths(self):
-        """Get list of paths from files list inside .torrent file."""
-        if not self.files:
-            self.paths.append(self.name)
-            self.fileinfo[self.name] = self.info["length"]
-
-        else:
-            for item in self.files:
-                size = item["length"]
-                self.total += size
-                path = os.path.join(*item["path"])
-                self.paths.append(path)
-                self.fileinfo[path] = size
-        return self.paths
-
-    def _check_path(self, paths):
-        """Check if paths exist.
-
-        Args:
-          paths (`list`): Paths to torrent files contents.
-
-        Returns:
-          `str`: "Complete" after finishing.
-        """
-        feeder = Feeder(paths, self.piece_length, self.total)
-        pieces = self.pieces
-        total = len(pieces) // 20
-        counter = 0
-
-        for digest in feeder:
-            diglen = len(digest)
-            if pieces[:diglen] == digest:
-                pieces = pieces[diglen:]
-                counter += 1
-
-        return str(int(counter / total) * 100) + "%"
-
-    def check_path(self):
-        """Check if path exists and is the correct size and hash.
-
-        Returns:
-            `str`: Indicating process has completed.
-        """
-        if os.path.isfile(self.location):
-            if os.path.basename(self.location) == self.name:
-                paths = [self.location]
-
-        else:
-            paths = [os.path.join(self.location, i) for i in self.paths]
-
-        return self._check_path(paths)
-
-    def check(self):
-        """Check if all components work as expected."""
-        self.decode_metafile()
-
-        self.get_paths()
-
-        status = self.check_path()
-        return status
 
 
 class Feeder:

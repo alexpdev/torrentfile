@@ -882,7 +882,6 @@ TorrentFileHybrid            (<span title="torrentfile.metabase.MetaFile">MetaFi
     <span class="sd">&quot;&quot;&quot;Assemble the parts of the torrentfile into meta dictionary.&quot;&quot;&quot;</span>
     <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_constants</span><span class="p">()</span>
     <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_assemble_infodict</span><span class="p">()</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="p">)</span>
     <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;piece_layers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span>
     <span class="k">return</span> <span class="n">meta</span>
 </code></pre></div>

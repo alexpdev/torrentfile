@@ -1,5 +1,17 @@
 # torrentfile
 
+## Version 0.4.2
+
+### Improved v0.4.2
+
+    - The Checker feature now supports v1, v2, & hybrid .torrent file.
+
+### Fixed v0.4.2
+
+    - Bug in CLI for python < 3.8
+
+---------------------
+
 ## Version 0.4.1
 
 ### Added v0.4.1

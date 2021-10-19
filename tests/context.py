@@ -28,7 +28,10 @@ def rmpath(path):
     if not os.path.exists(path):
         return
     if os.path.isdir(path):
-        shutil.rmtree(path)
+        try:
+            shutil.rmtree(path)
+        except PermissionError:
+            return
     else:
         os.remove(path)
 
@@ -170,15 +173,3 @@ def parameters():
 def teardown():
     """Teardown function for the end of testing."""
     rmpath(TESTDIR)
-
-
-# def tempdir():
-#     """Generate temporary directory filled with meaningless data."""
-#     datadir()
-#     tdir = os.path.join(TESTDIR, "tempdir")
-#     tdir_1 = os.path.join(tdir, "directory1")
-#     for folder in [tdir, tdir_1]:
-#         rmpath(folder)
-#         os.mkdir(folder)
-#         fill_folder(folder)
-#     return tdir

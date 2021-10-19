@@ -64,7 +64,10 @@ class MetaFile:
         # Most torrent clients have editting trackers as a feature.
         self.announce = announce
         self.announce_list = announce_list
-        self.private = private
+        if private:
+            self.private = 1
+        else:
+            self.private = private
         self.source = source
 
         self.comment = comment

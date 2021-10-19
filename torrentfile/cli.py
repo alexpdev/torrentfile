@@ -160,7 +160,6 @@ def main_script(args=None):
 
     parser.add_argument(
         "--announce-list",
-        action="extend",
         dest="announce_list",
         nargs="+",
         metavar="<url>",
