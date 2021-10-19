@@ -19,8 +19,7 @@ from pathlib import Path
 import pytest
 
 from tests.context import TESTDIR, parameters, rmpath, rmpaths, sizedfile
-from torrentfile import (Checker, TorrentFile, TorrentFileHybrid,
-                         TorrentFileV2, utils)
+from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2, utils
 from torrentfile.metabase import MetaFile
 
 
@@ -206,12 +205,14 @@ def test_hybrid_under_block_sized():
     rmpath(smallest)
 
 
-def maketorrent(args, ver2=False):
+def maketorrent(args, v=None):
     """Torrent making factory."""
-    if ver2:
-        torrent = TorrentFileV2(**args)
-    else:
+    if v not in [2, 3]:
         torrent = TorrentFile(**args)
+    elif v == 2:
+        torrent = TorrentFileV2(**args)
+    elif v == 3:
+        torrent = TorrentFileHybrid(**args)
     torrent.assemble()
     return torrent.write()
 
@@ -232,7 +233,7 @@ def metav2d(testdir):
         "source": "tracker",
         "comment": "content details and purpose",
     }
-    outfile, meta = maketorrent(args, ver2=True)
+    outfile, meta = maketorrent(args, v=2)
     yield outfile, meta
     rmpaths([testdir, outfile])
 
@@ -249,19 +250,6 @@ def metav1d(testdir):
     }
     outfile, meta = maketorrent(args)
     yield outfile, meta
-    rmpaths([testdir, outfile])
-
-
-@pytest.fixture(scope="module")
-def tdirmeta(testdir):
-    """Test metadata."""
-    args = {
-        "private": True,
-        "path": testdir,
-        "announce": "http://announce.com/announce",
-    }
-    outfile, _ = maketorrent(args)
-    yield outfile, testdir
     rmpaths([testdir, outfile])
 
 
@@ -299,14 +287,6 @@ def test_v1_info_keys_dir(metav1d, key):
     outfile, meta = metav1d
     assert key in meta["info"]  # nosec
     assert os.path.exists(outfile)  # nosec
-
-
-def test_metafile_checker_v1_dir(tdirmeta):
-    """Test metadata."""
-    outfile, tdir = tdirmeta
-    checker = Checker(outfile, tdir)
-    status = checker.check()
-    assert status == "100%"  # nosec
 
 
 def test_meta_no_args_v2():

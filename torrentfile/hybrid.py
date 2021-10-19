@@ -64,7 +64,6 @@ class TorrentFileHybrid(MetaFile):
         """Assemble the parts of the torrentfile into meta dictionary."""
         meta = self.apply_constants()
         meta["info"] = self._assemble_infodict()
-        meta["pieces"] = b"".join(self.pieces)
         meta["piece_layers"] = self.piece_layers
         return meta
 
@@ -93,6 +92,7 @@ class TorrentFileHybrid(MetaFile):
         for k, v in fields.items():
             if v:
                 info[k] = v
+        info["pieces"] = b"".join(self.pieces)
         return info
 
     def _traverse(self, path):

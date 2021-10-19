@@ -208,7 +208,7 @@ class TorrentFileV2(MetaFile):
             if size == 0:
                 return {"": {"length": size}}
 
-            fhash = FileHash(path, self.piece_length)
+            fhash = V2Hash(path, self.piece_length)
 
             if size > self.piece_length:
                 self.piece_layers[fhash.root] = fhash.piece_layer
@@ -231,7 +231,7 @@ def merkle_root(pieces):
     return pieces[0]
 
 
-class FileHash:
+class V2Hash:
     """Calculate and store hash information for specific file.
 
     Args:
