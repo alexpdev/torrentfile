@@ -580,9 +580,11 @@ invoked when called from command line, and parses accompanying arguments.</p>
     <span class="n">usage</span> <span class="o">=</span> <span class="p">(</span>
         <span class="sd">&quot;&quot;&quot;torrentfile -v --version</span>
 <span class="sd">           torrentfile -h --help</span>
-<span class="sd">           torrentfile path [-o &lt;dest&gt;] [-a &lt;url&gt;] [--private] [-d]</span>
-<span class="sd">           [--source &lt;x&gt;] [--piece-length &lt;n&gt;] [--meta-version &lt;n&gt;]</span>
-<span class="sd">           [--announce-list &lt;url2&gt; &lt;...&gt;]  [--comment &lt;comment&gt;]&quot;&quot;&quot;</span>
+<span class="sd">           torrentfile --checker &lt;metafile&gt; &lt;content&gt;</span>
+<span class="sd">           torrentfile &lt;path&gt; [-o &lt;dest&gt;] [-a &lt;url&gt;] [-d] [--source &lt;x&gt;]</span>
+<span class="sd">                       [--piece-length &lt;n&gt;] [--meta-version &lt;n&gt;] [--private]</span>
+<span class="sd">                       [--announce-list &lt;url2&gt; &lt;...&gt;]  [--comment &lt;comment&gt;]</span>
+<span class="sd">           &quot;&quot;&quot;</span>
     <span class="p">)</span>
 
     <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Create Bittorrent meta files for Bittorrent v1 and v2.&quot;</span>
@@ -608,6 +610,8 @@ invoked when called from command line, and parses accompanying arguments.</p>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;path&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">Path to content source file or directory.&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
@@ -695,10 +699,38 @@ invoked when called from command line, and parses accompanying arguments.</p>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">Additional tracker announce URLs.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--checker&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;checker&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;file&gt; &lt;dir&gt;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Activates Torrent Check Mode. If this option is active, then</span>
+<span class="s2">                all other options are ignored except debug. Two absolute or</span>
+<span class="s2">                relative paths must follow: The path to a .torrent file,</span>
+<span class="s2">                followed by the path to a directory where some or all the</span>
+<span class="s2">                files described it the .torrent file are saved. The contents</span>
+<span class="s2">                will then be analyzed and a percentage will be returned</span>
+<span class="s2">                representing how lose to the full contents currently exists.</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-h&quot;</span><span class="p">]</span>
-
     <span class="n">flags</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
+                        <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y %H:%M:%S&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">checker</span><span class="p">:</span>
+        <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">flags</span><span class="o">.</span><span class="n">checker</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">flags</span><span class="o">.</span><span class="n">checker</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">status</span>
 
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
@@ -711,26 +743,17 @@ invoked when called from command line, and parses accompanying arguments.</p>
         <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
-                            <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
-                            <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y %H:%M:%S&#39;</span><span class="p">)</span>
-
     <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
         <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileV2</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
     <span class="k">elif</span> <span class="n">flags</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
         <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileHybrid</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
     <span class="k">else</span><span class="p">:</span>
         <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-
     <span class="n">parser</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
-
     <span class="k">return</span> <span class="n">parser</span>
 </code></pre></div>
         </details>

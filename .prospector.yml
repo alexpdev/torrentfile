@@ -39,3 +39,9 @@ pyflakes:
   run: true
   disable:
     - F401
+
+
+mccabe:
+  run: true
+  disable:
+    - MC0001

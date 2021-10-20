@@ -28,6 +28,7 @@ from argparse import ArgumentParser, RawTextHelpFormatter
 
 import torrentfile
 
+from .checker import Checker
 from .hybrid import TorrentFileHybrid
 from .metafile import TorrentFile
 from .metafile2 import TorrentFileV2
@@ -50,9 +51,11 @@ def main_script(args=None):
     usage = (
         """torrentfile -v --version
            torrentfile -h --help
-           torrentfile path [-o <dest>] [-a <url>] [--private] [-d]
-           [--source <x>] [--piece-length <n>] [--meta-version <n>]
-           [--announce-list <url2> <...>]  [--comment <comment>]"""
+           torrentfile --checker <metafile> <content>
+           torrentfile <path> [-o <dest>] [-a <url>] [-d] [--source <x>]
+                       [--piece-length <n>] [--meta-version <n>] [--private]
+                       [--announce-list <url2> <...>]  [--comment <comment>]
+           """
     )
 
     desc = "Create Bittorrent meta files for Bittorrent v1 and v2."
@@ -78,6 +81,8 @@ def main_script(args=None):
     parser.add_argument(
         "path",
         action="store",
+        default="",
+        nargs="?",
         help="\t\tPath to content source file or directory.",
         metavar="<path>",
     )
@@ -165,10 +170,38 @@ def main_script(args=None):
         metavar="<url>",
         help="\t\tAdditional tracker announce URLs.",
     )
+
+    parser.add_argument(
+        "--checker",
+        dest="checker",
+        nargs=2,
+        metavar="<file> <dir>",
+        help=("""Activates Torrent Check Mode. If this option is active, then
+                all other options are ignored except debug. Two absolute or
+                relative paths must follow: The path to a .torrent file,
+                followed by the path to a directory where some or all the
+                files described it the .torrent file are saved. The contents
+                will then be analyzed and a percentage will be returned
+                representing how lose to the full contents currently exists.
+            """)
+    )
     if not args:
         args = ["-h"]
-
     flags = parser.parse_args(args)
+
+    if flags.debug:
+        level = logging.DEBUG
+    else:
+        level = logging.WARNING
+
+    logging.basicConfig(level=level, format='%(asctime)s %(message)s',
+                        datefmt='%m/%d/%Y %H:%M:%S')
+    if flags.checker:
+        checker = Checker(flags.checker[0], flags.checker[1])
+        status = checker.check()
+        print(status)
+        sys.stdout.write(status)
+        return status
 
     kwargs = {
         "path": flags.path,
@@ -181,26 +214,17 @@ def main_script(args=None):
         "comment": flags.comment,
     }
 
-    if flags.debug:
-        logging.basicConfig(level=logging.DEBUG,
-                            format='%(asctime)s %(message)s',
-                            datefmt='%m/%d/%Y %H:%M:%S')
-
     if flags.meta_version == "2":
         torrent = TorrentFileV2(**kwargs)
-
     elif flags.meta_version == "3":
         torrent = TorrentFileHybrid(**kwargs)
-
     else:
         torrent = TorrentFile(**kwargs)
 
     outfile, meta = torrent.write()
-
     parser.kwargs = kwargs
     parser.meta = meta
     parser.outfile = outfile
-
     return parser
 
 

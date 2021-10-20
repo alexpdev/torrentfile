@@ -243,13 +243,13 @@ single-line-if-stmt=yes
 ignore-comments=yes
 
 # Ignore docstrings when computing similarities.
-ignore-docstrings=yes
+ignore-docstrings=no
 
 # Ignore imports when computing similarities.
 ignore-imports=no
 
 # Minimum lines number of a similarity.
-min-similarity-lines=3
+min-similarity-lines=4
 
 
 [BASIC]
@@ -304,7 +304,7 @@ function-rgx=(([a-z][a-z0-9_]{2,30})|(_[a-z0-9_]*))$
 good-names=l,r,g,b,w,i,j,k,v,n,x,y,l,z,ex,ok,fd,d,Run,_
 
 # Include a hint for the correct naming format with invalid-name
-include-naming-hint=no
+include-naming-hint=yes
 
 # Naming hint for inline iteration names
 inlinevar-name-hint=[A-Za-z_][A-Za-z0-9_]*$
@@ -405,7 +405,7 @@ max-attributes=18
 max-bool-expr=5
 
 # Maximum number of branch for function / method body
-max-branches=12
+max-branches=19
 
 # Maximum number of locals for function / method body
 max-locals=20
@@ -420,7 +420,7 @@ max-public-methods=20
 max-returns=6
 
 # Maximum number of statements in function / method body
-max-statements=50
+max-statements=80
 
 # Minimum number of public methods for a class (see R0903).
 min-public-methods=0
