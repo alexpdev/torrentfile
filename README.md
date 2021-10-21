@@ -18,11 +18,12 @@ _Torrentfile_ is a CLI for creating .torrent files for bittorrent clients.
 - Simple interface
 - Create files for Bittorrent v1
 - Create files for Bittorrent v2
+- Create Hybrid files for Bittorrent v1 & v2
 - Create files with multiple trackers
 - Optionally specify size of individual packets of data for transfer
 - Flag torrent file as private for private trackers.
-- Check torrentfile against file or directory for match.
-- Optional GUI can be found at [https://github.com/Torrentfile-GUI](https://github.com/Torrentfile-GUI)
+- Validate downloaded content against hashes in .torrent file.
+- Optional GUI can be found at [https://github.com/TorrentfileQt](https://github.com/TorrentfileQt)
 
 ## Documentation
 
@@ -48,6 +49,7 @@ Or download the latest release from the Release page on github.
 
     usage:    torrentfile -v --version
               torrentfile -h --help
+              torrentfile --check
               torrentfile path [-o <dest>] [-a <url>] [--private] [-d]
               [--piece-length <n>] [--meta-version <n>] [--source <x>]
               [--announce-list <url2> <...>] [--comment <comment>]

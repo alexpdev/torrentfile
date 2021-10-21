@@ -1,5 +1,13 @@
 # torrentfile
 
+## Version 0.4.3
+
+### Fixed v0.4.3
+
+    - Bug Fixes
+
+---------------------
+
 ## Version 0.4.2
 
 ### Improved v0.4.2

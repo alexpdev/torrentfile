@@ -443,6 +443,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#torrentfile.checker.Checker.sort_paths" class="md-nav__link">
+    sort_paths()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.checker.Checker.v1_checker" class="md-nav__link">
+    v1_checker()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -587,7 +601,6 @@ checker = Checker(metafile, location)</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span> <span class="o">=</span> <span class="n">metafile</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">location</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="kc">None</span>
@@ -671,6 +684,8 @@ checker = Checker(metafile, location)</p>
 <span class="sd">    Returns:</span>
 <span class="sd">        status (`str`): Percentage of .torrent file download completed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Torrent File = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Search Dir = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="s2">&quot;Begin decoding .torrent file.&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">decode_metafile</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">get_paths</span><span class="p">()</span>
@@ -722,31 +737,39 @@ checker = Checker(metafile, location)</p>
 <span class="sd">        status (`str`): Indicating process has completed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Torrent File = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Search Dir = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">):</span>
-            <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">))</span>
+
             <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Found single file: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">))</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_path</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">:</span>
             <span class="n">full</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
             <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">path</span><span class="p">,</span> <span class="n">full</span><span class="p">))</span>
+
         <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Found matching directory: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_path</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+
     <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Searching for matching content in destination directory.&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+
             <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Found Matching Torrent Content = </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
             <span class="bp">self</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">:</span>
                 <span class="n">full</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
                 <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">path</span><span class="p">,</span> <span class="n">full</span><span class="p">))</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_path</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+
     <span class="n">text</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Could not find matching content in this directory.&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="k">return</span> <span class="kc">None</span>
@@ -777,19 +800,16 @@ checker = Checker(metafile, location)</p>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">decode_metafile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Decode bencoded data inside .torrent file.&quot;&quot;&quot;</span>
     <span class="n">terms</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="s2">&quot;Decoded bencoded data from meta file.&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">terms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Meta Dict: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">key1</span><span class="p">,</span> <span class="n">val1</span> <span class="ow">in</span> <span class="n">val</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="n">key1</span><span class="p">]</span> <span class="o">=</span> <span class="n">val1</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Info Dict: </span><span class="si">{</span><span class="n">key1</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">val1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decoding File Contents.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key1</span><span class="p">,</span> <span class="n">val1</span> <span class="ow">in</span> <span class="n">terms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="n">key1</span><span class="p">]</span> <span class="o">=</span> <span class="n">val1</span>
+        <span class="k">if</span> <span class="n">key1</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key2</span><span class="p">,</span> <span class="n">val2</span> <span class="ow">in</span> <span class="n">val1</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="n">key2</span><span class="p">]</span> <span class="o">=</span> <span class="n">val2</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;torrent name </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="s2">&quot;pieces&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="s2">&quot;Found Pieces in Info Dict.&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;torrent piece length: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -817,9 +837,8 @@ checker = Checker(metafile, location)</p>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get list of paths from files list inside .torrent file.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="s2">&quot;file tree&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="s2">&quot;File Tree found in Info Dict&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="s2">&quot;Torrent contains &#39;file tree&#39;.&quot;</span><span class="p">)</span>
         <span class="n">paths</span> <span class="o">=</span> <span class="n">parse_filetree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">paths</span><span class="si">}</span><span class="s2"> parsed from file tree&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">paths</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">+=</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
@@ -827,6 +846,8 @@ checker = Checker(metafile, location)</p>
     <span class="k">elif</span> <span class="s2">&quot;files&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="s2">&quot;Files found in info dict.&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="s2">&quot;.pad&quot;</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]:</span>
+                <span class="k">continue</span>
             <span class="n">size</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">+=</span> <span class="n">size</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
@@ -868,6 +889,171 @@ checker = Checker(metafile, location)</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">text</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">:</span>
         <span class="n">callback</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="torrentfile.checker.Checker.sort_paths" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">sort_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Sort listed paths in the order they appear in the .torrent file.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>paths</code></td>
+        <td><code>`list`</code></td>
+        <td><p>unsorted list of paths.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>pathlist (`list`)</code></td>
+      <td><p>sorted list of paths.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\checker.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sort_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sort listed paths in the order they appear in the .torrent file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        paths (`list`): unsorted list of paths.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pathlist (`list`): sorted list of paths.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">partials</span><span class="p">,</span> <span class="n">pathlst</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">],</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="s2">&quot;files&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">paths</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="s2">&quot;attr&quot;</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+        <span class="n">pathlst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="n">partials</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">path</span><span class="p">)][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">pathlst</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="torrentfile.checker.Checker.v1_checker" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">v1_checker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pathlst</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Verify the contents using Bittorrent v1 Protocol.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>pathlst</code></td>
+        <td><code>`list`</code></td>
+        <td><p>list of paths for hashing.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>status (`str`)</code></td>
+      <td><p>Text percentage of content downloaded.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\checker.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">v1_checker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pathlst</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Verify the contents using Bittorrent v1 Protocol.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pathlst (`list`): list of paths for hashing.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        status (`str`): Text percentage of content downloaded.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Detected Bittorrent v1 format.&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="n">arr</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">Feeder</span><span class="p">(</span><span class="n">pathlst</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">):</span>
+        <span class="n">arr</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">arr</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">]:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;100%&quot;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Content matches </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2"> to .torrent file.&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">status</span>
+
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">pathlst</span><span class="p">:</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">total</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Content matches </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2"> to .torrent file.&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outmsg</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">status</span>
 </code></pre></div>
         </details>
     </div>
