@@ -175,7 +175,7 @@ def main_script(args=None):
         "--checker",
         dest="checker",
         nargs=2,
-        metavar="<file> <dir>",
+        metavar="<path>",
         help=("""Activates Torrent Check Mode. If this option is active, then
                 all other options are ignored except debug. Two absolute or
                 relative paths must follow: The path to a .torrent file,
