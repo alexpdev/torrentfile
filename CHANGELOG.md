@@ -1,5 +1,18 @@
 # torrentfile
 
+## Version 0.4.4
+
+### Improved v0.4.4
+
+    - Checker/Validator Feature.
+    - Gives more accurate estimates for completeness.
+
+### Added v0.4.4
+
+    - Tests for Checker feature.
+
+---------------------
+
 ## Version 0.4.3
 
 ### Fixed v0.4.3

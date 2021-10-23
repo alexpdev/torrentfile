@@ -60,25 +60,12 @@ class Checker:
         self.paths = []
         self.fileinfo = {}
         self.output = ""
+        self.status = "Unknown."
 
     @classmethod
     def add_callback(cls, callback):
         """Register Callback function for displaying progress updates."""
         cls._callbacks.append(callback)
-
-    def decode_metafile(self):
-        """Decode bencoded data inside .torrent file."""
-        terms = pyben.load(self.metafile)
-        self.outmsg(f"Decoding File Contents.{self.metafile}")
-        for key1, val1 in terms.items():
-            self.info[key1] = val1
-            if key1 == "info":
-                for key2, val2 in val1.items():
-                    self.info[key2] = val2
-        self.name = self.info["name"]
-        self.outmsg(f"torrent name {self.name}")
-        self.piece_length = self.info["piece length"]
-        self.outmsg(f"torrent piece length: {self.piece_length}")
 
     def outmsg(self, text):
         """Generate Text output for notifying users of progress updates."""
@@ -87,54 +74,93 @@ class Checker:
         for callback in self._callbacks:
             callback(text)
 
-    def get_paths(self):
-        """Get list of paths from files list inside .torrent file."""
-        if "file tree" in self.info:
-            self.outmsg("Torrent contains 'file tree'.")
-            paths = parse_filetree(self.info["file tree"])
-            for path, val in paths.items():
-                self.paths.append(path)
-                self.total += val["length"]
-            self.fileinfo = paths
-        elif "files" in self.info:
-            self.outmsg("Files found in info dict.")
-            for item in self.info["files"]:
-                if ".pad" in item["path"]:
-                    continue
-                size = item["length"]
-                self.total += size
-                path = os.path.join(*item["path"])
-                self.paths.append(path)
-                self.fileinfo[path] = size
+    def decode_metafile(self):
+        """Decode bencoded data inside .torrent file."""
+        terms = pyben.load(self.metafile)
+        self.outmsg(f"Decoding torrent file: {self.metafile}")
+        for key1, val1 in terms.items():
+            self.info[key1] = val1
+            if key1 == "info":
+                for key2, val2 in val1.items():
+                    self.info[key2] = val2
+        self.name = self.info["name"]
+        self.outmsg(f"Torrent name: {self.name}")
+        self.piece_length = self.info["piece length"]
+        self.outmsg(f"Torrent piece length: {self.piece_length}")
+        if "meta version" not in self.info and "pieces" in self.info:
+            self.meta_version = 1
+        elif "pieces" in self.info and "meta version" in self.info:
+            self.meta_version = 3
         else:
-            self.paths.append(self.info["name"])
-            self.total = self.info["length"]
-            self.fileinfo[self.info["name"]] = self.info["length"]
-        self.outmsg(f"Total size of all files = {self.total}")
-        self.outmsg(f"File Information = {self.fileinfo}")
+            self.meta_version = 2
+        self.outmsg(f"Bittorrent meta-version {self.meta_version} detected.")
 
-    def sort_paths(self, paths):
-        """Sort listed paths in the order they appear in the .torrent file.
+    def run_procedure(self):
+        """Get list of paths from files list inside .torrent file."""
+        self.outmsg("Searching for Root Directory.")
+        current = os.path.basename(self.location)
+        if self.name == current:
+            self.outmsg(f"Found root path: {self.location}.")
+            return self.check_paths()
+        for name in os.listdir(self.location):
+            if name == self.name:
+                full = os.path.join(self.location, name)
+                self.location = full
+                self.outmsg(f"Found root path: {self.location}.")
+                return self.check_paths()
+        self.status = 0
+        self.outmsg(f"No torrent content was found in {self.location}?")
+        return self.status
 
-        Args:
-            paths (`list`): unsorted list of paths.
+    def check_paths(self):
+        """Extract and validate file path information from .torrent file."""
+        if self.meta_version == 1:
+            if os.path.isfile(self.location):
+                self.outmsg(f"Single File Torrent: {self.location}")
+                length = self.info["length"]
+                self.paths.append(self.location)
+                self.total = self.info["length"]
+                self.fileinfo[self.location] = {
+                    "partial": self.name, "length": length
+                }
+                return self.v1_checker()
+            for item in self.info["files"]:
+                if "attr" in item:
+                    continue
+                path = os.path.join(*item["path"])
+                self.total += item["length"]
+                full = os.path.join(self.location, path)
+                self.paths.append(full)
+                self.outmsg(f"Torrent includes: {full}, {item['length']}")
+                self.fileinfo[full] = {
+                    "partial": path, "length": item["length"]
+                }
+            self.outmsg(f"Torrent total size in bytes: {self.total}")
+            return self.v1_checker()
+        if os.path.isfile(self.location):
+            full = os.path.join(self.location, self.name)
+            fileinfo = self.info["file tree"][self.name][""]
+            self.paths = [self.location]
+            self.fileinfo[self.location] = {
+                "partial": self.name,
+                "length": fileinfo["length"],
+                "pieces root": fileinfo["pieces root"]
+            }
+            return self.hash_checker()
+        paths = parse_filetree(self.info["file tree"])
+        for path, details in paths.items():
+            full = os.path.join(self.location, path)
+            self.outmsg(f"Torrent includes: {full}")
+            self.paths.append(full)
+            self.total += details["length"]
+            self.fileinfo[full] = {
+                "partial": path,
+                "length": details["length"],
+                "pieces root": details["pieces root"]
+            }
+        return self.hash_checker()
 
-        Returns:
-            pathlist (`list`): sorted list of paths.
-        """
-        partials, pathlst = [i[0] for i in paths], []
-        if "files" not in self.info:
-            return [paths[0][1]]
-        for item in self.info["files"]:
-            if item["length"] == 0:
-                continue
-            if "attr" in item:
-                continue
-            path = os.path.join(*item["path"])
-            pathlst.append(paths[partials.index(path)][1])
-        return pathlst
-
-    def v1_checker(self, pathlst):
+    def v1_checker(self):
         """Verify the contents using Bittorrent v1 Protocol.
 
         Args:
@@ -143,114 +169,29 @@ class Checker:
         Returns:
             status (`str`): Text percentage of content downloaded.
         """
-        text = "Detected Bittorrent v1 format."
-        self.outmsg(text)
-
+        total_pieces = (self.total // self.piece_length) + 1
+        num_pieces = total_pieces
         arr = bytearray()
-        for piece in Feeder(pathlst, self.piece_length, self.total):
+        for piece in Feeder(self.paths, self.piece_length, self.total):
             arr.extend(piece)
+            if self.info["pieces"][:len(arr)] == arr:
+                num_pieces -= 1
+        percentage = int(((total_pieces - num_pieces) / total_pieces) * 100)
+        self.status = f"{percentage}%"
+        self.outmsg(f"Done: Checker Status = {self.status}")
 
-        if arr == self.info["pieces"]:
-            status = "100%"
-            text = f"Content matches {status} to .torrent file."
-            self.outmsg(text)
-            return status
-
-        total = 0
-        for path in pathlst:
-            total += os.path.getsize(path)
-        status = str(int((total / self.total) * 100)) + "%"
-        text = f"Content matches {status} to .torrent file."
-        self.outmsg(text)
-        return status
-
-    def _check_path(self, paths):
-        """Check if paths exist.
-
-        Args:
-          paths (`list`): Paths to torrent files contents.
-
-        Returns:
-          `str`: "Complete" after finishing.
-        """
-        pathlst = self.sort_paths(paths)
-        if "meta version" not in self.info and "file tree" not in self.info:
-            return self.v1_checker(pathlst)
-
-        if "pieces" in self.info:
-            hasher = HybridHash
-            text = "Detected Bittorrent v1 & v2 Hybrid Format."
-            self.outmsg(text)
-
-        else:
-            hasher = V2Hash
-            text = "Detected Bittorrent v2 Format."
-            self.outmsg(text)
-
-        matches = []
-        for part, path in paths:
-            if os.path.exists(path):
-                filehash = hasher(path, self.piece_length)
-                if filehash.root == self.fileinfo[part]["pieces root"]:
-                    text = f"{path} root hash matches."
-                    matches.append(path)
-        if len(matches) == len(paths):
-            status = "100%"
-            text = f"Torrent file matches {status}"
-            self.outmsg(text)
-            return status
-
-        total = 0
-        for path in [i[1] for i in paths]:
-            total += os.path.getsize(path)
-        status = str(int((total + 1 / self.total + 1) * 100)) + "%"
-        text = f"Content matches {status} to .torrent file."
-        self.outmsg(text)
-        return status
-
-    def check_path(self):
-        """Check if path exists and is the correct size and hash.
-
-        Returns:
-            status (`str`): Indicating process has completed.
-        """
-        paths = []
-        if os.path.basename(self.location) == self.name:
-            if os.path.isfile(self.location):
-
-                text = f"Found single file: {self.location}"
-                self.outmsg(text)
-
-                paths.append((self.name, self.location))
-                return self._check_path(paths)
-
-            for path in self.paths:
-                full = os.path.join(self.location, path)
-                paths.append((path, full))
-
-            text = f"Found matching directory: {self.location}"
-            self.outmsg(text)
-
-            return self._check_path(paths)
-
-        text = "Searching for matching content in destination directory."
-        self.outmsg(text)
-
-        for item in os.listdir(self.location):
-            if item == self.name:
-
-                text = f"Found Matching Torrent Content = {item}"
-                self.outmsg(text)
-
-                self.location = os.path.join(self.location, item)
-                for path in self.paths:
-                    full = os.path.join(self.location, path)
-                    paths.append((path, full))
-                return self._check_path(paths)
-
-        text = ("Could not find matching content in this directory.")
-        self.outmsg(text)
-        return None
+    def hash_checker(self):
+        """Validate files using Bittorrent v2 and hybrid file formats."""
+        hasher = V2Hash if self.meta_version == 2 else HybridHash
+        total = len(self.paths)
+        for item in self.paths:
+            if os.path.exists(item):
+                filehash = hasher(item, self.piece_length)
+                if filehash.root == self.fileinfo[item]["pieces root"]:
+                    total -= 1
+        percentage = int(((len(self.paths) - total) / len(self.paths)) * 100)
+        self.status = f"{percentage}%"
+        self.outmsg(f"Done: Checker Status = {self.status}")
 
     def check(self):
         """Check if all components work as expected.
@@ -258,13 +199,10 @@ class Checker:
         Returns:
             status (`str`): Percentage of .torrent file download completed.
         """
-        self.outmsg(f"Torrent File = {self.metafile}")
-        self.outmsg(f"Search Dir = {self.location}")
-        self.outmsg("Begin decoding .torrent file.")
         self.decode_metafile()
-        self.get_paths()
-        status = self.check_path()
-        return status
+        self.outmsg(f"Searching {self.location} matching files.")
+        status = self.run_procedure()
+        return status if status else self.status
 
 
 def parse_filetree(filetree):

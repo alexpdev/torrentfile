@@ -69,7 +69,7 @@ push: clean lint test coverage docs ## push to remote repo
 	@echo pushing to remote
 	git add .
 	git commit -m "$m"
-	git push
+	git push -u origin dev
 	bash codacy.sh report -r coverage.xml
 
 docs: environment ## Regenerate docs from changes

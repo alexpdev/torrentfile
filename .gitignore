@@ -10,6 +10,7 @@ tests/test_data/
 *.torrent
 repos/
 sites/
+tests/TESTDIR
 
 # bite-code
 *.pyc
