@@ -97,9 +97,9 @@ def tempdir1():
     dir1 = os.path.join(root, "directory1")
     dir2 = os.path.join(root, "directory2")
     dirs = [root, dir1, dir2]
-    file1 = (os.path.join(dir1, "file1"), 14)
-    file2 = (os.path.join(dir1, "file2"), 16)
-    file3 = (os.path.join(dir2, "file3"), 18)
+    file1 = (os.path.join(dir1, "file1"), 16)
+    file2 = (os.path.join(dir1, "file2"), 22)
+    file3 = (os.path.join(dir2, "file3"), 23)
     file4 = (os.path.join(dir2, "file4"), 20)
     files = [file1, file2, file3, file4]
     fill_folder(dirs, files)
@@ -112,7 +112,7 @@ def tempdir2():
     root = os.path.join(TESTDIR, "RootFolder2")
     dir1 = os.path.join(root, "directory1")
     dirs = [root, dir1]
-    file1 = (os.path.join(dir1, "file1"), 28)
+    file1 = (os.path.join(dir1, "file1"), 25)
     files = [file1]
     fill_folder(dirs, files)
     return root
@@ -124,8 +124,8 @@ def tempdir3():
     root = os.path.join(TESTDIR, "RootFolder3")
     dirs = [root]
     file1 = (os.path.join(root, "file1"), 14)
-    file2 = (os.path.join(root, "file2"), 14)
-    file3 = (os.path.join(root, "file3"), 14)
+    file2 = (os.path.join(root, "file2"), 16)
+    file3 = (os.path.join(root, "file3"), 16)
     file4 = (os.path.join(root, "file4"), 14)
     files = [file1, file2, file3, file4]
     fill_folder(dirs, files)
@@ -140,9 +140,9 @@ def tempdir4():
     dir2 = os.path.join(root, "directory2")
     dirs = [root, dir1, dir2]
     file1 = (os.path.join(dir1, "file1"), 22)
-    file2 = (os.path.join(dir1, "file2"), 26)
-    file3 = (os.path.join(dir2, "file3"), 24)
-    file4 = (os.path.join(dir2, "file4"), 27)
+    file2 = (os.path.join(dir1, "file2"), 27)
+    file3 = (os.path.join(dir2, "file3"), 26)
+    file4 = (os.path.join(dir2, "file4"), 25)
     files = [file1, file2, file3, file4]
     fill_folder(dirs, files)
     return root
@@ -166,7 +166,7 @@ def sizedfile(num=28):
 
 def parameters():
     """Return a list of all tempdir configurations."""
-    return [tempdir1, tempdir2, tempdir3, tempdir4, tempfile]
+    return [tempdir1, tempdir2, tempdir3, tempdir4]
 
 
 @atexit.register

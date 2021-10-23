@@ -1,7 +1,7 @@
 {
   "name": "torrentfile",
   "displayName": "Torrentfile",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Bittorent v1 & v2 .torrent file creation.",
   "repository": {
     "type": "git",

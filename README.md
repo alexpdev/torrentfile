@@ -16,14 +16,15 @@ _Torrentfile_ is a CLI for creating .torrent files for bittorrent clients.
 ## Features
 
 - Simple interface
-- Create files for Bittorrent v1
-- Create files for Bittorrent v2
+- Create meta files for Bittorrent v1
+- Create meta files for Bittorrent v2
 - Create Hybrid files for Bittorrent v1 & v2
 - Create files with multiple trackers
-- Optionally specify size of individual packets of data for transfer
+- Check .torrent file for verifying download completed.
+- Specify piece length attribute or let program calculate appropriate value.
 - Flag torrent file as private for private trackers.
-- Validate downloaded content against hashes in .torrent file.
-- Optional GUI can be found at [https://github.com/TorrentfileQt](https://github.com/TorrentfileQt)
+- Support for validating downloaded content from v1, v2, and hybrid file hashes.
+- Optional GUI can be found at [https://github.com/alexpdev/TorrentfileQt](https://github.com/alexpdev/TorrentfileQt)
 
 ## Documentation
 
@@ -54,7 +55,7 @@ Or download the latest release from the Release page on github.
               [--piece-length <n>] [--meta-version <n>] [--source <x>]
               [--announce-list <url2> <...>] [--comment <comment>]
 
-    Create Bittorrent meta files for Bittorrent v1 and v2.
+    Create and/or Re-Check Bittorrent meta files for Bittorrent v1 and v2 and hybrid.
 
     positional arguments:
       <path>                                Path to content source file or directory.

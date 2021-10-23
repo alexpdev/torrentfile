@@ -283,7 +283,14 @@ class V2Hash:
             # blocks is empty mean eof
             if not blocks:
                 break
-
+            if len(blocks) != self.num_blocks:
+                if not self.layer_hashes:
+                    next_pow_2 = 1 << int(math.log2(total) + 1)
+                    remaining = ((next_pow_2 - total) // BLOCK_SIZE) + 1
+                else:
+                    remaining = self.num_blocks - size
+                padding = [bytes(HASH_SIZE) for _ in range(remaining)]
+                blocks.extend(padding)
             # if the file is smaller than piece length
             self.layer_hashes.append(merkle_root(blocks))
         self._calculate_root()
