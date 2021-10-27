@@ -24,7 +24,7 @@ from torrentfile import (Checker, TorrentFile, TorrentFileHybrid,
 
 
 @pytest.fixture(scope="module", params=parameters())
-def testdir(request):
+def tempdir(request):
     """Return temp directory."""
     val = request.param()
     yield val
@@ -59,11 +59,11 @@ def tfile(request):
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
-def test_metafile_checker(testdir, version):
+def test_metafile_checker(tempdir, version):
     """Test metadata checker class."""
-    args = {"announce": "announce", "path": testdir, "private": 1}
+    args = {"announce": "announce", "path": tempdir, "private": 1}
     outfile, _ = mktorrent(args, v=version)
-    checker = Checker(outfile, testdir)
+    checker = Checker(outfile, tempdir)
     status = checker.check()
     assert status == "100%"  # nosec
     rmpath(outfile)
@@ -84,8 +84,8 @@ def test_partial_metafiles(tdir3, version):
         full = os.path.join(tdir3, item)
         if os.path.isfile(full):
             shortenfile(full)
-    testdir = os.path.dirname(tdir3)
-    checker = Checker(outfile, testdir)
+    tempdir = os.path.dirname(tdir3)
+    checker = Checker(outfile, tempdir)
     status = checker.check()
     assert status != "100%"  # nosec
     rmpath(outfile)
@@ -109,7 +109,7 @@ def test_checker_cli_args(tdir3, version):
     outfile, _ = mktorrent(args, v=version)
     sys.argv[1:] = ["--checker", outfile, tdir3]
     output = main()
-    assert output == "100%"   # nosec
+    assert output == "100"   # nosec
     rmpath(outfile)
 
 

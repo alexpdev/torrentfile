@@ -18,13 +18,15 @@ from pathlib import Path
 
 import pytest
 
-from tests.context import TESTDIR, parameters, rmpath, rmpaths, sizedfile
+from tests.context import parameters, rmpath, rmpaths, sizedfile
 from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2, utils
 from torrentfile.metabase import MetaFile
 
+TESTDIR = os.environ["TESTDIR"]
+
 
 @pytest.fixture(scope="module", params=parameters())
-def tdir(request):
+def tdir1(request):
     """Return temporary directory."""
     folder = request.param()
     args = {"path": folder, "announce": "https://tracker.com/announce"}
@@ -42,16 +44,16 @@ def smallfile():
     rmpath(path)
 
 
-def test_torrentfile_dir(tdir):
+def test_torrentfile_dir(tdir1):
     """Test temporary directory."""
-    _, args = tdir
+    _, args = tdir1
     torrent = TorrentFile(**args)
     assert torrent.meta is not None  # nosec
 
 
-def test_torrentfile_dir_private(tdir):
+def test_torrentfile_dir_private(tdir1):
     """Test temporary dir with arguments."""
-    _, args = tdir
+    _, args = tdir1
     args["private"] = True
     args["piece_length"] = 1048576
     torrent = TorrentFile(**args)
@@ -59,9 +61,9 @@ def test_torrentfile_dir_private(tdir):
     assert "private" in meta["info"]  # nosec
 
 
-def test_torrentfile_dir_comment(tdir):
+def test_torrentfile_dir_comment(tdir1):
     """Test temporary dir with arguments."""
-    _, args = tdir
+    _, args = tdir1
     args["private"] = True
     args["comment"] = "This is a comment"
     torrent = TorrentFile(**args)
@@ -77,9 +79,9 @@ def test_exception_path_error():
         assert True  # nosec
 
 
-def test_torrentfile_with_outfile(tdir):
+def test_torrentfile_with_outfile(tdir1):
     """Test TorrentFile class with output in kwargs."""
-    path, args = tdir
+    path, args = tdir1
     outfile = path + ".torrent"
     args["outfile"] = outfile
     torrent = TorrentFile(**args)
@@ -88,9 +90,9 @@ def test_torrentfile_with_outfile(tdir):
     rmpath(outfile)
 
 
-def test_torrentfile_write_outfile(tdir):
+def test_torrentfile_write_outfile(tdir1):
     """Test TorrentFile class with output in kwargs."""
-    path, args = tdir
+    path, args = tdir1
     outfile = path + ".torrent"
     torrent = TorrentFile(**args)
     torrent.write(outfile=outfile)
@@ -98,9 +100,9 @@ def test_torrentfile_write_outfile(tdir):
     rmpath(outfile)
 
 
-def test_torrentfilev2_outfile(tdir):
+def test_torrentfilev2_outfile(tdir1):
     """Test TorrentFile2 class with output as argument."""
-    path, args = tdir
+    path, args = tdir1
     outfile = path + ".torrent"
     torrent = TorrentFileV2(**args)
     torrent.write(outfile=outfile)
@@ -108,9 +110,9 @@ def test_torrentfilev2_outfile(tdir):
     rmpath(outfile)
 
 
-def test_torrentfilev2_with_outfile(tdir):
+def test_torrentfilev2_with_outfile(tdir1):
     """Test TorrentFileV2 class with output in kwargs."""
-    path, args = tdir
+    path, args = tdir1
     outfile = path + ".torrent"
     args["outfile"] = outfile
     torrent = TorrentFileV2(**args)
@@ -119,9 +121,9 @@ def test_torrentfilev2_with_outfile(tdir):
     rmpath(outfile)
 
 
-def test_hybrid_outfile(tdir):
+def test_hybrid_outfile(tdir1):
     """Test Hybrid class with output as argument."""
-    path, args = tdir
+    path, args = tdir1
     outfile = path + ".torrent"
     torrent = TorrentFileHybrid(**args)
     torrent.write(outfile=outfile)
@@ -129,9 +131,9 @@ def test_hybrid_outfile(tdir):
     rmpath(outfile)
 
 
-def test_hybrid_with_outfile(tdir):
+def test_hybrid_with_outfile(tdir1):
     """Test Hybrid class with output in kwargs."""
-    path, args = tdir
+    path, args = tdir1
     outfile = path + ".torrent"
     args["outfile"] = outfile
     torrent = TorrentFileHybrid(**args)
@@ -142,7 +144,7 @@ def test_hybrid_with_outfile(tdir):
 
 def test_hybrid_0_length():
     """Test Hybrid with zero length file."""
-    path = Path(TESTDIR) / "empty"
+    path = Path(os.environ["TESTDIR"]) / "empty"
     path.touch()
     args = {
         "path": str(path),
@@ -158,7 +160,7 @@ def test_hybrid_0_length():
 
 def test_v2_0_length():
     """Test TorrentFileV2 with zero length file."""
-    path = Path(TESTDIR) / "empty"
+    path = Path(os.environ["TESTDIR"]) / "empty"
     path.touch()
     args = {
         "path": str(path),
@@ -171,9 +173,9 @@ def test_v2_0_length():
     rmpaths([path, torpath])
 
 
-def test_metafile_assemble(tdir):
+def test_metafile_assemble(tdir1):
     """Test MetaFile assemble file Exception."""
-    fd, args = tdir
+    fd, args = tdir1
     meta = MetaFile(**args)
     try:
         meta.assemble()
@@ -192,7 +194,7 @@ def test_hybrid_sized_file(smallfile):
 
 def test_hybrid_under_block_sized():
     """Test pad_remaining function in hybrid FileHash class."""
-    smallest = os.path.join(TESTDIR, "smallest")
+    smallest = os.path.join(os.environ["TESTDIR"], "smallest")
     with open(smallest, "wb") as fd:
         letters = b"abcdefghijklmnopqrstuvwxyzABZDEFGHIJKLMNOPQRSTUVWXYZ"
         size = len(letters)
@@ -218,39 +220,39 @@ def maketorrent(args, v=None):
 
 
 @pytest.fixture(scope="module", params=parameters())
-def testdir(request):
+def tdir(request):
     """Return temp directory."""
     return request.param()
 
 
 @pytest.fixture(scope="module")
-def metav2d(testdir):
+def metav2d(tdir):
     """Return generated metadata v2 for directory."""
     args = {
         "private": True,
-        "path": testdir,
+        "path": tdir,
         "announce": "http://announce.com/announce",
         "source": "tracker",
         "comment": "content details and purpose",
     }
     outfile, meta = maketorrent(args, v=2)
     yield outfile, meta
-    rmpaths([testdir, outfile])
+    rmpaths([tdir, outfile])
 
 
 @pytest.fixture(scope="module")
-def metav1d(testdir):
+def metav1d(tdir):
     """Return generated metadata v1 for directory."""
     args = {
         "private": True,
-        "path": testdir,
+        "path": tdir,
         "announce": "http://announce.com/announce",
         "source": "tracker",
         "comment": "content details and purpose",
     }
     outfile, meta = maketorrent(args)
     yield outfile, meta
-    rmpaths([testdir, outfile])
+    rmpaths([tdir, outfile])
 
 
 @pytest.mark.parametrize('key', ["announce", "info", "piece layers",

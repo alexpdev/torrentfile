@@ -52,7 +52,7 @@ confidence=
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
 # disable=import-error,print-statement,parameter-unpacking,unpacking-in-except,old-raise-syntax,backtick,long-suffix,old-ne-operator,old-octal-literal,import-star-module-level,raw-checker-failed,bad-inline-option,locally-disabled,locally-enabled,file-ignored,suppressed-message,useless-suppression,deprecated-pragma,apply-builtin,basestring-builtin,buffer-builtin,cmp-builtin,coerce-builtin,execfile-builtin,file-builtin,long-builtin,raw_input-builtin,reduce-builtin,standarderror-builtin,unicode-builtin,xrange-builtin,coerce-method,delslice-method,getslice-method,setslice-method,no-absolute-import,old-division,dict-iter-method,dict-view-method,next-method-called,metaclass-assignment,indexing-exception,raising-string,reload-builtin,oct-method,hex-method,nonzero-method,cmp-method,input-builtin,round-builtin,intern-builtin,unichr-builtin,map-builtin-not-iterating,zip-builtin-not-iterating,range-builtin-not-iterating,filter-builtin-not-iterating,using-cmp-argument,eq-without-hash,div-method,idiv-method,rdiv-method,exception-message-attribute,invalid-str-codec,sys-max-int,bad-python3-import,deprecated-string-function,deprecated-str-translate-call
-disable=redefined-outer-name,unspecified-encoding,protected-access,attribute-defined-outside-init,consider-using-with,use-a-generator
+disable=redefined-outer-name,unspecified-encoding,protected-access,attribute-defined-outside-init,consider-using-with,use-a-generator,not-callable,useless-super-delegation
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -337,10 +337,10 @@ no-docstring-rgx=^_
 property-classes=abc.abstractproperty
 
 # Naming hint for variable names
-variable-name-hint=(([a-z][a-z0-9_]{2,30})|(_[a-z0-9_]*))$
+variable-name-hint=(([a-z][a-z0-9_]{2,30})|(_[a-z0-9_]*)|([A-Z0-9]{2,30}))$
 
 # Regular expression matching correct variable names
-variable-rgx=(([a-z][a-z0-9_]{2,30})|(_[a-z0-9_]*))$
+variable-rgx=(([a-zA-Z][a-zA-Z0-9_]{2,30})|(_[a-z0-9_]*))$
 
 
 [IMPORTS]

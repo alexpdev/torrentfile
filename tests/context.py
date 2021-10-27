@@ -21,6 +21,7 @@ import string
 
 TD = os.path.abspath(os.path.dirname(__file__))
 TESTDIR = os.path.join(TD, "TESTDIR")
+os.environ["TESTDIR"] = TESTDIR
 
 
 def rmpath(path):

@@ -18,11 +18,11 @@ import sys
 
 import pytest
 
-from tests.context import TESTDIR, parameters, rmpath
+from tests import context
 from torrentfile import TorrentFile, TorrentFileV2, main
 
 
-@pytest.fixture(scope="module", params=parameters())
+@pytest.fixture(scope="module", params=context.parameters())
 def tfile(request):
     """Create fixture for tests."""
     args = [
@@ -35,17 +35,17 @@ def tfile(request):
     ]
     t_file = request.param()
     yield args, t_file
-    rmpath(t_file)
+    context.rmpath(t_file)
 
 
 def test_main_func(tfile):
     """Test main script function."""
     args, path = tfile
-    opath = os.path.join(TESTDIR, "test.torrent")
+    opath = os.path.join(context.TESTDIR, "test.torrent")
     sys.argv = args + [path, "-o", opath]
     main()
     assert os.path.exists(opath)   # nosec
-    rmpath(opath)
+    context.rmpath(opath)
 
 
 def test_main_announce_list(tfile):
@@ -61,7 +61,7 @@ def test_main_announce_list(tfile):
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
-    rmpath(parser.outfile)
+    context.rmpath(parser.outfile)
 
 
 def test_main_annlist_single(tfile):
@@ -75,7 +75,7 @@ def test_main_annlist_single(tfile):
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
-    rmpath(parser.outfile)
+    context.rmpath(parser.outfile)
 
 
 def test_class_with_annlist(tfile):
@@ -144,7 +144,7 @@ def test_main_annlist_v2(tfile):
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
-    rmpath(parser.outfile)
+    context.rmpath(parser.outfile)
 
 
 def test_main_annlist_v3(tfile):
@@ -162,7 +162,7 @@ def test_main_annlist_v3(tfile):
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
-    rmpath(parser.outfile)
+    context.rmpath(parser.outfile)
 
 
 def test_main_annlist_single_v2(tfile):
@@ -178,7 +178,7 @@ def test_main_annlist_single_v2(tfile):
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
-    rmpath(parser.outfile)
+    context.rmpath(parser.outfile)
 
 
 def test_main_annlist_single_v3(tfile):
@@ -194,7 +194,7 @@ def test_main_annlist_single_v3(tfile):
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
-    rmpath(parser.outfile)
+    context.rmpath(parser.outfile)
 
 
 def test_main_annlist_single_v1(tfile):
@@ -210,7 +210,7 @@ def test_main_annlist_single_v1(tfile):
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
-    rmpath(parser.outfile)
+    context.rmpath(parser.outfile)
 
 
 def test_class_annlist_v2(tfile):

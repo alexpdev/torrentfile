@@ -28,10 +28,10 @@ from argparse import ArgumentParser, RawTextHelpFormatter
 
 import torrentfile
 
-from .checker import Checker
 from .hybrid import TorrentFileHybrid
 from .metafile import TorrentFile
 from .metafile2 import TorrentFileV2
+from .progress import CheckerClass
 
 
 def main_script(args=None):
@@ -197,8 +197,8 @@ def main_script(args=None):
     logging.basicConfig(level=level, format='%(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %H:%M:%S')
     if flags.checker:
-        checker = Checker(flags.checker[0], flags.checker[1])
-        status = checker.check()
+        checker = CheckerClass(flags.checker[0], flags.checker[1])
+        status = checker.result
         print(status)
         sys.stdout.write(status)
         return status
