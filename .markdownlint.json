@@ -1,8 +1,9 @@
 {
     "default": true,
-    "MD013": { "line_length": 110, "code_blocks": false, "tables": false },
+    "MD013": {"line_length": 120 },
     "MD029": { "style": "ordered" },
     "MD007": { "indent": 4 },
     "MD046": false,
-    "MD033": false
+    "MD033": {"allowed_elements": ["sup", "sub"]},
+    "no-hard-tabs": true
 }

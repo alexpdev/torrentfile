@@ -175,7 +175,7 @@ class HybridHash:
             blocklen (`int`): number of blocks processed.
 
         Returns:
-            `int`: Padding to fill remaining portion of tree.
+            padding (`bytes`): Padding to fill remaining portion of tree.
         """
         if not self.layer_hashes:
             next_pow_2 = 1 << int(math.log2(total) + 1)
@@ -188,7 +188,7 @@ class HybridHash:
         """Calculate layer hashes for contents of file.
 
         Args:
-            data (`IOBufferReader`): File opened in read mode.
+            data (`BytesIO`): File opened in read mode.
         """
         while True:
             plength = self.piece_length

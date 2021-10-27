@@ -138,9 +138,6 @@ class TorrentFileV2(MetaFile):
 
         Args:
             kwargs (`dict`): keywword arguments to pass to superclass.
-
-        Returns:
-          torrent: TorrentFileV2 instance.
         """
         super().__init__(**kwargs)
         logging.info("Create .torrent v2 file.")
@@ -200,7 +197,11 @@ class TorrentFileV2(MetaFile):
         return meta
 
     def _traverse(self, path):
-        """Walk directory tree."""
+        """Walk directory tree.
+
+        Args:
+            path (`str`): Path to file or directory.
+        """
         if os.path.isfile(path):
             # Calculate Size and hashes for each file.
             size = os.path.getsize(path)
@@ -232,26 +233,15 @@ def merkle_root(pieces):
 
 
 class V2Hash:
-    """Calculate and store hash information for specific file.
+    """Calculate the root hash and piece layers for file contents.
 
     Args:
-      path: `str`
-      piece_length: `int`
-
-    Public Methods:
-        `process_file`
+      path (`str`): Path to file.
+      piece_length (`int`): Size of layer hashes pieces.
     """
 
     def __init__(self, path, piece_length):
-        """Calculate and store hash information for specific file.
-
-        Args:
-          path (`str`): Absolute path to file.
-          piece_length (`int`): Size of each metfile piece.
-
-        Returns:
-          `FileHash`: instance of FileHash class.
-        """
+        """Calculate and store hash information for specific file."""
         self.path = path
         self.root = None
         self.piece_layer = None
@@ -267,7 +257,7 @@ class V2Hash:
         """Calculate hashes over 16KiB chuncks of file content.
 
         Args:
-            fd (`IOBufferReader`): opened file in read mode.
+            fd (`str`): Opened file in read mode.
         """
         while True:
             total = 0

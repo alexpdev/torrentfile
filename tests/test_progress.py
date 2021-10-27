@@ -110,6 +110,7 @@ def test_partial_metafiles(t3dir, version):
     outfile = mktorrent(args, v=version)
 
     def shortenfile(path):
+        """Shorten a few files for testing purposes."""
         with open(path, "rb") as bfile:
             data = bfile.read()
         with open(path, "wb") as bfile:
