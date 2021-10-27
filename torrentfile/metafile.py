@@ -64,7 +64,6 @@ case).
 
 In the single file case, the name key is the name of a file, in the muliple
 file case, it's the name of a directory.
-
 """
 
 import logging
@@ -96,10 +95,7 @@ class TorrentFile(MetaFile):
         """Construct TorrentFile class instance with given keyword args.
 
         Args:
-            **kwargs (`dict`): dictionary of keyword args passed to superclass.
-
-        Returns:
-            Instance of TorrentFile.
+            kwargs (`dict`): dictionary of keyword args passed to superclass.
         """
         super().__init__(**kwargs)
         logging.info("Making .torrent v1 file.")
@@ -186,7 +182,7 @@ class Feeder:
         """Iterate through feed pieces.
 
         Returns:
-          `iterator` : Iterator for leaves/hash pieces.
+          self (`iterator`): Iterator for leaves/hash pieces.
         """
         self.iterator = self.leaves()
         return self.iterator
@@ -199,7 +195,7 @@ class Feeder:
           partial (`int`): Size of incomplete piece_length
 
         Returns:
-          `bytes`: SHA1 digest of the complete piece.
+          digest (`bytes`): SHA1 digest of the complete piece.
         """
         while partial < self.piece_length and self.next_file():
             target = self.piece_length - partial

@@ -65,7 +65,7 @@ def normalize_piece_length(piece_length):
     """Verify input piece_length is valid and convert accordingly.
 
     Args:
-        piece_length (`int` or `str`): The piece length provided by user.
+        piece_length (`int`): The piece length provided by user.
 
     Returns:
         piece_length (`int`): normalized piece length.
@@ -97,7 +97,7 @@ def get_piece_length(size):
       size (`int`): Total bits of all files incluided in .torrent file.
 
     Returns:
-      (`int`): Ideal peace length calculated from the size arguement.
+      piece_length (`int`): Ideal peace length size arguement.
     """
     exp = 14
     while size / (2 ** exp) > 200 and exp < 23:
@@ -111,8 +111,8 @@ def sortfiles(path):
     Args:
         path (`str`): Target directory for sorting contents.
 
-    Returns:
-        (`iterator`): yield sorted content.
+    Yields:
+        item, full (`str`, `str`): Next item in sorted order.
     """
     items = sorted(os.listdir(path), key=str.lower)
     for item in items:

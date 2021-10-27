@@ -269,7 +269,7 @@ class CheckerClass:
     def register_hooks(cls, hook1, hook2):
         """Register hooks from 3rd party programs to access generated info.
 
-        Classmethod Args:
+        Args:
             hook1 (`function`): callback function for the logging feature.
             hook2 (`function`): callback function for update progress.
         """
@@ -277,7 +277,7 @@ class CheckerClass:
         cls.progress_hook = hook2
 
     def parse_metafile(self):
-        """Flatten Meta dictionary of .torrent file.
+        """Flatten Meta dictionary of torrent file.
 
         Returns:
             info (`dict`): flattened meta dictionary.
@@ -309,10 +309,10 @@ class CheckerClass:
                 self.logging_hook(msg)
 
     def find_root(self):
-        """Find the contents root.
+        """Find the root file or directory for torrent file contents.
 
-        If the path specified is not the root, then
-        search the provided path for content.
+        If the path specified is not the root, then search the
+        provided path for content.
 
         Returns:
             root (`str`): root path to content
@@ -463,8 +463,5 @@ def split_pieces(pieces):
     """
     lst = []
     for i in range(20, len(pieces), 20):
-        if i > len(pieces) - 20:
-            lst.append(pieces[i:])
-        else:
-            lst.append(pieces[i - 20:i])
+        lst.append(pieces[i - 20:i])
     return lst

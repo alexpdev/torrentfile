@@ -111,8 +111,6 @@ class Checker:
                 }
                 return self.v1_checker()
             for item in self.info["files"]:
-                if "attr" in item:
-                    continue
                 path = os.path.join(*item["path"])
                 self.total += item["length"]
                 full = os.path.join(self.location, path)

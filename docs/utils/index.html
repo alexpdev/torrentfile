@@ -227,7 +227,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../about/" class="md-nav__link">
+      <a href="../about.md" class="md-nav__link">
         About
       </a>
     </li>
@@ -257,7 +257,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../API/" class="md-nav__link">
+      <a href="../API.md" class="md-nav__link">
         API
       </a>
     </li>
@@ -1055,8 +1055,8 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
   </thead>
   <tbody>
     <tr>
-      <td><code>(`int`)</code></td>
-      <td><p>Ideal peace length calculated from the size arguement.</p></td>
+      <td><code>piece_length (`int`)</code></td>
+      <td><p>Ideal peace length size arguement.</p></td>
     </tr>
   </tbody>
 </table>
@@ -1069,7 +1069,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 <span class="sd">      size (`int`): Total bits of all files incluided in .torrent file.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">      (`int`): Ideal peace length calculated from the size arguement.</span>
+<span class="sd">      piece_length (`int`): Ideal peace length size arguement.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">exp</span> <span class="o">=</span> <span class="mi">14</span>
     <span class="k">while</span> <span class="n">size</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">exp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">200</span> <span class="ow">and</span> <span class="n">exp</span> <span class="o">&lt;</span> <span class="mi">23</span><span class="p">:</span>
@@ -1110,7 +1110,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
   <tbody>
       <tr>
         <td><code>piece_length</code></td>
-        <td><code>`int` or `str`</code></td>
+        <td><code>`int`</code></td>
         <td><p>The piece length provided by user.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -1152,7 +1152,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="sd">&quot;&quot;&quot;Verify input piece_length is valid and convert accordingly.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        piece_length (`int` or `str`): The piece length provided by user.</span>
+<span class="sd">        piece_length (`int`): The piece length provided by user.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        piece_length (`int`): normalized piece length.</span>
@@ -1427,22 +1427,9 @@ piece_length (<code>int</code>): The size of pieces of the torrent contents.</p>
         <td><em>required</em></td>
       </tr>
   </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>(`iterator`)</code></td>
-      <td><p>yield sorted content.</p></td>
-    </tr>
-  </tbody>
-</table>
+</table>      <p>!!! yields
+    item, full (<code>str</code>, <code>str</code>): Next item in sorted order.</p>
+
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sortfiles</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
@@ -1451,8 +1438,8 @@ piece_length (<code>int</code>): The size of pieces of the torrent contents.</p>
 <span class="sd">    Args:</span>
 <span class="sd">        path (`str`): Target directory for sorting contents.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        (`iterator`): yield sorted content.</span>
+<span class="sd">    Yields:</span>
+<span class="sd">        item, full (`str`, `str`): Next item in sorted order.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">items</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
