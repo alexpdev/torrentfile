@@ -502,21 +502,25 @@ $ torrentfile /path/to/data --announce https://tracker.com/announce_1234 --priva
 ```
 </code></pre>
 <ul>
-<li>Create a .torrent file with:</li>
+<li>Create a .torrent file with:<ul>
 <li>contents:  <code>/path/to/data</code></li>
 <li>tracker : <code>https://tracker.com/announce_1234</code></li>
 <li>set for private tracker.</li>
 </ul>
+</li>
+</ul>
 <h3 id="example-2">Example 2</h3>
 <pre><code>```bash
-$ torrentfile /contents/path -d --announce-list https://tracker2.com/announce https://tracker3.com/announce --piece-length 18
+$ torrentfile /contnts/path -d --announce-list https://traker2.com/annce https://traker3.com/annce --piece-length 18
 ```
 </code></pre>
 <ul>
-<li>Create .torrent file in debug mode with:</li>
+<li>Create .torrent file in debug mode with:<ul>
 <li>contents: <code>/some/dir</code></li>
 <li>trackers: <code>https://tracker1.com/announce</code>, <code>https://tracker2.com/announce</code>, <code>https://tracker3.com/announce</code></li>
 <li>piece length: <code>262144</code> or 2<sup>18</sup> bytes</li>
+</ul>
+</li>
 </ul>
 <h3 id="example-3">Example 3</h3>
 <pre><code>```bash
@@ -524,10 +528,12 @@ $ torrentfile /home/document -o /home/document_1.torrent -a https://tracker.com 
 ```
 </code></pre>
 <ul>
-<li>Create a .torrent file with Bittorrent v1 &amp; 2 Hybrid format:</li>
+<li>Create a .torrent file with Bittorrent v1 &amp; 2 Hybrid format:<ul>
 <li>contents: <code>/home/document</code></li>
 <li>tracker: <code>https://tracker.com</code></li>
 <li>output file: <code>/home/document_1.torrent</code></li>
+</ul>
+</li>
 </ul>
 <h3 id="example-4">Example 4</h3>
 <pre><code>```bash

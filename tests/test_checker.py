@@ -76,6 +76,7 @@ def test_partial_metafiles(tdir3, version):
     outfile, _ = mktorrent(args, v=version)
 
     def shorterfile(path):
+        """Make file shorter."""
         with open(path, "rb") as bitfile:
             data = bitfile.read()
         with open(path, "wb") as bitfile:
