@@ -523,43 +523,6 @@ Checker        </code>
     <div class="doc doc-contents ">
 
       <p>Check a given file or directory to see if it matches a torrentfile.</p>
-<p>Public constructor for Checker class instance.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>metafile</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Path to ".torrent" file.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>location</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Path where the content is located in filesystem.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Examples:</strong></p>
-    <blockquote>
-<blockquote>
-<p>metafile = "/path/to/torrentfile/content_file_or_dir.torrent"
-location = "/path/to/location"
-os.path.exists("/path/to/location/content_file_or_dir")
-Out: True
-checker = Checker(metafile, location)</p>
-</blockquote>
-</blockquote>
 
 
 

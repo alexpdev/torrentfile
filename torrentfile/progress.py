@@ -26,13 +26,14 @@ from torrentfile.metafile2 import V2Hash
 class FeedChecker:
     """Construct the FeederChecker.
 
-    Seemlesly generate hashes of piece length data from filelist contents.
+    Seemlesly validate torrent file contents by comparing hashes in
+    metafile against data on disk.
 
     Args:
-      paths (`list`): List of files.
-      piece_length (`int`): Size of chuncks to split the data into.
-      total (`int`): Sum of all files in file list.
-      fileinfo (`dict`): Info from .torrent file being checked.
+      paths (`list`): List of stirngs indicating file paths.
+      piece_length (`int`): Size of data blocks to split the data into.
+      total (`int`): Sum total in bytes of all files in file list.
+      fileinfo (`dict`): Info and meta dictionary from .torrent file.
     """
 
     def __init__(self, paths, piece_length, pieces, fileinfo):
@@ -128,7 +129,6 @@ class FeedChecker:
             else:
                 partial.extend(bytearray(length - size))
                 size += (length - size)
-                assert size == length
                 yield partial
 
     def gen_blanks(self, partial):
@@ -189,8 +189,11 @@ class HybridChecker:
             results (`tuple`): The size of the file and result of match.
         """
         for path in self.paths:
-            result = hasher(path, self.piece_length)
             size = self.fileinfo[path]["length"]
+            if not os.path.exists(path):
+                yield size, False
+                continue
+            result = hasher(path, self.piece_length)
             if result.root == self.fileinfo[path]["pieces root"]:
                 yield size, True
             else:
@@ -251,15 +254,16 @@ class CheckerClass:
         self.metafile = metafile
         self.log_msg("Checking: %s, %s", metafile, path)
         self.info = self.parse_metafile()
-        self.version = check_meta_version(self.info)
-        self.log_msg("Detected Torrent Meta Version %s.", str(self.version))
         self.root = self.find_root()
-        self.name = self.info["name"]
-        self.piece_length = self.info["piece length"]
-        self.total = 0
-        self.paths = []
-        self.fileinfo = {}
-        self.check_paths()
+        if self.result != "ERROR":
+            self.version = check_meta_version(self.info)
+            self.log_msg("Detected Meta Version %s.", str(self.version))
+            self.name = self.info["name"]
+            self.piece_length = self.info["piece length"]
+            self.total = 0
+            self.paths = []
+            self.fileinfo = {}
+            self.check_paths()
 
     @classmethod
     def register_hooks(cls, hook1, hook2):
@@ -279,7 +283,7 @@ class CheckerClass:
             info (`dict`): flattened meta dictionary.
         """
         if not os.path.exists(self.metafile):
-            self.result = "error"
+            self.result = "ERROR"
             return self.result
 
         info = {}
@@ -295,15 +299,14 @@ class CheckerClass:
         """Log msg to logger and send to callback hook."""
         logging.debug(*args)
         if self.logging_hook is not None:
-            if len(args) == 0:
-                return
             if len(args) == 1:
                 msg = args[0]
             elif len(args) == 2:
                 msg = args[0] % args[1]
             elif len(args) >= 3:
                 msg = (args[0] % tuple(args[1:]))
-            self.logging_hook(msg)
+            if msg:
+                self.logging_hook(msg)
 
     def find_root(self):
         """Find the contents root.
@@ -314,9 +317,9 @@ class CheckerClass:
         Returns:
             root (`str`): root path to content
         """
-        if not os.path.exists(self.root):
-            self.result = "Error"
-            raise Exception
+        if not os.path.exists(self.root) or self.result == "ERROR":
+            self.result = "ERROR"
+            return self.result
         self.root = os.path.abspath(self.root)
         base = os.path.basename(self.root)
 
@@ -332,8 +335,8 @@ class CheckerClass:
                 return root
 
         self.log_msg("Could not locate data in directory: %s", self.root)
-        self.result = "Error"
-        raise Exception
+        self.result = "ERROR"
+        return self.result
 
     def check_paths(self):
         """Gather all file paths described in the torrent file."""
@@ -348,15 +351,14 @@ class CheckerClass:
 
             # Otherwise Content is more than 1 file.
             else:
-                for i, path in enumerate(self.info["files"]):
+                for path in self.info["files"]:
                     self.total += path["length"]
-                    if "attr" in path:
-                        path["path"] = f"pad.{i}.file"
                     rlpath = os.path.join(*path["path"])
                     full = os.path.join(self.root, rlpath)
                     self.log_msg("Adding %s to file collection.", rlpath)
                     self.fileinfo[full] = {"length": path["length"]}
                     self.paths.append(full)
+
             # Split pieces into individual hash digests.
             self.pieces = split_pieces(self.info["pieces"])
             return self.checkerv1()

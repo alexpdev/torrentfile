@@ -28,21 +28,7 @@ from .metafile2 import V2Hash
 
 
 class Checker:
-    """Check a given file or directory to see if it matches a torrentfile.
-
-    Public constructor for Checker class instance.
-
-    Args:
-      metafile (`str`): Path to ".torrent" file.
-      location (`str`): Path where the content is located in filesystem.
-
-    Example:
-        >> metafile = "/path/to/torrentfile/content_file_or_dir.torrent"
-        >> location = "/path/to/location"
-        >> os.path.exists("/path/to/location/content_file_or_dir")
-        Out: True
-        >> checker = Checker(metafile, location)
-    """
+    """Check a given file or directory to see if it matches a torrentfile."""
 
     _callbacks = []
 
