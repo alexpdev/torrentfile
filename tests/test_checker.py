@@ -34,12 +34,12 @@ def tempdir(request):
 def mktorrent(args, v=None):
     """Creating different versions of .torrent files for testing."""
     if v == 3:
-        torrent = TorrentFileHybrid(**args)
+        bittorrent = TorrentFileHybrid(**args)
     elif v == 2:
-        torrent = TorrentFileV2(**args)
+        bittorrent = TorrentFileV2(**args)
     else:
-        torrent = TorrentFile(**args)
-    return torrent.write()
+        bittorrent = TorrentFile(**args)
+    return bittorrent.write()
 
 
 @pytest.fixture(scope="module")
@@ -53,9 +53,9 @@ def tdir3():
 @pytest.fixture(scope="module", params=[25, 26, 27, 28])
 def tfile(request):
     """Temporary testing files for testing torrent validation."""
-    tempfile = sizedfile(num=request.param)
-    yield tempfile
-    rmpath(tempfile)
+    testingfile = sizedfile(num=request.param)
+    yield testingfile
+    rmpath(testingfile)
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
@@ -75,15 +75,16 @@ def test_partial_metafiles(tdir3, version):
     args = {"announce": "announce", "path": tdir3, "private": 1}
     outfile, _ = mktorrent(args, v=version)
 
-    def shortenfile(path):
-        with open(path, "rb") as bfile:
-            data = bfile.read()
-        with open(path, "wb") as bfile:
-            bfile.write(data[:-2**12])
+    def shorterfile(path):
+        with open(path, "rb") as bitfile:
+            data = bitfile.read()
+        with open(path, "wb") as bitfile:
+            bitfile.write(data[:-2**12])
+
     for item in os.listdir(tdir3):
         full = os.path.join(tdir3, item)
         if os.path.isfile(full):
-            shortenfile(full)
+            shorterfile(full)
     tempdir = os.path.dirname(tdir3)
     checker = Checker(outfile, tempdir)
     status = checker.check()

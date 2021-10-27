@@ -15,14 +15,13 @@
 
 import os
 import sys
+from pathlib import Path
 
 import pytest
 
 from tests.context import parameters, rmpath, rmpaths, sizedfile, tempdir3
 from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2, main
 from torrentfile.progress import CheckerClass
-
-TESTS = os.environ["TESTDIR"]
 
 
 def mktorrent(args, v=None):
@@ -35,7 +34,7 @@ def mktorrent(args, v=None):
         torrent = TorrentFile(**args)
     base = os.path.basename(args['path'])
     name = f"{base}.{v}.torrent"
-    outfile = os.path.join(TESTS, name)
+    outfile = os.path.join(os.environ["TESTDIR"], name)
     torrent.write(outfile)
     return outfile
 
@@ -85,6 +84,7 @@ def test_checker_first_piece(path, version):
         elif os.path.isdir(path):
             for item in os.listdir(path):
                 change(os.path.join(path, item))
+
     change(path)
     checker = CheckerClass(outfile, path)
     assert int(checker.result) != 100  # nosec
@@ -118,8 +118,9 @@ def test_partial_metafiles(t3dir, version):
         full = os.path.join(t3dir, item)
         if os.path.isfile(full):
             shortenfile(full)
-    TESTS = os.path.dirname(t3dir)
-    checker = CheckerClass(outfile, TESTS)
+
+    testdir = os.path.dirname(t3dir)
+    checker = CheckerClass(outfile, testdir)
     assert checker.result != "100"  # nosec
     rmpath(outfile)
 
@@ -131,7 +132,7 @@ def test_checker_no_content(t3dir, version):
     outfile = mktorrent(args, v=version)
     CheckerClass.register_hooks(lambda *x: print(x), lambda *x: print(x))
     checker = CheckerClass(outfile, t3dir)
-    assert checker.result is not None   # nosec
+    assert checker.result == "100"   # nosec
     rmpath(outfile)
 
 
@@ -162,3 +163,44 @@ def test_checker_with_file(version, tfile):
     outfile = mktorrent(args, v=version)
     checker = CheckerClass(outfile, tfile)
     assert checker.result == "100"  # nosec
+
+
+def test_checker_no_meta_file(t3dir):
+    """Test Checker when incorrect metafile is provided."""
+    checker = CheckerClass("peaches", t3dir)
+    assert checker.result == "ERROR"   # nosec
+
+
+def test_checker_no_root_dir(t3dir):
+    """Test Checker when incorrect root directory is provided."""
+    args = {"announce": "announce", "path": t3dir, "private": 1}
+    outfile = mktorrent(args, v=1)
+    checker = CheckerClass(outfile, "peaches")
+    assert checker.result == "ERROR"  # nosec
+    rmpath(outfile)
+
+
+def test_checker_wrong_root_dir(t3dir):
+    """Test Checker when incorrect root directory is provided."""
+    args = {"announce": "announce", "path": t3dir, "private": 1}
+    path = Path(t3dir)
+    newpath = path.parent / (path.name + "FAKE")
+    os.mkdir(newpath)
+    newpath.touch(newpath / "file1")
+    outfile = mktorrent(args, v=1)
+    checker = CheckerClass(outfile, str(newpath))
+    assert checker.result == "ERROR"  # nosec
+    rmpath(outfile)
+    rmpath(newpath)
+
+
+@pytest.mark.parametrize("version", [1, 2, 3])
+def test_checker_class_missing(version):
+    """Test Checker class when files are missing from contents."""
+    path = tempdir3()
+    args = {"announce": "announce", "path": path, "private": 1}
+    outfile = mktorrent(args, v=version)
+    rmpath(os.path.join(path, "file1"))
+    rmpath(os.path.join(path, "file3"))
+    checker = CheckerClass(outfile, path)
+    assert int(checker.result) < 100   # nosec
