@@ -444,8 +444,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.CheckerClass.register_hooks" class="md-nav__link">
-    register_hooks()
+  <a href="#torrentfile.progress.CheckerClass.register_callbacks" class="md-nav__link">
+    register_callbacks()
   </a>
   
 </li>
@@ -886,11 +886,11 @@ checker = Checker(metafile, location)</p>
     <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span>
     <span class="n">tally</span> <span class="o">=</span> <span class="n">equal</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">checker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">):</span>
-        <span class="n">size</span><span class="p">,</span> <span class="n">match</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="n">match</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">result</span>
         <span class="n">tally</span> <span class="o">+=</span> <span class="n">size</span>
         <span class="n">equal</span> <span class="o">+=</span> <span class="n">size</span> <span class="k">if</span> <span class="n">match</span> <span class="k">else</span> <span class="mi">0</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress_hook</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">progress_hook</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">tally</span><span class="p">,</span> <span class="n">equal</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hook_status</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> percent Completed&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">equal</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">equal</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
@@ -925,9 +925,10 @@ checker = Checker(metafile, location)</p>
     <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">FeedChecker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
                               <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">):</span>
         <span class="n">tally</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">matched</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="mi">0</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress_hook</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">progress_hook</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">tally</span><span class="p">,</span> <span class="n">matched</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="n">matched</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">response</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hook_status</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> percent Completed&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">matched</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">matched</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
@@ -1028,7 +1029,7 @@ provided path for content.</p>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">log_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Log msg to logger and send to callback hook.&quot;&quot;&quot;</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logging_hook</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_log</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
@@ -1036,7 +1037,7 @@ provided path for content.</p>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
         <span class="k">if</span> <span class="n">msg</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logging_hook</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hook_log</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -1106,8 +1107,8 @@ provided path for content.</p>
 
 
 
-<h3 id="torrentfile.progress.CheckerClass.register_hooks" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">register_hooks</span><span class="p">(</span><span class="n">hook1</span><span class="p">,</span> <span class="n">hook2</span><span class="p">)</span></code>
+<h3 id="torrentfile.progress.CheckerClass.register_callbacks" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">register_callbacks</span><span class="p">(</span><span class="n">hook1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hook2</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-classmethod"><code>classmethod</code></small>
@@ -1134,28 +1135,28 @@ provided path for content.</p>
         <td><code>hook1</code></td>
         <td><code>`function`</code></td>
         <td><p>callback function for the logging feature.</p></td>
-        <td><em>required</em></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>hook2</code></td>
         <td><code>`function`</code></td>
         <td><p>callback function for update progress.</p></td>
-        <td><em>required</em></td>
+        <td><code>None</code></td>
       </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\progress.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="nd">@classmethod</span>
-<span class="k">def</span> <span class="nf">register_hooks</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">hook1</span><span class="p">,</span> <span class="n">hook2</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">register_callbacks</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">hook1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hook2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Register hooks from 3rd party programs to access generated info.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        hook1 (`function`): callback function for the logging feature.</span>
 <span class="sd">        hook2 (`function`): callback function for update progress.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">logging_hook</span> <span class="o">=</span> <span class="n">hook1</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">progress_hook</span> <span class="o">=</span> <span class="n">hook2</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">hook_log</span> <span class="o">=</span> <span class="n">hook1</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">hook_status</span> <span class="o">=</span> <span class="n">hook2</span>
 </code></pre></div>
         </details>
     </div>
@@ -1429,9 +1430,10 @@ metafile against data on disk.</p>
     <span class="n">chunck</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>  <span class="c1"># nosec</span>
     <span class="n">piece</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">chunck</span> <span class="o">==</span> <span class="n">piece</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">path</span>
+    <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">path</span>
 </code></pre></div>
         </details>
     </div>
@@ -1795,9 +1797,7 @@ HybridChecker        </code>
           <summary>Source code in <code>torrentfile\progress.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Provide the result of comparison.&quot;&quot;&quot;</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iterator</span><span class="p">)</span>
-    <span class="n">size</span><span class="p">,</span> <span class="n">final</span> <span class="o">=</span> <span class="n">result</span>
-    <span class="k">return</span> <span class="n">size</span><span class="p">,</span> <span class="n">final</span>
+    <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iterator</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -1855,13 +1855,13 @@ HybridChecker        </code>
     <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">:</span>
         <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">path</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="n">size</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="k">yield</span> <span class="kc">False</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
             <span class="k">continue</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">hasher</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">root</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">path</span><span class="p">][</span><span class="s2">&quot;pieces root&quot;</span><span class="p">]:</span>
-            <span class="k">yield</span> <span class="n">size</span><span class="p">,</span> <span class="kc">True</span>
+            <span class="k">yield</span> <span class="kc">True</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">size</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="k">yield</span> <span class="kc">False</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 </code></pre></div>
         </details>
     </div>

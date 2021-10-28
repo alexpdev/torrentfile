@@ -58,9 +58,10 @@ class FeedChecker:
         chunck = sha1(partial).digest()  # nosec
         piece = self.pieces[self.piece_count]
         self.piece_count += 1
+        path = self.paths[self.index]
         if chunck == piece:
-            return True
-        return False
+            return True, path
+        return False, path
 
     @property
     def current_length(self):
@@ -175,9 +176,7 @@ class HybridChecker:
 
     def __next__(self):
         """Provide the result of comparison."""
-        result = next(self.iterator)
-        size, final = result
-        return size, final
+        return next(self.iterator)
 
     def iter_paths(self, hasher):
         """Iterate through and compare root file hashes to .torrent file.
@@ -191,13 +190,13 @@ class HybridChecker:
         for path in self.paths:
             size = self.fileinfo[path]["length"]
             if not os.path.exists(path):
-                yield size, False
+                yield False, path, size
                 continue
             result = hasher(path, self.piece_length)
             if result.root == self.fileinfo[path]["pieces root"]:
-                yield size, True
+                yield True, path, size
             else:
-                yield size, False
+                yield False, path, size
 
 
 class V2Checker(HybridChecker):
@@ -239,8 +238,8 @@ class CheckerClass:
         >> checker = Checker(metafile, location)
     """
 
-    logging_hook = None
-    progress_hook = None
+    hook_log = None
+    hook_status = None
 
     def __init__(self, metafile, path):
         """Validate data against hashes contained in .torrent file.
@@ -266,15 +265,15 @@ class CheckerClass:
             self.check_paths()
 
     @classmethod
-    def register_hooks(cls, hook1, hook2):
+    def register_callbacks(cls, hook1=None, hook2=None):
         """Register hooks from 3rd party programs to access generated info.
 
         Args:
             hook1 (`function`): callback function for the logging feature.
             hook2 (`function`): callback function for update progress.
         """
-        cls.logging_hook = hook1
-        cls.progress_hook = hook2
+        cls.hook_log = hook1
+        cls.hook_status = hook2
 
     def parse_metafile(self):
         """Flatten Meta dictionary of torrent file.
@@ -298,7 +297,7 @@ class CheckerClass:
     def log_msg(self, *args):
         """Log msg to logger and send to callback hook."""
         logging.debug(*args)
-        if self.logging_hook is not None:
+        if self.hook_log is not None:
             if len(args) == 1:
                 msg = args[0]
             elif len(args) == 2:
@@ -306,7 +305,7 @@ class CheckerClass:
             elif len(args) >= 3:
                 msg = (args[0] % tuple(args[1:]))
             if msg:
-                self.logging_hook(msg)
+                self.hook_log(msg)
 
     def find_root(self):
         """Find the root file or directory for torrent file contents.
@@ -406,9 +405,10 @@ class CheckerClass:
         for result in FeedChecker(self.paths, self.piece_length,
                                   self.pieces, self.fileinfo):
             tally += 1
-            matched += 1 if result else 0
-            if self.progress_hook:
-                self.progress_hook(total, tally, matched)
+            response, path = result
+            matched += 1 if response else 0
+            if self.hook_status is not None:
+                self.hook_status(response, path, 1, total)
 
         self.log_msg("%s percent Completed", str(int((matched / total) * 100)))
         self.result = str(int((matched / total) * 100))
@@ -423,11 +423,11 @@ class CheckerClass:
         total = self.total
         tally = equal = 0
         for result in checker(self.paths, self.piece_length, self.fileinfo):
-            size, match = result
+            match, path, size = result
             tally += size
             equal += size if match else 0
-            if self.progress_hook:
-                self.progress_hook(total, tally, equal)
+            if self.hook_status is not None:
+                self.hook_status(match, path, size, total)
 
         self.log_msg("%s percent Completed", str(int((equal / total) * 100)))
         self.result = str(int((equal / total) * 100))

@@ -172,18 +172,19 @@ def main_script(args=None):
     )
 
     parser.add_argument(
-        "--checker",
+        "--re-check",
         dest="checker",
         nargs=2,
         metavar="<path>",
-        help=("""Activates Torrent Check Mode. If this option is active, then
-                all other options are ignored except debug. Two absolute or
-                relative paths must follow: The path to a .torrent file,
-                followed by the path to a directory where some or all the
-                files described it the .torrent file are saved. The contents
-                will then be analyzed and a percentage will be returned
-                representing how lose to the full contents currently exists.
-            """)
+        help=("""
+        \tTrigger torrent re-check mode.
+        \tWhen option is active, all other options are ignored (except debug).
+        \tThis option forces a re-check on specified torrent contents to
+        \tcalculate an accurate percentage complete for downloaded content.
+        \tArguements:
+        \t1) Absolute or relative path to The path to a ".torrent" file.
+        \t2) Absolute or relative path to Torrent Contents
+        """)
     )
     if not args:
         args = ["-h"]

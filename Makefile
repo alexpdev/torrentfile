@@ -98,14 +98,10 @@ install: environment clean test ## Install Locally
 	pip install --upgrade -rrequirements.txt --no-cache-dir
 	python setup.py install
 
-
-switch: clean ## Switch git branches after changes have been made
+branch: clean ## Switch git branches after changes have been made
+	git checkout master
 	git pull
 	git branch -d dev
-	git stash
 	git branch dev
 	git checkout dev
-	git stash pop
-	git add .
-	git commit -m "$m"
 	git push -u origin dev

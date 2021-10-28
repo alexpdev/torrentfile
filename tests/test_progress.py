@@ -101,6 +101,7 @@ def test_metafile_checker(path, version):
     checker = CheckerClass(outfile, path)
     assert checker.result == "100"  # nosec
     rmpath(outfile)
+    rmpath(path)
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
@@ -131,7 +132,7 @@ def test_checker_no_content(t3dir, version):
     """Test Checker class with directory that points to nothing."""
     args = {"announce": "announce", "path": t3dir, "private": 1}
     outfile = mktorrent(args, v=version)
-    CheckerClass.register_hooks(lambda *x: print(x), lambda *x: print(x))
+    CheckerClass.register_callbacks(lambda *x: print(x), lambda *x: print(x))
     checker = CheckerClass(outfile, t3dir)
     assert checker.result == "100"   # nosec
     rmpath(outfile)
@@ -142,7 +143,7 @@ def test_checker_cli_args(t3dir, version):
     """Test exclusive Checker Mode CLI."""
     args = {"announce": "announce", "path": t3dir, "private": 1}
     outfile = mktorrent(args, v=version)
-    sys.argv[1:] = ["--checker", outfile, t3dir]
+    sys.argv[1:] = ["--re-check", outfile, t3dir]
     output = main()
     assert output == "100"   # nosec
     rmpath(outfile)
@@ -155,6 +156,7 @@ def test_checker_parent_dir(t3dir, version):
     outfile = mktorrent(args, v=version)
     checker = CheckerClass(outfile, os.path.dirname(t3dir))
     assert checker.result == "100"  # nosec
+    rmpath(outfile)
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
@@ -164,6 +166,7 @@ def test_checker_with_file(version, tfile):
     outfile = mktorrent(args, v=version)
     checker = CheckerClass(outfile, tfile)
     assert checker.result == "100"  # nosec
+    rmpath(outfile)
 
 
 def test_checker_no_meta_file(t3dir):
@@ -205,3 +208,5 @@ def test_checker_class_missing(version):
     rmpath(os.path.join(path, "file3"))
     checker = CheckerClass(outfile, path)
     assert int(checker.result) < 100   # nosec
+    rmpath(outfile)
+    rmpath(path)
