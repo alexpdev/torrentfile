@@ -701,18 +701,19 @@ invoked when called from command line, and parses accompanying arguments.</p>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--checker&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--re-check&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;checker&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Activates Torrent Check Mode. If this option is active, then</span>
-<span class="s2">                all other options are ignored except debug. Two absolute or</span>
-<span class="s2">                relative paths must follow: The path to a .torrent file,</span>
-<span class="s2">                followed by the path to a directory where some or all the</span>
-<span class="s2">                files described it the .torrent file are saved. The contents</span>
-<span class="s2">                will then be analyzed and a percentage will be returned</span>
-<span class="s2">                representing how lose to the full contents currently exists.</span>
-<span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        </span><span class="se">\t</span><span class="s2">Trigger torrent re-check mode.</span>
+<span class="s2">        </span><span class="se">\t</span><span class="s2">When option is active, all other options are ignored (except debug).</span>
+<span class="s2">        </span><span class="se">\t</span><span class="s2">This option forces a re-check on specified torrent contents to</span>
+<span class="s2">        </span><span class="se">\t</span><span class="s2">calculate an accurate percentage complete for downloaded content.</span>
+<span class="s2">        </span><span class="se">\t</span><span class="s2">Arguements:</span>
+<span class="s2">        </span><span class="se">\t</span><span class="s2">1) Absolute or relative path to The path to a &quot;.torrent&quot; file.</span>
+<span class="s2">        </span><span class="se">\t</span><span class="s2">2) Absolute or relative path to Torrent Contents</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-h&quot;</span><span class="p">]</span>

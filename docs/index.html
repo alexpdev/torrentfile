@@ -629,30 +629,61 @@ or by visiting <a href="https://alexpdev.github.io/torrentfile">https://alexpdev
 <p>Or download the latest release from the Release page on github.
 <a href="https://github.com/alexpdev/torrentfile/releases">https://github.com/alexpdev/torrentfile/releases</a></p>
 <h2 id="usage">Usage</h2>
-<pre><code>usage: torrentfile -p &lt;path&gt; [-h] [-v] [-a &lt;url&gt;] [--piece-length &lt;i&gt;]
-       [--private] [-o &lt;path&gt;] [--comment &lt;comment&gt;] [--source &lt;source&gt;]
-       [--announce-list [&lt;url&gt; ...]] [--meta-version &lt;v&gt;]
+<pre><code>```bash:
+usage: torrentfile -v --version
+        torrentfile -h --help
+        torrentfile --checker &lt;metafile&gt; &lt;content&gt;
+        torrentfile &lt;path&gt; [-o &lt;dest&gt;] [-a &lt;url&gt;] [-d] [--source &lt;x&gt;]
+                    [--piece-length &lt;n&gt;] [--meta-version &lt;n&gt;] [--private]
+                    [--announce-list &lt;url2&gt; &lt;...&gt;]  [--comment &lt;comment&gt;]
 
-Create .torrent files for Bittorrent v1 or v2.
-All flags are optional except -p[--path].
 
-arguments:
--h, --help                     show this help message and exit
--v, --version                  show version number and exit
--p &lt;src&gt;, --path &lt;src&gt;         (REQUIRED) path to torrent content
--a &lt;url&gt;, --announce &lt;url&gt;     Tracker announce url.
---piece-length &lt;number&gt;        specify size in bytes for data transfer
---private                      Use for private tracker only.
--o &lt;dest&gt;, --out &lt;dest&gt;        Specify output '.torrent' file.
-                               (default: &lt;src&gt;.torrent)
---meta-version &lt;version&gt;       OPTIONS: 1, 2 or 3
-                               1 = meta version 1
-                               2 = meta version 2
-                               3 = meta version 1 &amp; 2 hybrid
-                               (default: 1)
---comment &lt;comment&gt;            Include a comment in .torrent file
---source &lt;source&gt;              Source tracker.
---announce-list [&lt;url&gt; ...]    additional tracker urls.
+Create Bittorrent meta files for Bittorrent v1 and v2.
+
+positional arguments:
+&lt;path&gt;                                Path to content source file or directory.
+
+optional arguments:
+-h, --help            show this help message and exit
+-v, --version                         Show program version and exit
+-d, --debug                           Turn on debug mode
+-a &lt;url&gt;, --announce &lt;url&gt;
+                                        Primary announce url for Bittorrent Tracker.
+-p &lt;val&gt;, --piece-length &lt;val&gt;
+
+                                        Intiger piece length for content used by Bittorrent Protocol.
+                                        Acceptable Input values include 14-35 which will be treated as
+                                        an exponent for 2^n power. Otherwise the value must be a
+                                        perfect power of 2 between 16KB and 16MB.
+                                        i.e. [--piece-length 14] is the same as [--piece-length  16384]
+                                        Alternatively, leave blank and let the program calulate the
+                                        appropriate piece length.
+
+--private                             Create file for use with private tracker.
+-o &lt;dest&gt;, --out &lt;dest&gt;
+                                        Path to the destination for the output .torrent file.
+--meta-version &lt;n&gt;
+                                        Options = 1, 2 or 3.
+                                        (1) = Bittorrent v1;. (Default)
+                                        (2) = Bittorrent v2.
+                                        (3) = Bittorrent v1 &amp; v2 hybrid.
+                                        Specify the Bittorrent Protocol and
+                                        formatting version for .torrent file.
+
+--comment &lt;text&gt;                      Include a comment in file metadata.
+--source &lt;text&gt;                       Specify source.
+--announce-list &lt;url&gt; [&lt;url&gt; ...]
+                                        Additional tracker announce URLs.
+--re-check &lt;path&gt; &lt;path&gt;
+
+                                        Trigger torrent re-check mode.
+                                        When option is active, all other options are ignored (except debug).
+                                        This option forces a re-check on specified torrent contents to
+                                        calculate an accurate percentage complete for downloaded content.
+                                        Arguements:
+                                        1) Absolute or relative path to The path to a ".torrent" file.
+                                        2) Absolute or relative path to Torrent Contents
+```
 </code></pre>
 <h2 id="license">License</h2>
 <p>Distributed under the GNU LGPL v3 license. See <code>LICENSE</code> for more information.</p>

@@ -4863,7 +4863,7 @@
     <span class="sd">&quot;&quot;&quot;Test exclusive Checker Mode CLI.&quot;&quot;&quot;</span>
     <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tdir3</span><span class="p">,</span> <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
     <span class="n">outfile</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">mktorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--checker&quot;</span><span class="p">,</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">tdir3</span><span class="p">]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--re-check&quot;</span><span class="p">,</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">tdir3</span><span class="p">]</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">output</span> <span class="o">==</span> <span class="s2">&quot;100&quot;</span>   <span class="c1"># nosec</span>
     <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
@@ -6545,6 +6545,8 @@
     <span class="n">rmpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;file3&quot;</span><span class="p">))</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="n">checker</span><span class="o">.</span><span class="n">result</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">100</span>   <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -6574,7 +6576,7 @@
     <span class="sd">&quot;&quot;&quot;Test exclusive Checker Mode CLI.&quot;&quot;&quot;</span>
     <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">t3dir</span><span class="p">,</span> <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
     <span class="n">outfile</span> <span class="o">=</span> <span class="n">mktorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--checker&quot;</span><span class="p">,</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">t3dir</span><span class="p">]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--re-check&quot;</span><span class="p">,</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">t3dir</span><span class="p">]</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">output</span> <span class="o">==</span> <span class="s2">&quot;100&quot;</span>   <span class="c1"># nosec</span>
     <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
@@ -6653,7 +6655,7 @@
     <span class="sd">&quot;&quot;&quot;Test Checker class with directory that points to nothing.&quot;&quot;&quot;</span>
     <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">t3dir</span><span class="p">,</span> <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
     <span class="n">outfile</span> <span class="o">=</span> <span class="n">mktorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
-    <span class="n">CheckerClass</span><span class="o">.</span><span class="n">register_hooks</span><span class="p">(</span><span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">CheckerClass</span><span class="o">.</span><span class="n">register_callbacks</span><span class="p">(</span><span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">t3dir</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;100&quot;</span>   <span class="c1"># nosec</span>
     <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
@@ -6747,6 +6749,7 @@
     <span class="n">outfile</span> <span class="o">=</span> <span class="n">mktorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">t3dir</span><span class="p">))</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;100&quot;</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -6778,6 +6781,7 @@
     <span class="n">outfile</span> <span class="o">=</span> <span class="n">mktorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">tfile</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;100&quot;</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -6848,6 +6852,7 @@
     <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;100&quot;</span>  <span class="c1"># nosec</span>
     <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -12363,6 +12368,8 @@
     <span class="n">rmpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;file3&quot;</span><span class="p">))</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="n">checker</span><span class="o">.</span><span class="n">result</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">100</span>   <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -12392,7 +12399,7 @@
     <span class="sd">&quot;&quot;&quot;Test exclusive Checker Mode CLI.&quot;&quot;&quot;</span>
     <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">t3dir</span><span class="p">,</span> <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
     <span class="n">outfile</span> <span class="o">=</span> <span class="n">mktorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--checker&quot;</span><span class="p">,</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">t3dir</span><span class="p">]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--re-check&quot;</span><span class="p">,</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">t3dir</span><span class="p">]</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">output</span> <span class="o">==</span> <span class="s2">&quot;100&quot;</span>   <span class="c1"># nosec</span>
     <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
@@ -12471,7 +12478,7 @@
     <span class="sd">&quot;&quot;&quot;Test Checker class with directory that points to nothing.&quot;&quot;&quot;</span>
     <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">t3dir</span><span class="p">,</span> <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
     <span class="n">outfile</span> <span class="o">=</span> <span class="n">mktorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
-    <span class="n">CheckerClass</span><span class="o">.</span><span class="n">register_hooks</span><span class="p">(</span><span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">CheckerClass</span><span class="o">.</span><span class="n">register_callbacks</span><span class="p">(</span><span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">t3dir</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;100&quot;</span>   <span class="c1"># nosec</span>
     <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
@@ -12565,6 +12572,7 @@
     <span class="n">outfile</span> <span class="o">=</span> <span class="n">mktorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">t3dir</span><span class="p">))</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;100&quot;</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -12596,6 +12604,7 @@
     <span class="n">outfile</span> <span class="o">=</span> <span class="n">mktorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">tfile</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;100&quot;</span>  <span class="c1"># nosec</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -12666,6 +12675,7 @@
     <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;100&quot;</span>  <span class="c1"># nosec</span>
     <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>

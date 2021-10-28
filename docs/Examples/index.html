@@ -446,7 +446,8 @@
                 
                 <h1 id="overview">Overview</h1>
 <h2 id="using">Using</h2>
-<pre><code> usage: torrentfile -v --version
+<pre><code>```bash:
+usage: torrentfile -v --version
         torrentfile -h --help
         torrentfile --checker &lt;metafile&gt; &lt;content&gt;
         torrentfile &lt;path&gt; [-o &lt;dest&gt;] [-a &lt;url&gt;] [-d] [--source &lt;x&gt;]
@@ -454,45 +455,52 @@
                     [--announce-list &lt;url2&gt; &lt;...&gt;]  [--comment &lt;comment&gt;]
 
 
-Torrent file creator and checker for Bittorrent v1 &amp; v2.  Supports .torrent files v1, v2 &amp; combo/hybrid formats.
+Create Bittorrent meta files for Bittorrent v1 and v2.
 
 positional arguments:
-  &lt;path&gt;                                Path to file or directory containing .torrent file contents.
+&lt;path&gt;                                Path to content source file or directory.
 
 optional arguments:
-  -h, --help                            Show this help message and exit
-  -v, --version                         Show program version and exit
-  -d, --debug                           Trigger debug mode
-  -a &lt;url&gt;, --announce &lt;url&gt;            Tracker announce URL
+-h, --help            show this help message and exit
+-v, --version                         Show program version and exit
+-d, --debug                           Turn on debug mode
+-a &lt;url&gt;, --announce &lt;url&gt;
+                                        Primary announce url for Bittorrent Tracker.
+-p &lt;val&gt;, --piece-length &lt;val&gt;
 
-  -p &lt;val&gt;, --piece-length &lt;val&gt;        Number of bytes in each piece the file is split into.
-                                        Number value must be a perfect power of 2; as such, Acceptable
-                                        input values include: Numbers `14 - 35` (inclusive) or a full value
-                                        that is a perfect power of 2 and lies between 16KB and 16MB.
+                                        Intiger piece length for content used by Bittorrent Protocol.
+                                        Acceptable Input values include 14-35 which will be treated as
+                                        an exponent for 2^n power. Otherwise the value must be a
+                                        perfect power of 2 between 16KB and 16MB.
                                         i.e. [--piece-length 14] is the same as [--piece-length  16384]
                                         Alternatively, leave blank and let the program calulate the
                                         appropriate piece length.
 
-  --private                             Create file for use with private tracker.
-  -o &lt;dest&gt;, --out &lt;dest&gt;               Output path where the .torrent file will be written.
-
-  --meta-version &lt;n&gt;                    Options = 1, 2 or 3.
+--private                             Create file for use with private tracker.
+-o &lt;dest&gt;, --out &lt;dest&gt;
+                                        Path to the destination for the output .torrent file.
+--meta-version &lt;n&gt;
+                                        Options = 1, 2 or 3.
                                         (1) = Bittorrent v1;. (Default)
                                         (2) = Bittorrent v2.
                                         (3) = Bittorrent v1 &amp; v2 hybrid.
                                         Specify the Bittorrent Protocol and
                                         formatting version for .torrent file.
 
-  --comment &lt;text&gt;                      Include a comment in file metadata.
-  --source &lt;text&gt;                       Specify source.
-  --announce-list &lt;url&gt; [&lt;url&gt; ...]     Additional tracker announce URLs.
+--comment &lt;text&gt;                      Include a comment in file metadata.
+--source &lt;text&gt;                       Specify source.
+--announce-list &lt;url&gt; [&lt;url&gt; ...]
+                                        Additional tracker announce URLs.
+--re-check &lt;path&gt; &lt;path&gt;
 
-  --checker &lt;path&gt; &lt;path&gt;               Trigger torrent re-check mode.
-                                        If this option is active, then all other options are ignored except debug.
-                                        Reviews current files in directory, and provides a percentage of total
-                                        torrentfile content that is available.
-                                        Arguements: 1) Absolute or relative path to The path to a ".torrent" file.
-                                                    2) Absolute or relative path to Torrent Contents
+                                        Trigger torrent re-check mode.
+                                        When option is active, all other options are ignored (except debug).
+                                        This option forces a re-check on specified torrent contents to
+                                        calculate an accurate percentage complete for downloaded content.
+                                        Arguements:
+                                        1) Absolute or relative path to The path to a ".torrent" file.
+                                        2) Absolute or relative path to Torrent Contents
+```
 </code></pre>
 <h2 id="cli-usage-examples">CLI Usage Examples</h2>
 <hr />

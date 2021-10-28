@@ -109,7 +109,7 @@ def test_checker_cli_args(tdir3, version):
     """Test exclusive Checker Mode CLI."""
     args = {"announce": "announce", "path": tdir3, "private": 1}
     outfile, _ = mktorrent(args, v=version)
-    sys.argv[1:] = ["--checker", outfile, tdir3]
+    sys.argv[1:] = ["--re-check", outfile, tdir3]
     output = main()
     assert output == "100"   # nosec
     rmpath(outfile)
