@@ -8,13 +8,14 @@ theme:
   name: material
 
 nav:
-  - Home: index.md
-  - About: about.md
-  - License: LICENSE.md
-  - API: API.md
-  - Tests: tests.md
+  - Overview: Examples.md
+  - Checker: Checker.md
   - CLI: CLI.md
+  - Home: index.md
   - Hybrid: Hybrid.md
+  - License: LICENSE.md
+  - Progress: Progress.md
+  - Tests: tests.md
   - TorrentFile: TorrentFile.md
   - TorrentFileV2: TorrentFileV2.md
   - Utils: utils.md

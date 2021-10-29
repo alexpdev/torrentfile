@@ -176,7 +176,11 @@ class HybridChecker:
 
     def __next__(self):
         """Provide the result of comparison."""
-        return next(self.iterator)
+        try:
+            value = next(self.iterator)
+            return value
+        except StopIteration as stopIter:
+            raise StopIteration(stopIter)
 
     def iter_paths(self, hasher):
         """Iterate through and compare root file hashes to .torrent file.

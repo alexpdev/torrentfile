@@ -39,52 +39,23 @@ def main_script(args=None):
 
     Args:
         args (`list`, default=None): Commandline arguments.
-
-    usage: torrentfile --path /path/to/content [-o /path/to/output.torrent]
-           [--piece-length n] [--private] [-t https://tracker.url/announce]
-           [--v2] [--source x] [--announce-list tracker.url2 tracker.url3]
-           [-h]
     """
     if not args:
         args = sys.argv[1:]
 
-    usage = (
-        """torrentfile -v --version
-           torrentfile -h --help
-           torrentfile --checker <metafile> <content>
-           torrentfile <path> [-o <dest>] [-a <url>] [-d] [--source <x>]
-                       [--piece-length <n>] [--meta-version <n>] [--private]
-                       [--announce-list <url2> <...>]  [--comment <comment>]
-           """
-    )
-
-    desc = "Create Bittorrent meta files for Bittorrent v1 and v2."
+    desc = ("Create or Re-Check Bittorrent meta files for "
+            "Bittorrent v1, v2 or v1, v2 combo Hybrids.")
     parser = ArgumentParser("torrentfile", description=desc, prefix_chars="-",
-                            usage=usage, formatter_class=RawTextHelpFormatter)
+                            formatter_class=RawTextHelpFormatter)
 
     parser.add_argument(
         "-v",
         "--version",
         action="version",
         version=f"torrentfile v{torrentfile.__version__}",
-        help="\t\tShow program version and exit\n",
-    )
-
-    parser.add_argument(
-        "-d",
-        "--debug",
-        action="store_true",
-        dest="debug",
-        help="\t\tTurn on debug mode"
-    )
-
-    parser.add_argument(
-        "path",
-        action="store",
-        default="",
-        nargs="?",
-        help="\t\tPath to content source file or directory.",
-        metavar="<path>",
+        help="""
+        Show program version and exit
+        """,
     )
 
     parser.add_argument(
@@ -93,8 +64,70 @@ def main_script(args=None):
         action="store",
         dest="announce",
         metavar="<url>",
-        help="\t\tPrimary announce url for Bittorrent Tracker.",
-        default="127.0.0.1"
+        default="",
+        help="""
+        Primary announce url for Bittorrent Tracker.
+        """,
+    )
+
+    parser.add_argument(
+        "--announce-list",
+        dest="announce_list",
+        nargs="+",
+        metavar="<url>",
+        help="""
+        Additional tracker announce URLs.
+        """,
+    )
+
+    parser.add_argument(
+        "-c",
+        "--comment",
+        action="store",
+        dest="comment",
+        metavar="<text>",
+        help="""
+        Include a comment in file metadata.
+        """,
+    )
+
+    parser.add_argument(
+        "-d",
+        "--debug",
+        action="store_true",
+        dest="debug",
+        help="""
+        Turn on debug mode.
+        """
+    )
+
+    parser.add_argument(
+        "-m",
+        "--meta-version",
+        default="1",
+        choices=["1", "2", "3"],
+        action="store",
+        dest="meta_version",
+        metavar="<n>",
+        help="""
+        Options = 1, 2 or 3.
+        (1) = Bittorrent v1;. (Default)
+        (2) = Bittorrent v2.
+        (3) = Bittorrent v1 & v2 hybrid.
+        Specify the Bittorrent Protocol and
+        formatting version for .torrent file.
+        """,
+    )
+
+    parser.add_argument(
+        "-o",
+        "--out",
+        action="store",
+        dest="outfile",
+        metavar="<dest>",
+        help="""
+        Path to the destination for the output .torrent file.
+        """,
     )
 
     parser.add_argument(
@@ -104,88 +137,63 @@ def main_script(args=None):
         dest="piece_length",
         metavar="<val>",
         help="""
-            \tIntiger piece length for content used by Bittorrent Protocol.
-            \tAcceptable Input values include 14-35 which will be treated as
-            \tan exponent for 2^n power. Otherwise the value must be a
-            \tperfect power of 2 between 16KB and 16MB.
-            \ti.e. [--piece-length 14] is the same as [--piece-length  16384]
-            \tAlternatively, leave blank and let the program calulate the
-            \tappropriate piece length.
-            """,
+        Piece size used by Bittorrent transfer.
+        Acceptable values include numbers 14-35, will be treated as the
+        exponent for 2^n power, or any power of 2 integer in 16KB-16MB.
+        e.g. [--piece-length 14] is the same as [--piece-length  16384]
+        If this option isn't triggered, the program will calculate an
+        appropriate value automatically.
+        """,
     )
 
     parser.add_argument(
         "--private",
         action="store_true",
         dest="private",
-        help="\t\tCreate file for use with private tracker.",
+        help="""
+        Create file for use with private tracker.
+        """,
     )
 
     parser.add_argument(
-        "-o",
-        "--out",
-        action="store",
-        help="\t\tPath to the destination for the output .torrent file.",
-        dest="outfile",
-        metavar="<dest>",
-    )
-
-    parser.add_argument(
-        "--meta-version",
-        default="1",
-        choices=["1", "2", "3"],
-        action="store",
-        help=("""
-            \tOptions = 1, 2 or 3.
-            \t(1) = Bittorrent v1;. (Default)
-            \t(2) = Bittorrent v2.
-            \t(3) = Bittorrent v1 & v2 hybrid.
-            \tSpecify the Bittorrent Protocol and
-            \tformatting version for .torrent file.
-        """),
-        dest="meta_version",
-        metavar="<n>",
-    )
-
-    parser.add_argument(
-        "--comment",
-        action="store",
-        dest="comment",
-        metavar="<text>",
-        help="\t\tInclude a comment in file metadata.",
-    )
-
-    parser.add_argument(
-        "--source",
-        action="store",
-        dest="source",
-        metavar="<text>",
-        help="\t\tSpecify source.",
-    )
-
-    parser.add_argument(
-        "--announce-list",
-        dest="announce_list",
-        nargs="+",
-        metavar="<url>",
-        help="\t\tAdditional tracker announce URLs.",
-    )
-
-    parser.add_argument(
+        "-r",
         "--re-check",
         dest="checker",
         nargs=2,
         metavar="<path>",
-        help=("""
-        \tTrigger torrent re-check mode.
-        \tWhen option is active, all other options are ignored (except debug).
-        \tThis option forces a re-check on specified torrent contents to
-        \tcalculate an accurate percentage complete for downloaded content.
-        \tArguements:
-        \t1) Absolute or relative path to The path to a ".torrent" file.
-        \t2) Absolute or relative path to Torrent Contents
-        """)
+        help="""
+        Trigger torrent re-check mode.
+        When option is active, all other options are ignored (except debug).
+        This option forces a re-check on specified torrent contents to
+        calculate an accurate percentage complete for downloaded content.
+        Arguements:
+        1) Absolute or relative path to The path to a ".torrent" file.
+        2) Absolute or relative path to Torrent Contents
+        """
     )
+
+    parser.add_argument(
+        "-s",
+        "--source",
+        action="store",
+        dest="source",
+        metavar="<text>",
+        help="""
+        Specify source.
+        """,
+    )
+
+    parser.add_argument(
+        "path",
+        action="store",
+        default="",
+        nargs="?",
+        metavar="<path>",
+        help="""
+        Path to content source file or directory.
+        """,
+    )
+
     if not args:
         args = ["-h"]
     flags = parser.parse_args(args)
@@ -200,7 +208,6 @@ def main_script(args=None):
     if flags.checker:
         checker = CheckerClass(flags.checker[0], flags.checker[1])
         status = checker.result
-        print(status)
         sys.stdout.write(status)
         return status
 
