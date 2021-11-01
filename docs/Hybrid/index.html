@@ -212,8 +212,8 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
-        Home
+      <a href="../Examples/" class="md-nav__link">
+        Overview
       </a>
     </li>
   
@@ -227,53 +227,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../about.md" class="md-nav__link">
-        About
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../LICENSE/" class="md-nav__link">
-        License
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../API.md" class="md-nav__link">
-        API
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tests/" class="md-nav__link">
-        Tests
+      <a href="../Checker/" class="md-nav__link">
+        Checker
       </a>
     </li>
   
@@ -289,6 +244,21 @@
     <li class="md-nav__item">
       <a href="../CLI/" class="md-nav__link">
         CLI
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
       </a>
     </li>
   
@@ -406,6 +376,51 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Progress/" class="md-nav__link">
+        Progress
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tests/" class="md-nav__link">
+        Tests
+      </a>
     </li>
   
 
@@ -674,6 +689,8 @@ of the Bittorrent protocols meta files respectively.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">piece_layer</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">padding_piece</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">padding_file</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">piece_length</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span>
@@ -882,7 +899,7 @@ TorrentFileHybrid            (<span title="torrentfile.metabase.MetaFile">MetaFi
     <span class="sd">&quot;&quot;&quot;Assemble the parts of the torrentfile into meta dictionary.&quot;&quot;&quot;</span>
     <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_constants</span><span class="p">()</span>
     <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_assemble_infodict</span><span class="p">()</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;piece_layers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span>
+    <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;piece layers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span>
     <span class="k">return</span> <span class="n">meta</span>
 </code></pre></div>
         </details>
@@ -959,7 +976,7 @@ TorrentFileHybrid            (<span title="torrentfile.metabase.MetaFile">MetaFi
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../CLI/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CLI" rel="prev">
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -968,20 +985,20 @@ TorrentFileHybrid            (<span title="torrentfile.metabase.MetaFile">MetaFi
               <span class="md-footer__direction">
                 Previous
               </span>
-              CLI
+              Home
             </div>
           </div>
         </a>
       
       
         
-        <a href="../TorrentFile/" class="md-footer__link md-footer__link--next" aria-label="Next: TorrentFile" rel="next">
+        <a href="../LICENSE/" class="md-footer__link md-footer__link--next" aria-label="Next: License" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              TorrentFile
+              License
             </div>
           </div>
           <div class="md-footer__button md-icon">

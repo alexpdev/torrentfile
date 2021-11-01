@@ -64,7 +64,7 @@ class TorrentFileHybrid(MetaFile):
         """Assemble the parts of the torrentfile into meta dictionary."""
         meta = self.apply_constants()
         meta["info"] = self._assemble_infodict()
-        meta["piece_layers"] = self.piece_layers
+        meta["piece layers"] = self.piece_layers
         return meta
 
     def _assemble_infodict(self):
@@ -160,6 +160,8 @@ class HybridHash:
         self.piece_length = piece_length
         self.pieces = []
         self.layer_hashes = []
+        self.piece_layer = None
+        self.root = None
         self.padding_piece = None
         self.padding_file = None
         self.amount = piece_length // BLOCK_SIZE
@@ -209,7 +211,8 @@ class HybridHash:
             if len(blocks) != self.amount:
                 padding = self._pad_remaining(len(blocks), size)
                 blocks.extend(padding)
-            self.layer_hashes.append(merkle_root(blocks))
+            layer_hash = merkle_root(blocks)
+            self.layer_hashes.append(layer_hash)
             if plength > 0:
                 self.padding_file = {
                     "attr": "p",

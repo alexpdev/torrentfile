@@ -235,6 +235,11 @@ def merkle_root(pieces):
 class V2Hash:
     """Calculate the root hash and piece layers for file contents.
 
+    Iterates over 16KiB blocks of data from given file, hashes the data,
+    then creates a hash tree from the individual block hashes until size of
+    hashed data equals the piece-length.  Then continues the hash tree until
+    root hash is calculated.
+
     Args:
       path (`str`): Path to file.
       piece_length (`int`): Size of layer hashes pieces.
@@ -282,7 +287,8 @@ class V2Hash:
                 padding = [bytes(HASH_SIZE) for _ in range(remaining)]
                 blocks.extend(padding)
             # if the file is smaller than piece length
-            self.layer_hashes.append(merkle_root(blocks))
+            layer_hash = merkle_root(blocks)
+            self.layer_hashes.append(layer_hash)
         self._calculate_root()
 
     def _calculate_root(self):

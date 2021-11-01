@@ -39,6 +39,7 @@ class Checker:
         """
         self.metafile = metafile
         self.location = location
+        self.meta_version = None
         self.info = {}
         self.total = 0
         self.piece_length = None

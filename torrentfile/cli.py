@@ -24,7 +24,7 @@ Functions:
 
 import logging
 import sys
-from argparse import ArgumentParser, RawTextHelpFormatter
+from argparse import ArgumentParser
 
 import torrentfile
 
@@ -45,17 +45,15 @@ def main_script(args=None):
 
     desc = ("Create or Re-Check Bittorrent meta files for "
             "Bittorrent v1, v2 or v1, v2 combo Hybrids.")
-    parser = ArgumentParser("torrentfile", description=desc, prefix_chars="-",
-                            formatter_class=RawTextHelpFormatter)
+    parser = ArgumentParser("torrentfile", description=desc, prefix_chars="-")
+    # formatter_class=RawTextHelpFormatter
 
     parser.add_argument(
         "-v",
         "--version",
         action="version",
         version=f"torrentfile v{torrentfile.__version__}",
-        help="""
-        Show program version and exit
-        """,
+        help="show program version and exit",
     )
 
     parser.add_argument(
@@ -65,9 +63,7 @@ def main_script(args=None):
         dest="announce",
         metavar="<url>",
         default="",
-        help="""
-        Primary announce url for Bittorrent Tracker.
-        """,
+        help="announce url for Bittorrent tracker",
     )
 
     parser.add_argument(
@@ -75,9 +71,7 @@ def main_script(args=None):
         dest="announce_list",
         nargs="+",
         metavar="<url>",
-        help="""
-        Additional tracker announce URLs.
-        """,
+        help="additional tracker announce URLs",
     )
 
     parser.add_argument(
@@ -85,10 +79,8 @@ def main_script(args=None):
         "--comment",
         action="store",
         dest="comment",
-        metavar="<text>",
-        help="""
-        Include a comment in file metadata.
-        """,
+        metavar="<comment>",
+        help="include a comment in file metadata",
     )
 
     parser.add_argument(
@@ -96,9 +88,7 @@ def main_script(args=None):
         "--debug",
         action="store_true",
         dest="debug",
-        help="""
-        Turn on debug mode.
-        """
+        help="activate debug mode"
     )
 
     parser.add_argument(
@@ -108,14 +98,14 @@ def main_script(args=None):
         choices=["1", "2", "3"],
         action="store",
         dest="meta_version",
-        metavar="<n>",
+        metavar="<meta version>",
         help="""
+        Specify the Bittorrent Protocol and formatting version for
+        .torrent file.
         Options = 1, 2 or 3.
         (1) = Bittorrent v1;. (Default)
         (2) = Bittorrent v2.
         (3) = Bittorrent v1 & v2 hybrid.
-        Specify the Bittorrent Protocol and
-        formatting version for .torrent file.
         """,
     )
 
@@ -124,10 +114,8 @@ def main_script(args=None):
         "--out",
         action="store",
         dest="outfile",
-        metavar="<dest>",
-        help="""
-        Path to the destination for the output .torrent file.
-        """,
+        metavar="<out>",
+        help="output path for files created",
     )
 
     parser.add_argument(
@@ -135,7 +123,7 @@ def main_script(args=None):
         "--piece-length",
         action="store",
         dest="piece_length",
-        metavar="<val>",
+        metavar="<piece length>",
         help="""
         Piece size used by Bittorrent transfer.
         Acceptable values include numbers 14-35, will be treated as the
@@ -150,25 +138,24 @@ def main_script(args=None):
         "--private",
         action="store_true",
         dest="private",
-        help="""
-        Create file for use with private tracker.
-        """,
+        help="create .torrent file for private tracker",
     )
 
     parser.add_argument(
         "-r",
         "--re-check",
         dest="checker",
-        nargs=2,
         metavar="<path>",
+        nargs=2,
         help="""
-        Trigger torrent re-check mode.
-        When option is active, all other options are ignored (except debug).
-        This option forces a re-check on specified torrent contents to
-        calculate an accurate percentage complete for downloaded content.
+        Activate Re-Check mode.
         Arguements:
         1) Absolute or relative path to The path to a ".torrent" file.
         2) Absolute or relative path to Torrent Contents
+        When option is active, all other options are ignored (except debug).
+        This option triggers a re-check of torrent contents on disk compared
+        to contents detailed in .torrent file. Outputs the percentage
+        downloaded or available in terminal.
         """
     )
 
@@ -177,10 +164,8 @@ def main_script(args=None):
         "--source",
         action="store",
         dest="source",
-        metavar="<text>",
-        help="""
-        Specify source.
-        """,
+        metavar="<source>",
+        help="specify source",
     )
 
     parser.add_argument(
@@ -189,9 +174,7 @@ def main_script(args=None):
         default="",
         nargs="?",
         metavar="<path>",
-        help="""
-        Path to content source file or directory.
-        """,
+        help="abs. or rel. path to content for creating .torrent file",
     )
 
     if not args:
@@ -238,7 +221,7 @@ def main_script(args=None):
 
 def main():
     """Initiate main function for CLI script."""
-    return main_script()
+    main_script()
 
 
 if __name__ == "__main__":

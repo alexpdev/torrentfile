@@ -113,7 +113,7 @@ def tempdir2():
     root = os.path.join(TESTDIR, "RootFolder2")
     dir1 = os.path.join(root, "directory1")
     dirs = [root, dir1]
-    file1 = (os.path.join(dir1, "file1"), 25)
+    file1 = (os.path.join(dir1, "file1"), 21)
     files = [file1]
     fill_folder(dirs, files)
     return root
@@ -141,8 +141,8 @@ def tempdir4():
     dir2 = os.path.join(root, "directory2")
     dirs = [root, dir1, dir2]
     file1 = (os.path.join(dir1, "file1"), 22)
-    file2 = (os.path.join(dir1, "file2"), 27)
-    file3 = (os.path.join(dir2, "file3"), 26)
+    file2 = (os.path.join(dir1, "file2"), 26)
+    file3 = (os.path.join(dir2, "file3"), 24)
     file4 = (os.path.join(dir2, "file4"), 25)
     files = [file1, file2, file3, file4]
     fill_folder(dirs, files)

@@ -20,7 +20,8 @@ from pathlib import Path
 import pytest
 
 from tests.context import parameters, rmpath, rmpaths, sizedfile, tempdir3
-from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2, main
+from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2
+from torrentfile.cli import main_script as main
 from torrentfile.progress import CheckerClass
 
 
@@ -202,7 +203,8 @@ def test_checker_wrong_root_dir(t3dir):
 def test_checker_class_missing(version):
     """Test Checker class when files are missing from contents."""
     path = tempdir3()
-    args = {"announce": "announce", "path": path, "private": 1}
+    args = {"announce": "announce", "path": path,
+            "private": 1, "piece_length": 2**16}
     outfile = mktorrent(args, v=version)
     rmpath(os.path.join(path, "file1"))
     rmpath(os.path.join(path, "file3"))
@@ -210,3 +212,20 @@ def test_checker_class_missing(version):
     assert int(checker.result) < 100   # nosec
     rmpath(outfile)
     rmpath(path)
+
+
+@pytest.mark.parametrize("version", [1, 2, 3])
+def test_checker_class_half_file(version):
+    """Test Checker class with half size single file."""
+    path = sizedfile(25)
+    args = {"announce": "announce", "path": path,
+            "private": 1, "piece_length": 2**15}
+    outfile = mktorrent(args, v=version)
+    half = int((2**25) / 2)
+    barr = bytearray(half)
+    with open(path, "rb") as content:
+        content.readinto(barr)
+    with open(path, "wb") as content:
+        content.write(barr)
+    checker = CheckerClass(outfile, path)
+    assert int(checker.result) < 100  # nosec

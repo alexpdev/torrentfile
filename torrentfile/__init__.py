@@ -27,11 +27,11 @@ Modules:
 """
 
 __author__ = "alexpdev"
-__version__ = "0.4.6"
+__version__ = "0.4.7"
 
-from . import hybrid, metafile, metafile2, utils
+from . import __main__, hybrid, metafile, metafile2, utils
 from .checker import Checker
-from .cli import main
+from .cli import main, main_script
 from .hybrid import TorrentFileHybrid
 from .metafile import TorrentFile
 from .metafile2 import TorrentFileV2
