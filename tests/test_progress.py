@@ -77,6 +77,7 @@ def test_checker_first_piece(path, version):
     outfile = mktorrent(args, v=version)
 
     def change(path):
+        """Change some bytes in file."""
         if os.path.isfile(path):
             data = open(path, "rb").read()
             new = b'some_different_bytes_to_swap'

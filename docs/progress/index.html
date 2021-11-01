@@ -13,7 +13,7 @@
       
         <link rel="canonical" href="https://alexpdev.github.io/torrentfile/Progress/">
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../assets/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.4">
     
     
@@ -82,8 +82,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="TorrentFile" class="md-header__button md-logo" aria-label="TorrentFile" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <img src="../assets/torrentfile.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -182,8 +181,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="TorrentFile" class="md-nav__button md-logo" aria-label="TorrentFile" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <img src="../assets/torrentfile.png" alt="logo">
 
     </a>
     TorrentFile
@@ -473,36 +471,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#torrentfile.progress.Hasher" class="md-nav__link">
-    Hasher
+  <a href="#torrentfile.progress.HashChecker" class="md-nav__link">
+    HashChecker
   </a>
   
-    <nav class="md-nav" aria-label="Hasher">
+    <nav class="md-nav" aria-label="HashChecker">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.Hasher.__init__" class="md-nav__link">
+  <a href="#torrentfile.progress.HashChecker.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.Hasher.__iter__" class="md-nav__link">
+  <a href="#torrentfile.progress.HashChecker.__iter__" class="md-nav__link">
     __iter__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.Hasher.__next__" class="md-nav__link">
+  <a href="#torrentfile.progress.HashChecker.__next__" class="md-nav__link">
     __next__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.Hasher.iter_paths" class="md-nav__link">
+  <a href="#torrentfile.progress.HashChecker.iter_paths" class="md-nav__link">
     iter_paths()
   </a>
   
@@ -759,36 +757,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#torrentfile.progress.Hasher" class="md-nav__link">
-    Hasher
+  <a href="#torrentfile.progress.HashChecker" class="md-nav__link">
+    HashChecker
   </a>
   
-    <nav class="md-nav" aria-label="Hasher">
+    <nav class="md-nav" aria-label="HashChecker">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.Hasher.__init__" class="md-nav__link">
+  <a href="#torrentfile.progress.HashChecker.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.Hasher.__iter__" class="md-nav__link">
+  <a href="#torrentfile.progress.HashChecker.__iter__" class="md-nav__link">
     __iter__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.Hasher.__next__" class="md-nav__link">
+  <a href="#torrentfile.progress.HashChecker.__next__" class="md-nav__link">
     __next__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.Hasher.iter_paths" class="md-nav__link">
+  <a href="#torrentfile.progress.HashChecker.iter_paths" class="md-nav__link">
     iter_paths()
   </a>
   
@@ -1213,8 +1211,8 @@ provided path for content.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">meta_hasher</span> <span class="o">=</span> <span class="n">V2Hash</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">HybridHash</span>
     <span class="n">tally</span> <span class="o">=</span> <span class="n">equal</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">Hasher</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">,</span> <span class="n">meta_hasher</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">HashChecker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">,</span> <span class="n">meta_hasher</span><span class="p">):</span>
         <span class="n">tally</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">equal</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1824,9 +1822,9 @@ metafile against data on disk.</p>
 
 
 
-<h2 id="torrentfile.progress.Hasher" class="doc doc-heading">
+<h2 id="torrentfile.progress.HashChecker" class="doc doc-heading">
         <code>
-Hasher        </code>
+HashChecker        </code>
 
 
 
@@ -1885,7 +1883,7 @@ Hasher        </code>
 
 
 
-<h3 id="torrentfile.progress.Hasher.__init__" class="doc doc-heading">
+<h3 id="torrentfile.progress.HashChecker.__init__" class="doc doc-heading">
 <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">,</span> <span class="n">fileinfo</span><span class="p">,</span> <span class="n">hasher</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
@@ -1919,7 +1917,7 @@ Hasher        </code>
 
 
 
-<h3 id="torrentfile.progress.Hasher.__iter__" class="doc doc-heading">
+<h3 id="torrentfile.progress.HashChecker.__iter__" class="doc doc-heading">
 <code class="highlight language-python"><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
@@ -1950,7 +1948,7 @@ Hasher        </code>
 
 
 
-<h3 id="torrentfile.progress.Hasher.__next__" class="doc doc-heading">
+<h3 id="torrentfile.progress.HashChecker.__next__" class="doc doc-heading">
 <code class="highlight language-python"><span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
@@ -1984,7 +1982,7 @@ Hasher        </code>
 
 
 
-<h3 id="torrentfile.progress.Hasher.iter_paths" class="doc doc-heading">
+<h3 id="torrentfile.progress.HashChecker.iter_paths" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">iter_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
