@@ -20,7 +20,7 @@ import pytest
 
 from tests.context import parameters, rmpath, sizedfile, tempdir3
 from torrentfile import (Checker, TorrentFile, TorrentFileHybrid,
-                         TorrentFileV2, main)
+                         TorrentFileV2, main_script)
 
 
 @pytest.fixture(scope="module", params=parameters())
@@ -110,7 +110,7 @@ def test_checker_cli_args(tdir3, version):
     args = {"announce": "announce", "path": tdir3, "private": 1}
     outfile, _ = mktorrent(args, v=version)
     sys.argv[1:] = ["--re-check", outfile, tdir3]
-    output = main()
+    output = main_script()
     assert output == "100"   # nosec
     rmpath(outfile)
 

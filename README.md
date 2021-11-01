@@ -16,11 +16,9 @@ _Torrentfile_ is a CLI for creating .torrent files for bittorrent clients.
 ## Features
 
 - Simple interface
-- Create meta files for Bittorrent v1
-- Create meta files for Bittorrent v2
-- Create Hybrid files for Bittorrent v1 & v2
-- Create files with multiple trackers
-- Check .torrent file for verifying download completed.
+- Create meta files for Bittorrent v1, v2, and Hybrid v1 & v2 files.
+- Re-Check torrent content availability on disk against .torrent file.
+- Display detailed information contained in torrent file.
 - Specify piece length attribute or let program calculate appropriate value.
 - Flag torrent file as private for private trackers.
 - Support for validating downloaded content from v1, v2, and hybrid file hashes.
@@ -40,6 +38,7 @@ or by visiting [https://alexpdev.github.io/torrentfile](https://alexpdev.github.
 ### via Git
 
 `> git clone https://github.com/alexpdev/torrentfile.git`
+`> python setup.py install`
 
 ### download
 
@@ -106,6 +105,6 @@ optional arguments:
 
 ## License
 
-Distributed under the GNU LGPL v3 license. See `LICENSE` for more information.
+Distributed under the GNU LGPL v3. See `LICENSE` for more information.
 
 [https://github.com/alexpdev](https://github.com/alexpdev/)

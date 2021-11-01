@@ -210,11 +210,92 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
-        Home
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Overview
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Overview
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using" class="md-nav__link">
+    Using
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-usage-examples" class="md-nav__link">
+    CLI Usage Examples
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1" class="md-nav__link">
+    Example 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2" class="md-nav__link">
+    Example 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-3" class="md-nav__link">
+    Example 3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-4" class="md-nav__link">
+    Example 4
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -227,53 +308,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../about.md" class="md-nav__link">
-        About
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../LICENSE/" class="md-nav__link">
-        License
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../API.md" class="md-nav__link">
-        API
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tests/" class="md-nav__link">
-        Tests
+      <a href="../Checker/" class="md-nav__link">
+        Checker
       </a>
     </li>
   
@@ -302,8 +338,68 @@
   
   
     <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../Hybrid/" class="md-nav__link">
         Hybrid
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Progress/" class="md-nav__link">
+        Progress
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tests/" class="md-nav__link">
+        Tests
       </a>
     </li>
   
@@ -446,62 +542,55 @@
                 
                 <h1 id="overview">Overview</h1>
 <h2 id="using">Using</h2>
-<pre><code>```bash:
+<p>```bash:
 usage: torrentfile -v --version
         torrentfile -h --help
-        torrentfile --checker &lt;metafile&gt; &lt;content&gt;
-        torrentfile &lt;path&gt; [-o &lt;dest&gt;] [-a &lt;url&gt;] [-d] [--source &lt;x&gt;]
-                    [--piece-length &lt;n&gt;] [--meta-version &lt;n&gt;] [--private]
-                    [--announce-list &lt;url2&gt; &lt;...&gt;]  [--comment &lt;comment&gt;]
-
-
-Create Bittorrent meta files for Bittorrent v1 and v2.
-
-positional arguments:
-&lt;path&gt;                                Path to content source file or directory.
-
-optional arguments:
+        torrentfile --checker <metafile> <content>
+        torrentfile <path> [-o <dest>] [-a <url>] [-d] [--source <x>]
+                    [--piece-length <n>] [--meta-version <n>] [--private]
+                    [--announce-list <url2> &lt;...&gt;]  [--comment <comment>]</p>
+<p>Create Bittorrent meta files for Bittorrent v1 and v2.</p>
+<p>positional arguments:
+<path>                                Path to content source file or directory.</p>
+<p>optional arguments:
 -h, --help            show this help message and exit
 -v, --version                         Show program version and exit
 -d, --debug                           Turn on debug mode
--a &lt;url&gt;, --announce &lt;url&gt;
+-a <url>, --announce <url>
                                         Primary announce url for Bittorrent Tracker.
--p &lt;val&gt;, --piece-length &lt;val&gt;
-
-                                        Intiger piece length for content used by Bittorrent Protocol.
-                                        Acceptable Input values include 14-35 which will be treated as
-                                        an exponent for 2^n power. Otherwise the value must be a
-                                        perfect power of 2 between 16KB and 16MB.
-                                        i.e. [--piece-length 14] is the same as [--piece-length  16384]
-                                        Alternatively, leave blank and let the program calulate the
-                                        appropriate piece length.
-
---private                             Create file for use with private tracker.
--o &lt;dest&gt;, --out &lt;dest&gt;
+-p <val>, --piece-length <val></p>
+<pre><code>                                    Intiger piece length for content used by Bittorrent Protocol.
+                                    Acceptable Input values include 14-35 which will be treated as
+                                    an exponent for 2^n power. Otherwise the value must be a
+                                    perfect power of 2 between 16KB and 16MB.
+                                    i.e. [--piece-length 14] is the same as [--piece-length  16384]
+                                    Alternatively, leave blank and let the program calulate the
+                                    appropriate piece length.
+</code></pre>
+<p>--private                             Create file for use with private tracker.
+-o <dest>, --out <dest>
                                         Path to the destination for the output .torrent file.
---meta-version &lt;n&gt;
+--meta-version <n>
                                         Options = 1, 2 or 3.
                                         (1) = Bittorrent v1;. (Default)
                                         (2) = Bittorrent v2.
                                         (3) = Bittorrent v1 &amp; v2 hybrid.
                                         Specify the Bittorrent Protocol and
-                                        formatting version for .torrent file.
-
---comment &lt;text&gt;                      Include a comment in file metadata.
---source &lt;text&gt;                       Specify source.
---announce-list &lt;url&gt; [&lt;url&gt; ...]
+                                        formatting version for .torrent file.</p>
+<p>--comment <text>                      Include a comment in file metadata.
+--source <text>                       Specify source.
+--announce-list <url> [<url> ...]
                                         Additional tracker announce URLs.
---re-check &lt;path&gt; &lt;path&gt;
-
-                                        Trigger torrent re-check mode.
-                                        When option is active, all other options are ignored (except debug).
-                                        This option forces a re-check on specified torrent contents to
-                                        calculate an accurate percentage complete for downloaded content.
-                                        Arguements:
-                                        1) Absolute or relative path to The path to a ".torrent" file.
-                                        2) Absolute or relative path to Torrent Contents
-```
+--re-check <path> <path></p>
+<pre><code>                                    Trigger torrent re-check mode.
+                                    When option is active, all other options are ignored (except debug).
+                                    This option forces a re-check on specified torrent contents to
+                                    calculate an accurate percentage complete for downloaded content.
+                                    Arguements:
+                                    1) Absolute or relative path to The path to a ".torrent" file.
+                                    2) Absolute or relative path to Torrent Contents
 </code></pre>
+<p>```</p>
 <h2 id="cli-usage-examples">CLI Usage Examples</h2>
 <hr />
 <h3 id="example-1">Example 1</h3>
@@ -567,6 +656,26 @@ $ torrentfile -d --checker /path/to/file.torrent /path/to/contents
       
         
 <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+      
+        
+        <a href="../Checker/" class="md-footer__link md-footer__link--next" aria-label="Next: Checker" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Checker
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">

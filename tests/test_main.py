@@ -19,7 +19,8 @@ import sys
 import pytest
 
 from tests import context
-from torrentfile import TorrentFile, TorrentFileV2, main
+from torrentfile import TorrentFile, TorrentFileV2
+from torrentfile import main_script as main
 
 
 @pytest.fixture(scope="module", params=context.parameters())

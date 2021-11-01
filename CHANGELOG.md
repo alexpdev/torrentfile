@@ -1,15 +1,42 @@
-# torrentfile
+# TorrentFile
 
-## Version 0.4.4
+## Version 0.4.7
 
-### Improved v0.4.4
+### Fixed v0.4.7
 
-    - Checker/Validator Feature.
-    - Gives more accurate estimates for completeness.
+    - A bug that misspelled a field when creating Hybrid torrent files.
 
-### Added v0.4.4
+### Improved 0.4.7
 
-    - Tests for Checker feature.
+    - Re-Check procedure for v2 and hybrid torrent file checking.
+
+---------------------
+
+## Version 0.4.6
+
+### Improved v0.4.6
+
+    - CLI Help and Usage Messages.
+    - Expanded CLI args.
+
+### Added v0.4.6
+
+    - Completely new CheckerClass which replaces old Checker
+    - Hooks for GUI or other 3rd party apps to hook into Checking
+    - Documentation and Unit tests for new CheckerClass
+
+---------------------
+
+## Version 0.4.5
+
+### Improved v0.4.5
+
+    - Documentation and docstrings.
+    - Better formating and more detailed.
+
+### Added v0.4.5
+
+    - More unit tests.
 
 ---------------------
 

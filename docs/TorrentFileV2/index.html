@@ -212,8 +212,8 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
-        Home
+      <a href="../Examples/" class="md-nav__link">
+        Overview
       </a>
     </li>
   
@@ -227,53 +227,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../about.md" class="md-nav__link">
-        About
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../LICENSE/" class="md-nav__link">
-        License
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../API.md" class="md-nav__link">
-        API
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tests/" class="md-nav__link">
-        Tests
+      <a href="../Checker/" class="md-nav__link">
+        Checker
       </a>
     </li>
   
@@ -302,8 +257,68 @@
   
   
     <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../Hybrid/" class="md-nav__link">
         Hybrid
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Progress/" class="md-nav__link">
+        Progress
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tests/" class="md-nav__link">
+        Tests
       </a>
     </li>
   
@@ -923,6 +938,10 @@ V2Hash        </code>
     <div class="doc doc-contents ">
 
       <p>Calculate the root hash and piece layers for file contents.</p>
+<p>Iterates over 16KiB blocks of data from given file, hashes the data,
+then creates a hash tree from the individual block hashes until size of
+hashed data equals the piece-length.  Then continues the hash tree until
+root hash is calculated.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -1065,7 +1084,8 @@ V2Hash        </code>
             <span class="n">padding</span> <span class="o">=</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
             <span class="n">blocks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span>
         <span class="c1"># if the file is smaller than piece length</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">merkle_root</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span>
+        <span class="n">layer_hash</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_root</span><span class="p">()</span>
 </code></pre></div>
         </details>
