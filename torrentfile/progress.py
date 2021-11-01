@@ -152,7 +152,7 @@ class FeedChecker:
         yield partial
 
 
-class Hasher:
+class HashChecker:
     """Construct the HybridChecker.
 
     Verify that root hashes of content files match the .torrent files.
@@ -436,8 +436,8 @@ class CheckerClass:
         """
         meta_hasher = V2Hash if self.version == 2 else HybridHash
         tally = equal = 0
-        for result in Hasher(self.paths, self.piece_length,
-                             self.fileinfo, meta_hasher):
+        for result in HashChecker(self.paths, self.piece_length,
+                                  self.fileinfo, meta_hasher):
             tally += 1
             equal += 1 if result[0] else 0
             if self.hook_status is not None:
