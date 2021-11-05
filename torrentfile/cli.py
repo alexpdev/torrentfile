@@ -181,8 +181,10 @@ def main_script(args=None):
         args = ["-h"]
     flags = parser.parse_args(args)
 
-    if flags.debug or flags.checker:
+    if flags.debug:
         level = logging.DEBUG
+    elif flags.checker:
+        level = logging.INFO
     else:
         level = logging.WARNING
 

@@ -115,14 +115,15 @@ class CheckerClass:
         self.log_msg("Detected Meta Version %s.", str(self.meta_version))
         return info
 
-    def log_msg(self, *args):
+    def log_msg(self, *args, level=logging.INFO):
         """Log message `msg` to logger and send `msg` to callback hook.
 
         Args:
             `*args` (`Iterable`[`str`]): formatting args for log message
+            level (`int`, default=`logging.INFO`) : Log level for this message
         """
-        logging.debug(*args)
-        if self._hook is not None:
+        logging.log(level, *args)
+        if self._hook and level == logging.INFO:
             if len(args) == 1:
                 msg = args[0]
             elif len(args) == 2:
@@ -251,15 +252,16 @@ class CheckerClass:
             tally += 1
             if chunk == piece:
                 matches += 1
-                self.log_msg("Piece %s matches in %s", str(tally), path)
+                logging.debug("Piece %s matches in %s", str(tally), path)
             else:
-                self.log_msg("Piece %s doesn't match in %s",
-                             str(tally), path)
+                logging.debug(
+                    "Piece %s doesn't match in %s", str(tally), path
+                )
             yield chunk, piece, path, size
             self.percent_total = str(int(total / self.total * 100))
             self.percent_complete = str(int(matches / tally * 100))
-            self.log_msg("Processed: %s%%, Matched: %s%%", self.percent_total,
-                         self.percent_complete)
+            self.log_msg("Processed: %s%%, Matched: %s%%",
+                         self.percent_total, self.percent_complete)
         self.log_msg("Re-Check Complete:\n %s%% of %s found at %s",
                      self.percent_complete, self.metafile, self.root)
         self._result = self.percent_complete

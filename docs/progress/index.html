@@ -1168,15 +1168,16 @@ provided path for content.</p>
         <span class="n">tally</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">chunk</span> <span class="o">==</span> <span class="n">piece</span><span class="p">:</span>
             <span class="n">matches</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Piece </span><span class="si">%s</span><span class="s2"> matches in </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tally</span><span class="p">),</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Piece </span><span class="si">%s</span><span class="s2"> matches in </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tally</span><span class="p">),</span> <span class="n">path</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Piece </span><span class="si">%s</span><span class="s2"> doesn&#39;t match in </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                         <span class="nb">str</span><span class="p">(</span><span class="n">tally</span><span class="p">),</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;Piece </span><span class="si">%s</span><span class="s2"> doesn&#39;t match in </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tally</span><span class="p">),</span> <span class="n">path</span>
+            <span class="p">)</span>
         <span class="k">yield</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">percent_total</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">total</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">matches</span> <span class="o">/</span> <span class="n">tally</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Processed: </span><span class="si">%s%%</span><span class="s2">, Matched: </span><span class="si">%s%%</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">percent_total</span><span class="p">,</span>
-                     <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Processed: </span><span class="si">%s%%</span><span class="s2">, Matched: </span><span class="si">%s%%</span><span class="s2">&quot;</span><span class="p">,</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">percent_total</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Re-Check Complete:</span><span class="se">\n</span><span class="s2"> </span><span class="si">%s%%</span><span class="s2"> of </span><span class="si">%s</span><span class="s2"> found at </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
                  <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span>
@@ -1193,7 +1194,7 @@ provided path for content.</p>
 
 
 <h3 id="torrentfile.progress.CheckerClass.log_msg" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">log_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">log_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span></code>
 
 
 </h3>
@@ -1219,18 +1220,25 @@ provided path for content.</p>
         <td><p>formatting args for log message</p></td>
         <td><em>required</em></td>
       </tr>
+      <tr>
+        <td><code>level</code></td>
+        <td><code>`int`, default=`logging.INFO`) </code></td>
+        <td><p>Log level for this message</p></td>
+        <td><code>20</code></td>
+      </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\progress.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">log_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">log_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Log message `msg` to logger and send `msg` to callback hook.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        `*args` (`Iterable`[`str`]): formatting args for log message</span>
+<span class="sd">        level (`int`, default=`logging.INFO`) : Log level for this message</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hook</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hook</span> <span class="ow">and</span> <span class="n">level</span> <span class="o">==</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
