@@ -27,7 +27,7 @@ Modules:
 """
 
 __author__ = "alexpdev"
-__version__ = "0.4.7"
+__version__ = "0.4.8"
 
 from . import __main__, hybrid, metafile, metafile2, utils
 from .checker import Checker

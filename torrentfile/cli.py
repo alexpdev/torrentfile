@@ -181,7 +181,7 @@ def main_script(args=None):
         args = ["-h"]
     flags = parser.parse_args(args)
 
-    if flags.debug:
+    if flags.debug or flags.checker:
         level = logging.DEBUG
     else:
         level = logging.WARNING
@@ -190,9 +190,7 @@ def main_script(args=None):
                         datefmt='%m/%d/%Y %H:%M:%S')
     if flags.checker:
         checker = CheckerClass(flags.checker[0], flags.checker[1])
-        status = checker.result
-        sys.stdout.write(status)
-        return status
+        return checker.result
 
     kwargs = {
         "path": flags.path,

@@ -348,6 +348,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#torrentfile.progress.CheckerClass.result" class="md-nav__link">
+    result
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#torrentfile.progress.CheckerClass.__init__" class="md-nav__link">
     __init__()
   </a>
@@ -362,13 +369,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.CheckerClass.feeder" class="md-nav__link">
-    feeder()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#torrentfile.progress.CheckerClass.find_root" class="md-nav__link">
     find_root()
   </a>
@@ -376,8 +376,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.CheckerClass.hasher" class="md-nav__link">
-    hasher()
+  <a href="#torrentfile.progress.CheckerClass.iter_hashes" class="md-nav__link">
+    iter_hashes()
   </a>
   
 </li>
@@ -397,8 +397,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.CheckerClass.register_callbacks" class="md-nav__link">
-    register_callbacks()
+  <a href="#torrentfile.progress.CheckerClass.register_callback" class="md-nav__link">
+    register_callback()
   </a>
   
 </li>
@@ -508,13 +508,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#torrentfile.progress.check_meta_version" class="md-nav__link">
-    check_meta_version()
-  </a>
   
 </li>
       
@@ -634,6 +627,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#torrentfile.progress.CheckerClass.result" class="md-nav__link">
+    result
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#torrentfile.progress.CheckerClass.__init__" class="md-nav__link">
     __init__()
   </a>
@@ -648,13 +648,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.CheckerClass.feeder" class="md-nav__link">
-    feeder()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#torrentfile.progress.CheckerClass.find_root" class="md-nav__link">
     find_root()
   </a>
@@ -662,8 +655,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.CheckerClass.hasher" class="md-nav__link">
-    hasher()
+  <a href="#torrentfile.progress.CheckerClass.iter_hashes" class="md-nav__link">
+    iter_hashes()
   </a>
   
 </li>
@@ -683,8 +676,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.progress.CheckerClass.register_callbacks" class="md-nav__link">
-    register_callbacks()
+  <a href="#torrentfile.progress.CheckerClass.register_callback" class="md-nav__link">
+    register_callback()
   </a>
   
 </li>
@@ -798,13 +791,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#torrentfile.progress.check_meta_version" class="md-nav__link">
-    check_meta_version()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#torrentfile.progress.split_pieces" class="md-nav__link">
     split_pieces()
   </a>
@@ -913,6 +899,27 @@ checker = Checker(metafile, location)</p>
 
 
 
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="torrentfile.progress.CheckerClass.result" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">result</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Generate result percentage and store for future calls.</p>
+    </div>
+
+  </div>
+
 
 
 
@@ -969,21 +976,18 @@ checker = Checker(metafile, location)</p>
 <span class="sd">        metafile (`str`): path to .torrent file</span>
 <span class="sd">        path (`str`): path to content or contents parent directory.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span> <span class="o">=</span> <span class="n">metafile</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Checking: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_metafile</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_root</span><span class="p">()</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">!=</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">check_meta_version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Detected Meta Version </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_paths</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_root</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">check_paths</span><span class="p">()</span>
 </code></pre></div>
         </details>
     </div>
@@ -1010,86 +1014,39 @@ checker = Checker(metafile, location)</p>
           <summary>Source code in <code>torrentfile\progress.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">check_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Gather all file paths described in the torrent file.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-
-        <span class="c1">#  If content is only one file</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Single file torrent detected.&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> points to a single file&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]}</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
-
-        <span class="c1"># Otherwise Content is more than 1 file.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span> <span class="o">=</span> <span class="n">split_pieces</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">],</span> <span class="n">SHA1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">+=</span> <span class="n">path</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
-                <span class="n">rlpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">path</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
-                <span class="n">full</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">rlpath</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Adding </span><span class="si">%s</span><span class="s2"> to file collection.&quot;</span><span class="p">,</span> <span class="n">rlpath</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">full</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]}</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full</span><span class="p">)</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+            <span class="n">info</span><span class="p">[</span><span class="s2">&quot;partial&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">:</span>
+                <span class="n">layers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;piece layers&quot;</span><span class="p">][</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces root&quot;</span><span class="p">]]</span>
+                <span class="n">info</span><span class="p">[</span><span class="s2">&quot;layer hashes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">split_pieces</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">SHA256</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Otherwise Content is more than 1 file.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> points to a directory&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">+=</span> <span class="n">path</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
+            <span class="n">rlpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">path</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+            <span class="n">full</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">rlpath</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Including file path: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">rlpath</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">full</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full</span><span class="p">)</span>
 
         <span class="c1"># Split pieces into individual hash digests.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span> <span class="o">=</span> <span class="n">split_pieces</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">],</span> <span class="n">SHA1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feeder</span><span class="p">()</span>
+        <span class="k">return</span>
 
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Single file torrent detected.&quot;</span><span class="p">)</span>
-        <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
-
-        <span class="c1"># File info will store necessary data for re-check</span>
-        <span class="n">fileinfo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;partial&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;pieces root&quot;</span><span class="p">:</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;pieces root&quot;</span><span class="p">]</span>
-        <span class="p">}</span>
-
-        <span class="c1"># gather layer hashes for file and add to fileinfo</span>
-        <span class="k">if</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">:</span>
-            <span class="n">layer_hashes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;piece layers&quot;</span><span class="p">][</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;pieces root&quot;</span><span class="p">]]</span>
-            <span class="n">fileinfo</span><span class="p">[</span><span class="s2">&quot;layer hashes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">split_pieces</span><span class="p">(</span><span class="n">layer_hashes</span><span class="p">,</span> <span class="n">SHA256</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">+=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-
-    <span class="k">else</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">walk_file_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">],</span> <span class="p">[])</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasher</span><span class="p">()</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="torrentfile.progress.CheckerClass.feeder" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">feeder</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Check if content hashes match thos in a torrent file.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>torrentfile\progress.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">feeder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Check if content hashes match thos in a torrent file.&quot;&quot;&quot;</span>
-    <span class="n">tally</span> <span class="o">=</span> <span class="n">matched</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">FeedChecker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
-                              <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="p">):</span>
-        <span class="n">tally</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">matched</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hook_status</span><span class="p">(</span><span class="o">*</span><span class="n">result</span><span class="p">)</span>
-
-    <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">matched</span> <span class="o">/</span> <span class="n">tally</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%%</span><span class="s2"> of torrent content is available&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">walk_file_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">],</span> <span class="p">[])</span>
 </code></pre></div>
         </details>
     </div>
@@ -1103,7 +1060,7 @@ checker = Checker(metafile, location)</p>
 
 
 <h3 id="torrentfile.progress.CheckerClass.find_root" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">find_root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">find_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></code>
 
 
 </h3>
@@ -1124,42 +1081,42 @@ provided path for content.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>root (`str`)</code></td>
+      <td><code>`str`</code></td>
       <td><p>root path to content</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\progress.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">find_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">find_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Find the root file or directory for torrent file contents.</span>
 
 <span class="sd">    If the path specified is not the root, then search the</span>
 <span class="sd">    provided path for content.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        root (`str`): root path to content</span>
+<span class="sd">        `str`: root path to content</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-    <span class="n">base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;The input path does not exist.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">base</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is correct torrent root.&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Searching for torrent root in </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]:</span>
-            <span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">base</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Content path found: </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">root</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Searching for torrent root in </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Found root: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">root</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Could not locate data in directory: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Could not locate torrent content in: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -1172,54 +1129,57 @@ provided path for content.</p>
 
 
 
-<h3 id="torrentfile.progress.CheckerClass.hasher" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">hasher</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+<h3 id="torrentfile.progress.CheckerClass.iter_hashes" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">iter_hashes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>Check if file hashes match those in a torrent file.</p>
+      <p>Produce results of comparing torrent contents piece by piece.</p>
+<p>!!! yields
+    chunck (<code>bytes</code>): hash of data found on disk
+    piece (<code>bytes</code>): hash of data when complete and correct
+    path (<code>str</code>): path to file being hashed
+    size (<code>int</code>): length of bytes hashed for piece</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>version</code></td>
-        <td><code>`int`</code></td>
-        <td><p>Meta Version for this torrent file.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\progress.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">hasher</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Check if file hashes match those in a torrent file.</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">iter_hashes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce results of comparing torrent contents piece by piece.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        version (`int`): Meta Version for this torrent file.</span>
+<span class="sd">    Yields:</span>
+<span class="sd">        chunck (`bytes`): hash of data found on disk</span>
+<span class="sd">        piece (`bytes`): hash of data when complete and correct</span>
+<span class="sd">        path (`str`): path to file being hashed</span>
+<span class="sd">        size (`int`): length of bytes hashed for piece</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">meta_hasher</span> <span class="o">=</span> <span class="n">V2Hash</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">HybridHash</span>
-    <span class="n">tally</span> <span class="o">=</span> <span class="n">equal</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">HashChecker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
-                              <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">,</span> <span class="n">meta_hasher</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">checker</span> <span class="o">=</span> <span class="n">FeedChecker</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">checker</span> <span class="o">=</span> <span class="n">HashChecker</span>
+        <span class="n">hasher</span> <span class="o">=</span> <span class="n">V2Hash</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">HybridHash</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">,</span> <span class="n">hasher</span><span class="p">)</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="n">tally</span> <span class="o">=</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">checker</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">size</span>
         <span class="n">tally</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">equal</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hook_status</span><span class="p">(</span><span class="o">*</span><span class="n">result</span><span class="p">)</span>
-
-    <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">equal</span> <span class="o">/</span> <span class="n">tally</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%%</span><span class="s2"> of torrent content available&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">chunk</span> <span class="o">==</span> <span class="n">piece</span><span class="p">:</span>
+            <span class="n">matches</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Piece </span><span class="si">%s</span><span class="s2"> matches in </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tally</span><span class="p">),</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Piece </span><span class="si">%s</span><span class="s2"> doesn&#39;t match in </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                         <span class="nb">str</span><span class="p">(</span><span class="n">tally</span><span class="p">),</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">percent_total</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">total</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">matches</span> <span class="o">/</span> <span class="n">tally</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Processed: </span><span class="si">%s%%</span><span class="s2">, Matched: </span><span class="si">%s%%</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">percent_total</span><span class="p">,</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Re-Check Complete:</span><span class="se">\n</span><span class="s2"> </span><span class="si">%s%%</span><span class="s2"> of </span><span class="si">%s</span><span class="s2"> found at </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span>
 </code></pre></div>
         </details>
     </div>
@@ -1240,22 +1200,44 @@ provided path for content.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Log msg to logger and send to callback hook.</p>
+      <p>Log message <code>msg</code> to logger and send <code>msg</code> to callback hook.</p>
 
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>`*args`</code></td>
+        <td><code>`Iterable`[`str`]</code></td>
+        <td><p>formatting args for log message</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\progress.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">log_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Log msg to logger and send to callback hook.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Log message `msg` to logger and send `msg` to callback hook.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        `*args` (`Iterable`[`str`]): formatting args for log message</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_log</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hook</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
-        <span class="k">if</span> <span class="n">msg</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hook_log</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hook</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -1288,7 +1270,7 @@ provided path for content.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>info (`dict`)</code></td>
+      <td><code>`dict`</code></td>
       <td><p>flattened meta dictionary.</p></td>
     </tr>
   </tbody>
@@ -1299,19 +1281,33 @@ provided path for content.</p>
     <span class="sd">&quot;&quot;&quot;Flatten Meta dictionary of torrent file.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        info (`dict`): flattened meta dictionary.</span>
+<span class="sd">        `dict`: flattened meta dictionary.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="p">)</span>
 
     <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">has_pieces</span> <span class="o">=</span> <span class="n">has_meta_version</span> <span class="o">=</span> <span class="kc">False</span>
+
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">info</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;pieces&quot;</span><span class="p">:</span>
+                    <span class="n">has_pieces</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;meta version&quot;</span><span class="p">:</span>
+                    <span class="n">has_meta_version</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">info</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+    <span class="k">if</span> <span class="n">has_meta_version</span> <span class="ow">and</span> <span class="n">has_pieces</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="k">elif</span> <span class="n">has_meta_version</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Detected Meta Version </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">info</span>
 </code></pre></div>
         </details>
@@ -1325,8 +1321,8 @@ provided path for content.</p>
 
 
 
-<h3 id="torrentfile.progress.CheckerClass.register_callbacks" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">register_callbacks</span><span class="p">(</span><span class="n">hook1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hook2</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<h3 id="torrentfile.progress.CheckerClass.register_callback" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">register_callback</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-classmethod"><code>classmethod</code></small>
@@ -1350,31 +1346,23 @@ provided path for content.</p>
   </thead>
   <tbody>
       <tr>
-        <td><code>hook1</code></td>
+        <td><code>hook</code></td>
         <td><code>`function`</code></td>
         <td><p>callback function for the logging feature.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>hook2</code></td>
-        <td><code>`function`</code></td>
-        <td><p>callback function for update progress.</p></td>
-        <td><code>None</code></td>
+        <td><em>required</em></td>
       </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\progress.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="nd">@classmethod</span>
-<span class="k">def</span> <span class="nf">register_callbacks</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">hook1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hook2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">register_callback</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">hook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Register hooks from 3rd party programs to access generated info.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        hook1 (`function`): callback function for the logging feature.</span>
-<span class="sd">        hook2 (`function`): callback function for update progress.</span>
+<span class="sd">        hook (`function`): callback function for the logging feature.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">hook_log</span> <span class="o">=</span> <span class="n">hook1</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">hook_status</span> <span class="o">=</span> <span class="n">hook2</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">_hook</span> <span class="o">=</span> <span class="n">hook</span>
 </code></pre></div>
         </details>
     </div>
@@ -1395,9 +1383,9 @@ provided path for content.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Traverse File Tree dictionary.</p>
-<p>Extract full pathnames, length, and root hash for each file
-included in the .torrent file.</p>
+      <p>Traverse File Tree dictionary to get file details.</p>
+<p>Extract full pathnames, length, root hash, and layer hashes
+for each file included in the .torrent's file tree.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -1427,10 +1415,10 @@ included in the .torrent file.</p>
         <details class="quote">
           <summary>Source code in <code>torrentfile\progress.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">walk_file_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">partials</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Traverse File Tree dictionary.</span>
+    <span class="sd">&quot;&quot;&quot;Traverse File Tree dictionary to get file details.</span>
 
-<span class="sd">    Extract full pathnames, length, and root hash for each file</span>
-<span class="sd">    included in the .torrent file.</span>
+<span class="sd">    Extract full pathnames, length, root hash, and layer hashes</span>
+<span class="sd">    for each file included in the .torrent&#39;s file tree.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        tree (`dict`): File Tree dict extracted from torrent file.</span>
@@ -1441,18 +1429,19 @@ included in the .torrent file.</p>
         <span class="c1"># Empty string means the tree&#39;s leaf is value</span>
         <span class="k">if</span> <span class="s2">&quot;&quot;</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="o">*</span><span class="n">partials</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Adding </span><span class="si">%s</span><span class="s2"> to file collection.&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
             <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">path</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
-            <span class="n">size</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">+=</span> <span class="n">size</span>
             <span class="n">info</span><span class="p">[</span><span class="s2">&quot;partial&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
 
             <span class="c1"># get layer hashes for this file</span>
             <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">:</span>
                 <span class="n">root</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">][</span><span class="s2">&quot;pieces root&quot;</span><span class="p">]</span>
                 <span class="n">layer_hashes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;piece layers&quot;</span><span class="p">][</span><span class="n">root</span><span class="p">]</span>
                 <span class="n">info</span><span class="p">[</span><span class="s2">&quot;layer hashes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">split_pieces</span><span class="p">(</span><span class="n">layer_hashes</span><span class="p">,</span> <span class="n">SHA256</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">+=</span> <span class="n">size</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Including: path - </span><span class="si">%s</span><span class="s2">, length - </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">walk_file_tree</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">partials</span> <span class="o">+</span> <span class="p">[</span><span class="n">key</span><span class="p">])</span>
@@ -1656,11 +1645,9 @@ metafile against data on disk.</p>
     <span class="n">partial</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itor</span><span class="p">)</span>
     <span class="n">chunck</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>  <span class="c1"># nosec</span>
     <span class="n">piece</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">chunck</span> <span class="o">==</span> <span class="n">piece</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece</span>
-    <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">chunck</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">))</span>
 </code></pre></div>
         </details>
     </div>
@@ -1797,7 +1784,7 @@ metafile against data on disk.</p>
             <span class="k">for</span> <span class="n">blank</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen_blanks</span><span class="p">(</span><span class="n">partial</span><span class="p">):</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">blank</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">:</span>
                     <span class="k">yield</span> <span class="n">blank</span>
-                    <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span>
+                    <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">partial</span> <span class="o">=</span> <span class="n">blank</span>
 </code></pre></div>
@@ -2033,7 +2020,7 @@ HashChecker        </code>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">pieces</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;layer hashes&quot;</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">pieces</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="kc">False</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece</span>
+                <span class="k">yield</span> <span class="kc">None</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span>
             <span class="k">continue</span>
         <span class="n">hashed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasher</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">length</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">:</span>
@@ -2045,11 +2032,8 @@ HashChecker        </code>
         <span class="n">diff</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">info_pieces</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">hash_pieces</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">hash_pieces</span> <span class="o">+=</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">SHA256</span><span class="p">)]</span> <span class="o">*</span> <span class="n">diff</span>
-        <span class="k">for</span> <span class="n">actual</span><span class="p">,</span> <span class="n">expected</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">hash_pieces</span><span class="p">,</span> <span class="n">info_pieces</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">expected</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="kc">True</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">actual</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="kc">False</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">expected</span>
+        <span class="k">for</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">piece</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">hash_pieces</span><span class="p">,</span> <span class="n">info_pieces</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span>
 </code></pre></div>
         </details>
     </div>
@@ -2066,83 +2050,6 @@ HashChecker        </code>
 
   </div>
 
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
-<h2 id="torrentfile.progress.check_meta_version" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">check_meta_version</span><span class="p">(</span><span class="n">info</span><span class="p">)</span></code>
-
-
-</h2>
-
-    <div class="doc doc-contents ">
-
-      <p>Find the meta version for .torrent file.</p>
-<p>Check .torrent file properties to determine which
-protocol version was used to create the .torrent file.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>info</code></td>
-        <td><code>`dict`</code></td>
-        <td><p>info dictionary from .torrent file.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>version (`int`)</code></td>
-      <td><p>The version number.</p></td>
-    </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>torrentfile\progress.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">check_meta_version</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Find the meta version for .torrent file.</span>
-
-<span class="sd">    Check .torrent file properties to determine which</span>
-<span class="sd">    protocol version was used to create the .torrent file.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        info (`dict`): info dictionary from .torrent file.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        version (`int`): The version number.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s2">&quot;meta version&quot;</span> <span class="ow">in</span> <span class="n">info</span> <span class="ow">and</span> <span class="s2">&quot;file tree&quot;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s2">&quot;pieces&quot;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">3</span>
-        <span class="k">return</span> <span class="mi">2</span>
-    <span class="k">return</span> <span class="mi">1</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
 
 
 
