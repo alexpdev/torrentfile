@@ -719,7 +719,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
         <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-h&quot;</span><span class="p">]</span>
     <span class="n">flags</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">debug</span> <span class="ow">or</span> <span class="n">flags</span><span class="o">.</span><span class="n">checker</span><span class="p">:</span>
         <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span>
@@ -728,9 +728,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
                         <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y %H:%M:%S&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">checker</span><span class="p">:</span>
         <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">flags</span><span class="o">.</span><span class="n">checker</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">flags</span><span class="o">.</span><span class="n">checker</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">status</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">status</span>
+        <span class="k">return</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span>
 
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>

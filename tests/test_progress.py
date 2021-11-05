@@ -134,7 +134,7 @@ def test_checker_no_content(t3dir, version):
     """Test Checker class with directory that points to nothing."""
     args = {"announce": "announce", "path": t3dir, "private": 1}
     outfile = mktorrent(args, v=version)
-    CheckerClass.register_callbacks(lambda *x: print(x), lambda *x: print(x))
+    CheckerClass.register_callback(lambda *x: print(x))
     checker = CheckerClass(outfile, t3dir)
     assert checker.result == "100"   # nosec
     rmpath(outfile)
@@ -173,16 +173,20 @@ def test_checker_with_file(version, tfile):
 
 def test_checker_no_meta_file(t3dir):
     """Test Checker when incorrect metafile is provided."""
-    checker = CheckerClass("peaches", t3dir)
-    assert checker.result == "ERROR"   # nosec
+    try:
+        CheckerClass("peaches", t3dir)
+    except FileNotFoundError:
+        assert True   # nosec
 
 
 def test_checker_no_root_dir(t3dir):
     """Test Checker when incorrect root directory is provided."""
     args = {"announce": "announce", "path": t3dir, "private": 1}
     outfile = mktorrent(args, v=1)
-    checker = CheckerClass(outfile, "peaches")
-    assert checker.result == "ERROR"  # nosec
+    try:
+        CheckerClass(outfile, "peaches")
+    except FileNotFoundError:
+        assert True   # nosec
     rmpath(outfile)
 
 
@@ -194,8 +198,10 @@ def test_checker_wrong_root_dir(t3dir):
     os.mkdir(newpath)
     newpath.touch(newpath / "file1")
     outfile = mktorrent(args, v=1)
-    checker = CheckerClass(outfile, str(newpath))
-    assert checker.result == "ERROR"  # nosec
+    try:
+        CheckerClass(outfile, str(newpath))
+    except FileNotFoundError:
+        assert True   # nosec
     rmpath(outfile)
     rmpath(newpath)
 
@@ -230,3 +236,15 @@ def test_checker_class_half_file(version):
         content.write(barr)
     checker = CheckerClass(outfile, path)
     assert int(checker.result) < 100  # nosec
+
+
+@pytest.mark.parametrize("version", [1, 2, 3])
+def test_checker_result_property(version):
+    """Test Checker class with half size single file."""
+    path = sizedfile(20)
+    args = {"announce": "announce", "path": path,
+            "private": 1, "piece_length": 2**14}
+    outfile = mktorrent(args, v=version)
+    checker = CheckerClass(outfile, path)
+    result = checker.result
+    assert checker.result == result   # nosec

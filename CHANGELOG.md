@@ -1,12 +1,24 @@
 # TorrentFile
 
+## Version 0.4.8
+
+### Changes v0.4.8
+
+    - Algorithm for the ReCheck process has changed but produces same results.
+
+### Improved v0.4.8
+
+    - Additions to documentation.
+
+---------------------
+
 ## Version 0.4.7
 
 ### Fixed v0.4.7
 
     - A bug that misspelled a field when creating Hybrid torrent files.
 
-### Improved 0.4.7
+### Improved v0.4.7
 
     - Re-Check procedure for v2 and hybrid torrent file checking.
 
