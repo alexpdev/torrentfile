@@ -13,7 +13,7 @@
       
         <link rel="canonical" href="https://alexpdev.github.io/torrentfile/CLI/">
       
-      <link rel="icon" href="../assets/favicon.png">
+      <link rel="icon" href="../favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.4">
     
     
@@ -82,7 +82,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="TorrentFile" class="md-header__button md-logo" aria-label="TorrentFile" data-md-component="logo">
       
-  <img src="../assets/torrentfile.png" alt="logo">
+  <img src="../torrentfile.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -181,7 +181,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="TorrentFile" class="md-nav__button md-logo" aria-label="TorrentFile" data-md-component="logo">
       
-  <img src="../assets/torrentfile.png" alt="logo">
+  <img src="../torrentfile.png" alt="logo">
 
     </a>
     TorrentFile
@@ -276,6 +276,26 @@
   <a href="#torrentfile.cli" class="md-nav__link">
     torrentfile.cli
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.cli.HelpFormat" class="md-nav__link">
+    HelpFormat
+  </a>
+  
+    <nav class="md-nav" aria-label="HelpFormat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.HelpFormat.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -454,6 +474,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#torrentfile.cli.HelpFormat" class="md-nav__link">
+    HelpFormat
+  </a>
+  
+    <nav class="md-nav" aria-label="HelpFormat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.HelpFormat.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#torrentfile.cli.main" class="md-nav__link">
     main()
   </a>
@@ -506,6 +546,107 @@ invoked when called from command line, and parses accompanying arguments.</p>
 
 
 
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="torrentfile.cli.HelpFormat" class="doc doc-heading">
+        <code>
+HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>)
+        </code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Formatting class for help tips provided by the CLI.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>prog</code></td>
+        <td><code>`str`</code></td>
+        <td><p>Name of the program.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>width</code></td>
+        <td><code>`int`</code></td>
+        <td><p>Max width of help message output.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>max_help_positions</code></td>
+        <td><code>`int`</code></td>
+        <td><p>max length until line wrap.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="torrentfile.cli.HelpFormat.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">max_help_pos</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Construct HelpFormat class.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">max_help_pos</span><span class="o">=</span><span class="mi">45</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Construct HelpFormat class.&quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">max_help_position</span><span class="o">=</span><span class="n">max_help_pos</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 
@@ -583,33 +724,41 @@ invoked when called from command line, and parses accompanying arguments.</p>
 
     <span class="n">desc</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Create or Re-Check Bittorrent meta files for &quot;</span>
             <span class="s2">&quot;Bittorrent v1, v2 or v1, v2 combo Hybrids.&quot;</span><span class="p">)</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span><span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span> <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
-    <span class="c1"># formatter_class=RawTextHelpFormatter</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span><span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span>
+                            <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">formatter_class</span><span class="o">=</span><span class="n">HelpFormat</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;-v&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--version&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span>
         <span class="n">version</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;torrentfile v</span><span class="si">{</span><span class="n">torrentfile</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;show program version and exit&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;show program version and exit&quot;</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--debug&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;output debug information&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-p&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;private&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;create .torrent file for private tracker&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-s&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;announce url for Bittorrent tracker&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--announce-list&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;announce_list&quot;</span><span class="p">,</span>
-        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;additional tracker announce URLs&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;source&gt;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify source&quot;</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -622,24 +771,41 @@ invoked when called from command line, and parses accompanying arguments.</p>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--debug&quot;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;activate debug mode&quot;</span>
+        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--announce&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;announce url for Bittorrent tracker&quot;</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-m&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--announce-list&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;announce_list&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;additional tracker announce URLs&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--out&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;outfile&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;output path for created .torrent file&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
         <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">],</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;meta_version&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;meta version&gt;&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;int&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Specify the Bittorrent Protocol and formatting version for</span>
-<span class="s2">        .torrent file.</span>
+<span class="s2">        .torrent file version.</span>
 <span class="s2">        Options = 1, 2 or 3.</span>
 <span class="s2">        (1) = Bittorrent v1;. (Default)</span>
 <span class="s2">        (2) = Bittorrent v2.</span>
@@ -648,90 +814,63 @@ invoked when called from command line, and parses accompanying arguments.</p>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--out&quot;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;outfile&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;out&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;output path for files created&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-p&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-l&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--piece-length&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;piece_length&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;piece length&gt;&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;int&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Piece size used by Bittorrent transfer.</span>
+<span class="s2">        piece size used by Bittorrent transfer protocol.</span>
 <span class="s2">        Acceptable values include numbers 14-35, will be treated as the</span>
 <span class="s2">        exponent for 2^n power, or any power of 2 integer in 16KB-16MB.</span>
-<span class="s2">        e.g. [--piece-length 14] is the same as [--piece-length  16384]</span>
-<span class="s2">        If this option isn&#39;t triggered, the program will calculate an</span>
+<span class="s2">        e.g. `--piece-length 14` is the same as `--piece-length  16384`</span>
+<span class="s2">        If this option flag is not used, the program will calculate an</span>
 <span class="s2">        appropriate value automatically.</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;private&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;create .torrent file for private tracker&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;-r&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--re-check&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;checker&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
-        <span class="n">nargs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;.torrent&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Activate Re-Check mode.</span>
-<span class="s2">        Arguements:</span>
-<span class="s2">        1) Absolute or relative path to The path to a &quot;.torrent&quot; file.</span>
-<span class="s2">        2) Absolute or relative path to Torrent Contents</span>
-<span class="s2">        When option is active, all other options are ignored (except debug).</span>
-<span class="s2">        This option triggers a re-check of torrent contents on disk compared</span>
-<span class="s2">        to contents detailed in .torrent file. Outputs the percentage</span>
-<span class="s2">        downloaded or available in terminal.</span>
+<span class="s2">        &lt;.torrent&gt; is the path to a .torrent meta file.</span>
+<span class="s2">        Check &lt;content&gt; data integrity with &lt;.torrent&gt; file.</span>
+<span class="s2">        When this option is active, all other options are ignored (except -d).</span>
 <span class="s2">        &quot;&quot;&quot;</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-s&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;source&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify source&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;path&quot;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;abs. or rel. path to content for creating .torrent file&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;content&gt;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to .torrent file content&quot;</span>
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-h&quot;</span><span class="p">]</span>
     <span class="n">flags</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">debug</span> <span class="ow">or</span> <span class="n">flags</span><span class="o">.</span><span class="n">checker</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
         <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span>
+    <span class="k">elif</span> <span class="n">flags</span><span class="o">.</span><span class="n">checker</span><span class="p">:</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span>
 
     <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
                         <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y %H:%M:%S&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">checker</span><span class="p">:</span>
-        <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">flags</span><span class="o">.</span><span class="n">checker</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">flags</span><span class="o">.</span><span class="n">checker</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span>
+        <span class="n">metafile</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">checker</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">content</span>
+        <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
         <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">announce</span><span class="p">,</span>
         <span class="s2">&quot;announce_list&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">announce_list</span><span class="p">,</span>
         <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>

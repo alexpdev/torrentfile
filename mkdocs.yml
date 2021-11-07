@@ -6,8 +6,8 @@ copyright: alexpdev 2021
 
 theme:
   name: material
-  logo: assets/torrentfile.png
-  favicon: assets/favicon.png
+  logo: torrentfile.png
+  favicon: favicon.png
 
 nav:
   - Overview: Examples.md

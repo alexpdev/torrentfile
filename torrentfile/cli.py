@@ -24,7 +24,7 @@ Functions:
 
 import logging
 import sys
-from argparse import ArgumentParser
+from argparse import ArgumentParser, HelpFormatter
 
 import torrentfile
 
@@ -32,6 +32,25 @@ from .hybrid import TorrentFileHybrid
 from .metafile import TorrentFile
 from .metafile2 import TorrentFileV2
 from .progress import CheckerClass
+
+
+class HelpFormat(HelpFormatter):
+    """Formatting class for help tips provided by the CLI.
+
+    Args:
+        prog (`str`): Name of the program.
+        width (`int`): Max width of help message output.
+        max_help_positions (`int`): max length until line wrap.
+    """
+
+    def __init__(self, prog, width=80, max_help_pos=45):
+        """Construct HelpFormat class."""
+        super().__init__(prog, width=width, max_help_position=max_help_pos)
+
+    def _split_lines(self, text, _):
+        """Split multiline help messages and remove indentation."""
+        lines = text.split("\n")
+        return [line.strip() for line in lines if line]
 
 
 def main_script(args=None):
@@ -45,33 +64,41 @@ def main_script(args=None):
 
     desc = ("Create or Re-Check Bittorrent meta files for "
             "Bittorrent v1, v2 or v1, v2 combo Hybrids.")
-    parser = ArgumentParser("torrentfile", description=desc, prefix_chars="-")
-    # formatter_class=RawTextHelpFormatter
+
+    parser = ArgumentParser("torrentfile", description=desc,
+                            prefix_chars="-", formatter_class=HelpFormat)
 
     parser.add_argument(
         "-v",
         "--version",
         action="version",
         version=f"torrentfile v{torrentfile.__version__}",
-        help="show program version and exit",
+        help="show program version and exit"
     )
 
     parser.add_argument(
-        "-a",
-        "--announce",
+        "-d",
+        "--debug",
+        action="store_true",
+        dest="debug",
+        help="output debug information"
+    )
+
+    parser.add_argument(
+        "-p",
+        "--private",
+        action="store_true",
+        dest="private",
+        help="create .torrent file for private tracker",
+    )
+
+    parser.add_argument(
+        "-s",
+        "--source",
         action="store",
-        dest="announce",
-        metavar="<url>",
-        default="",
-        help="announce url for Bittorrent tracker",
-    )
-
-    parser.add_argument(
-        "--announce-list",
-        dest="announce_list",
-        nargs="+",
-        metavar="<url>",
-        help="additional tracker announce URLs",
+        dest="source",
+        metavar="<source>",
+        help="specify source"
     )
 
     parser.add_argument(
@@ -84,24 +111,41 @@ def main_script(args=None):
     )
 
     parser.add_argument(
-        "-d",
-        "--debug",
-        action="store_true",
-        dest="debug",
-        help="activate debug mode"
+        "-a",
+        "--announce",
+        action="store",
+        dest="announce",
+        metavar="<url>",
+        default="",
+        help="announce url for Bittorrent tracker"
     )
 
     parser.add_argument(
-        "-m",
+        "--announce-list",
+        dest="announce_list",
+        nargs="+",
+        metavar="<url>",
+        help="additional tracker announce URLs",
+    )
+
+    parser.add_argument(
+        "-o",
+        "--out",
+        action="store",
+        dest="outfile",
+        metavar="<path>",
+        help="output path for created .torrent file",
+    )
+
+    parser.add_argument(
         "--meta-version",
         default="1",
         choices=["1", "2", "3"],
         action="store",
         dest="meta_version",
-        metavar="<meta version>",
+        metavar="<int>",
         help="""
-        Specify the Bittorrent Protocol and formatting version for
-        .torrent file.
+        .torrent file version.
         Options = 1, 2 or 3.
         (1) = Bittorrent v1;. (Default)
         (2) = Bittorrent v2.
@@ -110,90 +154,63 @@ def main_script(args=None):
     )
 
     parser.add_argument(
-        "-o",
-        "--out",
-        action="store",
-        dest="outfile",
-        metavar="<out>",
-        help="output path for files created",
-    )
-
-    parser.add_argument(
-        "-p",
+        "-l",
         "--piece-length",
         action="store",
         dest="piece_length",
-        metavar="<piece length>",
+        metavar="<int>",
         help="""
-        Piece size used by Bittorrent transfer.
+        piece size used by Bittorrent transfer protocol.
         Acceptable values include numbers 14-35, will be treated as the
         exponent for 2^n power, or any power of 2 integer in 16KB-16MB.
-        e.g. [--piece-length 14] is the same as [--piece-length  16384]
-        If this option isn't triggered, the program will calculate an
+        e.g. `--piece-length 14` is the same as `--piece-length  16384`
+        If this option flag is not used, the program will calculate an
         appropriate value automatically.
         """,
-    )
-
-    parser.add_argument(
-        "--private",
-        action="store_true",
-        dest="private",
-        help="create .torrent file for private tracker",
     )
 
     parser.add_argument(
         "-r",
         "--re-check",
         dest="checker",
-        metavar="<path>",
-        nargs=2,
+        metavar="<.torrent>",
         help="""
-        Activate Re-Check mode.
-        Arguements:
-        1) Absolute or relative path to The path to a ".torrent" file.
-        2) Absolute or relative path to Torrent Contents
-        When option is active, all other options are ignored (except debug).
-        This option triggers a re-check of torrent contents on disk compared
-        to contents detailed in .torrent file. Outputs the percentage
-        downloaded or available in terminal.
+        <.torrent> is the path to a .torrent meta file.
+        Check <content> data integrity with <.torrent> file.
+        When this option is active, all other options are ignored (except -d).
         """
     )
 
     parser.add_argument(
-        "-s",
-        "--source",
+        "content",
         action="store",
-        dest="source",
-        metavar="<source>",
-        help="specify source",
-    )
-
-    parser.add_argument(
-        "path",
-        action="store",
-        default="",
-        nargs="?",
-        metavar="<path>",
-        help="abs. or rel. path to content for creating .torrent file",
+        metavar="<content>",
+        help="path to .torrent file content"
     )
 
     if not args:
         args = ["-h"]
     flags = parser.parse_args(args)
 
-    if flags.debug or flags.checker:
+    if flags.debug:
         level = logging.DEBUG
+    elif flags.checker:
+        level = logging.INFO
     else:
         level = logging.WARNING
 
     logging.basicConfig(level=level, format='%(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %H:%M:%S')
     if flags.checker:
-        checker = CheckerClass(flags.checker[0], flags.checker[1])
-        return checker.result
+        metafile = flags.checker
+        content = flags.content
+        checker = CheckerClass(metafile, content)
+        result = checker.result
+        sys.stdout.write(str(result))
+        return result
 
     kwargs = {
-        "path": flags.path,
+        "path": flags.content,
         "announce": flags.announce,
         "announce_list": flags.announce_list,
         "piece_length": flags.piece_length,

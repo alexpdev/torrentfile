@@ -11,34 +11,32 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile?style=plastic)
 ![GitHub](https://img.shields.io/github/license/alexpdev/torrentfile?style=plastic)
 
-_Torrentfile_ is a CLI for creating .torrent files for bittorrent clients.
+_TorrentFile_ can create torrent files, Check content for accuracy and completeness with a
+.torrent file, and display detailed information contained in a .torrent file.
 
 ## Features
 
 - Simple interface
-- Create meta files for Bittorrent v1, v2, and Hybrid v1 & v2 files.
-- Re-Check torrent content availability on disk against .torrent file.
+- Create torrent files.
 - Display detailed information contained in torrent file.
-- Specify piece length attribute or let program calculate appropriate value.
-- Flag torrent file as private for private trackers.
-- Support for validating downloaded content from v1, v2, and hybrid file hashes.
-- Optional GUI can be found at [https://github.com/alexpdev/TorrentfileQt](https://github.com/alexpdev/TorrentfileQt)
+- Check torrent content for accuracy and completeness with a .torrent file.
+- Support for Bittorrent Version 1, 2, and hybrid .torrent files.
+- GUI project can be found at [https://github.com/alexpdev/TorrentfileQt](https://github.com/alexpdev/TorrentfileQt)
 
 ## Documentation
 
-Documentation can be found by opening your webrowser in the `docs` directory
-or by visiting [https://alexpdev.github.io/torrentfile](https://alexpdev.github.io/torrentfile).
+Documentation can be found in the `./docs` directory, or online at [https://alexpdev.github.io/torrentfile](https://alexpdev.github.io/torrentfile).
 
 ## Installation
 
 ### via PyPi
 
-`> pip install torrentfile`
+`pip install torrentfile`
 
 ### via Git
 
-`> git clone https://github.com/alexpdev/torrentfile.git`
-`> python setup.py install`
+`git clone https://github.com/alexpdev/torrentfile.git`
+`python setup.py install`
 
 ### download
 
@@ -48,59 +46,43 @@ Or download the latest release from the Release page on github.
 ## Using
 
 ```bash:
-usage: torrentfile -v --version
-        torrentfile -h --help
-        torrentfile --checker <metafile> <content>
-        torrentfile <path> [-o <dest>] [-a <url>] [-d] [--source <x>]
-                    [--piece-length <n>] [--meta-version <n>] [--private]
-                    [--announce-list <url2> <...>]  [--comment <comment>]
+usage: torrentfile [-h] [-v] [-d] [-p] [-s <source>] [-c <comment>] [-a <url>]
+                   [--announce-list <url> [<url> ...]] [-o <path>]
+                   [--meta-version <int>] [-l <int>] [-r <.torrent>]
+                   <content>
 
-
-Create Bittorrent meta files for Bittorrent v1 and v2.
+Create or Re-Check Bittorrent meta files for Bittorrent v1, v2 or v1, v2 combo
+Hybrids.
 
 positional arguments:
-<path>                                Path to content source file or directory.
+  <content>                             path to .torrent file content
 
 optional arguments:
--h, --help            show this help message and exit
--v, --version                         Show program version and exit
--d, --debug                           Turn on debug mode
--a <url>, --announce <url>
-                                        Primary announce url for Bittorrent Tracker.
--p <val>, --piece-length <val>
-
-                                        Intiger piece length for content used by Bittorrent Protocol.
-                                        Acceptable Input values include 14-35 which will be treated as
-                                        an exponent for 2^n power. Otherwise the value must be a
-                                        perfect power of 2 between 16KB and 16MB.
-                                        i.e. [--piece-length 14] is the same as [--piece-length  16384]
-                                        Alternatively, leave blank and let the program calulate the
-                                        appropriate piece length.
-
---private                             Create file for use with private tracker.
--o <dest>, --out <dest>
-                                        Path to the destination for the output .torrent file.
---meta-version <n>
+  -h, --help                            show this help message and exit
+  -v, --version                         show program version and exit
+  -d, --debug                           output debug information
+  -p, --private                         create .torrent file for private tracker
+  -s <source>, --source <source>        specify source
+  -c <comment>, --comment <comment>     include a comment in file metadata
+  -a <url>, --announce <url>            announce url for Bittorrent tracker
+  --announce-list <url> [<url> ...]     additional tracker announce URLs
+  -o <path>, --out <path>               output path for created .torrent file
+  --meta-version <int>                  .torrent file version.
                                         Options = 1, 2 or 3.
                                         (1) = Bittorrent v1;. (Default)
                                         (2) = Bittorrent v2.
                                         (3) = Bittorrent v1 & v2 hybrid.
-                                        Specify the Bittorrent Protocol and
-                                        formatting version for .torrent file.
 
---comment <text>                      Include a comment in file metadata.
---source <text>                       Specify source.
---announce-list <url> [<url> ...]
-                                        Additional tracker announce URLs.
---re-check <path> <path>
+  -l <int>, --piece-length <int>        piece size used by Bittorrent transfer protocol.
+                                        Acceptable values include numbers 14-35, will be treated as the
+                                        exponent for 2^n power, or any power of 2 integer in 16KB-16MB.
+                                        e.g. `--piece-length 14` is the same as `--piece-length  16384`
+                                        If this option flag is not used, the program will calculate an
+                                        appropriate value automatically.
 
-                                        Trigger torrent re-check mode.
-                                        When option is active, all other options are ignored (except debug).
-                                        This option forces a re-check on specified torrent contents to
-                                        calculate an accurate percentage complete for downloaded content.
-                                        Arguements:
-                                        1) Absolute or relative path to The path to a ".torrent" file.
-                                        2) Absolute or relative path to Torrent Contents
+  -r <.torrent>, --re-check <.torrent>  <.torrent> is the path to a .torrent meta file.
+                                        Check <content> data integrity with <.torrent> file.
+                                        When this option is active, all other options are ignored (except -d).
 ```
 
 ## License

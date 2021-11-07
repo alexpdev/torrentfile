@@ -1,4 +1,4 @@
-.PHONY: clean help full
+.PHONY: clean help full lint build environment test docs coverage push
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -22,6 +22,7 @@ endef
 export PRINT_HELP_PYSCRIPT
 
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
+
 
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
@@ -91,8 +92,9 @@ build: clean install
 	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
 		-D -n torrentfile -c -i ../runner/torrentfile.ico \
 		--specpath ../runner/ ../runner/exe
-	twine upload dist/*
-	cp -rfv ../runner/dist .
+	mkdir ./dist/bin
+	cp -rfv ../../runner/dist ./dist/bin
+# twine upload dist/*
 
 install: environment clean test ## Install Locally
 	pip install --upgrade -rrequirements.txt --no-cache-dir
