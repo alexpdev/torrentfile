@@ -1652,10 +1652,12 @@ metafile against data on disk.</p>
     <span class="sd">&quot;&quot;&quot;Yield back result of comparison.&quot;&quot;&quot;</span>
     <span class="n">partial</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itor</span><span class="p">)</span>
     <span class="n">chunck</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>  <span class="c1"># nosec</span>
-    <span class="n">piece</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span><span class="p">]</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">chunck</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span><span class="p">:</span>
+        <span class="n">piece</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span><span class="p">]</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">chunck</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">StopIteration</span>  <span class="c1"># pragma: nocover</span>
 </code></pre></div>
         </details>
     </div>

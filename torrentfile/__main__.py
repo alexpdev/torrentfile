@@ -11,15 +11,8 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Bolerplate file needed for CLI functionality."""
+"""Bolerplate file needed for CLI functionality."""  # pragma: no cover
 
-import torrentfile
-
-
-def main():
-    """Run main cli function."""
-    torrentfile.main()  # pragma: no cover
-
-
-if __name__ == '__main__':
-    main()   # pragma: no cover
+if __name__ == '__main__':  # pragma: no cover
+    import torrentfile  # pragma: no cover
+    torrentfile.main()   # pragma: no cover

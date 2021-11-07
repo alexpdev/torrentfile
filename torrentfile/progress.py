@@ -314,10 +314,12 @@ class FeedChecker:
         """Yield back result of comparison."""
         partial = next(self.itor)
         chunck = sha1(partial).digest()  # nosec
-        piece = self.pieces[self.piece_count]
-        path = self.paths[self.index]
-        self.piece_count += 1
-        return (chunck, piece, path, len(partial))
+        if len(self.pieces) > self.piece_count:
+            piece = self.pieces[self.piece_count]
+            path = self.paths[self.index]
+            self.piece_count += 1
+            return chunck, piece, path, len(partial)
+        raise StopIteration  # pragma: nocover
 
     @property
     def current_length(self):
