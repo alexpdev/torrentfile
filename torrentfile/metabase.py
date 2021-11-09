@@ -17,6 +17,7 @@ Classes:
     MetaFile (`obj`): base class for all MetaFile classes.
 """
 
+from collections.abc import Sequence
 from datetime import datetime
 
 import pyben
@@ -39,9 +40,8 @@ class MetaFile:
         source (`str`): Private tracker source.
     """
 
-    def __init__(self, path=None, announce=None, announce_list=None,
-                 private=False, source=None, piece_length=None,
-                 comment=None, outfile=None):
+    def __init__(self, path=None, announce=None, private=False,
+                 source=None, piece_length=None, comment=None, outfile=None):
         """Construct MetaFile superclass and assign local attributes.
 
         Keyword parameters include path, announce, announce_list private,
@@ -59,17 +59,25 @@ class MetaFile:
         else:
             self.piece_length = utils.path_piece_length(self.path)
         # Assign announce URL to empty string if none provided.
+        self.announce_list = None
         if not announce:
-            announce = ""
+            self.announce = ""
         # Most torrent clients have editting trackers as a feature.
-        self.announce = announce
-        self.announce_list = announce_list
+        elif isinstance(announce, str):
+            self.announce = announce
+        elif isinstance(announce, Sequence):
+            self.announce = announce[0]
+            # if announce has more than 1 argumnt
+            if len(announce) > 1:
+                # all but the first go to announce list field
+                self.announce_list = announce[1:]
+
         if private:
             self.private = 1
         else:
             self.private = private
-        self.source = source
 
+        self.source = source
         self.comment = comment
         self.outfile = outfile
 

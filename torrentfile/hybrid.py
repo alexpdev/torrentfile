@@ -52,7 +52,7 @@ class TorrentFileHybrid(MetaFile):
     def __init__(self, **kwargs):
         """Create Bittorrent v1 v2 hybrid metafiles."""
         super().__init__(**kwargs)
-        logging.info("Creating Hybrid torrent file.")
+        logging.debug("Creating Hybrid torrent file.")
         self.name = os.path.basename(self.path)
         self.hashes = []
         self.piece_layers = {}
@@ -165,7 +165,7 @@ class HybridHash:
         self.padding_piece = None
         self.padding_file = None
         self.amount = piece_length // BLOCK_SIZE
-        logging.info("Beginning file hashing: %s", self.path)
+        logging.debug("Beginning file hashing: %s", self.path)
         with open(path, "rb") as data:
             self._process_file(data)
 

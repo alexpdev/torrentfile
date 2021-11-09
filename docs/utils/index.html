@@ -934,20 +934,14 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
         <span class="n">file_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">file_size</span><span class="p">,</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span>
-
-    <span class="c1"># put all files into filelist within directory</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">total_size</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">filelist</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">filelist</span><span class="p">:</span>
-        <span class="n">full</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-
-        <span class="n">size</span><span class="p">,</span> <span class="n">paths</span> <span class="o">=</span> <span class="n">filelist_total</span><span class="p">(</span><span class="n">full</span><span class="p">)</span>
-
-        <span class="n">total_size</span> <span class="o">+=</span> <span class="n">size</span>
-        <span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">total_size</span><span class="p">,</span> <span class="n">files</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">filelist</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">full</span> <span class="ow">in</span> <span class="n">sortfiles</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">size</span><span class="p">,</span> <span class="n">paths</span> <span class="o">=</span> <span class="n">filelist_total</span><span class="p">(</span><span class="n">full</span><span class="p">)</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">size</span>
+            <span class="n">filelist</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total</span><span class="p">,</span> <span class="n">filelist</span>
 </code></pre></div>
         </details>
     </div>

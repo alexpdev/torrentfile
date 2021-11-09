@@ -116,16 +116,9 @@ def main_script(args=None):
         action="store",
         dest="announce",
         metavar="<url>",
-        default="",
-        help="announce url for Bittorrent tracker"
-    )
-
-    parser.add_argument(
-        "--announce-list",
-        dest="announce_list",
         nargs="+",
-        metavar="<url>",
-        help="additional tracker announce URLs",
+        default="",
+        help="1 or more announce url's for Bittorrent tracker"
     )
 
     parser.add_argument(
@@ -194,8 +187,6 @@ def main_script(args=None):
 
     if flags.debug:
         level = logging.DEBUG
-    elif flags.checker:
-        level = logging.INFO
     else:
         level = logging.WARNING
 
@@ -212,7 +203,6 @@ def main_script(args=None):
     kwargs = {
         "path": flags.content,
         "announce": flags.announce,
-        "announce_list": flags.announce_list,
         "piece_length": flags.piece_length,
         "source": flags.source,
         "private": flags.private,

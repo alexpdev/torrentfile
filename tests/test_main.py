@@ -54,13 +54,13 @@ def test_main_announce_list(tfile):
     args, path = tfile
     sys.argv = args + [
         path,
-        "--announce-list",
+        "-a",
         "https://tracker2/announce",
         "https://tracker3/announce",
         "https://tracker4/announce",
     ]
     parser = main()
-    url = "https://tracker2/announce"
+    url = "https://tracker4/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
     context.rmpath(parser.outfile)
 
@@ -69,13 +69,13 @@ def test_main_annlist_single(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--announce-list",
+        "-a",
         "https://tracker2/announce",
     ]
     sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker2/announce"
-    assert url in parser.meta["info"]["announce list"]  # nosec
+    assert url in parser.meta["announce"]  # nosec
     context.rmpath(parser.outfile)
 
 
@@ -83,16 +83,16 @@ def test_class_with_annlist(tfile):
     """Test TorrentFile Class with announce list arguement."""
     _, path = tfile
     kwargs = {
-        "announce": "https://tracker1.to/announce",
         "path": path,
-        "announce_list": (
-            "https://tracker2/announce"
-            " https://tracker3/announce"
-            " https://tracker4/announce"
+        "announce": (
+            "https://tracker1.to/announce",
+            "https://tracker2/announce",
+            "https://tracker3/announce",
+            "https://tracker4/announce",
         ),
     }
     torrent = TorrentFile(**kwargs)
-    url = "https://tracker2/announce"
+    url = "https://tracker3/announce"
     assert url in torrent.meta["info"]["announce list"]  # nosec
 
 
@@ -100,16 +100,16 @@ def test_class_tuple_annlist(tfile):
     """Test TorrentFile Class with tuple announce list arguement."""
     _, path = tfile
     kwargs = {
-        "announce": "https://tracker1.to/announce",
         "path": path,
-        "announce_list": (
+        "announce": (
+            "https://tracker1.to/announce",
             "https://tracker2/announce",
             "https://tracker3/announce",
             "https://tracker4/announce",
         ),
     }
     torrent = TorrentFile(**kwargs)
-    url = "https://tracker2/announce"
+    url = "https://tracker3/announce"
     assert url in torrent.meta["info"]["announce list"]  # nosec
 
 
@@ -117,9 +117,9 @@ def test_class_list_annlist(tfile):
     """Test TorrentFile Class with tuple announce list arguement."""
     _, path = tfile
     kwargs = {
-        "announce": "https://tracker1.to/announce",
         "path": path,
-        "announce_list": [
+        "announce": [
+            "https://tracker1.to/announce",
             "https://tracker2/announce",
             "https://tracker3/announce",
             "https://tracker4/announce",
@@ -134,7 +134,7 @@ def test_main_annlist_v2(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--announce-list",
+        "-a",
         "https://tracker2/announce",
         "https://tracker3/announce",
         "https://tracker4/announce",
@@ -144,7 +144,7 @@ def test_main_annlist_v2(tfile):
     sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker2/announce"
-    assert url in parser.meta["info"]["announce list"]  # nosec
+    assert url in parser.meta["announce"]  # nosec
     context.rmpath(parser.outfile)
 
 
@@ -152,7 +152,7 @@ def test_main_annlist_v3(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--announce-list",
+        "-a",
         "https://tracker2/announce",
         "https://tracker3/announce",
         "https://tracker4/announce",
@@ -161,7 +161,7 @@ def test_main_annlist_v3(tfile):
     ]
     sys.argv.insert(1, path)
     parser = main()
-    url = "https://tracker2/announce"
+    url = "https://tracker4/announce"
     assert url in parser.meta["info"]["announce list"]  # nosec
     context.rmpath(parser.outfile)
 
@@ -170,7 +170,7 @@ def test_main_annlist_single_v2(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--announce-list",
+        "-a",
         "https://tracker2/announce",
         "--meta-version",
         "2",
@@ -178,7 +178,7 @@ def test_main_annlist_single_v2(tfile):
     sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker2/announce"
-    assert url in parser.meta["info"]["announce list"]  # nosec
+    assert url in parser.meta["announce"]  # nosec
     context.rmpath(parser.outfile)
 
 
@@ -186,7 +186,7 @@ def test_main_annlist_single_v3(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--announce-list",
+        "-a",
         "https://tracker2/announce",
         "--meta-version",
         "3",
@@ -194,7 +194,7 @@ def test_main_annlist_single_v3(tfile):
     sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker2/announce"
-    assert url in parser.meta["info"]["announce list"]  # nosec
+    assert url in parser.meta["announce"]  # nosec
     context.rmpath(parser.outfile)
 
 
@@ -202,7 +202,7 @@ def test_main_annlist_single_v1(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "--announce-list",
+        "-a",
         "https://tracker2/announce",
         "--meta-version",
         "1",
@@ -210,7 +210,7 @@ def test_main_annlist_single_v1(tfile):
     sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker2/announce"
-    assert url in parser.meta["info"]["announce list"]  # nosec
+    assert url in parser.meta["announce"]  # nosec
     context.rmpath(parser.outfile)
 
 
@@ -218,12 +218,12 @@ def test_class_annlist_v2(tfile):
     """Test TorrentFile Class with announce list arguement."""
     _, path = tfile
     kwargs = {
-        "announce": "https://tracker1.to/announce",
         "path": path,
-        "announce_list": (
-            "https://tracker2/announce"
-            " https://tracker3/announce"
-            " https://tracker4/announce"
+        "announce": (
+            "https://tracker1.to/announce",
+            "https://tracker2/announce",
+            "https://tracker3/announce",
+            "https://tracker4/announce",
         ),
     }
     torrent = TorrentFileV2(**kwargs)
@@ -235,9 +235,9 @@ def test_class_tuple_annlist_v2(tfile):
     """Test TorrentFile Class with tuple announce list arguement."""
     _, path = tfile
     kwargs = {
-        "announce": "https://tracker1.to/announce",
         "path": path,
-        "announce_list": (
+        "announce": (
+            "https://tracker1.to/announce",
             "https://tracker2/announce",
             "https://tracker3/announce",
             "https://tracker4/announce",
@@ -252,9 +252,9 @@ def test_class_list_annlist_v2(tfile):
     """Test TorrentFile Class with tuple announce list arguement."""
     _, path = tfile
     kwargs = {
-        "announce": "https://tracker1.to/announce",
         "path": path,
-        "announce_list": [
+        "announce": [
+            "https://tracker1.to/announce",
             "https://tracker2/announce",
             "https://tracker3/announce",
             "https://tracker4/announce",

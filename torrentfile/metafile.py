@@ -98,7 +98,7 @@ class TorrentFile(MetaFile):
             kwargs (`dict`): dictionary of keyword args passed to superclass.
         """
         super().__init__(**kwargs)
-        logging.info("Making .torrent v1 file.")
+        logging.debug("Making .torrent v1 file.")
         self.meta = self.assemble()
 
     def _assemble_infodict(self):

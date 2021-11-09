@@ -1,5 +1,20 @@
 # TorrentFile
 
+## Version 0.5.0
+
+### Added v0.5.0
+
+    - Slew of new unit tests
+    - Stricter linting features
+    - Alternative method of -re-check feature
+
+### Fixed v0.5.0
+
+    - Bug Fixes
+    - CLI help formatting errors
+
+---------------------
+
 ## Version 0.4.8
 
 ### Changes v0.4.8

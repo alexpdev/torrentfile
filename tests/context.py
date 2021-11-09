@@ -24,23 +24,20 @@ TESTDIR = os.path.join(TD, "TESTDIR")
 os.environ["TESTDIR"] = TESTDIR
 
 
-def rmpath(path):
+def rmpath(paths):
     """Recursively remove path."""
-    if not os.path.exists(path):
-        return
-    if os.path.isdir(path):
-        try:
-            shutil.rmtree(path)
-        except PermissionError:
-            return
-    else:
-        os.remove(path)
-
-
-def rmpaths(paths):
-    """Recursively remove all paths."""
+    if isinstance(paths, (os.PathLike, str)):
+        paths = [paths]
     for path in paths:
-        rmpath(path)
+        if os.path.exists(path):
+            if os.path.isdir(path):
+                try:
+                    shutil.rmtree(path)
+                except PermissionError:  # pragma: no cover
+                    return      # pragma: no cover
+            else:
+                os.remove(path)
+        assert not os.path.exists(path)   # nosec
 
 
 def datadir(func):
@@ -141,9 +138,9 @@ def tempdir4():
     dir2 = os.path.join(root, "directory2")
     dirs = [root, dir1, dir2]
     file1 = (os.path.join(dir1, "file1"), 22)
-    file2 = (os.path.join(dir1, "file2"), 26)
-    file3 = (os.path.join(dir2, "file3"), 24)
-    file4 = (os.path.join(dir2, "file4"), 25)
+    file2 = (os.path.join(dir1, "file2"), 25)
+    file3 = (os.path.join(dir2, "file3"), 21)
+    file4 = (os.path.join(dir2, "file4"), 24)
     files = [file1, file2, file3, file4]
     fill_folder(dirs, files)
     return root
