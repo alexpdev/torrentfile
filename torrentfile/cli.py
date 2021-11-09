@@ -187,8 +187,6 @@ def main_script(args=None):
 
     if flags.debug:
         level = logging.DEBUG
-    elif flags.checker:
-        level = logging.INFO
     else:
         level = logging.WARNING
 

@@ -239,6 +239,7 @@ class CheckerClass:
             path (`str`): path to file being hashed
             size (`int`): length of bytes hashed for piece
         """
+        matched = consumed = 0
         if self.meta_version == 1:
             checker = FeedChecker
             args = (self.paths, self.piece_length, self.fileinfo, self.pieces)
@@ -246,23 +247,21 @@ class CheckerClass:
             checker = HashChecker
             hasher = V2Hash if self.meta_version == 2 else HybridHash
             args = (self.paths, self.piece_length, self.fileinfo, hasher)
-        matches = tally = total = 0
         for chunk, piece, path, size in checker(*args):
-            total += size
-            tally += 1
+            consumed += size
             if chunk == piece:
-                matches += 1
-                logging.debug("Piece %s matches in %s", str(tally), path)
+                matched += size
+                logging.debug("Match Success: %s, %s", path, size)
             else:
-                logging.debug("Piece %s fails match in %s", str(tally), path)
+                logging.debug("Match Fail: %s, %s", path, size)
             yield chunk, piece, path, size
-            self.percent_total = str(int(total / self.total * 100))
-            self.percent_complete = str(int(matches / tally * 100))
+            total_consumed = str(int(consumed / self.total * 100))
+            percent_matched = str(int(matched / consumed * 100))
             self.log_msg("Processed: %s%%, Matched: %s%%",
-                         self.percent_total, self.percent_complete)
+                         total_consumed, percent_matched)
         self.log_msg("Re-Check Complete:\n %s%% of %s found at %s",
-                     self.percent_complete, self.metafile, self.root)
-        self._result = self.percent_complete
+                     percent_matched, self.metafile, self.root)
+        self._result = percent_matched
 
 
 def split_pieces(pieces, hash_size):
@@ -275,8 +274,10 @@ def split_pieces(pieces, hash_size):
         lst (`list`): Pieces broken into groups of 20 bytes.
     """
     lst = []
-    for i in range(hash_size, len(pieces), hash_size):
-        lst.append(pieces[i - hash_size:i])
+    start = 0
+    while start < len(pieces):
+        lst.append(pieces[start: start + hash_size])
+        start += hash_size
     return lst
 
 
@@ -313,12 +314,10 @@ class FeedChecker:
         """Yield back result of comparison."""
         partial = next(self.itor)
         chunck = sha1(partial).digest()  # nosec
-        if len(self.pieces) > self.piece_count:
-            piece = self.pieces[self.piece_count]
-            path = self.paths[self.index]
-            self.piece_count += 1
-            return chunck, piece, path, len(partial)
-        raise StopIteration  # pragma: nocover
+        piece = self.pieces[self.piece_count]
+        path = self.paths[self.index]
+        self.piece_count += 1
+        return chunck, piece, path, len(partial)
 
     @property
     def current_length(self):
@@ -340,6 +339,8 @@ class FeedChecker:
                     if len(piece) == self.piece_length:
                         yield piece
                         partial = bytearray()
+                    elif i + 1 == len(self.paths):
+                        yield piece
                     else:
                         partial = piece
             else:
@@ -451,7 +452,6 @@ class HashChecker:
             results (`tuple`): The size of the file and result of match.
         """
         for path in self.paths:
-            logging.debug("Checking: %s", path)
             info = self.fileinfo[path]
             length = info["length"]
             logging.debug("%s length: %s", path, str(length))
@@ -465,11 +465,10 @@ class HashChecker:
                 for i, piece in enumerate(pieces):
                     if len(pieces) == 1:
                         size = length
-                    elif i < len(pieces) - 1:  # pragma: no cover
-                        size = self.piece_length   # pragma: no cover
-                    else:    # pragma: no cover
-                        size = length - ((len(pieces) - 1) *
-                                         self.piece_length)   # pragma: no cover
+                    elif i < len(pieces) - 1:
+                        size = self.piece_length
+                    else:
+                        size = length - ((len(pieces) - 1) * self.piece_length)
                     logging.debug("Yielding: %s %s %s %s", str(bytes(SHA256)),
                                   str(piece), path, str(size))
                     yield bytes(SHA256), piece, path, size

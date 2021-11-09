@@ -140,7 +140,7 @@ class TorrentFileV2(MetaFile):
             kwargs (`dict`): keywword arguments to pass to superclass.
         """
         super().__init__(**kwargs)
-        logging.info("Create .torrent v2 file.")
+        logging.debug("Create .torrent v2 file.")
         self.piece_layers = {}
         self.hashes = []
         self.meta = self.assemble()
@@ -161,11 +161,11 @@ class TorrentFileV2(MetaFile):
             info["comment"] = self.comment
 
         if os.path.isfile(self.path):
-            logging.info("'path' points to a single file.")
+            logging.debug("'path' points to a single file.")
             info["file tree"] = {name: self._traverse(self.path)}
             info["length"] = os.path.getsize(self.path)
         else:
-            logging.info("'path' points to a directory.")
+            logging.debug("'path' points to a directory.")
             info["file tree"] = self._traverse(self.path)
 
         info["name"] = name
@@ -175,10 +175,10 @@ class TorrentFileV2(MetaFile):
 
         if self.private:
             info["private"] = 1
-            logging.info("Torrent file will be marked as private.")
+            logging.debug("Torrent file will be marked as private.")
         if self.source:
             info["source"] = self.source
-        logging.info("Filled Info Dictionary.")
+        logging.debug("Filled Info Dictionary.")
 
         return info
 
@@ -188,7 +188,7 @@ class TorrentFileV2(MetaFile):
         Returns:
           meta (`dict`): Metainformation about the torrent.
         """
-        logging.info("Continue filling meta dictionary for .torrent file.")
+        logging.debug("Continue filling meta dictionary for .torrent file.")
         meta = self.apply_constants()
         # assemble info dictionary and assign it to info key in meta
         meta["info"] = self._assemble_infodict()
@@ -253,7 +253,7 @@ class V2Hash:
         self.layer_hashes = []
         self.piece_length = piece_length
         self.num_blocks = piece_length // BLOCK_SIZE
-        logging.info("Hashing v2: %s", self.path)
+        logging.debug("Hashing v2: %s", self.path)
 
         with open(self.path, "rb") as fd:
             self.process_file(fd)

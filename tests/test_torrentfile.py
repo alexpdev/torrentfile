@@ -226,6 +226,21 @@ def tdir(request):
 
 
 @pytest.fixture(scope="module")
+def metav3d(tdir):
+    """Return generated metadata v2 for directory."""
+    args = {
+        "private": True,
+        "path": tdir,
+        "announce": "http://announce.com/announce",
+        "source": "tracker",
+        "comment": "content details and purpose",
+    }
+    outfile, meta = maketorrent(args, v=3)
+    yield outfile, meta
+    rmpath([tdir, outfile])
+
+
+@pytest.fixture(scope="module")
 def metav2d(tdir):
     """Return generated metadata v2 for directory."""
     args = {
@@ -264,12 +279,30 @@ def test_v2_meta_keys(metav2d, key):
     assert os.path.exists(outfile)  # nosec
 
 
+@pytest.mark.parametrize('field', ["announce", "info", "piece layers",
+                                   "creation date", "created by"])
+def test_v3_meta_keys(metav3d, field):
+    """Test metadata."""
+    outfile, meta = metav3d
+    assert field in meta  # nosec
+    assert os.path.exists(outfile)  # nosec
+
+
 @pytest.mark.parametrize('key', ["piece length", "meta version", "file tree",
                                  "name", "private", "source", "comment"])
 def test_v2_info_keys_dir(metav2d, key):
     """Test metadata."""
     outfile, meta = metav2d
     assert key in meta["info"]  # nosec
+    assert os.path.exists(outfile)  # nosec
+
+
+@pytest.mark.parametrize('field', ["piece length", "meta version", "file tree",
+                                   "name", "private", "source", "comment"])
+def test_v3_info_keys_dir(metav3d, field):
+    """Test metadata."""
+    outfile, meta = metav3d
+    assert field in meta["info"]  # nosec
     assert os.path.exists(outfile)  # nosec
 
 
@@ -287,6 +320,15 @@ def test_v1_meta_keys(metav1d, key):
 def test_v1_info_keys_dir(metav1d, key):
     """Test metadata."""
     outfile, meta = metav1d
+    assert key in meta["info"]  # nosec
+    assert os.path.exists(outfile)  # nosec
+
+
+@pytest.mark.parametrize('key', ["piece length", "name", "private",
+                                 "source", "comment", "pieces"])
+def test_v3_info_keys_pieces(metav3d, key):
+    """Test metadata."""
+    outfile, meta = metav3d
     assert key in meta["info"]  # nosec
     assert os.path.exists(outfile)  # nosec
 

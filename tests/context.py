@@ -33,8 +33,8 @@ def rmpath(paths):
             if os.path.isdir(path):
                 try:
                     shutil.rmtree(path)
-                except PermissionError:
-                    return
+                except PermissionError:  # pragma: no cover
+                    return      # pragma: no cover
             else:
                 os.remove(path)
         assert not os.path.exists(path)   # nosec
@@ -138,9 +138,9 @@ def tempdir4():
     dir2 = os.path.join(root, "directory2")
     dirs = [root, dir1, dir2]
     file1 = (os.path.join(dir1, "file1"), 22)
-    file2 = (os.path.join(dir1, "file2"), 26)
-    file3 = (os.path.join(dir2, "file3"), 24)
-    file4 = (os.path.join(dir2, "file4"), 25)
+    file2 = (os.path.join(dir1, "file2"), 25)
+    file3 = (os.path.join(dir2, "file3"), 21)
+    file4 = (os.path.join(dir2, "file4"), 24)
     files = [file1, file2, file3, file4]
     fill_folder(dirs, files)
     return root

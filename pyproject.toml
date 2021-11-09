@@ -17,3 +17,6 @@ testpaths = [
     "tests",
     "torrentfile",
 ]
+
+[build-system]
+requires = ["setuptools>=40.8.0", "wheel"]

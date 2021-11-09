@@ -48,7 +48,7 @@ def t3dir():
     rmpath(tempdir)
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture
 def t4dir():
     """Fixture for TempDir4 configuration."""
     tempdir = tempdir4()
@@ -56,7 +56,7 @@ def t4dir():
     rmpath(tempdir)
 
 
-@pytest.fixture(params=[25, 26, 27, 28])
+@pytest.fixture(params=[25, 26, 27, 24])
 def tfile(request):
     """Temporary testing files for testing torrent validation."""
     tempfile = sizedfile(num=request.param)
@@ -255,15 +255,18 @@ def test_checker_result_property(version):
     checker = CheckerClass(outfile, path)
     result = checker.result
     assert checker.result == result   # nosec
+    rmpath(outfile)
 
 
-# @pytest.mark.parametrize("version", [1, 2, 3])
-# def test_checker_missing_files2(version, t4dir):
-#     args = {"announce": "announce", "path": t4dir,
-#             "private": 1, "piece_length": 2**14}
-#     outfile = mktorrent(args, v=version)
-#     paths = [os.path.join(t4dir, "directory1", "file2"),
-#              os.path.join(t4dir, "directory2", "file4")]
-#     rmpath(paths)
-#     checker = CheckerClass(outfile, t4dir)
-#     assert int(checker.result) < 100
+@pytest.mark.parametrize("version", [1, 2, 3])
+def test_checker_missing_files2(version, t4dir):
+    """Testing Meta Version 2 & hybrid checkerclass when missing files."""
+    args = {"announce": "announce", "path": t4dir,
+            "private": 1, "piece_length": 2**14}
+    outfile = mktorrent(args, v=version)
+    paths = [os.path.join(t4dir, "directory1", "file2"),
+             os.path.join(t4dir, "directory2", "file4")]
+    rmpath(paths)
+    checker = CheckerClass(outfile, t4dir)
+    assert int(checker.result) < 100  # nosec
+    rmpath(outfile)

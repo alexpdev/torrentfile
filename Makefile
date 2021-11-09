@@ -1,4 +1,4 @@
-.PHONY: clean help full lint build environment test docs coverage push
+.PHONY: clean help full lint build environment test docs push
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -51,22 +51,18 @@ lint: environment ## Check for styling errors
 	autopep8 --recursive torrentfile tests
 	isort torrentfile tests
 	pydocstyle torrentfile tests
-	pyroma .
+	pycodestyle torrentfile tests
 	pylint torrentfile tests
+	pyroma .
 	prospector torrentfile
 	prospector tests
 
-
 test: environment ## run tests quickly with the default Python
 	@echo Testing
-	pytest tests --cov=torrentfile --pylint
-
-coverage: environment ## check code coverage with the default Python
-	@echo Generating Coverage Report
-	coverage run --source torrentfile -m pytest tests
+	pytest tests --cov=torrentfile --cov=tests --pylint
 	coverage xml -o coverage.xml
 
-push: clean lint test coverage docs ## push to remote repo
+push: clean lint test docs ## push to remote repo
 	@echo pushing to remote
 	git add .
 	git commit -m "$m"
@@ -80,7 +76,7 @@ docs: environment ## Regenerate docs from changes
 
 build: clean install
 	python setup.py sdist bdist_wheel bdist_egg
-	twine upload dist/*
+	# twine upload dist/*
 	rm -rfv ../runner
 	mkdir ../runner
 	touch ../runner/exe
@@ -94,14 +90,11 @@ build: clean install
 		-D -n torrentfile -c -i ../runner/torrentfile.ico \
 		--specpath ../runner/ ../runner/exe
 	cp -rfv ../runner/dist/* ./dist/
-	tar -a -c -f ./dist/torrentfile torrentfile.zip
+	tar -va -c -f ./dist/torrentfile.zip ./dist/torrentfile
 
-
-
-
-install: environment clean test ## Install Locally
+install: ## Install Locally
 	pip install --upgrade -rrequirements.txt --no-cache-dir
-	python setup.py install
+	pip install -e .
 
 branch: clean ## Switch git branches after changes have been made
 	git checkout master
