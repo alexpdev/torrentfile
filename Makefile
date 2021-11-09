@@ -76,18 +76,18 @@ docs: environment ## Regenerate docs from changes
 
 build: clean install
 	python setup.py sdist bdist_wheel bdist_egg
-	# twine upload dist/*
+	twine upload dist/*
 	rm -rfv ../runner
 	mkdir ../runner
 	touch ../runner/exe
-	cp ./assets/torrentfile.ico ../runner/torrentfile.ico
+	cp ./assets/favicon.ico ../runner/favicon.ico
 	@echo "import torrentfile" >> ../runner/exe
 	@echo "torrentfile.main()" >> ../runner/exe
 	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
-		-F -n torrentfile -c -i ../runner/torrentfile.ico \
+		-F -n torrentfile -c -i ../runner/favicon.ico \
 		--specpath ../runner/ ../runner/exe
 	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
-		-D -n torrentfile -c -i ../runner/torrentfile.ico \
+		-D -n torrentfile -c -i ../runner/favicon.ico \
 		--specpath ../runner/ ../runner/exe
 	cp -rfv ../runner/dist/* ./dist/
 	tar -va -c -f ./dist/torrentfile.zip ./dist/torrentfile
