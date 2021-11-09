@@ -87,9 +87,9 @@ def test_rmpath():
     assert not os.path.exists(path)   # nosec
 
 
-def test_rmpaths():
+def test_rmpath2():
     """Test rmpath function."""
     temppaths = [context.sizedfile(20), context.tempfile()]
     assert [os.path.exists(path) for path in temppaths]   # nosec
-    context.rmpaths(temppaths)
+    context.rmpath(temppaths)
     assert [os.path.exists(i) for i in temppaths] == [False, False]   # nosec

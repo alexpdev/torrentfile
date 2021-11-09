@@ -80,6 +80,7 @@ docs: environment ## Regenerate docs from changes
 
 build: clean install
 	python setup.py sdist bdist_wheel bdist_egg
+	twine upload dist/*
 	rm -rfv ../runner
 	mkdir ../runner
 	touch ../runner/exe
@@ -92,9 +93,11 @@ build: clean install
 	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
 		-D -n torrentfile -c -i ../runner/torrentfile.ico \
 		--specpath ../runner/ ../runner/exe
-	mkdir ./dist/bin
-	cp -rfv ../../runner/dist ./dist/bin
-# twine upload dist/*
+	cp -rfv ../runner/dist/* ./dist/
+	tar -a -c -f ./dist/torrentfile torrentfile.zip
+
+
+
 
 install: environment clean test ## Install Locally
 	pip install --upgrade -rrequirements.txt --no-cache-dir

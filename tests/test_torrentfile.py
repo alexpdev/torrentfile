@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-from tests.context import parameters, rmpath, rmpaths, sizedfile
+from tests.context import parameters, rmpath, sizedfile
 from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2, utils
 from torrentfile.metabase import MetaFile
 
@@ -155,7 +155,7 @@ def test_hybrid_0_length():
     torrent.write()
     torpath = path.with_suffix(".torrent")
     assert os.path.exists(torpath)   # nosec
-    rmpaths([path, torpath])
+    rmpath([path, torpath])
 
 
 def test_v2_0_length():
@@ -170,7 +170,7 @@ def test_v2_0_length():
     torrent.write()
     torpath = path.with_suffix(".torrent")
     assert os.path.exists(torpath)  # nosec
-    rmpaths([path, torpath])
+    rmpath([path, torpath])
 
 
 def test_metafile_assemble(tdir1):
@@ -237,7 +237,7 @@ def metav2d(tdir):
     }
     outfile, meta = maketorrent(args, v=2)
     yield outfile, meta
-    rmpaths([tdir, outfile])
+    rmpath([tdir, outfile])
 
 
 @pytest.fixture(scope="module")
@@ -252,7 +252,7 @@ def metav1d(tdir):
     }
     outfile, meta = maketorrent(args)
     yield outfile, meta
-    rmpaths([tdir, outfile])
+    rmpath([tdir, outfile])
 
 
 @pytest.mark.parametrize('key', ["announce", "info", "piece layers",

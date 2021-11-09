@@ -133,20 +133,14 @@ def filelist_total(path):
     if os.path.isfile(path):
         file_size = os.path.getsize(path)
         return file_size, [path]
-
-    # put all files into filelist within directory
-    files = []
-    total_size = 0
-    filelist = sorted(os.listdir(path), key=str.lower)
-
-    for name in filelist:
-        full = os.path.join(path, name)
-
-        size, paths = filelist_total(full)
-
-        total_size += size
-        files.extend(paths)
-    return total_size, files
+    total = 0
+    filelist = []
+    if os.path.isdir(path):
+        for _, full in sortfiles(path):
+            size, paths = filelist_total(full)
+            total += size
+            filelist.extend(paths)
+    return total, filelist
 
 
 def path_size(path):

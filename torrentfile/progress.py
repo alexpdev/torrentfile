@@ -254,9 +254,7 @@ class CheckerClass:
                 matches += 1
                 logging.debug("Piece %s matches in %s", str(tally), path)
             else:
-                logging.debug(
-                    "Piece %s doesn't match in %s", str(tally), path
-                )
+                logging.debug("Piece %s fails match in %s", str(tally), path)
             yield chunk, piece, path, size
             self.percent_total = str(int(total / self.total * 100))
             self.percent_complete = str(int(matches / tally * 100))
@@ -301,6 +299,7 @@ class FeedChecker:
         self.paths = paths
         self.pieces = pieces
         self.fileinfo = fileinfo
+        self.piece_map = {}
         self.index = 0
         self.piece_count = 0
         self.itor = None
@@ -335,6 +334,7 @@ class FeedChecker:
         partial = bytearray()
         for i, path in enumerate(self.paths):
             self.index = i
+
             if os.path.exists(path):
                 for piece in self.extract(path, partial):
                     if len(piece) == self.piece_length:
@@ -426,6 +426,7 @@ class HashChecker:
         self.piece_length = piece_length
         self.fileinfo = fileinfo
         self.itor = None
+        logging.debug("Starting Hash Checker. piece length: %s", piece_length)
 
     def __iter__(self):
         """Assign iterator and return self."""
@@ -450,25 +451,45 @@ class HashChecker:
             results (`tuple`): The size of the file and result of match.
         """
         for path in self.paths:
+            logging.debug("Checking: %s", path)
             info = self.fileinfo[path]
             length = info["length"]
+            logging.debug("%s length: %s", path, str(length))
+            roothash = info["pieces root"]
+            logging.debug("%s root hash %s", path, str(roothash))
             if not os.path.exists(path):
-                if length < self.piece_length:
-                    pieces = [info["pieces root"]]
-                else:
+                if "layer hashes" in info and info["layer hashes"]:
                     pieces = info["layer hashes"]
-                for piece in pieces:
-                    yield None, piece, path, self.piece_length
+                else:
+                    pieces = [roothash]
+                for i, piece in enumerate(pieces):
+                    if len(pieces) == 1:
+                        size = length
+                    elif i < len(pieces) - 1:  # pragma: no cover
+                        size = self.piece_length   # pragma: no cover
+                    else:    # pragma: no cover
+                        size = length - ((len(pieces) - 1) *
+                                         self.piece_length)   # pragma: no cover
+                    logging.debug("Yielding: %s %s %s %s", str(bytes(SHA256)),
+                                  str(piece), path, str(size))
+                    yield bytes(SHA256), piece, path, size
                 continue
             hashed = self.hasher(path, self.piece_length)
-            if length < self.piece_length:
-                hash_pieces = [hashed.root]
-                info_pieces = [info["pieces root"]]
-            else:
+            if "layer hashes" in info:
                 hash_pieces = split_pieces(hashed.piece_layer, SHA256)
                 info_pieces = info["layer hashes"]
+            else:
+                hash_pieces = [hashed.root]
+                info_pieces = [info["pieces root"]]
             diff = len(info_pieces) - len(hash_pieces)
             if diff > 0:
                 hash_pieces += [bytes(SHA256)] * diff
+            num_pieces = len(hash_pieces)
+            size = self.piece_length
             for chunk, piece in zip(hash_pieces, info_pieces):
-                yield chunk, piece, path, self.piece_length
+                if num_pieces == 1:
+                    size = length - ((len(hash_pieces) - 1) * size)
+                logging.debug("Yielding: %s, %s, %s, %s", str(chunk),
+                              str(piece), str(path), str(size))
+                yield chunk, piece, path, size
+                num_pieces -= 1

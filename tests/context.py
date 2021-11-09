@@ -24,23 +24,20 @@ TESTDIR = os.path.join(TD, "TESTDIR")
 os.environ["TESTDIR"] = TESTDIR
 
 
-def rmpath(path):
+def rmpath(paths):
     """Recursively remove path."""
-    if not os.path.exists(path):
-        return
-    if os.path.isdir(path):
-        try:
-            shutil.rmtree(path)
-        except PermissionError:
-            return
-    else:
-        os.remove(path)
-
-
-def rmpaths(paths):
-    """Recursively remove all paths."""
+    if isinstance(paths, (os.PathLike, str)):
+        paths = [paths]
     for path in paths:
-        rmpath(path)
+        if os.path.exists(path):
+            if os.path.isdir(path):
+                try:
+                    shutil.rmtree(path)
+                except PermissionError:
+                    return
+            else:
+                os.remove(path)
+        assert not os.path.exists(path)   # nosec
 
 
 def datadir(func):
