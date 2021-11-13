@@ -26,8 +26,6 @@ Modules:
     utils: Utilities used throughout package.
 """
 
-__author__ = "alexpdev"
-__version__ = "0.5.0"
 
 from . import hybrid, metafile, metafile2, utils
 from .checker import Checker
@@ -35,3 +33,7 @@ from .cli import main, main_script
 from .hybrid import TorrentFileHybrid
 from .metafile import TorrentFile
 from .metafile2 import TorrentFileV2
+from .progress import CheckerClass
+from .version import __version__
+
+__author__ = "alexpdev"

@@ -1175,9 +1175,14 @@ provided path for content.</p>
         <span class="n">percent_matched</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">matched</span> <span class="o">/</span> <span class="n">consumed</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Processed: </span><span class="si">%s%%</span><span class="s2">, Matched: </span><span class="si">%s%%</span><span class="s2">&quot;</span><span class="p">,</span>
                      <span class="n">total_consumed</span><span class="p">,</span> <span class="n">percent_matched</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Re-Check Complete:</span><span class="se">\n</span><span class="s2"> </span><span class="si">%s%%</span><span class="s2"> of </span><span class="si">%s</span><span class="s2"> found at </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                 <span class="n">percent_matched</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">percent_matched</span>
+    <span class="k">if</span> <span class="n">consumed</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Re-Check Complete:</span><span class="se">\n</span><span class="s2"> </span><span class="si">%s%%</span><span class="s2"> of </span><span class="si">%s</span><span class="s2"> found at </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                     <span class="n">percent_matched</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">percent_matched</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Re-Check Complete:</span><span class="se">\n</span><span class="s2"> 0</span><span class="si">%%</span><span class="s2"> of </span><span class="si">%s</span><span class="s2"> found at </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
 </code></pre></div>
         </details>
     </div>
@@ -1650,7 +1655,10 @@ metafile against data on disk.</p>
     <span class="sd">&quot;&quot;&quot;Yield back result of comparison.&quot;&quot;&quot;</span>
     <span class="n">partial</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itor</span><span class="p">)</span>
     <span class="n">chunck</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>  <span class="c1"># nosec</span>
-    <span class="n">piece</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">piece</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">StopIteration</span>
     <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_count</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">chunck</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>

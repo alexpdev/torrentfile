@@ -22,8 +22,8 @@ from datetime import datetime
 
 import pyben
 
-from . import __version__ as version
 from . import utils
+from .version import __version__ as version
 
 
 class MetaFile:

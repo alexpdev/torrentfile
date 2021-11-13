@@ -1,9 +1,1 @@
 pyben
-coverage
-prospector
-pycodestyle
-pydocstyle
-pylint
-pytest
-pytest-cov
-pytest-pylint
