@@ -32,7 +32,6 @@ class MetaFile:
     Args:
         path (`str`): target path to torrent content.
         announce (`str`): Tracker URL.
-        announce_list (`list`): Additional tracker URL's.
         comment (`str`): A comment.
         piece_length (`int`): Size of torrent pieces.
         private (`bool`): For private trackers?
@@ -44,7 +43,7 @@ class MetaFile:
                  source=None, piece_length=None, comment=None, outfile=None):
         """Construct MetaFile superclass and assign local attributes.
 
-        Keyword parameters include path, announce, announce_list private,
+        Keyword parameters include path, announce, private,
         source, piece_length, comment, outfile.
         """
         if not path:
@@ -59,18 +58,18 @@ class MetaFile:
         else:
             self.piece_length = utils.path_piece_length(self.path)
         # Assign announce URL to empty string if none provided.
-        self.announce_list = None
         if not announce:
             self.announce = ""
+            self.announce_list = [[""]]
         # Most torrent clients have editting trackers as a feature.
         elif isinstance(announce, str):
             self.announce = announce
+            self.announce_list = [[announce]]
+
         elif isinstance(announce, Sequence):
             self.announce = announce[0]
             # if announce has more than 1 argumnt
-            if len(announce) > 1:
-                # all but the first go to announce list field
-                self.announce_list = announce[1:]
+            self.announce_list = [announce]
 
         if private:
             self.private = 1
@@ -92,6 +91,7 @@ class MetaFile:
         """
         return {
             "announce": self.announce,
+            "announce list": self.announce_list,
             "created by": f"TorrentFile:v{version}",
             "creation date": int(datetime.timestamp(datetime.now()))
         }

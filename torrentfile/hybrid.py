@@ -75,7 +75,6 @@ class TorrentFileHybrid(MetaFile):
         """
         info = {}
         fields = {
-            "announce list": self.announce_list,
             "comment": self.comment,
             "name": self.name,
             "meta version": 2,

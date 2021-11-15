@@ -114,9 +114,6 @@ class TorrentFile(MetaFile):
         if self.comment:
             info["comment"] = self.comment
 
-        if self.announce_list:
-            info["announce list"] = self.announce_list
-
         info["piece length"] = self.piece_length
 
         if os.path.isfile(self.path):

@@ -10,13 +10,13 @@ theme:
   favicon: favicon.png
 
 nav:
-  - Overview: Examples.md
-  - Checker: Checker.md
+  - Overview: examples.md
+  - Checker: checker.md
   - CLI: CLI.md
   - Home: index.md
-  - Hybrid: Hybrid.md
+  - Hybrid: hybrid.md
   - License: LICENSE.md
-  - Progress: Progress.md
+  - Progress: progress.md
   - Tests: tests.md
   - TorrentFile: TorrentFile.md
   - TorrentFileV2: TorrentFileV2.md

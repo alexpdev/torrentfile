@@ -28,7 +28,7 @@ from torrentfile.version import __version__ as version
 
 for item in Path("./dist").iterdir():
 	if item.suffix in [".exe", ".zip"]:
-		newname = f"{item.stem}-v{version}-windowsx64{item.suffix}"
+		newname = f"{item.stem}{version}.winx64{item.suffix}"
 		full = item.parent / newname
 		os.rename(item, full)
 endef
@@ -103,7 +103,7 @@ build: clean install
 		-D -n torrentfile -c -i ../runner/torrentfile.ico \
 		--specpath ../runner/ ../runner/exe
 	cp -rfv ../runner/dist/* ./dist/
-	python "$$FIX_BIN_VERSION_FILES"
+	python -c "$$FIX_BIN_VERSION_FILES"
 
 install: ## Install Locally
 	pip install --upgrade -rrequirements.txt --no-cache-dir

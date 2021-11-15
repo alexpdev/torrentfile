@@ -321,7 +321,7 @@ class FeedChecker:
         chunck = sha1(partial).digest()  # nosec
         try:
             piece = self.pieces[self.piece_count]
-        except IndexError:
+        except IndexError:  # pragma : no cover
             raise StopIteration
         path = self.paths[self.index]
         self.piece_count += 1

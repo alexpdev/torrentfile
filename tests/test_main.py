@@ -61,8 +61,9 @@ def test_main_announce_list(tfile):
     ]
     parser = main()
     url = "https://tracker4/announce"
-    assert url in parser.meta["info"]["announce list"]  # nosec
-    context.rmpath(parser.outfile)
+    announce_list = parser.meta["announce list"]
+    seq = [item for sub in announce_list for item in sub]
+    assert url in seq  # nosec
 
 
 def test_main_annlist_single(tfile):
@@ -75,8 +76,9 @@ def test_main_annlist_single(tfile):
     sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker2/announce"
-    assert url in parser.meta["announce"]  # nosec
-    context.rmpath(parser.outfile)
+    announce_list = parser.meta["announce list"]
+    seq = [item for sub in announce_list for item in sub]
+    assert url in seq  # nosec
 
 
 def test_class_with_annlist(tfile):
@@ -93,7 +95,9 @@ def test_class_with_annlist(tfile):
     }
     torrent = TorrentFile(**kwargs)
     url = "https://tracker3/announce"
-    assert url in torrent.meta["info"]["announce list"]  # nosec
+    announce_list = torrent.meta["announce list"]
+    seq = [item for sub in announce_list for item in sub]
+    assert url in seq  # nosec
 
 
 def test_class_tuple_annlist(tfile):
@@ -110,7 +114,9 @@ def test_class_tuple_annlist(tfile):
     }
     torrent = TorrentFile(**kwargs)
     url = "https://tracker3/announce"
-    assert url in torrent.meta["info"]["announce list"]  # nosec
+    announce_list = torrent.meta["announce list"]
+    seq = [item for sub in announce_list for item in sub]
+    assert url in seq  # nosec
 
 
 def test_class_list_annlist(tfile):
@@ -127,7 +133,9 @@ def test_class_list_annlist(tfile):
     }
     torrent = TorrentFile(**kwargs)
     url = "https://tracker2/announce"
-    assert url in torrent.meta["info"]["announce list"]  # nosec
+    announce_list = torrent.meta["announce list"]
+    seq = [item for sub in announce_list for item in sub]
+    assert url in seq  # nosec
 
 
 def test_main_annlist_v2(tfile):
@@ -162,8 +170,9 @@ def test_main_annlist_v3(tfile):
     sys.argv.insert(1, path)
     parser = main()
     url = "https://tracker4/announce"
-    assert url in parser.meta["info"]["announce list"]  # nosec
-    context.rmpath(parser.outfile)
+    announce_list = parser.meta["announce list"]
+    seq = [item for sub in announce_list for item in sub]
+    assert url in seq  # nosec
 
 
 def test_main_annlist_single_v2(tfile):
@@ -228,7 +237,9 @@ def test_class_annlist_v2(tfile):
     }
     torrent = TorrentFileV2(**kwargs)
     url = "https://tracker2/announce"
-    assert url in torrent.meta["info"]["announce list"]  # nosec
+    announce_list = torrent.meta["announce list"]
+    seq = [item for sub in announce_list for item in sub]
+    assert url in seq  # nosec
 
 
 def test_class_tuple_annlist_v2(tfile):
@@ -245,7 +256,9 @@ def test_class_tuple_annlist_v2(tfile):
     }
     torrent = TorrentFileV2(**kwargs)
     url = "https://tracker2/announce"
-    assert url in torrent.meta["info"]["announce list"]  # nosec
+    announce_list = torrent.meta["announce list"]
+    seq = [item for sub in announce_list for item in sub]
+    assert url in seq  # nosec
 
 
 def test_class_list_annlist_v2(tfile):
@@ -262,4 +275,6 @@ def test_class_list_annlist_v2(tfile):
     }
     torrent = TorrentFileV2(**kwargs)
     url = "https://tracker2/announce"
-    assert url in torrent.meta["info"]["announce list"]  # nosec
+    announce_list = torrent.meta["announce list"]
+    seq = [item for sub in announce_list for item in sub]
+    assert url in seq  # nosec

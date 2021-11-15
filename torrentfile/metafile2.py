@@ -153,10 +153,8 @@ class TorrentFileV2(MetaFile):
         """
         name = os.path.basename(self.path)
         info = {}
-        # include comment in info dictionary.
-        if self.announce_list:
-            info["announce list"] = self.announce_list
 
+        # include comment in info dictionary.
         if self.comment:
             info["comment"] = self.comment
 
