@@ -1,6 +1,6 @@
 {
     "default": true,
-    "MD013": {"line_length": 120 },
+    "MD013": {"line_length": 100 },
     "MD029": { "style": "ordered" },
     "MD007": { "indent": 4 },
     "MD046": false,
