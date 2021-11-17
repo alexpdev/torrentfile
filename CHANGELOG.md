@@ -1,5 +1,13 @@
 # TorrentFile
 
+## Version 0.5.2
+
+### Fixed v0.5.2
+
+    - Major Bug that was adding `announce list` to info dict
+
+---------------------
+
 ## Version 0.5.0
 
 ### Added v0.5.0
