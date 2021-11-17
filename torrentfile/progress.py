@@ -259,9 +259,14 @@ class CheckerClass:
             percent_matched = str(int(matched / consumed * 100))
             self.log_msg("Processed: %s%%, Matched: %s%%",
                          total_consumed, percent_matched)
-        self.log_msg("Re-Check Complete:\n %s%% of %s found at %s",
-                     percent_matched, self.metafile, self.root)
-        self._result = percent_matched
+        if consumed:
+            self.log_msg("Re-Check Complete:\n %s%% of %s found at %s",
+                         percent_matched, self.metafile, self.root)
+            self._result = percent_matched
+        else:  # pragma: no cover
+            self.log_msg("Re-Check Complete:\n 0%% of %s found at %s",
+                         self.metafile, self.root)
+            self._result = "0"
 
 
 def split_pieces(pieces, hash_size):
@@ -314,7 +319,10 @@ class FeedChecker:
         """Yield back result of comparison."""
         partial = next(self.itor)
         chunck = sha1(partial).digest()  # nosec
-        piece = self.pieces[self.piece_count]
+        try:
+            piece = self.pieces[self.piece_count]
+        except IndexError:  # pragma : no cover
+            raise StopIteration
         path = self.paths[self.index]
         self.piece_count += 1
         return chunck, piece, path, len(partial)

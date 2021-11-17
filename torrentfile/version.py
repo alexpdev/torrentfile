@@ -11,8 +11,6 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Bolerplate file needed for CLI functionality."""  # pragma: no cover
+"""Holds the release version number."""
 
-if __name__ == '__main__':  # pragma: no cover
-    import torrentfile
-    torrentfile.main()
+__version__ = "0.5.2"

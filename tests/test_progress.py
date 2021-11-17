@@ -229,6 +229,42 @@ def test_checker_class_missing(version):
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
+def test_checker_class_allfiles(version):
+    """Test Checker class when all files are missing from contents."""
+    path = Path(tempdir3())
+    args = {"announce": "announce", "path": path,
+            "private": 1, "piece_length": 2**16}
+    outfile = mktorrent(args, v=version)
+
+    def traverse(path):
+        if path.is_file():
+            rmpath(path)
+        elif path.is_dir():
+            for item in path.iterdir():
+                traverse(item)
+    traverse(path)
+    checker = CheckerClass(outfile, path)
+    assert int(checker.result) < 100   # nosec
+    rmpath(outfile)
+    rmpath(path)
+
+
+@pytest.mark.parametrize("version", [1, 2, 3])
+def test_checker_class_allpaths(version):
+    """Test Checker class when all files are missing from contents."""
+    path = Path(tempdir3())
+    args = {"announce": "announce", "path": path,
+            "private": 1, "piece_length": 2**16}
+    outfile = mktorrent(args, v=version)
+    for item in path.iterdir():
+        rmpath(item)
+    checker = CheckerClass(outfile, path)
+    assert int(checker.result) < 100   # nosec
+    rmpath(outfile)
+    rmpath(path)
+
+
+@pytest.mark.parametrize("version", [1, 2, 3])
 def test_checker_class_half_file(version):
     """Test Checker class with half size single file."""
     path = sizedfile(25)

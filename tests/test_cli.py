@@ -136,8 +136,9 @@ def test_cli_with_all_args_v3(tdir):
 
 
 @pytest.mark.parametrize("version", [2, 3])
-@pytest.mark.parametrize("field", ["announce", "piece layers", "info",
-                                   "created by", "creation date"])
+@pytest.mark.parametrize("field", ["announce", "announce list",
+                                   "piece layers", "created by",
+                                   "info", "creation date"])
 def test_cli_meta_output_v2_3(tdir, field, version):
     """Test CLI output torrentfile meta dict fields v2 and hybrid."""
     sys.argv = [
@@ -167,7 +168,7 @@ def test_cli_meta_output_v2_3(tdir, field, version):
 @pytest.mark.parametrize("version", [2, 3])
 @pytest.mark.parametrize("field", ["piece length", "name", "file tree",
                                    "comment", "private", "source",
-                                   "announce list", "meta version"])
+                                   "meta version"])
 def test_cli_info_output_v2_3(tdir, field, version):
     """Test CLI output file info dict meta versions 2 & 3."""
     sys.argv = [
@@ -195,8 +196,7 @@ def test_cli_info_output_v2_3(tdir, field, version):
 
 
 @pytest.mark.parametrize("field", ["piece length", "name", "pieces",
-                                   "comment", "private", "source",
-                                   "announce list"])
+                                   "comment", "private", "source"])
 def test_cli_info_output_v1(tdir, field):
     """Test CLI output files contents with specific arguments v1."""
     sys.argv = [

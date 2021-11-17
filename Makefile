@@ -21,6 +21,19 @@ for line in sys.stdin:
 endef
 export PRINT_HELP_PYSCRIPT
 
+define FIX_BIN_VERSION_FILES
+import os
+from pathlib import Path
+from torrentfile.version import __version__ as version
+
+for item in Path("./dist").iterdir():
+	if item.suffix in [".exe", ".zip"]:
+		newname = f"{item.stem}{version}.winx64{item.suffix}"
+		full = item.parent / newname
+		os.rename(item, full)
+endef
+export FIX_BIN_VERSION_FILES
+
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
 
@@ -90,7 +103,7 @@ build: clean install
 		-D -n torrentfile -c -i ../runner/favicon.ico \
 		--specpath ../runner/ ../runner/exe
 	cp -rfv ../runner/dist/* ./dist/
-	tar -va -c -f ./dist/torrentfile.zip ./dist/torrentfile
+	python -c "$$FIX_BIN_VERSION_FILES"
 
 install: ## Install Locally
 	pip install --upgrade -rrequirements.txt --no-cache-dir

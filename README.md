@@ -35,8 +35,10 @@ Documentation can be found in the `./docs` directory, or online at [https://alex
 
 ### via Git
 
-`git clone https://github.com/alexpdev/torrentfile.git`
-`python setup.py install`
+```bash:
+git clone https://github.com/alexpdev/torrentfile.git
+python setup.py install
+```
 
 ### download
 
@@ -46,43 +48,45 @@ Or download the latest release from the Release page on github.
 ## Using
 
 ```bash:
-usage: torrentfile [-h] [-v] [-d] [-p] [-s <source>] [-c <comment>] [-a <url>]
-                   [--announce-list <url> [<url> ...]] [-o <path>]
-                   [--meta-version <int>] [-l <int>] [-r <.torrent>]
+usage: torrentfile [-h] [-v] [-d] [-p] [-s <source>] [-c <comment>]
+                   [-a <url> [<url> ...]] [-o <path>] [--meta-version <int>]
+                   [-l <int>] [-r <.torrent>]
                    <content>
 
 Create or Re-Check Bittorrent meta files for Bittorrent v1, v2 or v1, v2 combo
 Hybrids.
 
 positional arguments:
-  <content>                             path to .torrent file content
+  <content>                                  path to .torrent file content
 
 optional arguments:
-  -h, --help                            show this help message and exit
-  -v, --version                         show program version and exit
-  -d, --debug                           output debug information
-  -p, --private                         create .torrent file for private tracker
-  -s <source>, --source <source>        specify source
-  -c <comment>, --comment <comment>     include a comment in file metadata
-  -a <url>, --announce <url>            announce url for Bittorrent tracker
-  --announce-list <url> [<url> ...]     additional tracker announce URLs
-  -o <path>, --out <path>               output path for created .torrent file
-  --meta-version <int>                  .torrent file version.
-                                        Options = 1, 2 or 3.
-                                        (1) = Bittorrent v1;. (Default)
-                                        (2) = Bittorrent v2.
-                                        (3) = Bittorrent v1 & v2 hybrid.
+  -h, --help                                 show this help message and exit
+  -v, --version                              show program version and exit
+  -d, --debug                                output debug information
+  -p, --private                              create .torrent file for private tracker
+  -s <source>, --source <source>             specify source
+  -c <comment>, --comment <comment>          include a comment in file metadata
+  -o <path>, --out <path>                    output path for created .torrent file
 
-  -l <int>, --piece-length <int>        piece size used by Bittorrent transfer protocol.
-                                        Acceptable values include numbers 14-35, will be treated as the
-                                        exponent for 2^n power, or any power of 2 integer in 16KB-16MB.
-                                        e.g. `--piece-length 14` is the same as `--piece-length  16384`
-                                        If this option flag is not used, the program will calculate an
-                                        appropriate value automatically.
+  -a <url> [<url> ...], --announce <url> [<url> ...]
+                                             One or more announce urls for Bittorrent tracker
 
-  -r <.torrent>, --re-check <.torrent>  <.torrent> is the path to a .torrent meta file.
-                                        Check <content> data integrity with <.torrent> file.
-                                        When this option is active, all other options are ignored (except -d).
+  --meta-version <int>                       .torrent file version.
+                                             Options = 1, 2 or 3.
+                                             (1) = Bittorrent v1;. (Default)
+                                             (2) = Bittorrent v2.
+                                             (3) = Bittorrent v1 & v2 hybrid.
+
+  -l <int>, --piece-length <int>             piece size used by Bittorrent transfer protocol.
+                                             Acceptable values include numbers 14-35, will be treated as the
+                                             exponent for 2^n power, or any power of 2 integer in 16KB-16MB.
+                                             e.g. `--piece-length 14` is the same as `--piece-length  16384`
+                                             If this option flag is not used, the program will calculate an
+                                             appropriate value automatically.
+
+  -r <.torrent>, --re-check <.torrent>       <.torrent> is the path to a .torrent meta file.
+                                             Check <content> data integrity with <.torrent> file.
+                                             When this option is active, all other options are ignored (except -d).
 ```
 
 ## License

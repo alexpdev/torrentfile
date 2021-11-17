@@ -14,13 +14,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install coverage pytest pytest-cov
+          pip install pytest-pylint pyben
+          pip install pycodestyle pydocstyle
 
       - name: Run tests and collect coverage
         run: |
-          pytest --cov=torrentfile --pylint
-          coverage run -m pytest tests
-          coverage report
+          pytest --cov=torrentfile --cov=tests --pylint
           coverage xml -o coverage.xml
 
       - name: Upload coverage to Codecov
