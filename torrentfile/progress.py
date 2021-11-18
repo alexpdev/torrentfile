@@ -19,8 +19,7 @@ from hashlib import sha1  # nosec
 
 import pyben
 
-from .hybrid import HybridHash
-from .metafile2 import V2Hash
+from .hasher import HybridHash, V2Hash
 
 SHA1 = 20
 SHA256 = 32
@@ -321,8 +320,8 @@ class FeedChecker:
         chunck = sha1(partial).digest()  # nosec
         try:
             piece = self.pieces[self.piece_count]
-        except IndexError:  # pragma : no cover
-            raise StopIteration
+        except IndexError:
+            raise StopIteration  # pragma: no cover
         path = self.paths[self.index]
         self.piece_count += 1
         return chunck, piece, path, len(partial)

@@ -11,15 +11,13 @@ theme:
 
 nav:
   - Overview: examples.md
-  - Checker: checker.md
   - CLI: CLI.md
   - Home: index.md
-  - Hybrid: hybrid.md
+  - Hasher: hasher.md
   - License: LICENSE.md
   - Progress: progress.md
+  - Torrent: torrent.md
   - Tests: tests.md
-  - TorrentFile: TorrentFile.md
-  - TorrentFileV2: TorrentFileV2.md
   - Utils: utils.md
 
 

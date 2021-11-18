@@ -18,12 +18,12 @@ import sys
 
 import pytest
 
-from tests import context
-from torrentfile import TorrentFile, TorrentFileV2
+from tests.context import Temp, rmpath, testfile
+from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2
 from torrentfile import main_script as main
 
 
-@pytest.fixture(scope="module", params=context.parameters())
+@pytest.fixture(scope="module", params=list(range(14, 26)))
 def tfile(request):
     """Create fixture for tests."""
     args = [
@@ -34,19 +34,19 @@ def tfile(request):
         "--source",
         "TFile",
     ]
-    t_file = request.param()
+    t_file = testfile(exp=request.param)
     yield args, t_file
-    context.rmpath(t_file)
+    rmpath(t_file)
 
 
 def test_main_func(tfile):
     """Test main script function."""
     args, path = tfile
-    opath = os.path.join(context.TESTDIR, "test.torrent")
+    opath = os.path.join(Temp.root, "test.torrent")
     sys.argv = args + [path, "-o", opath]
     main()
     assert os.path.exists(opath)   # nosec
-    context.rmpath(opath)
+    rmpath(opath)
 
 
 def test_main_announce_list(tfile):
@@ -153,7 +153,7 @@ def test_main_annlist_v2(tfile):
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["announce"]  # nosec
-    context.rmpath(parser.outfile)
+    rmpath(parser.outfile)
 
 
 def test_main_annlist_v3(tfile):
@@ -188,7 +188,7 @@ def test_main_annlist_single_v2(tfile):
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["announce"]  # nosec
-    context.rmpath(parser.outfile)
+    rmpath(parser.outfile)
 
 
 def test_main_annlist_single_v3(tfile):
@@ -204,7 +204,7 @@ def test_main_annlist_single_v3(tfile):
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["announce"]  # nosec
-    context.rmpath(parser.outfile)
+    rmpath(parser.outfile)
 
 
 def test_main_annlist_single_v1(tfile):
@@ -220,7 +220,7 @@ def test_main_annlist_single_v1(tfile):
     parser = main()
     url = "https://tracker2/announce"
     assert url in parser.meta["announce"]  # nosec
-    context.rmpath(parser.outfile)
+    rmpath(parser.outfile)
 
 
 def test_class_annlist_v2(tfile):
@@ -278,3 +278,19 @@ def test_class_list_annlist_v2(tfile):
     announce_list = torrent.meta["announce list"]
     seq = [item for sub in announce_list for item in sub]
     assert url in seq  # nosec
+
+
+@pytest.mark.parametrize("hasher", [TorrentFileV2, TorrentFileHybrid])
+def test_class_single_file_small(hasher):
+    """Test when single file is slightly larger than piece length."""
+    path = testfile(exp=15)
+    with open(path, "ab") as binfile:
+        binfile.write((Temp.seq * 2).encode("utf-8"))
+    args = {
+        "path": path,
+        "piece_length": 15,
+        "source": "example1"
+    }
+    torrent = hasher(**args)
+    tpath, _ = torrent.write()
+    assert os.path.exists(tpath)   # nosec
