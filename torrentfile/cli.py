@@ -28,10 +28,8 @@ from argparse import ArgumentParser, HelpFormatter
 
 import torrentfile
 
-from .hybrid import TorrentFileHybrid
-from .metafile import TorrentFile
-from .metafile2 import TorrentFileV2
 from .progress import CheckerClass
+from .torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
 
 class HelpFormat(HelpFormatter):

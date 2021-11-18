@@ -18,7 +18,7 @@ import os
 
 import pytest
 
-from tests.context import parameters, rmpath, tempfile
+from tests.context import Temp, build, rmpath, testfile
 from torrentfile import utils
 
 KIB = 2 ** 10
@@ -27,10 +27,10 @@ MIN_BLOCK = 2 ** 14
 MAX_BLOCK = MIB * 16
 
 
-@pytest.fixture(scope="module", params=parameters())
+@pytest.fixture(scope="module", params=Temp.structs)
 def tdir(request):
     """Return temporary directory."""
-    drct = request.param()
+    drct = build(request.param)
     yield drct
     rmpath(drct)
 
@@ -38,9 +38,9 @@ def tdir(request):
 @pytest.fixture(scope="module")
 def tfile():
     """Return temporary file."""
-    testfile = tempfile()
-    yield testfile
-    rmpath(testfile)
+    tle = testfile()
+    yield tle
+    rmpath(tle)
 
 
 def test_get_piece_length_min(tfile):

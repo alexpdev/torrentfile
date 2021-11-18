@@ -18,17 +18,15 @@ from pathlib import Path
 
 import pytest
 
-from tests.context import parameters, rmpath, sizedfile
+from tests.context import Temp, build, rmpath, testfile
 from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2, utils
-from torrentfile.metabase import MetaFile
-
-TESTDIR = os.environ["TESTDIR"]
+from torrentfile.torrent import MetaFile
 
 
-@pytest.fixture(scope="module", params=parameters())
+@pytest.fixture(scope="module", params=Temp.structs)
 def tdir1(request):
     """Return temporary directory."""
-    folder = request.param()
+    folder = build(request.param)
     args = {"path": folder, "announce": "https://tracker.com/announce"}
     yield folder, args
     rmpath(folder)
@@ -37,7 +35,7 @@ def tdir1(request):
 @pytest.fixture
 def smallfile():
     """Generate Sized file a tiny bit larger than BLOCK_SIZE."""
-    path = sizedfile(14)
+    path = testfile(exp=14)
     with open(path, "ab") as fd:
         fd.write(b"000000000000000")
     yield path
@@ -144,7 +142,7 @@ def test_hybrid_with_outfile(tdir1):
 
 def test_hybrid_0_length():
     """Test Hybrid with zero length file."""
-    path = Path(os.environ["TESTDIR"]) / "empty"
+    path = Path(Temp.root) / "empty"
     path.touch()
     args = {
         "path": str(path),
@@ -160,7 +158,7 @@ def test_hybrid_0_length():
 
 def test_v2_0_length():
     """Test TorrentFileV2 with zero length file."""
-    path = Path(os.environ["TESTDIR"]) / "empty"
+    path = Path(Temp.root) / "empty"
     path.touch()
     args = {
         "path": str(path),
@@ -194,7 +192,7 @@ def test_hybrid_sized_file(smallfile):
 
 def test_hybrid_under_block_sized():
     """Test pad_remaining function in hybrid FileHash class."""
-    smallest = os.path.join(os.environ["TESTDIR"], "smallest")
+    smallest = os.path.join(Temp.root, "smallest")
     with open(smallest, "wb") as fd:
         letters = b"abcdefghijklmnopqrstuvwxyzABZDEFGHIJKLMNOPQRSTUVWXYZ"
         size = len(letters)
@@ -219,10 +217,10 @@ def maketorrent(args, v=None):
     return torrent.write()
 
 
-@pytest.fixture(scope="module", params=parameters())
+@pytest.fixture(scope="module", params=Temp.structs)
 def tdir(request):
     """Return temp directory."""
-    return request.param()
+    return build(request.param)
 
 
 @pytest.fixture(scope="module")

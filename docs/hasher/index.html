@@ -11,14 +11,14 @@
       
       
       
-        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/TorrentFile/">
+        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/hasher/">
       
       <link rel="icon" href="../favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.4">
     
     
       
-        <title>TorrentFile - TorrentFile</title>
+        <title>Hasher - TorrentFile</title>
       
     
     
@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#torrenfile" class="md-skip">
+        <a href="#hasher-module" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              TorrentFile
+              Hasher
             
           </span>
         </div>
@@ -225,21 +225,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../checker/" class="md-nav__link">
-        Checker
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../CLI/" class="md-nav__link">
         CLI
       </a>
@@ -268,11 +253,160 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../hybrid/" class="md-nav__link">
-        Hybrid
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Hasher
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Hasher
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.hasher" class="md-nav__link">
+    torrentfile.hasher
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.hasher.Feeder" class="md-nav__link">
+    Feeder
+  </a>
+  
+    <nav class="md-nav" aria-label="Feeder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.hasher.Feeder.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.hasher.Feeder.__iter__" class="md-nav__link">
+    __iter__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.hasher.Feeder.handle_partial" class="md-nav__link">
+    handle_partial()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.hasher.Feeder.leaves" class="md-nav__link">
+    leaves()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.hasher.Feeder.next_file" class="md-nav__link">
+    next_file()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.hasher.HybridHash" class="md-nav__link">
+    HybridHash
+  </a>
+  
+    <nav class="md-nav" aria-label="HybridHash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.hasher.HybridHash.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.hasher.HybridHash.calculate_root" class="md-nav__link">
+    calculate_root()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.hasher.V2Hash" class="md-nav__link">
+    V2Hash
+  </a>
+  
+    <nav class="md-nav" aria-label="V2Hash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.hasher.V2Hash.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.hasher.V2Hash.process_file" class="md-nav__link">
+    process_file()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.hasher.merkle_root" class="md-nav__link">
+    merkle_root()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -315,159 +449,9 @@
   
   
     <li class="md-nav__item">
-      <a href="../tests/" class="md-nav__link">
-        Tests
+      <a href="../torrent/" class="md-nav__link">
+        Torrent
       </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          TorrentFile
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        TorrentFile
-      </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#torrentfile.metafile" class="md-nav__link">
-    torrentfile.metafile
-  </a>
-  
-    <nav class="md-nav" aria-label="torrentfile.metafile">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.metafile--notes" class="md-nav__link">
-    Notes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.metafile--info-dictionary" class="md-nav__link">
-    info dictionary
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#torrentfile.metafile.Feeder" class="md-nav__link">
-    Feeder
-  </a>
-  
-    <nav class="md-nav" aria-label="Feeder">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.metafile.Feeder.__init__" class="md-nav__link">
-    __init__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.metafile.Feeder.__iter__" class="md-nav__link">
-    __iter__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.metafile.Feeder.handle_partial" class="md-nav__link">
-    handle_partial()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.metafile.Feeder.leaves" class="md-nav__link">
-    leaves()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.metafile.Feeder.next_file" class="md-nav__link">
-    next_file()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#torrentfile.metafile.TorrentFile" class="md-nav__link">
-    TorrentFile
-  </a>
-  
-    <nav class="md-nav" aria-label="TorrentFile">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.metafile.TorrentFile.__init__" class="md-nav__link">
-    __init__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.metafile.TorrentFile.assemble" class="md-nav__link">
-    assemble()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -480,8 +464,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../TorrentFileV2/" class="md-nav__link">
-        TorrentFileV2
+      <a href="../tests/" class="md-nav__link">
+        Tests
       </a>
     </li>
   
@@ -528,34 +512,14 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#torrentfile.metafile" class="md-nav__link">
-    torrentfile.metafile
+  <a href="#torrentfile.hasher" class="md-nav__link">
+    torrentfile.hasher
   </a>
-  
-    <nav class="md-nav" aria-label="torrentfile.metafile">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.metafile--notes" class="md-nav__link">
-    Notes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.metafile--info-dictionary" class="md-nav__link">
-    info dictionary
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#torrentfile.metafile.Feeder" class="md-nav__link">
+  <a href="#torrentfile.hasher.Feeder" class="md-nav__link">
     Feeder
   </a>
   
@@ -563,35 +527,35 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#torrentfile.metafile.Feeder.__init__" class="md-nav__link">
+  <a href="#torrentfile.hasher.Feeder.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.metafile.Feeder.__iter__" class="md-nav__link">
+  <a href="#torrentfile.hasher.Feeder.__iter__" class="md-nav__link">
     __iter__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.metafile.Feeder.handle_partial" class="md-nav__link">
+  <a href="#torrentfile.hasher.Feeder.handle_partial" class="md-nav__link">
     handle_partial()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.metafile.Feeder.leaves" class="md-nav__link">
+  <a href="#torrentfile.hasher.Feeder.leaves" class="md-nav__link">
     leaves()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.metafile.Feeder.next_file" class="md-nav__link">
+  <a href="#torrentfile.hasher.Feeder.next_file" class="md-nav__link">
     next_file()
   </a>
   
@@ -603,29 +567,63 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#torrentfile.metafile.TorrentFile" class="md-nav__link">
-    TorrentFile
+  <a href="#torrentfile.hasher.HybridHash" class="md-nav__link">
+    HybridHash
   </a>
   
-    <nav class="md-nav" aria-label="TorrentFile">
+    <nav class="md-nav" aria-label="HybridHash">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#torrentfile.metafile.TorrentFile.__init__" class="md-nav__link">
+  <a href="#torrentfile.hasher.HybridHash.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#torrentfile.metafile.TorrentFile.assemble" class="md-nav__link">
-    assemble()
+  <a href="#torrentfile.hasher.HybridHash.calculate_root" class="md-nav__link">
+    calculate_root()
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.hasher.V2Hash" class="md-nav__link">
+    V2Hash
+  </a>
+  
+    <nav class="md-nav" aria-label="V2Hash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.hasher.V2Hash.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.hasher.V2Hash.process_file" class="md-nav__link">
+    process_file()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.hasher.merkle_root" class="md-nav__link">
+    merkle_root()
+  </a>
   
 </li>
       
@@ -641,55 +639,20 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/alexpdev/torrentfile/edit/master/docs/TorrentFile.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/alexpdev/torrentfile/edit/master/docs/hasher.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="torrenfile">TorrenFile</h1>
+                <h1 id="hasher-module">Hasher Module</h1>
 
 
   <div class="doc doc-object doc-module">
 
-<a id="torrentfile.metafile"></a>
+<a id="torrentfile.hasher"></a>
     <div class="doc doc-contents first">
 
-      <p>Creating and verfying Bittorrent v1 metafiles (.torrent).</p>
-<h3 id="torrentfile.metafile--notes">Notes</h3>
-<hr />
-<p>From Bittorrent.org Documentation pages.</p>
-<p>Metainfo files (also known as .torrent files) are bencoded dictionaries with
-the following keys:</p>
-<p>announce
-    The URL of the tracker.</p>
-<p>info</p>
-<p>This maps to a dictionary, with keys described below.</p>
-<p>All strings in a .torrent file that contains text must be UTF-8 encoded.</p>
-<h3 id="torrentfile.metafile--info-dictionary">info dictionary</h3>
-<p>The <code>name</code> key maps to a UTF-8 encoded string which is the suggested name to
-save the file (or directory) as. It is purely advisory.</p>
-<p><code>piece length</code> maps to the number of bytes in each piece the file is split
-into. For the purposes of transfer, files are split into fixed-size pieces
-which are all the same length except for possibly the last one which may be
-truncated. <code>piece length</code> is almost always a power of two, most commonly 2 18
-= 256 K (BitTorrent prior to version 3.2 uses 2 20 = 1 M as default).</p>
-<p><code>pieces</code> maps to a string whose length is a multiple of 20. It is to be
-subdivided into strings of length 20, each of which is the SHA1 hash of the
-piece at the corresponding index.</p>
-<p>There is also a key <code>length</code> or a key <code>files</code>, but not both or neither. If
-<code>length</code> is present then the download represents a single file, otherwise it
-represents a set of files which go in a directory structure.</p>
-<p>In the single file case, <code>length</code> maps to the length of the file in bytes.</p>
-<p>For the purposes of the other keys, the multi-file case is treated as only
-having a single file by concatenating the files in the order they appear in
-the files list. The files list is the value <code>files</code> maps to, and is a list of
-dictionaries containing the following keys:</p>
-<p><code>length</code> - The length of the file, in bytes.</p>
-<p><code>path</code> - A list of UTF-8 encoded strings corresponding to subdirectory names,
-the last of which is the actual file name (a zero length list is an error
-case).</p>
-<p>In the single file case, the name key is the name of a file, in the muliple
-file case, it's the name of a directory.</p>
+      <p>Piece/File Hashers for Bittorrent meta file contents.</p>
 
 
 
@@ -701,11 +664,13 @@ file case, it's the name of a directory.</p>
 
 
 
+
+
   <div class="doc doc-object doc-class">
 
 
 
-<h2 id="torrentfile.metafile.Feeder" class="doc doc-heading">
+<h2 id="torrentfile.hasher.Feeder" class="doc doc-heading">
         <code>
 Feeder        </code>
 
@@ -766,7 +731,7 @@ Feeder        </code>
 
 
 
-<h3 id="torrentfile.metafile.Feeder.__init__" class="doc doc-heading">
+<h3 id="torrentfile.hasher.Feeder.__init__" class="doc doc-heading">
 <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
@@ -780,7 +745,7 @@ Feeder        </code>
       <p>Generate hashes of piece length data from filelist contents.</p>
 
         <details class="quote">
-          <summary>Source code in <code>torrentfile\metafile.py</code></summary>
+          <summary>Source code in <code>torrentfile\hasher.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generate hashes of piece length data from filelist contents.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
@@ -804,7 +769,7 @@ Feeder        </code>
 
 
 
-<h3 id="torrentfile.metafile.Feeder.__iter__" class="doc doc-heading">
+<h3 id="torrentfile.hasher.Feeder.__iter__" class="doc doc-heading">
 <code class="highlight language-python"><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
@@ -833,7 +798,7 @@ Feeder        </code>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>torrentfile\metafile.py</code></summary>
+          <summary>Source code in <code>torrentfile\hasher.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Iterate through feed pieces.</span>
 
@@ -854,7 +819,7 @@ Feeder        </code>
 
 
 
-<h3 id="torrentfile.metafile.Feeder.handle_partial" class="doc doc-heading">
+<h3 id="torrentfile.hasher.Feeder.handle_partial" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">handle_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="n">partial</span><span class="p">)</span></code>
 
 
@@ -905,7 +870,7 @@ Feeder        </code>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>torrentfile\metafile.py</code></summary>
+          <summary>Source code in <code>torrentfile\hasher.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">handle_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="n">partial</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Seemlessly move to next file for input data.</span>
 
@@ -937,7 +902,7 @@ Feeder        </code>
 
 
 
-<h3 id="torrentfile.metafile.Feeder.leaves" class="doc doc-heading">
+<h3 id="torrentfile.hasher.Feeder.leaves" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
@@ -948,7 +913,7 @@ Feeder        </code>
       <p>Generate piece-length pieces of data from input file list.</p>
 
         <details class="quote">
-          <summary>Source code in <code>torrentfile\metafile.py</code></summary>
+          <summary>Source code in <code>torrentfile\hasher.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generate piece-length pieces of data from input file list.&quot;&quot;&quot;</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -974,7 +939,7 @@ Feeder        </code>
 
 
 
-<h3 id="torrentfile.metafile.Feeder.next_file" class="doc doc-heading">
+<h3 id="torrentfile.hasher.Feeder.next_file" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">next_file</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
@@ -985,7 +950,7 @@ Feeder        </code>
       <p>Seemlessly transition to next file in file list.</p>
 
         <details class="quote">
-          <summary>Source code in <code>torrentfile\metafile.py</code></summary>
+          <summary>Source code in <code>torrentfile\hasher.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">next_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Seemlessly transition to next file in file list.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -1016,10 +981,9 @@ Feeder        </code>
 
 
 
-<h2 id="torrentfile.metafile.TorrentFile" class="doc doc-heading">
+<h2 id="torrentfile.hasher.HybridHash" class="doc doc-heading">
         <code>
-TorrentFile            (<span title="torrentfile.metabase.MetaFile">MetaFile</span>)
-        </code>
+HybridHash        </code>
 
 
 
@@ -1027,8 +991,9 @@ TorrentFile            (<span title="torrentfile.metabase.MetaFile">MetaFile</sp
 
     <div class="doc doc-contents ">
 
-      <p>Class for creating Bittorrent meta files.</p>
-<p>Construct <em>Torrentfile</em> class instance object.</p>
+      <p>Calculate hashes for Hybrid torrentfile.</p>
+<p>Uses sha1 and sha256 hashes for each version  # nosec
+of the Bittorrent protocols meta files respectively.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -1042,51 +1007,15 @@ TorrentFile            (<span title="torrentfile.metabase.MetaFile">MetaFile</sp
   </thead>
   <tbody>
       <tr>
-        <td><code>path(`str`)</code></td>
-        <td></td>
-        <td><p>Path to torrent file or directory.</p></td>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>path to target file.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
-        <td><code>piece_length(`int`)</code></td>
-        <td></td>
-        <td><p>Size of each piece of torrent data.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>announce(`str`)</code></td>
-        <td></td>
-        <td><p>Tracker URL.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>announce_list(`str`</code></td>
-        <td><code>or `list`</code></td>
-        <td><p>Additional Tracker URLs.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>private(`int`)</code></td>
-        <td></td>
-        <td><p>1 if private torrent else 0.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>source(`str`)</code></td>
-        <td></td>
-        <td><p>Source tracker.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>comment(`str`)</code></td>
-        <td></td>
-        <td><p>Comment string.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>outfile(`str`)</code></td>
-        <td></td>
-        <td><p>Path to write metfile to.</p></td>
+        <td><code>piece_length</code></td>
+        <td><code>`int`</code></td>
+        <td><p>piece length for data chunks.</p></td>
         <td><em>required</em></td>
       </tr>
   </tbody>
@@ -1108,8 +1037,8 @@ TorrentFile            (<span title="torrentfile.metabase.MetaFile">MetaFile</sp
 
 
 
-<h3 id="torrentfile.metafile.TorrentFile.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="torrentfile.hasher.HybridHash.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -1119,7 +1048,97 @@ TorrentFile            (<span title="torrentfile.metabase.MetaFile">MetaFile</sp
 
     <div class="doc doc-contents ">
 
-      <p>Construct TorrentFile class instance with given keyword args.</p>
+      <p>Construct Hasher class instances for each file in torrent.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\hasher.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Construct Hasher class instances for each file in torrent.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">piece_layer</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">padding_piece</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">padding_file</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">piece_length</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Beginning file hashing: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="torrentfile.hasher.HybridHash.calculate_root" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">calculate_root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the root hash for opened file.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\hasher.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the root hash for opened file.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">piece_layer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">pad_piece</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">([</span><span class="nb">bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">)])</span>
+
+        <span class="n">next_pow_two</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span>
+        <span class="n">remainder</span> <span class="o">=</span> <span class="n">next_pow_two</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span> <span class="o">+=</span> <span class="p">[</span><span class="n">pad_piece</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remainder</span><span class="p">)]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="torrentfile.hasher.V2Hash" class="doc doc-heading">
+        <code>
+V2Hash        </code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the root hash and piece layers for file contents.</p>
+<p>Iterates over 16KiB blocks of data from given file, hashes the data,
+then creates a hash tree from the individual block hashes until size of
+hashed data equals the piece-length.  Then continues the hash tree until
+root hash is calculated.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -1133,24 +1152,63 @@ TorrentFile            (<span title="torrentfile.metabase.MetaFile">MetaFile</sp
   </thead>
   <tbody>
       <tr>
-        <td><code>kwargs</code></td>
-        <td><code>`dict`</code></td>
-        <td><p>dictionary of keyword args passed to superclass.</p></td>
-        <td><code>{}</code></td>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>Path to file.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>piece_length</code></td>
+        <td><code>`int`</code></td>
+        <td><p>Size of layer hashes pieces.</p></td>
+        <td><em>required</em></td>
       </tr>
   </tbody>
 </table>
-        <details class="quote">
-          <summary>Source code in <code>torrentfile\metafile.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Construct TorrentFile class instance with given keyword args.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        kwargs (`dict`): dictionary of keyword args passed to superclass.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Making .torrent v1 file.&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assemble</span><span class="p">()</span>
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="torrentfile.hasher.V2Hash.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate and store hash information for specific file.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\hasher.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate and store hash information for specific file.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">piece_layer</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">=</span> <span class="n">piece_length</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Hashing v2: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -1163,42 +1221,69 @@ TorrentFile            (<span title="torrentfile.metabase.MetaFile">MetaFile</sp
 
 
 
-<h3 id="torrentfile.metafile.TorrentFile.assemble" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+<h3 id="torrentfile.hasher.V2Hash.process_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>Assemble components of torrent metafile.</p>
+      <p>Calculate hashes over 16KiB chuncks of file content.</p>
 
-<p><strong>Returns:</strong></p>
+<p><strong>Parameters:</strong></p>
 <table>
   <thead>
     <tr>
+      <th>Name</th>
       <th>Type</th>
       <th>Description</th>
+      <th>Default</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><code>`dict`</code></td>
-      <td><p>metadata dictionary for torrent file</p></td>
-    </tr>
+      <tr>
+        <td><code>fd</code></td>
+        <td><code>`str`</code></td>
+        <td><p>Opened file in read mode.</p></td>
+        <td><em>required</em></td>
+      </tr>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>torrentfile\metafile.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Assemble components of torrent metafile.</span>
+          <summary>Source code in <code>torrentfile\hasher.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate hashes over 16KiB chuncks of file content.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">      `dict`: metadata dictionary for torrent file</span>
+<span class="sd">    Args:</span>
+<span class="sd">        fd (`str`): Opened file in read mode.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_constants</span><span class="p">()</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_assemble_infodict</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">meta</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">blocks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">leaf</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">BLOCK_SIZE</span><span class="p">)</span>
+        <span class="c1"># generate leaves of merkle tree</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span><span class="p">):</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">readinto</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">size</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sha256</span><span class="p">(</span><span class="n">leaf</span><span class="p">[:</span><span class="n">size</span><span class="p">])</span><span class="o">.</span><span class="n">digest</span><span class="p">())</span>
+        <span class="c1"># blocks is empty mean eof</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">blocks</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">:</span>
+                <span class="n">next_pow_2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">total</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">remaining</span> <span class="o">=</span> <span class="p">((</span><span class="n">next_pow_2</span> <span class="o">-</span> <span class="n">total</span><span class="p">)</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">-</span> <span class="n">size</span>
+            <span class="n">padding</span> <span class="o">=</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
+            <span class="n">blocks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span>
+        <span class="c1"># if the file is smaller than piece length</span>
+        <span class="n">layer_hash</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_root</span><span class="p">()</span>
 </code></pre></div>
         </details>
     </div>
@@ -1215,6 +1300,35 @@ TorrentFile            (<span title="torrentfile.metabase.MetaFile">MetaFile</sp
 
   </div>
 
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="torrentfile.hasher.merkle_root" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">merkle_root</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the merkle root for a seq of sha256 hash digests.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\hasher.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">merkle_root</span><span class="p">(</span><span class="n">blocks</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the merkle root for a seq of sha256 hash digests.&quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">blocks</span> <span class="o">=</span> <span class="p">[</span><span class="n">sha256</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="nb">iter</span><span class="p">(</span><span class="n">blocks</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">blocks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -1245,7 +1359,7 @@ TorrentFile            (<span title="torrentfile.metabase.MetaFile">MetaFile</sp
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../tests/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Tests" rel="prev">
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1254,20 +1368,20 @@ TorrentFile            (<span title="torrentfile.metabase.MetaFile">MetaFile</sp
               <span class="md-footer__direction">
                 Previous
               </span>
-              Tests
+              Home
             </div>
           </div>
         </a>
       
       
         
-        <a href="../TorrentFileV2/" class="md-footer__link md-footer__link--next" aria-label="Next: TorrentFileV2" rel="next">
+        <a href="../LICENSE/" class="md-footer__link md-footer__link--next" aria-label="Next: License" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              TorrentFileV2
+              License
             </div>
           </div>
           <div class="md-footer__button md-icon">
