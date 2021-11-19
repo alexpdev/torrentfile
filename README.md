@@ -77,12 +77,10 @@ optional arguments:
                                              (2) = Bittorrent v2.
                                              (3) = Bittorrent v1 & v2 hybrid.
 
-  -l <int>, --piece-length <int>             piece size used by Bittorrent transfer protocol.
-                                             Acceptable values include numbers 14-35, will be treated as the
+  -l <int>, --piece-length <int>             piece length used by Bittorrent transfer protocol.
+                                             Acceptable values include 14-24, will be treated as the
                                              exponent for 2^n power, or any power of 2 integer in 16KB-16MB.
                                              e.g. `--piece-length 14` is the same as `--piece-length  16384`
-                                             If this option flag is not used, the program will calculate an
-                                             appropriate value automatically.
 
   -r <.torrent>, --re-check <.torrent>       <.torrent> is the path to a .torrent meta file.
                                              Check <content> data integrity with <.torrent> file.
