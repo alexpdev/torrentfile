@@ -225,7 +225,3 @@ def main_script(args=None):
 def main():
     """Initiate main function for CLI script."""
     main_script()
-
-
-if __name__ == "__main__":
-    main()   # pragma: no cover

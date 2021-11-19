@@ -286,7 +286,7 @@ def split_pieces(pieces, hash_size):
 
 
 class FeedChecker:
-    """Construct the FeederChecker.
+    """Validates torrent content.
 
     Seemlesly validate torrent file contents by comparing hashes in
     metafile against data on disk.
@@ -412,7 +412,8 @@ class FeedChecker:
             left -= arrlen
             yield partial
             partial = bytearray(0)
-        partial.extend(bytearray(left))
+        if left > 0:
+            partial.extend(bytearray(left))
         yield partial
 
 
