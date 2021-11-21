@@ -794,6 +794,7 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;-r&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--check&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--re-check&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;checker&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;.torrent&gt;&quot;</span><span class="p">,</span>
@@ -828,6 +829,7 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
         <span class="n">checker</span> <span class="o">=</span> <span class="n">CheckerClass</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">result</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>

@@ -18,6 +18,7 @@ import os
 from hashlib import sha1  # nosec
 
 import pyben
+from tqdm import tqdm
 
 from .hasher import HybridHash, V2Hash
 
@@ -78,7 +79,8 @@ class CheckerClass:
         """Generate result percentage and store for future calls."""
         if self._result:
             return self._result
-        self.hashes = list(self.iter_hashes())
+        for _ in tqdm(self.iter_hashes()):
+            pass
         return self._result
 
     def parse_metafile(self):
@@ -459,7 +461,7 @@ class HashChecker:
         Yields:
             results (`tuple`): The size of the file and result of match.
         """
-        for path in self.paths:
+        for path in tqdm(self.paths):
             info = self.fileinfo[path]
             length = info["length"]
             logging.debug("%s length: %s", path, str(length))
