@@ -14,6 +14,7 @@
 """Module container Checker classes and providing checker functionality."""
 
 import logging
+import math
 import os
 from hashlib import sha1  # nosec
 
@@ -77,10 +78,28 @@ class CheckerClass:
     @property
     def result(self):
         """Generate result percentage and store for future calls."""
+        iterations = None
+        self.log_msg("Calulating completion percent.")
+        if self.meta_version == 1:
+            iterations = math.ceil(self.total / self.piece_length)
+        else:
+            for _, info in self.fileinfo.items():
+                length = info["length"]
+                if iterations is None:
+                    iterations = 0
+                iterations += length // self.piece_length
+                if length % self.piece_length != 0:
+                    iterations += 1
         if self._result:
             return self._result
-        for _ in tqdm(self.iter_hashes()):
+        for _ in tqdm(
+                iterable=self.iter_hashes(),
+                desc="hash pieces",
+                total=iterations,
+                unit="piece hash",
+                colour="blue"):
             pass
+        self.log_msg("%s%% of torrent content available.", self._result)
         return self._result
 
     def parse_metafile(self):
@@ -90,6 +109,7 @@ class CheckerClass:
             `dict`: flattened meta dictionary.
         """
         if not os.path.exists(self.metafile):
+            self.log_msg("File %s could not be found.", self.metafile)
             raise FileNotFoundError(self.metafile)
 
         info = {}
@@ -134,30 +154,35 @@ class CheckerClass:
             self._hook(msg)
 
     def find_root(self, path):
-        """Find the root file or directory for torrent file contents.
+        """Check path for torrent content.
 
-        If the path specified is not the root, then search the
-        provided path for content.
+        The path can be a relative or absolute filesystem path.  In the case
+        where the content is a single file, the path may point directly to the
+        the file, or it may point to the parent directory.  If content points
+        to a directory.  The directory will be checked to see if it matches
+        the torrent's name, if not the directories contents will be searched.
+        The returned value will be the absolute path that matches the torrent's
+        name.
 
         Returns:
             `str`: root path to content
         """
         if not os.path.exists(path):
-            self.log_msg("The input path does not exist.")
+            self.log_msg("Could not locate torrent content %s.", path)
             raise FileNotFoundError(path)
 
         root = os.path.abspath(path)
         base = os.path.basename(root)
 
         if base == self.name:
-            self.log_msg("Content path found: %s.", root)
+            self.log_msg("Content found: %s.", root)
             return root
 
         self.log_msg("Searching for torrent root in %s", root)
         for name in os.listdir(root):
             if name == self.name:
                 root = os.path.join(root, name)
-                self.log_msg("Found root: %s", root)
+                self.log_msg("Content Found: %s", root)
                 return root
 
         self.log_msg("Could not locate torrent content in: %s", root)

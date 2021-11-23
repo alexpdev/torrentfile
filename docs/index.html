@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://alexpdev.github.io/torrentfile/">
       
       <link rel="icon" href="favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.4">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.db9e7362.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.a57b2b03.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.3f5d1f46.min.css">
@@ -259,6 +259,8 @@
       </a>
       
         
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -458,6 +460,8 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -569,16 +573,14 @@
 <pre><code>mkdocs.yml            # The configuration file.
 docs/
     index.md          # The documentation homepage.
-    Checker.md        # Checker Module
-    CLI.md            # Command Line Interface API
+    hasher.md         # Piece Hasher Objects.
+    torrent.md        # Bittorrent meta file objects.
+    CLI.md            # Command Line Interface API.
     Examples.md       # Overview page.
-    Hybrid.md         # Hybrid TorrentFile 1 &amp; 2
     LICENSE.md        # License file.
     Progress.md       # Progress Module
-    tests.md          # Testing Suit API
-    torrentfile.md    # TorrentFile version 1 API
-    torrentfile2.md   # TorrentFile version 2 API
-    utils.md          # Utility Function
+    tests.md          # Testing Suit API.
+    utils.md          # Utility Functions.
 </code></pre>
 <p><img alt="torrentfile" src="https://github.com/alexpdev/torrentfile/blob/master/assets/torrentfile.png?raw=true" /></p>
 <hr />
@@ -644,7 +646,8 @@ Hybrids.</p>
                                         appropriate value automatically.</p>
 <p>-r &lt;.torrent&gt;, --re-check &lt;.torrent&gt;  &lt;.torrent&gt; is the path to a .torrent meta file.
                                         Check <content> data integrity with &lt;.torrent&gt; file.
-                                        When this option is active, all other options are ignored (except -d).
+                                        When this option is active, all other options
+                                        are ignored (except -d).
 ```</p>
 <h2 id="license">License</h2>
 <p>Distributed under the GNU LGPL v3 license. See <code>LICENSE</code> for more information.</p>
@@ -725,10 +728,10 @@ Hybrids.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.1e84347e.min.js"></script>
+      <script src="assets/javascripts/bundle.b1047164.min.js"></script>
       
     
   </body>
