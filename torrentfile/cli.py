@@ -162,6 +162,7 @@ def main_script(args=None):
 
     parser.add_argument(
         "-r",
+        "--check",
         "--re-check",
         dest="checker",
         metavar="<.torrent>",
@@ -196,6 +197,7 @@ def main_script(args=None):
         checker = CheckerClass(metafile, content)
         result = checker.result
         sys.stdout.write(str(result))
+        sys.stdout.flush()
         return result
 
     kwargs = {
