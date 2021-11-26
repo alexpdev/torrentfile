@@ -10,15 +10,15 @@ theme:
   favicon: favicon.png
 
 nav:
-  - Overview: examples.md
+  - examples: examples.md
   - CLI: CLI.md
-  - Home: index.md
-  - Hasher: hasher.md
-  - License: LICENSE.md
-  - Progress: progress.md
-  - Torrent: torrent.md
-  - Tests: tests.md
-  - Utils: utils.md
+  - home: index.md
+  - hasher: hasher.md
+  - LICENSE: LICENSE.md
+  - progress: progress.md
+  - torrent: torrent.md
+  - tests: tests.md
+  - utils: utils.md
 
 
 plugins:

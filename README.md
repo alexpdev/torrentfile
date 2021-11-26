@@ -69,7 +69,7 @@ optional arguments:
   -o <path>, --out <path>                    output path for created .torrent file
 
   -a <url> [<url> ...], --announce <url> [<url> ...]
-                                             One or more announce urls for Bittorrent tracker
+                                             One or more tracker announce url's.
 
   --meta-version <int>                       .torrent file version.
                                              Options = 1, 2 or 3.
@@ -78,13 +78,16 @@ optional arguments:
                                              (3) = Bittorrent v1 & v2 hybrid.
 
   -l <int>, --piece-length <int>             piece length used by Bittorrent transfer protocol.
-                                             Acceptable values include 14-24, will be treated as the
-                                             exponent for 2^n power, or any power of 2 integer in 16KB-16MB.
-                                             e.g. `--piece-length 14` is the same as `--piece-length  16384`
+                                             Acceptable values include numbers 14-24 (inclusive), 
+                                             which will be treated as the exponent in 2^n, 
+                                             or any number that is a perfect power of 2 between 16KB-16MB.
+                                             e.g. `--piece-length 14`, `--piece-length  16384` 
+                                             `-l 1048576`, `-l 20`, `--pice-length 24`
 
-  -r <.torrent>, --re-check <.torrent>       <.torrent> is the path to a .torrent meta file.
+  -r <.torrent>, --recheck <.torrent>       <.torrent> is the path to a .torrent meta file.
                                              Check <content> data integrity with <.torrent> file.
-                                             When this option is active, all other options are ignored (except -d).
+                                             When this option is active, all other options 
+                                             are ignored (except -d).
 ```
 
 ## License
