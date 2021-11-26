@@ -56,6 +56,7 @@ class CheckerClass:
         self._result = None
         self.meta_version = None
         self.metafile = metafile
+        self.last_log = None
         self.log_msg("Checking: %s, %s", metafile, path)
         self.info = self.parse_metafile()
         self.name = self.info["name"]
@@ -144,15 +145,18 @@ class CheckerClass:
             `*args` (`Iterable`[`str`]): formatting args for log message
             level (`int`, default=`logging.INFO`) : Log level for this message
         """
-        logging.log(level, *args)
-        if self._hook and level == logging.INFO:
-            if len(args) == 1:
-                msg = args[0]
-            elif len(args) == 2:
-                msg = (args[0] % args[1])
-            elif len(args) >= 3:
-                msg = (args[0] % tuple(args[1:]))
-            self._hook(msg)
+        message = args[0]
+        if len(args) >= 3:
+            message = (message % tuple(args[1:]))
+        elif len(args) == 2:
+            message = (message % args[1])
+
+        # Repeat log messages should be ignored.
+        if message != self.last_log:
+            self.last_log = message
+            logging.log(level, message)
+            if self._hook and level == logging.INFO:
+                self._hook(message)
 
     def find_root(self, path):
         """Check path for torrent content.

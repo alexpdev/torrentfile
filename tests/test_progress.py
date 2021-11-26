@@ -135,7 +135,7 @@ def test_checker_cli_args(struct, version):
     t3dir = build(struct)
     args = {"announce": "announce", "path": t3dir, "private": 1}
     outfile = mktorrent(args, v=version)
-    sys.argv[1:] = ["--re-check", outfile, t3dir]
+    sys.argv[1:] = ["--recheck", outfile, t3dir]
     output = main()
     assert output == "100"   # nosec
     rmpath(outfile)

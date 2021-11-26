@@ -163,7 +163,7 @@ def main_script(args=None):
     parser.add_argument(
         "-r",
         "--check",
-        "--re-check",
+        "--recheck",
         dest="checker",
         metavar="<.torrent>",
         help="""
