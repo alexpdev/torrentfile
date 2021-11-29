@@ -41,7 +41,7 @@ class HelpFormat(HelpFormatter):
         max_help_positions (`int`): max length until line wrap.
     """
 
-    def __init__(self, prog, width=80, max_help_pos=45):
+    def __init__(self, prog, width=75, max_help_pos=40):
         """Construct HelpFormat class."""
         super().__init__(prog, width=width, max_help_position=max_help_pos)
 
@@ -60,10 +60,9 @@ def main_script(args=None):
     if not args:
         args = sys.argv[1:]
 
-    desc = ("Create or Re-Check Bittorrent meta files for "
-            "Bittorrent v1, v2 or v1, v2 combo Hybrids.")
+    desc = ("Create and/or ReCheck Bittorrent V1, V2, and Hybrid meta files.")
 
-    parser = ArgumentParser("torrentfile", description=desc,
+    parser = ArgumentParser("TorrentFile", description=desc,
                             prefix_chars="-", formatter_class=HelpFormat)
 
     parser.add_argument(
@@ -87,7 +86,7 @@ def main_script(args=None):
         "--private",
         action="store_true",
         dest="private",
-        help="create .torrent file for private tracker",
+        help="create file for private tracker",
     )
 
     parser.add_argument(
@@ -96,7 +95,7 @@ def main_script(args=None):
         action="store",
         dest="source",
         metavar="<source>",
-        help="specify source"
+        help="specify source tracker"
     )
 
     parser.add_argument(
@@ -106,17 +105,6 @@ def main_script(args=None):
         dest="comment",
         metavar="<comment>",
         help="include a comment in file metadata",
-    )
-
-    parser.add_argument(
-        "-a",
-        "--announce",
-        action="store",
-        dest="announce",
-        metavar="<url>",
-        nargs="+",
-        default="",
-        help="1 or more announce url's for Bittorrent tracker"
     )
 
     parser.add_argument(
@@ -135,12 +123,11 @@ def main_script(args=None):
         action="store",
         dest="meta_version",
         metavar="<int>",
-        help="""
-        .torrent file version.
+        help="""torrent file version.
         Options = 1, 2 or 3.
-        (1) = Bittorrent v1;. (Default)
-        (2) = Bittorrent v2.
-        (3) = Bittorrent v1 & v2 hybrid.
+        (1) = Bittorrent v1 (Default)
+        (2) = Bittorrent v2
+        (3) = Bittorrent v1 & v2 hybrid
         """,
     )
 
@@ -151,13 +138,26 @@ def main_script(args=None):
         dest="piece_length",
         metavar="<int>",
         help="""
-        piece size used by Bittorrent transfer protocol.
-        Acceptable values include numbers 14-35, will be treated as the
-        exponent for 2^n power, or any power of 2 integer in 16KB-16MB.
-        e.g. `--piece-length 14` is the same as `--piece-length  16384`
-        If this option flag is not used, the program will calculate an
-        appropriate value automatically.
+        Fixed amount of bytes for each chunk of data. (Default: None)
+        Acceptable input values include integers 14-24, which
+        will be interpreted as the exponent for 2^n, or any perfect
+        power of two integer between 16Kib and 16MiB (inclusive).
+        Examples:: [--piece-length 14] [-l 20] [-l 16777216]
         """,
+    )
+
+    parser.add_argument(
+        "-a",
+        "--announce",
+        action="store",
+        dest="announce",
+        metavar="<url>",
+        nargs="+",
+        default="",
+        help="""
+        one or more Bittorrent tracker announce url(s)
+        Examples: [-a url1 url2 url3]  [--anounce url1]
+        """
     )
 
     parser.add_argument(
@@ -169,7 +169,8 @@ def main_script(args=None):
         help="""
         <.torrent> is the path to a .torrent meta file.
         Check <content> data integrity with <.torrent> file.
-        When this option is active, all other options are ignored (except -d).
+        If this is active, all other options are ignored
+        (except --debug)
         """
     )
 
@@ -177,7 +178,7 @@ def main_script(args=None):
         "content",
         action="store",
         metavar="<content>",
-        help="path to .torrent file content"
+        help="path to content file or directory"
     )
 
     if not args:
@@ -189,8 +190,12 @@ def main_script(args=None):
     else:
         level = logging.WARNING
 
-    logging.basicConfig(level=level, format='%(asctime)s %(message)s',
-                        datefmt='%m/%d/%Y %H:%M:%S')
+    logging.basicConfig(
+        level=level,
+        format='%(prog)s %(asctime)s %(message)s',
+        datefmt='%m-%d-%Y %H:%M:%S'
+    )
+
     if flags.checker:
         metafile = flags.checker
         content = flags.content

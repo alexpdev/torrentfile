@@ -614,46 +614,45 @@ or by visiting <a href="https://alexpdev.github.io/torrentfile">https://alexpdev
 <p>Or download the latest release from the Release page on github.
 <a href="https://github.com/alexpdev/torrentfile/releases">https://github.com/alexpdev/torrentfile/releases</a></p>
 <h2 id="usage">Usage</h2>
-<pre><code>usage: torrentfile [-h] [-v] [-d] [-p] [-s &lt;source&gt;] [-c &lt;comment&gt;]
-                [-a &lt;url&gt; [&lt;url&gt; ...]] [-o &lt;path&gt;] [--meta-version &lt;int&gt;]
-                [-l &lt;int&gt;] [-r &lt;.torrent&gt;]
+<pre><code>usage: TorrentFile [-h] [-v] [-d] [-p] [-s &lt;source&gt;] [-c &lt;comment&gt;]
+                [-o &lt;path&gt;] [--meta-version &lt;int&gt;] [-l &lt;int&gt;]
+                [-a &lt;url&gt; [&lt;url&gt; ...]] [-r &lt;.torrent&gt;]
                 &lt;content&gt;
 
-Create or Re-Check Bittorrent meta files for Bittorrent v1, v2 or v1, v2 combo
-Hybrids.
+Create and/or ReCheck Bittorrent V1, V2, and Hybrid meta files.
 
 positional arguments:
-&lt;content&gt;                                  path to .torrent file content
+&lt;content&gt;                             path to content file or directory
 
 optional arguments:
--h, --help                                 show this help message and exit
--v, --version                              show program version and exit
--d, --debug                                output debug information
--p, --private                              create .torrent file for private tracker
--s &lt;source&gt;, --source &lt;source&gt;             specify source
--c &lt;comment&gt;, --comment &lt;comment&gt;          include a comment in file metadata
--o &lt;path&gt;, --out &lt;path&gt;                    output path for created .torrent file
+-h, --help                            show this help message and exit
+-v, --version                         show program version and exit
+-d, --debug                           output debug information
+-p, --private                         create file for private tracker
+-s &lt;source&gt;, --source &lt;source&gt;        specify source tracker
+-c &lt;comment&gt;, --comment &lt;comment&gt;     include a comment in file metadata
+-o &lt;path&gt;, --out &lt;path&gt;               output path for created .torrent file
+--meta-version &lt;int&gt;                  torrent file version.
+                                        Options = 1, 2 or 3.
+                                        (1) = Bittorrent v1 (Default)
+                                        (2) = Bittorrent v2
+                                        (3) = Bittorrent v1 &amp; v2 hybrid
+
+-l &lt;int&gt;, --piece-length &lt;int&gt;        Fixed amount of bytes for each chunk of data. (Default: None)
+                                        Acceptable input values include integers 14-24, which
+                                        will be interpreted as the exponent for 2^n, or any perfect
+                                        power of two integer between 16Kib and 16MiB (inclusive).
+                                        Examples:: [--piece-length 14] [-l 20] [-l 16777216]
 
 -a &lt;url&gt; [&lt;url&gt; ...], --announce &lt;url&gt; [&lt;url&gt; ...]
-                                            One or more tracker announce url's.
+                                        one or more Bittorrent tracker announce url(s)
+                                        Examples: [-a url1 url2 url3]  [--anounce url1]
 
---meta-version &lt;int&gt;                       .torrent file version.
-                                            Options = 1, 2 or 3.
-                                            (1) = Bittorrent v1;. (Default)
-                                            (2) = Bittorrent v2.
-                                            (3) = Bittorrent v1 &amp; v2 hybrid.
-
--l &lt;int&gt;, --piece-length &lt;int&gt;             piece length used by Bittorrent transfer protocol.
-                                           Acceptable values include numbers 14-24 (inclusive),
-                                           which will be treated as the exponent in 2^n,
-                                           or any number that is a perfect power of 2 between 16KB-16MB.
-                                           e.g. `--piece-length 14`, `--piece-length  16384`
-                                           `-l 1048576`, `-l 20`, `--pice-length 24`
-
--r &lt;.torrent&gt;, --recheck &lt;.torrent&gt;       &lt;.torrent&gt; is the path to a .torrent meta file.
-                                            Check &lt;content&gt; data integrity with &lt;.torrent&gt; file.
-                                            When this option is active, all other options 
-                                            are ignored (except -d).
+-r &lt;.torrent&gt;, --check &lt;.torrent&gt;, --recheck &lt;.torrent&gt;
+                                        &lt;.torrent&gt; is the path to a .torrent meta file.
+                                        Check &lt;content&gt; data integrity with &lt;.torrent&gt; file.
+                                        If this is active, all other options are ignored
+                                        (except --debug)
 </code></pre>
 <h2 id="license">License</h2>
 <p>Distributed under the GNU LGPL v3 license. See <code>LICENSE</code> for more information.</p>

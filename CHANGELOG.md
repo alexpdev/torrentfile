@@ -1,5 +1,26 @@
 # TorrentFile
 
+## Version 0.6.2
+
+### Fixed
+
+    - Bug fixes
+    - Documentation error pages
+
+---------------------
+
+## Version 0.6.0
+
+## Changed v0.6.0
+
+    - cli commands alterations
+
+## Added v0.6.0
+
+    - debug logging during creation process
+
+---------------------
+
 ## Version 0.5.2
 
 ### Fixed v0.5.2

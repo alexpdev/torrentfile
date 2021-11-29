@@ -22,6 +22,7 @@ import pyben
 from tqdm import tqdm
 
 from .hasher import HybridHash, V2Hash
+from .utils import humanize_bytes
 
 SHA1 = 20
 SHA256 = 32
@@ -256,7 +257,11 @@ class CheckerClass:
 
                 self.paths.append(path)
                 self.total += size
-                self.log_msg("Including: path - %s, length - %s", path, size)
+                self.log_msg(
+                    "Including: path - %s, length - %s",
+                    path,
+                    humanize_bytes(size)
+                )
 
             else:
                 self.walk_file_tree(val, partials + [key])
@@ -280,11 +285,13 @@ class CheckerClass:
             args = (self.paths, self.piece_length, self.fileinfo, hasher)
         for chunk, piece, path, size in checker(*args):
             consumed += size
+            msg = "Match %s: %s %s"
+            humansize = humanize_bytes(size)
             if chunk == piece:
                 matched += size
-                logging.debug("Match Success: %s, %s", path, size)
+                logging.debug(msg, "Success", path, humansize)
             else:
-                logging.debug("Match Fail: %s, %s", path, size)
+                logging.debug(msg, "Fail", path, humansize)
             yield chunk, piece, path, size
             total_consumed = str(int(consumed / self.total * 100))
             percent_matched = str(int(matched / consumed * 100))
@@ -467,7 +474,10 @@ class HashChecker:
         self.piece_length = piece_length
         self.fileinfo = fileinfo
         self.itor = None
-        logging.debug("Starting Hash Checker. piece length: %s", piece_length)
+        logging.debug(
+            "Starting Hash Checker. piece length: %s",
+            humanize_bytes(self.piece_length)
+        )
 
     def __iter__(self):
         """Assign iterator and return self."""
@@ -497,6 +507,7 @@ class HashChecker:
             logging.debug("%s length: %s", path, str(length))
             roothash = info["pieces root"]
             logging.debug("%s root hash %s", path, str(roothash))
+
             if not os.path.exists(path):
                 if "layer hashes" in info and info["layer hashes"]:
                     pieces = info["layer hashes"]
@@ -513,6 +524,7 @@ class HashChecker:
                                   str(piece), path, str(size))
                     yield bytes(SHA256), piece, path, size
                 continue
+
             hashed = self.hasher(path, self.piece_length)
             if "layer hashes" in info:
                 hash_pieces = split_pieces(hashed.piece_layer, SHA256)
@@ -520,6 +532,7 @@ class HashChecker:
             else:
                 hash_pieces = [hashed.root]
                 info_pieces = [info["pieces root"]]
+
             diff = len(info_pieces) - len(hash_pieces)
             if diff > 0:
                 hash_pieces += [bytes(SHA256)] * diff

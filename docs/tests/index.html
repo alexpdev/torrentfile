@@ -1198,6 +1198,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tests.test_utils.test_humanize_bytes" class="md-nav__link">
+    test_humanize_bytes()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#tests.test_utils.test_normalize_plength_fails" class="md-nav__link">
     test_normalize_plength_fails()
   </a>
@@ -1568,6 +1575,13 @@
         <li class="md-nav__item">
   <a href="#tests.test_utils.test_get_piece_length_min" class="md-nav__link">
     test_get_piece_length_min()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tests.test_utils.test_humanize_bytes" class="md-nav__link">
+    test_humanize_bytes()
   </a>
   
 </li>
@@ -3129,6 +3143,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tests.test_utils.test_humanize_bytes" class="md-nav__link">
+    test_humanize_bytes()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#tests.test_utils.test_normalize_plength_fails" class="md-nav__link">
     test_normalize_plength_fails()
   </a>
@@ -3499,6 +3520,13 @@
         <li class="md-nav__item">
   <a href="#tests.test_utils.test_get_piece_length_min" class="md-nav__link">
     test_get_piece_length_min()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tests.test_utils.test_humanize_bytes" class="md-nav__link">
+    test_humanize_bytes()
   </a>
   
 </li>
@@ -8185,6 +8213,42 @@ Temp        </code>
 
 
 
+<h3 id="tests.test_utils.test_humanize_bytes" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_humanize_bytes</span><span class="p">(</span><span class="n">size</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Test humanize bytes function from the utils module.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">40</span><span class="p">)))</span>
+<span class="k">def</span> <span class="nf">test_humanize_bytes</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test humanize bytes function from the utils module.&quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">size</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">30</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="s2">&quot;GiB&quot;</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">humanize_bytes</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="s2">&quot;MiB&quot;</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">humanize_bytes</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">10</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="s2">&quot;KiB&quot;</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">humanize_bytes</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="n">utils</span><span class="o">.</span><span class="n">humanize_bytes</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h3 id="tests.test_utils.test_normalize_plength_fails" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">test_normalize_plength_fails</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span></code>
 
@@ -9897,6 +9961,42 @@ Temp        </code>
     <span class="n">size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_piece_length</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">result</span> <span class="o">&gt;=</span> <span class="n">MIN_BLOCK</span>  <span class="c1"># nosec</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="tests.test_utils.test_humanize_bytes" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_humanize_bytes</span><span class="p">(</span><span class="n">size</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Test humanize bytes function from the utils module.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">40</span><span class="p">)))</span>
+<span class="k">def</span> <span class="nf">test_humanize_bytes</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test humanize bytes function from the utils module.&quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">size</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">30</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="s2">&quot;GiB&quot;</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">humanize_bytes</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="s2">&quot;MiB&quot;</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">humanize_bytes</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">10</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="s2">&quot;KiB&quot;</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">humanize_bytes</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># nosec</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="n">utils</span><span class="o">.</span><span class="n">humanize_bytes</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># nosec</span>
 </code></pre></div>
         </details>
     </div>

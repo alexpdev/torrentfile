@@ -1753,15 +1753,12 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
 <span class="sd">    Returns:</span>
 <span class="sd">      meta (`dict`): Metainformation about the torrent.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Continue filling meta dictionary for .torrent file.&quot;</span><span class="p">)</span>
     <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;&#39;path&#39; points to a single file.&quot;</span><span class="p">)</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)}</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;&#39;path&#39; points to a directory.&quot;</span><span class="p">)</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
 
     <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>

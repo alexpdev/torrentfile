@@ -1150,11 +1150,13 @@ name.</p>
         <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">,</span> <span class="n">hasher</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">checker</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">consumed</span> <span class="o">+=</span> <span class="n">size</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Match </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span>
+        <span class="n">humansize</span> <span class="o">=</span> <span class="n">humanize_bytes</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">chunk</span> <span class="o">==</span> <span class="n">piece</span><span class="p">:</span>
             <span class="n">matched</span> <span class="o">+=</span> <span class="n">size</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Match Success: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">humansize</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Match Fail: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;Fail&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">humansize</span><span class="p">)</span>
         <span class="k">yield</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
         <span class="n">total_consumed</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">consumed</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
         <span class="n">percent_matched</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">matched</span> <span class="o">/</span> <span class="n">consumed</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
@@ -1440,7 +1442,11 @@ for each file included in the .torrent's file tree.</p>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">+=</span> <span class="n">size</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Including: path - </span><span class="si">%s</span><span class="s2">, length - </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span>
+                <span class="s2">&quot;Including: path - </span><span class="si">%s</span><span class="s2">, length - </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">path</span><span class="p">,</span>
+                <span class="n">humanize_bytes</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+            <span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">walk_file_tree</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">partials</span> <span class="o">+</span> <span class="p">[</span><span class="n">key</span><span class="p">])</span>
@@ -1898,7 +1904,10 @@ HashChecker        </code>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span> <span class="o">=</span> <span class="n">fileinfo</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">itor</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting Hash Checker. piece length: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Starting Hash Checker. piece length: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">humanize_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span>
+    <span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -2024,6 +2033,7 @@ HashChecker        </code>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> length: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
         <span class="n">roothash</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces root&quot;</span><span class="p">]</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> root hash </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">roothash</span><span class="p">))</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="k">if</span> <span class="s2">&quot;layer hashes&quot;</span> <span class="ow">in</span> <span class="n">info</span> <span class="ow">and</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;layer hashes&quot;</span><span class="p">]:</span>
                 <span class="n">pieces</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;layer hashes&quot;</span><span class="p">]</span>
@@ -2040,6 +2050,7 @@ HashChecker        </code>
                               <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span> <span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
                 <span class="k">yield</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">SHA256</span><span class="p">),</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
             <span class="k">continue</span>
+
         <span class="n">hashed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasher</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span>
         <span class="k">if</span> <span class="s2">&quot;layer hashes&quot;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
             <span class="n">hash_pieces</span> <span class="o">=</span> <span class="n">split_pieces</span><span class="p">(</span><span class="n">hashed</span><span class="o">.</span><span class="n">piece_layer</span><span class="p">,</span> <span class="n">SHA256</span><span class="p">)</span>
@@ -2047,6 +2058,7 @@ HashChecker        </code>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">hash_pieces</span> <span class="o">=</span> <span class="p">[</span><span class="n">hashed</span><span class="o">.</span><span class="n">root</span><span class="p">]</span>
             <span class="n">info_pieces</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces root&quot;</span><span class="p">]]</span>
+
         <span class="n">diff</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">info_pieces</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">hash_pieces</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">hash_pieces</span> <span class="o">+=</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">SHA256</span><span class="p">)]</span> <span class="o">*</span> <span class="n">diff</span>

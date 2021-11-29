@@ -433,6 +433,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#torrentfile.utils.humanize_bytes" class="md-nav__link">
+    humanize_bytes()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#torrentfile.utils.normalize_piece_length" class="md-nav__link">
     normalize_piece_length()
   </a>
@@ -566,6 +573,13 @@
         <li class="md-nav__item">
   <a href="#torrentfile.utils.get_piece_length" class="md-nav__link">
     get_piece_length()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.utils.humanize_bytes" class="md-nav__link">
+    humanize_bytes()
   </a>
   
 </li>
@@ -1056,6 +1070,80 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="k">while</span> <span class="n">size</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">exp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">200</span> <span class="ow">and</span> <span class="n">exp</span> <span class="o">&lt;</span> <span class="mi">23</span><span class="p">:</span>
         <span class="n">exp</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">exp</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="torrentfile.utils.humanize_bytes" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">humanize_bytes</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Convert integer into human readable memory sized denomination.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>amount</code></td>
+        <td><code>`int`</code></td>
+        <td><p>total number of bytes.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>`str` </code></td>
+      <td><p>human readable representation of the given amount of bytes.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">humanize_bytes</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert integer into human readable memory sized denomination.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        amount (`int`): total number of bytes.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        `str` : human readable representation of the given amount of bytes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">1024</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
+    <span class="k">if</span> <span class="mi">1024</span> <span class="o">&lt;=</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">1_048_576</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span> <span class="o">//</span> <span class="mi">1024</span><span class="si">}</span><span class="s2"> KiB&quot;</span>
+    <span class="k">if</span> <span class="mi">1_048_576</span> <span class="o">&lt;=</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">1_073_741_824</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span> <span class="o">//</span> <span class="mi">1_048_576</span><span class="si">}</span><span class="s2"> MiB&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span> <span class="o">//</span> <span class="mi">1073741824</span><span class="si">}</span><span class="s2"> GiB&quot;</span>
 </code></pre></div>
         </details>
     </div>

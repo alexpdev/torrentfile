@@ -361,15 +361,12 @@ class TorrentFileV2(MetaFile):
         Returns:
           meta (`dict`): Metainformation about the torrent.
         """
-        logging.debug("Continue filling meta dictionary for .torrent file.")
         info = self.meta["info"]
 
         if os.path.isfile(self.path):
-            logging.debug("'path' points to a single file.")
             info["file tree"] = {info["name"]: self._traverse(self.path)}
             info["length"] = os.path.getsize(self.path)
         else:
-            logging.debug("'path' points to a directory.")
             info["file tree"] = self._traverse(self.path)
 
         info["meta version"] = 2
