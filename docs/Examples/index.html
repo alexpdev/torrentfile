@@ -18,7 +18,7 @@
     
     
       
-        <title>Overview - TorrentFile</title>
+        <title>examples - TorrentFile</title>
       
     
     
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Overview
+              examples
             
           </span>
         </div>
@@ -220,12 +220,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Overview
+          examples
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Overview
+        examples
       </a>
       
         
@@ -245,8 +245,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#using" class="md-nav__link">
-    Using
+  <a href="#terminal-help-menu" class="md-nav__link">
+    Terminal Help Menu
   </a>
   
 </li>
@@ -324,7 +324,7 @@
   
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        Home
+        home
       </a>
     </li>
   
@@ -339,7 +339,7 @@
   
     <li class="md-nav__item">
       <a href="../hasher/" class="md-nav__link">
-        Hasher
+        hasher
       </a>
     </li>
   
@@ -354,7 +354,7 @@
   
     <li class="md-nav__item">
       <a href="../LICENSE/" class="md-nav__link">
-        License
+        LICENSE
       </a>
     </li>
   
@@ -369,7 +369,7 @@
   
     <li class="md-nav__item">
       <a href="../progress/" class="md-nav__link">
-        Progress
+        progress
       </a>
     </li>
   
@@ -384,7 +384,7 @@
   
     <li class="md-nav__item">
       <a href="../torrent/" class="md-nav__link">
-        Torrent
+        torrent
       </a>
     </li>
   
@@ -399,7 +399,7 @@
   
     <li class="md-nav__item">
       <a href="../tests/" class="md-nav__link">
-        Tests
+        tests
       </a>
     </li>
   
@@ -414,7 +414,7 @@
   
     <li class="md-nav__item">
       <a href="../utils/" class="md-nav__link">
-        Utils
+        utils
       </a>
     </li>
   
@@ -448,8 +448,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#using" class="md-nav__link">
-    Using
+  <a href="#terminal-help-menu" class="md-nav__link">
+    Terminal Help Menu
   </a>
   
 </li>
@@ -513,41 +513,47 @@
                 
                 
                 <h1 id="overview">Overview</h1>
-<h2 id="using">Using</h2>
-<p>```bash:
-usage: torrentfile [-h][-v] [-d][-p] [-s <source>] [-c <comment>]
-                   [-a <url> [<url> ...]] [-o <path>] [--meta-version <int>]
-                   [-l <int>] [-r &lt;.torrent&gt;]
-                   <content></p>
-<p>Create or Re-Check Bittorrent meta files for Bittorrent v1, v2 or v1, v2 combo
-Hybrids.</p>
-<p>positional arguments:
-  <content>                                  path to .torrent file content</p>
-<p>optional arguments:
-  -h, --help                                 show this help message and exit
-  -v, --version                              show program version and exit
-  -d, --debug                                output debug information
-  -p, --private                              create .torrent file for private tracker
-  -s <source>, --source <source>             specify source
-  -c <comment>, --comment <comment>          include a comment in file metadata
-  -o <path>, --out <path>                    output path for created .torrent file</p>
-<p>-a <url> [<url> ...], --announce <url> [<url> ...]
-                                             One or more announce urls for Bittorrent tracker</p>
-<p>--meta-version <int>                       .torrent file version.
-                                             Options = 1, 2 or 3.
-                                             (1) = Bittorrent v1;. (Default)
-                                             (2) = Bittorrent v2.
-                                             (3) = Bittorrent v1 &amp; v2 hybrid.</p>
-<p>-l <int>, --piece-length <int>             piece size used by Bittorrent transfer protocol.
-                                             Acceptable values include numbers 14-35, will be treated as the
-                                             exponent for 2^n power, or any power of 2 integer in 16KB-16MB.
-                                             e.g. <code>--piece-length 14</code> is the same as <code>--piece-length  16384</code>
-                                             If this option flag is not used, the program will calculate an
-                                             appropriate value automatically.</p>
-<p>-r &lt;.torrent&gt;, --re-check &lt;.torrent&gt;       &lt;.torrent&gt; is the path to a .torrent meta file.
-                                             Check <content> data integrity with &lt;.torrent&gt; file.
-                                             When this option is active, all other options are ignored (except -d).
-```</p>
+<h2 id="terminal-help-menu">Terminal Help Menu</h2>
+<pre><code>usage: TorrentFile [-h] [-v] [-d] [-p] [-s &lt;source&gt;] [-c &lt;comment&gt;]
+                [-o &lt;path&gt;] [--meta-version &lt;int&gt;] [-l &lt;int&gt;]
+                [-a &lt;url&gt; [&lt;url&gt; ...]] [-r &lt;.torrent&gt;]
+                &lt;content&gt;
+
+Create and/or ReCheck Bittorrent V1, V2, and Hybrid meta files.
+
+positional arguments:
+&lt;content&gt;                             path to content file or directory
+
+optional arguments:
+-h, --help                            show this help message and exit
+-v, --version                         show program version and exit
+-d, --debug                           output debug information
+-p, --private                         create file for private tracker
+-s &lt;source&gt;, --source &lt;source&gt;        specify source tracker
+-c &lt;comment&gt;, --comment &lt;comment&gt;     include a comment in file metadata
+-o &lt;path&gt;, --out &lt;path&gt;               output path for created .torrent file
+--meta-version &lt;int&gt;                  torrent file version.
+                                        Options = 1, 2 or 3.
+                                        (1) = Bittorrent v1 (Default)
+                                        (2) = Bittorrent v2
+                                        (3) = Bittorrent v1 &amp; v2 hybrid
+
+-l &lt;int&gt;, --piece-length &lt;int&gt;        Fixed amount of bytes for each chunk of data. (Default: None)
+                                        Acceptable input values include integers 14-24, which
+                                        will be interpreted as the exponent for 2^n, or any perfect
+                                        power of two integer between 16Kib and 16MiB (inclusive).
+                                        Examples:: [--piece-length 14] [-l 20] [-l 16777216]
+
+-a &lt;url&gt; [&lt;url&gt; ...], --announce &lt;url&gt; [&lt;url&gt; ...]
+                                        one or more Bittorrent tracker announce url(s)
+                                        Examples: [-a url1 url2 url3]  [--anounce url1]
+
+-r &lt;.torrent&gt;, --check &lt;.torrent&gt;, --recheck &lt;.torrent&gt;
+                                        &lt;.torrent&gt; is the path to a .torrent meta file.
+                                        Check &lt;content&gt; data integrity with &lt;.torrent&gt; file.
+                                        If this is active, all other options are ignored
+                                        (except --debug)
+</code></pre>
 <h2 id="cli-usage-examples">CLI Usage Examples</h2>
 <hr />
 <h3 id="example-1">Example 1</h3>
@@ -558,17 +564,19 @@ Hybrids.</p>
 <li>contents:  <code>/path/to/data</code></li>
 <li>tracker : <code>https://tracker.com/announce_1234</code></li>
 <li>set for private tracker.</li>
+<li>output file: <code>/path/to/data.torrent</code></li>
 </ul>
 </li>
 </ul>
 <h3 id="example-2">Example 2</h3>
-<pre><code>torrentfile -d --a https://traker2.com/annce https://traker3.com/annce --piece-length 18 /contnts/path
+<pre><code>torrentfile -d --a https://traker2.co/annce http://trkr3.com/a --piece-length 18 /contents/path
 </code></pre>
 <ul>
 <li>Create .torrent file in debug mode with:<ul>
 <li>contents: <code>/some/dir</code></li>
-<li>trackers: <code>https://tracker2.com/announce</code>, <code>https://tracker3.com/announce</code></li>
+<li>trackers: <code>https://tracker2.co/announce</code>, <code>https://trckr3.com/a</code></li>
 <li>piece length: <code>262144</code> or 2<sup>18</sup> bytes</li>
+<li>output file: <code>/some/dir.torrent</code></li>
 </ul>
 </li>
 </ul>
@@ -584,7 +592,7 @@ Hybrids.</p>
 </li>
 </ul>
 <h3 id="example-4">Example 4</h3>
-<pre><code>$ torrentfile -d -r /path/to/file.torrent /path/to/contents
+<pre><code>torrentfile -r /path/to/file.torrent /path/to/contents
 &gt;&gt; 100%
 </code></pre>
 <ul>

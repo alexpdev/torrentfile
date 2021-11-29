@@ -17,14 +17,18 @@ import logging
 import math
 from hashlib import sha1, sha256  # nosec
 
+from .utils import humanize_bytes
+
 BLOCK_SIZE = 2 ** 14  # 16KiB
 HASH_SIZE = 32
 
 
 class Feeder:
-    """Construct the Feeder class.
+    """Piece hasher for Bittorrent V1 files.
 
-    Seemlesly generate hashes of piece length data from filelist contents.
+    Takes a sorted list of all file paths, calculates sha1 hash
+    for fixed size pieces of file data from each file
+    seemlessly until the last piece which may be smaller than others.
 
     Args:
       paths (`list`): List of files.
@@ -43,6 +47,11 @@ class Feeder:
         self.num_pieces = math.ceil(self.total // self.piece_length)
         self.current = open(self.paths[0], "rb")
         self.iterator = None
+        logging.debug(
+            "Hashing v1 torrent file. Size: %s Piece Length: %s",
+            humanize_bytes(self.total),
+            humanize_bytes(self.piece_length)
+        )
 
     def __iter__(self):
         """Iterate through feed pieces.
@@ -53,8 +62,8 @@ class Feeder:
         self.iterator = self.leaves()
         return self.iterator
 
-    def handle_partial(self, arr, partial):
-        """Seemlessly move to next file for input data.
+    def _handle_partial(self, arr, partial):
+        """Define the handling partial pieces that span 2 or more files.
 
         Args:
           arr (`bytearray`): Incomplete piece containing partial data
@@ -91,7 +100,7 @@ class Feeder:
                 if not self.next_file():
                     break
             elif size < self.piece_length:
-                yield self.handle_partial(piece[:size], size)
+                yield self._handle_partial(piece[:size], size)
             else:
                 yield sha1(piece).digest()  # nosec
             self.piece_count += 1
@@ -125,7 +134,11 @@ class V2Hash:
         self.layer_hashes = []
         self.piece_length = piece_length
         self.num_blocks = piece_length // BLOCK_SIZE
-        logging.debug("Hashing v2: %s", self.path)
+        logging.debug(
+            "Hashing partial v2 torrent file. Piece Length: %s Path: %s",
+            humanize_bytes(self.piece_length),
+            str(self.path),
+        )
 
         with open(self.path, "rb") as fd:
             self.process_file(fd)
@@ -197,7 +210,11 @@ class HybridHash:
         self.padding_piece = None
         self.padding_file = None
         self.amount = piece_length // BLOCK_SIZE
-        logging.debug("Beginning file hashing: %s", self.path)
+        logging.debug(
+            "Hashing partial Hybrid torrent file. Piece Length: %s Path: %s",
+            humanize_bytes(self.piece_length),
+            str(self.path),
+        )
         with open(path, "rb") as data:
             self._process_file(data)
 

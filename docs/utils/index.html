@@ -18,7 +18,7 @@
     
     
       
-        <title>Utils - TorrentFile</title>
+        <title>utils - TorrentFile</title>
       
     
     
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Utils
+              utils
             
           </span>
         </div>
@@ -211,7 +211,7 @@
   
     <li class="md-nav__item">
       <a href="../examples/" class="md-nav__link">
-        Overview
+        examples
       </a>
     </li>
   
@@ -241,7 +241,7 @@
   
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        Home
+        home
       </a>
     </li>
   
@@ -256,7 +256,7 @@
   
     <li class="md-nav__item">
       <a href="../hasher/" class="md-nav__link">
-        Hasher
+        hasher
       </a>
     </li>
   
@@ -271,7 +271,7 @@
   
     <li class="md-nav__item">
       <a href="../LICENSE/" class="md-nav__link">
-        License
+        LICENSE
       </a>
     </li>
   
@@ -286,7 +286,7 @@
   
     <li class="md-nav__item">
       <a href="../progress/" class="md-nav__link">
-        Progress
+        progress
       </a>
     </li>
   
@@ -301,7 +301,7 @@
   
     <li class="md-nav__item">
       <a href="../torrent/" class="md-nav__link">
-        Torrent
+        torrent
       </a>
     </li>
   
@@ -316,7 +316,7 @@
   
     <li class="md-nav__item">
       <a href="../tests/" class="md-nav__link">
-        Tests
+        tests
       </a>
     </li>
   
@@ -340,12 +340,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Utils
+          utils
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Utils
+        utils
       </a>
       
         
@@ -428,6 +428,13 @@
         <li class="md-nav__item">
   <a href="#torrentfile.utils.get_piece_length" class="md-nav__link">
     get_piece_length()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.utils.humanize_bytes" class="md-nav__link">
+    humanize_bytes()
   </a>
   
 </li>
@@ -566,6 +573,13 @@
         <li class="md-nav__item">
   <a href="#torrentfile.utils.get_piece_length" class="md-nav__link">
     get_piece_length()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.utils.humanize_bytes" class="md-nav__link">
+    humanize_bytes()
   </a>
   
 </li>
@@ -1068,6 +1082,80 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 
+<h2 id="torrentfile.utils.humanize_bytes" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">humanize_bytes</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Convert integer into human readable memory sized denomination.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>amount</code></td>
+        <td><code>`int`</code></td>
+        <td><p>total number of bytes.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>`str` </code></td>
+      <td><p>human readable representation of the given amount of bytes.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">humanize_bytes</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert integer into human readable memory sized denomination.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        amount (`int`): total number of bytes.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        `str` : human readable representation of the given amount of bytes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">1024</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
+    <span class="k">if</span> <span class="mi">1024</span> <span class="o">&lt;=</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">1_048_576</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span> <span class="o">//</span> <span class="mi">1024</span><span class="si">}</span><span class="s2"> KiB&quot;</span>
+    <span class="k">if</span> <span class="mi">1_048_576</span> <span class="o">&lt;=</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">1_073_741_824</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span> <span class="o">//</span> <span class="mi">1_048_576</span><span class="si">}</span><span class="s2"> MiB&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span> <span class="o">//</span> <span class="mi">1073741824</span><span class="si">}</span><span class="s2"> GiB&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h2 id="torrentfile.utils.normalize_piece_length" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">normalize_piece_length</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span></code>
 
@@ -1461,7 +1549,7 @@ piece_length (<code>int</code>): The size of pieces of the torrent contents.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../tests/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Tests" rel="prev">
+        <a href="../tests/" class="md-footer__link md-footer__link--prev" aria-label="Previous: tests" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1470,7 +1558,7 @@ piece_length (<code>int</code>): The size of pieces of the torrent contents.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Tests
+              tests
             </div>
           </div>
         </a>

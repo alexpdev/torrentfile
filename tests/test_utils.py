@@ -208,3 +208,17 @@ def test_normalize_plength_fails(piece_length):
         utils.normalize_piece_length(piece_length)
     except utils.PieceLengthValueError:
         assert True   # nosec
+
+
+@pytest.mark.parametrize("size", list(range(9, 40)))
+def test_humanize_bytes(size):
+    """Test humanize bytes function from the utils module."""
+    value = 2 ** size
+    if value >= 2**30:
+        assert "GiB" in utils.humanize_bytes(value)  # nosec
+    elif value >= 2**20:
+        assert "MiB" in utils.humanize_bytes(value)  # nosec
+    elif value >= 2**10:
+        assert "KiB" in utils.humanize_bytes(value)  # nosec
+    else:
+        assert str(value) == utils.humanize_bytes(value)  # nosec

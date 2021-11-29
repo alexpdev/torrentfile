@@ -61,6 +61,24 @@ class PieceLengthValueError(Exception):
         super().__init__(message)
 
 
+def humanize_bytes(amount):
+    """Convert integer into human readable memory sized denomination.
+
+    Args:
+        amount (`int`): total number of bytes.
+
+    Returns:
+        `str` : human readable representation of the given amount of bytes.
+    """
+    if amount < 1024:
+        return str(amount)
+    if 1024 <= amount < 1_048_576:
+        return f"{amount // 1024} KiB"
+    if 1_048_576 <= amount < 1_073_741_824:
+        return f"{amount // 1_048_576} MiB"
+    return f"{amount // 1073741824} GiB"
+
+
 def normalize_piece_length(piece_length):
     """Verify input piece_length is valid and convert accordingly.
 

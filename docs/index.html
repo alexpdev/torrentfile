@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              home
             
           </span>
         </div>
@@ -211,7 +211,7 @@
   
     <li class="md-nav__item">
       <a href="examples/" class="md-nav__link">
-        Overview
+        examples
       </a>
     </li>
   
@@ -250,12 +250,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Home
+          home
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="." class="md-nav__link md-nav__link--active">
-        Home
+        home
       </a>
       
         
@@ -367,7 +367,7 @@
   
     <li class="md-nav__item">
       <a href="hasher/" class="md-nav__link">
-        Hasher
+        hasher
       </a>
     </li>
   
@@ -382,7 +382,7 @@
   
     <li class="md-nav__item">
       <a href="LICENSE/" class="md-nav__link">
-        License
+        LICENSE
       </a>
     </li>
   
@@ -397,7 +397,7 @@
   
     <li class="md-nav__item">
       <a href="progress/" class="md-nav__link">
-        Progress
+        progress
       </a>
     </li>
   
@@ -412,7 +412,7 @@
   
     <li class="md-nav__item">
       <a href="torrent/" class="md-nav__link">
-        Torrent
+        torrent
       </a>
     </li>
   
@@ -427,7 +427,7 @@
   
     <li class="md-nav__item">
       <a href="tests/" class="md-nav__link">
-        Tests
+        tests
       </a>
     </li>
   
@@ -442,7 +442,7 @@
   
     <li class="md-nav__item">
       <a href="utils/" class="md-nav__link">
-        Utils
+        utils
       </a>
     </li>
   
@@ -614,44 +614,45 @@ or by visiting <a href="https://alexpdev.github.io/torrentfile">https://alexpdev
 <p>Or download the latest release from the Release page on github.
 <a href="https://github.com/alexpdev/torrentfile/releases">https://github.com/alexpdev/torrentfile/releases</a></p>
 <h2 id="usage">Usage</h2>
-<pre><code>usage: torrentfile [-h] [-v] [-d] [-p] [-s &lt;source&gt;] [-c &lt;comment&gt;] [-a &lt;url&gt;]
-                    [--announce-list &lt;url&gt; [&lt;url&gt; ...]] [-o &lt;path&gt;]
-                    [--meta-version &lt;int&gt;] [-l &lt;int&gt;] [-r &lt;.torrent&gt;]
-                    &lt;content&gt;
+<pre><code>usage: TorrentFile [-h] [-v] [-d] [-p] [-s &lt;source&gt;] [-c &lt;comment&gt;]
+                [-o &lt;path&gt;] [--meta-version &lt;int&gt;] [-l &lt;int&gt;]
+                [-a &lt;url&gt; [&lt;url&gt; ...]] [-r &lt;.torrent&gt;]
+                &lt;content&gt;
 
- Create or Re-Check Bittorrent meta files for Bittorrent v1, v2 or v1, v2 combo
- Hybrids.
+Create and/or ReCheck Bittorrent V1, V2, and Hybrid meta files.
 
- positional arguments:
-   &lt;content&gt;                             path to .torrent file content
+positional arguments:
+&lt;content&gt;                             path to content file or directory
 
- optional arguments:
-   -h, --help                            show this help message and exit
-   -v, --version                         show program version and exit
-   -d, --debug                           output debug information
-   -p, --private                         create .torrent file for private tracker
-   -s &lt;source&gt;, --source &lt;source&gt;        specify source
-   -c &lt;comment&gt;, --comment &lt;comment&gt;     include a comment in file metadata
-   -a &lt;url&gt;, --announce &lt;url&gt;            announce url for Bittorrent tracker
-   --announce-list &lt;url&gt; [&lt;url&gt; ...]     additional tracker announce URLs
-   -o &lt;path&gt;, --out &lt;path&gt;               output path for created .torrent file
-   --meta-version &lt;int&gt;                  .torrent file version.
-                                         Options = 1, 2 or 3.
-                                         (1) = Bittorrent v1;. (Default)
-                                         (2) = Bittorrent v2.
-                                         (3) = Bittorrent v1 &amp; v2 hybrid.
+optional arguments:
+-h, --help                            show this help message and exit
+-v, --version                         show program version and exit
+-d, --debug                           output debug information
+-p, --private                         create file for private tracker
+-s &lt;source&gt;, --source &lt;source&gt;        specify source tracker
+-c &lt;comment&gt;, --comment &lt;comment&gt;     include a comment in file metadata
+-o &lt;path&gt;, --out &lt;path&gt;               output path for created .torrent file
+--meta-version &lt;int&gt;                  torrent file version.
+                                        Options = 1, 2 or 3.
+                                        (1) = Bittorrent v1 (Default)
+                                        (2) = Bittorrent v2
+                                        (3) = Bittorrent v1 &amp; v2 hybrid
 
-   -l &lt;int&gt;, --piece-length &lt;int&gt;        Specify piece size used by Bittorrent transfer protocol.
-                                         Acceptable values include numbers 14-35, and will be 
-                                         interpreted as the exponent power of 2, or any integer 
-                                         that is a perfect power of 2 in between 16KB-32MB.
-                                         e.g. `--piece-length 14` and `--piece-length  16384` 
-                                         have the same meaning.
+-l &lt;int&gt;, --piece-length &lt;int&gt;        Fixed amount of bytes for each chunk of data. (Default: None)
+                                        Acceptable input values include integers 14-24, which
+                                        will be interpreted as the exponent for 2^n, or any perfect
+                                        power of two integer between 16Kib and 16MiB (inclusive).
+                                        Examples:: [--piece-length 14] [-l 20] [-l 16777216]
 
-   -r &lt;.torrent&gt;, --re-check &lt;.torrent&gt;  &lt;.torrent&gt; is the path to a .torrent meta file.
-                                         Check &lt;content&gt; data integrity with &lt;.torrent&gt; file.
-                                         When this option is active, all other options
-                                         are ignored (except -d).
+-a &lt;url&gt; [&lt;url&gt; ...], --announce &lt;url&gt; [&lt;url&gt; ...]
+                                        one or more Bittorrent tracker announce url(s)
+                                        Examples: [-a url1 url2 url3]  [--anounce url1]
+
+-r &lt;.torrent&gt;, --check &lt;.torrent&gt;, --recheck &lt;.torrent&gt;
+                                        &lt;.torrent&gt; is the path to a .torrent meta file.
+                                        Check &lt;content&gt; data integrity with &lt;.torrent&gt; file.
+                                        If this is active, all other options are ignored
+                                        (except --debug)
 </code></pre>
 <h2 id="license">License</h2>
 <p>Distributed under the GNU LGPL v3 license. See <code>LICENSE</code> for more information.</p>
@@ -691,13 +692,13 @@ or by visiting <a href="https://alexpdev.github.io/torrentfile">https://alexpdev
       
       
         
-        <a href="hasher/" class="md-footer__link md-footer__link--next" aria-label="Next: Hasher" rel="next">
+        <a href="hasher/" class="md-footer__link md-footer__link--next" aria-label="Next: hasher" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Hasher
+              hasher
             </div>
           </div>
           <div class="md-footer__button md-icon">

@@ -1,8 +1,8 @@
 {
   "name": "torrentfile",
   "displayName": "TorrentFile",
-  "version": "0.6.1",
-  "description": "Bittorent v1 & v2 .torrent file creation.",
+  "version": "0.6.2",
+  "description": "Create Bittorent v1, v2 and hybrid meta files.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexpdev/torrentfile.git"
