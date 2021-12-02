@@ -1,8 +1,17 @@
 # TorrentFile
 
+## Version 0.6.3
+
+### Fixed 0.6.3
+
+    - Bug that would format list of trackers incorrectly
+    - CLI Bug Fixes
+
+---------------------
+
 ## Version 0.6.2
 
-### Fixed
+### Fixed 0.6.2
 
     - Bug fixes
     - Documentation error pages

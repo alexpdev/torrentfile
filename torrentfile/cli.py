@@ -123,7 +123,8 @@ def main_script(args=None):
         action="store",
         dest="meta_version",
         metavar="<int>",
-        help="""torrent file version.
+        help="""
+        Bittorrent metafile version.
         Options = 1, 2 or 3.
         (1) = Bittorrent v1 (Default)
         (2) = Bittorrent v2
@@ -156,7 +157,7 @@ def main_script(args=None):
         default="",
         help="""
         one or more Bittorrent tracker announce url(s)
-        Examples: [-a url1 url2 url3]  [--anounce url1]
+        Examples:: [-a url1 url2 url3]  [--anounce url1]
         """
     )
 

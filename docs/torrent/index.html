@@ -977,19 +977,19 @@ source, piece_length, comment, outfile.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">normalize_piece_length</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">path_piece_length</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
     <span class="c1"># Assign announce URL to empty string if none provided.</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">announce</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">announce</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">announce_list</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;&quot;</span><span class="p">]]</span>
+
     <span class="c1"># Most torrent clients have editting trackers as a feature.</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">announce</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">announce</span> <span class="o">=</span> <span class="n">announce</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">announce_list</span> <span class="o">=</span> <span class="p">[[</span><span class="n">announce</span><span class="p">]]</span>
-
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">announce</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">announce</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="c1"># if announce has more than 1 argumnt</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">announce_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">announce</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">announce_list</span> <span class="o">=</span> <span class="p">[[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">announce</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">private</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">private</span> <span class="o">=</span> <span class="mi">1</span>

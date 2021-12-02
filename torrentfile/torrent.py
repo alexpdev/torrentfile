@@ -201,19 +201,19 @@ class MetaFile:
             self.piece_length = utils.normalize_piece_length(piece_length)
         else:
             self.piece_length = utils.path_piece_length(self.path)
+
         # Assign announce URL to empty string if none provided.
         if not announce:
             self.announce = ""
             self.announce_list = [[""]]
+
         # Most torrent clients have editting trackers as a feature.
         elif isinstance(announce, str):
             self.announce = announce
             self.announce_list = [[announce]]
-
         elif isinstance(announce, Sequence):
             self.announce = announce[0]
-            # if announce has more than 1 argumnt
-            self.announce_list = [announce]
+            self.announce_list = [[i] for i in announce]
 
         if private:
             self.private = 1
