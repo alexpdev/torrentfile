@@ -118,7 +118,7 @@ def get_piece_length(size):
       piece_length (`int`): Ideal peace length size arguement.
     """
     exp = 14
-    while size / (2 ** exp) > 200 and exp < 23:
+    while size / (2 ** exp) > 200 and exp < 24:
         exp += 1
     return 2 ** exp
 

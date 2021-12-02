@@ -1,7 +1,7 @@
 {
   "name": "torrentfile",
   "displayName": "TorrentFile",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Create Bittorent v1, v2 and hybrid meta files.",
   "repository": {
     "type": "git",
@@ -13,14 +13,8 @@
   "url": "https://github.com/alexpdev",
   "keywords": [
     "Bittorrent",
-    "metadata",
     "torrent",
-    "p2p",
-    "bittorrent-meta",
-    "torrent-meta",
-    "torrent-metafiles",
     "bittorrent-metafiles",
-    "metafile",
     "bittorrent-protocol"
   ],
   "bugs": {
