@@ -69,7 +69,7 @@ lint: ## Check for styling errors
 
 test: lint ## run tests quickly with the default Python
 	@echo Testing
-	pytest tests --cov=torrentfile --cov=tests --pylint
+	pytest --cov=torrentfile --cov=tests --pylint tests
 	coverage xml -o coverage.xml
 
 push: clean lint test docs ## push to remote repo
@@ -102,7 +102,7 @@ build: clean install
 	python -c "$$FIX_BIN_VERSION_FILES"
 
 install: ## Install Locally
-	pip install --upgrade -rrequirements.txt --no-cache-dir
+	pip install --upgrade -rrequirements.txt --no-cache-dir --pre
 	pip install -e .
 
 branch: clean ## Switch git branches after changes have been made
