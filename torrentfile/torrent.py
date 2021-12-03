@@ -25,8 +25,8 @@ Constants:
     BLOCK_SIZE (`int`): size of leaf hashes for merkle tree.
     HASH_SIZE (`int`): Length of a sha256 hash.
 
-## Notes
---------
+Notes
+-----
 Implementation details for Bittorrent Protocol v2.
 
 Metainfo files (also known as .torrent files) are bencoded dictionaries
@@ -175,7 +175,7 @@ class MetaFile:
 
     Args:
         path (`str`): target path to torrent content.
-        announce (`str`): Tracker URL.
+        announce (`str`): One or more tracker URL's.
         comment (`str`): A comment.
         piece_length (`int`): Size of torrent pieces.
         private (`bool`): For private trackers?
@@ -185,11 +185,7 @@ class MetaFile:
 
     def __init__(self, path=None, announce=None, private=False,
                  source=None, piece_length=None, comment=None, outfile=None):
-        """Construct MetaFile superclass and assign local attributes.
-
-        Keyword parameters include path, announce, private,
-        source, piece_length, comment, outfile.
-        """
+        """Construct MetaFile superclass and assign local attributes."""
         if not path:
             raise utils.MissingPathError
 
@@ -283,8 +279,7 @@ class TorrentFile(MetaFile):
     Args:
         path(`str`): Path to torrent file or directory.
         piece_length(`int`): Size of each piece of torrent data.
-        announce(`str`): Tracker URL.
-        announce_list(`str` or `list`): Additional Tracker URLs.
+        announce(`str` or `list`): One or more tracker URL's.
         private(`int`): 1 if private torrent else 0.
         source(`str`): Source tracker.
         comment(`str`): Comment string.
@@ -292,7 +287,7 @@ class TorrentFile(MetaFile):
     """
 
     def __init__(self, **kwargs):
-        """Construct TorrentFile class instance with given keyword args.
+        """Construct TorrentFile instance with given keyword args.
 
         Args:
             kwargs (`dict`): dictionary of keyword args passed to superclass.
@@ -335,8 +330,7 @@ class TorrentFileV2(MetaFile):
     Args:
         path (`str`): Path to torrent file or directory.
         piece_length (`int`): Size of each piece of torrent data.
-        announce (`str`): Tracker URL.
-        announce_list ('list`): List of additional trackers.
+        announce (`str` or `list`): one or more tracker URL's.
         private (`int`): 1 if private torrent else 0.
         source (`str`): Source tracker.
         comment (`str`): Comment string.
@@ -406,8 +400,7 @@ class TorrentFileHybrid(MetaFile):
 
     Args:
         path (`str`): path to torrentfile target.
-        announce (`str`): Tracker URL.
-        announce_list (`list`): Additional tracker URLs.
+        announce (`str` or `list`): one or more tracker URL's.
         comment (`str`): Some comment.
         source (`str`): Used for private trackers.
         outfile (`str`): target path to write output.

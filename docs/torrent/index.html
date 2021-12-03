@@ -733,7 +733,6 @@ to constructing .torrent files using Bittorrent v2 Protocol</p>
     BLOCK_SIZE (<code>int</code>): size of leaf hashes for merkle tree.
     HASH_SIZE (<code>int</code>): Length of a sha256 hash.</p>
 <h3 id="torrentfile.torrent--notes">Notes</h3>
-<hr />
 <p>Implementation details for Bittorrent Protocol v2.</p>
 <p>Metainfo files (also known as .torrent files) are bencoded dictionaries
 with the following keys:</p>
@@ -890,7 +889,7 @@ MetaFile        </code>
       <tr>
         <td><code>announce</code></td>
         <td><code>`str`</code></td>
-        <td><p>Tracker URL.</p></td>
+        <td><p>One or more tracker URL's.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
@@ -954,18 +953,12 @@ MetaFile        </code>
     <div class="doc doc-contents ">
 
       <p>Construct MetaFile superclass and assign local attributes.</p>
-<p>Keyword parameters include path, announce, private,
-source, piece_length, comment, outfile.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
              <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Construct MetaFile superclass and assign local attributes.</span>
-
-<span class="sd">    Keyword parameters include path, announce, private,</span>
-<span class="sd">    source, piece_length, comment, outfile.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Construct MetaFile superclass and assign local attributes.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">MissingPathError</span>
 
@@ -1213,15 +1206,9 @@ TorrentFile            (<a title="torrentfile.torrent.MetaFile" href="#torrentfi
         <td><em>required</em></td>
       </tr>
       <tr>
-        <td><code>announce(`str`)</code></td>
-        <td></td>
-        <td><p>Tracker URL.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>announce_list(`str`</code></td>
+        <td><code>announce(`str`</code></td>
         <td><code>or `list`</code></td>
-        <td><p>Additional Tracker URLs.</p></td>
+        <td><p>One or more tracker URL's.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
@@ -1278,7 +1265,7 @@ TorrentFile            (<a title="torrentfile.torrent.MetaFile" href="#torrentfi
 
     <div class="doc doc-contents ">
 
-      <p>Construct TorrentFile class instance with given keyword args.</p>
+      <p>Construct TorrentFile instance with given keyword args.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -1302,7 +1289,7 @@ TorrentFile            (<a title="torrentfile.torrent.MetaFile" href="#torrentfi
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Construct TorrentFile class instance with given keyword args.</span>
+    <span class="sd">&quot;&quot;&quot;Construct TorrentFile instance with given keyword args.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        kwargs (`dict`): dictionary of keyword args passed to superclass.</span>
@@ -1429,14 +1416,8 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
       </tr>
       <tr>
         <td><code>announce</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Tracker URL.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>announce_list</code></td>
-        <td><code>`list`</code></td>
-        <td><p>Additional tracker URLs.</p></td>
+        <td><code>`str` or `list`</code></td>
+        <td><p>one or more tracker URL's.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
@@ -1610,14 +1591,8 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
       </tr>
       <tr>
         <td><code>announce</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Tracker URL.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>announce_list</code></td>
-        <td><code>&#39;list`</code></td>
-        <td><p>List of additional trackers.</p></td>
+        <td><code>`str` or `list`</code></td>
+        <td><p>one or more tracker URL's.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>

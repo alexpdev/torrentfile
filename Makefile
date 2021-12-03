@@ -42,9 +42,6 @@ help:
 
 clean: clean-build ## remove all build, test, coverage and Python artifacts
 
-environment: ## environment
-	.\env\Scripts\activate.bat
-
 clean-build: ## remove build artifacts
 	@echo Cleaning
 	rm -fr build/
@@ -59,7 +56,7 @@ clean-build: ## remove build artifacts
 	rm -fr .pytest_cache
 	rm -f *.spec
 
-lint: environment ## Check for styling errors
+lint: ## Check for styling errors
 	@echo Linting
 	autopep8 --recursive torrentfile tests
 	isort torrentfile tests
@@ -70,26 +67,25 @@ lint: environment ## Check for styling errors
 	prospector torrentfile
 	prospector tests
 
-test: environment ## run tests quickly with the default Python
+test: lint ## run tests quickly with the default Python
 	@echo Testing
-	pytest tests --cov=torrentfile --cov=tests --pylint
+	pytest --cov=torrentfile --cov=tests --pylint tests
 	coverage xml -o coverage.xml
 
 push: clean lint test docs ## push to remote repo
 	@echo pushing to remote
 	git add .
 	git commit -m "$m"
-	git push -u origin dev
+	git push
 	bash codacy.sh report -r coverage.xml
 
-docs: environment ## Regenerate docs from changes
+docs: ## Regenerate docs from changes
 	rm -rf docs/*
 	mkdocs -q build
 	touch docs/.nojekyll
 
 build: clean install
 	python setup.py sdist bdist_wheel bdist_egg
-	twine upload dist/*
 	rm -rfv ../runner
 	mkdir ../runner
 	touch ../runner/exe
@@ -106,7 +102,7 @@ build: clean install
 	python -c "$$FIX_BIN_VERSION_FILES"
 
 install: ## Install Locally
-	pip install --upgrade -rrequirements.txt --no-cache-dir
+	pip install --upgrade -rrequirements.txt --no-cache-dir --pre
 	pip install -e .
 
 branch: clean ## Switch git branches after changes have been made
