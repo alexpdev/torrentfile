@@ -67,7 +67,7 @@ lint: ## Check for styling errors
 	prospector torrentfile
 	prospector tests
 
-test: ## run tests quickly with the default Python
+test: lint ## run tests quickly with the default Python
 	@echo Testing
 	pytest tests --cov=torrentfile --cov=tests --pylint
 	coverage xml -o coverage.xml
@@ -76,7 +76,7 @@ push: clean lint test docs ## push to remote repo
 	@echo pushing to remote
 	git add .
 	git commit -m "$m"
-	git push -u origin dev
+	git push
 	bash codacy.sh report -r coverage.xml
 
 docs: ## Regenerate docs from changes
@@ -86,7 +86,6 @@ docs: ## Regenerate docs from changes
 
 build: clean install
 	python setup.py sdist bdist_wheel bdist_egg
-	twine upload dist/*
 	rm -rfv ../runner
 	mkdir ../runner
 	touch ../runner/exe
