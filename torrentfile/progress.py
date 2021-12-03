@@ -11,7 +11,14 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Module container Checker classes and providing checker functionality."""
+"""Module container Checker Class.
+
+The CheckerClass takes a torrentfile and tha path to it's contents.
+It will then iterate through every file and directory contained
+and compare their data to values contained within the torrent file.
+Completion percentages will be printed to screen for each file and
+at the end for the torrentfile as a whole.
+"""
 
 import logging
 import math

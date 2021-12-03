@@ -1,0 +1,15 @@
+language: python
+os: linux
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install python3 python3-pip
+
+install:
+  - python3 -m pip install --upgrade pip
+  - pip3 install pyben pytest tqdm prospector bandit pytest-cov
+
+script:
+  - make test
+  - make build
+  - make install
+  - pytest --cov=torrentfile --cov=tests tests

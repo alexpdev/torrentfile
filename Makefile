@@ -42,9 +42,6 @@ help:
 
 clean: clean-build ## remove all build, test, coverage and Python artifacts
 
-environment: ## environment
-	.\env\Scripts\activate.bat
-
 clean-build: ## remove build artifacts
 	@echo Cleaning
 	rm -fr build/
@@ -59,7 +56,7 @@ clean-build: ## remove build artifacts
 	rm -fr .pytest_cache
 	rm -f *.spec
 
-lint: environment ## Check for styling errors
+lint: ## Check for styling errors
 	@echo Linting
 	autopep8 --recursive torrentfile tests
 	isort torrentfile tests
@@ -70,7 +67,7 @@ lint: environment ## Check for styling errors
 	prospector torrentfile
 	prospector tests
 
-test: environment ## run tests quickly with the default Python
+test: ## run tests quickly with the default Python
 	@echo Testing
 	pytest tests --cov=torrentfile --cov=tests --pylint
 	coverage xml -o coverage.xml
@@ -82,7 +79,7 @@ push: clean lint test docs ## push to remote repo
 	git push -u origin dev
 	bash codacy.sh report -r coverage.xml
 
-docs: environment ## Regenerate docs from changes
+docs: ## Regenerate docs from changes
 	rm -rf docs/*
 	mkdocs -q build
 	touch docs/.nojekyll
