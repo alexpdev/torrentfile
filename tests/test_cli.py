@@ -137,6 +137,7 @@ def test_cli_with_all_args_v3(struct, start, stop):
         "-d",
         "-t",
         "https://tracker-url.com/announce",
+        "--align-pieces",
         "--comment",
         "some comment",
         "--piece-length",
@@ -153,7 +154,7 @@ def test_cli_with_all_args_v3(struct, start, stop):
 @pytest.mark.parametrize("version", [2, 3])
 @pytest.mark.parametrize("field", ["announce", "announce list",
                                    "piece layers", "created by",
-                                   "info", "creation date"])
+                                   "info", "creation date", "url-list"])
 @pytest.mark.parametrize("struct", Temp.structs)
 def test_cli_meta_output_v2_3(struct, field, version):
     """Test CLI output torrentfile meta dict fields v2 and hybrid."""
@@ -168,6 +169,9 @@ def test_cli_meta_output_v2_3(struct, field, version):
         "https://tracker-url.com/announce",
         "https://tracker2-url.com/announce",
         "https://tracker3-url.com/announce",
+        "-w",
+        "http://someurl.com/link",
+        "http://other.net/link",
         "--comment",
         "some comment",
         "--piece-length",
@@ -224,6 +228,7 @@ def test_cli_info_output_v1(struct, field):
         "torrentfile",
         tdir,
         "-d",
+        "--align-pieces",
         "-t",
         "https://tracker-url.com/announce",
         "https://tracker2-url.com/announce",
@@ -243,7 +248,8 @@ def test_cli_info_output_v1(struct, field):
 
 
 @pytest.mark.parametrize("field", ["announce", "created by",
-                                   "creation date", "info"])
+                                   "creation date", "info",
+                                   "announce list", "url-list"])
 @pytest.mark.parametrize("struct", Temp.structs)
 def test_cli_meta_output_v1(struct, field):
     """Test CLI output v1 file meta dict specific arguments."""
@@ -256,6 +262,9 @@ def test_cli_meta_output_v1(struct, field):
         "https://tracker-url.com/announce",
         "https://tracker2-url.com/announce",
         "https://tracker3-url.com/announce",
+        "-w",
+        "http://urlforfile.site/link",
+        "http://some.thing/link",
         "--comment",
         "some comment",
         "--piece-length",

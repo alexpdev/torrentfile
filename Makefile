@@ -67,12 +67,12 @@ lint: ## Check for styling errors
 	prospector torrentfile
 	prospector tests
 
-test: lint ## run tests quickly with the default Python
+test: ## run tests quickly with the default Python
 	@echo Testing
 	pytest --cov=torrentfile --cov=tests --pylint --maxfail=2 tests
 	coverage xml -o coverage.xml
 
-push: clean test docs ## push to remote repo
+push: test ## push to remote repo
 	@echo pushing to remote
 	bash codacy.sh report -r coverage.xml
 	rm coverage.xml

@@ -90,18 +90,6 @@ def main_script(args=None):
     )
 
     parser.add_argument(
-        "--align-pieces",
-        action="store_true",
-        dest="align",
-        help="""
-        Align pieces to file boundaries.
-        This option prevents torrent pieces from spanning two
-        different files, and applies to meta-version 1 files
-        only.
-        """,
-    )
-
-    parser.add_argument(
         "-s",
         "--source",
         action="store",
@@ -126,6 +114,18 @@ def main_script(args=None):
         dest="outfile",
         metavar="<path>",
         help="output path for created .torrent file",
+    )
+
+    parser.add_argument(
+        "--align-pieces",
+        action="store_true",
+        dest="align",
+        help="""
+        Align pieces to file boundaries.
+        This option prevents torrent pieces from spanning two
+        different files, and applies to meta-version 1 files
+        only.
+        """,
     )
 
     parser.add_argument(

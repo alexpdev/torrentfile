@@ -311,39 +311,37 @@ class TorrentFile(MetaFile):
         if os.path.isfile(self.path):
             info["length"] = size
 
-        if not self.align:
-            info["files"] = [
-                {
-                    "length": os.path.getsize(path),
-                    "path": os.path.relpath(path, self.path).split(os.sep),
-                }
-                for path in filelist
-            ]
-
-            pieces = bytearray()
-            feeder = Feeder(filelist, self.piece_length, size)
-            for piece in feeder:
-                pieces.extend(piece)
-
-            info["pieces"] = pieces
         else:
-            files = []
-            for path in filelist:
-                total = os.path.getsize(path)
-                files.append({
-                    "length": total,
-                    "path": os.path.relpath(path, self.path).split(os.sep),
-                })
-                remainder = total % self.piece_length
-                if remainder:
+            if not self.align:
+                info["files"] = [
+                    {
+                        "length": os.path.getsize(path),
+                        "path": os.path.relpath(path, self.path).split(os.sep),
+                    }
+                    for path in filelist
+                ]
+            else:
+                files = info["files"] = []
+                for path in filelist:
+                    total = os.path.getsize(path)
+                    remainder = total % self.piece_length
                     files.append({
-                        "attr": "p",
-                        "length": remainder,
-                        "path": [".pad", str(remainder)]
+                        "length": total,
+                        "path": os.path.relpath(path, self.path).split(os.sep),
                     })
+                    if remainder:
+                        files.append({
+                            "attr": "p",
+                            "length": remainder,
+                            "path": [".pad", str(remainder)]
+                        })
 
-            pieces = bytearray()
-            feeder = Feeder(filelist, self.piece_length, size, align=True)
+        pieces = bytearray()
+        feeder = Feeder(filelist, self.piece_length, size, align=True)
+        for piece in feeder:
+            pieces.extend(piece)
+
+        info["pieces"] = pieces
 
 
 class TorrentFileV2(MetaFile):
@@ -445,12 +443,15 @@ class TorrentFileHybrid(MetaFile):
         """Assemble the parts of the torrentfile into meta dictionary."""
         info = self.meta["info"]
         info["meta version"] = 2
+
         if os.path.isfile(self.path):
             info["file tree"] = {self.name: self._traverse(self.path)}
             info["length"] = os.path.getsize(self.path)
+
         else:
             info["file tree"] = self._traverse(self.path)
             info["files"] = self.files
+
         info["pieces"] = b"".join(self.pieces)
         self.meta["piece layers"] = self.piece_layers
         return info
@@ -463,25 +464,21 @@ class TorrentFileHybrid(MetaFile):
         """
         if os.path.isfile(path):
             fsize = os.path.getsize(path)
-
             self.files.append(
                 {
                     "length": fsize,
                     "path": os.path.relpath(path, self.path).split(os.sep),
                 }
             )
-
             if fsize == 0:
                 return {"": {"length": fsize}}
 
             fhash = HybridHash(path, self.piece_length)
-
             if fsize > self.piece_length:
                 self.piece_layers[fhash.root] = fhash.piece_layer
 
             self.hashes.append(fhash)
             self.pieces.extend(fhash.pieces)
-
             if fhash.padding_file:
                 self.files.append(fhash.padding_file)
 
@@ -489,7 +486,6 @@ class TorrentFileHybrid(MetaFile):
 
         tree = {}
         if os.path.isdir(path):
-
             for base, full in utils.sortfiles(path):
                 tree[base] = self._traverse(full)
 
