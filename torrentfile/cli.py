@@ -90,6 +90,18 @@ def main_script(args=None):
     )
 
     parser.add_argument(
+        "--align-pieces",
+        action="store_true",
+        dest="align",
+        help="""
+        Align pieces to file boundaries.
+        This option prevents torrent pieces from spanning two
+        different files, and applies to meta-version 1 files
+        only.
+        """,
+    )
+
+    parser.add_argument(
         "-s",
         "--source",
         action="store",
@@ -139,7 +151,7 @@ def main_script(args=None):
         dest="piece_length",
         metavar="<int>",
         help="""
-        Fixed amount of bytes for each chunk of data. (Default: None)
+        Fixed size container for data transfer between peers.
         Acceptable input values include integers 14-24, which
         will be interpreted as the exponent for 2^n, or any perfect
         power of two integer between 16Kib and 16MiB (inclusive).
@@ -148,16 +160,29 @@ def main_script(args=None):
     )
 
     parser.add_argument(
-        "-a",
-        "--announce",
+        "-t",
+        "--tracker",
         action="store",
-        dest="announce",
+        dest="tracker",
         metavar="<url>",
         nargs="+",
         default="",
         help="""
-        one or more Bittorrent tracker announce url(s)
+        one or more tracker announce url(s).
         Examples:: [-a url1 url2 url3]  [--anounce url1]
+        """
+    )
+
+    parser.add_argument(
+        "-w",
+        "--web-seeds",
+        action="store",
+        dest="web_seeds",
+        metavar="<url>",
+        nargs="+",
+        help="""
+        one or more locations on the web for any or all files
+        within the torrent, an alternative source for torrent data.
         """
     )
 
@@ -208,8 +233,10 @@ def main_script(args=None):
 
     kwargs = {
         "path": flags.content,
-        "announce": flags.announce,
+        "announce": flags.tracker,
+        "web_seeds": flags.web_seeds,
         "piece_length": flags.piece_length,
+        "align": flags.align,
         "source": flags.source,
         "private": flags.private,
         "outfile": flags.outfile,

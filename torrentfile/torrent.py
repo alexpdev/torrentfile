@@ -184,7 +184,8 @@ class MetaFile:
     """
 
     def __init__(self, path=None, announce=None, private=False,
-                 source=None, piece_length=None, comment=None, outfile=None):
+                 source=None, piece_length=None, comment=None,
+                 outfile=None, web_seeds=None, align=None):
         """Construct MetaFile superclass and assign local attributes."""
         if not path:
             raise utils.MissingPathError
@@ -211,14 +212,13 @@ class MetaFile:
             self.announce = announce[0]
             self.announce_list = [[i] for i in announce]
 
-        if private:
-            self.private = 1
-        else:
-            self.private = private
-
+        self.align = align
+        self.private = 1 if private else private
+        self.web_seeds = web_seeds
         self.source = source
         self.comment = comment
         self.outfile = outfile
+
         self.meta = {
             "announce": self.announce,
             "announce list": self.announce_list,
@@ -226,12 +226,15 @@ class MetaFile:
             "creation date": int(datetime.timestamp(datetime.now())),
             "info": {}
         }
+
         if self.comment:
             self.meta["info"]["comment"] = self.comment
         if self.private:
             self.meta["info"]["private"] = self.private
         if self.source:
             self.meta["info"]["source"] = self.source
+        if self.web_seeds:
+            self.meta["url-list"] = self.web_seeds
         self.meta["info"]["name"] = os.path.basename(self.path)
         self.meta["info"]["piece length"] = self.piece_length
 
@@ -307,7 +310,8 @@ class TorrentFile(MetaFile):
 
         if os.path.isfile(self.path):
             info["length"] = size
-        else:
+
+        if not self.align:
             info["files"] = [
                 {
                     "length": os.path.getsize(path),
@@ -316,12 +320,30 @@ class TorrentFile(MetaFile):
                 for path in filelist
             ]
 
-        pieces = bytearray()
-        feeder = Feeder(filelist, self.piece_length, size)
-        for piece in feeder:
-            pieces.extend(piece)
+            pieces = bytearray()
+            feeder = Feeder(filelist, self.piece_length, size)
+            for piece in feeder:
+                pieces.extend(piece)
 
-        info["pieces"] = pieces
+            info["pieces"] = pieces
+        else:
+            files = []
+            for path in filelist:
+                total = os.path.getsize(path)
+                files.append({
+                    "length": total,
+                    "path": os.path.relpath(path, self.path).split(os.sep),
+                })
+                remainder = total % self.piece_length
+                if remainder:
+                    files.append({
+                        "attr": "p",
+                        "length": remainder,
+                        "path": [".pad", str(remainder)]
+                    })
+
+            pieces = bytearray()
+            feeder = Feeder(filelist, self.piece_length, size, align=True)
 
 
 class TorrentFileV2(MetaFile):

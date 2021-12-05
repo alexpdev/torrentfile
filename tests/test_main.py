@@ -29,7 +29,7 @@ def tfile(request):
     args = [
         "torrentfile",
         "--private",
-        "--announce",
+        "--tracker",
         "https://tracker1.to/announce",
         "--source",
         "TFile",
@@ -54,7 +54,7 @@ def test_main_announce_list(tfile):
     args, path = tfile
     sys.argv = args + [
         path,
-        "-a",
+        "-t",
         "https://tracker2/announce",
         "https://tracker3/announce",
         "https://tracker4/announce",
@@ -70,7 +70,7 @@ def test_main_annlist_single(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "-a",
+        "-t",
         "https://tracker2/announce",
     ]
     sys.argv.insert(1, path)
@@ -142,7 +142,7 @@ def test_main_annlist_v2(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "-a",
+        "-t",
         "https://tracker2/announce",
         "https://tracker3/announce",
         "https://tracker4/announce",
@@ -160,7 +160,7 @@ def test_main_annlist_v3(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "-a",
+        "-t",
         "https://tracker2/announce",
         "https://tracker3/announce",
         "https://tracker4/announce",
@@ -179,7 +179,7 @@ def test_main_annlist_single_v2(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "-a",
+        "-t",
         "https://tracker2/announce",
         "--meta-version",
         "2",
@@ -195,7 +195,7 @@ def test_main_annlist_single_v3(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "-a",
+        "-t",
         "https://tracker2/announce",
         "--meta-version",
         "3",
@@ -211,7 +211,7 @@ def test_main_annlist_single_v1(tfile):
     """Test main function with announce list flag."""
     args, path = tfile
     sys.argv = args + [
-        "-a",
+        "-t",
         "https://tracker2/announce",
         "--meta-version",
         "1",

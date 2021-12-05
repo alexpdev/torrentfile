@@ -726,6 +726,18 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--align-pieces&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;align&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        Align pieces to file boundaries.</span>
+<span class="s2">        This option prevents torrent pieces from spanning two</span>
+<span class="s2">        different files, and applies to meta-version 1 files</span>
+<span class="s2">        only.</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;-s&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
@@ -775,7 +787,7 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;piece_length&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;int&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Fixed amount of bytes for each chunk of data. (Default: None)</span>
+<span class="s2">        Fixed size container for data transfer between peers.</span>
 <span class="s2">        Acceptable input values include integers 14-24, which</span>
 <span class="s2">        will be interpreted as the exponent for 2^n, or any perfect</span>
 <span class="s2">        power of two integer between 16Kib and 16MiB (inclusive).</span>
@@ -784,16 +796,29 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--tracker&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;tracker&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        one or more Bittorrent tracker announce url(s)</span>
+<span class="s2">        one or more tracker announce url(s).</span>
 <span class="s2">        Examples:: [-a url1 url2 url3]  [--anounce url1]</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-w&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--web-seeds&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;web_seeds&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        one or more locations on the web for any or all files</span>
+<span class="s2">        within the torrent, an alternative source for torrent data.</span>
 <span class="s2">        &quot;&quot;&quot;</span>
     <span class="p">)</span>
 
@@ -844,8 +869,10 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
 
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
-        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">announce</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">tracker</span><span class="p">,</span>
+        <span class="s2">&quot;web_seeds&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">web_seeds</span><span class="p">,</span>
         <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
+        <span class="s2">&quot;align&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">align</span><span class="p">,</span>
         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
         <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">private</span><span class="p">,</span>
         <span class="s2">&quot;outfile&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">outfile</span><span class="p">,</span>

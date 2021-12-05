@@ -9,7 +9,9 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2da47ec1b5904538a40230f049a02be4)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/2da47ec1b5904538a40230f049a02be4)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Coverage)
 ![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile?style=plastic)
-![GitHub](https://img.shields.io/github/license/alexpdev/torrentfile?style=plastic)
+![GitHub license](https://img.shields.io/github/license/alexpdev/torrentfile?style=plastic)
+[![Build Status](https://app.travis-ci.com/alexpdev/torrentfile.svg?branch=master)](https://app.travis-ci.com/alexpdev/torrentfile)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/torrentfile?style=plastic)
 
 _TorrentFile_ can create torrent files, Check content for accuracy and completeness with a
 .torrent file, and display detailed information contained in a .torrent file.

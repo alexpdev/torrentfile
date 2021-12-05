@@ -36,11 +36,12 @@ class Feeder:
       total (`int`): Sum of all files in file list.
     """
 
-    def __init__(self, paths, piece_length, total):
+    def __init__(self, paths, piece_length, total, align=False):
         """Generate hashes of piece length data from filelist contents."""
         self.piece_length = piece_length
         self.paths = paths
         self.total = total
+        self.align = align
         self.pieces = []
         self.index = 0
         self.piece_count = 0
@@ -99,7 +100,7 @@ class Feeder:
             if size == 0:
                 if not self.next_file():
                     break
-            elif size < self.piece_length:
+            elif size < self.piece_length and not self.align:
                 yield self._handle_partial(piece[:size], size)
             else:
                 yield sha1(piece).digest()  # nosec

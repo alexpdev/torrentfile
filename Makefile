@@ -69,15 +69,16 @@ lint: ## Check for styling errors
 
 test: lint ## run tests quickly with the default Python
 	@echo Testing
-	pytest --cov=torrentfile --cov=tests --pylint tests
+	pytest --cov=torrentfile --cov=tests --pylint --maxfail=2 tests
 	coverage xml -o coverage.xml
 
-push: clean lint test docs ## push to remote repo
+push: clean test docs ## push to remote repo
 	@echo pushing to remote
+	bash codacy.sh report -r coverage.xml
+	rm coverage.xml
 	git add .
 	git commit -m "$m"
 	git push
-	bash codacy.sh report -r coverage.xml
 
 docs: ## Regenerate docs from changes
 	rm -rf docs/*

@@ -4758,7 +4758,7 @@ Temp        </code>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
         <span class="n">tdir</span><span class="p">,</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3-url.com/announce&quot;</span><span class="p">,</span>
@@ -4812,7 +4812,7 @@ Temp        </code>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="nb">str</span><span class="p">(</span><span class="n">version</span><span class="p">),</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3-url.com/announce&quot;</span><span class="p">,</span>
@@ -4862,7 +4862,7 @@ Temp        </code>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
         <span class="n">tdir</span><span class="p">,</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3-url.com/announce&quot;</span><span class="p">,</span>
@@ -4916,7 +4916,7 @@ Temp        </code>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="nb">str</span><span class="p">(</span><span class="n">version</span><span class="p">),</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3-url.com/announce&quot;</span><span class="p">,</span>
@@ -4998,7 +4998,7 @@ Temp        </code>
         <span class="n">tdir</span><span class="p">,</span>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;3&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
         <span class="s2">&quot;some comment&quot;</span><span class="p">,</span>
@@ -5047,7 +5047,7 @@ Temp        </code>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;2&quot;</span><span class="p">,</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
         <span class="s2">&quot;some comment&quot;</span><span class="p">,</span>
@@ -5096,7 +5096,7 @@ Temp        </code>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;3&quot;</span><span class="p">,</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
         <span class="s2">&quot;some comment&quot;</span><span class="p">,</span>
@@ -5760,7 +5760,7 @@ Temp        </code>
     <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
     <span class="p">]</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
@@ -5797,7 +5797,7 @@ Temp        </code>
     <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;1&quot;</span><span class="p">,</span>
@@ -5835,7 +5835,7 @@ Temp        </code>
     <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;2&quot;</span><span class="p">,</span>
@@ -5873,7 +5873,7 @@ Temp        </code>
     <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;3&quot;</span><span class="p">,</span>
@@ -5911,7 +5911,7 @@ Temp        </code>
     <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
@@ -5951,7 +5951,7 @@ Temp        </code>
     <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
@@ -5993,7 +5993,7 @@ Temp        </code>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
         <span class="n">path</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
@@ -6065,7 +6065,7 @@ Temp        </code>
     <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--tracker&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker1.to/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
         <span class="s2">&quot;TFile&quot;</span><span class="p">,</span>
@@ -9235,7 +9235,7 @@ Temp        </code>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
         <span class="n">tdir</span><span class="p">,</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3-url.com/announce&quot;</span><span class="p">,</span>
@@ -9289,7 +9289,7 @@ Temp        </code>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="nb">str</span><span class="p">(</span><span class="n">version</span><span class="p">),</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3-url.com/announce&quot;</span><span class="p">,</span>
@@ -9339,7 +9339,7 @@ Temp        </code>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
         <span class="n">tdir</span><span class="p">,</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3-url.com/announce&quot;</span><span class="p">,</span>
@@ -9393,7 +9393,7 @@ Temp        </code>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="nb">str</span><span class="p">(</span><span class="n">version</span><span class="p">),</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3-url.com/announce&quot;</span><span class="p">,</span>
@@ -9475,7 +9475,7 @@ Temp        </code>
         <span class="n">tdir</span><span class="p">,</span>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;3&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
         <span class="s2">&quot;some comment&quot;</span><span class="p">,</span>
@@ -9524,7 +9524,7 @@ Temp        </code>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;2&quot;</span><span class="p">,</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
         <span class="s2">&quot;some comment&quot;</span><span class="p">,</span>
@@ -9573,7 +9573,7 @@ Temp        </code>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;3&quot;</span><span class="p">,</span>
         <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker-url.com/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
         <span class="s2">&quot;some comment&quot;</span><span class="p">,</span>
@@ -11830,7 +11830,7 @@ Temp        </code>
     <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
     <span class="p">]</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
@@ -11867,7 +11867,7 @@ Temp        </code>
     <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;1&quot;</span><span class="p">,</span>
@@ -11905,7 +11905,7 @@ Temp        </code>
     <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;2&quot;</span><span class="p">,</span>
@@ -11943,7 +11943,7 @@ Temp        </code>
     <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="s2">&quot;3&quot;</span><span class="p">,</span>
@@ -11981,7 +11981,7 @@ Temp        </code>
     <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
@@ -12021,7 +12021,7 @@ Temp        </code>
     <span class="sd">&quot;&quot;&quot;Test main function with announce list flag.&quot;&quot;&quot;</span>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
@@ -12063,7 +12063,7 @@ Temp        </code>
     <span class="n">args</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tfile</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span> <span class="o">+</span> <span class="p">[</span>
         <span class="n">path</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker2/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker3/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker4/announce&quot;</span><span class="p">,</span>
@@ -12135,7 +12135,7 @@ Temp        </code>
     <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--announce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--tracker&quot;</span><span class="p">,</span>
         <span class="s2">&quot;https://tracker1.to/announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
         <span class="s2">&quot;TFile&quot;</span><span class="p">,</span>
