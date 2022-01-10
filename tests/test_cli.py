@@ -11,260 +11,322 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Test CLI script functionality."""
+"""Testing functions for the command line interface."""
 
+import datetime
 import os
 import sys
 
 import pyben
 import pytest
 
-from tests.context import Temp, build, rmpath
-from torrentfile import main, main_script
+from tests import dir1, dir2, rmpath
+from torrentfile.cli import main
 
 
-@pytest.mark.parametrize("struct", Temp.structs)
-@pytest.mark.parametrize("start", list(range(14, 19)))
-@pytest.mark.parametrize("stop", list(range(19, 23)))
-def test_cli_args_dir(struct, start, stop):
-    """Test CLI script with only path as arguement."""
-    args = [build(struct, start, stop)]
-    sys.argv = [sys.argv[0]] + args
-    parser = main_script()
-    assert os.path.exists(parser.outfile)  # nosec
-    rmpath(parser.outfile)
+def test_cli_v1(dir1):
+    """Basic create torrent cli command."""
+    args = ["torrentfile", "create", str(dir1)]
+    sys.argv = args
+    main()
+    assert os.path.exists(str(dir1) + ".torrent")
+    rmpath(str(dir1) + ".torrent")
 
 
-@pytest.mark.parametrize("struct", Temp.structs)
-@pytest.mark.parametrize("start", list(range(14, 19)))
-@pytest.mark.parametrize("stop", list(range(19, 23)))
-def test_cli_args_dir_v2(struct, start, stop):
-    """Test CLI script with minimal arguments v2."""
-    tdir = build(struct, start, stop)
-    args = [tdir, "--meta-version", "2"]
-    sys.argv = [sys.argv[0]] + args
-    parser = main_script()
-    assert os.path.exists(parser.outfile)  # nosec
-    rmpath(parser.outfile)
+def test_cli_v2(dir1):
+    """Create torrent v2 cli command."""
+    args = ["torrentfile", "create", str(dir1), "--meta-version", "2"]
+    sys.argv = args
+    main()
+    assert os.path.exists(str(dir1) + ".torrent")
+    rmpath(str(dir1) + ".torrent")
 
 
-@pytest.mark.parametrize("struct", Temp.structs)
-@pytest.mark.parametrize("start", list(range(14, 19)))
-@pytest.mark.parametrize("stop", list(range(19, 23)))
-def test_cli_args_dir_v3(struct, start, stop):
-    """Test CLI script with minimal arguments v3."""
-    tdir = build(struct, start, stop)
-    args = [tdir, "--meta-version", "3"]
-    sys.argv = [sys.argv[0]] + args
-    parser = main_script()
-    assert os.path.exists(parser.outfile)  # nosec
-    rmpath(parser.outfile)
+def test_cli_v3(dir1):
+    """Create hybrid torrent cli command."""
+    args = ["torrentfile", "create", str(dir1), "--meta-version", "3"]
+    sys.argv = args
+    main()
+    assert os.path.exists(str(dir1) + ".torrent")
+    rmpath(str(dir1) + ".torrent")
 
 
-def test_cli_no_args():
-    """Test CLI script with no arguments."""
-    sys.argv = [sys.argv[0]]
+def test_cli_private(dir1):
+    """Test private cli flag."""
+    args = ["torrentfile", "create", str(dir1), "--private"]
+    sys.argv = args
+    main()
+    meta = pyben.load(str(dir1) + ".torrent")
+    assert "private" in meta["info"]
+    rmpath(str(dir1) + ".torrent")
+
+
+@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("version", ["1", "2", "3"])
+def test_cli_piece_length(dir1, piece_length, version):
+    """Test piece length cli flag."""
+    args = [
+        "torrentfile",
+        "create",
+        str(dir1),
+        "--piece-length",
+        str(piece_length),
+        "--meta-version",
+        version,
+    ]
+    sys.argv = args
+    main()
+    meta = pyben.load(str(dir1) + ".torrent")
+    assert meta["info"]["piece length"] == piece_length
+    rmpath(str(dir1) + ".torrent")
+
+
+@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("version", ["1", "2", "3"])
+def test_cli_announce(dir1, piece_length, version):
+    """Test announce cli flag."""
+    args = [
+        "torrentfile",
+        "create",
+        str(dir1),
+        "--piece-length",
+        str(piece_length),
+        "--meta-version",
+        version,
+        "--tracker",
+        "https://announce.org/tracker",
+    ]
+    sys.argv = args
+    main()
+    meta = pyben.load(str(dir1) + ".torrent")
+    assert meta["announce"] == "https://announce.org/tracker"
+    rmpath(str(dir1) + ".torrent")
+
+
+@pytest.mark.parametrize("version", ["1", "2", "3"])
+def test_cli_announce_list(dir1, version):
+    """Test announce list cli flag."""
+    trackers = [
+        "https://announce.org/tracker",
+        "https://announce.net/tracker",
+        "https://tracker.net/announce",
+    ]
+    args = [
+        "torrentfile",
+        "create",
+        str(dir1),
+        "--meta-version",
+        version,
+        "--tracker",
+    ] + trackers
+    sys.argv = args
+    main()
+    meta = pyben.load(str(dir1) + ".torrent")
+    for url in trackers:
+        assert url in [j for i in meta["announce list"] for j in i]
+    rmpath(str(dir1) + ".torrent")
+
+
+@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("version", ["1", "2", "3"])
+def test_cli_comment(dir1, piece_length, version):
+    """Test comment cli flag."""
+    args = [
+        "torrentfile",
+        "create",
+        str(dir1),
+        "--piece-length",
+        str(piece_length),
+        "--meta-version",
+        version,
+        "--comment",
+        "this is a comment",
+    ]
+    sys.argv = args
+    main()
+    meta = pyben.load(str(dir1) + ".torrent")
+    assert meta["info"]["comment"] == "this is a comment"
+    rmpath(str(dir1) + ".torrent")
+
+
+@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("version", ["1", "2", "3"])
+def test_cli_outfile(dir1, piece_length, version):
+    """Test outfile cli flag."""
+    outfile = str(dir1) + "test.torrent"
+    args = [
+        "torrentfile",
+        "create",
+        str(dir1),
+        "--piece-length",
+        str(piece_length),
+        "--meta-version",
+        version,
+        "-o",
+        outfile,
+    ]
+    sys.argv = args
+    main()
+    assert os.path.exists(outfile)
+    rmpath(outfile)
+
+
+@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("version", ["1", "2", "3"])
+def test_cli_creation_date(dir1, piece_length, version):
+    """Test if torrents created get an accurate timestamp."""
+    args = [
+        "torrentfile",
+        "create",
+        str(dir1),
+        "--piece-length",
+        str(piece_length),
+        "--meta-version",
+        version,
+        "--comment",
+        "this is a comment",
+    ]
+    sys.argv = args
+    main()
+    meta = pyben.load(str(dir1) + ".torrent")
+    num = float(meta["creation date"])
+    date = datetime.datetime.fromtimestamp(num)
+    now = datetime.datetime.now()
+    assert date.day == now.day
+    assert date.year == now.year
+    assert date.month == now.month
+    rmpath(str(dir1) + ".torrent")
+
+
+@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("version", ["1", "2", "3"])
+def test_cli_created_by(dir1, piece_length, version):
+    """Test if created torrents recieve a created by field in meta info."""
+    args = [
+        "torrentfile",
+        "create",
+        str(dir1),
+        "--piece-length",
+        str(piece_length),
+        "--meta-version",
+        version,
+        "--comment",
+        "this is a comment",
+    ]
+    sys.argv = args
+    main()
+    meta = pyben.load(str(dir1) + ".torrent")
+    assert "TorrentFile" in meta["created by"]
+    rmpath(str(dir1) + ".torrent")
+
+
+@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("version", ["1", "2", "3"])
+def test_cli_web_seeds(dir1, piece_length, version):
+    """Test if created torrents recieve a created by field in meta info."""
+    args = [
+        "torrentfile",
+        "create",
+        str(dir1),
+        "--piece-length",
+        str(piece_length),
+        "--meta-version",
+        version,
+        "-w",
+        "https://webseed.url/1",
+        "https://webseed.url/2",
+        "https://webseed.url/3",
+    ]
+    sys.argv = args
+    main()
+    meta = pyben.load(str(dir1) + ".torrent")
+    assert "https://webseed.url/1" in meta["url-list"]
+    rmpath(str(dir1) + ".torrent")
+
+
+@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("version", ["1", "2", "3"])
+def test_cli_with_debug(dir1, piece_length, version):
+    """Test debug mode cli flag."""
+    args = [
+        "torrentfile",
+        "-v",
+        "create",
+        str(dir1),
+        "--piece-length",
+        str(piece_length),
+        "--meta-version",
+        version,
+        "--comment",
+        "this is a comment",
+    ]
+    sys.argv = args
+    main()
+    assert os.path.exists(str(dir1) + ".torrent")
+    rmpath(str(dir1) + ".torrent")
+
+
+@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("version", ["1", "2", "3"])
+def test_cli_with_source(dir1, piece_length, version):
+    """Test source cli flag."""
+    args = [
+        "torrentfile",
+        "create",
+        str(dir1),
+        "--piece-length",
+        str(piece_length),
+        "--meta-version",
+        version,
+        "--source",
+        "somesource",
+    ]
+    sys.argv = args
+    main()
+    meta = pyben.load(str(dir1) + ".torrent")
+    assert meta["info"]["source"] == "somesource"
+    rmpath(str(dir1) + ".torrent")
+
+
+def test_cli_help():
+    """Test showing help notice cli flag."""
+    args = ["-h"]
+    sys.argv = args
     try:
-        main()
+        assert main()
     except SystemExit:
-        assert True  # nosec
+        assert True
+        assert dir1
+        assert dir2
 
 
-@pytest.mark.parametrize("struct", Temp.structs)
-@pytest.mark.parametrize("start", list(range(14, 19)))
-@pytest.mark.parametrize("stop", list(range(19, 23)))
-def test_cli_with_all_args_dir(struct, start, stop):
-    """Test CLI script with other specific arguments v3."""
-    tdir = build(struct, start, stop)
-    sys.argv = [
+@pytest.mark.parametrize("version", ["1", "2", "3"])
+def test_cli_empty_files(dir2, version):
+    """Test creating torrent with empty files."""
+    args = [
         "torrentfile",
-        tdir,
+        "create",
+        str(dir2),
         "--meta-version",
-        "3",
-        "-a",
-        "https://tracker-url.com/announce",
-        "--comment",
-        "some comment",
-        "--piece-length",
-        str(2 ** 15),
-        "--private",
+        version,
         "--source",
-        "TRACKER",
+        "somesource",
     ]
-    parser = main_script()
-    assert os.path.exists(parser.outfile)  # nosec
-    rmpath(parser.outfile)
+    sys.argv = args
 
+    def walk(root, count):
+        """Traverse directory to edit files."""
+        if root.is_file():
+            with open(root, "wb") as _:
+                return 1
+        elif root.is_dir():
+            for item in root.iterdir():
+                if count >= 2:
+                    break
+                count += walk(item, count)
+        return count
 
-@pytest.mark.parametrize("struct", Temp.structs)
-@pytest.mark.parametrize("start", list(range(14, 19)))
-@pytest.mark.parametrize("stop", list(range(19, 23)))
-def test_cli_with_all_args_v2(struct, start, stop):
-    """Test CLI script with all arguments v2."""
-    tdir = build(struct, start, stop)
-    sys.argv = [
-        "torrentfile",
-        tdir,
-        "--meta-version",
-        "2",
-        "-d",
-        "-a",
-        "https://tracker-url.com/announce",
-        "--comment",
-        "some comment",
-        "--piece-length",
-        str(2 ** 16),
-        "--private",
-        "--source",
-        "TRACKER",
-    ]
-    parser = main_script()
-    assert os.path.exists(parser.outfile)  # nosec
-    rmpath(parser.outfile)
-
-
-@pytest.mark.parametrize("struct", Temp.structs)
-@pytest.mark.parametrize("start", list(range(14, 19)))
-@pytest.mark.parametrize("stop", list(range(19, 23)))
-def test_cli_with_all_args_v3(struct, start, stop):
-    """Test CLI script with all arguments v3."""
-    tdir = build(struct, start, stop)
-    sys.argv = [
-        "torrentfile",
-        tdir,
-        "--meta-version",
-        "3",
-        "-d",
-        "-a",
-        "https://tracker-url.com/announce",
-        "--comment",
-        "some comment",
-        "--piece-length",
-        str(2 ** 16),
-        "--private",
-        "--source",
-        "TRACKER",
-    ]
-    parser = main_script()
-    assert os.path.exists(parser.outfile)  # nosec
-    rmpath(parser.outfile)
-
-
-@pytest.mark.parametrize("version", [2, 3])
-@pytest.mark.parametrize("field", ["announce", "announce list",
-                                   "piece layers", "created by",
-                                   "info", "creation date"])
-@pytest.mark.parametrize("struct", Temp.structs)
-def test_cli_meta_output_v2_3(struct, field, version):
-    """Test CLI output torrentfile meta dict fields v2 and hybrid."""
-    tdir = build(struct)
-    sys.argv = [
-        "torrentfile",
-        tdir,
-        "--meta-version",
-        str(version),
-        "-d",
-        "-a",
-        "https://tracker-url.com/announce",
-        "https://tracker2-url.com/announce",
-        "https://tracker3-url.com/announce",
-        "--comment",
-        "some comment",
-        "--piece-length",
-        str(2 ** 16),
-        "--private",
-        "--source",
-        "TRACKER",
-    ]
-    parser = main_script()
-    meta = pyben.load(parser.outfile)
-    assert field in meta    # nosec
-    rmpath(parser.outfile)
-
-
-@pytest.mark.parametrize("version", [2, 3])
-@pytest.mark.parametrize("field", ["piece length", "name", "file tree",
-                                   "comment", "private", "source",
-                                   "meta version"])
-@pytest.mark.parametrize("struct", Temp.structs)
-def test_cli_info_output_v2_3(struct, field, version):
-    """Test CLI output file info dict meta versions 2 & 3."""
-    tdir = build(struct)
-    sys.argv = [
-        "torrentfile",
-        tdir,
-        "--meta-version",
-        str(version),
-        "-d",
-        "-a",
-        "https://tracker-url.com/announce",
-        "https://tracker2-url.com/announce",
-        "https://tracker3-url.com/announce",
-        "--comment",
-        "some comment",
-        "--piece-length",
-        str(2 ** 16),
-        "--private",
-        "--source",
-        "TRACKER",
-    ]
-    parser = main_script()
-    meta = pyben.load(parser.outfile)
-    assert field in meta["info"]   # nosec
-    rmpath(parser.outfile)
-
-
-@pytest.mark.parametrize("field", ["piece length", "name", "pieces",
-                                   "comment", "private", "source"])
-@pytest.mark.parametrize("struct", Temp.structs)
-def test_cli_info_output_v1(struct, field):
-    """Test CLI output files contents with specific arguments v1."""
-    tdir = build(struct)
-    sys.argv = [
-        "torrentfile",
-        tdir,
-        "-d",
-        "-a",
-        "https://tracker-url.com/announce",
-        "https://tracker2-url.com/announce",
-        "https://tracker3-url.com/announce",
-        "--comment",
-        "some comment",
-        "--piece-length",
-        str(2 ** 16),
-        "--private",
-        "--source",
-        "TRACKER",
-    ]
-    parser = main_script()
-    meta = pyben.load(parser.outfile)
-    assert field in meta["info"]  # nosec
-    rmpath(parser.outfile)
-
-
-@pytest.mark.parametrize("field", ["announce", "created by",
-                                   "creation date", "info"])
-@pytest.mark.parametrize("struct", Temp.structs)
-def test_cli_meta_output_v1(struct, field):
-    """Test CLI output v1 file meta dict specific arguments."""
-    tdir = build(struct)
-    sys.argv = [
-        "torrentfile",
-        tdir,
-        "-d",
-        "-a",
-        "https://tracker-url.com/announce",
-        "https://tracker2-url.com/announce",
-        "https://tracker3-url.com/announce",
-        "--comment",
-        "some comment",
-        "--piece-length",
-        str(2 ** 16),
-        "--private",
-        "--source",
-        "TRACKER",
-    ]
-    parser = main_script()
-    meta = pyben.load(parser.outfile)
-    assert field in meta  # nosec
-    rmpath(parser.outfile)
+    walk(dir2, 0)
+    main()
+    assert os.path.exists(str(dir2) + ".torrent")
+    rmpath(str(dir2) + ".torrent")

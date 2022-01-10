@@ -1,6 +1,5 @@
 [tool.bandit]
-skips = "B101"
-
+skips = ["B101"]
 
 [tool.black]
 line-length = 80
@@ -17,6 +16,8 @@ testpaths = [
     "tests",
     "torrentfile",
 ]
+console_output_style = "progress"
+addopts = "--maxfail=5"
 
 [build-system]
 requires = ["setuptools>=40.8.0", "wheel"]

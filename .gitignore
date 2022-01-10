@@ -9,7 +9,6 @@ activate
 tests/test_data/
 *.torrent
 repos/
-sites/
 tests/TESTDIR
 runtests.py
 
@@ -139,9 +138,6 @@ env/
 
 # Rope project settings
 .ropeproject
-
-# mkdocs documentation
-/site
 
 # mypy
 .mypy_cache/

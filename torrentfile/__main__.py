@@ -13,6 +13,7 @@
 #####################################################################
 """Bolerplate file needed for CLI functionality."""  # pragma: no cover
 
-if __name__ == '__main__':  # pragma: no cover
+if __name__ == "__main__":  # pragma: no cover
     import torrentfile
+
     torrentfile.main()

@@ -1,5 +1,18 @@
 # TorrentFile
 
+## Version 0.6.4
+
+### Changed/Fixed/Added 0.6.4
+
+    - CLI interface add subcommands
+    - added interactive mode
+    - Re-wrote the recheck module
+    - fixed documentation and docstrings
+    - linting and testing errors
+    - 
+
+---------------------
+
 ## Version 0.6.3
 
 ### Fixed 0.6.3
