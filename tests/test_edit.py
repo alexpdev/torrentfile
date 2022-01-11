@@ -18,7 +18,7 @@ import sys
 import pyben
 import pytest
 
-from tests import dir1, dir2, rmpath
+from tests import dir2, rmpath
 from torrentfile.cli import main
 from torrentfile.edit import edit_torrent
 from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
@@ -47,7 +47,7 @@ def torfile(dir2, request):
 
 def test_fix():
     """Testing dir fixtures."""
-    assert dir2 and dir1
+    assert dir2
 
 
 @pytest.mark.parametrize(
