@@ -115,7 +115,7 @@ def main_script(args=None):
         "create",
         help="Create a torrent file.",
         prefix_chars="-",
-        aliases=["c", "new", "make"],
+        aliases=["c", "new"],
         formatter_class=HelpFormat,
     )
 

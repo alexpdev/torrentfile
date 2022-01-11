@@ -9,7 +9,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile)
 ![GitHub License](https://img.shields.io/github/license/alexpdev/torrentfile)
 ![PyPI - Downloads](https://img.shields.io/pypi/dw/torrentfile)
-[![CI](https://github.com/alexpdev/TorrentFile/actions/workflows/python_workflow.yml/badge.svg?branch=master&event=push)](https://github.com/alexpdev/torrentfile/actions/workflows/python_workflow.yml)
+[![CI](https://github.com/alexpdev/TorrentFile/actions/workflows/pyworkflow.yml/badge.svg?branch=master&event=push)](https://github.com/alexpdev/torrentfile/actions/workflows/pyworkflow.yml)
 [![DeepSource](https://deepsource.io/gh/alexpdev/TorrentFile.svg/?label=active+issues&token=16Sl_dF7nTU8YgPilcqhvHm8)](https://deepsource.io/gh/alexpdev/torrentfile/)
 
 ## :globe_with_meridians: Overview
@@ -53,6 +53,7 @@ Sub-Commands:
     create           Create a new torrent file.
     check            Check if file/folder contents match a torrent file.
     edit             Edit a pre-existing torrent file.
+    magnet           Create Magnet URI for an existing torrent meta file.
 
 optional arguments:
   -h, --help         show this help message and exit
@@ -62,6 +63,10 @@ optional arguments:
 ```
 
 > Usage examples can be found in the project documentation on the [examples page.](https://alexpdev.github.io/torrentfile/examples)
+
+!!!
+    _torrentfile_ is under active development, and is subject to significant changes in  
+    it's codebase between releases.
 
 ## :memo: License
 

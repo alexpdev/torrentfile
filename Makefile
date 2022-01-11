@@ -81,6 +81,8 @@ lint:
 
 docs: ## Regenerate docs from changes
 	rm -rf docs/*
+	rm -rf site/index.md
+	cp -rfv README.md site/index.md
 	mkdocs -q build
 	touch docs/.nojekyll
 

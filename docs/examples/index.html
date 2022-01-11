@@ -125,8 +125,13 @@ illustrate some of the options available for creating torrent files.</p>
 <li>to create files using bittorrent v2 or other formats use <code>--meta-version</code></li>
 <li><code>--meta-version 3</code> asks for a v1 &amp; v2 hybrid file.</li>
 </ul>
-<pre><code class="language-bash">&gt; torrentfile create /path/to/content --meta-version 2 -t https://tracker1.com
-&gt; torrentfile create /path/to/content --meta-version 3 
+<pre><code class="language-bash">&gt; torrentfile create /path/to/content --meta-version 2 
+&gt; torrentfile create --meta-version 3 /path/to/content
+</code></pre>
+<ul>
+<li>to create a magnet URI for the created torrent file use <code>--magnet</code></li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create --t https://tracker1/annc https://tracker2/annc --magnet /path/to/content
 </code></pre>
 <h3 id="recheck-torrents">Recheck Torrents</h3>
 <p>Using the sub-command <code>recheck</code> or <code>check</code> or <code>r</code> you can check how much of
@@ -141,6 +146,11 @@ torrent file.</p>
 <p>Using the sub-command <code>edit</code> or <code>e</code> enables editting a pre-existing torrent file.
 The edit sub-command works identically to the <code>create</code> sub-command and accepts many
 of the same arguments.</p>
+<h3 id="create-magnet">Create Magnet</h3>
+<p>To create a magnet URI for a pre-existing torrent meta file, use the sub-command<br />
+<code>magnet</code> with the path to the meta file.</p>
+<pre><code class="language-bash">&gt; torrentfile magnet /path/to/metafile
+</code></pre>
 
   <br>
     
