@@ -1,0 +1,14 @@
+code {
+    color: #a01110;
+    white-space: normal;
+    word-wrap: normal;
+}
+
+.mkapi-node code.mkapi-item-name {
+    font-size: 0.9em;
+    color: #007;
+}
+
+.mkapi-section-name-body {
+    font-size: 0.9em;
+}

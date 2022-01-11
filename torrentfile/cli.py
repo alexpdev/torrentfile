@@ -27,11 +27,10 @@ import sys
 from argparse import ArgumentParser, HelpFormatter
 
 import torrentfile
-
-from .edit import edit_torrent
-from .interactive import select_action
-from .recheck import Checker
-from .torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
+from torrentfile.edit import edit_torrent
+from torrentfile.interactive import select_action
+from torrentfile.recheck import Checker
+from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
 
 class HelpFormat(HelpFormatter):

@@ -18,7 +18,7 @@ import math
 import os
 from hashlib import sha1, sha256  # nosec
 
-from .utils import humanize_bytes
+from torrentfile.utils import humanize_bytes
 
 BLOCK_SIZE = 2 ** 14  # 16KiB
 HASH_SIZE = 32

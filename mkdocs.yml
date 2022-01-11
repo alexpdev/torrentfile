@@ -13,7 +13,7 @@ theme:
 
 nav:
   - home : index.md
-  - API : api.md
+  - API : _api.md
   - Examples : examples.md
   - license : LGPLv3.md
 

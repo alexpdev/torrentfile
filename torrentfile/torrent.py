@@ -187,9 +187,9 @@ from datetime import datetime
 
 import pyben
 
-from . import utils
-from .hasher import Hasher, HasherHybrid, HasherV2
-from .version import __version__ as version
+from torrentfile import utils
+from torrentfile.hasher import Hasher, HasherHybrid, HasherV2
+from torrentfile.version import __version__ as version
 
 
 class MetaFile:

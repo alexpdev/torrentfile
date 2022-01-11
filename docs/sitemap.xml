@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/</loc>
+         <lastmod>2022-01-11</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/LGPLv3/</loc>
+         <lastmod>2022-01-11</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/_api/</loc>
+         <lastmod>2022-01-11</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/examples/</loc>
+         <lastmod>2022-01-11</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+</urlset>

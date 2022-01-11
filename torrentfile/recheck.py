@@ -28,8 +28,8 @@ from pathlib import Path
 import pyben
 from tqdm import tqdm
 
-from .hasher import HasherHybrid, HasherV2
-from .utils import humanize_bytes
+from torrentfile.hasher import HasherHybrid, HasherV2
+from torrentfile.utils import humanize_bytes
 
 SHA1 = 20
 SHA256 = 32

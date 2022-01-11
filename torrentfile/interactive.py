@@ -26,9 +26,9 @@ import sys
 
 import pyben
 
-from .edit import edit_torrent
-from .recheck import Checker
-from .torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
+from torrentfile.edit import edit_torrent
+from torrentfile.recheck import Checker
+from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
 
 def get_input(*args):  # pragma: no cover
