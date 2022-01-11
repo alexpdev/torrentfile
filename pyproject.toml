@@ -1,3 +1,6 @@
+[build-system]
+requires = ["setuptools>=40.8.0", "wheel"]
+
 [tool.bandit]
 skips = ["B101"]
 
@@ -18,6 +21,3 @@ testpaths = [
 ]
 console_output_style = "progress"
 addopts = "--maxfail=5"
-
-[build-system]
-requires = ["setuptools>=40.8.0", "wheel"]
