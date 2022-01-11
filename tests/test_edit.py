@@ -14,12 +14,14 @@
 """Testing the edit torrent feature."""
 
 import sys
+from hashlib import sha1  # nosec
+from urllib.parse import quote_plus
 
 import pyben
 import pytest
 
-from tests import dir1, dir2, rmpath
-from torrentfile.cli import main
+from tests import dir2, rmpath
+from torrentfile.cli import create_magnet, main, main_script
 from torrentfile.edit import edit_torrent
 from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
@@ -34,7 +36,7 @@ def torfile(dir2, request):
     """Create a standard metafile for testing."""
     args = {
         "path": dir2,
-        "announce": "url1 url2 url4",
+        "announce": ["url1", "url2", "url4"],
         "comment": "this is a comment",
         "source": "SomeSource",
     }
@@ -47,7 +49,7 @@ def torfile(dir2, request):
 
 def test_fix():
     """Testing dir fixtures."""
-    assert dir2 and dir1
+    assert dir2
 
 
 @pytest.mark.parametrize(
@@ -59,7 +61,7 @@ def test_edit_torrent(torfile, announce):
     data = edit_torrent(torfile, edits)
     meta = pyben.load(torfile)
     assert data == meta
-    assert data["announce list"] == [announce]
+    assert data["announce-list"] == [announce]
 
 
 @pytest.mark.parametrize("announce", ["urla", "urlb urlc", "urla urlb urlc"])
@@ -69,7 +71,7 @@ def test_edit_torrent_str(torfile, announce):
     data = edit_torrent(torfile, edits)
     meta = pyben.load(torfile)
     assert data == meta
-    assert data["announce list"] == [announce.split()]
+    assert data["announce-list"] == [announce.split()]
 
 
 @pytest.mark.parametrize("url_list", ["urla", "urlb urlc", "urla urlb urlc"])
@@ -187,5 +189,51 @@ def test_edit_cli(torfile, comment, source, announce, webseed):
     assert comment == info.get("comment")
     assert source == info.get("source")
     assert info.get("private") == 1
-    assert meta["announce list"] == [[announce]]
+    assert meta["announce-list"] == [[announce]]
     assert meta["url-list"] == [webseed]
+
+
+def test_magnet_uri(torfile):
+    """Test create magnet function digest."""
+    magnet_link = create_magnet(torfile)
+    meta = pyben.load(torfile)
+    announce = meta["announce"]
+    assert quote_plus(announce) in magnet_link
+
+
+def test_magnet_hex(torfile):
+    """Test create magnet function digest."""
+    magnet_link = create_magnet(torfile)
+    meta = pyben.load(torfile)
+    info = meta["info"]
+    binfo = sha1(pyben.dumps(info)).hexdigest().upper()
+    assert binfo in magnet_link
+
+
+def test_magnet(torfile):
+    """Test create magnet function scheme."""
+    magnet_link = create_magnet(torfile)
+    assert magnet_link.startswith("magnet")
+
+
+def test_magnet_no_announce_list(torfile):
+    """Test create magnet function scheme."""
+    meta = pyben.load(torfile)
+    del meta["announce-list"]
+    pyben.dump(meta, torfile)
+    magnet_link = create_magnet(torfile)
+    assert magnet_link.startswith("magnet")
+
+
+def test_magnet_empty():
+    """Test create magnet function scheme."""
+    try:
+        create_magnet("file_that_does_not_exist")
+    except FileNotFoundError:
+        assert True
+
+
+def test_magnet_cli(torfile):
+    """Test cli args for maggnet."""
+    sys.argv[1:] = ["magnet", str(torfile)]
+    assert "magnet" in main_script()

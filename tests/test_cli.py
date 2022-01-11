@@ -105,7 +105,7 @@ def test_cli_announce(dir1, piece_length, version):
 
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_announce_list(dir1, version):
-    """Test announce list cli flag."""
+    """Test announce-list cli flag."""
     trackers = [
         "https://announce.org/tracker",
         "https://announce.net/tracker",
@@ -123,7 +123,7 @@ def test_cli_announce_list(dir1, version):
     main()
     meta = pyben.load(str(dir1) + ".torrent")
     for url in trackers:
-        assert url in [j for i in meta["announce list"] for j in i]
+        assert url in [j for i in meta["announce-list"] for j in i]
     rmpath(str(dir1) + ".torrent")
 
 
@@ -139,6 +139,7 @@ def test_cli_comment(dir1, piece_length, version):
         str(piece_length),
         "--meta-version",
         version,
+        "--magnet",
         "--comment",
         "this is a comment",
     ]

@@ -115,7 +115,7 @@ def main_script(args=None):
         "create",
         help="Create a torrent file.",
         prefix_chars="-",
-        aliases=["c"],
+        aliases=["c", "new", "make"],
         formatter_class=HelpFormat,
     )
 
@@ -124,7 +124,7 @@ def main_script(args=None):
         "--private",
         action="store_true",
         dest="private",
-        help="create file for private tracker",
+        help="create a private torrent file",
     )
 
     create_parser.add_argument(
@@ -134,6 +134,14 @@ def main_script(args=None):
         dest="source",
         metavar="<source>",
         help="specify source tracker",
+    )
+
+    create_parser.add_argument(
+        "-m",
+        "--magnet",
+        action="store_true",
+        dest="magnet",
+        help="output Magnet Link after creation completes",
     )
 
     create_parser.add_argument(
@@ -152,6 +160,20 @@ def main_script(args=None):
         dest="outfile",
         metavar="<path>",
         help="output path for created .torrent file",
+    )
+
+    create_parser.add_argument(
+        "-t",
+        "--tracker",
+        action="store",
+        dest="tracker",
+        metavar="<url>",
+        nargs="+",
+        default=[],
+        help="""
+        One or more Bittorrent tracker announce url(s).
+        Examples:: [-a url1 url2 url3]  [--anounce url1]
+        """,
     )
 
     create_parser.add_argument(
@@ -185,20 +207,6 @@ def main_script(args=None):
     )
 
     create_parser.add_argument(
-        "-t",
-        "--tracker",
-        action="store",
-        dest="announce",
-        metavar="<url>",
-        nargs="+",
-        default="",
-        help="""
-        One or more Bittorrent tracker announce url(s).
-        Examples:: [-a url1 url2 url3]  [--anounce url1]
-        """,
-    )
-
-    create_parser.add_argument(
         "-w",
         "--web-seed",
         action="store",
@@ -210,6 +218,17 @@ def main_script(args=None):
         the torrent contents.  This is useful if the torrent
         tracker is ever unreachable. Example:: [-w url1 [url2 [url3]]]
         """,
+    )
+
+    create_parser.add_argument(
+        "-a",
+        "--announce",
+        action="store",
+        dest="announce",
+        metavar="<url>",
+        nargs="+",
+        default=[],
+        help="alias for -t/--tracker",
     )
 
     create_parser.add_argument(
@@ -302,6 +321,21 @@ def main_script(args=None):
         help="replaces current source with <source>",
     )
 
+    magnet_parser = subparsers.add_parser(
+        "magnet",
+        help="Create magnet url from a Bittorrent Meta File.",
+        aliases=["m"],
+        prefix_chars="-",
+        formatter_class=HelpFormat,
+    )
+
+    magnet_parser.add_argument(
+        "metafile",
+        action="store",
+        help="path to bittorrent meta file.",
+        metavar="<*.torrent>",
+    )
+
     flags = parser.parse_args(args)
     print(flags)
     if flags.debug:
@@ -323,6 +357,9 @@ def main_script(args=None):
 
     if flags.interactive:
         return select_action()
+
+    if flags.command in ["m", "magnet"]:
+        return create_magnet(flags.metafile)
 
     if flags.command in ["recheck", "r", "check"]:
         tlogger.debug("Program entering Recheck mode.")
@@ -351,7 +388,7 @@ def main_script(args=None):
     kwargs = {
         "url_list": flags.url_list,
         "path": flags.content,
-        "announce": flags.announce,
+        "announce": flags.announce + flags.tracker,
         "piece_length": flags.piece_length,
         "source": flags.source,
         "private": flags.private,
@@ -369,6 +406,8 @@ def main_script(args=None):
         torrent = TorrentFile(**kwargs)
     tlogger.debug("Completed torrent files meta info assembly.")
     outfile, meta = torrent.write()
+    if flags.magnet:
+        create_magnet(outfile)
     parser.kwargs = kwargs
     parser.meta = meta
     parser.outfile = outfile
@@ -379,3 +418,44 @@ def main_script(args=None):
 def main():
     """Initiate main function for CLI script."""
     main_script()
+
+
+def create_magnet(metafile):
+    """Create a magnet URI from a Bittorrent meta file.
+
+    Parameters
+    ----------
+    metafile : `str` | `os.PathLike`
+        path to bittorrent meta file.
+
+    Returns
+    -------
+    `str`
+        created magnet URI.
+    """
+    import os
+    from hashlib import sha1  # nosec
+    from urllib.parse import quote_plus
+
+    import pyben
+
+    if not os.path.exists(metafile):
+        raise FileNotFoundError
+    meta = pyben.load(metafile)
+    info = meta["info"]
+    binfo = pyben.dumps(info)
+    infohash = sha1(binfo).hexdigest().upper()  # nosec
+    scheme = "magnet:"
+    hasharg = "?xt=urn:btih:" + infohash
+    namearg = "&dn=" + quote_plus(info["name"])
+    if "announce-list" in meta:
+        announce_args = [
+            "&tr=" + quote_plus(url)
+            for urllist in meta["announce-list"]
+            for url in urllist
+        ]
+    else:
+        announce_args = ["&tr=" + quote_plus(meta["announce"])]
+    full_uri = "".join([scheme, hasharg, namearg] + announce_args)
+    sys.stdout.write(full_uri)
+    return full_uri

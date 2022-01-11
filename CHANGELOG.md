@@ -47,7 +47,7 @@
 
 ### Fixed v0.5.2
 
-    - Major Bug that was adding `announce list` to info dict
+    - Major Bug that was adding `announce-list` to info dict
 
 ---------------------
 

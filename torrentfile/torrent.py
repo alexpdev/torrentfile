@@ -269,11 +269,12 @@ class MetaFile:
         self.source = source
         self.meta = {
             "announce": self.announce,
-            "announce list": self.announce_list,
+            "announce-list": self.announce_list,
             "created by": f"TorrentFile:v{version}",
             "creation date": int(datetime.timestamp(datetime.now())),
             "info": {},
         }
+        logging.debug("Announce list = %s", str(self.announce_list))
         if comment:
             self.meta["info"]["comment"] = comment
         if private:

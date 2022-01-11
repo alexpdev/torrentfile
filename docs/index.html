@@ -40,13 +40,13 @@
         
         var pageToc = [
           {title: "TorrentFile", url: "#_top", children: [
-              {title: "Overview", url: "#overview" },
-              {title: "Requirements", url: "#requirements" },
-              {title: "Install", url: "#install" },
-              {title: "Documentation", url: "#documentation" },
+              {title: ":globe_with_meridians: Overview", url: "#globe_with_meridians-overview" },
+              {title: ":white_check_mark: Requirements", url: "#white_check_mark-requirements" },
+              {title: ":package: Install", url: "#package-install" },
+              {title: ":scroll: Documentation", url: "#scroll-documentation" },
               {title: ":rocket: Usage", url: "#rocket-usage" },
-              {title: "License", url: "#license" },
-              {title: "Issues", url: "#issues" },
+              {title: ":memo: License", url: "#memo-license" },
+              {title: ":bug: Issues", url: "#bug-issues" },
           ]},
         ];
 
@@ -158,44 +158,40 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1 id="torrentfile">TorrentFile</h1>
 <p><img alt="torrentfile" src="https://github.com/alexpdev/torrentfile/blob/master/assets/torrentfile.png?raw=true" /></p>
 <hr />
-<p><a href="https://www.codacy.com/gh/alexpdev/TorrentFile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/TorrentFile&amp;utm_campaign=Badge_Grade"><img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Grade/202440df15224535b5358503e6235c88" /></a>
-<a href="https://codecov.io/gh/alexpdev/TorrentFile"><img alt="codecov" src="https://codecov.io/gh/alexpdev/TorrentFile/branch/master/graph/badge.svg?token=PXFsxXVAHW" /></a>
-<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/alexpdev/TorrentFile" />
-<img alt="GitHub License" src="https://img.shields.io/github/license/alexpdev/TorrentFile" />
+<p><a href="https://www.codacy.com/gh/alexpdev/TorrentFile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Grade"><img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Grade/202440df15224535b5358503e6235c88" /></a>
+<a href="https://codecov.io/gh/alexpdev/torrentfile"><img alt="codecov" src="https://codecov.io/gh/alexpdev/TorrentFile/branch/master/graph/badge.svg?token=PXFsxXVAHW" /></a>
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/alexpdev/torrentfile" />
+<img alt="GitHub License" src="https://img.shields.io/github/license/alexpdev/torrentfile" />
 <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dw/torrentfile" />
-<a href="https://github.com/alexpdev/TorrentFile/actions/workflows/python_workflow.yml"><img alt="CI" src="https://github.com/alexpdev/TorrentFile/actions/workflows/python_workflow.yml/badge.svg?branch=master&amp;event=push" /></a>
-<a href="https://deepsource.io/gh/alexpdev/TorrentFile/"><img alt="DeepSource" src="https://deepsource.io/gh/alexpdev/TorrentFile.svg/?label=active+issues&amp;token=16Sl_dF7nTU8YgPilcqhvHm8" /></a></p>
-<h2 id="overview">Overview</h2>
-<p>A <code>simple</code> and <code>convenient</code> tool for creating, reviewing, editing, and<br />
-checking/validating bittorrent meta files (aka torrent files). <code>torrentfile</code><br />
-support all versions of Bittorrent files, including hybrid meta files.</p>
+<a href="https://github.com/alexpdev/torrentfile/actions/workflows/python_workflow.yml"><img alt="CI" src="https://github.com/alexpdev/TorrentFile/actions/workflows/python_workflow.yml/badge.svg?branch=master&amp;event=push" /></a>
+<a href="https://deepsource.io/gh/alexpdev/torrentfile/"><img alt="DeepSource" src="https://deepsource.io/gh/alexpdev/TorrentFile.svg/?label=active+issues&amp;token=16Sl_dF7nTU8YgPilcqhvHm8" /></a></p>
+<h2 id="globe_with_meridians-overview">:globe_with_meridians: Overview</h2>
+<p>A <code>simple</code> and <code>convenient</code> tool for creating, reviewing, editing, and/or<br />
+checking/validating bittorrent meta files (aka torrent files). <em><code>torrentfile</code></em><br />
+supports all versions of Bittorrent files, including hybrid meta files.</p>
 <blockquote>
 <p>A GUI frontend for this project can be found at <a href="https://github.com/alexpdev/TorrentfileQt">https://github.com/alexpdev/TorrentfileQt</a></p>
 </blockquote>
-<h2 id="requirements">Requirements</h2>
+<h2 id="white_check_mark-requirements">:white_check_mark: Requirements</h2>
 <ul>
 <li>Python 3.7+</li>
 <li>Tested on Linux and Windows</li>
 </ul>
-<h2 id="install">Install</h2>
-<h3 id="via-pypi">via PyPi</h3>
+<h2 id="package-install">:package: Install</h2>
+<p><strong>via PyPi:</strong></p>
 <pre><code>pip install torrentfile
 </code></pre>
-<h3 id="via-git">via Git</h3>
+<p><strong>via Git:</strong></p>
 <pre><code>git clone https://github.com/alexpdev/torrentfile.git
 python setup.py install
 </code></pre>
 <blockquote>
-<p>Or download pre-compiled binaries from the Github release page.
-<a href="https://github.com/alexpdev/torrentfile/releases">https://github.com/alexpdev/torrentfile/releases</a></p>
+<p>Download pre-compiled binaries from the <a href="https://github.com/alexpdev/torrentfile/releases">release page</a>.</p>
 </blockquote>
-<h2 id="documentation">Documentation</h2>
-<p>Documentation is available online at
-<a href="https://alexpdev.github.io/torrentfile">https://alexpdev.github.io/torrentfile</a>
- and in the <code>./docs</code> directory, or online at.</p>
+<h2 id="scroll-documentation">:scroll: Documentation</h2>
+<p>Documentation can be found  <a href="https://alexpdev.github.io/torrentfile">here</a>
+or in the <em><code>docs</code></em> directory.</p>
 <h2 id="rocket-usage">:rocket: Usage</h2>
-<pre><code>~$torrentfile -h
-</code></pre>
 <pre><code class="language-bash">torrentfile [-h] [-i] [-V] [-v]  ...
 
 Sub-Commands:
@@ -205,16 +201,19 @@ Sub-Commands:
     edit             Edit a pre-existing torrent file.
 
 optional arguments:
-  -V, --version      show program version and exit
   -h, --help         show this help message and exit
+  -V, --version      show program version and exit
   -i, --interactive  select program options interactively
   -v, --verbose      output debug information
 </code></pre>
-<h2 id="license">License</h2>
+<blockquote>
+<p>Usage examples can be found in the project documentation on the <a href="https://alexpdev.github.io/torrentfile/examples">examples page.</a></p>
+</blockquote>
+<h2 id="memo-license">:memo: License</h2>
 <p>Distributed under the GNU LGPL v3. See <code>LICENSE</code> for more information.</p>
-<h2 id="issues">Issues</h2>
+<h2 id="bug-issues">:bug: Issues</h2>
 <p>If you encounter any bugs or would like to request a new feature please open a new issue.</p>
-<p><a href="https://github.com/alexpdev/TorrentFile/issues">https://github.com/alexpdev/TorrentFile/issues</a></p>
+<p><a href="https://github.com/alexpdev/torrentfile/issues">https://github.com/alexpdev/torrentfile/issues</a></p>
 
   <br>
     
@@ -253,5 +252,5 @@ Edit on GitHub</a>
 </html>
 <!--
 MkDocs version : 1.2.3
-Build Date UTC : 2022-01-11 00:09:39.283482+00:00
+Build Date UTC : 2022-01-11 04:14:38.530837+00:00
 -->

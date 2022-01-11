@@ -146,6 +146,10 @@ invoked when called from command line, and parses accompanying arguments.</p>
           <span class="mkapi-section-name-body functions">Functions</span> 
         </div>
       <div class="mkapi-section-body functions"><ul class="mkapi-items">
+<li class="function"><code class="mkapi-item-name">create_magnet</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">metafile</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`str`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create a magnet URI from a Bittorrent meta file.</span></li>
+
 <li class="function"><code class="mkapi-item-name">main</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initiate main function for CLI script.</span></li>
@@ -288,6 +292,68 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
 
 
 
+<h3 id="torrentfile.cli.create_magnet" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">create_magnet</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_magnet</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a magnet URI from a Bittorrent meta file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    metafile : `str` | `os.PathLike`</span>
+<span class="sd">        path to bittorrent meta file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `str`</span>
+<span class="sd">        created magnet URI.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha1</span>  <span class="c1"># nosec</span>
+    <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">quote_plus</span>
+
+    <span class="kn">import</span> <span class="nn">pyben</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
+    <span class="n">binfo</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+    <span class="n">infohash</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">(</span><span class="n">binfo</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>  <span class="c1"># nosec</span>
+    <span class="n">scheme</span> <span class="o">=</span> <span class="s2">&quot;magnet:&quot;</span>
+    <span class="n">hasharg</span> <span class="o">=</span> <span class="s2">&quot;?xt=urn:btih:&quot;</span> <span class="o">+</span> <span class="n">infohash</span>
+    <span class="n">namearg</span> <span class="o">=</span> <span class="s2">&quot;&amp;dn=&quot;</span> <span class="o">+</span> <span class="n">quote_plus</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s2">&quot;announce-list&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+        <span class="n">announce_args</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;&amp;tr=&quot;</span> <span class="o">+</span> <span class="n">quote_plus</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">urllist</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce-list&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urllist</span>
+        <span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">announce_args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&amp;tr=&quot;</span> <span class="o">+</span> <span class="n">quote_plus</span><span class="p">(</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">])]</span>
+    <span class="n">full_uri</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">scheme</span><span class="p">,</span> <span class="n">hasharg</span><span class="p">,</span> <span class="n">namearg</span><span class="p">]</span> <span class="o">+</span> <span class="n">announce_args</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">full_uri</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">full_uri</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h3 id="torrentfile.cli.main" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">main</span><span class="p">()</span></code>
 
@@ -384,7 +450,7 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
         <span class="s2">&quot;create&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Create a torrent file.&quot;</span><span class="p">,</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
-        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">],</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;new&quot;</span><span class="p">,</span> <span class="s2">&quot;make&quot;</span><span class="p">],</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">HelpFormat</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -393,7 +459,7 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
         <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;private&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;create file for private tracker&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;create a private torrent file&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -403,6 +469,14 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;source&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify source tracker&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-m&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--magnet&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;magnet&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;output Magnet Link after creation completes&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -421,6 +495,20 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;outfile&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;output path for created .torrent file&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--tracker&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;tracker&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        One or more Bittorrent tracker announce url(s).</span>
+<span class="s2">        Examples:: [-a url1 url2 url3]  [--anounce url1]</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -454,20 +542,6 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--tracker&quot;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
-        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        One or more Bittorrent tracker announce url(s).</span>
-<span class="s2">        Examples:: [-a url1 url2 url3]  [--anounce url1]</span>
-<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;-w&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--web-seed&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
@@ -479,6 +553,17 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
 <span class="s2">        the torrent contents.  This is useful if the torrent</span>
 <span class="s2">        tracker is ever unreachable. Example:: [-w url1 [url2 [url3]]]</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--announce&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;alias for -t/--tracker&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -571,6 +656,21 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;replaces current source with &lt;source&gt;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
+    <span class="n">magnet_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;magnet&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Create magnet url from a Bittorrent Meta File.&quot;</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">],</span>
+        <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">HelpFormat</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">magnet_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;metafile&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to bittorrent meta file.&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;*.torrent&gt;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">flags</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
@@ -592,6 +692,9 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
 
     <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">command</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;magnet&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">create_magnet</span><span class="p">(</span><span class="n">flags</span><span class="o">.</span><span class="n">metafile</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">command</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;recheck&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;check&quot;</span><span class="p">]:</span>
         <span class="n">tlogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Program entering Recheck mode.&quot;</span><span class="p">)</span>
@@ -620,7 +723,7 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;url_list&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">url_list</span><span class="p">,</span>
         <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
-        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">announce</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">announce</span> <span class="o">+</span> <span class="n">flags</span><span class="o">.</span><span class="n">tracker</span><span class="p">,</span>
         <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
         <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">private</span><span class="p">,</span>
@@ -638,6 +741,8 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
         <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">tlogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Completed torrent files meta info assembly.&quot;</span><span class="p">)</span>
     <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">magnet</span><span class="p">:</span>
+        <span class="n">create_magnet</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
@@ -1081,11 +1186,12 @@ MetaFile        </code>
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">announce</span><span class="p">,</span>
-            <span class="s2">&quot;announce list&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">announce_list</span><span class="p">,</span>
+            <span class="s2">&quot;announce-list&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">announce_list</span><span class="p">,</span>
             <span class="s2">&quot;created by&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;TorrentFile:v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="s2">&quot;creation date&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())),</span>
             <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="p">{},</span>
         <span class="p">}</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Announce list = </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">announce_list</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">comment</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">comment</span>
         <span class="k">if</span> <span class="n">private</span><span class="p">:</span>
@@ -1213,11 +1319,12 @@ MetaFile        </code>
     <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">announce</span><span class="p">,</span>
-        <span class="s2">&quot;announce list&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">announce_list</span><span class="p">,</span>
+        <span class="s2">&quot;announce-list&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">announce_list</span><span class="p">,</span>
         <span class="s2">&quot;created by&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;TorrentFile:v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="s2">&quot;creation date&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())),</span>
         <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="p">{},</span>
     <span class="p">}</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Announce list = </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">announce_list</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">comment</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">comment</span>
     <span class="k">if</span> <span class="n">private</span><span class="p">:</span>
@@ -3607,10 +3714,10 @@ torrentfile.hasher.HasherHybrid            (<span title="torrentfile.hasher.CbMi
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">vallist</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
             <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vallist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">vallist</span><span class="p">]</span>
+            <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce-list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">vallist</span><span class="p">]</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="p">]</span>
+            <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce-list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="s2">&quot;url-list&quot;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
         <span class="n">val</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url-list&quot;</span><span class="p">)</span>
@@ -5653,7 +5760,7 @@ InteractiveEditor        </code>
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;url-list&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url-list&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-            <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;announce list&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;announce-list&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
             <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
             <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;private&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
             <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;comment&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
@@ -5769,7 +5876,7 @@ InteractiveEditor        </code>
     <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;url-list&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url-list&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;announce list&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;announce-list&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
         <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;private&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
         <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;comment&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
