@@ -155,6 +155,20 @@ def main_script(args=None):
     )
 
     create_parser.add_argument(
+        "-t",
+        "--tracker",
+        action="store",
+        dest="tracker",
+        metavar="<url>",
+        nargs="+",
+        default=[],
+        help="""
+        One or more Bittorrent tracker announce url(s).
+        Examples:: [-a url1 url2 url3]  [--anounce url1]
+        """,
+    )
+
+    create_parser.add_argument(
         "--meta-version",
         default="1",
         choices=["1", "2", "3"],
@@ -185,20 +199,6 @@ def main_script(args=None):
     )
 
     create_parser.add_argument(
-        "-t",
-        "--tracker",
-        action="store",
-        dest="announce",
-        metavar="<url>",
-        nargs="+",
-        default="",
-        help="""
-        One or more Bittorrent tracker announce url(s).
-        Examples:: [-a url1 url2 url3]  [--anounce url1]
-        """,
-    )
-
-    create_parser.add_argument(
         "-w",
         "--web-seed",
         action="store",
@@ -210,6 +210,17 @@ def main_script(args=None):
         the torrent contents.  This is useful if the torrent
         tracker is ever unreachable. Example:: [-w url1 [url2 [url3]]]
         """,
+    )
+
+    create_parser.add_argument(
+        "-a",
+        "--announce",
+        action="store",
+        dest="announce",
+        metavar="<url>",
+        nargs="+",
+        default=[],
+        help="alias for -t/--tracker",
     )
 
     create_parser.add_argument(
@@ -302,6 +313,21 @@ def main_script(args=None):
         help="replaces current source with <source>",
     )
 
+    magnet_parser = subparsers.add_parser(
+        "magnet",
+        help="Create magnet url from a Bittorrent Meta File.",
+        aliases=["m"],
+        prefix_chars="-",
+        formatter_class=HelpFormat
+    )
+
+    magnet_parser.add_argument(
+        "metafile",
+        action="store",
+        help="path to bittorrent meta file.",
+        metavar="<*.torrent>"
+    )
+
     flags = parser.parse_args(args)
     print(flags)
     if flags.debug:
@@ -323,6 +349,9 @@ def main_script(args=None):
 
     if flags.interactive:
         return select_action()
+
+    if flags.command in ["m", "magnet"]:
+        return create_magnet(flags.metafile)
 
     if flags.command in ["recheck", "r", "check"]:
         tlogger.debug("Program entering Recheck mode.")
@@ -351,7 +380,7 @@ def main_script(args=None):
     kwargs = {
         "url_list": flags.url_list,
         "path": flags.content,
-        "announce": flags.announce,
+        "announce": flags.announce + flags.tracker,
         "piece_length": flags.piece_length,
         "source": flags.source,
         "private": flags.private,
@@ -379,3 +408,33 @@ def main_script(args=None):
 def main():
     """Initiate main function for CLI script."""
     main_script()
+
+
+def create_magnet(metafile):
+    """Create a magnet URI from a Bittorrent meta file.
+
+    Parameters
+    ----------
+    metafile : `str` | `os.PathLike`
+        path to bittorrent meta file.
+
+    Returns
+    -------
+    `str`
+        created magnet URI.
+    """
+    import pyben
+    import os
+    from hashlib import sha1
+    from urllib.parse import quote_plus
+    scheme = "magnet:?xt=urn:btih:"
+    if not os.path.exists(metafile):
+        raise FileNotFoundError
+    meta = pyben.load(metafile)
+    info = meta["info"]
+    binfo = pyben.dumps(info)
+    infohash = sha1(binfo).hexdigest()
+    rest = f"&d={info['name']}&tr={quote_plus(meta['announce'])}"
+    uri = scheme + infohash + rest
+    sys.stdout.write(uri)
+    return uri
