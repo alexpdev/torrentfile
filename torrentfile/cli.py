@@ -115,7 +115,7 @@ def main_script(args=None):
         "create",
         help="Create a torrent file.",
         prefix_chars="-",
-        aliases=["c"],
+        aliases=["c", "new", "make"],
         formatter_class=HelpFormat,
     )
 
@@ -124,7 +124,7 @@ def main_script(args=None):
         "--private",
         action="store_true",
         dest="private",
-        help="create file for private tracker",
+        help="create a private torrent file",
     )
 
     create_parser.add_argument(
@@ -134,6 +134,14 @@ def main_script(args=None):
         dest="source",
         metavar="<source>",
         help="specify source tracker",
+    )
+
+    create_parser.add_argument(
+        "-m",
+        "--magnet",
+        action="store_true",
+        dest="magnet",
+        help="output Magnet Link after creation completes",
     )
 
     create_parser.add_argument(
@@ -398,6 +406,8 @@ def main_script(args=None):
         torrent = TorrentFile(**kwargs)
     tlogger.debug("Completed torrent files meta info assembly.")
     outfile, meta = torrent.write()
+    if flags.magnet:
+        create_magnet(outfile)
     parser.kwargs = kwargs
     parser.meta = meta
     parser.outfile = outfile
@@ -429,14 +439,23 @@ def create_magnet(metafile):
 
     import pyben
 
-    scheme = "magnet:?xt=urn:btih:"
     if not os.path.exists(metafile):
         raise FileNotFoundError
     meta = pyben.load(metafile)
     info = meta["info"]
     binfo = pyben.dumps(info)
-    infohash = sha1(binfo).hexdigest()  # nosec
-    rest = f"&d={info['name']}&tr={quote_plus(meta['announce'])}"
-    uri = scheme + infohash + rest
-    sys.stdout.write(uri)
-    return uri
+    infohash = sha1(binfo).hexdigest().upper()  # nosec
+    scheme = "magnet:"
+    hasharg = "?xt=urn:btih:" + infohash
+    namearg = "&dn=" + quote_plus(info["name"])
+    if "announce-list" in meta:
+        announce_args = [
+            "&tr=" + quote_plus(url)
+            for urllist in meta["announce-list"]
+            for url in urllist
+        ]
+    else:
+        announce_args = ["&tr=" + quote_plus(meta["announce"])]
+    full_uri = "".join([scheme, hasharg, namearg] + announce_args)
+    sys.stdout.write(full_uri)
+    return full_uri

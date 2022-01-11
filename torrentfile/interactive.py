@@ -192,7 +192,7 @@ class InteractiveEditor:
         self.info = self.meta["info"]
         self.args = {
             "url-list": self.meta.get("url-list", None),
-            "announce": self.meta.get("announce list", None),
+            "announce": self.meta.get("announce-list", None),
             "source": self.info.get("source", None),
             "private": self.info.get("private", None),
             "comment": self.info.get("comment", None),

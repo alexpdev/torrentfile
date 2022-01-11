@@ -73,10 +73,10 @@ def edit_torrent(metafile, args):
         if isinstance(val, str):
             vallist = val.split()
             meta["announce"] = vallist[0]
-            meta["announce list"] = [vallist]
+            meta["announce-list"] = [vallist]
         elif isinstance(val, list):
             meta["announce"] = val[0]
-            meta["announce list"] = [val]
+            meta["announce-list"] = [val]
 
     if "url-list" in args:
         val = args.get("url-list")

@@ -36,7 +36,7 @@ def torfile(dir2, request):
     """Create a standard metafile for testing."""
     args = {
         "path": dir2,
-        "announce": "url1 url2 url4",
+        "announce": ["url1", "url2", "url4"],
         "comment": "this is a comment",
         "source": "SomeSource",
     }
@@ -61,7 +61,7 @@ def test_edit_torrent(torfile, announce):
     data = edit_torrent(torfile, edits)
     meta = pyben.load(torfile)
     assert data == meta
-    assert data["announce list"] == [announce]
+    assert data["announce-list"] == [announce]
 
 
 @pytest.mark.parametrize("announce", ["urla", "urlb urlc", "urla urlb urlc"])
@@ -71,7 +71,7 @@ def test_edit_torrent_str(torfile, announce):
     data = edit_torrent(torfile, edits)
     meta = pyben.load(torfile)
     assert data == meta
-    assert data["announce list"] == [announce.split()]
+    assert data["announce-list"] == [announce.split()]
 
 
 @pytest.mark.parametrize("url_list", ["urla", "urlb urlc", "urla urlb urlc"])
@@ -189,7 +189,7 @@ def test_edit_cli(torfile, comment, source, announce, webseed):
     assert comment == info.get("comment")
     assert source == info.get("source")
     assert info.get("private") == 1
-    assert meta["announce list"] == [[announce]]
+    assert meta["announce-list"] == [[announce]]
     assert meta["url-list"] == [webseed]
 
 
@@ -206,12 +206,21 @@ def test_magnet_hex(torfile):
     magnet_link = create_magnet(torfile)
     meta = pyben.load(torfile)
     info = meta["info"]
-    binfo = sha1(pyben.dumps(info)).hexdigest()
+    binfo = sha1(pyben.dumps(info)).hexdigest().upper()
     assert binfo in magnet_link
 
 
 def test_magnet(torfile):
     """Test create magnet function scheme."""
+    magnet_link = create_magnet(torfile)
+    assert magnet_link.startswith("magnet")
+
+
+def test_magnet_no_announce_list(torfile):
+    """Test create magnet function scheme."""
+    meta = pyben.load(torfile)
+    del meta["announce-list"]
+    pyben.dump(meta, torfile)
     magnet_link = create_magnet(torfile)
     assert magnet_link.startswith("magnet")
 
