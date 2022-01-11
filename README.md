@@ -1,95 +1,74 @@
-# torrentfile
+# TorrentFile
 
 ![torrentfile](https://github.com/alexpdev/torrentfile/blob/master/assets/torrentfile.png?raw=true)
 
 ------
 
-## Bittorrent File Creator (.torrent)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/202440df15224535b5358503e6235c88)](https://www.codacy.com/gh/alexpdev/TorrentFile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/alexpdev/TorrentFile/branch/master/graph/badge.svg?token=PXFsxXVAHW)](https://codecov.io/gh/alexpdev/torrentfile)
+![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile)
+![GitHub License](https://img.shields.io/github/license/alexpdev/torrentfile)
+![PyPI - Downloads](https://img.shields.io/pypi/dw/torrentfile)
+[![CI](https://github.com/alexpdev/TorrentFile/actions/workflows/python_workflow.yml/badge.svg?branch=master&event=push)](https://github.com/alexpdev/torrentfile/actions/workflows/python_workflow.yml)
+[![DeepSource](https://deepsource.io/gh/alexpdev/TorrentFile.svg/?label=active+issues&token=16Sl_dF7nTU8YgPilcqhvHm8)](https://deepsource.io/gh/alexpdev/torrentfile/)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/2da47ec1b5904538a40230f049a02be4)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Grade)
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/2da47ec1b5904538a40230f049a02be4)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Coverage)
-![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile?style=plastic)
-![GitHub](https://img.shields.io/github/license/alexpdev/torrentfile?style=plastic)
+## :globe_with_meridians: Overview
 
-_TorrentFile_ can create torrent files, Check content for accuracy and completeness with a
-.torrent file, and display detailed information contained in a .torrent file.
+A `simple` and `convenient` tool for creating, reviewing, editing, and/or  
+checking/validating bittorrent meta files (aka torrent files). _`torrentfile`_  
+supports all versions of Bittorrent files, including hybrid meta files.
 
-## Features
+> A GUI frontend for this project can be found at [https://github.com/alexpdev/TorrentfileQt](https://github.com/alexpdev/TorrentfileQt)
 
-- Create meta files for Bittorrent v1, v2 and hybrid torrent files.
-- Display detailed information contained in torrent file.
-- Check/ReCheck content and torrent file for download completion details and data integrity.
-- Supports all .torrent files.
-- GUI project can be found at [https://github.com/alexpdev/TorrentfileQt](https://github.com/alexpdev/TorrentfileQt)
+## :white_check_mark: Requirements
 
-## Documentation
+- Python 3.7+
+- Tested on Linux and Windows
 
-Documentation can be found in the `./docs` directory, or online at [https://alexpdev.github.io/torrentfile](https://alexpdev.github.io/torrentfile).
+## :package: Install
 
-## Installation
+__via PyPi:__
 
-### via PyPi
+    pip install torrentfile
 
-`pip install torrentfile`
+__via Git:__
 
-### via Git
+    git clone https://github.com/alexpdev/torrentfile.git
+    python setup.py install
 
-```bash:
-git clone https://github.com/alexpdev/torrentfile.git
-python setup.py install
-```
+> Download pre-compiled binaries from the [release page](https://github.com/alexpdev/torrentfile/releases).
 
-### download
+## :scroll: Documentation
 
-Or download the latest release from the Release page on github.
-[https://github.com/alexpdev/torrentfile/releases](https://github.com/alexpdev/torrentfile/releases)
+Documentation can be found  [here](https://alexpdev.github.io/torrentfile)
+or in the _`docs`_ directory.
 
-## CLI Help Message
+## :rocket: Usage
 
-```bash:
-usage: TorrentFile [-h] [-v] [-d] [-p] [-s <source>] [-c <comment>]
-                   [-o <path>] [--meta-version <int>] [-l <int>]
-                   [-a <url> [<url> ...]] [-r <.torrent>]
-                   <content>
+```bash
+torrentfile [-h] [-i] [-V] [-v]  ...
 
-Create and/or ReCheck Bittorrent V1, V2, and Hybrid meta files.
+Sub-Commands:
 
-positional arguments:
-  <content>                             path to content file or directory
+    create           Create a new torrent file.
+    check            Check if file/folder contents match a torrent file.
+    edit             Edit a pre-existing torrent file.
 
 optional arguments:
-  -h, --help                            show this help message and exit
-  -v, --version                         show program version and exit
-  -d, --debug                           output debug information
-  -p, --private                         create file for private tracker
-  -s <source>, --source <source>        specify source tracker
-  -c <comment>, --comment <comment>     include a comment in file metadata
-  -o <path>, --out <path>               output path for created .torrent file
-  --meta-version <int>                  torrent file version.
-                                        Options = 1, 2 or 3.
-                                        (1) = Bittorrent v1 (Default)
-                                        (2) = Bittorrent v2
-                                        (3) = Bittorrent v1 & v2 hybrid
-
-  -l <int>, --piece-length <int>        Fixed amount of bytes for each chunk of data. (Default: None)
-                                        Acceptable input values include integers 14-24, which
-                                        will be interpreted as the exponent for 2^n, or any perfect
-                                        power of two integer between 16Kib and 16MiB (inclusive).
-                                        Examples:: [--piece-length 14] [-l 20] [-l 16777216]
-
-  -a <url> [<url> ...], --announce <url> [<url> ...]
-                                        one or more Bittorrent tracker announce url(s)
-                                        Examples: [-a url1 url2 url3]  [--anounce url1]
-
-  -r <.torrent>, --check <.torrent>, --recheck <.torrent>
-                                        <.torrent> is the path to a .torrent meta file.
-                                        Check <content> data integrity with <.torrent> file.
-                                        If this is active, all other options are ignored
-                                        (except --debug)
+  -h, --help         show this help message and exit
+  -V, --version      show program version and exit
+  -i, --interactive  select program options interactively
+  -v, --verbose      output debug information
 ```
 
-## License
+> Usage examples can be found in the project documentation on the [examples page.](https://alexpdev.github.io/torrentfile/examples)
+
+## :memo: License
 
 Distributed under the GNU LGPL v3. See `LICENSE` for more information.
 
-[https://github.com/alexpdev](https://github.com/alexpdev/)
+## :bug: Issues
+
+If you encounter any bugs or would like to request a new feature please open a new issue.
+
+[https://github.com/alexpdev/torrentfile/issues](https://github.com/alexpdev/torrentfile/issues)

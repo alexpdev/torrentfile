@@ -18,10 +18,10 @@ import sys
 import pyben
 import pytest
 
-from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
+from tests import dir1, dir2, rmpath
 from torrentfile.cli import main
 from torrentfile.edit import edit_torrent
-from tests import dir1, dir2, rmpath
+from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
 
 def torrents():
