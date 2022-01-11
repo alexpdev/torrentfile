@@ -46,8 +46,14 @@ illustrate some of the options available for creating torrent files.
 - `--meta-version 3` asks for a v1 & v2 hybrid file.
 
 ```bash
-> torrentfile create /path/to/content --meta-version 2 -t https://tracker1.com
-> torrentfile create /path/to/content --meta-version 3 
+> torrentfile create /path/to/content --meta-version 2 
+> torrentfile create --meta-version 3 /path/to/content
+```
+
+- to create a magnet URI for the created torrent file use `--magnet`
+
+```bash
+> torrentfile create --t https://tracker1/annc https://tracker2/annc --magnet /path/to/content
 ```
 
 ### Recheck Torrents
@@ -67,3 +73,12 @@ torrent file.
 Using the sub-command `edit` or `e` enables editting a pre-existing torrent file.
 The edit sub-command works identically to the `create` sub-command and accepts many
 of the same arguments.
+
+### Create Magnet
+
+To create a magnet URI for a pre-existing torrent meta file, use the sub-command  
+`magnet` with the path to the meta file.
+
+```bash
+> torrentfile magnet /path/to/metafile
+```
