@@ -15,69 +15,95 @@
 
 import logging
 import math
+import os
 from hashlib import sha1, sha256  # nosec
 
-from .utils import humanize_bytes
+from torrentfile.utils import humanize_bytes
 
 BLOCK_SIZE = 2 ** 14  # 16KiB
 HASH_SIZE = 32
 
+hashlog = logging.getLogger("tlogger.hash")
 
-class Feeder:
+
+class CbMixin:
+    """Mixin class to set a callback during hashing procedure."""
+
+    _cb = None
+
+    @classmethod
+    def set_callback(cls, func):
+        """
+        Assign a callback to the Hashing class.
+
+        Parameters
+        ----------
+        func : function
+            the callback function
+        """
+        cls._cb = func
+
+
+class Hasher(CbMixin):
     """Piece hasher for Bittorrent V1 files.
 
     Takes a sorted list of all file paths, calculates sha1 hash
     for fixed size pieces of file data from each file
     seemlessly until the last piece which may be smaller than others.
 
-    Args:
-      paths (`list`): List of files.
-      piece_length (`int`): Size of chuncks to split the data into.
-      total (`int`): Sum of all files in file list.
+    Parameters
+    ----------
+    paths : `list`
+        List of files.
+    piece_length : `int`
+        Size of chuncks to split the data into.
+    total : `int`
+        Sum of all files in file list.
     """
 
-    def __init__(self, paths, piece_length, total):
+    def __init__(self, paths, piece_length):
         """Generate hashes of piece length data from filelist contents."""
         self.piece_length = piece_length
         self.paths = paths
-        self.total = total
-        self.pieces = []
+        self.total = sum([os.path.getsize(i) for i in self.paths])
         self.index = 0
-        self.piece_count = 0
-        self.num_pieces = math.ceil(self.total // self.piece_length)
         self.current = open(self.paths[0], "rb")
-        self.iterator = None
-        logging.debug(
+        hashlog.debug(
             "Hashing v1 torrent file. Size: %s Piece Length: %s",
             humanize_bytes(self.total),
-            humanize_bytes(self.piece_length)
+            humanize_bytes(self.piece_length),
         )
 
     def __iter__(self):
         """Iterate through feed pieces.
 
-        Returns:
-          self (`iterator`): Iterator for leaves/hash pieces.
+        Returns
+        -------
+        self : `iterator`
+            Iterator for leaves/hash pieces.
         """
-        self.iterator = self.leaves()
-        return self.iterator
+        return self
 
-    def _handle_partial(self, arr, partial):
+    def _handle_partial(self, arr):
         """Define the handling partial pieces that span 2 or more files.
 
-        Args:
-          arr (`bytearray`): Incomplete piece containing partial data
-          partial (`int`): Size of incomplete piece_length
+        Parameters
+        ----------
+        arr : `bytearray`
+            Incomplete piece containing partial data
+        partial : `int`
+            Size of incomplete piece_length
 
-        Returns:
-          digest (`bytes`): SHA1 digest of the complete piece.
+        Returns
+        -------
+        digest : `bytes`
+            SHA1 digest of the complete piece.
         """
-        while partial < self.piece_length and self.next_file():
-            target = self.piece_length - partial
+        while len(arr) < self.piece_length and self.next_file():
+            target = self.piece_length - len(arr)
             temp = bytearray(target)
             size = self.current.readinto(temp)
             arr.extend(temp[:size])
-            partial += size
             if size == target:
                 break
         return sha1(arr).digest()  # nosec
@@ -91,19 +117,18 @@ class Feeder:
             return True
         return False
 
-    def leaves(self):
+    def __next__(self):
         """Generate piece-length pieces of data from input file list."""
         while True:
             piece = bytearray(self.piece_length)
             size = self.current.readinto(piece)
             if size == 0:
                 if not self.next_file():
-                    break
+                    raise StopIteration
             elif size < self.piece_length:
-                yield self._handle_partial(piece[:size], size)
+                return self._handle_partial(piece[:size])
             else:
-                yield sha1(piece).digest()  # nosec
-            self.piece_count += 1
+                return sha1(piece).digest()  # nosec
 
 
 def merkle_root(blocks):
@@ -113,7 +138,7 @@ def merkle_root(blocks):
     return blocks[0]
 
 
-class V2Hash:
+class HasherV2(CbMixin):
     """Calculate the root hash and piece layers for file contents.
 
     Iterates over 16KiB blocks of data from given file, hashes the data,
@@ -121,9 +146,12 @@ class V2Hash:
     hashed data equals the piece-length.  Then continues the hash tree until
     root hash is calculated.
 
-    Args:
-      path (`str`): Path to file.
-      piece_length (`int`): Size of layer hashes pieces.
+    Parameters
+    ----------
+    path : `str`
+        Path to file.
+    piece_length : `int`
+        Size of layer hashes pieces.
     """
 
     def __init__(self, path, piece_length):
@@ -134,7 +162,7 @@ class V2Hash:
         self.layer_hashes = []
         self.piece_length = piece_length
         self.num_blocks = piece_length // BLOCK_SIZE
-        logging.debug(
+        hashlog.debug(
             "Hashing partial v2 torrent file. Piece Length: %s Path: %s",
             humanize_bytes(self.piece_length),
             str(self.path),
@@ -146,33 +174,46 @@ class V2Hash:
     def process_file(self, fd):
         """Calculate hashes over 16KiB chuncks of file content.
 
-        Args:
-            fd (`str`): Opened file in read mode.
+        Parameters
+        ----------
+        fd : `str`
+            Opened file in read mode.
         """
         while True:
             total = 0
             blocks = []
             leaf = bytearray(BLOCK_SIZE)
             # generate leaves of merkle tree
+
             for _ in range(self.num_blocks):
                 size = fd.readinto(leaf)
                 total += size
                 if not size:
                     break
                 blocks.append(sha256(leaf[:size]).digest())
+
             # blocks is empty mean eof
             if not blocks:
                 break
             if len(blocks) != self.num_blocks:
+                # when size of file doesn't fill the last block
                 if not self.layer_hashes:
+                    # when the there is only one block for file
+
                     next_pow_2 = 1 << int(math.log2(total) + 1)
                     remaining = ((next_pow_2 - total) // BLOCK_SIZE) + 1
+
                 else:
+                    # when the file contains multiple pieces
                     remaining = self.num_blocks - size
-                padding = [bytes(HASH_SIZE) for _ in range(remaining)]
+                # pad the the rest with zeroes to fill remaining space.
+                padding = [bytes(32) for _ in range(remaining)]
                 blocks.extend(padding)
-            # if the file is smaller than piece length
+            # calculate the root hash for the merkle tree up to piece-length
+
             layer_hash = merkle_root(blocks)
+            if self._cb:
+                self._cb(layer_hash)
             self.layer_hashes.append(layer_hash)
         self._calculate_root()
 
@@ -188,15 +229,19 @@ class V2Hash:
         self.root = merkle_root(self.layer_hashes)
 
 
-class HybridHash:
-    """Calculate hashes for Hybrid torrentfile.
+class HasherHybrid(CbMixin):
+    """Calculate root and piece hashes for creating hybrid torrent file.
 
-    Uses sha1 and sha256 hashes for each version  # nosec
-    of the Bittorrent protocols meta files respectively.
+    Create merkle tree layers from sha256 hashed 16KiB blocks of contents.
+    With a branching factor of 2, merge layer hashes until blocks equal
+    piece_length bytes for the piece layer, and then the root hash.
 
-    Args:
-        path (`str`): path to target file.
-        piece_length (`int`): piece length for data chunks.
+    Parameters
+    ----------
+    path : `str`
+        path to target file.
+    piece_length : `int`
+        piece length for data chunks.
     """
 
     def __init__(self, path, piece_length):
@@ -210,7 +255,7 @@ class HybridHash:
         self.padding_piece = None
         self.padding_file = None
         self.amount = piece_length // BLOCK_SIZE
-        logging.debug(
+        hashlog.debug(
             "Hashing partial Hybrid torrent file. Piece Length: %s Path: %s",
             humanize_bytes(self.piece_length),
             str(self.path),
@@ -221,12 +266,17 @@ class HybridHash:
     def _pad_remaining(self, total, blocklen):
         """Generate Hash sized, 0 filled bytes for padding.
 
-        Args:
-            total (`int`): length of bytes processed.
-            blocklen (`int`): number of blocks processed.
+        Parameters
+        ----------
+        total : `int`
+            length of bytes processed.
+        blocklen : `int`
+            number of blocks processed.
 
-        Returns:
-            padding (`bytes`): Padding to fill remaining portion of tree.
+        Returns
+        -------
+        padding : `bytes`
+            Padding to fill remaining portion of tree.
         """
         if not self.layer_hashes:
             next_pow_2 = 1 << int(math.log2(total) + 1)
@@ -238,8 +288,10 @@ class HybridHash:
     def _process_file(self, data):
         """Calculate layer hashes for contents of file.
 
-        Args:
-            data (`BytesIO`): File opened in read mode.
+        Parameters
+        ----------
+        data : `BytesIO`
+            File opened in read mode.
         """
         while True:
             plength = self.piece_length
@@ -261,6 +313,8 @@ class HybridHash:
                 padding = self._pad_remaining(len(blocks), size)
                 blocks.extend(padding)
             layer_hash = merkle_root(blocks)
+            if self._cb:
+                self._cb(layer_hash)
             self.layer_hashes.append(layer_hash)
             if plength > 0:
                 self.padding_file = {
@@ -270,9 +324,9 @@ class HybridHash:
                 }
                 piece.update(bytes(plength))
             self.pieces.append(piece.digest())  # nosec
-        self.calculate_root()
+        self._calculate_root()
 
-    def calculate_root(self):
+    def _calculate_root(self):
         """Calculate the root hash for opened file."""
         self.piece_layer = b"".join(self.layer_hashes)
 

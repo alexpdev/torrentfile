@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#! usr/bin/python3
 # -*- coding: utf-8 -*-
 
 #####################################################################
@@ -11,31 +11,45 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Base and Subclasses for bittorrent meta files.
+"""Classes and procedures pertaining to the creation of torrent meta files.
 
-This module `metafile2` contains classes and functions related
-to constructing .torrent files using Bittorrent v2 Protocol
+Classes
+-------
 
-Classes:
-    `TorrentFile`: construct .torrent file.
-    `TorrentFileV2`: construct .torrent v2 files using provided data.
-    `MetaFile` base class for all MetaFile classes.
+- `TorrentFile`
+    construct .torrent file.
 
-Constants:
-    BLOCK_SIZE (`int`): size of leaf hashes for merkle tree.
-    HASH_SIZE (`int`): Length of a sha256 hash.
+- `TorrentFileV2`
+    construct .torrent v2 files using provided data.
 
-Notes
------
-Implementation details for Bittorrent Protocol v2.
+- `MetaFile`
+    base class for all MetaFile classes.
 
-Metainfo files (also known as .torrent files) are bencoded dictionaries
-with the following keys:
+Constants
+---------
 
-"announce":
+- BLOCK_SIZE : `int`
+    size of leaf hashes for merkle tree.
+
+- HASH_SIZE : `int`
+    Length of a sha256 hash.
+
+Bittorrent V2
+-------------
+
+**From Bittorrent.org Documentation pages.**
+*Implementation details for Bittorrent Protocol v2.*
+
+!!! attention
+    All strings in a .torrent file that contains text
+    must be UTF-8 encoded.
+
+### Meta Version 2 Dictionary:
+
+- "announce":
     The URL of the tracker.
 
-"info":
+- "info":
     This maps to a dictionary, with keys described below.
 
     "name":
@@ -62,17 +76,17 @@ with the following keys:
     "file tree":
         A tree of dictionaries where dictionary keys represent UTF-8
         encoded path elements. Entries with zero-length keys describe the
-        properties of the composed path at that point. 'UTF-8 encoded' in this
+        properties of the composed path at that point. 'UTF-8 encoded'
         context only means that if the native encoding is known at creation
         time it must be converted to UTF-8. Keys may contain invalid UTF-8
         sequences or characters and names that are reserved on specific
         filesystems. Implementations must be prepared to sanitize them. On
-        most platforms path components exactly matching '.' and '..' must be
+        platforms path components exactly matching '.' and '..' must be
         sanitized since they could lead to directory traversal attacks and
-        conflicting path descriptions. On platforms that require valid UTF-8
+        conflicting path descriptions. On platforms that require UTF-8
         path components this sanitizing step must happen after normalizing
         overlong UTF-8 encodings.
-        File is aligned to a piece boundary and occurs in the same order as in
+        File is aligned to a piece boundary and occurs in same order as
         the file tree. The last piece of each file may be shorter than the
         specified piece length, resulting in an alignment gap.
 
@@ -83,79 +97,87 @@ with the following keys:
 
     "pieces root":
         For non-empty files this is the the root hash of a merkle
-        tree with a branching factor of 2, constructed from 16KiB blocks of the
-        file. The last block may be shorter than 16KiB. The remaining leaf
-        hashes beyond the end of the file required to construct upper layers
-        of the merkle tree are set to zero. As of meta version 2 SHA2-256 is
-        used as digest function for the merkle tree. The hash is stored in its
-        binary form, not as human-readable string.
+        tree with a branching factor of 2, constructed from 16KiB blocks
+        of the file. The last block may be shorter than 16KiB. The
+        remaining leaf hashes beyond the end of the file required to
+        construct upper layers of the merkle tree are set to zero. As of
+        meta version 2 SHA2-256 is used as digest function for the merkle
+        tree. The hash is stored in its binary form, not as human-readable
+        string.
 
-"piece layers":
+-"piece layers":
     A dictionary of strings. For each file in the file tree that
     is larger than the piece size it contains one string value.
     The keys are the merkle roots while the values consist of concatenated
     hashes of one layer within that merkle tree. The layer is chosen so
-    that one hash covers piece length bytes. For example if the piece size is
-    16KiB then the leaf hashes are used. If a piece size of 128KiB is used
-    then 3rd layer up from the leaf hashes is used. Layer hashes which
-    exclusively cover data beyond the end of file, i.e. are only needed to
-    balance the tree, are omitted. All hashes are stored in their binary
-    format. A torrent is not valid if this field is absent, the contained
-    hashes do not match the merkle roots or are not from the correct layer.
+    that one hash covers piece length bytes. For example if the piece
+    size is 16KiB then the leaf hashes are used. If a piece size of
+    128KiB is used then 3rd layer up from the leaf hashes is used. Layer
+    hashes which exclusively cover data beyond the end of file, i.e.
+    are only needed to balance the tree, are omitted. All hashes are
+    stored in their binary format. A torrent is not valid if this field is
+    absent, the contained hashes do not match the merkle roots or are
+    not from the correct layer.
 
-> The file tree root dictionary itself must not be a file, i.e. it must not
-> contain a zero-length key with a dictionary containing a length key.
+!!! important
+    The file tree root dictionary itself must not be a file,
+    i.e. it must not contain a zero-length key with a dictionary containing
+    a length key.
 
---------
+Bittorrent V1
+-------------
 
-From Bittorrent.org Documentation pages.
+### Version 1 meta-dictionary
 
-Metainfo files (also known as .torrent files) are bencoded dictionaries with
-the following keys:
-
-announce
+-announce:
     The URL of the tracker.
 
-info
+- info:
+    This maps to a dictionary, with keys described below.
 
-This maps to a dictionary, with keys described below.
 
-All strings in a .torrent file that contains text must be UTF-8 encoded.
+## Version 1 info-dictionary
 
-## info dictionary
+- `name`:
+    maps to a UTF-8 encoded string which is the suggested name to
+    save the file (or directory) as. It is purely advisory.
 
-The `name` key maps to a UTF-8 encoded string which is the suggested name to
-save the file (or directory) as. It is purely advisory.
+- `piece length`:
+    maps to the number of bytes in each piece the file is split
+    into. For the purposes of transfer, files are split into
+    fixed-size pieces which are all the same length except for
+    possibly the last one which may be truncated.
 
-`piece length` maps to the number of bytes in each piece the file is split
-into. For the purposes of transfer, files are split into fixed-size pieces
-which are all the same length except for possibly the last one which may be
-truncated. `piece length` is almost always a power of two, most commonly 2 18
-= 256 K (BitTorrent prior to version 3.2 uses 2 20 = 1 M as default).
+- `piece length`:
+    is almost always a power of two, most commonly 2^18 = 256 K
 
-`pieces` maps to a string whose length is a multiple of 20. It is to be
-subdivided into strings of length 20, each of which is the SHA1 hash of the
-piece at the corresponding index.
+- `pieces`:
+    maps to a string whose length is a multiple of 20. It is to be
+    subdivided into strings of length 20, each of which is the SHA1
+    hash of the piece at the corresponding index.
 
-There is also a key `length` or a key `files`, but not both or neither. If
-`length` is present then the download represents a single file, otherwise it
-represents a set of files which go in a directory structure.
+- `length`:
+    In the single file case, maps to the length of the file in bytes.
 
-In the single file case, `length` maps to the length of the file in bytes.
+- `files`:
+    If present then the download represents a single file, otherwise it
+    represents a set of files which go in a directory structure.
+    For the purposes of the other keys, the multi-file case is treated
+    as only having a single file by concatenating the files in the order
+    they appear in the files list. The files list is the value `files`
+    maps to, and is a list of dictionaries containing the following keys:
 
-For the purposes of the other keys, the multi-file case is treated as only
-having a single file by concatenating the files in the order they appear in
-the files list. The files list is the value `files` maps to, and is a list of
-dictionaries containing the following keys:
+    `path`:
+        A list of UTF-8 encoded strings corresponding to subdirectory
+        names, the last of which is the actual file name
 
-`length` - The length of the file, in bytes.
+    `length`:
+        Maps to the length of the file in bytes.
 
-`path` - A list of UTF-8 encoded strings corresponding to subdirectory names,
-the last of which is the actual file name (a zero length list is an error
-case).
 
-In the single file case, the name key is the name of a file, in the muliple
-file case, it's the name of a directory.
+!!! Important
+    In the single file case, the name key is the name of a file,
+    in the muliple file case, it's the name of a directory.
 """
 
 import logging
@@ -165,26 +187,51 @@ from datetime import datetime
 
 import pyben
 
-from . import utils
-from .hasher import Feeder, HybridHash, V2Hash
-from .version import __version__ as version
+from torrentfile import utils
+from torrentfile.hasher import Hasher, HasherHybrid, HasherV2
+from torrentfile.version import __version__ as version
 
 
 class MetaFile:
     """Base Class for all TorrentFile classes.
 
-    Args:
-        path (`str`): target path to torrent content.
-        announce (`str`): One or more tracker URL's.
-        comment (`str`): A comment.
-        piece_length (`int`): Size of torrent pieces.
-        private (`bool`): For private trackers?
-        outfile (`str`): target path to write .torrent file.
-        source (`str`): Private tracker source.
+    Parameters
+    ----------
+    path : `str`
+        target path to torrent content.  Default: None
+    announce : `str`
+        One or more tracker URL's.  Default: None
+    comment : `str`
+        A comment.  Default: None
+    piece_length : `int`
+        Size of torrent pieces.  Default: None
+    private : `bool`
+        For private trackers.  Default: None
+    outfile : `str`
+        target path to write .torrent file. Default: None
+    source : `str`
+        Private tracker source. Default: None
     """
 
+    hasher = None
+
+    @classmethod
+    def set_callback(cls, func):
+        """
+        Assign a callback function for the Hashing class to call for each hash.
+
+        Parameters
+        ----------
+        func : function
+            The callback function which accepts a single paramter.
+        """
+        if "hasher" in vars(cls) and vars(cls)["hasher"]:
+            cls.hasher.set_callback(func)
+
+    # fmt: off
     def __init__(self, path=None, announce=None, private=False,
-                 source=None, piece_length=None, comment=None, outfile=None):
+                 source=None, piece_length=None, comment=None,
+                 outfile=None, url_list=None):
         """Construct MetaFile superclass and assign local attributes."""
         if not path:
             raise utils.MissingPathError
@@ -206,40 +253,46 @@ class MetaFile:
         # Most torrent clients have editting trackers as a feature.
         elif isinstance(announce, str):
             self.announce = announce
-            self.announce_list = [[announce]]
+            self.announce_list = [announce]
         elif isinstance(announce, Sequence):
             self.announce = announce[0]
-            self.announce_list = [[i] for i in announce]
+            self.announce_list = [announce]
 
         if private:
             self.private = 1
         else:
-            self.private = private
+            self.private = None
 
-        self.source = source
-        self.comment = comment
         self.outfile = outfile
+        self.comment = comment
+        self.url_list = url_list
+        self.source = source
         self.meta = {
             "announce": self.announce,
             "announce list": self.announce_list,
             "created by": f"TorrentFile:v{version}",
             "creation date": int(datetime.timestamp(datetime.now())),
-            "info": {}
+            "info": {},
         }
-        if self.comment:
-            self.meta["info"]["comment"] = self.comment
-        if self.private:
-            self.meta["info"]["private"] = self.private
-        if self.source:
-            self.meta["info"]["source"] = self.source
+        if comment:
+            self.meta["info"]["comment"] = comment
+        if private:
+            self.meta["info"]["private"] = 1
+        if source:
+            self.meta["info"]["source"] = source
+        if url_list:
+            self.meta["url-list"] = url_list
         self.meta["info"]["name"] = os.path.basename(self.path)
         self.meta["info"]["piece length"] = self.piece_length
+    # fmt: on
 
     def assemble(self):
         """Overload in subclasses.
 
-        Raises:
-            NotImplementedError (`Exception`)
+        Raises
+        ------
+        `Exception`
+            NotImplementedError
         """
         raise NotImplementedError
 
@@ -253,18 +306,23 @@ class MetaFile:
     def write(self, outfile=None):
         """Write meta information to .torrent file.
 
-        Args:
-            outfile (`str`, default=None): Destination path for .torrent file.
+        Parameters
+        ----------
+        outfile : `str`
+            Destination path for .torrent file. default=None
 
-        Returns:
-            outfile (`str`): Where the .torrent file was writen.
-            meta (`dict`): .torrent meta information.
+        Returns
+        -------
+        outfile : `str`
+            Where the .torrent file was writen.
+        meta : `dict`
+            .torrent meta information.
         """
         if outfile is not None:
             self.outfile = outfile
 
         if self.outfile is None:
-            self.outfile = self.path + ".torrent"
+            self.outfile = str(self.path) + ".torrent"
 
         self.meta = self.sort_meta()
         pyben.dump(self.meta, self.outfile)
@@ -276,21 +334,33 @@ class TorrentFile(MetaFile):
 
     Construct *Torrentfile* class instance object.
 
-    Args:
-        path(`str`): Path to torrent file or directory.
-        piece_length(`int`): Size of each piece of torrent data.
-        announce(`str` or `list`): One or more tracker URL's.
-        private(`int`): 1 if private torrent else 0.
-        source(`str`): Source tracker.
-        comment(`str`): Comment string.
-        outfile(`str`): Path to write metfile to.
+    Parameters
+    ----------
+    path : `str`
+        Path to torrent file or directory.
+    piece_length : `int`
+        Size of each piece of torrent data.
+    announce : `str` or `list`
+        One or more tracker URL's.
+    private : `int`
+        1 if private torrent else 0.
+    source : `str`
+        Source tracker.
+    comment : `str`
+        Comment string.
+    outfile : `str`
+        Path to write metfile to.
     """
+
+    hasher = Hasher
 
     def __init__(self, **kwargs):
         """Construct TorrentFile instance with given keyword args.
 
-        Args:
-            kwargs (`dict`): dictionary of keyword args passed to superclass.
+        Parameters
+        ----------
+        kwargs : `dict`
+            dictionary of keyword args passed to superclass.
         """
         super().__init__(**kwargs)
         logging.debug("Making Bittorrent V1 meta file.")
@@ -299,8 +369,10 @@ class TorrentFile(MetaFile):
     def assemble(self):
         """Assemble components of torrent metafile.
 
-        Returns:
-          `dict`: metadata dictionary for torrent file
+        Returns
+        -------
+        `dict`
+            metadata dictionary for torrent file
         """
         info = self.meta["info"]
         size, filelist = utils.filelist_total(self.path)
@@ -317,7 +389,7 @@ class TorrentFile(MetaFile):
             ]
 
         pieces = bytearray()
-        feeder = Feeder(filelist, self.piece_length, size)
+        feeder = Hasher(filelist, self.piece_length)
         for piece in feeder:
             pieces.extend(piece)
 
@@ -327,21 +399,33 @@ class TorrentFile(MetaFile):
 class TorrentFileV2(MetaFile):
     """Class for creating Bittorrent meta v2 files.
 
-    Args:
-        path (`str`): Path to torrent file or directory.
-        piece_length (`int`): Size of each piece of torrent data.
-        announce (`str` or `list`): one or more tracker URL's.
-        private (`int`): 1 if private torrent else 0.
-        source (`str`): Source tracker.
-        comment (`str`): Comment string.
-        outfile (`str`): Path to write metfile to.
+    Parameters
+    ----------
+    path : `str`
+        Path to torrent file or directory.
+    piece_length : `int`
+        Size of each piece of torrent data.
+    announce : `str` or `list`
+        one or more tracker URL's.
+    private : `int`
+        1 if private torrent else 0.
+    source : `str`
+        Source tracker.
+    comment : `str`
+        Comment string.
+    outfile : `str`
+        Path to write metfile to.
     """
+
+    hasher = HasherV2
 
     def __init__(self, **kwargs):
         """Construct `TorrentFileV2` Class instance from given parameters.
 
-        Args:
-            kwargs (`dict`): keywword arguments to pass to superclass.
+        Parameters
+        ----------
+        kwargs : `dict`
+            keywword arguments to pass to superclass.
         """
         super().__init__(**kwargs)
         logging.debug("Create .torrent v2 file.")
@@ -352,8 +436,10 @@ class TorrentFileV2(MetaFile):
     def assemble(self):
         """Assemble then return the meta dictionary for encoding.
 
-        Returns:
-          meta (`dict`): Metainformation about the torrent.
+        Returns
+        -------
+        meta : `dict`
+            Metainformation about the torrent.
         """
         info = self.meta["info"]
 
@@ -369,8 +455,10 @@ class TorrentFileV2(MetaFile):
     def _traverse(self, path):
         """Walk directory tree.
 
-        Args:
-            path (`str`): Path to file or directory.
+        Parameters
+        ----------
+        path : `str`
+            Path to file or directory.
         """
         if os.path.isfile(path):
             # Calculate Size and hashes for each file.
@@ -379,7 +467,7 @@ class TorrentFileV2(MetaFile):
             if size == 0:
                 return {"": {"length": size}}
 
-            fhash = V2Hash(path, self.piece_length)
+            fhash = HasherV2(path, self.piece_length)
 
             if size > self.piece_length:
                 self.piece_layers[fhash.root] = fhash.piece_layer
@@ -388,25 +476,33 @@ class TorrentFileV2(MetaFile):
 
         file_tree = {}
         if os.path.isdir(path):
-
-            for base, full in utils.sortfiles(path):
-                file_tree[base] = self._traverse(full)
-
+            for name in sorted(os.listdir(path)):
+                file_tree[name] = self._traverse(os.path.join(path, name))
         return file_tree
 
 
 class TorrentFileHybrid(MetaFile):
     """Construct the Hybrid torrent meta file with provided parameters.
 
-    Args:
-        path (`str`): path to torrentfile target.
-        announce (`str` or `list`): one or more tracker URL's.
-        comment (`str`): Some comment.
-        source (`str`): Used for private trackers.
-        outfile (`str`): target path to write output.
-        private (`bool`): Used for private trackers.
-        piece_length (`int`): torrentfile data piece length.
+    Parameters
+    ----------
+    path : `str`
+        path to torrentfile target.
+    announce : `str` or `list`
+        one or more tracker URL's.
+    comment : `str`
+        Some comment.
+    source : `str`
+        Used for private trackers.
+    outfile : `str`
+        target path to write output.
+    private : `bool`
+        Used for private trackers.
+    piece_length : `int`
+        torrentfile data piece length.
     """
+
+    hasher = HasherHybrid
 
     def __init__(self, **kwargs):
         """Create Bittorrent v1 v2 hybrid metafiles."""
@@ -436,8 +532,10 @@ class TorrentFileHybrid(MetaFile):
     def _traverse(self, path):
         """Build meta dictionary while walking directory.
 
-        Args:
-            path (`str`): Path to target file.
+        Parameters
+        ----------
+        path : `str`
+            Path to target file.
         """
         if os.path.isfile(path):
             fsize = os.path.getsize(path)
@@ -452,7 +550,7 @@ class TorrentFileHybrid(MetaFile):
             if fsize == 0:
                 return {"": {"length": fsize}}
 
-            fhash = HybridHash(path, self.piece_length)
+            fhash = HasherHybrid(path, self.piece_length)
 
             if fsize > self.piece_length:
                 self.piece_layers[fhash.root] = fhash.piece_layer
@@ -467,8 +565,6 @@ class TorrentFileHybrid(MetaFile):
 
         tree = {}
         if os.path.isdir(path):
-
-            for base, full in utils.sortfiles(path):
-                tree[base] = self._traverse(full)
-
+            for name in sorted(os.listdir(path)):
+                tree[name] = self._traverse(os.path.join(path, name))
         return tree

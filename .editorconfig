@@ -10,6 +10,10 @@ trim_trailing_whitespace = false
 insert_final_newline = true
 indent_size = 4
 
+[*.c]
+indent_style = space
+indent_size = 2
+
 
 [*.{py,c,cpp,java}]
 indent_style = space

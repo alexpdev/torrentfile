@@ -12,10 +12,10 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 """
-Main script entrypoint for creating .torrent files.
+Command Line Interface for TorrentFile project.
 
 This module provides the primary command line argument parser for
-the torrentfile package.  The main_script function is automatically
+the torrentfile package. The main_script function is automatically
 invoked when called from command line, and parses accompanying arguments.
 
 Functions:
@@ -27,21 +27,26 @@ import sys
 from argparse import ArgumentParser, HelpFormatter
 
 import torrentfile
-
-from .progress import CheckerClass
-from .torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
+from torrentfile.edit import edit_torrent
+from torrentfile.interactive import select_action
+from torrentfile.recheck import Checker
+from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
 
 class HelpFormat(HelpFormatter):
     """Formatting class for help tips provided by the CLI.
 
-    Args:
-        prog (`str`): Name of the program.
-        width (`int`): Max width of help message output.
-        max_help_positions (`int`): max length until line wrap.
+    Parameters
+    ----------
+    prog : `str`
+        Name of the program.
+    width : `int`
+        Max width of help message output.
+    max_help_positions : `int`
+        max length until line wrap.
     """
 
-    def __init__(self, prog, width=75, max_help_pos=40):
+    def __init__(self, prog: str, width=75, max_help_pos=40):
         """Construct HelpFormat class."""
         super().__init__(prog, width=width, max_help_position=max_help_pos)
 
@@ -54,34 +59,67 @@ class HelpFormat(HelpFormatter):
 def main_script(args=None):
     """Initialize Command Line Interface for torrentfile.
 
-    Args:
-        args (`list`, default=None): Commandline arguments.
+    Parameters
+    ----------
+    args : `list`
+        Commandline arguments. default=None
     """
     if not args:
-        args = sys.argv[1:]
+        if sys.argv[1:]:
+            args = sys.argv[1:]
+        else:
+            args = ["-h"]
 
-    desc = ("Create and/or ReCheck Bittorrent V1, V2, and Hybrid meta files.")
-
-    parser = ArgumentParser("TorrentFile", description=desc,
-                            prefix_chars="-", formatter_class=HelpFormat)
+    parser = ArgumentParser(
+        "TorrentFile",
+        description="""
+        CLI Tool for creating, checking and editing Bittorrent meta files.
+        Supports all meta file versions including hybrid files.
+        """,
+        prefix_chars="-",
+        formatter_class=HelpFormat,
+    )
 
     parser.add_argument(
-        "-v",
+        "-i",
+        "--interactive",
+        action="store_true",
+        dest="interactive",
+        help="select program options interactively",
+    )
+
+    parser.add_argument(
+        "-V",
         "--version",
         action="version",
         version=f"torrentfile v{torrentfile.__version__}",
-        help="show program version and exit"
+        help="show program version and exit",
     )
 
     parser.add_argument(
-        "-d",
-        "--debug",
+        "-v",
+        "--verbose",
         action="store_true",
         dest="debug",
-        help="output debug information"
+        help="output debug information",
     )
 
-    parser.add_argument(
+    subparsers = parser.add_subparsers(
+        title="Commands",
+        description="TorrentFile sub-command actions.",
+        dest="command",
+        metavar="",
+    )
+
+    create_parser = subparsers.add_parser(
+        "create",
+        help="Create a torrent file.",
+        prefix_chars="-",
+        aliases=["c"],
+        formatter_class=HelpFormat,
+    )
+
+    create_parser.add_argument(
         "-p",
         "--private",
         action="store_true",
@@ -89,16 +127,16 @@ def main_script(args=None):
         help="create file for private tracker",
     )
 
-    parser.add_argument(
+    create_parser.add_argument(
         "-s",
         "--source",
         action="store",
         dest="source",
         metavar="<source>",
-        help="specify source tracker"
+        help="specify source tracker",
     )
 
-    parser.add_argument(
+    create_parser.add_argument(
         "-c",
         "--comment",
         action="store",
@@ -107,7 +145,7 @@ def main_script(args=None):
         help="include a comment in file metadata",
     )
 
-    parser.add_argument(
+    create_parser.add_argument(
         "-o",
         "--out",
         action="store",
@@ -116,7 +154,7 @@ def main_script(args=None):
         help="output path for created .torrent file",
     )
 
-    parser.add_argument(
+    create_parser.add_argument(
         "--meta-version",
         default="1",
         choices=["1", "2", "3"],
@@ -132,8 +170,7 @@ def main_script(args=None):
         """,
     )
 
-    parser.add_argument(
-        "-l",
+    create_parser.add_argument(
         "--piece-length",
         action="store",
         dest="piece_length",
@@ -147,66 +184,172 @@ def main_script(args=None):
         """,
     )
 
-    parser.add_argument(
-        "-a",
-        "--announce",
+    create_parser.add_argument(
+        "-t",
+        "--tracker",
         action="store",
         dest="announce",
         metavar="<url>",
         nargs="+",
         default="",
         help="""
-        one or more Bittorrent tracker announce url(s)
+        One or more Bittorrent tracker announce url(s).
         Examples:: [-a url1 url2 url3]  [--anounce url1]
-        """
+        """,
     )
 
-    parser.add_argument(
-        "-r",
-        "--check",
-        "--recheck",
-        dest="checker",
-        metavar="<.torrent>",
+    create_parser.add_argument(
+        "-w",
+        "--web-seed",
+        action="store",
+        dest="url_list",
+        metavar="<url>",
+        nargs="+",
         help="""
-        <.torrent> is the path to a .torrent meta file.
-        Check <content> data integrity with <.torrent> file.
-        If this is active, all other options are ignored
-        (except --debug)
-        """
+        One or more url(s) linking to a http server hosting
+        the torrent contents.  This is useful if the torrent
+        tracker is ever unreachable. Example:: [-w url1 [url2 [url3]]]
+        """,
     )
 
-    parser.add_argument(
+    create_parser.add_argument(
         "content",
         action="store",
         metavar="<content>",
-        help="path to content file or directory"
+        help="path to content file or directory",
     )
 
-    if not args:
-        args = ["-h"]
-    flags = parser.parse_args(args)
+    check_parser = subparsers.add_parser(
+        "recheck",
+        help="Recheck/Check torrent download completion",
+        aliases=["r", "check"],
+        prefix_chars="-",
+        formatter_class=HelpFormat,
+    )
 
+    check_parser.add_argument(
+        "metafile",
+        action="store",
+        metavar="<*.torrent>",
+        help="path to .torrent file.",
+    )
+
+    check_parser.add_argument(
+        "content",
+        action="store",
+        metavar="<content>",
+        help="path to content file or directory",
+    )
+
+    edit_parser = subparsers.add_parser(
+        "edit",
+        help="Edit a torrent file.",
+        aliases=["e"],
+        prefix_chars="-",
+        formatter_class=HelpFormat,
+    )
+
+    edit_parser.add_argument(
+        "metafile",
+        action="store",
+        help="path to *.torrent file",
+        metavar="<*.torrent>",
+    )
+
+    edit_parser.add_argument(
+        "--tracker",
+        action="store",
+        dest="announce",
+        metavar="<url>",
+        nargs="+",
+        help="""
+        replace current list of tracker/announce urls with one or more space
+        seperated Bittorrent tracker announce url(s).
+        """,
+    )
+
+    edit_parser.add_argument(
+        "--web-seed",
+        action="store",
+        dest="url_list",
+        metavar="<url>",
+        nargs="+",
+        help="""
+        replace current list of web-seed urls with one or more space seperated url(s)
+        """,
+    )
+
+    edit_parser.add_argument(
+        "--private",
+        action="store_true",
+        help="If currently private, will make it public, if public then private.",
+        dest="private",
+    )
+
+    edit_parser.add_argument(
+        "--comment",
+        help="replaces any existing comment with <comment>",
+        metavar="<comment>",
+        dest="comment",
+        action="store",
+    )
+
+    edit_parser.add_argument(
+        "--source",
+        action="store",
+        dest="source",
+        metavar="<source>",
+        help="replaces current source with <source>",
+    )
+
+    flags = parser.parse_args(args)
+    print(flags)
     if flags.debug:
         level = logging.DEBUG
     else:
         level = logging.WARNING
-
-    logging.basicConfig(
-        level=level,
-        format='%(prog)s %(asctime)s %(message)s',
-        datefmt='%m-%d-%Y %H:%M:%S'
+    tlogger = logging.getLogger("tlogger")
+    tlogger.setLevel(level)
+    handler = logging.StreamHandler()
+    handler.setLevel(level)
+    handler.setFormatter(
+        logging.Formatter(
+            fmt="%(prog)s %(asctime)s %(message)s",
+            datefmt="%m-%d-%Y %H:%M:%S",
+            style="%",
+        )
     )
+    tlogger.addHandler(handler)
 
-    if flags.checker:
-        metafile = flags.checker
+    if flags.interactive:
+        return select_action()
+
+    if flags.command in ["recheck", "r", "check"]:
+        tlogger.debug("Program entering Recheck mode.")
+        metafile = flags.metafile
         content = flags.content
-        checker = CheckerClass(metafile, content)
-        result = checker.result
+        tlogger.debug("Checking %s against %s contents", metafile, content)
+        checker = Checker(metafile, content)
+        tlogger.debug("Completed initialization of the Checker class")
+        result = checker.results()
+        tlogger.info("Final result for %s recheck:  %s", metafile, result)
         sys.stdout.write(str(result))
         sys.stdout.flush()
         return result
 
+    if flags.command in ["edit", "e"]:
+        metafile = flags.metafile
+        editargs = {
+            "url-list": flags.url_list,
+            "announce": flags.announce,
+            "source": flags.source,
+            "private": flags.private,
+            "comment": flags.comment,
+        }
+        return edit_torrent(metafile, editargs)
+
     kwargs = {
+        "url_list": flags.url_list,
         "path": flags.content,
         "announce": flags.announce,
         "piece_length": flags.piece_length,
@@ -216,17 +359,20 @@ def main_script(args=None):
         "comment": flags.comment,
     }
 
+    tlogger.debug("Program has entered torrent creation mode.")
+
     if flags.meta_version == "2":
         torrent = TorrentFileV2(**kwargs)
     elif flags.meta_version == "3":
         torrent = TorrentFileHybrid(**kwargs)
     else:
         torrent = TorrentFile(**kwargs)
-
+    tlogger.debug("Completed torrent files meta info assembly.")
     outfile, meta = torrent.write()
     parser.kwargs = kwargs
     parser.meta = meta
     parser.outfile = outfile
+    tlogger.debug("New torrent file (%s) has been created.", str(outfile))
     return parser
 
 

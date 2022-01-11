@@ -25,10 +25,10 @@ Modules:
     exceptions: Custom Exceptions used in package.
     utils: Utilities used throughout package.
 """
-from . import utils
-from .cli import main, main_script
-from .progress import CheckerClass
-from .torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
-from .version import __version__
+from torrentfile import interactive, utils
+from torrentfile.cli import main, main_script
+from torrentfile.recheck import Checker
+from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
+from torrentfile.version import __version__
 
 __author__ = "alexpdev"

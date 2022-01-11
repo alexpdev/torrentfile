@@ -2,47 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://alexpdev.github.io/torrentfile/</loc>
-         <lastmod>2021-12-03</lastmod>
+         <lastmod>2022-01-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://alexpdev.github.io/torrentfile/CLI/</loc>
-         <lastmod>2021-12-03</lastmod>
+         <loc>https://alexpdev.github.io/torrentfile/LGPLv3/</loc>
+         <lastmod>2022-01-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://alexpdev.github.io/torrentfile/LICENSE/</loc>
-         <lastmod>2021-12-03</lastmod>
+         <loc>https://alexpdev.github.io/torrentfile/_api/</loc>
+         <lastmod>2022-01-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://alexpdev.github.io/torrentfile/examples/</loc>
-         <lastmod>2021-12-03</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://alexpdev.github.io/torrentfile/hasher/</loc>
-         <lastmod>2021-12-03</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://alexpdev.github.io/torrentfile/progress/</loc>
-         <lastmod>2021-12-03</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://alexpdev.github.io/torrentfile/tests/</loc>
-         <lastmod>2021-12-03</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://alexpdev.github.io/torrentfile/torrent/</loc>
-         <lastmod>2021-12-03</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://alexpdev.github.io/torrentfile/utils/</loc>
-         <lastmod>2021-12-03</lastmod>
+         <lastmod>2022-01-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

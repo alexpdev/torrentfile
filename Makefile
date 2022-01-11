@@ -1,4 +1,4 @@
-.PHONY: clean help full lint build environment test docs push
+.PHONY: clean help lint test docs nixenv
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -22,13 +22,26 @@ endef
 export PRINT_HELP_PYSCRIPT
 
 define FIX_BIN_VERSION_FILES
-import os
+import os, shutil
 from pathlib import Path
 from torrentfile.version import __version__ as version
-
 for item in Path("./dist").iterdir():
-	if item.suffix in [".exe", ".zip"]:
-		newname = f"{item.stem}{version}.winx64{item.suffix}"
+	if item.is_dir() and item.name == "torrentfile_linux":
+		name = name = f"TorrentFile-{version}-portable_linux"
+		path = item.parent / name
+		shutil.move(item, path)
+		shutil.make_archive(path, 'zip', path)
+	if item.is_dir() and item.name == 'torrentfile':
+		name = f"TorrentFile-{version}-portable_win"
+		path = item.parent / name
+		shutil.move(item, path)
+		shutil.make_archive(path, 'zip', path)
+	elif item.name == "torrentfile" and item.is_file():
+		name = f"torrentfile-{version}-linux_exec"
+		path = item.parent / name
+		os.rename(item, path)
+	elif item.suffix == ".exe":
+		newname = f"{item.stem}-{version}-portable.exe"
 		full = item.parent / newname
 		os.rename(item, full)
 endef
@@ -50,41 +63,45 @@ clean-build: ## remove build artifacts
 	rm -fr .tox/
 	rm -f .coverage
 	rm -rf */__pycache__
+	rm -f coverage.xml
 	rm -fr htmlcov/
 	rm -rf *.egg-info
 	rm -f corbertura.xml
 	rm -fr .pytest_cache
 	rm -f *.spec
 
-lint: ## Check for styling errors
-	@echo Linting
-	autopep8 --recursive torrentfile tests
+test: ## Get coverage report
+	pytest --cov=torrentfile --cov=tests
+
+lint:
+	black torrentfile tests
 	isort torrentfile tests
-	pydocstyle torrentfile tests
-	pycodestyle torrentfile tests
-	pylint torrentfile tests
-	pyroma .
 	prospector torrentfile
 	prospector tests
-
-test: lint ## run tests quickly with the default Python
-	@echo Testing
-	pytest --cov=torrentfile --cov=tests --pylint tests
-	coverage xml -o coverage.xml
-
-push: clean lint test docs ## push to remote repo
-	@echo pushing to remote
-	git add .
-	git commit -m "$m"
-	git push
-	bash codacy.sh report -r coverage.xml
 
 docs: ## Regenerate docs from changes
 	rm -rf docs/*
 	mkdocs -q build
 	touch docs/.nojekyll
 
-build: clean install
+coverage: test ## Get coverage report
+	coverage html
+	coverage xml
+
+push: clean lint docs test ## Push to github
+	git add .
+	git commit -m "$m"
+	git push
+
+setup: clean docs ## setup and build repo
+	pip install --pre --upgrade --force-reinstall --no-cache -rrequirements.txt
+	python setup.py sdist bdist_wheel bdist_egg
+	pip install -e .
+	twine upload --verbose dist/*
+
+build: clean
+	pip install --pre --upgrade --force-reinstall --no-cache -rrequirements.txt
+	pip install pyinstaller
 	python setup.py sdist bdist_wheel bdist_egg
 	rm -rfv ../runner
 	mkdir ../runner
@@ -101,14 +118,24 @@ build: clean install
 	cp -rfv ../runner/dist/* ./dist/
 	python -c "$$FIX_BIN_VERSION_FILES"
 
-install: ## Install Locally
-	pip install --upgrade -rrequirements.txt --no-cache-dir --pre
-	pip install -e .
+nixenv: ## activate unix python vurtual environment
+	source nixenv/bin/activate
 
-branch: clean ## Switch git branches after changes have been made
-	git checkout master
-	git pull
-	git branch -d dev
-	git branch dev
-	git checkout dev
-	git push -u origin dev
+nixbuild:
+	pip install pyinstaller
+	python3 setup.py sdist bdist_wheel bdist_egg
+	pip install -e .
+	rm -rfv ../runner
+	mkdir ../runner
+	touch ../runner/exec
+	cp ./assets/favicon.png ../runner/favicon.png
+	@echo "import torrentfile" >> ../runner/exec
+	@echo "torrentfile.main()" >> ../runner/exec
+	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
+		-F -n torrentfile -c -i ../runner/favicon.png \
+		--specpath ../runner/ ../runner/exec
+	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
+		-D -n torrentfile_linux -c -i ../runner/favicon.png \
+		--specpath ../runner/ ../runner/exec
+	cp -rfv ../runner/dist/* ./dist/
+	python3 -c "$$FIX_BIN_VERSION_FILES"

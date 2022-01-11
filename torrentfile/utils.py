@@ -1,6 +1,3 @@
-#! /usr/bin/python3
-# -*- coding: utf-8 -*-
-
 #####################################################################
 # THE SOFTWARE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
@@ -24,6 +21,7 @@ Functions:
 
 import math
 import os
+from pathlib import Path
 
 
 class MissingPathError(Exception):
@@ -31,8 +29,10 @@ class MissingPathError(Exception):
 
     Creating a .torrent file with no contents seems rather silly.
 
-    Args:
-      message (`any`, optional): Message for user.
+    Parameters
+    ----------
+    message : `any`
+        Message for user (optional).
     """
 
     def __init__(self, message=None):
@@ -47,8 +47,10 @@ class MissingPathError(Exception):
 class PieceLengthValueError(Exception):
     """Piece Length parameter must equal a perfect power of 2.
 
-    Args:
-      message (`any`, optional): Message for user.
+    Parameters
+    ----------
+    message : `any`
+        Message for user (optional).
     """
 
     def __init__(self, message=None):
@@ -63,11 +65,15 @@ class PieceLengthValueError(Exception):
 def humanize_bytes(amount):
     """Convert integer into human readable memory sized denomination.
 
-    Args:
-        amount (`int`): total number of bytes.
+    Parameters
+    ----------
+    amount : `int`
+        total number of bytes.
 
-    Returns:
-        `str` : human readable representation of the given amount of bytes.
+    Returns
+    -------
+    `str` :
+        human readable representation of the given amount of bytes.
     """
     if amount < 1024:
         return str(amount)
@@ -78,17 +84,23 @@ def humanize_bytes(amount):
     return f"{amount // 1073741824} GiB"
 
 
-def normalize_piece_length(piece_length):
+def normalize_piece_length(piece_length) -> int:
     """Verify input piece_length is valid and convert accordingly.
 
-    Args:
-        piece_length (`int`): The piece length provided by user.
+    Parameters
+    ----------
+    piece_length : `int` | `str`
+        The piece length provided by user.
 
-    Returns:
-        piece_length (`int`): normalized piece length.
+    Returns
+    -------
+    piece_length : `int`
+        normalized piece length.
 
-    Raises:
-        PieceLengthValueError: If piece length is improper value.
+    Raises
+    ------
+    PieceLengthValueError :
+        If piece length is improper value.
     """
     if isinstance(piece_length, str):
         if piece_length.isnumeric():
@@ -107,67 +119,91 @@ def normalize_piece_length(piece_length):
     raise PieceLengthValueError
 
 
-def get_piece_length(size):
+def get_piece_length(size: int) -> int:
     """Calculate the ideal piece length for bittorrent data.
 
-    Args:
-      size (`int`): Total bits of all files incluided in .torrent file.
+    Parameters
+    ----------
+    size : `int`
+        Total bits of all files incluided in .torrent file.
 
-    Returns:
-      piece_length (`int`): Ideal peace length size arguement.
+    Returns
+    -------
+    piece_length : `int`
+        Ideal peace length size arguement.
     """
     exp = 14
-    while size / (2 ** exp) > 200 and exp < 24:
+    while size / (2 ** exp) > 200 and exp < 25:
         exp += 1
     return 2 ** exp
 
 
-def sortfiles(path):
-    """Sort entries in path.
+def filelist_total(pathstring):
+    """Perform error checking and format conversion to os.PathLike.
 
-    Args:
-        path (`str`): Target directory for sorting contents.
+    Parameters
+    ----------
+    pathstring : `str`
+        An existing filesystem path.
 
-    Yields:
-        item, full (`str`, `str`): Next item in sorted order.
+    Returns
+    -------
+    `os.PathLike`
+        Input path converted to bytes format.
+
+    Raises
+    ------
+    MissingPathError
+        File could not be found.
     """
-    items = sorted(os.listdir(path), key=str.lower)
-    for item in items:
-        full = os.path.join(path, item)
-        yield item, full
+    if os.path.exists(pathstring):
+        path = Path(pathstring)
+        return _filelist_total(path)
+    raise MissingPathError
 
 
-def filelist_total(path):
+def _filelist_total(path):
     """Search directory tree for files.
 
-    Args:
-      path (`str`): Path to file or directory base
-      sort (`bool`): Return list sorted. Defaults to False.
+    Parameters
+    ----------
+    path : `str`
+        Path to file or directory base
+    sort : `bool`
+        Return list sorted. Defaults to False.
 
-    Returns:
-      (`list`): All file paths within directory tree.
+    Returns
+    -------
+    filelist : `list`
+        All file paths within directory tree.
+    total : `int`
+        Sum of all filesizes in filelist.
     """
-    if os.path.isfile(path):
+    if path.is_file():
         file_size = os.path.getsize(path)
-        return file_size, [path]
+        return file_size, [str(path)]
     total = 0
     filelist = []
-    if os.path.isdir(path):
-        for _, full in sortfiles(path):
-            size, paths = filelist_total(full)
+    if path.is_dir():
+        for item in path.iterdir():
+            size, paths = filelist_total(item)
             total += size
             filelist.extend(paths)
-    return total, filelist
+    return total, sorted(filelist)
 
 
 def path_size(path):
     """Return the total size of all files in path recursively.
 
-    Args:
-        path (`str`): path to target file or directory.
+    Parameters
+    ----------
+    path : `str`
+        path to target file or directory.
 
-    Returns:
-        size (`int`): total size of files.
+    Returns
+    -------
+    size : `int`
+        total size of files.
     """
     total_size, _ = filelist_total(path)
     return total_size
@@ -176,11 +212,15 @@ def path_size(path):
 def get_file_list(path):
     """Return a sorted list of file paths contained in directory.
 
-    Args:
-        path (`str`): target file or directory.
+    Parameters
+    ----------
+    path : `str`
+        target file or directory.
 
-    Returns:
-        filelist (`list`): sorted list of file paths.
+    Returns
+    -------
+    filelist : `list`
+        sorted list of file paths.
     """
     _, filelist = filelist_total(path)
     return filelist
@@ -189,13 +229,19 @@ def get_file_list(path):
 def path_stat(path):
     """Calculate directory statistics.
 
-    Args:
-        path (`str`): The path to start calculating from.
+    Parameters
+    ----------
+    path : `str`
+        The path to start calculating from.
 
-    Returns:
-        filelist (`list`):  List of all files contained in Directory
-        size (`int`): Total sum of bytes from all contents of dir
-        piece_length (`int`): The size of pieces of the torrent contents.
+    Returns
+    -------
+    filelist : `list`
+        List of all files contained in Directory
+    size : `int`
+        Total sum of bytes from all contents of dir
+    piece_length : `int`
+        The size of pieces of the torrent contents.
     """
     total_size, filelist = filelist_total(path)
     piece_length = get_piece_length(total_size)
@@ -205,11 +251,15 @@ def path_stat(path):
 def path_piece_length(path):
     """Calculate piece length for input path and contents.
 
-    Args:
-      path (`str`): The absolute path to directory and contents.
+    Parameters
+    ----------
+    path : `str`
+        The absolute path to directory and contents.
 
-    Returns:
-      piece_length (`int`): The size of pieces of torrent content.
+    Returns
+    -------
+    piece_length : `int`
+        The size of pieces of torrent content.
     """
     psize = path_size(path)
     return get_piece_length(psize)
