@@ -146,6 +146,10 @@ invoked when called from command line, and parses accompanying arguments.</p>
           <span class="mkapi-section-name-body functions">Functions</span> 
         </div>
       <div class="mkapi-section-body functions"><ul class="mkapi-items">
+<li class="function"><code class="mkapi-item-name">create_magnet</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">metafile</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`str`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create a magnet URI from a Bittorrent meta file.</span></li>
+
 <li class="function"><code class="mkapi-item-name">main</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initiate main function for CLI script.</span></li>
@@ -281,6 +285,59 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
 
   </div>
 
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.cli.create_magnet" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">create_magnet</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_magnet</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a magnet URI from a Bittorrent meta file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    metafile : `str` | `os.PathLike`</span>
+<span class="sd">        path to bittorrent meta file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `str`</span>
+<span class="sd">        created magnet URI.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha1</span>  <span class="c1"># nosec</span>
+    <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">quote_plus</span>
+
+    <span class="kn">import</span> <span class="nn">pyben</span>
+
+    <span class="n">scheme</span> <span class="o">=</span> <span class="s2">&quot;magnet:?xt=urn:btih:&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
+    <span class="n">binfo</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+    <span class="n">infohash</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">(</span><span class="n">binfo</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>  <span class="c1"># nosec</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&amp;d=</span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&amp;tr=</span><span class="si">{</span><span class="n">quote_plus</span><span class="p">(</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;announce&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">uri</span> <span class="o">=</span> <span class="n">scheme</span> <span class="o">+</span> <span class="n">infohash</span> <span class="o">+</span> <span class="n">rest</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">uri</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -424,6 +481,20 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--tracker&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;tracker&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        One or more Bittorrent tracker announce url(s).</span>
+<span class="s2">        Examples:: [-a url1 url2 url3]  [--anounce url1]</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
         <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">],</span>
@@ -454,20 +525,6 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--tracker&quot;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span>
-        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
-        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        One or more Bittorrent tracker announce url(s).</span>
-<span class="s2">        Examples:: [-a url1 url2 url3]  [--anounce url1]</span>
-<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;-w&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--web-seed&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
@@ -479,6 +536,17 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
 <span class="s2">        the torrent contents.  This is useful if the torrent</span>
 <span class="s2">        tracker is ever unreachable. Example:: [-w url1 [url2 [url3]]]</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--announce&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;alias for -t/--tracker&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -571,6 +639,21 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;replaces current source with &lt;source&gt;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
+    <span class="n">magnet_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;magnet&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Create magnet url from a Bittorrent Meta File.&quot;</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">],</span>
+        <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">HelpFormat</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">magnet_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;metafile&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to bittorrent meta file.&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;*.torrent&gt;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">flags</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
@@ -592,6 +675,9 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
 
     <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">command</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;magnet&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">create_magnet</span><span class="p">(</span><span class="n">flags</span><span class="o">.</span><span class="n">metafile</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">command</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;recheck&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;check&quot;</span><span class="p">]:</span>
         <span class="n">tlogger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Program entering Recheck mode.&quot;</span><span class="p">)</span>
@@ -620,7 +706,7 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;url_list&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">url_list</span><span class="p">,</span>
         <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
-        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">announce</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">announce</span> <span class="o">+</span> <span class="n">flags</span><span class="o">.</span><span class="n">tracker</span><span class="p">,</span>
         <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
         <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">private</span><span class="p">,</span>

@@ -318,14 +318,14 @@ def main_script(args=None):
         help="Create magnet url from a Bittorrent Meta File.",
         aliases=["m"],
         prefix_chars="-",
-        formatter_class=HelpFormat
+        formatter_class=HelpFormat,
     )
 
     magnet_parser.add_argument(
         "metafile",
         action="store",
         help="path to bittorrent meta file.",
-        metavar="<*.torrent>"
+        metavar="<*.torrent>",
     )
 
     flags = parser.parse_args(args)
@@ -423,17 +423,19 @@ def create_magnet(metafile):
     `str`
         created magnet URI.
     """
-    import pyben
     import os
-    from hashlib import sha1
+    from hashlib import sha1  # nosec
     from urllib.parse import quote_plus
+
+    import pyben
+
     scheme = "magnet:?xt=urn:btih:"
     if not os.path.exists(metafile):
         raise FileNotFoundError
     meta = pyben.load(metafile)
     info = meta["info"]
     binfo = pyben.dumps(info)
-    infohash = sha1(binfo).hexdigest()
+    infohash = sha1(binfo).hexdigest()  # nosec
     rest = f"&d={info['name']}&tr={quote_plus(meta['announce'])}"
     uri = scheme + infohash + rest
     sys.stdout.write(uri)

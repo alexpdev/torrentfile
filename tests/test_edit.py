@@ -21,9 +21,8 @@ import pyben
 import pytest
 
 from tests import dir2, rmpath
-from torrentfile.cli import main, create_magnet, main_script
+from torrentfile.cli import create_magnet, main, main_script
 from torrentfile.edit import edit_torrent
-from torrentfile.utils import MissingPathError
 from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
 
@@ -201,6 +200,7 @@ def test_magnet_uri(torfile):
     announce = meta["announce"]
     assert quote_plus(announce) in magnet_link
 
+
 def test_magnet_hex(torfile):
     """Test create magnet function digest."""
     magnet_link = create_magnet(torfile)
@@ -209,17 +209,20 @@ def test_magnet_hex(torfile):
     binfo = sha1(pyben.dumps(info)).hexdigest()
     assert binfo in magnet_link
 
+
 def test_magnet(torfile):
     """Test create magnet function scheme."""
     magnet_link = create_magnet(torfile)
     assert magnet_link.startswith("magnet")
 
+
 def test_magnet_empty():
     """Test create magnet function scheme."""
     try:
-        magnet_link = create_magnet('jhjh')
+        create_magnet("file_that_does_not_exist")
     except FileNotFoundError:
         assert True
+
 
 def test_magnet_cli(torfile):
     """Test cli args for maggnet."""
