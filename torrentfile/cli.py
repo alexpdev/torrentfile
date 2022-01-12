@@ -34,6 +34,7 @@ from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
 logger = logging.getLogger(__name__)
 
+
 class HelpFormat(HelpFormatter):
     """Formatting class for help tips provided by the CLI.
 
@@ -57,8 +58,8 @@ class HelpFormat(HelpFormatter):
         return [line.strip() for line in lines if line]
 
     def _format_text(self, text):
-        text = text % dict(prog=self._prog) if '%(prog)' in text else text
-        text = self._whitespace_matcher.sub(' ', text).strip()
+        text = text % dict(prog=self._prog) if "%(prog)" in text else text
+        text = self._whitespace_matcher.sub(" ", text).strip()
         return text + "\n\n"
 
 
@@ -198,7 +199,7 @@ def main_script(args=None):
         help="""
         Enable showing the progress bar during torrent creation.
         (Minimially impacts the duration of torrent file creation.)
-        """
+        """,
     )
 
     create_parser.add_argument(
@@ -359,7 +360,7 @@ def main_script(args=None):
     flags = parser.parse_args(args)
 
     if flags.debug:
-        torrentfile.setLevel(logging.DEBUG)
+        torrentfile.set_level(logging.DEBUG)
 
     logger.debug(str(flags))
     if flags.interactive:
@@ -383,7 +384,7 @@ def main_script(args=None):
 
     if flags.command in ["edit", "e"]:
         metafile = flags.metafile
-        logger.info("Editing %s" % flags.metafile)
+        logger.info("Editing %s Meta File", str(flags.metafile))
         editargs = {
             "url-list": flags.url_list,
             "announce": flags.announce,

@@ -68,7 +68,7 @@ def test_torrentfile_extra(dir2, version):
         "path": dir2,
         "comment": "somecomment",
         "announce": "announce",
-        "progress" : True
+        "progress": True,
     }
     torrent = version(**args)
     assert torrent.meta["announce"] == "announce"
@@ -88,7 +88,7 @@ def test_torrentfile_single(version, size, piece_length, progress, capsys):
         "comment": "somecomment",
         "announce": "announce",
         "piece_length": piece_length,
-        "progress": progress
+        "progress": progress,
     }
     torrent = version(**args)
     torrent.write()

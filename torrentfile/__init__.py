@@ -25,8 +25,8 @@ Modules:
     exceptions: Custom Exceptions used in package.
     utils: Utilities used throughout package.
 """
-import sys
 import logging
+import sys
 
 from torrentfile import interactive, utils
 from torrentfile.cli import main, main_script
@@ -37,7 +37,8 @@ from torrentfile.version import __version__
 __author__ = "alexpdev"
 logger = logging.getLogger(__name__)
 
-def setLogger(logger):
+
+def set_logger(logger):
     """Initial setup for the application logging functionality.
 
     Parameters
@@ -56,9 +57,9 @@ def setLogger(logger):
         datefmt="%m/%d %H:%M:%S",
         style="%",
     )
-    handlers =  [
+    handlers = [
         logging.StreamHandler(stream=sys.stdout),
-        logging.FileHandler("torrentfile.log", mode="w", encoding="utf-8")
+        logging.FileHandler("torrentfile.log", mode="w", encoding="utf-8"),
     ]
     for handle in handlers:
         handle.setFormatter(formatter)
@@ -66,9 +67,11 @@ def setLogger(logger):
         logger.addHandler(handle)
     return handlers
 
-handlers = setLogger(logger)
 
-def setLevel(level=logging.DEBUG):
+handlers = set_logger(logger)
+
+
+def set_level(level=logging.DEBUG):
     """Set the logging stream handler to provided level.
 
     Parameters

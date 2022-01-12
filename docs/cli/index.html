@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://alexpdev.github.io/torrentfile/cli/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>CLI - TorrentFile</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
+    <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet">
+    <link href="../css/mkapi-common.css" rel="stylesheet">
+    <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+    <link href="../stylesheets/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "TorrentFile CLI Menu", url: "#_top", children: [
+              {title: "torrentfile -h", url: "#torrentfile-h" },
+              {title: "torrentfile c -h", url: "#torrentfile-c-h" },
+              {title: "torrentfile e -h", url: "#torrentfile-e-h" },
+              {title: "torrentfile m -h", url: "#torrentfile-m-h" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/mkapi.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../examples/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../examples/" class="btn btn-xs btn-link">
+        Examples
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../api/" class="btn btn-xs btn-link">
+        API
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="torrentfile-cli-menu">TorrentFile CLI Menu</h1>
+<h2 id="torrentfile-h"><code>torrentfile -h</code></h2>
+<pre><code>usage: TorrentFile [-h] [-i] [-V] [-v]
+                {c,create,new,e,edit,m,magnet,r,recheck,check} ...
+
+CLI Tool for creating, checking and editing Bittorrent meta files. Supports all meta file versions including hybrid files.
+
+optional arguments:
+-h, --help                                      show this help message and exit
+-i, --interactive                               select program options interactively
+-V, --version                                   show program version and exit
+-v, --verbose                                   output debug information
+
+Actions:
+Each sub-command triggers a specific action.
+
+{c,create,new,e,edit,m,magnet,r,recheck,check}
+    c (create, new)                               Create a torrent meta file.
+
+    e (edit)                                      Edit existing torrent meta file.
+
+    m (magnet)                                    Create magnet url from an existing Bittorrent meta file.
+
+    r (recheck, check)                            Calculate amount of torrent meta file's content is found on disk.
+</code></pre>
+<h2 id="torrentfile-c-h"><code>torrentfile c -h</code></h2>
+<pre><code>usage: TorrentFile c [-h] [-a &lt;url&gt; [&lt;url&gt; ...]] [-p] [-s &lt;source&gt;] [-m]
+                    [-c &lt;comment&gt;] [-o &lt;path&gt;] [-t &lt;url&gt; [&lt;url&gt; ...]]
+                    [--progress] [--meta-version &lt;int&gt;]
+                    [--piece-length &lt;int&gt;] [-w &lt;url&gt; [&lt;url&gt; ...]]
+                    &lt;content&gt;
+
+positional arguments:
+&lt;content&gt;                                           path to content file or directory
+
+optional arguments:
+-h, --help                                          show this help message and exit
+-a &lt;url&gt; [&lt;url&gt; ...], --announce &lt;url&gt; [&lt;url&gt; ...]  Alias for -t/--tracker
+-p, --private                                       Create a private torrent meta file
+-s &lt;source&gt;, --source &lt;source&gt;                      specify source tracker
+-m, --magnet                                        output Magnet Link after creation completes
+-c &lt;comment&gt;, --comment &lt;comment&gt;                   include a comment in file metadata
+-o &lt;path&gt;, --out &lt;path&gt;                             Output path for created .torrent file
+-t &lt;url&gt; [&lt;url&gt; ...], --tracker &lt;url&gt; [&lt;url&gt; ...]   One or more Bittorrent tracker announce url(s).
+--progress                                          Enable showing the progress bar during torrent creation.
+                                                    (Minimially impacts the duration of torrent file creation.)
+
+--meta-version &lt;int&gt;                                Bittorrent metafile version.
+                                                    Options = 1, 2 or 3.
+                                                    (1) = Bittorrent v1 (Default)
+                                                    (2) = Bittorrent v2
+                                                    (3) = Bittorrent v1 &amp; v2 hybrid
+
+--piece-length &lt;int&gt;                                Fixed amount of bytes for each chunk of data. (Default: None)
+                                                    Acceptable input values include integers 14-24, which
+                                                    will be interpreted as the exponent for 2^n, or any perfect
+                                                    power of two integer between 16Kib and 16MiB (inclusive).
+                                                    Examples:: [--piece-length 14] [-l 20] [-l 16777216]
+
+-w &lt;url&gt; [&lt;url&gt; ...], --web-seed &lt;url&gt; [&lt;url&gt; ...]  One or more url(s) linking to a http server hosting
+                                                    the torrent contents.  This is useful if the torrent
+                                                    tracker is ever unreachable. Example:: [-w url1 [url2 [url3]]]
+</code></pre>
+<h2 id="torrentfile-e-h"><code>torrentfile e -h</code></h2>
+<pre><code>usage: TorrentFile e [-h] [--tracker &lt;url&gt; [&lt;url&gt; ...]]
+                    [--web-seed &lt;url&gt; [&lt;url&gt; ...]] [--private]
+                    [--comment &lt;comment&gt;] [--source &lt;source&gt;]
+                    &lt;*.torrent&gt;
+
+positional arguments:
+&lt;*.torrent&gt;                   path to *.torrent file
+
+optional arguments:
+-h, --help                    show this help message and exit
+--tracker &lt;url&gt; [&lt;url&gt; ...]   replace current list of tracker/announce urls with one or more space
+                                seperated Bittorrent tracker announce url(s).
+
+--web-seed &lt;url&gt; [&lt;url&gt; ...]  replace current list of web-seed urls with one or more space seperated url(s)
+
+--private                     If currently private, will make it public, if public then private.
+--comment &lt;comment&gt;           replaces any existing comment with &lt;comment&gt;
+--source &lt;source&gt;             replaces current source with &lt;source&gt;
+</code></pre>
+<h2 id="torrentfile-m-h">torrentfile m -h</h2>
+<pre><code>usage: TorrentFile m [-h] &lt;*.torrent&gt;
+
+positional arguments:
+&lt;*.torrent&gt;  path to Bittorrent meta file.
+
+optional arguments:
+-h, --help   show this help message and exit
+usage: TorrentFile r [-h] &lt;*.torrent&gt; content
+
+positional arguments:
+&lt;*.torrent&gt;  path to .torrent file.
+content    path to content file or directory
+
+optional arguments:
+-h, --help   show this help message and exit
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../examples/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../examples/" class="btn btn-xs btn-link">
+        Examples
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../api/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../api/" class="btn btn-xs btn-link">
+        API
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/alexpdev/torrentfile/edit/master/docs/cli.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p><p>alexpdev 2021</p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

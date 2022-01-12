@@ -74,7 +74,7 @@ def test_cli_piece_length(dir1, piece_length, version):
         str(piece_length),
         "--meta-version",
         version,
-        "--progress"
+        "--progress",
     ]
     sys.argv = args
     main()

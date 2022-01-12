@@ -14,7 +14,7 @@ theme:
 nav:
   - home : index.md
   - API : api.md
-  - CLI : CLI.md
+  - CLI : cli.md
   - Examples : examples.md
   - license : LGPLv3.md
 

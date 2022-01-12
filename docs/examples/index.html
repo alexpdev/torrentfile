@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://alexpdev.github.io/torrentfile/examples/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Examples - TorrentFile</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
+    <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet">
+    <link href="../css/mkapi-common.css" rel="stylesheet">
+    <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+    <link href="../stylesheets/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "TorrentFile", url: "#_top", children: [
+              {title: "CLI Usage Examples", url: "#cli-usage-examples" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/mkapi.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../LGPLv3/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../LGPLv3/" class="btn btn-xs btn-link">
+        license
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../cli/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../cli/" class="btn btn-xs btn-link">
+        CLI
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="torrentfile">TorrentFile</h1>
+<h2 id="cli-usage-examples">CLI Usage Examples</h2>
+<p>Examples using TorrentFile with CLI arguments can be found below.
+Alternatively, <code>interactive mode</code> allows program options to be specified
+one option at a time  from a series of prompts using the following commands.</p>
+<p><code>torrentfile -i</code> or <code>torrentfile --interactive</code></p>
+<h3 id="creating-torrents">Creating Torrents</h3>
+<p>Using the sub-command <code>create</code> <em>TorrentFile</em> can create a new torrent
+from the contents of a file or directory path. The following examples
+illustrate some of the options available for creating torrent files.</p>
+<ul>
+<li>Create a torrent file from(<code>/path/to/content</code>) file or directory</li>
+<li>by default torrent files are saved to <code>/path/to/content.torrent</code></li>
+<li>by default torrents are created using bittorrent meta version 1</li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create /path/to/content
+</code></pre>
+<ul>
+<li>the <code>-t</code> or <code>--tracker</code> flag adds one or more items to the list of trackers</li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create /path/to/content --tracker http://tracker1.com
+&gt; torrentfile create /other/content -t http://tracker2 http://tracker3
+</code></pre>
+<ul>
+<li>the <code>--private</code> flag indicates use by a private tracker</li>
+<li>the <code>--source</code> flag adds a "source" property and fills it</li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create ./content --source TrackerReq --private
+</code></pre>
+<ul>
+<li>to specify the save location use the <code>-o</code> or <code>--outfile</code> flags</li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create ./content -o /specific/path/name.torrent
+</code></pre>
+<ul>
+<li>to create files using bittorrent v2 or other formats use <code>--meta-version</code></li>
+<li><code>--meta-version 3</code> asks for a v1 &amp; v2 hybrid file.</li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create /path/to/content --meta-version 2 
+&gt; torrentfile create --meta-version 3 /path/to/content
+</code></pre>
+<ul>
+<li>to create a magnet URI for the created torrent file use <code>--magnet</code></li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create --t https://tracker1/annc https://tracker2/annc --magnet /path/to/content
+</code></pre>
+<h3 id="recheck-torrents">Recheck Torrents</h3>
+<p>Using the sub-command <code>recheck</code> or <code>check</code> or <code>r</code> you can check how much of
+a torrents data you have saved by comparing the contetnts to the original
+torrent file.</p>
+<ul>
+<li>recheck torrent file <code>/path/to/name.torrent</code> with <code>./downloads/name</code></li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile recheck /path/to/name.torrent ./downloads/name
+</code></pre>
+<h3 id="edit-torrents">Edit Torrents</h3>
+<p>Using the sub-command <code>edit</code> or <code>e</code> enables editting a pre-existing torrent file.
+The edit sub-command works identically to the <code>create</code> sub-command and accepts many
+of the same arguments.</p>
+<h3 id="create-magnet">Create Magnet</h3>
+<p>To create a magnet URI for a pre-existing torrent meta file, use the sub-command<br />
+<code>magnet</code> with the path to the meta file.</p>
+<pre><code class="language-bash">&gt; torrentfile magnet /path/to/metafile
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../LGPLv3/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../LGPLv3/" class="btn btn-xs btn-link">
+        license
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../cli/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../cli/" class="btn btn-xs btn-link">
+        CLI
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/alexpdev/torrentfile/edit/master/docs/examples.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p><p>alexpdev 2021</p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
