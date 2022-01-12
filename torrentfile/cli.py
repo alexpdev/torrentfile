@@ -59,11 +59,26 @@ class HelpFormat(HelpFormatter):
         )
 
     def _split_lines(self, text, _):
-        """Split multiline help messages and remove indentation."""
+        """Split multiline help messages and remove indentation.
+
+        Parameters
+        ----------
+        text : `str`
+            text that needs to be split
+        _ : `int`
+            max width for line.
+        """
         lines = text.split("\n")
         return [line.strip() for line in lines if line]
 
     def _format_text(self, text):
+        """Format text for cli usage messages.
+
+        Parameters
+        ----------
+        text : `str`
+            string that needs formatting.
+        """
         text = text % dict(prog=self._prog) if "%(prog)" in text else text
         text = self._whitespace_matcher.sub(" ", text).strip()
         return text + "\n\n"

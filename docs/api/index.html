@@ -245,11 +245,26 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_split_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Split multiline help messages and remove indentation.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Split multiline help messages and remove indentation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : `str`</span>
+<span class="sd">            text that needs to be split</span>
+<span class="sd">        _ : `int`</span>
+<span class="sd">            max width for line.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_format_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Format text for cli usage messages.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : `str`</span>
+<span class="sd">            string that needs formatting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">text</span> <span class="o">%</span> <span class="nb">dict</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_prog</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;%(prog)&quot;</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">else</span> <span class="n">text</span>
         <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_whitespace_matcher</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">text</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
@@ -934,11 +949,26 @@ torrentfile.cli.HelpFormat            (<span title="argparse.HelpFormatter">Help
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_split_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Split multiline help messages and remove indentation.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Split multiline help messages and remove indentation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : `str`</span>
+<span class="sd">            text that needs to be split</span>
+<span class="sd">        _ : `int`</span>
+<span class="sd">            max width for line.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_format_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Format text for cli usage messages.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : `str`</span>
+<span class="sd">            string that needs formatting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">text</span> <span class="o">%</span> <span class="nb">dict</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_prog</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;%(prog)&quot;</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">else</span> <span class="n">text</span>
         <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_whitespace_matcher</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">text</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
