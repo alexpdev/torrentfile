@@ -23,7 +23,7 @@ from torrentfile.utils import humanize_bytes
 BLOCK_SIZE = 2 ** 14  # 16KiB
 HASH_SIZE = 32
 
-hashlog = logging.getLogger("tlogger.hash")
+logger = logging.getLogger(__name__)
 
 
 class CbMixin:
@@ -68,7 +68,7 @@ class Hasher(CbMixin):
         self.total = sum([os.path.getsize(i) for i in self.paths])
         self.index = 0
         self.current = open(self.paths[0], "rb")
-        hashlog.debug(
+        logger.debug(
             "Hashing v1 torrent file. Size: %s Piece Length: %s",
             humanize_bytes(self.total),
             humanize_bytes(self.piece_length),
@@ -162,7 +162,7 @@ class HasherV2(CbMixin):
         self.layer_hashes = []
         self.piece_length = piece_length
         self.num_blocks = piece_length // BLOCK_SIZE
-        hashlog.debug(
+        logger.debug(
             "Hashing partial v2 torrent file. Piece Length: %s Path: %s",
             humanize_bytes(self.piece_length),
             str(self.path),
@@ -255,7 +255,7 @@ class HasherHybrid(CbMixin):
         self.padding_piece = None
         self.padding_file = None
         self.amount = piece_length // BLOCK_SIZE
-        hashlog.debug(
+        logger.debug(
             "Hashing partial Hybrid torrent file. Piece Length: %s Path: %s",
             humanize_bytes(self.piece_length),
             str(self.path),
