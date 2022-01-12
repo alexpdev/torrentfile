@@ -64,7 +64,12 @@ def test_torrentfile_extra(dir2, version):
                 walk(sub)
 
     walk(dir2)
-    args = {"path": dir2, "comment": "somecomment", "announce": "announce"}
+    args = {
+        "path": dir2,
+        "comment": "somecomment",
+        "announce": "announce",
+        "progress" : True
+    }
     torrent = version(**args)
     assert torrent.meta["announce"] == "announce"
 
@@ -72,7 +77,8 @@ def test_torrentfile_extra(dir2, version):
 @pytest.mark.parametrize("size", list(range(17, 25)))
 @pytest.mark.parametrize("piece_length", [2 ** i for i in range(14, 18)])
 @pytest.mark.parametrize("version", torrents())
-def test_torrentfile_single(version, size, piece_length, capsys):
+@pytest.mark.parametrize("progress", [True, False])
+def test_torrentfile_single(version, size, piece_length, progress, capsys):
     """Test creating a torrent file from a single file contents."""
     tfile = tempfile(exp=size)
     with capsys.disabled():
@@ -82,6 +88,7 @@ def test_torrentfile_single(version, size, piece_length, capsys):
         "comment": "somecomment",
         "announce": "announce",
         "piece_length": piece_length,
+        "progress": progress
     }
     torrent = version(**args)
     torrent.write()

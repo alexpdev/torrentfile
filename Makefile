@@ -86,9 +86,10 @@ docs: ## Regenerate docs from changes
 	mkdocs -q build
 	touch docs/.nojekyll
 
-coverage: test ## Get coverage report
-	coverage html
+coverage: ## Get coverage report
+	coverage run -m pytest
 	coverage xml
+	bash coverage.sh report -r coverage.xml
 
 push: clean lint docs test ## Push to github
 	git add .

@@ -191,6 +191,7 @@ from torrentfile import utils
 from torrentfile.hasher import Hasher, HasherHybrid, HasherV2
 from torrentfile.version import __version__ as version
 
+logger = logging.getLogger(__name__)
 
 class MetaFile:
     """Base Class for all TorrentFile classes.
@@ -211,6 +212,8 @@ class MetaFile:
         target path to write .torrent file. Default: None
     source : `str`
         Private tracker source. Default: None
+    progress : `bool`
+        If True disable showing the progress bar.
     """
 
     hasher = None
@@ -231,7 +234,7 @@ class MetaFile:
     # fmt: off
     def __init__(self, path=None, announce=None, private=False,
                  source=None, piece_length=None, comment=None,
-                 outfile=None, url_list=None):
+                 outfile=None, url_list=None, progress=False):
         """Construct MetaFile superclass and assign local attributes."""
         if not path:
             raise utils.MissingPathError
@@ -264,6 +267,7 @@ class MetaFile:
             self.private = None
 
         self.outfile = outfile
+        self.progress = progress
         self.comment = comment
         self.url_list = url_list
         self.source = source
@@ -274,7 +278,7 @@ class MetaFile:
             "creation date": int(datetime.timestamp(datetime.now())),
             "info": {},
         }
-        logging.debug("Announce list = %s", str(self.announce_list))
+        logger.debug("Announce list = %s", str(self.announce_list))
         if comment:
             self.meta["info"]["comment"] = comment
         if private:
@@ -364,7 +368,7 @@ class TorrentFile(MetaFile):
             dictionary of keyword args passed to superclass.
         """
         super().__init__(**kwargs)
-        logging.debug("Making Bittorrent V1 meta file.")
+        logger.debug("Making Bittorrent V1 meta file.")
         self.assemble()
 
     def assemble(self):
@@ -377,7 +381,6 @@ class TorrentFile(MetaFile):
         """
         info = self.meta["info"]
         size, filelist = utils.filelist_total(self.path)
-
         if os.path.isfile(self.path):
             info["length"] = size
         else:
@@ -391,9 +394,22 @@ class TorrentFile(MetaFile):
 
         pieces = bytearray()
         feeder = Hasher(filelist, self.piece_length)
-        for piece in feeder:
-            pieces.extend(piece)
-
+        if self.progress:
+            from tqdm import tqdm
+            for piece in tqdm(
+                iterable=feeder,
+                desc="Hashing Content",
+                total=size // self.piece_length,
+                unit="bytes",
+                unit_scale=True,
+                unit_divisor=self.piece_length,
+                initial=0,
+                leave=True
+                ):
+                pieces.extend(piece)
+        else:
+            for piece in feeder:
+                pieces.extend(piece)
         info["pieces"] = pieces
 
 
@@ -429,10 +445,19 @@ class TorrentFileV2(MetaFile):
             keywword arguments to pass to superclass.
         """
         super().__init__(**kwargs)
-        logging.debug("Create .torrent v2 file.")
+        logger.debug("Create .torrent v2 file.")
         self.piece_layers = {}
         self.hashes = []
+        self.bar = None
         self.assemble()
+
+    @property
+    def update(self):
+        """Update for the progress bar."""
+        if self.bar:
+            self.bar.update(n=1)
+        return
+
 
     def assemble(self):
         """Assemble then return the meta dictionary for encoding.
@@ -444,9 +469,20 @@ class TorrentFileV2(MetaFile):
         """
         info = self.meta["info"]
 
+        if self.progress:
+            from tqdm import tqdm
+            lst = utils.get_file_list(self.path)
+            self.bar = tqdm(
+                desc="Hashing Files:",
+                total=len(lst),
+                leave=True,
+                unit="file",
+                )
+
         if os.path.isfile(self.path):
             info["file tree"] = {info["name"]: self._traverse(self.path)}
             info["length"] = os.path.getsize(self.path)
+            self.update
         else:
             info["file tree"] = self._traverse(self.path)
 
@@ -466,13 +502,14 @@ class TorrentFileV2(MetaFile):
             size = os.path.getsize(path)
 
             if size == 0:
+                self.update
                 return {"": {"length": size}}
 
             fhash = HasherV2(path, self.piece_length)
 
             if size > self.piece_length:
                 self.piece_layers[fhash.root] = fhash.piece_layer
-
+            self.update
             return {"": {"length": size, "pieces root": fhash.root}}
 
         file_tree = {}
@@ -508,10 +545,11 @@ class TorrentFileHybrid(MetaFile):
     def __init__(self, **kwargs):
         """Create Bittorrent v1 v2 hybrid metafiles."""
         super().__init__(**kwargs)
-        logging.debug("Creating Hybrid torrent file.")
+        logger.debug("Creating Hybrid torrent file.")
         self.name = os.path.basename(self.path)
         self.hashes = []
         self.piece_layers = {}
+        self.bar = None
         self.pieces = []
         self.files = []
         self.assemble()
@@ -520,9 +558,21 @@ class TorrentFileHybrid(MetaFile):
         """Assemble the parts of the torrentfile into meta dictionary."""
         info = self.meta["info"]
         info["meta version"] = 2
+        if self.progress:
+            from tqdm import tqdm
+            lst = utils.get_file_list(self.path)
+            self.bar = tqdm(
+                desc="Hashing Files:",
+                total=len(lst),
+                leave=True,
+                unit="file",
+                )
+
         if os.path.isfile(self.path):
             info["file tree"] = {self.name: self._traverse(self.path)}
             info["length"] = os.path.getsize(self.path)
+            if self.bar:
+                self.bar.update(n=1)
         else:
             info["file tree"] = self._traverse(self.path)
             info["files"] = self.files
@@ -549,6 +599,8 @@ class TorrentFileHybrid(MetaFile):
             )
 
             if fsize == 0:
+                if self.bar:
+                    self.bar.update(n=1)
                 return {"": {"length": fsize}}
 
             fhash = HasherHybrid(path, self.piece_length)
@@ -561,6 +613,9 @@ class TorrentFileHybrid(MetaFile):
 
             if fhash.padding_file:
                 self.files.append(fhash.padding_file)
+
+            if self.bar:
+                self.bar.update(n=1)
 
             return {"": {"length": fsize, "pieces root": fhash.root}}
 

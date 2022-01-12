@@ -32,6 +32,7 @@ from torrentfile.interactive import select_action
 from torrentfile.recheck import Checker
 from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
+logger = logging.getLogger(__name__)
 
 class HelpFormat(HelpFormatter):
     """Formatting class for help tips provided by the CLI.
@@ -46,7 +47,7 @@ class HelpFormat(HelpFormatter):
         max length until line wrap.
     """
 
-    def __init__(self, prog: str, width=75, max_help_pos=40):
+    def __init__(self, prog: str, width=75, max_help_pos=60):
         """Construct HelpFormat class."""
         super().__init__(prog, width=width, max_help_position=max_help_pos)
 
@@ -54,6 +55,11 @@ class HelpFormat(HelpFormatter):
         """Split multiline help messages and remove indentation."""
         lines = text.split("\n")
         return [line.strip() for line in lines if line]
+
+    def _format_text(self, text):
+        text = text % dict(prog=self._prog) if '%(prog)' in text else text
+        text = self._whitespace_matcher.sub(' ', text).strip()
+        return text + "\n\n"
 
 
 def main_script(args=None):
@@ -105,18 +111,30 @@ def main_script(args=None):
     )
 
     subparsers = parser.add_subparsers(
-        title="Commands",
-        description="TorrentFile sub-command actions.",
+        title="Actions",
+        description="Each sub-command triggers a specific action.",
         dest="command",
-        metavar="",
     )
 
     create_parser = subparsers.add_parser(
-        "create",
-        help="Create a torrent file.",
+        "c",
+        help="""
+        Create a torrent meta file.
+        """,
         prefix_chars="-",
-        aliases=["c", "new"],
+        aliases=["create", "new"],
         formatter_class=HelpFormat,
+    )
+
+    create_parser.add_argument(
+        "-a",
+        "--announce",
+        action="store",
+        dest="announce",
+        metavar="<url>",
+        nargs="+",
+        default=[],
+        help="Alias for -t/--tracker",
     )
 
     create_parser.add_argument(
@@ -124,7 +142,7 @@ def main_script(args=None):
         "--private",
         action="store_true",
         dest="private",
-        help="create a private torrent file",
+        help="Create a private torrent meta file",
     )
 
     create_parser.add_argument(
@@ -159,7 +177,7 @@ def main_script(args=None):
         action="store",
         dest="outfile",
         metavar="<path>",
-        help="output path for created .torrent file",
+        help="Output path for created .torrent file",
     )
 
     create_parser.add_argument(
@@ -170,10 +188,17 @@ def main_script(args=None):
         metavar="<url>",
         nargs="+",
         default=[],
+        help="""One or more Bittorrent tracker announce url(s).""",
+    )
+
+    create_parser.add_argument(
+        "--progress",
+        action="store_true",
+        dest="progress",
         help="""
-        One or more Bittorrent tracker announce url(s).
-        Examples:: [-a url1 url2 url3]  [--anounce url1]
-        """,
+        Enable showing the progress bar during torrent creation.
+        (Minimially impacts the duration of torrent file creation.)
+        """
     )
 
     create_parser.add_argument(
@@ -221,49 +246,18 @@ def main_script(args=None):
     )
 
     create_parser.add_argument(
-        "-a",
-        "--announce",
-        action="store",
-        dest="announce",
-        metavar="<url>",
-        nargs="+",
-        default=[],
-        help="alias for -t/--tracker",
-    )
-
-    create_parser.add_argument(
         "content",
         action="store",
-        metavar="<content>",
-        help="path to content file or directory",
-    )
-
-    check_parser = subparsers.add_parser(
-        "recheck",
-        help="Recheck/Check torrent download completion",
-        aliases=["r", "check"],
-        prefix_chars="-",
-        formatter_class=HelpFormat,
-    )
-
-    check_parser.add_argument(
-        "metafile",
-        action="store",
-        metavar="<*.torrent>",
-        help="path to .torrent file.",
-    )
-
-    check_parser.add_argument(
-        "content",
-        action="store",
-        metavar="<content>",
+        metavar="<content path>",
         help="path to content file or directory",
     )
 
     edit_parser = subparsers.add_parser(
-        "edit",
-        help="Edit a torrent file.",
-        aliases=["e"],
+        "e",
+        help="""
+        Edit existing torrent meta file.
+        """,
+        aliases=["edit"],
         prefix_chars="-",
         formatter_class=HelpFormat,
     )
@@ -322,9 +316,11 @@ def main_script(args=None):
     )
 
     magnet_parser = subparsers.add_parser(
-        "magnet",
-        help="Create magnet url from a Bittorrent Meta File.",
-        aliases=["m"],
+        "m",
+        help="""
+        Create magnet url from an existing Bittorrent meta file.
+        """,
+        aliases=["magnet"],
         prefix_chars="-",
         formatter_class=HelpFormat,
     )
@@ -332,29 +328,40 @@ def main_script(args=None):
     magnet_parser.add_argument(
         "metafile",
         action="store",
-        help="path to bittorrent meta file.",
+        help="path to Bittorrent meta file.",
         metavar="<*.torrent>",
     )
 
-    flags = parser.parse_args(args)
-    print(flags)
-    if flags.debug:
-        level = logging.DEBUG
-    else:
-        level = logging.WARNING
-    tlogger = logging.getLogger("tlogger")
-    tlogger.setLevel(level)
-    handler = logging.StreamHandler()
-    handler.setLevel(level)
-    handler.setFormatter(
-        logging.Formatter(
-            fmt="%(prog)s %(asctime)s %(message)s",
-            datefmt="%m-%d-%Y %H:%M:%S",
-            style="%",
-        )
+    check_parser = subparsers.add_parser(
+        "r",
+        help="""
+        Calculate amount of torrent meta file's content is found on disk.
+        """,
+        aliases=["recheck", "check"],
+        prefix_chars="-",
+        formatter_class=HelpFormat,
     )
-    tlogger.addHandler(handler)
 
+    check_parser.add_argument(
+        "metafile",
+        action="store",
+        metavar="<*.torrent>",
+        help="path to .torrent file.",
+    )
+
+    check_parser.add_argument(
+        "content",
+        action="store",
+        metavar="<content>",
+        help="path to content file or directory",
+    )
+
+    flags = parser.parse_args(args)
+
+    if flags.debug:
+        torrentfile.setLevel(logging.DEBUG)
+
+    logger.debug(str(flags))
     if flags.interactive:
         return select_action()
 
@@ -362,20 +369,21 @@ def main_script(args=None):
         return create_magnet(flags.metafile)
 
     if flags.command in ["recheck", "r", "check"]:
-        tlogger.debug("Program entering Recheck mode.")
+        logger.debug("Program entering Recheck mode.")
         metafile = flags.metafile
         content = flags.content
-        tlogger.debug("Checking %s against %s contents", metafile, content)
+        logger.debug("Checking %s against %s contents", metafile, content)
         checker = Checker(metafile, content)
-        tlogger.debug("Completed initialization of the Checker class")
+        logger.debug("Completed initialization of the Checker class")
         result = checker.results()
-        tlogger.info("Final result for %s recheck:  %s", metafile, result)
+        logger.info("Final result for %s recheck:  %s", metafile, result)
         sys.stdout.write(str(result))
         sys.stdout.flush()
         return result
 
     if flags.command in ["edit", "e"]:
         metafile = flags.metafile
+        logger.info("Editing %s" % flags.metafile)
         editargs = {
             "url-list": flags.url_list,
             "announce": flags.announce,
@@ -386,6 +394,7 @@ def main_script(args=None):
         return edit_torrent(metafile, editargs)
 
     kwargs = {
+        "progress": flags.progress,
         "url_list": flags.url_list,
         "path": flags.content,
         "announce": flags.announce + flags.tracker,
@@ -396,7 +405,7 @@ def main_script(args=None):
         "comment": flags.comment,
     }
 
-    tlogger.debug("Program has entered torrent creation mode.")
+    logger.debug("Program has entered torrent creation mode.")
 
     if flags.meta_version == "2":
         torrent = TorrentFileV2(**kwargs)
@@ -404,14 +413,14 @@ def main_script(args=None):
         torrent = TorrentFileHybrid(**kwargs)
     else:
         torrent = TorrentFile(**kwargs)
-    tlogger.debug("Completed torrent files meta info assembly.")
+    logger.debug("Completed torrent files meta info assembly.")
     outfile, meta = torrent.write()
     if flags.magnet:
         create_magnet(outfile)
     parser.kwargs = kwargs
     parser.meta = meta
     parser.outfile = outfile
-    tlogger.debug("New torrent file (%s) has been created.", str(outfile))
+    logger.debug("New torrent file (%s) has been created.", str(outfile))
     return parser
 
 

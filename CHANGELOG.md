@@ -1,5 +1,19 @@
 # TorrentFile
 
+## Version 0.6.5
+
+### Added 0.6.5
+
+    - Support for creating Magnet URI's
+    - Added optional progress bar for torrent creation
+    - Log File handler
+    - CLI args page in documentation
+
+### Fixed 0.6.5
+
+    - verbose and logging bugs
+    - multi tracker errors bug
+
 ## Version 0.6.4
 
 ### Changed/Fixed/Added 0.6.4

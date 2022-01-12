@@ -34,7 +34,7 @@ from torrentfile.utils import humanize_bytes
 SHA1 = 20
 SHA256 = 32
 
-checklog = logging.getLogger("tlogger.check")
+logger = logging.getLogger(__name__)
 
 
 class Checker:
@@ -164,7 +164,7 @@ class Checker:
         # Repeat log messages should be ignored.
         if message != self.last_log:
             self.last_log = message
-            checklog.log(level, message)
+            logger.log(level, message)
             if self._hook and level == logging.INFO:
                 self._hook(message)
 
@@ -297,9 +297,9 @@ class Checker:
             if chunk == piece:
                 matching += size
                 matched += size
-                checklog.debug(msg, "Success", path, humansize)
+                logger.debug(msg, "Success", path, humansize)
             else:
-                checklog.debug(msg, "Fail", path, humansize)
+                logger.debug(msg, "Fail", path, humansize)
             yield chunk, piece, path, size
             total_consumed = str(int(consumed / self.total * 100))
             percent_matched = str(int(matched / consumed * 100))
@@ -472,7 +472,7 @@ class HashChecker:
         self.piece_layers = checker.meta["piece layers"]
         self.piece_count = 0
         self.it = None
-        checklog.debug(
+        logger.debug(
             "Starting Hash Checker. piece length: %s",
             humanize_bytes(self.piece_length),
         )
@@ -501,9 +501,9 @@ class HashChecker:
         for i, path in enumerate(self.paths):
             info = self.fileinfo[i]
             length, plength = info["length"], self.piece_length
-            checklog.debug("%s length: %s", path, str(length))
+            logger.debug("%s length: %s", path, str(length))
             roothash = info["pieces root"]
-            checklog.debug("%s root hash %s", path, str(roothash))
+            logger.debug("%s root hash %s", path, str(roothash))
             if roothash in self.piece_layers:
                 pieces = self.piece_layers[roothash]
             else:
@@ -548,7 +548,7 @@ class HashChecker:
                             block = sha256(bytearray(size)).digest()
                         size = plength if plength < length else length
                         length -= size
-                        checklog.debug(
+                        logger.debug(
                             "Yielding: %s, %s, %s, %s",
                             str(block),
                             str(piece),
