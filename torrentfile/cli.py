@@ -36,21 +36,27 @@ logger = logging.getLogger(__name__)
 
 
 class HelpFormat(HelpFormatter):
-    """Formatting class for help tips provided by the CLI.
+    """
+    Formatting class for help tips provided by the CLI.
 
-    Parameters
-    ----------
-    prog : `str`
-        Name of the program.
-    width : `int`
-        Max width of help message output.
-    max_help_positions : `int`
-        max length until line wrap.
+    Subclasses Argparse.HelpFormatter.
     """
 
-    def __init__(self, prog: str, width=75, max_help_pos=60):
-        """Construct HelpFormat class."""
-        super().__init__(prog, width=width, max_help_position=max_help_pos)
+    def __init__(self, prog, width=75, max_help_positions=60):
+        """Construct HelpFormat class for usage output.
+
+        Parameters
+        ----------
+        prog : `str`
+            Name of the program.
+        width : `int`
+            Max width of help message output.
+        max_help_positions : `int`
+            max length until line wrap.
+        """
+        super().__init__(
+            prog, width=width, max_help_position=max_help_positions
+        )
 
     def _split_lines(self, text, _):
         """Split multiline help messages and remove indentation."""

@@ -39,9 +39,7 @@
         var pageToc = [
           {title: "TorrentFile CLI Menu", url: "#_top", children: [
               {title: "torrentfile -h", url: "#torrentfile-h" },
-              {title: "torrentfile c -h", url: "#torrentfile-c-h" },
               {title: "torrentfile e -h", url: "#torrentfile-e-h" },
-              {title: "torrentfile m -h", url: "#torrentfile-m-h" },
           ]},
         ];
 
@@ -92,31 +90,30 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     <h1 id="torrentfile-cli-menu">TorrentFile CLI Menu</h1>
 <h2 id="torrentfile-h"><code>torrentfile -h</code></h2>
-<pre><code>usage: TorrentFile [-h] [-i] [-V] [-v]
-                {c,create,new,e,edit,m,magnet,r,recheck,check} ...
-
-CLI Tool for creating, checking and editing Bittorrent meta files. Supports all meta file versions including hybrid files.
-
-optional arguments:
+<p>```bash:
+usage: TorrentFile [-h][-i] [-V][-v]
+                {c,create,new,e,edit,m,magnet,r,recheck,check} ...</p>
+<p>CLI Tool for creating, checking and editing Bittorrent meta files. Supports all meta file versions including hybrid files.</p>
+<p>optional arguments:
 -h, --help                                      show this help message and exit
 -i, --interactive                               select program options interactively
 -V, --version                                   show program version and exit
--v, --verbose                                   output debug information
+-v, --verbose                                   output debug information</p>
+<p>Actions:
+Each sub-command triggers a specific action.</p>
+<p>{c,create,new,e,edit,m,magnet,r,recheck,check}
+    c (create, new)                               Create a torrent meta file.</p>
+<pre><code>e (edit)                                      Edit existing torrent meta file.
 
-Actions:
-Each sub-command triggers a specific action.
+m (magnet)                                    Create magnet url from an existing Bittorrent meta file.
 
-{c,create,new,e,edit,m,magnet,r,recheck,check}
-    c (create, new)                               Create a torrent meta file.
-
-    e (edit)                                      Edit existing torrent meta file.
-
-    m (magnet)                                    Create magnet url from an existing Bittorrent meta file.
-
-    r (recheck, check)                            Calculate amount of torrent meta file's content is found on disk.
+r (recheck, check)                            Calculate amount of torrent meta file's content is found on disk.
 </code></pre>
-<h2 id="torrentfile-c-h"><code>torrentfile c -h</code></h2>
-<pre><code>usage: TorrentFile c [-h] [-a &lt;url&gt; [&lt;url&gt; ...]] [-p] [-s &lt;source&gt;] [-m]
+<pre><code>
+## `torrentfile c -h`
+
+```bash:
+usage: TorrentFile c [-h] [-a &lt;url&gt; [&lt;url&gt; ...]] [-p] [-s &lt;source&gt;] [-m]
                     [-c &lt;comment&gt;] [-o &lt;path&gt;] [-t &lt;url&gt; [&lt;url&gt; ...]]
                     [--progress] [--meta-version &lt;int&gt;]
                     [--piece-length &lt;int&gt;] [-w &lt;url&gt; [&lt;url&gt; ...]]
@@ -154,27 +151,26 @@ optional arguments:
                                                     tracker is ever unreachable. Example:: [-w url1 [url2 [url3]]]
 </code></pre>
 <h2 id="torrentfile-e-h"><code>torrentfile e -h</code></h2>
-<pre><code>usage: TorrentFile e [-h] [--tracker &lt;url&gt; [&lt;url&gt; ...]]
-                    [--web-seed &lt;url&gt; [&lt;url&gt; ...]] [--private]
-                    [--comment &lt;comment&gt;] [--source &lt;source&gt;]
-                    &lt;*.torrent&gt;
-
-positional arguments:
-&lt;*.torrent&gt;                   path to *.torrent file
-
-optional arguments:
+<p>```bash:
+usage: TorrentFile e [-h] [--tracker <url> [<url> ...]]
+                    [--web-seed <url> [<url> ...]][--private]
+                    [--comment <comment>] [--source <source>]
+                    &lt;*.torrent&gt;</p>
+<p>positional arguments:
+&lt;<em>.torrent&gt;                   path to </em>.torrent file</p>
+<p>optional arguments:
 -h, --help                    show this help message and exit
---tracker &lt;url&gt; [&lt;url&gt; ...]   replace current list of tracker/announce urls with one or more space
-                                seperated Bittorrent tracker announce url(s).
+--tracker <url> [<url> ...]   replace current list of tracker/announce urls with one or more space
+                                seperated Bittorrent tracker announce url(s).</p>
+<p>--web-seed <url> [<url> ...]  replace current list of web-seed urls with one or more space seperated url(s)</p>
+<p>--private                     If currently private, will make it public, if public then private.
+--comment <comment>           replaces any existing comment with <comment>
+--source <source>             replaces current source with <source></p>
+<pre><code>
+## `torrentfile m -h`
 
---web-seed &lt;url&gt; [&lt;url&gt; ...]  replace current list of web-seed urls with one or more space seperated url(s)
-
---private                     If currently private, will make it public, if public then private.
---comment &lt;comment&gt;           replaces any existing comment with &lt;comment&gt;
---source &lt;source&gt;             replaces current source with &lt;source&gt;
-</code></pre>
-<h2 id="torrentfile-m-h">torrentfile m -h</h2>
-<pre><code>usage: TorrentFile m [-h] &lt;*.torrent&gt;
+```bash:
+usage: TorrentFile m [-h] &lt;*.torrent&gt;
 
 positional arguments:
 &lt;*.torrent&gt;  path to Bittorrent meta file.
@@ -182,13 +178,6 @@ positional arguments:
 optional arguments:
 -h, --help   show this help message and exit
 usage: TorrentFile r [-h] &lt;*.torrent&gt; content
-
-positional arguments:
-&lt;*.torrent&gt;  path to .torrent file.
-content    path to content file or directory
-
-optional arguments:
--h, --help   show this help message and exit
 </code></pre>
 
   <br>
