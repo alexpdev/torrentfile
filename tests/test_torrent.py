@@ -90,8 +90,8 @@ def test_torrentfile_single(version, size, piece_length, progress, capsys):
         "piece_length": piece_length,
         "progress": progress,
     }
-    torrent = version(**args)
-    torrent.write()
+    trent = version(**args)
+    trent.write()
     assert os.path.exists(str(tfile) + ".torrent")
     rmpath(tfile, str(tfile) + ".torrent")
 
@@ -112,8 +112,9 @@ def test_torrentfile_single_extra(version, size, piece_length):
     }
     torrent = version(**args)
     torrent.write()
-    assert os.path.exists(str(tfile) + ".torrent")
-    rmpath(tfile, str(tfile) + ".torrent")
+    outfile = str(tfile) + ".torrent"
+    assert os.path.exists(outfile)
+    rmpath(tfile, outfile)
 
 
 @pytest.mark.parametrize("size", list(range(17, 25)))
@@ -122,18 +123,17 @@ def test_torrentfile_single_extra(version, size, piece_length):
 def test_torrentfile_single_under(version, size, piece_length):
     """Test creating a torrent file from less than a single file contents."""
     tfile = tempfile(exp=size)
-    outfile = str(tfile) + ".torrent"
     with open(tfile, "rb") as binfile:
         data = binfile.read()
     with open(tfile, "wb") as binfile:
         binfile.write(data[: -(2 ** 9)])
-    args = {
+    kwargs = {
         "path": tfile,
         "comment": "somecomment",
         "announce": "announce",
         "piece_length": piece_length,
     }
-    torrent = version(**args)
-    torrent.write()
-    assert os.path.exists(str(tfile) + ".torrent")
+    torrent = version(**kwargs)
+    outfile, _ = torrent.write()
+    assert os.path.exists(outfile)
     rmpath(tfile, outfile)
