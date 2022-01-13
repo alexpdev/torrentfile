@@ -205,7 +205,7 @@ class HasherV2(CbMixin):
 
                 else:
                     # when the file contains multiple pieces
-                    remaining = self.num_blocks - size
+                    remaining = self.num_blocks - len(blocks)
                 # pad the the rest with zeroes to fill remaining space.
                 padding = [bytes(32) for _ in range(remaining)]
                 blocks.extend(padding)

@@ -69,6 +69,8 @@ clean-build: ## remove build artifacts
 	rm -f corbertura.xml
 	rm -fr .pytest_cache
 	rm -f *.spec
+	rm -rf Release
+	rm -f *.log
 
 test: ## Get coverage report
 	pytest --cov=torrentfile --cov=tests

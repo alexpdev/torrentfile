@@ -6,17 +6,19 @@
 #include <math.h>
 #include <stdbool.h>
 #include "sha1.h"
+#include "hasher.h"
 
 #define BLOCK_SIZE 16384
 
-typedef struct {
-    uint8_t *ptr;
-    int size;
-    int allocated;
-    int logical;
-} Hash;
+// typedef struct {
+//     uint8_t *ptr;
+//     int size;
+//     int allocated;
+//     int logical;
+// } Hash;
 
-void HashInit(Hash *hash)
+
+void HASHInit(HASH *hash)
 {
     hash->size = 20;
     hash->allocated = 2;
@@ -24,7 +26,8 @@ void HashInit(Hash *hash)
     hash->ptr = (uint8_t *)malloc(40);
 }
 
-void extend_Hash(Hash *hash, uint8_t *output)
+
+void extend_Hash(HASH *hash, uint8_t *output)
 {
     int index, i, j;
     if (hash->logical == hash->allocated){
@@ -45,7 +48,8 @@ void extend_Hash(Hash *hash, uint8_t *output)
     return;
 }
 
-void show_Hash(Hash *hash)
+
+void show_Hash(HASH *hash)
 {
     int i;
     printf("%d, %d, %d", hash->logical, hash->allocated, hash->size);
@@ -58,6 +62,7 @@ void show_Hash(Hash *hash)
     printf("\n");
 }
 
+
 int addpartial(uint8_t *buffer, FILE *fptr, int remains, int piece_length)
 {
     int subsize = piece_length - remains;
@@ -68,7 +73,10 @@ int addpartial(uint8_t *buffer, FILE *fptr, int remains, int piece_length)
     return amount + remains;
 }
 
-Hash *HASHER(char **filelist, int piece_length, Hash *hash){
+
+HASH *HASHER(char **filelist, int piece_length){
+    HASH *hash = (HASH *)malloc(sizeof(HASH));
+    HASHInit(hash);
     int i, amount;
     FILE *fptr;
     bool partial = false;
@@ -114,13 +122,13 @@ Hash *HASHER(char **filelist, int piece_length, Hash *hash){
     return hash;
 }
 
-int main(int argc, char **argv)
-{
-    int piece_length = BLOCK_SIZE;
-    printf("%d\n", BLOCK_SIZE);
-    Hash *hash = malloc(sizeof(Hash));
-    HashInit(hash);
-    Hasher(argv, piece_length, hash);
-    show_Hash(hash);
-    return 0;
-}
+// int main(int argc, char **argv)
+// {
+//     int piece_length = BLOCK_SIZE;
+//     printf("%d\n", BLOCK_SIZE);
+//     Hash *hash = malloc(sizeof(Hash));
+//     HashInit(hash);
+//     Hasher(argv, piece_length, hash);
+//     show_Hash(hash);
+//     return 0;
+// }
