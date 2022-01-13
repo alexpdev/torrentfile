@@ -1,11 +1,12 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
-
+"""
+Script for CFFI Build.
+"""
 import os
 from cffi import FFI
 
 ffibuilder = FFI() # 'hasher_build.py:FFI_BUILDER'
-
 HEADER = '''
 typedef struct {
     uint8_t *ptr;
@@ -31,7 +32,6 @@ HASHHYBRID *HasherHybrid(char *path, unsigned piece_length);
 '''
 
 ffibuilder.cdef(HEADER)
-
 path = "c"
 filelist = os.listdir("c")
 sources = [
@@ -41,8 +41,6 @@ sources = [
     "sha1.c",
     "sha256.c",
 ]
-
-
 ffibuilder.set_source(
     "c_hasher",
     """
@@ -53,6 +51,5 @@ ffibuilder.set_source(
     #include "hasherhybrid.h"
     """,
     sources=sources)
-
 if __name__ == "__main__":
     ffibuilder.compile()

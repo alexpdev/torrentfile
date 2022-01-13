@@ -394,9 +394,19 @@ def test_checker_missing_singles(version, piece_length, dir3):
         "piece_length": piece_length,
     }
     outfile = mktorrent(args, v=version)
-    for item in Path(path).iterdir():
-        rmpath(item)
-        break
+
+    def walk(folder):
+        """Remove first file found."""
+        if folder.is_file():
+            rmpath(folder)
+            return True
+        elif folder.is_dir():
+            for item in folder.iterdir():
+                if walk(item):
+                    return True
+        return False
+
+    walk(dir3)
     checker = Checker(outfile, path)
     assert int(checker.results()) < 100
 
