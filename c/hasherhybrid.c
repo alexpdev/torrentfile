@@ -172,21 +172,6 @@ uint8 *getPadPiece(unsigned n)
 }
 
 
-unsigned extend_v1hash(uint8 *hash, uint8 *v1pieces, unsigned v1length)
-{
-    unsigned size = v1length + V1HASHSIZE;
-    uint8 v1piece[size];
-    for (int i = 0; i < v1length; i++){
-        v1piece[i] = v1pieces[i];
-    }
-    for (int j=0; j < V1HASHSIZE; j++){
-        v1piece[v1length + j] = hash[j];
-    }
-    v1pieces = v1piece;
-    return size;
-}
-
-
 HASHHYBRID *HasherHybrid(char *path, unsigned piece_length)
 {
     unsigned amount, next_pow2, total, remaining, blocks_per_piece;
@@ -194,7 +179,7 @@ HASHHYBRID *HasherHybrid(char *path, unsigned piece_length)
     LayerV3 *layerV3_hashes = newLayerV3();
     FILE *fptr = fopen(path, "rb");
     uint8 *buffer = (uint8 *)malloc(BLOCKSIZE);
-    uint8 v1pieces[] = {};
+    LayerV3 *v1pieces = newLayerV3();
     unsigned v1length = 0;
     total = 0;
     blocks_per_piece = (unsigned) floor(piece_length / BLOCKSIZE);
@@ -230,7 +215,6 @@ HASHHYBRID *HasherHybrid(char *path, unsigned piece_length)
             {
                 remaining = blocks_per_piece - layerV3->count;
             }
-            printf("Remaining = %d; count = %d.", remaining, layerV3->count);
             uint8 *padding;
             for (int i = 0; i < remaining; i++)
             {
@@ -242,7 +226,7 @@ HASHHYBRID *HasherHybrid(char *path, unsigned piece_length)
         SHA1(v1hash, v1buffer, bufsize);
         piece = MerkleRoot(layerV3);
         add_node(layerV3_hashes, piece);
-        v1length = extend_v1hash(v1hash, v1pieces, v1length);
+        add_node(v1pieces, v1hash);
     }
     uint8 *piece_layerV3 = (uint8 *)malloc(HASHSIZE * layerV3_hashes->count);
     Node *current = layerV3_hashes->start;
@@ -257,7 +241,7 @@ HASHHYBRID *HasherHybrid(char *path, unsigned piece_length)
         current = current->next;
     }
     int x = layerV3_hashes->count;
-    if (!(x && (!(x&(x-1)))))
+    if (x && x & (x-1) == 0)
     {
         next_pow2 = 1 << (unsigned) floor((log(x)/log(2)) + 1);
         remaining = next_pow2 - x;
@@ -267,12 +251,22 @@ HASHHYBRID *HasherHybrid(char *path, unsigned piece_length)
             add_node(layerV3_hashes, piece);
         }
     }
+    uint8 *v1p = (uint8 *)malloc(V1HASHSIZE * v1pieces->count);
+    Node *first = v1pieces->start;
+    int counter = 0;
+    while (first != NULL){
+        for (int i=0;i<V1HASHSIZE;i++){
+            v1p[counter] = first->hash[i];
+            counter += 1;
+        }
+        first = first->next;
+    }
     uint8 *roothash;
     roothash = MerkleRoot(layerV3_hashes);
     HASHHYBRID *result = (HASHHYBRID *)malloc(sizeof(HASHHYBRID));
     result->piece_layerV3 = piece_layerV3;
     result->pieces_root = roothash;
-    result->hashv1 = v1pieces;
+    result->hashv1 = v1p;
     return result;
 }
 
