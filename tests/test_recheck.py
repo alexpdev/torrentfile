@@ -406,7 +406,7 @@ def test_checker_missing_singles(version, piece_length, dir3):
                     return True
         return False
 
-    walk(dir3)
+    walk(Path(dir3))
     checker = Checker(outfile, path)
     assert int(checker.results()) < 100
 
