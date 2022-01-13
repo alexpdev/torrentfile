@@ -17,6 +17,7 @@ c_hasher.c
 c/Makefile
 c/testfile
 Release/
+*.exe
 
 # bite-code
 *.pyc
