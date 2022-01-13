@@ -402,8 +402,7 @@ def test_checker_missing_singles(version, piece_length, dir3):
             return True
         if root.is_dir():
             for item in root.iterdir():
-                if walk(item):
-                    return True
+                walk(item)
         return False
 
     walk(Path(dir3))
