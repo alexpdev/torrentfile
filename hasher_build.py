@@ -1,12 +1,10 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
-"""
-Script for CFFI Build.
-"""
+"""Script for CFFI Build."""
 import os
 from cffi import FFI
 
-ffibuilder = FFI() # 'hasher_build.py:FFI_BUILDER'
+ffibuilder = FFI()  # 'hasher_build.py:FFI_BUILDER'
 HEADER = '''
 typedef struct {
     uint8_t *ptr;

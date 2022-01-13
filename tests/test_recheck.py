@@ -395,13 +395,13 @@ def test_checker_missing_singles(version, piece_length, dir3):
     }
     outfile = mktorrent(args, v=version)
 
-    def walk(folder):
+    def walk(root):
         """Remove first file found."""
-        if folder.is_file():
-            rmpath(folder)
+        if root.is_file():
+            rmpath(root)
             return True
-        elif folder.is_dir():
-            for item in folder.iterdir():
+        if root.is_dir():
+            for item in root.iterdir():
                 if walk(item):
                     return True
         return False
