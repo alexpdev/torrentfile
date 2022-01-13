@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include "sha1.h"
 
-typedef uint8_t uint8
+typedef uint8_t uint8;
 
 #define rol(value, bits) (((value) << (bits)) | ((value) >> (32 - (bits))))
 

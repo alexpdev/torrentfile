@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <string.h>
 
-typedef uint8_t uint8
+typedef uint8_t uint8;
 
 typedef struct {
 	uint8 *hash;

@@ -13,6 +13,10 @@ tests/TESTDIR
 runtests.py
 coverage.sh
 coverage.xml
+c_hasher.c
+c/Makefile
+c/testfile
+Release/
 
 # bite-code
 *.pyc
