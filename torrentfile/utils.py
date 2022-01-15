@@ -278,7 +278,9 @@ def next_power_2(value):
     `int`
         The next power of 2 greater than value, or value if already power of 2.
     """
-    log = math.log2(value)
-    if log == int(log):
+    if not value & (value - 1) and value:
         return value
-    return 1 << int(log) + 1
+    start = 1
+    while start < value:
+        start <<= 1
+    return start

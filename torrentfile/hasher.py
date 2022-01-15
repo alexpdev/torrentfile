@@ -329,8 +329,8 @@ class HasherHybrid(CbMixin):
         if len(self.layer_hashes) > 1:
             pad_piece = merkle_root([bytes(32) for _ in range(self.amount)])
 
-            next_pow_two = 1 << (len(self.layer_hashes) - 1).bit_length()
-            remainder = next_pow_two - len(self.layer_hashes)
+            pow2 = next_power_2(len(self.layer_hashes))
+            remainder = pow2 - len(self.layer_hashes)
 
             self.layer_hashes += [pad_piece for _ in range(remainder)]
         self.root = merkle_root(self.layer_hashes)
