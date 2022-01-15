@@ -2930,27 +2930,25 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">blocklen</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generate Hash sized, 0 filled bytes for padding.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        total : `int`</span>
-<span class="sd">            length of bytes processed.</span>
-<span class="sd">        blocklen : `int`</span>
-<span class="sd">            number of blocks processed.</span>
+<span class="sd">        block_count : `int`</span>
+<span class="sd">            current total number of blocks collected.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        padding : `bytes`</span>
 <span class="sd">            Padding to fill remaining portion of tree.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># when the there is only one block for file</span>
+        <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">-</span> <span class="n">block_count</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">:</span>
-            <span class="n">next_pow_2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">total</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">remaining</span> <span class="o">=</span> <span class="p">((</span><span class="n">next_pow_2</span> <span class="o">-</span> <span class="n">total</span><span class="p">)</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="k">return</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">-</span> <span class="n">blocklen</span><span class="p">)]</span>
+            <span class="n">power2</span> <span class="o">=</span> <span class="n">next_power_2</span><span class="p">(</span><span class="n">block_count</span><span class="p">)</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="n">power2</span> <span class="o">-</span> <span class="n">block_count</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
 
     <span class="k">def</span> <span class="nf">_process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculate layer hashes for contents of file.</span>
@@ -2977,7 +2975,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">blocks</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">:</span>
-                <span class="n">padding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pad_remaining</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">),</span> <span class="n">size</span><span class="p">)</span>
+                <span class="n">padding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pad_remaining</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span>
                 <span class="n">blocks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span>
             <span class="n">layer_hash</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cb</span><span class="p">:</span>
@@ -3471,15 +3469,13 @@ root hash is calculated.</p>
                 <span class="k">break</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span><span class="p">:</span>
                 <span class="c1"># when size of file doesn&#39;t fill the last block</span>
+                <span class="c1"># when the file contains multiple pieces</span>
+                <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">:</span>
                     <span class="c1"># when the there is only one block for file</span>
+                    <span class="n">power2</span> <span class="o">=</span> <span class="n">next_power_2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span>
+                    <span class="n">remaining</span> <span class="o">=</span> <span class="n">power2</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
 
-                    <span class="n">next_pow_2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">total</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-                    <span class="n">remaining</span> <span class="o">=</span> <span class="p">((</span><span class="n">next_pow_2</span> <span class="o">-</span> <span class="n">total</span><span class="p">)</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="c1"># when the file contains multiple pieces</span>
-                    <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
                 <span class="c1"># pad the the rest with zeroes to fill remaining space.</span>
                 <span class="n">padding</span> <span class="o">=</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
                 <span class="n">blocks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span>
@@ -3494,9 +3490,10 @@ root hash is calculated.</p>
     <span class="k">def</span> <span class="nf">_calculate_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculate root hash for the target file.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_layer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">next_pow_2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">remainder</span> <span class="o">=</span> <span class="n">next_pow_2</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
+        <span class="n">hashes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">hashes</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">pow2</span> <span class="o">=</span> <span class="n">next_power_2</span><span class="p">(</span><span class="n">hashes</span><span class="p">)</span>
+            <span class="n">remainder</span> <span class="o">=</span> <span class="n">pow2</span> <span class="o">-</span> <span class="n">hashes</span>
             <span class="n">pad_piece</span> <span class="o">=</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span><span class="p">)]</span>
             <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remainder</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">merkle_root</span><span class="p">(</span><span class="n">pad_piece</span><span class="p">))</span>
@@ -3620,15 +3617,13 @@ root hash is calculated.</p>
             <span class="k">break</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span><span class="p">:</span>
             <span class="c1"># when size of file doesn&#39;t fill the last block</span>
+            <span class="c1"># when the file contains multiple pieces</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">:</span>
                 <span class="c1"># when the there is only one block for file</span>
+                <span class="n">power2</span> <span class="o">=</span> <span class="n">next_power_2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span>
+                <span class="n">remaining</span> <span class="o">=</span> <span class="n">power2</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
 
-                <span class="n">next_pow_2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">total</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="n">remaining</span> <span class="o">=</span> <span class="p">((</span><span class="n">next_pow_2</span> <span class="o">-</span> <span class="n">total</span><span class="p">)</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># when the file contains multiple pieces</span>
-                <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
             <span class="c1"># pad the the rest with zeroes to fill remaining space.</span>
             <span class="n">padding</span> <span class="o">=</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
             <span class="n">blocks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span>
@@ -4351,15 +4346,13 @@ root hash is calculated.</p>
                 <span class="k">break</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span><span class="p">:</span>
                 <span class="c1"># when size of file doesn&#39;t fill the last block</span>
+                <span class="c1"># when the file contains multiple pieces</span>
+                <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">:</span>
                     <span class="c1"># when the there is only one block for file</span>
+                    <span class="n">power2</span> <span class="o">=</span> <span class="n">next_power_2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span>
+                    <span class="n">remaining</span> <span class="o">=</span> <span class="n">power2</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
 
-                    <span class="n">next_pow_2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">total</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-                    <span class="n">remaining</span> <span class="o">=</span> <span class="p">((</span><span class="n">next_pow_2</span> <span class="o">-</span> <span class="n">total</span><span class="p">)</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="c1"># when the file contains multiple pieces</span>
-                    <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
                 <span class="c1"># pad the the rest with zeroes to fill remaining space.</span>
                 <span class="n">padding</span> <span class="o">=</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
                 <span class="n">blocks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span>
@@ -4374,9 +4367,10 @@ root hash is calculated.</p>
     <span class="k">def</span> <span class="nf">_calculate_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculate root hash for the target file.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_layer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">next_pow_2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">remainder</span> <span class="o">=</span> <span class="n">next_pow_2</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
+        <span class="n">hashes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">hashes</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">pow2</span> <span class="o">=</span> <span class="n">next_power_2</span><span class="p">(</span><span class="n">hashes</span><span class="p">)</span>
+            <span class="n">remainder</span> <span class="o">=</span> <span class="n">pow2</span> <span class="o">-</span> <span class="n">hashes</span>
             <span class="n">pad_piece</span> <span class="o">=</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span><span class="p">)]</span>
             <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remainder</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">merkle_root</span><span class="p">(</span><span class="n">pad_piece</span><span class="p">))</span>
@@ -4500,15 +4494,13 @@ root hash is calculated.</p>
             <span class="k">break</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span><span class="p">:</span>
             <span class="c1"># when size of file doesn&#39;t fill the last block</span>
+            <span class="c1"># when the file contains multiple pieces</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">:</span>
                 <span class="c1"># when the there is only one block for file</span>
+                <span class="n">power2</span> <span class="o">=</span> <span class="n">next_power_2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span>
+                <span class="n">remaining</span> <span class="o">=</span> <span class="n">power2</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
 
-                <span class="n">next_pow_2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">total</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="n">remaining</span> <span class="o">=</span> <span class="p">((</span><span class="n">next_pow_2</span> <span class="o">-</span> <span class="n">total</span><span class="p">)</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># when the file contains multiple pieces</span>
-                <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
             <span class="c1"># pad the the rest with zeroes to fill remaining space.</span>
             <span class="n">padding</span> <span class="o">=</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
             <span class="n">blocks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span>
@@ -4618,27 +4610,25 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">blocklen</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generate Hash sized, 0 filled bytes for padding.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        total : `int`</span>
-<span class="sd">            length of bytes processed.</span>
-<span class="sd">        blocklen : `int`</span>
-<span class="sd">            number of blocks processed.</span>
+<span class="sd">        block_count : `int`</span>
+<span class="sd">            current total number of blocks collected.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        padding : `bytes`</span>
 <span class="sd">            Padding to fill remaining portion of tree.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># when the there is only one block for file</span>
+        <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">-</span> <span class="n">block_count</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">:</span>
-            <span class="n">next_pow_2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">total</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">remaining</span> <span class="o">=</span> <span class="p">((</span><span class="n">next_pow_2</span> <span class="o">-</span> <span class="n">total</span><span class="p">)</span> <span class="o">//</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="k">return</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">-</span> <span class="n">blocklen</span><span class="p">)]</span>
+            <span class="n">power2</span> <span class="o">=</span> <span class="n">next_power_2</span><span class="p">(</span><span class="n">block_count</span><span class="p">)</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="n">power2</span> <span class="o">-</span> <span class="n">block_count</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
 
     <span class="k">def</span> <span class="nf">_process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculate layer hashes for contents of file.</span>
@@ -4665,7 +4655,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">blocks</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">:</span>
-                <span class="n">padding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pad_remaining</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">),</span> <span class="n">size</span><span class="p">)</span>
+                <span class="n">padding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pad_remaining</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span>
                 <span class="n">blocks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span>
             <span class="n">layer_hash</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cb</span><span class="p">:</span>
@@ -8065,6 +8055,10 @@ InteractiveEditor        </code>
 <span class="mkapi-item-type">(`str` :)</span>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Convert integer into human readable memory sized denomination.</span></li>
 
+<li class="function"><code class="mkapi-item-name">next_power_2</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">value</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`int`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate the next perfect power of 2 equal to or greater than value.</span></li>
+
 <li class="function"><code class="mkapi-item-name">normalize_piece_length</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">piece_length</code><code class="mkapi-object-parenthesis">)</code>
 <span class="mkapi-item-type">(piece_length : `int`)</span>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Verify input piece_length is valid and convert accordingly.</span></li>
@@ -8652,6 +8646,81 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="k">if</span> <span class="mi">1_048_576</span> <span class="o">&lt;=</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">1_073_741_824</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span> <span class="o">//</span> <span class="mi">1_048_576</span><span class="si">}</span><span class="s2"> MiB&quot;</span>
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span> <span class="o">//</span> <span class="mi">1073741824</span><span class="si">}</span><span class="s2"> GiB&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.next_power_2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">next_power_2</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the next perfect power of 2 equal to or greater than value.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>value</code></td>
+        <td><code>`int`</code></td>
+        <td><p>integer value that is less than some perfect power of 2.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>`int`</code></td>
+      <td><p>The next power of 2 greater than value, or value if already power of 2.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">next_power_2</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the next perfect power of 2 equal to or greater than value.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    value : `int`</span>
+<span class="sd">        integer value that is less than some perfect power of 2.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `int`</span>
+<span class="sd">        The next power of 2 greater than value, or value if already power of 2.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">log</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">log</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">log</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 </code></pre></div>
         </details>
     </div>

@@ -47,6 +47,7 @@
               {title: ":rocket: Usage", url: "#rocket-usage" },
               {title: ":memo: License", url: "#memo-license" },
               {title: ":bug: Issues", url: "#bug-issues" },
+              {title: "CLI Usage Examples", url: "#cli-usage-examples" },
           ]},
         ];
 
@@ -220,6 +221,70 @@ optional arguments:
 <h2 id="bug-issues">:bug: Issues</h2>
 <p>If you encounter any bugs or would like to request a new feature please open a new issue.</p>
 <p><a href="https://github.com/alexpdev/torrentfile/issues">https://github.com/alexpdev/torrentfile/issues</a></p>
+<hr />
+<h2 id="cli-usage-examples">CLI Usage Examples</h2>
+<p>Examples using TorrentFile with CLI arguments can be found below.
+Alternatively, <code>interactive mode</code> allows program options to be specified
+one option at a time  from a series of prompts using the following commands.</p>
+<p><code>torrentfile -i</code> or <code>torrentfile --interactive</code></p>
+<h3 id="creating-torrents">Creating Torrents</h3>
+<p>Using the sub-command <code>create</code> <em>TorrentFile</em> can create a new torrent
+from the contents of a file or directory path. The following examples
+illustrate some of the options available for creating torrent files.</p>
+<ul>
+<li>Create a torrent file from(<code>/path/to/content</code>) file or directory</li>
+<li>by default torrent files are saved to <code>/path/to/content.torrent</code></li>
+<li>by default torrents are created using bittorrent meta version 1</li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create /path/to/content
+</code></pre>
+<ul>
+<li>the <code>-t</code> or <code>--tracker</code> flag adds one or more items to the list of trackers</li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create /path/to/content --tracker http://tracker1.com
+&gt; torrentfile create /other/content -t http://tracker2 http://tracker3
+</code></pre>
+<ul>
+<li>the <code>--private</code> flag indicates use by a private tracker</li>
+<li>the <code>--source</code> flag adds a "source" property and fills it</li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create ./content --source SrcStr --private
+</code></pre>
+<ul>
+<li>to specify the save location use the <code>-o</code> or <code>--outfile</code> flags</li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create -o /specific/path/name.torrent ./content
+</code></pre>
+<ul>
+<li>to create files using bittorrent v2 use <code>--meta-version 2</code></li>
+<li>likewise <code>--meta-version 3</code> creates a hybrid torrent file.</li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create --meta-version 2 /path/to/content
+&gt; torrentfile create --meta-version 3 /path/to/content
+</code></pre>
+<ul>
+<li>to create a magnet URI for the created torrent file use <code>--magnet</code></li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile create --t https://tracker1/annc https://tracker2/annc --magnet /path/to/content
+</code></pre>
+<h3 id="checkrecheck-torrents">Check/Recheck Torrents</h3>
+<p>Using the sub-command <code>recheck</code> or <code>check</code> or <code>r</code> you can check how much of
+a torrent's data you have available by comparing the contetnts to the original
+torrent meta file.</p>
+<ul>
+<li>recheck torrent file <code>/path/to/name.torrent</code> with <code>./downloads/name</code></li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile recheck /path/to/name.torrent ./downloads/name
+</code></pre>
+<h3 id="edit-torrents">Edit Torrents</h3>
+<p>Using the sub-command <code>edit</code> or <code>e</code> enables editting a pre-existing torrent file.
+The edit sub-command works identically to the <code>create</code> sub-command and accepts many
+of the same arguments.</p>
+<h3 id="create-magnet">Create Magnet</h3>
+<p>To create a magnet URI for a pre-existing torrent meta file, use the sub-command<br />
+<code>magnet</code> with the path to the meta file.</p>
+<pre><code class="language-bash">&gt; torrentfile magnet /path/to/metafile
+</code></pre>
 
   <br>
     
@@ -258,5 +323,5 @@ Edit on GitHub</a>
 </html>
 <!--
 MkDocs version : 1.2.3
-Build Date UTC : 2022-01-13 19:33:03.505463+00:00
+Build Date UTC : 2022-01-15 10:08:19.194199+00:00
 -->

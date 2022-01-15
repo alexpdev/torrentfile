@@ -12,6 +12,8 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
 """Unittest functions for testing torrentfile utils module."""
+import math
+
 import pytest
 
 from tests import dir1, dir2, rmpath
@@ -106,6 +108,16 @@ def test_missing_path_error():
     except utils.MissingPathError:
         assert True
         assert dir2
+
+
+@pytest.mark.parametrize("value", [5, 32, 18, 225, 16384, 256000])
+def test_next_power_2(value):
+    """Test next power of 2 function in utils module."""
+    result = utils.next_power_2(value)
+    log = math.log2(result)
+    assert log == int(log)
+    assert result % 2 == 0
+    assert result >= value
 
 
 @pytest.mark.parametrize(

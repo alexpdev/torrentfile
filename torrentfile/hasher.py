@@ -14,11 +14,10 @@
 """Piece/File Hashers for Bittorrent meta file contents."""
 
 import logging
-import math
 import os
 from hashlib import sha1, sha256  # nosec
 
-from torrentfile.utils import humanize_bytes
+from torrentfile.utils import humanize_bytes, next_power_2
 
 BLOCK_SIZE = 2 ** 14  # 16KiB
 HASH_SIZE = 32
@@ -197,15 +196,13 @@ class HasherV2(CbMixin):
                 break
             if len(blocks) != self.num_blocks:
                 # when size of file doesn't fill the last block
+                # when the file contains multiple pieces
+                remaining = self.num_blocks - len(blocks)
                 if not self.layer_hashes:
                     # when the there is only one block for file
+                    power2 = next_power_2(len(blocks))
+                    remaining = power2 - len(blocks)
 
-                    next_pow_2 = 1 << int(math.log2(total) + 1)
-                    remaining = ((next_pow_2 - total) // BLOCK_SIZE) + 1
-
-                else:
-                    # when the file contains multiple pieces
-                    remaining = self.num_blocks - len(blocks)
                 # pad the the rest with zeroes to fill remaining space.
                 padding = [bytes(32) for _ in range(remaining)]
                 blocks.extend(padding)
@@ -220,9 +217,10 @@ class HasherV2(CbMixin):
     def _calculate_root(self):
         """Calculate root hash for the target file."""
         self.piece_layer = b"".join(self.layer_hashes)
-        if len(self.layer_hashes) > 1:
-            next_pow_2 = 1 << int(math.log2(len(self.layer_hashes)) + 1)
-            remainder = next_pow_2 - len(self.layer_hashes)
+        hashes = len(self.layer_hashes)
+        if hashes > 1:
+            pow2 = next_power_2(hashes)
+            remainder = pow2 - hashes
             pad_piece = [bytes(HASH_SIZE) for _ in range(self.num_blocks)]
             for _ in range(remainder):
                 self.layer_hashes.append(merkle_root(pad_piece))
@@ -263,27 +261,25 @@ class HasherHybrid(CbMixin):
         with open(path, "rb") as data:
             self._process_file(data)
 
-    def _pad_remaining(self, total, blocklen):
+    def _pad_remaining(self, block_count):
         """Generate Hash sized, 0 filled bytes for padding.
 
         Parameters
         ----------
-        total : `int`
-            length of bytes processed.
-        blocklen : `int`
-            number of blocks processed.
+        block_count : `int`
+            current total number of blocks collected.
 
         Returns
         -------
         padding : `bytes`
             Padding to fill remaining portion of tree.
         """
+        # when the there is only one block for file
+        remaining = self.amount - block_count
         if not self.layer_hashes:
-            next_pow_2 = 1 << int(math.log2(total) + 1)
-            remaining = ((next_pow_2 - total) // BLOCK_SIZE) + 1
-            return [bytes(HASH_SIZE) for _ in range(remaining)]
-
-        return [bytes(HASH_SIZE) for _ in range(self.amount - blocklen)]
+            power2 = next_power_2(block_count)
+            remaining = power2 - block_count
+        return [bytes(HASH_SIZE) for _ in range(remaining)]
 
     def _process_file(self, data):
         """Calculate layer hashes for contents of file.
@@ -310,7 +306,7 @@ class HasherHybrid(CbMixin):
             if not blocks:
                 break
             if len(blocks) != self.amount:
-                padding = self._pad_remaining(len(blocks), size)
+                padding = self._pad_remaining(len(blocks))
                 blocks.extend(padding)
             layer_hash = merkle_root(blocks)
             if self._cb:

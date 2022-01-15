@@ -64,7 +64,7 @@ setup(
     tests_require=["pytest"],
     install_requires=["pyben", "tqdm", "cffi>=1.15.0"],
     setup_requires=["setuptools", "wheel", "cffi>=1.15.0"],
-    cffi_modules=["hasher_build.py:FFI_BUILDER"],
+    # cffi_modules=["hasher_build.py:FFI_BUILDER"],
     zip_safe=False,
     test_suite="complete",
 )

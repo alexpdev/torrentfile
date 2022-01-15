@@ -263,3 +263,22 @@ def path_piece_length(path):
     """
     psize = path_size(path)
     return get_piece_length(psize)
+
+
+def next_power_2(value):
+    """Calculate the next perfect power of 2 equal to or greater than value.
+
+    Parameters
+    ----------
+    value : `int`
+        integer value that is less than some perfect power of 2.
+
+    Returns
+    -------
+    `int`
+        The next power of 2 greater than value, or value if already power of 2.
+    """
+    log = math.log2(value)
+    if log == int(log):
+        return value
+    return 1 << int(log) + 1

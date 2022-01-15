@@ -1,5 +1,14 @@
 # TorrentFile
 
+## Version 0.6.6
+
+### Fixed 0.6.6
+
+    - bug that created faulty Bittorrent V2 meta files in some instances.
+    - back to working as it should.
+
+---------------------
+
 ## Version 0.6.5
 
 ### Added 0.6.5
@@ -13,6 +22,8 @@
 
     - verbose and logging bugs
     - multi tracker errors bug
+
+---------------------
 
 ## Version 0.6.4
 
