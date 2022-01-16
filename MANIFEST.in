@@ -6,6 +6,7 @@ include requirements.txt
 include mkdocs.yml
 include pyproject.toml
 include .prospector.yml
+include package.json
 include .pylintrc
 include setup.py
 
