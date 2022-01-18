@@ -1,164 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  
-  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bittorrent Meta File Creator.">
-    
-    <link rel="canonical" href="https://alexpdev.github.io/torrentfile/">
-    <link rel="shortcut icon" href="./img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>TorrentFile</title>
-    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="./css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/highlight.css">
-    <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
-    <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet">
-    <link href="css/mkapi-common.css" rel="stylesheet">
-    <link href="assets/_mkdocstrings.css" rel="stylesheet">
-    <link href="stylesheets/extra.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
-
-    <script src="./js/jquery-3.2.1.min.js"></script>
-    <script src="./js/bootstrap-3.3.7.min.js"></script>
-    <script src="./js/highlight.pack.js"></script>
-    
-      <script src="./js/elasticlunr.min.js"></script>
-    
-    <base target="_top">
-    <script>
-      var base_url = '.';
-      var is_top_frame = (window === window.parent);
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Bittorrent Meta File Creator.">
         
-        var pageToc = [
-          {title: "TorrentFile", url: "#_top", children: [
-              {title: ":globe_with_meridians: Overview", url: "#globe_with_meridians-overview" },
-              {title: ":white_check_mark: Requirements", url: "#white_check_mark-requirements" },
-              {title: ":package: Install", url: "#package-install" },
-              {title: ":scroll: Documentation", url: "#scroll-documentation" },
-              {title: ":rocket: Usage", url: "#rocket-usage" },
-              {title: ":memo: License", url: "#memo-license" },
-              {title: ":bug: Issues", url: "#bug-issues" },
-              {title: "CLI Usage Examples", url: "#cli-usage-examples" },
-          ]},
-        ];
+        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/">
+        <link rel="shortcut icon" href="./img/favicon.ico">
 
-    </script>
-    <script src="./js/base.js"></script>
-      <script src="js/mkapi.js"></script> 
-</head>
+        <title>home - TorrentFile</title>
 
-<body>
-<script>
-if (is_top_frame) { $('body').addClass('wm-top-page'); }
-</script>
+        <link href="./css/bootstrap.min.css" rel="stylesheet">
+        <link href="./css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="./css/highlight.min.css">
+        <link href="./css/base.css" rel="stylesheet">
+        <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
+        <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet">
+        <link href="css/mkapi-common.css" rel="stylesheet">
+        <link href="assets/_mkdocstrings.css" rel="stylesheet">
+        <link href="stylesheets/extra.css" rel="stylesheet">
 
-<nav class="navbar wm-page-top-frame">
-  <div class="container-fluid wm-top-container">
-    
-    <div class="wm-top-tool pull-right wm-vcenter">
-      <form class="dropdown wm-vcentered" id="wm-search-form" action="./search.html">
-        
-        <button id="wm-search-show" class="btn btn-sm btn-default" type="submit"
-          ><i class="fa fa-search" aria-hidden="true"></i></button>
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
 
-        <div class="input-group input-group-sm wm-top-search">
-          <input type="text" name="q" class="form-control" id="mkdocs-search-query" placeholder="Search" autocomplete="off">
-          <span class="input-group-btn" role="search">
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Main title -->
+            <a class="navbar-brand" href=".">
             
-            <button class="btn btn-default dropdown-toggle collapse" data-toggle="dropdown" type="button"><span class="caret"></span></button>
-            <ul id="mkdocs-search-results" class="dropdown-menu dropdown-menu-right"></ul>
-            <button id="wm-search-go" class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-          </span>
+            TorrentFile
+            </a>
         </div>
-      </form>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+            
+            
+            
+                
+                <li class="active">
+                    <a href=".">
+                      home
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="api/">
+                      API
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="cli.md">
+                      CLI
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="examples/">
+                      Examples
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="LGPLv3/">
+                      license
+                    </a>
+                </li>
+                
+            
+            
+            
+            </ul>
+
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+              
+                
+                <li>
+                    <a href="https://github.com/alexpdev/torrentfile/">
+                        
+                            <i class="fa fa-gihub"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
     </div>
+</div>
 
-    
-    <div class="wm-top-tool wm-vcenter pull-right wm-small-left">
-      <button id="wm-toc-button" type="button" class="btn btn-sm btn-default wm-vcentered"><i class="fa fa-th-list" aria-hidden="true"></i></button>
-    </div>
-
-    
-    
-
-    
-    <a href="" class="wm-top-brand wm-top-link wm-vcenter">
-      
-      <div class="wm-top-title">
-        TorrentFile<br>
-        
-      </div>
-    </a>
-  </div>
-</nav>
-
-  <div id="main-content" class="wm-page-top-frame">
-    
-<nav class="wm-toc-pane">
+        <div class="container">
+            <div class="col-md-3">
   
-    <ul class="wm-toctree wm-toc-repo">
-      <li class="wm-toc-li wm-toc-lev1">
-      <a class="wm-article-link wm-toc-text" href="https://github.com/alexpdev/torrentfile/">
-        <i class="fa fa-github"></i>
-
-        GitHub
-      </a>
-      </li>
+<div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#torrentfile">TorrentFile</a></li>
+        
+            <li><a href="#globe_with_meridians-overview">:globe_with_meridians: Overview</a></li>
+        
+            <li><a href="#white_check_mark-requirements">:white_check_mark: Requirements</a></li>
+        
+            <li><a href="#package-install">:package: Install</a></li>
+        
+            <li><a href="#scroll-documentation">:scroll: Documentation</a></li>
+        
+            <li><a href="#rocket-usage">:rocket: Usage</a></li>
+        
+            <li><a href="#memo-license">:memo: License</a></li>
+        
+            <li><a href="#bug-issues">:bug: Issues</a></li>
+        
+            <li><a href="#cli-usage-examples">CLI Usage Examples</a></li>
+        
+    
     </ul>
-  <ul class="wm-toctree">
-        <li class="wm-toc-li wm-toc-lev1 "><a href="" class="wm-article-link wm-toc-text">home</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="api/" class="wm-article-link wm-toc-text">API</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="cli.md" class="wm-article-link wm-toc-text">CLI</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="examples/" class="wm-article-link wm-toc-text">Examples</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="LGPLv3/" class="wm-article-link wm-toc-text">license</a>
-</li>
-  </ul>
-</nav>
+</div>
+  
+</div>
+            <div class="col-md-9" role="main">
 
-    <div class="wm-content-pane">
-      <iframe class="wm-article" name="article"></iframe>
-    </div>
-  </div>
-
-<div class="container-fluid wm-page-content">
-  <a name="_top"></a>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="api/" class="btn btn-xs btn-default pull-right">
-        Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="api/" class="btn btn-xs btn-link">
-        API
-      </a>
-    </div>
-    
-  </div>
-
-    
-
-    <h1 id="torrentfile">TorrentFile</h1>
+<h1 id="torrentfile">TorrentFile</h1>
 <p><img alt="torrentfile" src="https://github.com/alexpdev/torrentfile/blob/master/assets/torrentfile.png?raw=true" /></p>
 <hr />
 <p><a href="https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Grade"><img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Grade/b67ff65b3d574025b65b6587266bbab7" /></a>
@@ -284,44 +304,22 @@ of the same arguments.</p>
 <p>To create a magnet URI for a pre-existing torrent meta file, use the sub-command<br />
 <code>magnet</code> with the path to the meta file.</p>
 <pre><code class="language-bash">&gt; torrentfile magnet /path/to/metafile
-</code></pre>
+</code></pre></div>
+        </div>
 
-  <br>
-    
+    <footer class="col-md-12">
+        <hr>
+        
+        <center>alexpdev 2021</center>
+        
+    </footer>
 
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="api/" class="btn btn-xs btn-default pull-right">
-        Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="api/" class="btn btn-xs btn-link">
-        API
-      </a>
-    </div>
-    
-  </div>
-
-    <br>
-</div>
-
-<footer class="container-fluid wm-page-content">
-      <p>
-        <a href="https://github.com/alexpdev/torrentfile/edit/master/docs/index.md"><i class="fa fa-github"></i>
-Edit on GitHub</a>
-      </p><p>alexpdev 2021</p>
-  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
-</footer>
-
-</body>
+        <script src="./js/jquery.min.js"></script>
+        <script src="./js/bootstrap.min.js"></script>
+        <script src="./js/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script src="./js/base.js"></script>
+        <script src="js/mkapi.js"></script>
+        <script src="search/main.js"></script>
+    </body>
 </html>
-<!--
-MkDocs version : 1.2.3
-Build Date UTC : 2022-01-16 05:50:14.290789+00:00
--->

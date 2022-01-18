@@ -25,7 +25,7 @@ HASH_SIZE = 32
 logger = logging.getLogger(__name__)
 
 
-class CbMixin:
+class _CbMixin:
     """Mixin class to set a callback during hashing procedure."""
 
     _cb = None
@@ -43,7 +43,7 @@ class CbMixin:
         cls._cb = func
 
 
-class Hasher(CbMixin):
+class Hasher(_CbMixin):
     """Piece hasher for Bittorrent V1 files.
 
     Takes a sorted list of all file paths, calculates sha1 hash
@@ -137,7 +137,7 @@ def merkle_root(blocks):
     return blocks[0]
 
 
-class HasherV2(CbMixin):
+class HasherV2(_CbMixin):
     """Calculate the root hash and piece layers for file contents.
 
     Iterates over 16KiB blocks of data from given file, hashes the data,
@@ -227,7 +227,7 @@ class HasherV2(CbMixin):
         self.root = merkle_root(self.layer_hashes)
 
 
-class HasherHybrid(CbMixin):
+class HasherHybrid(_CbMixin):
     """Calculate root and piece hashes for creating hybrid torrent file.
 
     Create merkle tree layers from sha256 hashed 16KiB blocks of contents.
@@ -259,7 +259,7 @@ class HasherHybrid(CbMixin):
             str(self.path),
         )
         with open(path, "rb") as data:
-            self._process_file(data)
+            self.process_file(data)
 
     def _pad_remaining(self, block_count):
         """Generate Hash sized, 0 filled bytes for padding.
@@ -281,7 +281,7 @@ class HasherHybrid(CbMixin):
             remaining = power2 - block_count
         return [bytes(HASH_SIZE) for _ in range(remaining)]
 
-    def _process_file(self, data):
+    def process_file(self, data):
         """Calculate layer hashes for contents of file.
 
         Parameters
