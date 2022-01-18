@@ -1,5 +1,13 @@
 # TorrentFile
 
+## Version 0.6.7
+
+### Fixed 0.6.7
+
+    - Updates to API
+
+---------------------
+
 ## Version 0.6.6
 
 ### Fixed 0.6.6

@@ -1,116 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  
-  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
-    <link rel="canonical" href="https://alexpdev.github.io/torrentfile/api/">
-    <link rel="shortcut icon" href="../img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>API - TorrentFile</title>
-    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="../css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/highlight.css">
-    <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
-    <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet">
-    <link href="../css/mkapi-common.css" rel="stylesheet">
-    <link href="../assets/_mkdocstrings.css" rel="stylesheet">
-    <link href="../stylesheets/extra.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
-
-    <script src="../js/jquery-3.2.1.min.js"></script>
-    <script src="../js/bootstrap-3.3.7.min.js"></script>
-    <script src="../js/highlight.pack.js"></script>
-    
-    <base target="_top">
-    <script>
-      var base_url = '..';
-      var is_top_frame = false;
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Bittorrent Meta File Creator.">
         
-        var pageToc = [
-          {title: "TorrentFile API Documentation", url: "#_top", children: [
-              {title: "CLI Module", url: "#cli-module" },
-              {title: "cli", url: "#torrentfile.cli" },
-              {title: "HelpFormat", url: "#torrentfile.cli.HelpFormat" },
-              {title: "Torrent Module", url: "#torrent-module" },
-              {title: "Classes", url: "#classes" },
-              {title: "Constants", url: "#constants" },
-              {title: "Bittorrent V2", url: "#bittorrent-v2" },
-              {title: "Bittorrent V1", url: "#bittorrent-v1" },
-              {title: "Version 1 info-dictionary", url: "#version-1-info-dictionary" },
-              {title: "torrent", url: "#torrentfile.torrent" },
-              {title: "Hasher Module", url: "#hasher-module" },
-              {title: "merkle_root()", url: "#torrentfile.hasher.merkle_root" },
-              {title: "Hasher", url: "#torrentfile.hasher.Hasher" },
-              {title: "HasherV2", url: "#torrentfile.hasher.HasherV2" },
-              {title: "HasherHybrid", url: "#torrentfile.hasher.HasherHybrid" },
-              {title: "Edit Module", url: "#edit-module" },
-              {title: "edit", url: "#torrentfile.edit" },
-              {title: "Recheck Module", url: "#recheck-module" },
-              {title: "recheck", url: "#torrentfile.recheck" },
-              {title: "Interactive Module", url: "#interactive-module" },
-              {title: "Functions", url: "#functions" },
-              {title: "interactive", url: "#torrentfile.interactive" },
-              {title: "Utils Module", url: "#utils-module" },
-              {title: "utils", url: "#torrentfile.utils" },
-          ]},
-        ];
+        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/api/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
 
-    </script>
-    <script src="../js/base.js"></script>
-      <script src="../js/mkapi.js"></script> 
-</head>
+        <title>API - TorrentFile</title>
 
-<body>
-<script>
-if (is_top_frame) { $('body').addClass('wm-top-page'); }
-</script>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.min.css">
+        <link href="../css/base.css" rel="stylesheet">
+        <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
+        <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet">
+        <link href="../css/mkapi-common.css" rel="stylesheet">
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+        <link href="../stylesheets/extra.css" rel="stylesheet">
 
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
 
+    </head>
 
-<div class="container-fluid wm-page-content">
-  <a name="_top"></a>
-    
+    <body>
 
-    
-    
-      
-    
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
 
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../examples/" class="btn btn-xs btn-default pull-right">
-        Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../examples/" class="btn btn-xs btn-link">
-        Examples
-      </a>
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">
+            
+            TorrentFile
+            </a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+            
+            
+            
+                
+                <li >
+                    <a href="..">
+                      home
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li class="active">
+                    <a href="./">
+                      API
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../cli.md">
+                      CLI
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../examples/">
+                      Examples
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../LGPLv3/">
+                      license
+                    </a>
+                </li>
+                
+            
+            
+            
+            </ul>
+
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+              
+                
+                <li>
+                    <a href="https://github.com/alexpdev/torrentfile/">
+                        
+                            <i class="fa fa-gihub"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
     </div>
-    
-    <div class="wm-article-nav">
-      <a href=".." class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href=".." class="btn btn-xs btn-link">
-        home
-      </a>
-    </div>
-    
-  </div>
+</div>
 
+        <div class="container">
+            <div class="col-md-3">
+  
+<div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
     
+        <li class="main active"><a href="#torrentfile-api-documentation">TorrentFile API Documentation</a></li>
+        
+            <li><a href="#cli-module">CLI Module</a></li>
+        
+            <li><a href="#torrentfile.cli">cli</a></li>
+        
+            <li><a href="#torrentfile.cli.HelpFormat">HelpFormat</a></li>
+        
+            <li><a href="#torrent-module">Torrent Module</a></li>
+        
+            <li><a href="#classes">Classes</a></li>
+        
+            <li><a href="#constants">Constants</a></li>
+        
+            <li><a href="#bittorrent-v2">Bittorrent V2</a></li>
+        
+            <li><a href="#bittorrent-v1">Bittorrent V1</a></li>
+        
+            <li><a href="#version-1-info-dictionary">Version 1 info-dictionary</a></li>
+        
+            <li><a href="#torrentfile.torrent">torrent</a></li>
+        
+            <li><a href="#hasher-module">Hasher Module</a></li>
+        
+            <li><a href="#torrentfile.hasher.merkle_root">merkle_root()</a></li>
+        
+            <li><a href="#torrentfile.hasher.Hasher">Hasher</a></li>
+        
+            <li><a href="#torrentfile.hasher.HasherV2">HasherV2</a></li>
+        
+            <li><a href="#torrentfile.hasher.HasherHybrid">HasherHybrid</a></li>
+        
+            <li><a href="#edit-module">Edit Module</a></li>
+        
+            <li><a href="#torrentfile.edit">edit</a></li>
+        
+            <li><a href="#recheck-module">Recheck Module</a></li>
+        
+            <li><a href="#torrentfile.recheck">recheck</a></li>
+        
+            <li><a href="#interactive-module">Interactive Module</a></li>
+        
+            <li><a href="#functions">Functions</a></li>
+        
+            <li><a href="#torrentfile.interactive">interactive</a></li>
+        
+            <li><a href="#utils-module">Utils Module</a></li>
+        
+            <li><a href="#torrentfile.utils">utils</a></li>
+        
+    
+    </ul>
+</div>
+  
+</div>
+            <div class="col-md-9" role="main">
 
-    <h1 id="torrentfile-api-documentation">TorrentFile API Documentation</h1>
+<h1 id="torrentfile-api-documentation">TorrentFile API Documentation</h1>
 <h2 id="cli-module"><code>CLI</code> Module</h2>
 <div class="mkapi-node" id="torrentfile.cli">
 <div class='mkapi-object-container'>
@@ -541,7 +641,7 @@ HelpFormat            (<span title="argparse.HelpFormatter">HelpFormatter</span>
             <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-h&quot;</span><span class="p">]</span>
 
     <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span>
-        <span class="s2">&quot;TorrentFile&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">        CLI Tool for creating, checking and editing Bittorrent meta files.</span>
 <span class="s2">        Supports all meta file versions including hybrid files.</span>
@@ -2189,7 +2289,7 @@ TorrentFile            (<a title="torrentfile.torrent.MetaFile" href="#torrentfi
 
 <h4 id="torrentfile.torrent.TorrentFile.hasher" class="doc doc-heading">
         <code>
-hasher            (<span title="torrentfile.hasher.CbMixin">CbMixin</span>)
+hasher            (<span title="torrentfile.hasher._CbMixin">_CbMixin</span>)
         </code>
 
 
@@ -2236,7 +2336,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Hasher</span><span class="p">(</span><span class="n">CbMixin</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Hasher</span><span class="p">(</span><span class="n">_CbMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Piece hasher for Bittorrent V1 files.</span>
 
 <span class="sd">    Takes a sorted list of all file paths, calculates sha1 hash</span>
@@ -2855,7 +2955,7 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
 
 <h4 id="torrentfile.torrent.TorrentFileHybrid.hasher" class="doc doc-heading">
         <code>
-hasher            (<span title="torrentfile.hasher.CbMixin">CbMixin</span>)
+hasher            (<span title="torrentfile.hasher._CbMixin">_CbMixin</span>)
         </code>
 
 
@@ -2896,7 +2996,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">HasherHybrid</span><span class="p">(</span><span class="n">CbMixin</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">HasherHybrid</span><span class="p">(</span><span class="n">_CbMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Calculate root and piece hashes for creating hybrid torrent file.</span>
 
 <span class="sd">    Create merkle tree layers from sha256 hashed 16KiB blocks of contents.</span>
@@ -2928,7 +3028,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
             <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generate Hash sized, 0 filled bytes for padding.</span>
@@ -2950,7 +3050,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
             <span class="n">remaining</span> <span class="o">=</span> <span class="n">power2</span> <span class="o">-</span> <span class="n">block_count</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
 
-    <span class="k">def</span> <span class="nf">_process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculate layer hashes for contents of file.</span>
 
 <span class="sd">        Parameters</span>
@@ -2998,8 +3098,8 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">pad_piece</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">([</span><span class="nb">bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">)])</span>
 
-            <span class="n">next_pow_two</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span>
-            <span class="n">remainder</span> <span class="o">=</span> <span class="n">next_pow_two</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
+            <span class="n">pow2</span> <span class="o">=</span> <span class="n">next_power_2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">))</span>
+            <span class="n">remainder</span> <span class="o">=</span> <span class="n">pow2</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span> <span class="o">+=</span> <span class="p">[</span><span class="n">pad_piece</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remainder</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
@@ -3054,7 +3154,90 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h5 id="torrentfile.torrent.TorrentFileHybrid.hasher.process_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
+
+
+</h5>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate layer hashes for contents of file.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>data</code></td>
+        <td><code>`BytesIO`</code></td>
+        <td><p>File opened in read mode.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\torrent.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate layer hashes for contents of file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : `BytesIO`</span>
+<span class="sd">        File opened in read mode.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">plength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span>
+        <span class="n">blocks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">piece</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">()</span>  <span class="c1"># nosec</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">BLOCK_SIZE</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">):</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">readinto</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">size</span>
+            <span class="n">plength</span> <span class="o">-=</span> <span class="n">size</span>
+            <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sha256</span><span class="p">(</span><span class="n">block</span><span class="p">[:</span><span class="n">size</span><span class="p">])</span><span class="o">.</span><span class="n">digest</span><span class="p">())</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">block</span><span class="p">[:</span><span class="n">size</span><span class="p">])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">blocks</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">:</span>
+            <span class="n">padding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pad_remaining</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span>
+            <span class="n">blocks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span>
+        <span class="n">layer_hash</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cb</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cb</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">plength</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">padding_file</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;attr&quot;</span><span class="p">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">size</span><span class="p">,</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;.pad&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">plength</span><span class="p">)],</span>
+            <span class="p">}</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">plength</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">piece</span><span class="o">.</span><span class="n">digest</span><span class="p">())</span>  <span class="c1"># nosec</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_root</span><span class="p">()</span>
 </code></pre></div>
         </details>
     </div>
@@ -3368,7 +3551,7 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
 
 <h4 id="torrentfile.torrent.TorrentFileV2.hasher" class="doc doc-heading">
         <code>
-hasher            (<span title="torrentfile.hasher.CbMixin">CbMixin</span>)
+hasher            (<span title="torrentfile.hasher._CbMixin">_CbMixin</span>)
         </code>
 
 
@@ -3410,7 +3593,7 @@ root hash is calculated.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">HasherV2</span><span class="p">(</span><span class="n">CbMixin</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">HasherV2</span><span class="p">(</span><span class="n">_CbMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Calculate the root hash and piece layers for file contents.</span>
 
 <span class="sd">    Iterates over 16KiB blocks of data from given file, hashes the data,</span>
@@ -3849,10 +4032,6 @@ root hash is calculated.</p>
           <span class="mkapi-section-name-body classes">Classes</span> 
         </div>
       <div class="mkapi-section-body classes"><ul class="mkapi-items">
-<li class="class"><code class="mkapi-item-name">CbMixin</code>
-
-<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Mixin class to set a callback during hashing procedure.</span></li>
-
 <li class="class"><code class="mkapi-item-name">Hasher</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Piece hasher for Bittorrent V1 files.</span></li>
@@ -3921,7 +4100,7 @@ root hash is calculated.</p>
 
 <h2 id="torrentfile.hasher.Hasher" class="doc doc-heading">
         <code>
-torrentfile.hasher.Hasher            (<span title="torrentfile.hasher.CbMixin">CbMixin</span>)
+torrentfile.hasher.Hasher            (<span title="torrentfile.hasher._CbMixin">_CbMixin</span>)
         </code>
 
 
@@ -3968,7 +4147,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Hasher</span><span class="p">(</span><span class="n">CbMixin</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Hasher</span><span class="p">(</span><span class="n">_CbMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Piece hasher for Bittorrent V1 files.</span>
 
 <span class="sd">    Takes a sorted list of all file paths, calculates sha1 hash</span>
@@ -4245,7 +4424,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 
 <h2 id="torrentfile.hasher.HasherV2" class="doc doc-heading">
         <code>
-torrentfile.hasher.HasherV2            (<span title="torrentfile.hasher.CbMixin">CbMixin</span>)
+torrentfile.hasher.HasherV2            (<span title="torrentfile.hasher._CbMixin">_CbMixin</span>)
         </code>
 
 
@@ -4287,7 +4466,7 @@ root hash is calculated.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">HasherV2</span><span class="p">(</span><span class="n">CbMixin</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">HasherV2</span><span class="p">(</span><span class="n">_CbMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Calculate the root hash and piece layers for file contents.</span>
 
 <span class="sd">    Iterates over 16KiB blocks of data from given file, hashes the data,</span>
@@ -4535,7 +4714,7 @@ root hash is calculated.</p>
 
 <h2 id="torrentfile.hasher.HasherHybrid" class="doc doc-heading">
         <code>
-torrentfile.hasher.HasherHybrid            (<span title="torrentfile.hasher.CbMixin">CbMixin</span>)
+torrentfile.hasher.HasherHybrid            (<span title="torrentfile.hasher._CbMixin">_CbMixin</span>)
         </code>
 
 
@@ -4576,7 +4755,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">HasherHybrid</span><span class="p">(</span><span class="n">CbMixin</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">HasherHybrid</span><span class="p">(</span><span class="n">_CbMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Calculate root and piece hashes for creating hybrid torrent file.</span>
 
 <span class="sd">    Create merkle tree layers from sha256 hashed 16KiB blocks of contents.</span>
@@ -4608,7 +4787,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
             <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generate Hash sized, 0 filled bytes for padding.</span>
@@ -4630,7 +4809,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
             <span class="n">remaining</span> <span class="o">=</span> <span class="n">power2</span> <span class="o">-</span> <span class="n">block_count</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
 
-    <span class="k">def</span> <span class="nf">_process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculate layer hashes for contents of file.</span>
 
 <span class="sd">        Parameters</span>
@@ -4678,8 +4857,8 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">pad_piece</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">([</span><span class="nb">bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">)])</span>
 
-            <span class="n">next_pow_two</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span>
-            <span class="n">remainder</span> <span class="o">=</span> <span class="n">next_pow_two</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
+            <span class="n">pow2</span> <span class="o">=</span> <span class="n">next_power_2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">))</span>
+            <span class="n">remainder</span> <span class="o">=</span> <span class="n">pow2</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span> <span class="o">+=</span> <span class="p">[</span><span class="n">pad_piece</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remainder</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="p">)</span>
@@ -4734,7 +4913,90 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="torrentfile.hasher.HasherHybrid.process_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate layer hashes for contents of file.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>data</code></td>
+        <td><code>`BytesIO`</code></td>
+        <td><p>File opened in read mode.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\hasher.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate layer hashes for contents of file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : `BytesIO`</span>
+<span class="sd">        File opened in read mode.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">plength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span>
+        <span class="n">blocks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">piece</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">()</span>  <span class="c1"># nosec</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">BLOCK_SIZE</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">):</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">readinto</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">size</span>
+            <span class="n">plength</span> <span class="o">-=</span> <span class="n">size</span>
+            <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sha256</span><span class="p">(</span><span class="n">block</span><span class="p">[:</span><span class="n">size</span><span class="p">])</span><span class="o">.</span><span class="n">digest</span><span class="p">())</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">block</span><span class="p">[:</span><span class="n">size</span><span class="p">])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">blocks</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">:</span>
+            <span class="n">padding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pad_remaining</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span>
+            <span class="n">blocks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span>
+        <span class="n">layer_hash</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cb</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cb</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">plength</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">padding_file</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;attr&quot;</span><span class="p">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">size</span><span class="p">,</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;.pad&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">plength</span><span class="p">)],</span>
+            <span class="p">}</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">plength</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">piece</span><span class="o">.</span><span class="n">digest</span><span class="p">())</span>  <span class="c1"># nosec</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_root</span><span class="p">()</span>
 </code></pre></div>
         </details>
     </div>
@@ -8717,10 +8979,12 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 <span class="sd">    `int`</span>
 <span class="sd">        The next power of 2 greater than value, or value if already power of 2.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">log</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">log</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">log</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">value</span>
-    <span class="k">return</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">log</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">value</span><span class="p">:</span>
+        <span class="n">start</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">start</span>
 </code></pre></div>
         </details>
     </div>
@@ -9066,48 +9330,22 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     </div>
 
-  </div>
+  </div></div>
+        </div>
 
-  <br>
-    
+    <footer class="col-md-12">
+        <hr>
+        
+        <center>alexpdev 2021</center>
+        
+    </footer>
 
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../examples/" class="btn btn-xs btn-default pull-right">
-        Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../examples/" class="btn btn-xs btn-link">
-        Examples
-      </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href=".." class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href=".." class="btn btn-xs btn-link">
-        home
-      </a>
-    </div>
-    
-  </div>
-
-    <br>
-</div>
-
-<footer class="container-fluid wm-page-content">
-      <p>
-        <a href="https://github.com/alexpdev/torrentfile/edit/master/docs/api.md"><i class="fa fa-github"></i>
-Edit on GitHub</a>
-      </p><p>alexpdev 2021</p>
-  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
-</footer>
-
-</body>
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script src="../js/base.js"></script>
+        <script src="../js/mkapi.js"></script>
+        <script src="../search/main.js"></script>
+    </body>
 </html>

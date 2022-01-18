@@ -99,7 +99,7 @@ def main_script(args=None):
             args = ["-h"]
 
     parser = ArgumentParser(
-        "TorrentFile",
+        "torrentfile",
         description="""
         CLI Tool for creating, checking and editing Bittorrent meta files.
         Supports all meta file versions including hybrid files.

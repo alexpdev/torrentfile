@@ -1,57 +1,23 @@
 # enviornment packages
 node_modules/
-*.env
-.env
 start.py
-activate.bat
-activate.ps1
-activate
-tests/test_data/
 *.torrent
-repos/
 tests/TESTDIR
-runtests.py
 coverage.sh
 coverage.xml
-c_hasher.c
-c/Makefile
-c/testfile
 Release/
 *.exe
-
 # bite-code
 *.pyc
 *.bin
-
 # temp files
-bep*
 /tests/tempdir
-testing.py
 temp/
-data/*.json
-data/
-formated.json
-*.pickle
-*.log
-*.db
-
-# user-specific logfiles
-_settings.py
-_testsettings.py
-__settings.py
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-scraper.py
 *$py.class
-WinRAR*/
-
-# C extensions
-*.so
-
 # Distribution / packaging
-.Python
 codacy.sh
 build/
 develop-eggs/
@@ -69,86 +35,19 @@ wheels/
 .installed.cfg
 *.egg
 testfile
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
 # Unit test / coverage reports
 htmlcov/
 .tox/
 .coverage
 .coverage.*
 .cache
-nosetests.xml
 *.cover
-.hypothesis/
 .pytest_cache/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
 *.log
-local_settings.py
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/source/
-docs/_build/
-.docs/
-
-# PyBuilder
-target/
-
 # Jupyter Notebook
 .ipynb_checkpoints
-
-# pyenv
-.python-version
-
-# coverage codacy
 .codacy-coverage/
-
-# celery beat schedule file
-celerybeat-schedule
-
-# SageMath parsed files
-*.sage.py
-
-# dotenv
 .env
-pydenv.py
-test_pydenv.py
-
-# virtualenv
-.venv
-venv/
-ENV/
 env/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mypy
-.mypy_cache/
-
 # IDE settings
 .vscode/
