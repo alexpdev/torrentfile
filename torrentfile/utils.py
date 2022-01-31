@@ -62,7 +62,7 @@ class PieceLengthValueError(Exception):
         super().__init__(message)
 
 
-def humanize_bytes(amount):
+def humanize_bytes(amount: int) -> str:
     """Convert integer into human readable memory sized denomination.
 
     Parameters
@@ -129,7 +129,7 @@ def get_piece_length(size: int) -> int:
 
     Returns
     -------
-    piece_length : `int`
+    `int`
         Ideal peace length size arguement.
     """
     exp = 14
@@ -174,9 +174,9 @@ def _filelist_total(path):
 
     Returns
     -------
-    filelist : `list`
+    `list`
         All file paths within directory tree.
-    total : `int`
+    `int`
         Sum of all filesizes in filelist.
     """
     if path.is_file():
@@ -202,7 +202,7 @@ def path_size(path):
 
     Returns
     -------
-    size : `int`
+    `int`
         total size of files.
     """
     total_size, _ = filelist_total(path)
@@ -236,11 +236,11 @@ def path_stat(path):
 
     Returns
     -------
-    filelist : `list`
+    `list`
         List of all files contained in Directory
-    size : `int`
+    `int`
         Total sum of bytes from all contents of dir
-    piece_length : `int`
+    `int`
         The size of pieces of the torrent contents.
     """
     total_size, filelist = filelist_total(path)
@@ -258,7 +258,7 @@ def path_piece_length(path):
 
     Returns
     -------
-    piece_length : `int`
+    `int`
         The size of pieces of torrent content.
     """
     psize = path_size(path)

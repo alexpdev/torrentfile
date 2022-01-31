@@ -4,12 +4,12 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Bittorrent Meta File Creator.">
+        <meta name="description" content="TorrentFile CLI Documentation and Examples">
         
         <link rel="canonical" href="https://alexpdev.github.io/torrentfile/examples/">
         <link rel="shortcut icon" href="../img/favicon.ico">
 
-        <title>Examples - TorrentFile</title>
+        <title>Examples - TorrentFile Docs</title>
 
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
@@ -47,7 +47,7 @@
             <!-- Main title -->
             <a class="navbar-brand" href="..">
             
-            TorrentFile
+            TorrentFile Docs
             </a>
         </div>
 
@@ -116,10 +116,38 @@
             
             
             
+            
+            
+                
+                <li >
+                    <a href="../hasher/">
+                      Hasher
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../torrent/">
+                      Metafile
+                    </a>
+                </li>
+                
+            
+            
+            
             </ul>
 
             <!-- Search, Navigation and Repo links -->
             <ul class="nav navbar-nav navbar-right">
+            
+            
+            
+            
             
             
             
@@ -155,68 +183,92 @@
 
 <h1 id="torrentfile">TorrentFile</h1>
 <h2 id="cli-usage-examples">CLI Usage Examples</h2>
-<p>Examples using TorrentFile with CLI arguments can be found below.
-Alternatively, <code>interactive mode</code> allows program options to be specified
-one option at a time  from a series of prompts using the following commands.</p>
-<p><code>torrentfile -i</code> or <code>torrentfile --interactive</code></p>
 <h3 id="creating-torrents">Creating Torrents</h3>
-<p>Using the sub-command <code>create</code> <em>TorrentFile</em> can create a new torrent
-from the contents of a file or directory path. The following examples
-illustrate some of the options available for creating torrent files.</p>
+<p>Using the sub-command <code>create</code> or <code>c</code> <em>TorrentFile</em> can create a new torrent<br />
+from the contents of a file or directory path. The following examples illustrate<br />
+some of the options available for creating torrents (AKA meta files).</p>
 <ul>
-<li>Create a torrent file from(<code>/path/to/content</code>) file or directory</li>
-<li>by default torrent files are saved to <code>/path/to/content.torrent</code></li>
-<li>by default torrents are created using bittorrent meta version 1</li>
+<li>Create a torrent from any file or directory. example (<code>/path/to/content</code>)</li>
+<li>by default the save path will be the content path with a ".torrent" extension. (<code>/path/to/content.torrent</code>)</li>
+<li>by default torrents are created using bittorrent meta-version 1</li>
 </ul>
-<pre><code class="language-bash">&gt; torrentfile create /path/to/content
+<pre><code class="language-bash">&gt;torrentfile create /path/to/content
 </code></pre>
 <ul>
-<li>the <code>-t</code> or <code>--tracker</code> flag adds one or more items to the list of trackers</li>
+<li>The <code>-t</code> or <code>--tracker</code> flag adds one or more urls to tracker list.</li>
+<li>This flag will cause an error if the content path immediately follows it.</li>
 </ul>
-<pre><code class="language-bash">&gt; torrentfile create /path/to/content --tracker http://tracker1.com
-&gt; torrentfile create /other/content -t http://tracker2 http://tracker3
+<p>do this</p>
+<pre><code class="language-bash">&gt;torrentfile create /path/to/content --tracker http://tracker1.com
+</code></pre>
+<p>or this</p>
+<pre><code class="language-bash">&gt;torrentfile create -t http://tracker2 http://tracker3 --private /path/to/content
+</code></pre>
+<p>not this</p>
+<pre><code class="language-bash">&gt;torrentfile create --tracker http://tracker /path/to/content   #ERROR
+&gt;torrentfile create -t http://tracker1 http://tracker2 /path/to/content #ERROR
 </code></pre>
 <ul>
 <li>the <code>--private</code> flag indicates use by a private tracker</li>
-<li>the <code>--source</code> flag adds a "source" property and fills it</li>
+<li>the <code>--source</code> flag can be used to help with cross-seeding</li>
 </ul>
-<pre><code class="language-bash">&gt; torrentfile create ./content --source TrackerReq --private
+<pre><code class="language-bash">&gt;torrentfile create --private --source /path/to/content --tracker https://tracker/url
 </code></pre>
 <ul>
-<li>to specify the save location use the <code>-o</code> or <code>--outfile</code> flags</li>
+<li>to turn off the progress bar shown use <code>--noprogress</code></li>
+<li>this can improve the performance by a very small amount</li>
 </ul>
-<pre><code class="language-bash">&gt; torrentfile create ./content -o /specific/path/name.torrent
+<pre><code class="language-bash">&gt;torrentfile -t http://tracker.com --noprogress
 </code></pre>
 <ul>
-<li>to create files using bittorrent v2 or other formats use <code>--meta-version</code></li>
-<li><code>--meta-version 3</code> asks for a v1 &amp; v2 hybrid file.</li>
+<li>to specify the save location use the <code>-o</code> or <code>--out</code> flags</li>
 </ul>
-<pre><code class="language-bash">&gt; torrentfile create /path/to/content --meta-version 2 
-&gt; torrentfile create --meta-version 3 /path/to/content
+<pre><code class="language-bash">&gt;torrentfile create -o /specific/path/name.torrent ./content
 </code></pre>
 <ul>
-<li>to create a magnet URI for the created torrent file use <code>--magnet</code></li>
+<li>to create files using bittorrent v2 use <code>--meta-version 2</code></li>
+<li>likewise <code>--meta-version 3</code> creates a hybrid torrent file.</li>
 </ul>
-<pre><code class="language-bash">&gt; torrentfile create --t https://tracker1/annc https://tracker2/annc --magnet /path/to/content
+<pre><code class="language-bash">&gt;torrentfile create --meta-version 2 /path/to/content
+&gt;torrentfile create --meta-version 3 /path/to/content
 </code></pre>
-<h3 id="recheck-torrents">Recheck Torrents</h3>
-<p>Using the sub-command <code>recheck</code> or <code>check</code> or <code>r</code> you can check how much of
-a torrents data you have saved by comparing the contetnts to the original
-torrent file.</p>
 <ul>
-<li>recheck torrent file <code>/path/to/name.torrent</code> with <code>./downloads/name</code></li>
+<li>to output a magnet URI for the created torrent file use <code>--magnet</code></li>
 </ul>
-<pre><code class="language-bash">&gt; torrentfile recheck /path/to/name.torrent ./downloads/name
+<pre><code class="language-bash">&gt;torrentfile create --t https://tracker1/annc https://tracker2/annc --magnet /path/to/content
 </code></pre>
-<h3 id="edit-torrents">Edit Torrents</h3>
+<hr />
+<h3 id="checkrecheck-torrent">Check/Recheck Torrent</h3>
+<p>Using the sub-command <code>recheck</code> or <code>check</code> or <code>r</code> you can check the percentage of a torrent<br />
+is saved to disk by comparing the the contents to a torrent metafile.</p>
+<ul>
+<li>recheck torrent file <code>/path/to/some.torrent</code> with <code>/path/to/content</code></li>
+<li>enter the metafile path first then the content path (the order matters)</li>
+</ul>
+<pre><code class="language-bash">&gt;torrentfile recheck /path/to/some.torrent /path/to/content
+</code></pre>
+<hr />
+<h3 id="edit-torrent">Edit Torrent</h3>
 <p>Using the sub-command <code>edit</code> or <code>e</code> enables editting a pre-existing torrent file.
-The edit sub-command works identically to the <code>create</code> sub-command and accepts many
+The edit sub-command works the same as the <code>create</code> sub-command and accepts many
 of the same arguments.</p>
+<hr />
 <h3 id="create-magnet">Create Magnet</h3>
 <p>To create a magnet URI for a pre-existing torrent meta file, use the sub-command<br />
-<code>magnet</code> with the path to the meta file.</p>
-<pre><code class="language-bash">&gt; torrentfile magnet /path/to/metafile
-</code></pre></div>
+<code>magnet</code> or <code>m</code> with the path to the torrent file.</p>
+<pre><code class="language-bash">&gt;torrentfile magnet /path/to/some.torrent
+</code></pre>
+<hr />
+<h4 id="interactive-mode">Interactive Mode</h4>
+<p>Alternatively to supplying a bunch of command line arguments, <code>interactive mode</code>
+allows users to specify program options one at a time from a series of prompts.</p>
+<ul>
+<li>to activate interactive mode use <code>-i</code> or <code>--interactive</code> flag</li>
+</ul>
+<pre><code class="language-bash">&gt;torrentfile -i
+</code></pre>
+<h3 id="gui">GUI</h3>
+<p>If you prefer a graphical windowed interface please check out the official GUI frontend <a href="https://github.com/alexpdev/TorrentFileQt">here</a></p></div>
         </div>
 
     <footer class="col-md-12">

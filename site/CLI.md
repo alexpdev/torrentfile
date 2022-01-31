@@ -27,6 +27,8 @@ Each sub-command triggers a specific action.
     r (recheck, check)                            Calculate amount of torrent meta file's content is found on disk.
 ```
 
+-----
+
 ## `torrentfile c -h`
 
 ```bash:
@@ -68,6 +70,8 @@ optional arguments:
                                                     tracker is ever unreachable. Example:: [-w url1 [url2 [url3]]]
 ```
 
+-----
+
 ## `torrentfile e -h`
 
 ```bash:
@@ -90,6 +94,8 @@ optional arguments:
 --comment <comment>           replaces any existing comment with <comment>
 --source <source>             replaces current source with <source>
 ```
+
+-----
 
 ## `torrentfile m -h`
 

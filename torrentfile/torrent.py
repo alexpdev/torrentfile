@@ -38,11 +38,11 @@ Bittorrent V2
 -------------
 
 **From Bittorrent.org Documentation pages.**
+
 *Implementation details for Bittorrent Protocol v2.*
 
-!!! attention
-    All strings in a .torrent file that contains text
-    must be UTF-8 encoded.
+!!!Note
+    All strings in a .torrent file that contain text must be UTF-8 encoded.
 
 ### Meta Version 2 Dictionary:
 
@@ -52,16 +52,16 @@ Bittorrent V2
 - "info":
     This maps to a dictionary, with keys described below.
 
-    "name":
+    - "name":
         A display name for the torrent. It is purely advisory.
 
-    "piece length":
+    - "piece length":
         The number of bytes that each logical piece in the peer
         protocol refers to. I.e. it sets the granularity of piece, request,
         bitfield and have messages. It must be a power of two and at least
         6KiB.
 
-    "meta version":
+    - "meta version":
         An integer value, set to 2 to indicate compatibility
         with the current revision of this specification. Version 1 is not
         assigned to avoid confusion with BEP3. Future revisions will only
@@ -73,7 +73,7 @@ Bittorrent V2
         about invalid files. Files are mapped into this piece address space so
         that each non-empty
 
-    "file tree":
+    - "file tree":
         A tree of dictionaries where dictionary keys represent UTF-8
         encoded path elements. Entries with zero-length keys describe the
         properties of the composed path at that point. 'UTF-8 encoded'
@@ -90,12 +90,12 @@ Bittorrent V2
         the file tree. The last piece of each file may be shorter than the
         specified piece length, resulting in an alignment gap.
 
-    "length":
+    - "length":
         Length of the file in bytes. Presence of this field indicates
         that the dictionary describes a file, not a directory. Which means
         it must not have any sibling entries.
 
-    "pieces root":
+    - "pieces root":
         For non-empty files this is the the root hash of a merkle
         tree with a branching factor of 2, constructed from 16KiB blocks
         of the file. The last block may be shorter than 16KiB. The
@@ -105,7 +105,7 @@ Bittorrent V2
         tree. The hash is stored in its binary form, not as human-readable
         string.
 
--"piece layers":
+- "piece layers":
     A dictionary of strings. For each file in the file tree that
     is larger than the piece size it contains one string value.
     The keys are the merkle roots while the values consist of concatenated
@@ -119,7 +119,7 @@ Bittorrent V2
     absent, the contained hashes do not match the merkle roots or are
     not from the correct layer.
 
-!!! important
+!!!important
     The file tree root dictionary itself must not be a file,
     i.e. it must not contain a zero-length key with a dictionary containing
     a length key.
@@ -127,55 +127,56 @@ Bittorrent V2
 Bittorrent V1
 -------------
 
-### Version 1 meta-dictionary
+### v1 meta-dictionary
 
--announce:
+- announce:
     The URL of the tracker.
 
 - info:
     This maps to a dictionary, with keys described below.
 
+    - `name`:
+        maps to a UTF-8 encoded string which is the suggested name to
+        save the file (or directory) as. It is purely advisory.
 
-## Version 1 info-dictionary
+    - `piece length`:
+        maps to the number of bytes in each piece the file is split
+        into. For the purposes of transfer, files are split into
+        fixed-size pieces which are all the same length except for
+        possibly the last one which may be truncated.
 
-- `name`:
-    maps to a UTF-8 encoded string which is the suggested name to
-    save the file (or directory) as. It is purely advisory.
+    - `piece length`:
+        is almost always a power of two, most commonly 2^18 = 256 K
 
-- `piece length`:
-    maps to the number of bytes in each piece the file is split
-    into. For the purposes of transfer, files are split into
-    fixed-size pieces which are all the same length except for
-    possibly the last one which may be truncated.
+    - `pieces`:
+        maps to a string whose length is a multiple of 20. It is to be
+        subdivided into strings of length 20, each of which is the SHA1
+        hash of the piece at the corresponding index.
 
-- `piece length`:
-    is almost always a power of two, most commonly 2^18 = 256 K
+    - `length`:
+        In the single file case, maps to the length of the file in bytes.
 
-- `pieces`:
-    maps to a string whose length is a multiple of 20. It is to be
-    subdivided into strings of length 20, each of which is the SHA1
-    hash of the piece at the corresponding index.
+    - `files`:
+        If present then the download represents a single file, otherwise it
+        represents a set of files which go in a directory structure.
+        For the purposes of the other keys, the multi-file case is treated
+        as only having a single file by concatenating the files in the order
+        they appear in the files list. The files list is the value `files`
+        maps to, and is a list of dictionaries containing the following keys:
 
-- `length`:
-    In the single file case, maps to the length of the file in bytes.
+        - `path`:
+            A list of UTF-8 encoded strings corresponding to subdirectory
+            names, the last of which is the actual file name
 
-- `files`:
-    If present then the download represents a single file, otherwise it
-    represents a set of files which go in a directory structure.
-    For the purposes of the other keys, the multi-file case is treated
-    as only having a single file by concatenating the files in the order
-    they appear in the files list. The files list is the value `files`
-    maps to, and is a list of dictionaries containing the following keys:
+        - `length`:
+            Maps to the length of the file in bytes.
 
-    `path`:
-        A list of UTF-8 encoded strings corresponding to subdirectory
-        names, the last of which is the actual file name
-
-    `length`:
-        Maps to the length of the file in bytes.
+    - `length`:
+        Only present if the torrent contents is a single file. Maps to the length
+        of the file in bytes.
 
 
-!!! Important
+!!!Note
     In the single file case, the name key is the name of a file,
     in the muliple file case, it's the name of a directory.
 """
@@ -590,35 +591,35 @@ class TorrentFileHybrid(MetaFile):
             Path to target file.
         """
         if os.path.isfile(path):
-            fsize = os.path.getsize(path)
+            file_size = os.path.getsize(path)
 
             self.files.append(
                 {
-                    "length": fsize,
+                    "length": file_size,
                     "path": os.path.relpath(path, self.path).split(os.sep),
                 }
             )
 
-            if fsize == 0:
+            if file_size == 0:
                 if self.pbar:
                     self.pbar.update(n=1)
-                return {"": {"length": fsize}}
+                return {"": {"length": file_size}}
 
-            fhash = HasherHybrid(path, self.piece_length)
+            file_hash = HasherHybrid(path, self.piece_length)
 
-            if fsize > self.piece_length:
-                self.piece_layers[fhash.root] = fhash.piece_layer
+            if file_size > self.piece_length:
+                self.piece_layers[file_hash.root] = file_hash.piece_layer
 
-            self.hashes.append(fhash)
-            self.pieces.extend(fhash.pieces)
+            self.hashes.append(file_hash)
+            self.pieces.extend(file_hash.pieces)
 
-            if fhash.padding_file:
-                self.files.append(fhash.padding_file)
+            if file_hash.padding_file:
+                self.files.append(file_hash.padding_file)
 
             if self.pbar:
                 self.pbar.update(n=1)
 
-            return {"": {"length": fsize, "pieces root": fhash.root}}
+            return {"": {"length": file_size, "pieces root": file_hash.root}}
 
         tree = {}
         if os.path.isdir(path):

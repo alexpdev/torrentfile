@@ -35,7 +35,7 @@ from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 logger = logging.getLogger(__name__)
 
 
-class HelpFormat(HelpFormatter):
+class _HelpFormat(HelpFormatter):
     """
     Formatting class for help tips provided by the CLI.
 
@@ -105,7 +105,7 @@ def main_script(args=None):
         Supports all meta file versions including hybrid files.
         """,
         prefix_chars="-",
-        formatter_class=HelpFormat,
+        formatter_class=_HelpFormat,
     )
 
     parser.add_argument(
@@ -145,7 +145,7 @@ def main_script(args=None):
         """,
         prefix_chars="-",
         aliases=["create", "new"],
-        formatter_class=HelpFormat,
+        formatter_class=_HelpFormat,
     )
 
     create_parser.add_argument(
@@ -164,7 +164,7 @@ def main_script(args=None):
         "--private",
         action="store_true",
         dest="private",
-        help="Create a private torrent meta file",
+        help="Create a private torrent file",
     )
 
     create_parser.add_argument(
@@ -173,7 +173,7 @@ def main_script(args=None):
         action="store",
         dest="source",
         metavar="<source>",
-        help="specify source tracker",
+        help="Useful for cross-seeding",
     )
 
     create_parser.add_argument(
@@ -181,7 +181,7 @@ def main_script(args=None):
         "--magnet",
         action="store_true",
         dest="magnet",
-        help="output Magnet Link after creation completes",
+        help="Output Magnet Link after creation completes",
     )
 
     create_parser.add_argument(
@@ -190,7 +190,7 @@ def main_script(args=None):
         action="store",
         dest="comment",
         metavar="<comment>",
-        help="include a comment in file metadata",
+        help="Include a comment in file metadata",
     )
 
     create_parser.add_argument(
@@ -249,7 +249,7 @@ def main_script(args=None):
         Acceptable input values include integers 14-24, which
         will be interpreted as the exponent for 2^n, or any perfect
         power of two integer between 16Kib and 16MiB (inclusive).
-        Examples:: [--piece-length 14] [-l 20] [-l 16777216]
+        Examples:: [--piece-length 14] [--piece-length 16777216]
         """,
     )
 
@@ -263,15 +263,15 @@ def main_script(args=None):
         help="""
         One or more url(s) linking to a http server hosting
         the torrent contents.  This is useful if the torrent
-        tracker is ever unreachable. Example:: [-w url1 [url2 [url3]]]
+        tracker is ever unreachable. Example:: -w url1 url2 url3
         """,
     )
 
     create_parser.add_argument(
         "content",
         action="store",
-        metavar="<content path>",
-        help="path to content file or directory",
+        metavar="<content>",
+        help="Path to content file or directory",
     )
 
     edit_parser = subparsers.add_parser(
@@ -281,7 +281,7 @@ def main_script(args=None):
         """,
         aliases=["edit"],
         prefix_chars="-",
-        formatter_class=HelpFormat,
+        formatter_class=_HelpFormat,
     )
 
     edit_parser.add_argument(
@@ -298,7 +298,7 @@ def main_script(args=None):
         metavar="<url>",
         nargs="+",
         help="""
-        replace current list of tracker/announce urls with one or more space
+        Replace current list of tracker/announce urls with one or more space
         seperated Bittorrent tracker announce url(s).
         """,
     )
@@ -310,20 +310,20 @@ def main_script(args=None):
         metavar="<url>",
         nargs="+",
         help="""
-        replace current list of web-seed urls with one or more space seperated url(s)
+        Replace current list of web-seed urls with one or more space seperated url(s)
         """,
     )
 
     edit_parser.add_argument(
         "--private",
         action="store_true",
-        help="If currently private, will make it public, if public then private.",
+        help="Make torrent private.",
         dest="private",
     )
 
     edit_parser.add_argument(
         "--comment",
-        help="replaces any existing comment with <comment>",
+        help="Replaces any existing comment with <comment>",
         metavar="<comment>",
         dest="comment",
         action="store",
@@ -334,7 +334,7 @@ def main_script(args=None):
         action="store",
         dest="source",
         metavar="<source>",
-        help="replaces current source with <source>",
+        help="Replaces current source with <source>",
     )
 
     magnet_parser = subparsers.add_parser(
@@ -344,13 +344,13 @@ def main_script(args=None):
         """,
         aliases=["magnet"],
         prefix_chars="-",
-        formatter_class=HelpFormat,
+        formatter_class=_HelpFormat,
     )
 
     magnet_parser.add_argument(
         "metafile",
         action="store",
-        help="path to Bittorrent meta file.",
+        help="Path to Bittorrent meta file.",
         metavar="<*.torrent>",
     )
 
@@ -361,7 +361,7 @@ def main_script(args=None):
         """,
         aliases=["recheck", "check"],
         prefix_chars="-",
-        formatter_class=HelpFormat,
+        formatter_class=_HelpFormat,
     )
 
     check_parser.add_argument(
