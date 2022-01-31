@@ -1,7 +1,7 @@
-site_name: TorrentFile
+site_name: TorrentFile Docs
 site_url: https://alexpdev.github.io/torrentfile
 repo_url: https://github.com/alexpdev/torrentfile
-site_description: "Bittorrent Meta File Creator."
+site_description: "TorrentFile CLI Documentation and Examples"
 copyright: alexpdev 2021
 extra_css:
   - stylesheets/extra.css
@@ -17,6 +17,8 @@ nav:
   - CLI : cli.md
   - Examples : examples.md
   - license : LGPLv3.md
+  - Hasher : hasher.md
+  - Metafile : torrent.md
 
 plugins:
   - search

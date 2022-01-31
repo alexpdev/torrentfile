@@ -11,7 +11,6 @@ include .pylintrc
 include setup.py
 
 recursive-include .github
-recursive-include tests *
 recursive-include torrentfile *
 recursive-include assets *
 recursive-include docs *

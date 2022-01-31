@@ -127,8 +127,10 @@ def select_action():
         "Enter the action you wish to perform.\n"
         "Action (Create | Edit | Recheck): "
     )
+
     if action.lower() == "create":
         return create_torrent()
+
     if "check" in action.lower():
         return recheck_torrent()
     return edit_action()
@@ -190,6 +192,7 @@ class InteractiveEditor:
         self.metafile = metafile
         self.meta = pyben.load(metafile)
         self.info = self.meta["info"]
+
         self.args = {
             "url-list": self.meta.get("url-list", None),
             "announce": self.meta.get("announce-list", None),
@@ -231,6 +234,7 @@ class InteractiveEditor:
                 "Choose the number for a propert the needs editing."
                 "Enter DONE when all editing has been completed."
             )
+
             props = {
                 1: "comment",
                 2: "source",
@@ -238,6 +242,7 @@ class InteractiveEditor:
                 4: "tracker",
                 5: "web-seed",
             }
+
             args = {
                 1: "comment",
                 2: "source",
@@ -245,10 +250,12 @@ class InteractiveEditor:
                 4: "announce",
                 5: "url-list",
             }
+
             txt = ", ".join((str(k) + ": " + v) for k, v in props.items())
             prop = get_input(txt)
             if prop.lower() == "done":
                 break
+
             if prop.isdigit() and 0 < int(prop) < 6:
                 key = props[int(prop)]
                 key2 = args[int(prop)]
@@ -258,6 +265,7 @@ class InteractiveEditor:
                 )
                 response = get_input(f"{key.title()} ({val}): ")
                 self.sanatize_response(key2, response)
+
             else:
                 showtext("Invalid input: Try again.")
         edit_torrent(self.metafile, self.args)
@@ -296,36 +304,48 @@ class InteractiveCreator:
         piece_length = get_input(
             "Piece Length (empty=auto): ", lambda x: x.isdigit()
         )
+
         self.kwargs["piece_length"] = piece_length
         announce = get_input(
             "Tracker list (empty): ", lambda x: isinstance(x, str)
         )
+
         if announce:
             self.kwargs["announce"] = announce.split()
+
         url_list = get_input(
             "Web Seed list (empty): ", lambda x: isinstance(x, str)
         )
+
         if url_list:
             self.kwargs["url_list"] = url_list.split()
         comment = get_input("Comment (empty): ", None)
+
         if comment:
             self.kwargs["comment"] = comment
         source = get_input("Source (empty): ", None)
+
         if source:
             self.kwargs["source"] = source
+
         private = get_input(
             "Private Torrent? {Y/N}: (N)", lambda x: x in "yYnN"
         )
+
         if private and private.lower() == "y":
             self.kwargs["private"] = 1
+
         contents = get_input("Content Path: ", os.path.exists)
         self.kwargs["path"] = contents
+
         outfile = get_input(
             f"Output Path ({contents}.torrent): ",
             lambda x: os.path.exists(os.path.dirname(x)),
         )
+
         if outfile:
             self.kwargs["outfile"] = outfile
+
         meta_version = get_input(
             "Meta Version {1,2,3}: (1)", lambda x: x in "123"
         )

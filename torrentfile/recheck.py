@@ -74,12 +74,15 @@ class Checker:
         self.paths = []
         self.fileinfo = {}
         self.last_log = None
+
         if not os.path.exists(metafile):
             raise FileNotFoundError
+
         self.meta = pyben.load(metafile)
         self.info = self.meta["info"]
         self.name = self.info["name"]
         self.piece_length = self.info["piece length"]
+
         if "meta version" in self.info:
             if "pieces" in self.info:
                 self.meta_version = 3
@@ -87,6 +90,7 @@ class Checker:
                 self.meta_version = 2
         else:
             self.meta_version = 1
+
         self.root = self.find_root(path)
         self.log_msg("Checking: %s, %s", metafile, path)
         self.check_paths()
@@ -121,9 +125,9 @@ class Checker:
 
         Returns
         -------
-        `Obj`
+        `HashChecker` || `FeedChecker`
             Individual piece hasher.
-        """ ""
+        """
         if self.meta_version == 1:
             return FeedChecker
         return HashChecker
@@ -134,6 +138,7 @@ class Checker:
             iterations = len(self.info["pieces"]) // SHA1
         else:
             iterations = (self.total // self.piece_length) + 1
+
         responses = []
         for response in tqdm(
             iterable=self.iter_hashes(),
@@ -142,7 +147,6 @@ class Checker:
             unit="piece",
         ):
             responses.append(response)
-        print(responses)
         return self._result
 
     def log_msg(self, *args, level=logging.INFO):
@@ -206,32 +210,40 @@ class Checker:
     def check_paths(self):
         """Gather all file paths described in the torrent file."""
         finfo = self.fileinfo
+
         if "length" in self.info:
             self.log_msg("%s points to a single file", self.root)
             self.total = self.info["length"]
             self.paths.append(str(self.root))
+
             finfo[0] = {
                 "path": self.root,
                 "length": self.info["length"],
             }
+
             if self.meta_version > 1:
                 root = self.info["file tree"][self.name][""]["pieces root"]
                 finfo[0]["pieces root"] = root
+
             return
 
         # Otherwise Content is more than 1 file.
         self.log_msg("%s points to a directory", self.root)
         if self.meta_version == 1:
+
             for i, item in enumerate(self.info["files"]):
                 self.total += item["length"]
                 base = os.path.join(*item["path"])
+
                 self.fileinfo[i] = {
                     "path": str(self.root / base),
                     "length": item["length"],
                 }
+
                 self.paths.append(str(self.root / base))
                 self.log_msg("Including file path: %s", str(self.root / base))
             return
+
         self.walk_file_tree(self.info["file tree"], [])
 
     def walk_file_tree(self, tree: dict, partials: list):

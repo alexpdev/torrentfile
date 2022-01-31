@@ -4,7 +4,7 @@
     "MD029": { "style": "ordered" },
     "MD007": { "indent": 4 },
     "MD046": false,
-    "MD024": true,
+    "MD024": false,
     "MD033": {"allowed_elements": ["sup", "sub"]},
     "no-hard-tabs": true
 }
