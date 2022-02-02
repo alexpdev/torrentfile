@@ -183,9 +183,9 @@
     
         <li class="main active"><a href="#torrentfile-cli-menu">TorrentFile CLI Menu</a></li>
         
-            <li><a href="#torrentfile-h">torrentfile -h</a></li>
+            <li><a href="#help-message">Help Message</a></li>
         
-            <li><a href="#torrentfile-e-h">torrentfile e -h</a></li>
+            <li><a href="#edit">edit</a></li>
         
     
     </ul>
@@ -195,7 +195,7 @@
             <div class="col-md-9" role="main">
 
 <h1 id="torrentfile-cli-menu">TorrentFile CLI Menu</h1>
-<h2 id="torrentfile-h"><code>torrentfile -h</code></h2>
+<h2 id="help-message">Help Message</h2>
 <p>```bash:
 usage: TorrentFile [-h][-i] [-V][-v]
                 {c,create,new,e,edit,m,magnet,r,recheck,check} ...</p>
@@ -218,7 +218,7 @@ r (recheck, check)                            Calculate amount of torrent meta f
 <pre><code>
 -----
 
-## `torrentfile c -h`
+## create
 
 ```bash:
 usage: TorrentFile c [-h] [-a &lt;url&gt; [&lt;url&gt; ...]] [-p] [-s &lt;source&gt;] [-m]
@@ -259,7 +259,7 @@ optional arguments:
                                                     tracker is ever unreachable. Example:: [-w url1 [url2 [url3]]]
 </code></pre>
 <hr />
-<h2 id="torrentfile-e-h"><code>torrentfile e -h</code></h2>
+<h2 id="edit">edit</h2>
 <p>```bash:
 usage: TorrentFile e [-h] [--tracker <url> [<url> ...]]
                     [--web-seed <url> [<url> ...]][--private]
@@ -278,7 +278,7 @@ usage: TorrentFile e [-h] [--tracker <url> [<url> ...]]
 <pre><code>
 -----
 
-## `torrentfile m -h`
+## magnet
 
 ```bash:
 usage: TorrentFile m [-h] &lt;*.torrent&gt;

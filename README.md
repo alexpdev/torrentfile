@@ -8,11 +8,11 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Coverage)
 ![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile)
 ![GitHub License](https://img.shields.io/github/license/alexpdev/torrentfile)
-![PyPI - Downloads](https://img.shields.io/pypi/dw/torrentfile)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/torrentfile)
 [![CI](https://github.com/alexpdev/TorrentFile/actions/workflows/pyworkflow.yml/badge.svg?branch=master&event=push)](https://github.com/alexpdev/torrentfile/actions/workflows/pyworkflow.yml)
 [![DeepSource](https://deepsource.io/gh/alexpdev/TorrentFile.svg/?label=active+issues&token=16Sl_dF7nTU8YgPilcqhvHm8)](https://deepsource.io/gh/alexpdev/torrentfile/)
 
-## Overview
+## 🌐 Overview
 
 A `simple` and `convenient` tool for creating, reviewing, editing, and/or
 checking bittorrent meta files (aka torrent files). _`torrentfile`_
@@ -20,12 +20,12 @@ supports all versions of Bittorrent files, including hybrid meta files.
 
 > A GUI frontend for this project can be found at [https://github.com/alexpdev/TorrentfileQt](https://github.com/alexpdev/TorrentfileQt)
 
-## Requirements
+## 🔌 Requirements
 
 - Python 3.7+
 - Tested on Linux and Windows
 
-## Install
+## 💻 Install
 
 __via PyPi:__
 
@@ -38,7 +38,7 @@ __via Git:__
 
 > Download pre-compiled binaries from the [release page](https://github.com/alexpdev/torrentfile/releases).
 
-## Documentation
+## 📚 Documentation
 
 Documentation can be found  [here](https://alexpdev.github.io/torrentfile)
 or in the _`docs`_ directory.
@@ -46,7 +46,7 @@ or in the _`docs`_ directory.
 >_torrentfile_ is under active development, and is subject to significant changes in  
     it's codebase between releases.
 
-## Usage
+## 🚀 Usage
 
 ```bash
 torrentfile [-h] [-i] [-V] [-v]  ...
@@ -67,11 +67,11 @@ optional arguments:
 
 > Usage examples can be found in the project documentation on the [examples page.](https://alexpdev.github.io/torrentfile/examples)
 
-## License
+## 📝 License
 
 Distributed under the GNU LGPL v3. See `LICENSE` for more information.
 
-## Issues
+## 💡 Issues
 
 If you encounter any bugs or would like to request a new feature please open a new issue.
 
@@ -79,7 +79,7 @@ If you encounter any bugs or would like to request a new feature please open a n
 
 ------
 
-## CLI Usage Examples
+## ⚙️ CLI Usage Examples
 
 > More examples can be found in the documentation.
 

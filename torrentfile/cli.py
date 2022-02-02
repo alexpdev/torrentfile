@@ -84,6 +84,176 @@ class _HelpFormat(HelpFormatter):
         return text + "\n\n"
 
 
+def create_command(args, logger):
+    """Execute the create CLI sub-command to create a new torrent metafile.
+
+    Parameters
+    ----------
+    args : `Namespace`
+        positional and optional CLI arguments.
+    logger: `Logger`
+        logging facility for module.
+
+    Returns
+    -------
+    `Result`
+        object containing the path to created metafile and its contents.
+    """
+    kwargs = {
+        "progress": args.progress,
+        "url_list": args.url_list,
+        "path": args.content,
+        "announce": args.announce + args.tracker,
+        "piece_length": args.piece_length,
+        "source": args.source,
+        "private": args.private,
+        "outfile": args.outfile,
+        "comment": args.comment,
+    }
+
+    logger.debug("Program has entered torrent creation mode.")
+
+    if args.meta_version == "2":
+        torrent = TorrentFileV2(**kwargs)
+    elif args.meta_version == "3":
+        torrent = TorrentFileHybrid(**kwargs)
+    else:
+        torrent = TorrentFile(**kwargs)
+    logger.debug("Completed torrent files meta info assembly.")
+    outfile, meta = torrent.write()
+
+    if args.magnet:
+        create_magnet(outfile)
+
+    args.torrent = torrent
+    args.kwargs = kwargs
+    args.outfile = outfile
+    args.meta = meta
+
+    logger.debug("New torrent file (%s) has been created.", str(outfile))
+    return args
+
+
+def edit_command(args, logger):
+    """Execute the edit CLI sub-command with provided arguments.
+
+    Parameters
+    ----------
+    args : `Namespace`
+        positional and optional CLI arguments.
+    logger: `Logger`
+        logging facility for module.
+
+    Returns
+    -------
+    `str`
+        path to edited torrent file.
+    """
+    metafile = args.metafile
+    logger.info("Editing %s Meta File", str(args.metafile))
+    editargs = {
+        "url-list": args.url_list,
+        "announce": args.announce,
+        "source": args.source,
+        "private": args.private,
+        "comment": args.comment,
+    }
+    return edit_torrent(metafile, editargs)
+
+
+def recheck_command(args, logger):
+    """Execute recheck CLI sub-command.
+
+    Parameters
+    ----------
+    args : `Namespace`
+        positional and optional arguments.
+    logger: `Logger`
+        logging facility for module.
+
+    Returns
+    -------
+    `str` :
+        The percentage of content currently saved to disk.
+    """
+    logger.debug("Program entering Recheck mode.")
+    metafile = args.metafile
+    content = args.content
+    logger.debug("Checking %s against %s contents", metafile, content)
+    checker = Checker(metafile, content)
+    logger.debug("Completed initialization of the Checker class")
+    result = checker.results()
+    logger.info("Final result for %s recheck:  %s", metafile, result)
+    sys.stdout.write(str(result))
+    sys.stdout.flush()
+    return result
+
+
+def magnet_command(args, logger):
+    """Execute the magnet sub-command to create a Magnet URI.
+
+    Parameters
+    ----------
+    args : `Namespace`
+        positional and optional command line arguments
+    logger: `Logger`
+        logging facility for module.
+
+    Returns
+    -------
+    `str` :
+        Full Magnet URI for torrent file.
+    """
+    metafile = args.metafile
+    logger.info("[magnet command executed]")
+    return create_magnet(metafile)
+
+
+def create_magnet(metafile):
+    """Create a magnet URI from a Bittorrent meta file.
+
+    Parameters
+    ----------
+    metafile : `str` | `os.PathLike`
+        path to bittorrent meta file.
+    logger: `Logger`
+        logging facility for module.
+
+    Returns
+    -------
+    `str`
+        created magnet URI.
+    """
+    import os
+    from hashlib import sha1  # nosec
+    from urllib.parse import quote_plus
+
+    import pyben
+
+    if not os.path.exists(metafile):
+        raise FileNotFoundError
+    meta = pyben.load(metafile)
+    info = meta["info"]
+    binfo = pyben.dumps(info)
+    infohash = sha1(binfo).hexdigest().upper()  # nosec
+    logger.info("Magnet Info Hash: %s", infohash)
+    scheme = "magnet:"
+    hasharg = "?xt=urn:btih:" + infohash
+    namearg = "&dn=" + quote_plus(info["name"])
+    if "announce-list" in meta:
+        announce_args = [
+            "&tr=" + quote_plus(url)
+            for urllist in meta["announce-list"]
+            for url in urllist
+        ]
+    else:
+        announce_args = ["&tr=" + quote_plus(meta["announce"])]
+    full_uri = "".join([scheme, hasharg, namearg] + announce_args)
+    logger.info("Created Magnet URI %s", full_uri)
+    sys.stdout.write(full_uri)
+    return full_uri
+
+
 def main_script(args=None):
     """Initialize Command Line Interface for torrentfile.
 
@@ -274,6 +444,8 @@ def main_script(args=None):
         help="Path to content file or directory",
     )
 
+    create_parser.set_defaults(func=create_command)
+
     edit_parser = subparsers.add_parser(
         "e",
         help="""
@@ -337,6 +509,8 @@ def main_script(args=None):
         help="Replaces current source with <source>",
     )
 
+    edit_parser.set_defaults(func=edit_command)
+
     magnet_parser = subparsers.add_parser(
         "m",
         help="""
@@ -353,6 +527,8 @@ def main_script(args=None):
         help="Path to Bittorrent meta file.",
         metavar="<*.torrent>",
     )
+
+    magnet_parser.set_defaults(func=magnet_command)
 
     check_parser = subparsers.add_parser(
         "r",
@@ -378,115 +554,19 @@ def main_script(args=None):
         help="path to content file or directory",
     )
 
-    flags = parser.parse_args(args)
+    check_parser.set_defaults(func=recheck_command)
+    args = parser.parse_args(args)
 
-    if flags.debug:
+    if args.debug:
         torrentfile.set_level(logging.DEBUG)
 
-    logger.debug(str(flags))
-    if flags.interactive:
+    logger.debug(str(args))
+    if args.interactive:
         return select_action()
 
-    if flags.command in ["m", "magnet"]:
-        return create_magnet(flags.metafile)
-
-    if flags.command in ["recheck", "r", "check"]:
-        logger.debug("Program entering Recheck mode.")
-        metafile = flags.metafile
-        content = flags.content
-        logger.debug("Checking %s against %s contents", metafile, content)
-        checker = Checker(metafile, content)
-        logger.debug("Completed initialization of the Checker class")
-        result = checker.results()
-        logger.info("Final result for %s recheck:  %s", metafile, result)
-        sys.stdout.write(str(result))
-        sys.stdout.flush()
-        return result
-
-    if flags.command in ["edit", "e"]:
-        metafile = flags.metafile
-        logger.info("Editing %s Meta File", str(flags.metafile))
-        editargs = {
-            "url-list": flags.url_list,
-            "announce": flags.announce,
-            "source": flags.source,
-            "private": flags.private,
-            "comment": flags.comment,
-        }
-        return edit_torrent(metafile, editargs)
-
-    kwargs = {
-        "progress": flags.progress,
-        "url_list": flags.url_list,
-        "path": flags.content,
-        "announce": flags.announce + flags.tracker,
-        "piece_length": flags.piece_length,
-        "source": flags.source,
-        "private": flags.private,
-        "outfile": flags.outfile,
-        "comment": flags.comment,
-    }
-
-    logger.debug("Program has entered torrent creation mode.")
-
-    if flags.meta_version == "2":
-        torrent = TorrentFileV2(**kwargs)
-    elif flags.meta_version == "3":
-        torrent = TorrentFileHybrid(**kwargs)
-    else:
-        torrent = TorrentFile(**kwargs)
-    logger.debug("Completed torrent files meta info assembly.")
-    outfile, meta = torrent.write()
-    if flags.magnet:
-        create_magnet(outfile)
-    parser.kwargs = kwargs
-    parser.meta = meta
-    parser.outfile = outfile
-    logger.debug("New torrent file (%s) has been created.", str(outfile))
-    return parser
+    return args.func(args, logger)
 
 
 def main():
     """Initiate main function for CLI script."""
     main_script()
-
-
-def create_magnet(metafile):
-    """Create a magnet URI from a Bittorrent meta file.
-
-    Parameters
-    ----------
-    metafile : `str` | `os.PathLike`
-        path to bittorrent meta file.
-
-    Returns
-    -------
-    `str`
-        created magnet URI.
-    """
-    import os
-    from hashlib import sha1  # nosec
-    from urllib.parse import quote_plus
-
-    import pyben
-
-    if not os.path.exists(metafile):
-        raise FileNotFoundError
-    meta = pyben.load(metafile)
-    info = meta["info"]
-    binfo = pyben.dumps(info)
-    infohash = sha1(binfo).hexdigest().upper()  # nosec
-    scheme = "magnet:"
-    hasharg = "?xt=urn:btih:" + infohash
-    namearg = "&dn=" + quote_plus(info["name"])
-    if "announce-list" in meta:
-        announce_args = [
-            "&tr=" + quote_plus(url)
-            for urllist in meta["announce-list"]
-            for url in urllist
-        ]
-    else:
-        announce_args = ["&tr=" + quote_plus(meta["announce"])]
-    full_uri = "".join([scheme, hasharg, namearg] + announce_args)
-    sys.stdout.write(full_uri)
-    return full_uri

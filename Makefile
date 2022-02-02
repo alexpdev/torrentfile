@@ -57,19 +57,21 @@ clean: clean-build ## remove all build, test, coverage and Python artifacts
 
 clean-build: ## remove build artifacts
 	@echo Cleaning
-	rm -fr build/
-	rm -fr dist/
-	rm -fr .eggs/
-	rm -fr .tox/
-	rm -f .coverage
-	rm -rf */__pycache__
-	rm -f coverage.xml
-	rm -fr htmlcov/
-	rm -rf *.egg-info
-	rm -f corbertura.xml
-	rm -fr .pytest_cache
-	rm -f *.spec
-	rm -rf Release
+	rm -frv build/
+	rm -frv dist/
+	rm -frv .eggs/
+	rm -frv .tox/
+	rm -fv .coverage
+	rm -rfv */__pycache__
+	rm -fv coverage.xml
+	rm -frv htmlcov/
+	rm -rfv *.egg-info
+	rm -fv corbertura.xml
+	rm -frv .pytest_cache
+	rm -fv *.spec
+	rm -rfv Release
+	rm -rfv node_modules
+	rm -fv torrentfile.log
 
 
 test: ## Get coverage report
