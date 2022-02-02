@@ -232,9 +232,21 @@ invoked when called from command line, and parses accompanying arguments.</p>
           <span class="mkapi-section-name-body functions">Functions</span> 
         </div>
       <div class="mkapi-section-body functions"><ul class="mkapi-items">
+<li class="function"><code class="mkapi-item-name">create_command</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code>, <code class="mkapi-object-signature">logger</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`Result`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Execute the create CLI sub-command to create a new torrent metafile.</span></li>
+
 <li class="function"><code class="mkapi-item-name">create_magnet</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">metafile</code><code class="mkapi-object-parenthesis">)</code>
 <span class="mkapi-item-type">(`str`)</span>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create a magnet URI from a Bittorrent meta file.</span></li>
+
+<li class="function"><code class="mkapi-item-name">edit_command</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code>, <code class="mkapi-object-signature">logger</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`str`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Execute the edit CLI sub-command with provided arguments.</span></li>
+
+<li class="function"><code class="mkapi-item-name">magnet_command</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code>, <code class="mkapi-object-signature">logger</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`str` :)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Execute the magnet sub-command to create a Magnet URI.</span></li>
 
 <li class="function"><code class="mkapi-item-name">main</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code>
 
@@ -243,6 +255,10 @@ invoked when called from command line, and parses accompanying arguments.</p>
 <li class="function"><code class="mkapi-item-name">main_script</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code><code class="mkapi-object-parenthesis">)</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialize Command Line Interface for torrentfile.</span></li>
+
+<li class="function"><code class="mkapi-item-name">recheck_command</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code>, <code class="mkapi-object-signature">logger</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`str` :)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Execute recheck CLI sub-command.</span></li>
 
 
 </ul></div>
@@ -290,6 +306,118 @@ invoked when called from command line, and parses accompanying arguments.</p>
 
 
 
+<h3 id="torrentfile.cli.create_command" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">create_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Execute the create CLI sub-command to create a new torrent metafile.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>args</code></td>
+        <td><code>`Namespace`</code></td>
+        <td><p>positional and optional CLI arguments.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>logger</code></td>
+        <td><code>`Logger`</code></td>
+        <td><p>logging facility for module.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>`Result`</code></td>
+      <td><p>object containing the path to created metafile and its contents.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Execute the create CLI sub-command to create a new torrent metafile.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : `Namespace`</span>
+<span class="sd">        positional and optional CLI arguments.</span>
+<span class="sd">    logger: `Logger`</span>
+<span class="sd">        logging facility for module.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `Result`</span>
+<span class="sd">        object containing the path to created metafile and its contents.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">progress</span><span class="p">,</span>
+        <span class="s2">&quot;url_list&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">url_list</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">announce</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">tracker</span><span class="p">,</span>
+        <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">private</span><span class="p">,</span>
+        <span class="s2">&quot;outfile&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">outfile</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Program has entered torrent creation mode.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileV2</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileHybrid</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Completed torrent files meta info assembly.&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">magnet</span><span class="p">:</span>
+        <span class="n">create_magnet</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+
+    <span class="n">args</span><span class="o">.</span><span class="n">torrent</span> <span class="o">=</span> <span class="n">torrent</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;New torrent file (</span><span class="si">%s</span><span class="s2">) has been created.&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">outfile</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">args</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h3 id="torrentfile.cli.create_magnet" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">create_magnet</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span></code>
 
@@ -315,6 +443,12 @@ invoked when called from command line, and parses accompanying arguments.</p>
         <td><code>metafile</code></td>
         <td><code>`str` | `os.PathLike`</code></td>
         <td><p>path to bittorrent meta file.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>logger</code></td>
+        <td><code>`Logger`</code></td>
+        <td><p>logging facility for module.</p></td>
         <td><em>required</em></td>
       </tr>
   </tbody>
@@ -343,6 +477,8 @@ invoked when called from command line, and parses accompanying arguments.</p>
 <span class="sd">    ----------</span>
 <span class="sd">    metafile : `str` | `os.PathLike`</span>
 <span class="sd">        path to bittorrent meta file.</span>
+<span class="sd">    logger: `Logger`</span>
+<span class="sd">        logging facility for module.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -361,6 +497,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
     <span class="n">info</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
     <span class="n">binfo</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
     <span class="n">infohash</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">(</span><span class="n">binfo</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>  <span class="c1"># nosec</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Magnet Info Hash: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">infohash</span><span class="p">)</span>
     <span class="n">scheme</span> <span class="o">=</span> <span class="s2">&quot;magnet:&quot;</span>
     <span class="n">hasharg</span> <span class="o">=</span> <span class="s2">&quot;?xt=urn:btih:&quot;</span> <span class="o">+</span> <span class="n">infohash</span>
     <span class="n">namearg</span> <span class="o">=</span> <span class="s2">&quot;&amp;dn=&quot;</span> <span class="o">+</span> <span class="n">quote_plus</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
@@ -373,8 +510,165 @@ invoked when called from command line, and parses accompanying arguments.</p>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">announce_args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&amp;tr=&quot;</span> <span class="o">+</span> <span class="n">quote_plus</span><span class="p">(</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">])]</span>
     <span class="n">full_uri</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">scheme</span><span class="p">,</span> <span class="n">hasharg</span><span class="p">,</span> <span class="n">namearg</span><span class="p">]</span> <span class="o">+</span> <span class="n">announce_args</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Created Magnet URI </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">full_uri</span><span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">full_uri</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">full_uri</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.cli.edit_command" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">edit_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Execute the edit CLI sub-command with provided arguments.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>args</code></td>
+        <td><code>`Namespace`</code></td>
+        <td><p>positional and optional CLI arguments.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>logger</code></td>
+        <td><code>`Logger`</code></td>
+        <td><p>logging facility for module.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>`str`</code></td>
+      <td><p>path to edited torrent file.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">edit_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Execute the edit CLI sub-command with provided arguments.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : `Namespace`</span>
+<span class="sd">        positional and optional CLI arguments.</span>
+<span class="sd">    logger: `Logger`</span>
+<span class="sd">        logging facility for module.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `str`</span>
+<span class="sd">        path to edited torrent file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metafile</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">metafile</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Editing </span><span class="si">%s</span><span class="s2"> Meta File&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">metafile</span><span class="p">))</span>
+    <span class="n">editargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;url-list&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">url_list</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">announce</span><span class="p">,</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">private</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">edit_torrent</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">editargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.cli.magnet_command" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">magnet_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Execute the magnet sub-command to create a Magnet URI.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>args</code></td>
+        <td><code>`Namespace`</code></td>
+        <td><p>positional and optional command line arguments</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>logger</code></td>
+        <td><code>`Logger`</code></td>
+        <td><p>logging facility for module.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">magnet_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Execute the magnet sub-command to create a Magnet URI.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : `Namespace`</span>
+<span class="sd">        positional and optional command line arguments</span>
+<span class="sd">    logger: `Logger`</span>
+<span class="sd">        logging facility for module.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `str` :</span>
+<span class="sd">        Full Magnet URI for torrent file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metafile</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">metafile</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[magnet command executed]&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">create_magnet</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -635,6 +929,8 @@ invoked when called from command line, and parses accompanying arguments.</p>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to content file or directory&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
+    <span class="n">create_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">create_command</span><span class="p">)</span>
+
     <span class="n">edit_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;e&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
@@ -698,6 +994,8 @@ invoked when called from command line, and parses accompanying arguments.</p>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Replaces current source with &lt;source&gt;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
+    <span class="n">edit_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">edit_command</span><span class="p">)</span>
+
     <span class="n">magnet_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;m&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
@@ -714,6 +1012,8 @@ invoked when called from command line, and parses accompanying arguments.</p>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to Bittorrent meta file.&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;*.torrent&gt;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+
+    <span class="n">magnet_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">magnet_command</span><span class="p">)</span>
 
     <span class="n">check_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;r&quot;</span><span class="p">,</span>
@@ -739,72 +1039,92 @@ invoked when called from command line, and parses accompanying arguments.</p>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to content file or directory&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">flags</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">check_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">recheck_command</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
         <span class="n">torrentfile</span><span class="o">.</span><span class="n">set_level</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">flags</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">command</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;magnet&quot;</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="n">create_magnet</span><span class="p">(</span><span class="n">flags</span><span class="o">.</span><span class="n">metafile</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">args</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
 
-    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">command</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;recheck&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;check&quot;</span><span class="p">]:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Program entering Recheck mode.&quot;</span><span class="p">)</span>
-        <span class="n">metafile</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">metafile</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">content</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Checking </span><span class="si">%s</span><span class="s2"> against </span><span class="si">%s</span><span class="s2"> contents&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
-        <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Completed initialization of the Checker class&quot;</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Final result for </span><span class="si">%s</span><span class="s2"> recheck:  </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">result</span>
+  </div>
 
-    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">command</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;edit&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">]:</span>
-        <span class="n">metafile</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">metafile</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Editing </span><span class="si">%s</span><span class="s2"> Meta File&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">flags</span><span class="o">.</span><span class="n">metafile</span><span class="p">))</span>
-        <span class="n">editargs</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;url-list&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">url_list</span><span class="p">,</span>
-            <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">announce</span><span class="p">,</span>
-            <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
-            <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">private</span><span class="p">,</span>
-            <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">edit_torrent</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">editargs</span><span class="p">)</span>
 
-    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">progress</span><span class="p">,</span>
-        <span class="s2">&quot;url_list&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">url_list</span><span class="p">,</span>
-        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
-        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">announce</span> <span class="o">+</span> <span class="n">flags</span><span class="o">.</span><span class="n">tracker</span><span class="p">,</span>
-        <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
-        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
-        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">private</span><span class="p">,</span>
-        <span class="s2">&quot;outfile&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">outfile</span><span class="p">,</span>
-        <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">flags</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
-    <span class="p">}</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Program has entered torrent creation mode.&quot;</span><span class="p">)</span>
+  <div class="doc doc-object doc-function">
 
-    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
-        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileV2</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">flags</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
-        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileHybrid</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Completed torrent files meta info assembly.&quot;</span><span class="p">)</span>
-    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">magnet</span><span class="p">:</span>
-        <span class="n">create_magnet</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;New torrent file (</span><span class="si">%s</span><span class="s2">) has been created.&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">outfile</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">parser</span>
+
+
+<h3 id="torrentfile.cli.recheck_command" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">recheck_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Execute recheck CLI sub-command.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>args</code></td>
+        <td><code>`Namespace`</code></td>
+        <td><p>positional and optional arguments.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>logger</code></td>
+        <td><code>`Logger`</code></td>
+        <td><p>logging facility for module.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">recheck_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Execute recheck CLI sub-command.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : `Namespace`</span>
+<span class="sd">        positional and optional arguments.</span>
+<span class="sd">    logger: `Logger`</span>
+<span class="sd">        logging facility for module.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `str` :</span>
+<span class="sd">        The percentage of content currently saved to disk.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Program entering Recheck mode.&quot;</span><span class="p">)</span>
+    <span class="n">metafile</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">metafile</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">content</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Checking </span><span class="si">%s</span><span class="s2"> against </span><span class="si">%s</span><span class="s2"> contents&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Completed initialization of the Checker class&quot;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Final result for </span><span class="si">%s</span><span class="s2"> recheck:  </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">result</span>
 </code></pre></div>
         </details>
     </div>

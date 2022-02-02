@@ -1,6 +1,6 @@
 # TorrentFile CLI Menu
 
-## `torrentfile -h`
+## Help Message
 
 ```bash:
 usage: TorrentFile [-h] [-i] [-V] [-v]
@@ -29,7 +29,7 @@ Each sub-command triggers a specific action.
 
 -----
 
-## `torrentfile c -h`
+## create
 
 ```bash:
 usage: TorrentFile c [-h] [-a <url> [<url> ...]] [-p] [-s <source>] [-m]
@@ -72,7 +72,7 @@ optional arguments:
 
 -----
 
-## `torrentfile e -h`
+## edit
 
 ```bash:
 usage: TorrentFile e [-h] [--tracker <url> [<url> ...]]
@@ -97,7 +97,7 @@ optional arguments:
 
 -----
 
-## `torrentfile m -h`
+## magnet
 
 ```bash:
 usage: TorrentFile m [-h] <*.torrent>

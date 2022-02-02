@@ -46,7 +46,6 @@ jobs:
         run: |
           pytest --cov=torrentfile --cov=tests --pylint
           coverage xml -o ./coverage.xml
-          ls -al
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2.1.0
