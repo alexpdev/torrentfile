@@ -56,8 +56,6 @@ class Hasher(_CbMixin):
         List of files.
     piece_length : `int`
         Size of chuncks to split the data into.
-    total : `int`
-        Sum of all files in file list.
     """
 
     def __init__(self, paths, piece_length):

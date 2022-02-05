@@ -6,12 +6,17 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://alexpdev.github.io/torrentfile/API/</loc>
+         <loc>https://alexpdev.github.io/torrentfile/CLI/</loc>
          <lastmod>2022-02-05</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://alexpdev.github.io/torrentfile/Commands/</loc>
+         <lastmod>2022-02-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/Edit/</loc>
          <lastmod>2022-02-05</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -22,6 +27,11 @@
     </url>
     <url>
          <loc>https://alexpdev.github.io/torrentfile/Hasher/</loc>
+         <lastmod>2022-02-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/Interactive/</loc>
          <lastmod>2022-02-05</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -37,6 +47,11 @@
     </url>
     <url>
          <loc>https://alexpdev.github.io/torrentfile/Torrent/</loc>
+         <lastmod>2022-02-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/Utils/</loc>
          <lastmod>2022-02-05</lastmod>
          <changefreq>daily</changefreq>
     </url>

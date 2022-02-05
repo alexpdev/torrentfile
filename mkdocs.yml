@@ -13,12 +13,15 @@ theme:
 
 nav:
   - home : index.md
-  - API : API.md
   - Command Line : Commands.md
-  - Examples : examples.md
+  - Examples : Examples.md
   - License : LGPLv3.md
-  - Hasher : hasher.md
-  - Metafile : torrent.md
+  - Hasher : Hasher.md
+  - Metafile : Torrent.md
+  - Interactive : Interactive.md
+  - Edit : Edit.md
+  - CLI : CLI.md
+  - Utils : Utils.md
   - Recheck : Recheck.md
   - Changelog : changelog.md
 

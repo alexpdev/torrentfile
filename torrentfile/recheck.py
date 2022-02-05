@@ -44,8 +44,10 @@ class Checker:
 
     Parameters
     ----------
-      metafile (`str`): Path to ".torrent" file.
-      location (`str`): Path where the content is located in filesystem.
+    metafile : `str`
+        Path to ".torrent" file.
+    path : `str`
+        Path where the content is located in filesystem.
 
     Example
     -------

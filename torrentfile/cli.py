@@ -128,15 +128,13 @@ class TorrentFileHelpFormatter(HelpFormatter):
         return parts
 
 
-def create_command(args, logger):
+def create_command(args):
     """Execute the create CLI sub-command to create a new torrent metafile.
 
     Parameters
     ----------
     args : `Namespace`
         positional and optional CLI arguments.
-    logger: `Logger`
-        logging facility for module.
 
     Returns
     -------
@@ -178,15 +176,13 @@ def create_command(args, logger):
     return args
 
 
-def edit_command(args, logger):
+def edit_command(args):
     """Execute the edit CLI sub-command with provided arguments.
 
     Parameters
     ----------
     args : `Namespace`
         positional and optional CLI arguments.
-    logger: `Logger`
-        logging facility for module.
 
     Returns
     -------
@@ -205,15 +201,13 @@ def edit_command(args, logger):
     return edit_torrent(metafile, editargs)
 
 
-def recheck_command(args, logger):
+def recheck_command(args):
     """Execute recheck CLI sub-command.
 
     Parameters
     ----------
     args : `Namespace`
         positional and optional arguments.
-    logger: `Logger`
-        logging facility for module.
 
     Returns
     -------
@@ -233,35 +227,13 @@ def recheck_command(args, logger):
     return result
 
 
-def magnet_command(args, logger):
-    """Execute the magnet sub-command to create a Magnet URI.
-
-    Parameters
-    ----------
-    args : `Namespace`
-        positional and optional command line arguments
-    logger: `Logger`
-        logging facility for module.
-
-    Returns
-    -------
-    `str` :
-        Full Magnet URI for torrent file.
-    """
-    metafile = args.metafile
-    logger.info("[magnet command executed]")
-    return create_magnet(metafile)
-
-
 def create_magnet(metafile):
     """Create a magnet URI from a Bittorrent meta file.
 
     Parameters
     ----------
-    metafile : `str` | `os.PathLike`
-        path to bittorrent meta file.
-    logger: `Logger`
-        logging facility for module.
+    metafile : (`Namespace`||`str`)
+        Namespace class for CLI arguments.
 
     Returns
     -------
@@ -274,6 +246,8 @@ def create_magnet(metafile):
 
     import pyben
 
+    if hasattr(metafile, "metafile"):
+        metafile = metafile.metafile
     if not os.path.exists(metafile):
         raise FileNotFoundError
     meta = pyben.load(metafile)
@@ -573,7 +547,7 @@ def main_script(args=None):
         metavar="<*.torrent>",
     )
 
-    magnet_parser.set_defaults(func=magnet_command)
+    magnet_parser.set_defaults(func=create_magnet)
 
     check_parser = subparsers.add_parser(
         "r",
@@ -609,7 +583,7 @@ def main_script(args=None):
     if args.interactive:
         return select_action()
 
-    return args.func(args, logger)
+    return args.func(args)
 
 
 def main():

@@ -11,14 +11,7 @@
 # FROM, OUT OF OR IN commentION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""
-Module contains the procedures used for Interactive Mode.
-
-Functions
----------
-`program_Options`
-    gather program behaviour Options.
-"""
+"""Module contains the procedures used for Interactive Mode."""
 
 import os
 import shutil
@@ -32,8 +25,7 @@ from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
 
 def get_input(*args):  # pragma: no cover
-    """
-    Determine appropriate input function to call.
+    """Determine appropriate input function to call.
 
     Parameters
     ----------
@@ -51,8 +43,7 @@ def get_input(*args):  # pragma: no cover
 
 
 def _get_input(txt):  # pragma: no cover
-    """
-    Gather information needed from user.
+    """Gather information needed from user.
 
     Parameters
     ----------
@@ -69,8 +60,7 @@ def _get_input(txt):  # pragma: no cover
 
 
 def _get_input_loop(txt, func):  # pragma: no cover
-    """
-    Gather information needed from user.
+    """Gather information needed from user.
 
     Parameters
     ----------
@@ -94,8 +84,7 @@ def _get_input_loop(txt, func):  # pragma: no cover
 
 
 def showtext(txt):
-    """
-    Print contents of txt to screen.
+    """Print contents of txt to screen.
 
     Parameters
     ----------
@@ -106,8 +95,7 @@ def showtext(txt):
 
 
 def showcenter(txt):
-    """
-    Prints text to screen in the center position of the terminal.
+    """Prints text to screen in the center position of the terminal.
 
     Parameters
     ----------
@@ -181,8 +169,7 @@ class InteractiveEditor:
     """Interactive dialog class for torrent editing."""
 
     def __init__(self, metafile):
-        """
-        Initialize the Interactive torrent editor guide.
+        """Initialize the Interactive torrent editor guide.
 
         Parameters
         ----------
@@ -211,8 +198,7 @@ class InteractiveEditor:
         showtext(out)
 
     def sanatize_response(self, key, response):
-        """
-        Convert the input data into a form recognizable by the program.
+        """Convert the input data into a form recognizable by the program.
 
         Parameters
         ----------
@@ -272,18 +258,7 @@ class InteractiveEditor:
 
 
 class InteractiveCreator:
-    """Class namespace for interactive program options.
-
-    Attributes
-    ----------
-    _piece_length : int
-    _comment : str
-    _source : str
-    _url_list : list
-    _path : str
-    _outfile : str
-    _announce : str
-    """
+    """Class namespace for interactive program options."""
 
     def __init__(self):
         """Initialize interactive meta file creator dialog."""

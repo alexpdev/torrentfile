@@ -343,22 +343,8 @@ class TorrentFile(MetaFile):
 
     Parameters
     ----------
-    path : `str`
-        Path to torrent file or directory.
-    piece_length : `int`
-        Size of each piece of torrent data.
-    announce : `str` or `list`
-        One or more tracker URL's.
-    private : `int`
-        1 if private torrent else 0.
-    source : `str`
-        Source tracker.
-    comment : `str`
-        Comment string.
-    outfile : `str`
-        Path to write metfile to.
-    noprogress : `bool`
-        True if progress bar is disabled.
+    kwargs : `dict`
+        Dictionary containing torrent file options.
     """
 
     hasher = Hasher
@@ -423,22 +409,8 @@ class TorrentFileV2(MetaFile):
 
     Parameters
     ----------
-    path : `str`
-        Path to torrent file or directory.
-    piece_length : `int`
-        Size of each piece of torrent data.
-    announce : `str` or `list`
-        one or more tracker URL's.
-    private : `int`
-        1 if private torrent else 0.
-    source : `str`
-        Source tracker.
-    comment : `str`
-        Comment string.
-    outfile : `str`
-        Path to write metfile to.
-    noprogress : `bool`
-        True if progress bar is disabled.
+    kwargs : `dict`
+        Keyword arguments for torrent file options.
     """
 
     hasher = HasherV2
@@ -529,22 +501,8 @@ class TorrentFileHybrid(MetaFile):
 
     Parameters
     ----------
-    path : `str`
-        path to torrentfile target.
-    announce : `str` or `list`
-        one or more tracker URL's.
-    comment : `str`
-        Some comment.
-    source : `str`
-        Used for private trackers.
-    outfile : `str`
-        target path to write output.
-    private : `bool`
-        Used for private trackers.
-    piece_length : `int`
-        torrentfile data piece length.
-    noprogress : `bool`
-        True if progress bar is disabled.
+    kwargs : `dict`
+        Keyword arguments for torrent options.
     """
 
     hasher = HasherHybrid

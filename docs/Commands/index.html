@@ -71,18 +71,6 @@
             
             
                 
-                <li >
-                    <a href="../API/">
-                      API
-                    </a>
-                </li>
-                
-            
-            
-            
-            
-            
-                
                 <li class="active">
                     <a href="./">
                       Command Line
@@ -96,7 +84,7 @@
             
                 
                 <li >
-                    <a href="../examples.md">
+                    <a href="../Examples/">
                       Examples
                     </a>
                 </li>
@@ -120,7 +108,7 @@
             
                 
                 <li >
-                    <a href="../hasher.md">
+                    <a href="../Hasher/">
                       Hasher
                     </a>
                 </li>
@@ -132,8 +120,56 @@
             
                 
                 <li >
-                    <a href="../torrent.md">
+                    <a href="../Torrent/">
                       Metafile
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Interactive/">
+                      Interactive
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Edit/">
+                      Edit
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../CLI/">
+                      CLI
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Utils/">
+                      Utils
                     </a>
                 </li>
                 
@@ -187,6 +223,12 @@
             
             
             
+            
+            
+            
+            
+            
+            
               
                 
                 <li>
@@ -213,7 +255,21 @@
         
             <li><a href="#help-messages">Help Messages</a></li>
         
+            <li><a href="#optional-arguments">Optional Arguments</a></li>
+        
+            <li><a href="#actions">Actions</a></li>
+        
             <li><a href="#edit">edit</a></li>
+        
+            <li><a href="#positional-arguments">Positional Arguments</a></li>
+        
+            <li><a href="#optional-arguments_1">Optional Arguments</a></li>
+        
+            <li><a href="#magnet">magnet</a></li>
+        
+            <li><a href="#positional-arguments_1">Positional Arguments</a></li>
+        
+            <li><a href="#optional-arguments_2">Optional Arguments</a></li>
         
     
     </ul>
@@ -225,23 +281,25 @@
 <h1 id="torrentfile-cli-menu">TorrentFile CLI Menu</h1>
 <h2 id="help-messages">Help Messages</h2>
 <p>```bash:
-usage: TorrentFile [-h][-i] [-V][-v]
-                {c,create,new,e,edit,m,magnet,r,recheck,check} ...</p>
-<p>CLI Tool for creating, checking and editing Bittorrent meta files. Supports all meta file versions including hybrid files.</p>
-<p>optional arguments:
--h, --help                                      show this help message and exit
--i, --interactive                               select program options interactively
--V, --version                                   show program version and exit
--v, --verbose                                   output debug information</p>
-<p>Actions:
-Each sub-command triggers a specific action.</p>
-<p>{c,create,new,e,edit,m,magnet,r,recheck,check}
-    c (create, new)                               Create a torrent meta file.</p>
-<pre><code>e (edit)                                      Edit existing torrent meta file.
+Usage
+=====
+   torrentfile [-h][-i] [-V][-v]
+                   <create> <edit> <magnet> <recheck> ...</p>
+<p>CLI utility for editing, creating, checking, and other useful tools for Bittorrent meta files. 
+TorrentFile supports all versions of torrent files.</p>
+<h2 id="optional-arguments">Optional Arguments</h2>
+<p>-h, --help                          show this help message and exit
+  -i, --interactive                   select program options interactively
+  -V, --version                       show program version and exit
+  -v, --verbose                       output debug information</p>
+<h2 id="actions">Actions</h2>
+<p><create> <edit> <magnet> <recheck>
+    c (create, new)                   Create a torrent meta file.</p>
+<pre><code>e (edit)                          Edit existing torrent meta file.
 
-m (magnet)                                    Create magnet url from an existing Bittorrent meta file.
+m (magnet)                        Create magnet url from an existing Bittorrent meta file.
 
-r (recheck, check)                            Calculate amount of torrent meta file's content is found on disk.
+r (recheck, check)                Calculate amount of torrent meta file's content is found on disk.
 </code></pre>
 <pre><code>
 -----
@@ -249,75 +307,92 @@ r (recheck, check)                            Calculate amount of torrent meta f
 ## create
 
 ```bash:
-usage: TorrentFile c [-h] [-a &lt;url&gt; [&lt;url&gt; ...]] [-p] [-s &lt;source&gt;] [-m]
-                    [-c &lt;comment&gt;] [-o &lt;path&gt;] [-t &lt;url&gt; [&lt;url&gt; ...]]
-                    [--progress] [--meta-version &lt;int&gt;]
-                    [--piece-length &lt;int&gt;] [-w &lt;url&gt; [&lt;url&gt; ...]]
-                    &lt;content&gt;
+Usage
+=====
+   torrentfile c [-h] [-a &lt;url&gt; [&lt;url&gt; ...]] [-p] [-s &lt;source&gt;] [-m]
+                     [-c &lt;comment&gt;] [-o &lt;path&gt;] [-t &lt;url&gt; [&lt;url&gt; ...]]
+                     [--noprogress] [--meta-version &lt;int&gt;]
+                     [--piece-length &lt;int&gt;] [-w &lt;url&gt; [&lt;url&gt; ...]]
+                     &lt;content&gt;
 
-positional arguments:
-&lt;content&gt;                                           path to content file or directory
+Positional Arguments
+--------------------
+  &lt;content&gt;                                           Path to content file or directory
 
-optional arguments:
--h, --help                                          show this help message and exit
--a &lt;url&gt; [&lt;url&gt; ...], --announce &lt;url&gt; [&lt;url&gt; ...]  Alias for -t/--tracker
--p, --private                                       Create a private torrent meta file
--s &lt;source&gt;, --source &lt;source&gt;                      specify source tracker
--m, --magnet                                        output Magnet Link after creation completes
--c &lt;comment&gt;, --comment &lt;comment&gt;                   include a comment in file metadata
--o &lt;path&gt;, --out &lt;path&gt;                             Output path for created .torrent file
--t &lt;url&gt; [&lt;url&gt; ...], --tracker &lt;url&gt; [&lt;url&gt; ...]   One or more Bittorrent tracker announce url(s).
---progress                                          Enable showing the progress bar during torrent creation.
-                                                    (Minimially impacts the duration of torrent file creation.)
-
---meta-version &lt;int&gt;                                Bittorrent metafile version.
-                                                    Options = 1, 2 or 3.
-                                                    (1) = Bittorrent v1 (Default)
-                                                    (2) = Bittorrent v2
-                                                    (3) = Bittorrent v1 &amp; v2 hybrid
-
---piece-length &lt;int&gt;                                Fixed amount of bytes for each chunk of data. (Default: None)
-                                                    Acceptable input values include integers 14-24, which
-                                                    will be interpreted as the exponent for 2^n, or any perfect
-                                                    power of two integer between 16Kib and 16MiB (inclusive).
-                                                    Examples:: [--piece-length 14] [-l 20] [-l 16777216]
-
--w &lt;url&gt; [&lt;url&gt; ...], --web-seed &lt;url&gt; [&lt;url&gt; ...]  One or more url(s) linking to a http server hosting
-                                                    the torrent contents.  This is useful if the torrent
-                                                    tracker is ever unreachable. Example:: [-w url1 [url2 [url3]]]
+Optional Arguments
+------------------
+  -h, --help                                          show this help message and exit
+  -a &lt;url&gt; [&lt;url&gt; ...], --announce &lt;url&gt; [&lt;url&gt; ...]  Alias for -t/--tracker
+  -p, --private                                       Create a private torrent file
+  -s &lt;source&gt;, --source &lt;source&gt;                      Useful for cross-seeding
+  -m, --magnet                                        Output Magnet Link after creation completes
+  -c &lt;comment&gt;, --comment &lt;comment&gt;                   Include a comment in file metadata
+  -o &lt;path&gt;, --out &lt;path&gt;                             Output path for created .torrent file
+  -t &lt;url&gt; [&lt;url&gt; ...], --tracker &lt;url&gt; [&lt;url&gt; ...]   One or more Bittorrent tracker announce url(s).
+  --noprogress                                        Disable showing the progress bar during torrent creation.
+                                                      (Minimially improves performance of torrent file creation.)
+  --meta-version &lt;int&gt;                                Bittorrent metafile version.
+                                                      Options - {1, 2, 3}
+                                                      (1) = Bittorrent v1 (Default)
+                                                      (2) = Bittorrent v2
+                                                      (3) = Bittorrent v1 &amp; v2 hybrid
+  --piece-length &lt;int&gt;                                Number of bytes per piece. (Default: None)
+                                                      Acceptable inputs include {14 - 24} as exponent for 2^n,
+                                                      or any acceptable integer value (must be power of 2).
+                                                      Examples:: [--piece-length 14] [--piece-length 16777216]
+  -w &lt;url&gt; [&lt;url&gt; ...], --web-seed &lt;url&gt; [&lt;url&gt; ...]  One or more url(s) linking to a http server hosting
+                                                      the torrent contents.  This is useful if the torrent
+                                                      tracker is ever unreachable. Example:: -w url1 url2 url3
 </code></pre>
 <hr />
 <h2 id="edit">edit</h2>
 <p>```bash:
-usage: TorrentFile e [-h] [--tracker <url> [<url> ...]]
-                    [--web-seed <url> [<url> ...]][--private]
-                    [--comment <comment>] [--source <source>]
-                    &lt;*.torrent&gt;</p>
-<p>positional arguments:
-&lt;<em>.torrent&gt;                   path to </em>.torrent file</p>
-<p>optional arguments:
--h, --help                    show this help message and exit
---tracker <url> [<url> ...]   replace current list of tracker/announce urls with one or more space
+Usage
+=====
+   torrentfile e [-h] [--tracker <url> [<url> ...]]
+                     [--web-seed <url> [<url> ...]][--private]
+                     [--comment <comment>] [--source <source>]
+                     &lt;*.torrent&gt;</p>
+<h2 id="positional-arguments">Positional Arguments</h2>
+<p>&lt;<em>.torrent&gt;                   path to </em>.torrent file</p>
+<h2 id="optional-arguments_1">Optional Arguments</h2>
+<p>-h, --help                    show this help message and exit
+  --tracker <url> [<url> ...]   Replace current list of tracker/announce urls with one or more space
                                 seperated Bittorrent tracker announce url(s).</p>
-<p>--web-seed <url> [<url> ...]  replace current list of web-seed urls with one or more space seperated url(s)</p>
-<p>--private                     If currently private, will make it public, if public then private.
---comment <comment>           replaces any existing comment with <comment>
---source <source>             replaces current source with <source></p>
+<p>--web-seed <url> [<url> ...]  Replace current list of web-seed urls with one or more space seperated url(s)</p>
+<p>--private                     Make torrent private.
+  --comment <comment>           Replaces any existing comment with <comment>
+  --source <source>             Replaces current source with <source></p>
 <pre><code>
 -----
 
-## magnet
+## Recheck
 
-```bash:
-usage: TorrentFile m [-h] &lt;*.torrent&gt;
+```bash
+Usage
+=====
+   torrentfile r [-h] &lt;*.torrent&gt; &lt;content&gt;
 
-positional arguments:
-&lt;*.torrent&gt;  path to Bittorrent meta file.
+Positional Arguments
+--------------------
+  &lt;*.torrent&gt;  path to .torrent file.
+  &lt;content&gt;    path to content file or directory
 
-optional arguments:
--h, --help   show this help message and exit
-usage: TorrentFile r [-h] &lt;*.torrent&gt; content
-</code></pre></div>
+Optional Arguments
+------------------
+  -h, --help   show this help message and exit
+</code></pre>
+<hr />
+<h2 id="magnet">magnet</h2>
+<p>```bash:
+Usage
+=====
+   torrentfile m [-h] &lt;*.torrent&gt;</p>
+<h2 id="positional-arguments_1">Positional Arguments</h2>
+<p>&lt;*.torrent&gt;  Path to Bittorrent meta file.</p>
+<h2 id="optional-arguments_2">Optional Arguments</h2>
+<p>-h, --help   show this help message and exit
+```</p></div>
         </div>
 
     <footer class="col-md-12">
