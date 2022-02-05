@@ -89,7 +89,7 @@ def test_cli_piece_length(folder, piece_length, version):
         str(piece_length),
         "--meta-version",
         version,
-        "--progress",
+        "--noprogress",
     ]
     sys.argv = args
     main()
@@ -319,8 +319,8 @@ def test_cli_help():
 
 
 @pytest.mark.parametrize("version", ["1", "2", "3"])
-@pytest.mark.parametrize("progress", [True, False])
-def test_cli_empty_files(dir2, version, progress):
+@pytest.mark.parametrize("noprogress", [True, False])
+def test_cli_empty_files(dir2, version, noprogress):
     """Test creating torrent with empty files."""
     args = [
         "torrentfile",
@@ -332,8 +332,8 @@ def test_cli_empty_files(dir2, version, progress):
         "somesource",
     ]
     sys.argv = args
-    if progress:
-        sys.argv.append("--progress")
+    if noprogress:
+        sys.argv.append("--noprogress")
 
     def walk(root, count):
         """Traverse directory to edit files."""

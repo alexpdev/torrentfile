@@ -68,7 +68,7 @@ def test_torrentfile_extra(dir2, version):
         "path": dir2,
         "comment": "somecomment",
         "announce": "announce",
-        "progress": True,
+        "noprogress": True,
     }
     torrent = version(**args)
     assert torrent.meta["announce"] == "announce"
@@ -77,8 +77,8 @@ def test_torrentfile_extra(dir2, version):
 @pytest.mark.parametrize("size", list(range(17, 25)))
 @pytest.mark.parametrize("piece_length", [2 ** i for i in range(14, 18)])
 @pytest.mark.parametrize("version", torrents())
-@pytest.mark.parametrize("progress", [True, False])
-def test_torrentfile_single(version, size, piece_length, progress, capsys):
+@pytest.mark.parametrize("noprogress", [True, False])
+def test_torrentfile_single(version, size, piece_length, noprogress, capsys):
     """Test creating a torrent file from a single file contents."""
     tfile = tempfile(exp=size)
     with capsys.disabled():
@@ -88,7 +88,7 @@ def test_torrentfile_single(version, size, piece_length, progress, capsys):
         "comment": "somecomment",
         "announce": "announce",
         "piece_length": piece_length,
-        "progress": progress,
+        "noprogress": noprogress,
     }
     trent = version(**args)
     trent.write()

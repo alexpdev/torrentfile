@@ -24,15 +24,11 @@ from setuptools import find_packages, setup
 
 
 def load_info():
-    """Extract information from package.json."""
-    return json.load(open("package.json"))
-
-
-def load_description():
-    """Load readme into long description parameter."""
+    """Extract information from package.json and README files."""
+    info = json.load(open("package.json"))
     with open("README.md", "rt", encoding="utf-8") as readme:
-        long_description = readme.read()
-    return long_description
+        info["long_description"] = readme.read()
+    return info
 
 
 INFO = load_info()
@@ -41,13 +37,19 @@ setup(
     name=INFO["name"],
     version=INFO["version"],
     description=INFO["description"],
-    long_description=load_description(),
+    long_description=INFO["long_description"],
     long_description_content_type="text/markdown",
     classifiers=[
+        "Environment :: Console",
         "Development Status :: 3 - Alpha",
         "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Intended Audience :: End Users/Desktop",
+        "Intended Audience :: Developers",
+        "Topic :: Utilities",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "License :: OSI Approved :: GNU Lesser General Public License v3"
         " (LGPLv3)",
@@ -64,6 +66,5 @@ setup(
     tests_require=["pytest"],
     install_requires=["pyben", "tqdm"],
     setup_requires=["setuptools", "wheel"],
-    zip_safe=False,
-    test_suite="complete",
+    zip_safe=False
 )

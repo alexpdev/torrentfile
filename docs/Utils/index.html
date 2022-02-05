@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="TorrentFile CLI Documentation and Examples">
+        
+        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/Utils/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Utils - TorrentFile Docs</title>
+
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.min.css">
+        <link href="../css/base.css" rel="stylesheet">
+        <link href="//use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
+        <link href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" rel="stylesheet">
+        <link href="../css/mkapi-common.css" rel="stylesheet">
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+        <link href="../stylesheets/extra.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">
+            
+            TorrentFile Docs
+            </a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+            
+            
+            
+                
+                <li >
+                    <a href="..">
+                      home
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Commands/">
+                      Command Line
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Examples/">
+                      Examples
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../LGPLv3/">
+                      License
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Hasher/">
+                      Hasher
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Torrent/">
+                      Metafile
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Interactive/">
+                      Interactive
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Edit/">
+                      Edit
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../CLI/">
+                      CLI
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li class="active">
+                    <a href="./">
+                      Utils
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Recheck/">
+                      Recheck
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../changelog/">
+                      Changelog
+                    </a>
+                </li>
+                
+            
+            
+            
+            </ul>
+
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+              
+                
+                <li>
+                    <a href="https://github.com/alexpdev/torrentfile/">
+                        
+                            <i class="fa fa-gihub"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3">
+  
+<div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#torrentfile-api-documentation">TorrentFile API Documentation</a></li>
+        
+            <li><a href="#utils-module">Utils Module</a></li>
+        
+            <li><a href="#torrentfile.utils">utils</a></li>
+        
+    
+    </ul>
+</div>
+  
+</div>
+            <div class="col-md-9" role="main">
+
+<h1 id="torrentfile-api-documentation">TorrentFile API Documentation</h1>
+<h2 id="utils-module"><code>Utils</code> Module</h2>
+<div class="mkapi-node" id="torrentfile.utils">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object module code top">
+    <div class="mkapi-object-kind module top">module</div>
+    <div class="mkapi-object-body module top"><code class="mkapi-object-prefix">torrentfile.</code><code class="mkapi-object-name">utils</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Utility functions and classes used throughout package.</p>
+<p>Functions:
+  get_piece_length: calculate ideal piece length for torrent file.
+  sortfiles: traverse directory in sorted order yielding paths encountered.
+  path_size: Sum the sizes of each file in path.
+  get_file_list: Return list of all files contained in directory.
+  path_stat: Get ideal piece length, total size, and file list for directory.
+  path_piece_length: Get ideal piece length based on size of directory.</p></div>
+    </div>
+  <div class="mkapi-section classes">
+      <div class="mkapi-section-name classes">
+          <span class="mkapi-section-name-body classes">Classes</span> 
+        </div>
+      <div class="mkapi-section-body classes"><ul class="mkapi-items">
+<li class="class"><code class="mkapi-item-name">MissingPathError</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Path parameter is required to specify target content.</span></li>
+
+<li class="class"><code class="mkapi-item-name">PieceLengthValueError</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Piece Length parameter must equal a perfect power of 2.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section functions">
+      <div class="mkapi-section-name functions">
+          <span class="mkapi-section-name-body functions">Functions</span> 
+        </div>
+      <div class="mkapi-section-body functions"><ul class="mkapi-items">
+<li class="function"><code class="mkapi-item-name">filelist_total</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">pathstring</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`os.PathLike`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Perform error checking and format conversion to os.PathLike.</span></li>
+
+<li class="function"><code class="mkapi-item-name">get_file_list</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">path</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(filelist : `list`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Return a sorted list of file paths contained in directory.</span></li>
+
+<li class="function"><code class="mkapi-item-name">get_piece_length</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">size</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`int`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate the ideal piece length for bittorrent data.</span></li>
+
+<li class="function"><code class="mkapi-item-name">humanize_bytes</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">amount</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`str` :)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Convert integer into human readable memory sized denomination.</span></li>
+
+<li class="function"><code class="mkapi-item-name">next_power_2</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">value</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`int`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate the next perfect power of 2 equal to or greater than value.</span></li>
+
+<li class="function"><code class="mkapi-item-name">normalize_piece_length</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">piece_length</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(piece_length : `int`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Verify input piece_length is valid and convert accordingly.</span></li>
+
+<li class="function"><code class="mkapi-item-name">path_piece_length</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">path</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`int`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate piece length for input path and contents.</span></li>
+
+<li class="function"><code class="mkapi-item-name">path_size</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">path</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`int`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Return the total size of all files in path recursively.</span></li>
+
+<li class="function"><code class="mkapi-item-name">path_stat</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">path</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(`list`)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate directory statistics.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+</div>
+
+<hr />
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h2 id="torrentfile.utils" class="doc doc-heading">
+        <code>torrentfile.utils</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+      <p>Utility functions and classes used throughout package.</p>
+<p>Functions:
+  get_piece_length: calculate ideal piece length for torrent file.
+  sortfiles: traverse directory in sorted order yielding paths encountered.
+  path_size: Sum the sizes of each file in path.
+  get_file_list: Return list of all files contained in directory.
+  path_stat: Get ideal piece length, total size, and file list for directory.
+  path_piece_length: Get ideal piece length based on size of directory.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="torrentfile.utils.MissingPathError" class="doc doc-heading">
+        <code>
+MissingPathError            (<span title="Exception">Exception</span>)
+        </code>
+
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Path parameter is required to specify target content.</p>
+<p>Creating a .torrent file with no contents seems rather silly.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>message</code></td>
+        <td><code>`any`</code></td>
+        <td><p>Message for user (optional).</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MissingPathError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Path parameter is required to specify target content.</span>
+
+<span class="sd">    Creating a .torrent file with no contents seems rather silly.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    message : `any`</span>
+<span class="sd">        Message for user (optional).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Raise when creating a meta file without specifying target content.</span>
+
+<span class="sd">        The `message` argument is a message to pass to Exception base class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Path arguement is missing and required </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="torrentfile.utils.MissingPathError.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Raise when creating a meta file without specifying target content.</p>
+<p>The <code>message</code> argument is a message to pass to Exception base class.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raise when creating a meta file without specifying target content.</span>
+
+<span class="sd">    The `message` argument is a message to pass to Exception base class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Path arguement is missing and required </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="torrentfile.utils.PieceLengthValueError" class="doc doc-heading">
+        <code>
+PieceLengthValueError            (<span title="Exception">Exception</span>)
+        </code>
+
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Piece Length parameter must equal a perfect power of 2.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>message</code></td>
+        <td><code>`any`</code></td>
+        <td><p>Message for user (optional).</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PieceLengthValueError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Piece Length parameter must equal a perfect power of 2.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    message : `any`</span>
+<span class="sd">        Message for user (optional).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Raise when creating a meta file with incorrect piece length value.</span>
+
+<span class="sd">        The `message` argument is a message to pass to Exception base class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Incorrect value for piece length: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="torrentfile.utils.PieceLengthValueError.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Raise when creating a meta file with incorrect piece length value.</p>
+<p>The <code>message</code> argument is a message to pass to Exception base class.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raise when creating a meta file with incorrect piece length value.</span>
+
+<span class="sd">    The `message` argument is a message to pass to Exception base class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Incorrect value for piece length: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.filelist_total" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">filelist_total</span><span class="p">(</span><span class="n">pathstring</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Perform error checking and format conversion to os.PathLike.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>pathstring</code></td>
+        <td><code>`str`</code></td>
+        <td><p>An existing filesystem path.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>MissingPathError</code></td>
+        <td><p>File could not be found.</p></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>`os.PathLike`</code></td>
+      <td><p>Input path converted to bytes format.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">filelist_total</span><span class="p">(</span><span class="n">pathstring</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Perform error checking and format conversion to os.PathLike.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pathstring : `str`</span>
+<span class="sd">        An existing filesystem path.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `os.PathLike`</span>
+<span class="sd">        Input path converted to bytes format.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    MissingPathError</span>
+<span class="sd">        File could not be found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pathstring</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">pathstring</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">MissingPathError</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.get_file_list" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_file_list</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return a sorted list of file paths contained in directory.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>target file or directory.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>`list`</code></td>
+      <td><p>sorted list of file paths.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_file_list</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return a sorted list of file paths contained in directory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : `str`</span>
+<span class="sd">        target file or directory.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    filelist : `list`</span>
+<span class="sd">        sorted list of file paths.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">filelist</span> <span class="o">=</span> <span class="n">filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filelist</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.get_piece_length" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_piece_length</span><span class="p">(</span><span class="n">size</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the ideal piece length for bittorrent data.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>size</code></td>
+        <td><code>int</code></td>
+        <td><p>Total bits of all files incluided in .torrent file.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>int</code></td>
+      <td><p>Ideal peace length size arguement.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_piece_length</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the ideal piece length for bittorrent data.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    size : `int`</span>
+<span class="sd">        Total bits of all files incluided in .torrent file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `int`</span>
+<span class="sd">        Ideal peace length size arguement.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="k">while</span> <span class="n">size</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">exp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">200</span> <span class="ow">and</span> <span class="n">exp</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">:</span>
+        <span class="n">exp</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">exp</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.humanize_bytes" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">humanize_bytes</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Convert integer into human readable memory sized denomination.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>amount</code></td>
+        <td><code>int</code></td>
+        <td><p>total number of bytes.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>str</code></td>
+      <td><p>human readable representation of the given amount of bytes.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">humanize_bytes</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Convert integer into human readable memory sized denomination.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    amount : `int`</span>
+<span class="sd">        total number of bytes.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `str` :</span>
+<span class="sd">        human readable representation of the given amount of bytes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">1024</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
+    <span class="k">if</span> <span class="mi">1024</span> <span class="o">&lt;=</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">1_048_576</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span> <span class="o">//</span> <span class="mi">1024</span><span class="si">}</span><span class="s2"> KiB&quot;</span>
+    <span class="k">if</span> <span class="mi">1_048_576</span> <span class="o">&lt;=</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">1_073_741_824</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span> <span class="o">//</span> <span class="mi">1_048_576</span><span class="si">}</span><span class="s2"> MiB&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">amount</span> <span class="o">//</span> <span class="mi">1073741824</span><span class="si">}</span><span class="s2"> GiB&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.next_power_2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">next_power_2</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the next perfect power of 2 equal to or greater than value.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>value</code></td>
+        <td><code>`int`</code></td>
+        <td><p>integer value that is less than some perfect power of 2.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>`int`</code></td>
+      <td><p>The next power of 2 greater than value, or value if already power of 2.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">next_power_2</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the next perfect power of 2 equal to or greater than value.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    value : `int`</span>
+<span class="sd">        integer value that is less than some perfect power of 2.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `int`</span>
+<span class="sd">        The next power of 2 greater than value, or value if already power of 2.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">value</span><span class="p">:</span>
+        <span class="n">start</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">start</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.normalize_piece_length" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">normalize_piece_length</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Verify input piece_length is valid and convert accordingly.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>piece_length</code></td>
+        <td><code>`int` | `str`</code></td>
+        <td><p>The piece length provided by user.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>PieceLengthValueError :</code></td>
+        <td><p>If piece length is improper value.</p></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>int</code></td>
+      <td><p>normalized piece length.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">normalize_piece_length</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Verify input piece_length is valid and convert accordingly.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    piece_length : `int` | `str`</span>
+<span class="sd">        The piece length provided by user.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    piece_length : `int`</span>
+<span class="sd">        normalized piece length.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    PieceLengthValueError :</span>
+<span class="sd">        If piece length is improper value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">piece_length</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">piece_length</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+            <span class="n">piece_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PieceLengthValueError</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="mi">13</span> <span class="o">&lt;</span> <span class="n">piece_length</span> <span class="o">&lt;</span> <span class="mi">26</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">piece_length</span>
+    <span class="k">if</span> <span class="n">piece_length</span> <span class="o">&lt;=</span> <span class="mi">13</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">PieceLengthValueError</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
+
+    <span class="n">log</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">piece_length</span><span class="p">))</span>
+    <span class="k">if</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">log</span> <span class="o">==</span> <span class="n">piece_length</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">piece_length</span>
+    <span class="k">raise</span> <span class="n">PieceLengthValueError</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.path_piece_length" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">path_piece_length</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate piece length for input path and contents.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>The absolute path to directory and contents.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>`int`</code></td>
+      <td><p>The size of pieces of torrent content.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">path_piece_length</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate piece length for input path and contents.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : `str`</span>
+<span class="sd">        The absolute path to directory and contents.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `int`</span>
+<span class="sd">        The size of pieces of torrent content.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">psize</span> <span class="o">=</span> <span class="n">path_size</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">get_piece_length</span><span class="p">(</span><span class="n">psize</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.path_size" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">path_size</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return the total size of all files in path recursively.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>path to target file or directory.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>`int`</code></td>
+      <td><p>total size of files.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">path_size</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the total size of all files in path recursively.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : `str`</span>
+<span class="sd">        path to target file or directory.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `int`</span>
+<span class="sd">        total size of files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">total_size</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total_size</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.path_stat" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">path_stat</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate directory statistics.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>`str`</code></td>
+        <td><p>The path to start calculating from.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>`list`</code></td>
+      <td><p>List of all files contained in Directory</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\utils.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">path_stat</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate directory statistics.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : `str`</span>
+<span class="sd">        The path to start calculating from.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `list`</span>
+<span class="sd">        List of all files contained in Directory</span>
+<span class="sd">    `int`</span>
+<span class="sd">        Total sum of bytes from all contents of dir</span>
+<span class="sd">    `int`</span>
+<span class="sd">        The size of pieces of the torrent contents.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">total_size</span><span class="p">,</span> <span class="n">filelist</span> <span class="o">=</span> <span class="n">filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">piece_length</span> <span class="o">=</span> <span class="n">get_piece_length</span><span class="p">(</span><span class="n">total_size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">filelist</span><span class="p">,</span> <span class="n">total_size</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div></div>
+        </div>
+
+    <footer class="col-md-12">
+        <hr>
+        
+        <center>alexpdev 2021</center>
+        
+    </footer>
+
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script src="../js/base.js"></script>
+        <script src="../js/mkapi.js"></script>
+        <script src="../search/main.js"></script>
+    </body>
+</html>

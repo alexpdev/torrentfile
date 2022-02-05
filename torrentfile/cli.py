@@ -35,7 +35,7 @@ from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 logger = logging.getLogger(__name__)
 
 
-class _HelpFormat(HelpFormatter):
+class TorrentFileHelpFormatter(HelpFormatter):
     """
     Formatting class for help tips provided by the CLI.
 
@@ -77,22 +77,64 @@ class _HelpFormat(HelpFormatter):
         Parameters
         ----------
         text : `str`
-            string that needs formatting.
+            Pre-formatted text.
+
+        Returns
+        -------
+        `str` :
+            Formatted text from input.
         """
         text = text % dict(prog=self._prog) if "%(prog)" in text else text
         text = self._whitespace_matcher.sub(" ", text).strip()
         return text + "\n\n"
 
+    def _join_parts(self, part_strings):
+        """Combine different sections of the help message.
 
-def create_command(args, logger):
+        Parameters
+        ----------
+        part_strings : `list`
+            List of argument help messages and headers.
+
+        Returns
+        -------
+        `str` :
+            Fully formatted help message for CLI.
+        """
+        parts = self.format_headers(part_strings)
+        return super()._join_parts(parts)
+
+    @staticmethod
+    def format_headers(parts):
+        """Format help message section headers.
+
+        Parameters
+        ----------
+        parts : `list`
+            List of individual lines for help message.
+
+        Returns
+        -------
+        `list` :
+            Input list with formatted section headers.
+        """
+        if parts and parts[0].startswith("usage:"):
+            parts[0] = "Usage\n=====\n  " + parts[0][6:]
+        headings = [i for i in range(len(parts)) if parts[i].endswith(":\n")]
+        for i in headings[::-1]:
+            parts[i] = parts[i][:-2].title()
+            underline = "".join(["\n", "-" * len(parts[i]), "\n"])
+            parts.insert(i + 1, underline)
+        return parts
+
+
+def create_command(args):
     """Execute the create CLI sub-command to create a new torrent metafile.
 
     Parameters
     ----------
     args : `Namespace`
         positional and optional CLI arguments.
-    logger: `Logger`
-        logging facility for module.
 
     Returns
     -------
@@ -100,7 +142,7 @@ def create_command(args, logger):
         object containing the path to created metafile and its contents.
     """
     kwargs = {
-        "progress": args.progress,
+        "noprogress": args.noprogress,
         "url_list": args.url_list,
         "path": args.content,
         "announce": args.announce + args.tracker,
@@ -134,15 +176,13 @@ def create_command(args, logger):
     return args
 
 
-def edit_command(args, logger):
+def edit_command(args):
     """Execute the edit CLI sub-command with provided arguments.
 
     Parameters
     ----------
     args : `Namespace`
         positional and optional CLI arguments.
-    logger: `Logger`
-        logging facility for module.
 
     Returns
     -------
@@ -161,15 +201,13 @@ def edit_command(args, logger):
     return edit_torrent(metafile, editargs)
 
 
-def recheck_command(args, logger):
+def recheck_command(args):
     """Execute recheck CLI sub-command.
 
     Parameters
     ----------
     args : `Namespace`
         positional and optional arguments.
-    logger: `Logger`
-        logging facility for module.
 
     Returns
     -------
@@ -189,35 +227,13 @@ def recheck_command(args, logger):
     return result
 
 
-def magnet_command(args, logger):
-    """Execute the magnet sub-command to create a Magnet URI.
-
-    Parameters
-    ----------
-    args : `Namespace`
-        positional and optional command line arguments
-    logger: `Logger`
-        logging facility for module.
-
-    Returns
-    -------
-    `str` :
-        Full Magnet URI for torrent file.
-    """
-    metafile = args.metafile
-    logger.info("[magnet command executed]")
-    return create_magnet(metafile)
-
-
 def create_magnet(metafile):
     """Create a magnet URI from a Bittorrent meta file.
 
     Parameters
     ----------
-    metafile : `str` | `os.PathLike`
-        path to bittorrent meta file.
-    logger: `Logger`
-        logging facility for module.
+    metafile : (`Namespace`||`str`)
+        Namespace class for CLI arguments.
 
     Returns
     -------
@@ -230,6 +246,8 @@ def create_magnet(metafile):
 
     import pyben
 
+    if hasattr(metafile, "metafile"):
+        metafile = metafile.metafile
     if not os.path.exists(metafile):
         raise FileNotFoundError
     meta = pyben.load(metafile)
@@ -271,11 +289,12 @@ def main_script(args=None):
     parser = ArgumentParser(
         "torrentfile",
         description="""
-        CLI Tool for creating, checking and editing Bittorrent meta files.
-        Supports all meta file versions including hybrid files.
+        CLI Tool for creating, checking, editing... Bittorrent meta files.
+        TorrentFile supports all versions of torrent files.
         """,
         prefix_chars="-",
-        formatter_class=_HelpFormat,
+        formatter_class=TorrentFileHelpFormatter,
+        conflict_handler="resolve",
     )
 
     parser.add_argument(
@@ -304,8 +323,8 @@ def main_script(args=None):
 
     subparsers = parser.add_subparsers(
         title="Actions",
-        description="Each sub-command triggers a specific action.",
         dest="command",
+        metavar="<create> <edit> <magnet> <recheck>",
     )
 
     create_parser = subparsers.add_parser(
@@ -315,7 +334,7 @@ def main_script(args=None):
         """,
         prefix_chars="-",
         aliases=["create", "new"],
-        formatter_class=_HelpFormat,
+        formatter_class=TorrentFileHelpFormatter,
     )
 
     create_parser.add_argument(
@@ -384,12 +403,12 @@ def main_script(args=None):
     )
 
     create_parser.add_argument(
-        "--progress",
+        "--noprogress",
         action="store_true",
-        dest="progress",
+        dest="noprogress",
         help="""
-        Enable showing the progress bar during torrent creation.
-        (Minimially impacts the duration of torrent file creation.)
+        Disable showing the progress bar during torrent creation.
+        (Minimially improves performance of torrent file creation.)
         """,
     )
 
@@ -453,7 +472,7 @@ def main_script(args=None):
         """,
         aliases=["edit"],
         prefix_chars="-",
-        formatter_class=_HelpFormat,
+        formatter_class=TorrentFileHelpFormatter,
     )
 
     edit_parser.add_argument(
@@ -518,7 +537,7 @@ def main_script(args=None):
         """,
         aliases=["magnet"],
         prefix_chars="-",
-        formatter_class=_HelpFormat,
+        formatter_class=TorrentFileHelpFormatter,
     )
 
     magnet_parser.add_argument(
@@ -528,7 +547,7 @@ def main_script(args=None):
         metavar="<*.torrent>",
     )
 
-    magnet_parser.set_defaults(func=magnet_command)
+    magnet_parser.set_defaults(func=create_magnet)
 
     check_parser = subparsers.add_parser(
         "r",
@@ -537,7 +556,7 @@ def main_script(args=None):
         """,
         aliases=["recheck", "check"],
         prefix_chars="-",
-        formatter_class=_HelpFormat,
+        formatter_class=TorrentFileHelpFormatter,
     )
 
     check_parser.add_argument(
@@ -564,7 +583,7 @@ def main_script(args=None):
     if args.interactive:
         return select_action()
 
-    return args.func(args, logger)
+    return args.func(args)
 
 
 def main():

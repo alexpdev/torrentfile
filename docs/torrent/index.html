@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="TorrentFile CLI Documentation and Examples">
         
-        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/torrent/">
+        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/Torrent/">
         <link rel="shortcut icon" href="../img/favicon.ico">
 
         <title>Metafile - TorrentFile Docs</title>
@@ -72,8 +72,8 @@
             
                 
                 <li >
-                    <a href="../api/">
-                      API
+                    <a href="../Commands/">
+                      Command Line
                     </a>
                 </li>
                 
@@ -84,19 +84,7 @@
             
                 
                 <li >
-                    <a href="../cli.md">
-                      CLI
-                    </a>
-                </li>
-                
-            
-            
-            
-            
-            
-                
-                <li >
-                    <a href="../examples/">
+                    <a href="../Examples/">
                       Examples
                     </a>
                 </li>
@@ -109,7 +97,7 @@
                 
                 <li >
                     <a href="../LGPLv3/">
-                      license
+                      License
                     </a>
                 </li>
                 
@@ -120,7 +108,7 @@
             
                 
                 <li >
-                    <a href="../hasher/">
+                    <a href="../Hasher/">
                       Hasher
                     </a>
                 </li>
@@ -140,10 +128,92 @@
             
             
             
+            
+            
+                
+                <li >
+                    <a href="../Interactive/">
+                      Interactive
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Edit/">
+                      Edit
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../CLI/">
+                      CLI
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Utils/">
+                      Utils
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Recheck/">
+                      Recheck
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../changelog/">
+                      Changelog
+                    </a>
+                </li>
+                
+            
+            
+            
             </ul>
 
             <!-- Search, Navigation and Repo links -->
             <ul class="nav navbar-nav navbar-right">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
             
             
@@ -735,7 +805,7 @@ MetaFile        </code>
         <td><code>None</code></td>
       </tr>
       <tr>
-        <td><code>progress</code></td>
+        <td><code>noprogress</code></td>
         <td><code>`bool`</code></td>
         <td><p>If True disable showing the progress bar.</p></td>
         <td><code>False</code></td>
@@ -763,7 +833,7 @@ MetaFile        </code>
 <span class="sd">        target path to write .torrent file. Default: None</span>
 <span class="sd">    source : `str`</span>
 <span class="sd">        Private tracker source. Default: None</span>
-<span class="sd">    progress : `bool`</span>
+<span class="sd">    noprogress : `bool`</span>
 <span class="sd">        If True disable showing the progress bar.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -785,7 +855,7 @@ MetaFile        </code>
     <span class="c1"># fmt: off</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                 <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Construct MetaFile superclass and assign local attributes.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">MissingPathError</span>
@@ -818,7 +888,7 @@ MetaFile        </code>
             <span class="bp">self</span><span class="o">.</span><span class="n">private</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="n">progress</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span> <span class="o">=</span> <span class="n">noprogress</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">url_list</span> <span class="o">=</span> <span class="n">url_list</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
@@ -904,7 +974,7 @@ MetaFile        </code>
 
 
 <h4 id="torrentfile.torrent.MetaFile.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -920,7 +990,7 @@ MetaFile        </code>
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
              <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+             <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Construct MetaFile superclass and assign local attributes.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">MissingPathError</span>
@@ -953,7 +1023,7 @@ MetaFile        </code>
         <span class="bp">self</span><span class="o">.</span><span class="n">private</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="n">progress</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span> <span class="o">=</span> <span class="n">noprogress</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">url_list</span> <span class="o">=</span> <span class="n">url_list</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
@@ -1241,46 +1311,10 @@ TorrentFile            (<a title="torrentfile.torrent.MetaFile" href="#torrentfi
   </thead>
   <tbody>
       <tr>
-        <td><code>path</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Path to torrent file or directory.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>piece_length</code></td>
-        <td><code>`int`</code></td>
-        <td><p>Size of each piece of torrent data.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>announce</code></td>
-        <td><code>`str` or `list`</code></td>
-        <td><p>One or more tracker URL's.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>private</code></td>
-        <td><code>`int`</code></td>
-        <td><p>1 if private torrent else 0.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>source</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Source tracker.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>comment</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Comment string.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>outfile</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Path to write metfile to.</p></td>
-        <td><em>required</em></td>
+        <td><code>kwargs</code></td>
+        <td><code>`dict`</code></td>
+        <td><p>Dictionary containing torrent file options.</p></td>
+        <td><code>{}</code></td>
       </tr>
   </tbody>
 </table>
@@ -1293,20 +1327,8 @@ TorrentFile            (<a title="torrentfile.torrent.MetaFile" href="#torrentfi
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    path : `str`</span>
-<span class="sd">        Path to torrent file or directory.</span>
-<span class="sd">    piece_length : `int`</span>
-<span class="sd">        Size of each piece of torrent data.</span>
-<span class="sd">    announce : `str` or `list`</span>
-<span class="sd">        One or more tracker URL&#39;s.</span>
-<span class="sd">    private : `int`</span>
-<span class="sd">        1 if private torrent else 0.</span>
-<span class="sd">    source : `str`</span>
-<span class="sd">        Source tracker.</span>
-<span class="sd">    comment : `str`</span>
-<span class="sd">        Comment string.</span>
-<span class="sd">    outfile : `str`</span>
-<span class="sd">        Path to write metfile to.</span>
+<span class="sd">    kwargs : `dict`</span>
+<span class="sd">        Dictionary containing torrent file options.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">hasher</span> <span class="o">=</span> <span class="n">Hasher</span>
@@ -1346,7 +1368,10 @@ TorrentFile            (<a title="torrentfile.torrent.MetaFile" href="#torrentfi
 
         <span class="n">pieces</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
         <span class="n">feeder</span> <span class="o">=</span> <span class="n">Hasher</span><span class="p">(</span><span class="n">filelist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">feeder</span><span class="p">:</span>
+                <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
             <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span>
@@ -1359,9 +1384,6 @@ TorrentFile            (<a title="torrentfile.torrent.MetaFile" href="#torrentfi
                 <span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                 <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">):</span>
-                <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">feeder</span><span class="p">:</span>
                 <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pieces</span>
 </code></pre></div>
@@ -1420,12 +1442,6 @@ seemlessly until the last piece which may be smaller than others.</p>
         <td><p>Size of chuncks to split the data into.</p></td>
         <td><em>required</em></td>
       </tr>
-      <tr>
-        <td><code>total</code></td>
-        <td><code>`int`</code></td>
-        <td><p>Sum of all files in file list.</p></td>
-        <td><em>required</em></td>
-      </tr>
   </tbody>
 </table>
         <details class="quote">
@@ -1443,8 +1459,6 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        List of files.</span>
 <span class="sd">    piece_length : `int`</span>
 <span class="sd">        Size of chuncks to split the data into.</span>
-<span class="sd">    total : `int`</span>
-<span class="sd">        Sum of all files in file list.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
@@ -1814,7 +1828,10 @@ seemlessly until the last piece which may be smaller than others.</p>
 
     <span class="n">pieces</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">feeder</span> <span class="o">=</span> <span class="n">Hasher</span><span class="p">(</span><span class="n">filelist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">feeder</span><span class="p">:</span>
+            <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
         <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
         <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span>
@@ -1827,9 +1844,6 @@ seemlessly until the last piece which may be smaller than others.</p>
             <span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
             <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-            <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">feeder</span><span class="p">:</span>
             <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
     <span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pieces</span>
 </code></pre></div>
@@ -1879,46 +1893,10 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
   </thead>
   <tbody>
       <tr>
-        <td><code>path</code></td>
-        <td><code>`str`</code></td>
-        <td><p>path to torrentfile target.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>announce</code></td>
-        <td><code>`str` or `list`</code></td>
-        <td><p>one or more tracker URL's.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>comment</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Some comment.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>source</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Used for private trackers.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>outfile</code></td>
-        <td><code>`str`</code></td>
-        <td><p>target path to write output.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>private</code></td>
-        <td><code>`bool`</code></td>
-        <td><p>Used for private trackers.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>piece_length</code></td>
-        <td><code>`int`</code></td>
-        <td><p>torrentfile data piece length.</p></td>
-        <td><em>required</em></td>
+        <td><code>kwargs</code></td>
+        <td><code>`dict`</code></td>
+        <td><p>Keyword arguments for torrent options.</p></td>
+        <td><code>{}</code></td>
       </tr>
   </tbody>
 </table>
@@ -1929,20 +1907,8 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    path : `str`</span>
-<span class="sd">        path to torrentfile target.</span>
-<span class="sd">    announce : `str` or `list`</span>
-<span class="sd">        one or more tracker URL&#39;s.</span>
-<span class="sd">    comment : `str`</span>
-<span class="sd">        Some comment.</span>
-<span class="sd">    source : `str`</span>
-<span class="sd">        Used for private trackers.</span>
-<span class="sd">    outfile : `str`</span>
-<span class="sd">        target path to write output.</span>
-<span class="sd">    private : `bool`</span>
-<span class="sd">        Used for private trackers.</span>
-<span class="sd">    piece_length : `int`</span>
-<span class="sd">        torrentfile data piece length.</span>
+<span class="sd">    kwargs : `dict`</span>
+<span class="sd">        Keyword arguments for torrent options.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">hasher</span> <span class="o">=</span> <span class="n">HasherHybrid</span>
@@ -1963,7 +1929,8 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
         <span class="sd">&quot;&quot;&quot;Assemble the parts of the torrentfile into meta dictionary.&quot;&quot;&quot;</span>
         <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
             <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
@@ -2410,7 +2377,8 @@ piece_length bytes for the piece layer, and then the root hash.</p>
     <span class="sd">&quot;&quot;&quot;Assemble the parts of the torrentfile into meta dictionary.&quot;&quot;&quot;</span>
     <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
     <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">:</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
         <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
         <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
@@ -2479,46 +2447,10 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
   </thead>
   <tbody>
       <tr>
-        <td><code>path</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Path to torrent file or directory.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>piece_length</code></td>
-        <td><code>`int`</code></td>
-        <td><p>Size of each piece of torrent data.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>announce</code></td>
-        <td><code>`str` or `list`</code></td>
-        <td><p>one or more tracker URL's.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>private</code></td>
-        <td><code>`int`</code></td>
-        <td><p>1 if private torrent else 0.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>source</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Source tracker.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>comment</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Comment string.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>outfile</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Path to write metfile to.</p></td>
-        <td><em>required</em></td>
+        <td><code>kwargs</code></td>
+        <td><code>`dict`</code></td>
+        <td><p>Keyword arguments for torrent file options.</p></td>
+        <td><code>{}</code></td>
       </tr>
   </tbody>
 </table>
@@ -2529,20 +2461,8 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    path : `str`</span>
-<span class="sd">        Path to torrent file or directory.</span>
-<span class="sd">    piece_length : `int`</span>
-<span class="sd">        Size of each piece of torrent data.</span>
-<span class="sd">    announce : `str` or `list`</span>
-<span class="sd">        one or more tracker URL&#39;s.</span>
-<span class="sd">    private : `int`</span>
-<span class="sd">        1 if private torrent else 0.</span>
-<span class="sd">    source : `str`</span>
-<span class="sd">        Source tracker.</span>
-<span class="sd">    comment : `str`</span>
-<span class="sd">        Comment string.</span>
-<span class="sd">    outfile : `str`</span>
-<span class="sd">        Path to write metfile to.</span>
+<span class="sd">    kwargs : `dict`</span>
+<span class="sd">        Keyword arguments for torrent file options.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">hasher</span> <span class="o">=</span> <span class="n">HasherV2</span>
@@ -2577,7 +2497,7 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
             <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
@@ -3032,7 +2952,7 @@ root hash is calculated.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
         <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
         <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>

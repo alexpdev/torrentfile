@@ -214,7 +214,7 @@ class MetaFile:
         target path to write .torrent file. Default: None
     source : `str`
         Private tracker source. Default: None
-    progress : `bool`
+    noprogress : `bool`
         If True disable showing the progress bar.
     """
 
@@ -236,7 +236,7 @@ class MetaFile:
     # fmt: off
     def __init__(self, path=None, announce=None, private=False,
                  source=None, piece_length=None, comment=None,
-                 outfile=None, url_list=None, progress=False):
+                 outfile=None, url_list=None, noprogress=False):
         """Construct MetaFile superclass and assign local attributes."""
         if not path:
             raise utils.MissingPathError
@@ -269,7 +269,7 @@ class MetaFile:
             self.private = None
 
         self.outfile = outfile
-        self.progress = progress
+        self.noprogress = noprogress
         self.comment = comment
         self.url_list = url_list
         self.source = source
@@ -343,20 +343,8 @@ class TorrentFile(MetaFile):
 
     Parameters
     ----------
-    path : `str`
-        Path to torrent file or directory.
-    piece_length : `int`
-        Size of each piece of torrent data.
-    announce : `str` or `list`
-        One or more tracker URL's.
-    private : `int`
-        1 if private torrent else 0.
-    source : `str`
-        Source tracker.
-    comment : `str`
-        Comment string.
-    outfile : `str`
-        Path to write metfile to.
+    kwargs : `dict`
+        Dictionary containing torrent file options.
     """
 
     hasher = Hasher
@@ -396,7 +384,10 @@ class TorrentFile(MetaFile):
 
         pieces = bytearray()
         feeder = Hasher(filelist, self.piece_length)
-        if self.progress:
+        if self.noprogress:
+            for piece in feeder:
+                pieces.extend(piece)
+        else:
             from tqdm import tqdm
 
             for piece in tqdm(
@@ -410,9 +401,6 @@ class TorrentFile(MetaFile):
                 leave=True,
             ):
                 pieces.extend(piece)
-        else:
-            for piece in feeder:
-                pieces.extend(piece)
         info["pieces"] = pieces
 
 
@@ -421,20 +409,8 @@ class TorrentFileV2(MetaFile):
 
     Parameters
     ----------
-    path : `str`
-        Path to torrent file or directory.
-    piece_length : `int`
-        Size of each piece of torrent data.
-    announce : `str` or `list`
-        one or more tracker URL's.
-    private : `int`
-        1 if private torrent else 0.
-    source : `str`
-        Source tracker.
-    comment : `str`
-        Comment string.
-    outfile : `str`
-        Path to write metfile to.
+    kwargs : `dict`
+        Keyword arguments for torrent file options.
     """
 
     hasher = HasherV2
@@ -469,7 +445,7 @@ class TorrentFileV2(MetaFile):
         """
         info = self.meta["info"]
 
-        if self.progress:
+        if not self.noprogress:
             from tqdm import tqdm
 
             lst = utils.get_file_list(self.path)
@@ -525,20 +501,8 @@ class TorrentFileHybrid(MetaFile):
 
     Parameters
     ----------
-    path : `str`
-        path to torrentfile target.
-    announce : `str` or `list`
-        one or more tracker URL's.
-    comment : `str`
-        Some comment.
-    source : `str`
-        Used for private trackers.
-    outfile : `str`
-        target path to write output.
-    private : `bool`
-        Used for private trackers.
-    piece_length : `int`
-        torrentfile data piece length.
+    kwargs : `dict`
+        Keyword arguments for torrent options.
     """
 
     hasher = HasherHybrid
@@ -559,7 +523,8 @@ class TorrentFileHybrid(MetaFile):
         """Assemble the parts of the torrentfile into meta dictionary."""
         info = self.meta["info"]
         info["meta version"] = 2
-        if self.progress:
+
+        if not self.noprogress:
             from tqdm import tqdm
 
             lst = utils.get_file_list(self.path)
