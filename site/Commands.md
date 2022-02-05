@@ -1,6 +1,6 @@
 # TorrentFile CLI Menu
 
-## Help Message
+## Help Messages
 
 ```bash:
 usage: TorrentFile [-h] [-i] [-V] [-v]

@@ -214,7 +214,7 @@ class MetaFile:
         target path to write .torrent file. Default: None
     source : `str`
         Private tracker source. Default: None
-    progress : `bool`
+    noprogress : `bool`
         If True disable showing the progress bar.
     """
 
@@ -236,7 +236,7 @@ class MetaFile:
     # fmt: off
     def __init__(self, path=None, announce=None, private=False,
                  source=None, piece_length=None, comment=None,
-                 outfile=None, url_list=None, progress=False):
+                 outfile=None, url_list=None, noprogress=False):
         """Construct MetaFile superclass and assign local attributes."""
         if not path:
             raise utils.MissingPathError
@@ -269,7 +269,7 @@ class MetaFile:
             self.private = None
 
         self.outfile = outfile
-        self.progress = progress
+        self.noprogress = noprogress
         self.comment = comment
         self.url_list = url_list
         self.source = source
@@ -357,6 +357,8 @@ class TorrentFile(MetaFile):
         Comment string.
     outfile : `str`
         Path to write metfile to.
+    noprogress : `bool`
+        True if progress bar is disabled.
     """
 
     hasher = Hasher
@@ -396,7 +398,10 @@ class TorrentFile(MetaFile):
 
         pieces = bytearray()
         feeder = Hasher(filelist, self.piece_length)
-        if self.progress:
+        if self.noprogress:
+            for piece in feeder:
+                pieces.extend(piece)
+        else:
             from tqdm import tqdm
 
             for piece in tqdm(
@@ -409,9 +414,6 @@ class TorrentFile(MetaFile):
                 initial=0,
                 leave=True,
             ):
-                pieces.extend(piece)
-        else:
-            for piece in feeder:
                 pieces.extend(piece)
         info["pieces"] = pieces
 
@@ -435,6 +437,8 @@ class TorrentFileV2(MetaFile):
         Comment string.
     outfile : `str`
         Path to write metfile to.
+    noprogress : `bool`
+        True if progress bar is disabled.
     """
 
     hasher = HasherV2
@@ -469,7 +473,7 @@ class TorrentFileV2(MetaFile):
         """
         info = self.meta["info"]
 
-        if self.progress:
+        if not self.noprogress:
             from tqdm import tqdm
 
             lst = utils.get_file_list(self.path)
@@ -539,6 +543,8 @@ class TorrentFileHybrid(MetaFile):
         Used for private trackers.
     piece_length : `int`
         torrentfile data piece length.
+    noprogress : `bool`
+        True if progress bar is disabled.
     """
 
     hasher = HasherHybrid
@@ -559,7 +565,8 @@ class TorrentFileHybrid(MetaFile):
         """Assemble the parts of the torrentfile into meta dictionary."""
         info = self.meta["info"]
         info["meta version"] = 2
-        if self.progress:
+
+        if not self.noprogress:
             from tqdm import tqdm
 
             lst = utils.get_file_list(self.path)

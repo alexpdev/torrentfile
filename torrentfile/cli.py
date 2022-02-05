@@ -35,7 +35,7 @@ from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 logger = logging.getLogger(__name__)
 
 
-class _HelpFormat(HelpFormatter):
+class TorrentFileHelpFormatter(HelpFormatter):
     """
     Formatting class for help tips provided by the CLI.
 
@@ -77,11 +77,53 @@ class _HelpFormat(HelpFormatter):
         Parameters
         ----------
         text : `str`
-            string that needs formatting.
+            Pre-formatted text.
+
+        Returns
+        -------
+        `str` :
+            Formatted text from input.
         """
         text = text % dict(prog=self._prog) if "%(prog)" in text else text
         text = self._whitespace_matcher.sub(" ", text).strip()
         return text + "\n\n"
+
+    def _join_parts(self, part_strings):
+        """Combine different sections of the help message.
+
+        Parameters
+        ----------
+        part_strings : `list`
+            List of argument help messages and headers.
+
+        Returns
+        -------
+        `str` :
+            Fully formatted help message for CLI.
+        """
+        parts = self.format_headers(part_strings)
+        return super()._join_parts(parts)
+
+    @staticmethod
+    def format_headers(parts):
+        """Format help message section headers.
+
+        Parameters
+        ----------
+        parts : `list`
+            List of individual lines for help message.
+
+        Returns
+        -------
+        `list` :
+            Input list with formatted section headers.
+        """
+        headings = [i for i in range(len(parts)) if parts[i].endswith(":\n")]
+        for i in headings[::-1]:
+            parts[i] = parts[i][:-2].title()
+            underline = "".join(["\n", "-" * len(parts[i]), "\n"])
+            parts.insert(i + 1, underline)
+        return parts
 
 
 def create_command(args, logger):
@@ -100,7 +142,7 @@ def create_command(args, logger):
         object containing the path to created metafile and its contents.
     """
     kwargs = {
-        "progress": args.progress,
+        "noprogress": args.noprogress,
         "url_list": args.url_list,
         "path": args.content,
         "announce": args.announce + args.tracker,
@@ -275,7 +317,8 @@ def main_script(args=None):
         Supports all meta file versions including hybrid files.
         """,
         prefix_chars="-",
-        formatter_class=_HelpFormat,
+        formatter_class=TorrentFileHelpFormatter,
+        conflict_handler="resolve",
     )
 
     parser.add_argument(
@@ -315,7 +358,7 @@ def main_script(args=None):
         """,
         prefix_chars="-",
         aliases=["create", "new"],
-        formatter_class=_HelpFormat,
+        formatter_class=TorrentFileHelpFormatter,
     )
 
     create_parser.add_argument(
@@ -384,12 +427,12 @@ def main_script(args=None):
     )
 
     create_parser.add_argument(
-        "--progress",
+        "--noprogress",
         action="store_true",
-        dest="progress",
+        dest="noprogress",
         help="""
-        Enable showing the progress bar during torrent creation.
-        (Minimially impacts the duration of torrent file creation.)
+        Disable showing the progress bar during torrent creation.
+        (Minimially improves performance of torrent file creation.)
         """,
     )
 
@@ -453,7 +496,7 @@ def main_script(args=None):
         """,
         aliases=["edit"],
         prefix_chars="-",
-        formatter_class=_HelpFormat,
+        formatter_class=TorrentFileHelpFormatter,
     )
 
     edit_parser.add_argument(
@@ -518,7 +561,7 @@ def main_script(args=None):
         """,
         aliases=["magnet"],
         prefix_chars="-",
-        formatter_class=_HelpFormat,
+        formatter_class=TorrentFileHelpFormatter,
     )
 
     magnet_parser.add_argument(
@@ -537,7 +580,7 @@ def main_script(args=None):
         """,
         aliases=["recheck", "check"],
         prefix_chars="-",
-        formatter_class=_HelpFormat,
+        formatter_class=TorrentFileHelpFormatter,
     )
 
     check_parser.add_argument(

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="TorrentFile CLI Documentation and Examples">
         
-        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/api/">
+        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/API/">
         <link rel="shortcut icon" href="../img/favicon.ico">
 
         <title>API - TorrentFile Docs</title>
@@ -84,8 +84,8 @@
             
                 
                 <li >
-                    <a href="../cli.md">
-                      CLI
+                    <a href="../Commands/">
+                      Command Line
                     </a>
                 </li>
                 
@@ -96,7 +96,7 @@
             
                 
                 <li >
-                    <a href="../examples/">
+                    <a href="../examples.md">
                       Examples
                     </a>
                 </li>
@@ -109,7 +109,7 @@
                 
                 <li >
                     <a href="../LGPLv3/">
-                      license
+                      License
                     </a>
                 </li>
                 
@@ -120,7 +120,7 @@
             
                 
                 <li >
-                    <a href="../hasher/">
+                    <a href="../hasher.md">
                       Hasher
                     </a>
                 </li>
@@ -132,8 +132,32 @@
             
                 
                 <li >
-                    <a href="../torrent/">
+                    <a href="../torrent.md">
                       Metafile
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../Recheck/">
+                      Recheck
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../changelog/">
+                      Changelog
                     </a>
                 </li>
                 
@@ -144,6 +168,10 @@
 
             <!-- Search, Navigation and Repo links -->
             <ul class="nav navbar-nav navbar-right">
+            
+            
+            
+            
             
             
             
@@ -227,6 +255,18 @@ invoked when called from command line, and parses accompanying arguments.</p>
 <p>Functions:
     main_script: process command line arguments and run program.</p></div>
     </div>
+  <div class="mkapi-section classes">
+      <div class="mkapi-section-name classes">
+          <span class="mkapi-section-name-body classes">Classes</span> 
+        </div>
+      <div class="mkapi-section-body classes"><ul class="mkapi-items">
+<li class="class"><code class="mkapi-item-name">TorrentFileHelpFormatter</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Formatting class for help tips provided by the CLI.</span></li>
+
+
+</ul></div>
+    </div>
   <div class="mkapi-section functions">
       <div class="mkapi-section-name functions">
           <span class="mkapi-section-name-body functions">Functions</span> 
@@ -298,6 +338,279 @@ invoked when called from command line, and parses accompanying arguments.</p>
 
 
 
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="torrentfile.cli.TorrentFileHelpFormatter" class="doc doc-heading">
+        <code>
+TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFormatter</span>)
+        </code>
+
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Formatting class for help tips provided by the CLI.</p>
+<p>Subclasses Argparse.HelpFormatter.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TorrentFileHelpFormatter</span><span class="p">(</span><span class="n">HelpFormatter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formatting class for help tips provided by the CLI.</span>
+
+<span class="sd">    Subclasses Argparse.HelpFormatter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Construct HelpFormat class for usage output.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        prog : `str`</span>
+<span class="sd">            Name of the program.</span>
+<span class="sd">        width : `int`</span>
+<span class="sd">            Max width of help message output.</span>
+<span class="sd">        max_help_positions : `int`</span>
+<span class="sd">            max length until line wrap.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">max_help_position</span><span class="o">=</span><span class="n">max_help_positions</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_split_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Split multiline help messages and remove indentation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : `str`</span>
+<span class="sd">            text that needs to be split</span>
+<span class="sd">        _ : `int`</span>
+<span class="sd">            max width for line.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_format_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Format text for cli usage messages.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : `str`</span>
+<span class="sd">            Pre-formatted text.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        `str` :</span>
+<span class="sd">            Formatted text from input.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">text</span> <span class="o">%</span> <span class="nb">dict</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_prog</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;%(prog)&quot;</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">else</span> <span class="n">text</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_whitespace_matcher</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">text</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_join_parts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">part_strings</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Combine different sections of the help message.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        part_strings : `list`</span>
+<span class="sd">            List of argument help messages and headers.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        `str` :</span>
+<span class="sd">            Fully formatted help message for CLI.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_headers</span><span class="p">(</span><span class="n">part_strings</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_join_parts</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">format_headers</span><span class="p">(</span><span class="n">parts</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Format help message section headers.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parts : `list`</span>
+<span class="sd">            List of individual lines for help message.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        `list` :</span>
+<span class="sd">            Input list with formatted section headers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">headings</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">))</span> <span class="k">if</span> <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">headings</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+            <span class="n">underline</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">])</span>
+            <span class="n">parts</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">underline</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">parts</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="torrentfile.cli.TorrentFileHelpFormatter.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Construct HelpFormat class for usage output.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>prog</code></td>
+        <td><code>`str`</code></td>
+        <td><p>Name of the program.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>width</code></td>
+        <td><code>`int`</code></td>
+        <td><p>Max width of help message output.</p></td>
+        <td><code>75</code></td>
+      </tr>
+      <tr>
+        <td><code>max_help_positions</code></td>
+        <td><code>`int`</code></td>
+        <td><p>max length until line wrap.</p></td>
+        <td><code>60</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Construct HelpFormat class for usage output.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    prog : `str`</span>
+<span class="sd">        Name of the program.</span>
+<span class="sd">    width : `int`</span>
+<span class="sd">        Max width of help message output.</span>
+<span class="sd">    max_help_positions : `int`</span>
+<span class="sd">        max length until line wrap.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">max_help_position</span><span class="o">=</span><span class="n">max_help_positions</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="torrentfile.cli.TorrentFileHelpFormatter.format_headers" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">format_headers</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Format help message section headers.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>parts</code></td>
+        <td><code>`list`</code></td>
+        <td><p>List of individual lines for help message.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span> <span class="nf">format_headers</span><span class="p">(</span><span class="n">parts</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Format help message section headers.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parts : `list`</span>
+<span class="sd">        List of individual lines for help message.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `list` :</span>
+<span class="sd">        Input list with formatted section headers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">headings</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">))</span> <span class="k">if</span> <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">headings</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+        <span class="n">underline</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">])</span>
+        <span class="n">parts</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">underline</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parts</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 
@@ -374,7 +687,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
 <span class="sd">        object containing the path to created metafile and its contents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">progress</span><span class="p">,</span>
+        <span class="s2">&quot;noprogress&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">noprogress</span><span class="p">,</span>
         <span class="s2">&quot;url_list&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">url_list</span><span class="p">,</span>
         <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
         <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">announce</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">tracker</span><span class="p">,</span>
@@ -760,7 +1073,8 @@ invoked when called from command line, and parses accompanying arguments.</p>
 <span class="s2">        Supports all meta file versions including hybrid files.</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
-        <span class="n">formatter_class</span><span class="o">=</span><span class="n">_HelpFormat</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
+        <span class="n">conflict_handler</span><span class="o">=</span><span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -800,7 +1114,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
         <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="s2">&quot;new&quot;</span><span class="p">],</span>
-        <span class="n">formatter_class</span><span class="o">=</span><span class="n">_HelpFormat</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -869,12 +1183,12 @@ invoked when called from command line, and parses accompanying arguments.</p>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--progress&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--noprogress&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;progress&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;noprogress&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Enable showing the progress bar during torrent creation.</span>
-<span class="s2">        (Minimially impacts the duration of torrent file creation.)</span>
+<span class="s2">        Disable showing the progress bar during torrent creation.</span>
+<span class="s2">        (Minimially improves performance of torrent file creation.)</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -938,7 +1252,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
         <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;edit&quot;</span><span class="p">],</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
-        <span class="n">formatter_class</span><span class="o">=</span><span class="n">_HelpFormat</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">edit_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1003,7 +1317,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
         <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;magnet&quot;</span><span class="p">],</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
-        <span class="n">formatter_class</span><span class="o">=</span><span class="n">_HelpFormat</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">magnet_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1022,7 +1336,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
         <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;recheck&quot;</span><span class="p">,</span> <span class="s2">&quot;check&quot;</span><span class="p">],</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
-        <span class="n">formatter_class</span><span class="o">=</span><span class="n">_HelpFormat</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">check_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
