@@ -21,15 +21,11 @@
 
 import json
 from setuptools import find_packages, setup
-from torrentfile.version import __version__
 
 
 def load_info():
     """Extract information from package.json and README files."""
     info = json.load(open("package.json"))
-    if info['version'] != __version__:
-        info['version'] = __version__
-        json.dump(info, open('package.json', 'wt'), indent=2)
     with open("README.md", "rt", encoding="utf-8") as readme:
         info["long_description"] = readme.read()
     return info
@@ -41,7 +37,7 @@ setup(
     name=INFO["name"],
     version=INFO["version"],
     description=INFO["description"],
-    long_description=INFO["load_description"],
+    long_description=INFO["long_description"],
     long_description_content_type="text/markdown",
     classifiers=[
         "Environment :: Console",

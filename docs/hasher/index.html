@@ -293,7 +293,6 @@
 
     <div class="doc doc-contents first">
 
-      <p>Calculate the merkle root for a seq of sha256 hash digests.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
@@ -325,42 +324,7 @@ torrentfile.hasher.Hasher            (<span title="torrentfile.hasher._CbMixin">
 
     <div class="doc doc-contents first">
 
-      <p>Piece hasher for Bittorrent V1 files.</p>
-<p>Takes a sorted list of all file paths, calculates sha1 hash
-for fixed size pieces of file data from each file
-seemlessly until the last piece which may be smaller than others.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>paths</code></td>
-        <td><code>`list`</code></td>
-        <td><p>List of files.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>piece_length</code></td>
-        <td><code>`int`</code></td>
-        <td><p>Size of chuncks to split the data into.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>total</code></td>
-        <td><code>`int`</code></td>
-        <td><p>Sum of all files in file list.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Hasher</span><span class="p">(</span><span class="n">_CbMixin</span><span class="p">):</span>
@@ -478,7 +442,6 @@ seemlessly until the last piece which may be smaller than others.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Generate hashes of piece length data from filelist contents.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
@@ -517,23 +480,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Iterate through feed pieces.</p>
 
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>`iterator`</code></td>
-      <td><p>Iterator for leaves/hash pieces.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -568,7 +515,6 @@ seemlessly until the last piece which may be smaller than others.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Generate piece-length pieces of data from input file list.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
@@ -604,7 +550,6 @@ seemlessly until the last piece which may be smaller than others.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Seemlessly transition to next file in file list.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
@@ -649,37 +594,7 @@ torrentfile.hasher.HasherV2            (<span title="torrentfile.hasher._CbMixin
 
     <div class="doc doc-contents first">
 
-      <p>Calculate the root hash and piece layers for file contents.</p>
-<p>Iterates over 16KiB blocks of data from given file, hashes the data,
-then creates a hash tree from the individual block hashes until size of
-hashed data equals the piece-length.  Then continues the hash tree until
-root hash is calculated.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>path</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Path to file.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>piece_length</code></td>
-        <td><code>`int`</code></td>
-        <td><p>Size of layer hashes pieces.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">HasherV2</span><span class="p">(</span><span class="n">_CbMixin</span><span class="p">):</span>
@@ -800,7 +715,6 @@ root hash is calculated.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Calculate and store hash information for specific file.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
@@ -840,27 +754,7 @@ root hash is calculated.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Calculate hashes over 16KiB chuncks of file content.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>fd</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Opened file in read mode.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
@@ -939,36 +833,7 @@ torrentfile.hasher.HasherHybrid            (<span title="torrentfile.hasher._CbM
 
     <div class="doc doc-contents first">
 
-      <p>Calculate root and piece hashes for creating hybrid torrent file.</p>
-<p>Create merkle tree layers from sha256 hashed 16KiB blocks of contents.
-With a branching factor of 2, merge layer hashes until blocks equal
-piece_length bytes for the piece layer, and then the root hash.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>path</code></td>
-        <td><code>`str`</code></td>
-        <td><p>path to target file.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>piece_length</code></td>
-        <td><code>`int`</code></td>
-        <td><p>piece length for data chunks.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">HasherHybrid</span><span class="p">(</span><span class="n">_CbMixin</span><span class="p">):</span>
@@ -1108,7 +973,6 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Construct Hasher class instances for each file in torrent.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
@@ -1150,27 +1014,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Calculate layer hashes for contents of file.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>data</code></td>
-        <td><code>`BytesIO`</code></td>
-        <td><p>File opened in read mode.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>

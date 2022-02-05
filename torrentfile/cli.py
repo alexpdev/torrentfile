@@ -118,6 +118,8 @@ class TorrentFileHelpFormatter(HelpFormatter):
         `list` :
             Input list with formatted section headers.
         """
+        if parts and parts[0].startswith("usage:"):
+            parts[0] = "Usage\n=====\n  " + parts[0][6:]
         headings = [i for i in range(len(parts)) if parts[i].endswith(":\n")]
         for i in headings[::-1]:
             parts[i] = parts[i][:-2].title()
@@ -313,8 +315,8 @@ def main_script(args=None):
     parser = ArgumentParser(
         "torrentfile",
         description="""
-        CLI Tool for creating, checking and editing Bittorrent meta files.
-        Supports all meta file versions including hybrid files.
+        CLI Tool for creating, checking, editing... Bittorrent meta files.
+        TorrentFile supports all versions of torrent files.
         """,
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
@@ -347,8 +349,8 @@ def main_script(args=None):
 
     subparsers = parser.add_subparsers(
         title="Actions",
-        description="Each sub-command triggers a specific action.",
         dest="command",
+        metavar="<create> <edit> <magnet> <recheck>",
     )
 
     create_parser = subparsers.add_parser(

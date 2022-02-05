@@ -46,6 +46,16 @@ for item in Path("./dist").iterdir():
 endef
 export FIX_BIN_VERSION_FILES
 
+define UPDATE_PACKAGE_VERSION
+import json
+from torrentfile.version import __version__
+data = json.load(open("package.json"))
+if data['version'] != __version__:
+	data['version'] = __version__
+	json.dump(data, open("package.json", "wt"), indent=2)
+endef
+export UPDATE_PACKAGE_VERSION
+
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
 help:
@@ -82,6 +92,7 @@ lint:
 	prospector tests
 
 docs: ## Regenerate docs from changes
+	python -c "$$UPDATE_PACKAGE_VERSION"
 	rm -rfv docs/*
 	rm -rfv site/index.md
 	cp -rfv README.md site/index.md
@@ -99,13 +110,13 @@ push: clean lint docs test coverage ## Push to github
 	git commit -m "$m"
 	git push
 
-setup: clean docs ## setup and build repo
+setup: clean test lint docs ## setup and build repo
 	pip install --pre --upgrade --force-reinstall --no-cache -rrequirements.txt
 	python setup.py sdist bdist_wheel bdist_egg
 	pip install -e .
 	twine upload --verbose dist/*
 
-build: clean
+build: clean test lint docs
 	pip install --pre --upgrade --force-reinstall --no-cache -rrequirements.txt
 	pip install pyinstaller
 	python setup.py sdist bdist_wheel bdist_egg

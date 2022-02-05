@@ -323,12 +323,6 @@ invoked when called from command line, and parses accompanying arguments.</p>
 
     <div class="doc doc-contents first">
 
-      <p>Command Line Interface for TorrentFile project.</p>
-<p>This module provides the primary command line argument parser for
-the torrentfile package. The main_script function is automatically
-invoked when called from command line, and parses accompanying arguments.</p>
-<p>Functions:
-    main_script: process command line arguments and run program.</p>
 
 
 
@@ -356,8 +350,6 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents ">
 
-      <p>Formatting class for help tips provided by the CLI.</p>
-<p>Subclasses Argparse.HelpFormatter.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\cli.py</code></summary>
@@ -444,6 +436,8 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 <span class="sd">        `list` :</span>
 <span class="sd">            Input list with formatted section headers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parts</span> <span class="ow">and</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;usage:&quot;</span><span class="p">):</span>
+            <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Usage</span><span class="se">\n</span><span class="s2">=====</span><span class="se">\n</span><span class="s2">  &quot;</span> <span class="o">+</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">6</span><span class="p">:]</span>
         <span class="n">headings</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">))</span> <span class="k">if</span> <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">headings</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
@@ -480,39 +474,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents ">
 
-      <p>Construct HelpFormat class for usage output.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>prog</code></td>
-        <td><code>`str`</code></td>
-        <td><p>Name of the program.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>width</code></td>
-        <td><code>`int`</code></td>
-        <td><p>Max width of help message output.</p></td>
-        <td><code>75</code></td>
-      </tr>
-      <tr>
-        <td><code>max_help_positions</code></td>
-        <td><code>`int`</code></td>
-        <td><p>max length until line wrap.</p></td>
-        <td><code>60</code></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\cli.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
@@ -553,27 +515,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents ">
 
-      <p>Format help message section headers.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>parts</code></td>
-        <td><code>`list`</code></td>
-        <td><p>List of individual lines for help message.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\cli.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
@@ -590,6 +532,8 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 <span class="sd">    `list` :</span>
 <span class="sd">        Input list with formatted section headers.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">parts</span> <span class="ow">and</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;usage:&quot;</span><span class="p">):</span>
+        <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Usage</span><span class="se">\n</span><span class="s2">=====</span><span class="se">\n</span><span class="s2">  &quot;</span> <span class="o">+</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">6</span><span class="p">:]</span>
     <span class="n">headings</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">))</span> <span class="k">if</span> <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">headings</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
         <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
@@ -627,48 +571,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents ">
 
-      <p>Execute the create CLI sub-command to create a new torrent metafile.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>args</code></td>
-        <td><code>`Namespace`</code></td>
-        <td><p>positional and optional CLI arguments.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>logger</code></td>
-        <td><code>`Logger`</code></td>
-        <td><p>logging facility for module.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>`Result`</code></td>
-      <td><p>object containing the path to created metafile and its contents.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\cli.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
@@ -739,48 +642,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents ">
 
-      <p>Create a magnet URI from a Bittorrent meta file.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>metafile</code></td>
-        <td><code>`str` | `os.PathLike`</code></td>
-        <td><p>path to bittorrent meta file.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>logger</code></td>
-        <td><code>`Logger`</code></td>
-        <td><p>logging facility for module.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>`str`</code></td>
-      <td><p>created magnet URI.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\cli.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_magnet</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
@@ -846,48 +708,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents ">
 
-      <p>Execute the edit CLI sub-command with provided arguments.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>args</code></td>
-        <td><code>`Namespace`</code></td>
-        <td><p>positional and optional CLI arguments.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>logger</code></td>
-        <td><code>`Logger`</code></td>
-        <td><p>logging facility for module.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>`str`</code></td>
-      <td><p>path to edited torrent file.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\cli.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">edit_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
@@ -935,33 +756,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents ">
 
-      <p>Execute the magnet sub-command to create a Magnet URI.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>args</code></td>
-        <td><code>`Namespace`</code></td>
-        <td><p>positional and optional command line arguments</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>logger</code></td>
-        <td><code>`Logger`</code></td>
-        <td><p>logging facility for module.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\cli.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">magnet_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
@@ -1002,7 +797,6 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents ">
 
-      <p>Initiate main function for CLI script.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\cli.py</code></summary>
@@ -1029,27 +823,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents ">
 
-      <p>Initialize Command Line Interface for torrentfile.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>args</code></td>
-        <td><code>`list`</code></td>
-        <td><p>Commandline arguments. default=None</p></td>
-        <td><code>None</code></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\cli.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">main_script</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1069,8 +843,8 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
     <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        CLI Tool for creating, checking and editing Bittorrent meta files.</span>
-<span class="s2">        Supports all meta file versions including hybrid files.</span>
+<span class="s2">        CLI Tool for creating, checking, editing... Bittorrent meta files.</span>
+<span class="s2">        TorrentFile supports all versions of torrent files.</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
@@ -1103,8 +877,8 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Actions&quot;</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Each sub-command triggers a specific action.&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;command&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;create&gt; &lt;edit&gt; &lt;magnet&gt; &lt;recheck&gt;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
@@ -1384,33 +1158,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents ">
 
-      <p>Execute recheck CLI sub-command.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>args</code></td>
-        <td><code>`Namespace`</code></td>
-        <td><p>positional and optional arguments.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>logger</code></td>
-        <td><code>`Logger`</code></td>
-        <td><p>logging facility for module.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\cli.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">recheck_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
@@ -1505,7 +1253,6 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents first">
 
-      <p>Edit torrent meta file.</p>
 
 
 
@@ -1530,33 +1277,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents ">
 
-      <p>Edit the properties and values in a torrent meta file.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>metafile</code></td>
-        <td><code>`str`</code></td>
-        <td><p>path to the torrent meta file.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>args</code></td>
-        <td><code>`dict`</code></td>
-        <td><p>key value pairs of the properties to be edited.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\edit.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">edit_torrent</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
@@ -1624,39 +1345,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents ">
 
-      <p>Remove dictionary keys with empty values.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>args</code></td>
-        <td><code>`dict`</code></td>
-        <td><p>Editable metafile properties from user.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>meta</code></td>
-        <td><code>`dict`</code></td>
-        <td><p>Metafile data dictionary.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>info</code></td>
-        <td><code>`dict`</code></td>
-        <td><p>Metafile info dictionary.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\edit.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">filter_empty</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
@@ -1788,10 +1477,6 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <div class="doc doc-contents first">
 
-      <p>Module contains the procedures used for Interactive Mode.</p>
-<h4 id="torrentfile.interactive--functions">Functions</h4>
-<p><code>program_Options</code>
-    gather program behaviour Options.</p>
 
 
 
@@ -1817,55 +1502,7 @@ InteractiveCreator        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Class namespace for interactive program options.</p>
 
-<p><strong>Attributes:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>_piece_length</code></td>
-        <td><code>int</code></td>
-        <td>None</td>
-      </tr>
-      <tr>
-        <td><code>_comment</code></td>
-        <td><code>str</code></td>
-        <td>None</td>
-      </tr>
-      <tr>
-        <td><code>_source</code></td>
-        <td><code>str</code></td>
-        <td>None</td>
-      </tr>
-      <tr>
-        <td><code>_url_list</code></td>
-        <td><code>list</code></td>
-        <td>None</td>
-      </tr>
-      <tr>
-        <td><code>_path</code></td>
-        <td><code>str</code></td>
-        <td>None</td>
-      </tr>
-      <tr>
-        <td><code>_outfile</code></td>
-        <td><code>str</code></td>
-        <td>None</td>
-      </tr>
-      <tr>
-        <td><code>_announce</code></td>
-        <td><code>str</code></td>
-        <td>None</td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">InteractiveCreator</span><span class="p">:</span>
@@ -1986,7 +1623,6 @@ InteractiveCreator        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Initialize interactive meta file creator dialog.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
@@ -2023,7 +1659,6 @@ InteractiveCreator        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Gather details for torrentfile from user.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
@@ -2119,7 +1754,6 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Interactive dialog class for torrent editing.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
@@ -2245,27 +1879,7 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Initialize the Interactive torrent editor guide.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>metafile</code></td>
-        <td><code>`str`</code></td>
-        <td><p>user input string identifying the path to a torrent meta file.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">):</span>
@@ -2308,7 +1922,6 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Loop continuosly for edits until user signals DONE.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
@@ -2374,33 +1987,7 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Convert the input data into a form recognizable by the program.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>key</code></td>
-        <td><code>`str`</code></td>
-        <td><p>name of the property and attribute being eddited.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>response</code></td>
-        <td><code>`str`</code></td>
-        <td><p>User input value the property is being edited to.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sanatize_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
@@ -2439,7 +2026,6 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Display the current met file information to screen.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
@@ -2482,7 +2068,6 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Create new torrent file interactively.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
@@ -2518,7 +2103,6 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Edit the editable values of the torrent meta file.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
@@ -2549,42 +2133,7 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Determine appropriate input function to call.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>args</code></td>
-        <td><code>`tuple`</code></td>
-        <td><p>Arbitrary number of args to pass to next function</p></td>
-        <td><code>()</code></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>`str`</code></td>
-      <td><p>The results of the function call.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_input</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
@@ -2624,7 +2173,6 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Check torrent download completed percentage.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
@@ -2664,7 +2212,6 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Operate TorrentFile program interactively through terminal.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
@@ -2702,27 +2249,7 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Prints text to screen in the center position of the terminal.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>txt</code></td>
-        <td><code>`str`</code></td>
-        <td><p>the preformated message to send to stdout.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">showcenter</span><span class="p">(</span><span class="n">txt</span><span class="p">):</span>
@@ -2758,27 +2285,7 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Print contents of txt to screen.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>txt</code></td>
-        <td><code>`str`</code></td>
-        <td><p>text to print to terminal.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">showtext</span><span class="p">(</span><span class="n">txt</span><span class="p">):</span>
@@ -2908,14 +2415,6 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents first">
 
-      <p>Utility functions and classes used throughout package.</p>
-<p>Functions:
-  get_piece_length: calculate ideal piece length for torrent file.
-  sortfiles: traverse directory in sorted order yielding paths encountered.
-  path_size: Sum the sizes of each file in path.
-  get_file_list: Return list of all files contained in directory.
-  path_stat: Get ideal piece length, total size, and file list for directory.
-  path_piece_length: Get ideal piece length based on size of directory.</p>
 
 
 
@@ -2942,28 +2441,7 @@ MissingPathError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Path parameter is required to specify target content.</p>
-<p>Creating a .torrent file with no contents seems rather silly.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>message</code></td>
-        <td><code>`any`</code></td>
-        <td><p>Message for user (optional).</p></td>
-        <td><code>None</code></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MissingPathError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -3014,8 +2492,6 @@ MissingPathError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Raise when creating a meta file without specifying target content.</p>
-<p>The <code>message</code> argument is a message to pass to Exception base class.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
@@ -3059,27 +2535,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Piece Length parameter must equal a perfect power of 2.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>message</code></td>
-        <td><code>`any`</code></td>
-        <td><p>Message for user (optional).</p></td>
-        <td><code>None</code></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PieceLengthValueError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -3128,8 +2584,6 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Raise when creating a meta file with incorrect piece length value.</p>
-<p>The <code>message</code> argument is a message to pass to Exception base class.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
@@ -3171,57 +2625,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Perform error checking and format conversion to os.PathLike.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>pathstring</code></td>
-        <td><code>`str`</code></td>
-        <td><p>An existing filesystem path.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Exceptions:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>MissingPathError</code></td>
-        <td><p>File could not be found.</p></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>`os.PathLike`</code></td>
-      <td><p>Input path converted to bytes format.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">filelist_total</span><span class="p">(</span><span class="n">pathstring</span><span class="p">):</span>
@@ -3266,42 +2670,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Return a sorted list of file paths contained in directory.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>path</code></td>
-        <td><code>`str`</code></td>
-        <td><p>target file or directory.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>`list`</code></td>
-      <td><p>sorted list of file paths.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_file_list</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
@@ -3339,42 +2708,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Calculate the ideal piece length for bittorrent data.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>int</code></td>
-        <td><p>Total bits of all files incluided in .torrent file.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>int</code></td>
-      <td><p>Ideal peace length size arguement.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_piece_length</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -3414,42 +2748,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Convert integer into human readable memory sized denomination.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>amount</code></td>
-        <td><code>int</code></td>
-        <td><p>total number of bytes.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>str</code></td>
-      <td><p>human readable representation of the given amount of bytes.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">humanize_bytes</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -3492,42 +2791,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Calculate the next perfect power of 2 equal to or greater than value.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>value</code></td>
-        <td><code>`int`</code></td>
-        <td><p>integer value that is less than some perfect power of 2.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>`int`</code></td>
-      <td><p>The next power of 2 greater than value, or value if already power of 2.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">next_power_2</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
@@ -3569,57 +2833,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Verify input piece_length is valid and convert accordingly.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>piece_length</code></td>
-        <td><code>`int` | `str`</code></td>
-        <td><p>The piece length provided by user.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Exceptions:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>PieceLengthValueError :</code></td>
-        <td><p>If piece length is improper value.</p></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>int</code></td>
-      <td><p>normalized piece length.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">normalize_piece_length</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -3675,42 +2889,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Calculate piece length for input path and contents.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>path</code></td>
-        <td><code>`str`</code></td>
-        <td><p>The absolute path to directory and contents.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>`int`</code></td>
-      <td><p>The size of pieces of torrent content.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">path_piece_length</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
@@ -3748,42 +2927,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Return the total size of all files in path recursively.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>path</code></td>
-        <td><code>`str`</code></td>
-        <td><p>path to target file or directory.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>`int`</code></td>
-      <td><p>total size of files.</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">path_size</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
@@ -3821,42 +2965,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <div class="doc doc-contents ">
 
-      <p>Calculate directory statistics.</p>
 
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>path</code></td>
-        <td><code>`str`</code></td>
-        <td><p>The path to start calculating from.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>`list`</code></td>
-      <td><p>List of all files contained in Directory</p></td>
-    </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\utils.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">path_stat</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
