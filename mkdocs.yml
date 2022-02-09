@@ -11,17 +11,13 @@ theme:
 
 nav:
   - HOME : index.md
-  - HELP : Commands.md
+  - CLI : Commands.md
   - Examples : Examples.md
-  - LICENSE : LGPLv3.md
-  - HASHER : Hasher.md
-  - TORRENT : Torrent.md
-  - INTERACTIVE : Interactive.md
-  - EDIT : Edit.md
-  - CLI : CLI.md
-  - UTILS : Utils.md
-  - RECHECK : Recheck.md
+  - API : API.md
+  - HASHER API : HasherAPI.md
+  - TORRENT API : TorrentAPI.md
   - CHANGELOG : changelog.md
+  - LICENSE : LGPLv3.md
 
 
 plugins:

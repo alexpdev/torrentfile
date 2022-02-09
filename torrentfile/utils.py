@@ -72,7 +72,7 @@ def humanize_bytes(amount: int) -> str:
 
     Returns
     -------
-    `str` :
+    `str`
         human readable representation of the given amount of bytes.
     """
     if amount < 1024:
@@ -84,7 +84,7 @@ def humanize_bytes(amount: int) -> str:
     return f"{amount // 1073741824} GiB"
 
 
-def normalize_piece_length(piece_length) -> int:
+def normalize_piece_length(piece_length: int) -> int:
     """Verify input piece_length is valid and convert accordingly.
 
     Parameters
@@ -130,7 +130,7 @@ def get_piece_length(size: int) -> int:
     Returns
     -------
     `int`
-        Ideal peace length size arguement.
+        Ideal piece length.
     """
     exp = 14
     while size / (2 ** exp) > 200 and exp < 25:
@@ -138,7 +138,7 @@ def get_piece_length(size: int) -> int:
     return 2 ** exp
 
 
-def filelist_total(pathstring):
+def filelist_total(pathstring: str) -> os.PathLike:
     """Perform error checking and format conversion to os.PathLike.
 
     Parameters
@@ -162,22 +162,20 @@ def filelist_total(pathstring):
     raise MissingPathError
 
 
-def _filelist_total(path):
+def _filelist_total(path: str) -> tuple[int, list]:
     """Search directory tree for files.
 
     Parameters
     ----------
     path : `str`
         Path to file or directory base
-    sort : `bool`
-        Return list sorted. Defaults to False.
 
     Returns
     -------
-    `list`
-        All file paths within directory tree.
     `int`
         Sum of all filesizes in filelist.
+    `list`
+        All file paths within directory tree.
     """
     if path.is_file():
         file_size = os.path.getsize(path)
@@ -192,7 +190,7 @@ def _filelist_total(path):
     return total, sorted(filelist)
 
 
-def path_size(path):
+def path_size(path: str) -> int:
     """Return the total size of all files in path recursively.
 
     Parameters
@@ -209,7 +207,7 @@ def path_size(path):
     return total_size
 
 
-def get_file_list(path):
+def get_file_list(path: str) -> list:
     """Return a sorted list of file paths contained in directory.
 
     Parameters
@@ -226,7 +224,7 @@ def get_file_list(path):
     return filelist
 
 
-def path_stat(path):
+def path_stat(path: str) -> tuple[list, int, int]:
     """Calculate directory statistics.
 
     Parameters
@@ -248,7 +246,7 @@ def path_stat(path):
     return (filelist, total_size, piece_length)
 
 
-def path_piece_length(path):
+def path_piece_length(path: str) -> int:
     """Calculate piece length for input path and contents.
 
     Parameters
@@ -265,7 +263,7 @@ def path_piece_length(path):
     return get_piece_length(psize)
 
 
-def next_power_2(value):
+def next_power_2(value: int) -> int:
     """Calculate the next perfect power of 2 equal to or greater than value.
 
     Parameters

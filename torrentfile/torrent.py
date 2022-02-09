@@ -175,7 +175,6 @@ Bittorrent V1
         Only present if the torrent contents is a single file. Maps to the length
         of the file in bytes.
 
-
 !!!Note
     In the single file case, the name key is the name of a file,
     in the muliple file case, it's the name of a directory.
