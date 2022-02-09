@@ -2,28 +2,26 @@ site_name: TorrentFile Docs
 site_url: https://alexpdev.github.io/torrentfile
 repo_url: https://github.com/alexpdev/torrentfile
 site_description: "TorrentFile CLI Documentation and Examples"
-copyright: alexpdev 2021
-extra_css:
-  - stylesheets/extra.css
+copyright: alexpdev 2022
 
 theme:
-  name: cluster
+  name: superhero
   logo: images/torrentfile.png
-  favicon: images/favicon.png
+  favicon: images/favicon.ico
 
 nav:
-  - home : index.md
-  - Command Line : Commands.md
+  - HOME : index.md
+  - HELP : Commands.md
   - Examples : Examples.md
-  - License : LGPLv3.md
-  - Hasher : Hasher.md
-  - Metafile : Torrent.md
-  - Interactive : Interactive.md
-  - Edit : Edit.md
+  - LICENSE : LGPLv3.md
+  - HASHER : Hasher.md
+  - TORRENT : Torrent.md
+  - INTERACTIVE : Interactive.md
+  - EDIT : Edit.md
   - CLI : CLI.md
-  - Utils : Utils.md
-  - Recheck : Recheck.md
-  - Changelog : changelog.md
+  - UTILS : Utils.md
+  - RECHECK : Recheck.md
+  - CHANGELOG : changelog.md
 
 
 plugins:
