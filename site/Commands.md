@@ -5,7 +5,7 @@
 ```bash:
 Usage
 =====
-   torrentfile [-h] [-i] [-V] [-v]
+   torrentfile [-h]  [-i]  [-V]  [-v]
                    <create> <edit> <magnet> <recheck> ...
 
 CLI utility for editing, creating, checking, and other useful tools for Bittorrent meta files. 
@@ -39,7 +39,7 @@ Usage
 =====
    torrentfile c [-h] [-a <url> [<url> ...]] [-p] [-s <source>] [-m]
                      [-c <comment>] [-o <path>] [-t <url> [<url> ...]]
-                     [--noprogress] [--meta-version <int>]
+                     [--noprogress] [--meta-version <int>] [--private]
                      [--piece-length <int>] [-w <url> [<url> ...]]
                      <content>
 
@@ -81,7 +81,7 @@ Optional Arguments
 Usage
 =====
    torrentfile e [-h] [--tracker <url> [<url> ...]]
-                     [--web-seed <url> [<url> ...]] [--private]
+                     [--web-seed <url> [<url> ...]]  [--private]
                      [--comment <comment>] [--source <source>]
                      <*.torrent>
 
