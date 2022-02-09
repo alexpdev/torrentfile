@@ -1,19 +1,16 @@
 # enviornment packages
 node_modules/
-start.py
 *.torrent
-tests/TESTDIR
 coverage.sh
 coverage.xml
-Release/
 *.exe
-# bite-code
-*.pyc
-*.bin
 # temp files
+tests/TESTDIR
 /tests/tempdir
 temp/
 # Byte-compiled / optimized / DLL files
+*.bin
+*.pyc
 __pycache__/
 *.py[cod]
 *$py.class
@@ -43,7 +40,6 @@ htmlcov/
 .pytest_cache/
 *.log
 # Jupyter Notebook
-.ipynb_checkpoints
 .codacy-coverage/
 .env
 env/

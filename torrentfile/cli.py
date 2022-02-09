@@ -42,7 +42,7 @@ class TorrentFileHelpFormatter(HelpFormatter):
     Subclasses Argparse.HelpFormatter.
     """
 
-    def __init__(self, prog, width=75, max_help_positions=60):
+    def __init__(self, prog, width=60, max_help_positions=40):
         """Construct HelpFormat class for usage output.
 
         Parameters
