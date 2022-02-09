@@ -15,7 +15,7 @@
     "Bittorrent",
     "torrent",
     "bittorrent-metafiles",
-    "bittorrent-protocol"
+    "CLI"
   ],
   "bugs": {
     "url": "https://github.com/alexpdev/torrentfile/issues"

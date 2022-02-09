@@ -9,6 +9,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile)
 ![GitHub License](https://img.shields.io/github/license/alexpdev/torrentfile)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/torrentfile)
+[![codecov](https://codecov.io/gh/alexpdev/torrentfile/branch/master/graph/badge.svg?token=EWF7NIL9SQ)](https://codecov.io/gh/alexpdev/torrentfile)
 [![CI](https://github.com/alexpdev/TorrentFile/actions/workflows/pyworkflow.yml/badge.svg?branch=master&event=push)](https://github.com/alexpdev/torrentfile/actions/workflows/pyworkflow.yml)
 [![DeepSource](https://deepsource.io/gh/alexpdev/TorrentFile.svg/?label=active+issues&token=16Sl_dF7nTU8YgPilcqhvHm8)](https://deepsource.io/gh/alexpdev/torrentfile/)
 
@@ -29,12 +30,17 @@ supports all versions of Bittorrent files, including hybrid meta files.
 
 __via PyPi:__
 
-    pip install torrentfile
+```bash
+pip install torrentfile
+```
 
 __via Git:__
 
-    git clone https://github.com/alexpdev/torrentfile.git
-    python setup.py install
+```bash
+git clone https://github.com/alexpdev/torrentfile.git
+cd torrentfile
+python setup.py install
+```
 
 > Download pre-compiled binaries from the [release page](https://github.com/alexpdev/torrentfile/releases).
 
@@ -94,7 +100,7 @@ some of the options available for creating torrents (AKA meta files).
 - by default torrents are created using bittorrent meta-version 1
 
 ```bash
->torrentfile create /path/to/content
+torrentfile create /path/to/content
 ```
 
 - The `-t` or `--tracker` flag adds one or more urls to tracker list.
@@ -103,54 +109,54 @@ some of the options available for creating torrents (AKA meta files).
 do this
 
 ```bash
->torrentfile create /path/to/content --tracker http://tracker1.com
+torrentfile create /path/to/content --tracker http://tracker1.com
 ```
 
 or this
 
 ```bash
->torrentfile create -t http://tracker2 http://tracker3 --private /path/to/content
+torrentfile create -t http://tracker2 http://tracker3 --private /path/to/content
 ```
 
 not this
 
 ```bash
->torrentfile create --tracker http://tracker /path/to/content   #ERROR
->torrentfile create -t http://tracker1 http://tracker2 /path/to/content #ERROR
+torrentfile create --tracker http://tracker /path/to/content   #ERROR
+torrentfile create -t http://tracker1 http://tracker2 /path/to/content #ERROR
 ```
 
 - the `--private` flag indicates use by a private tracker
 - the `--source` flag can be used to help with cross-seeding
 
 ```bash
->torrentfile create --private --source /path/to/content --tracker https://tracker/url
+torrentfile create --private --source /path/to/content --tracker https://tracker/url
 ```
 
 - to turn off the progress bar shown use `--noprogress`
 - this can improve the performance by a very small amount
 
 ```bash
->torrentfile -t http://tracker.com --noprogress
+torrentfile -t http://tracker.com --noprogress
 ```
 
 - to specify the save location use the `-o` or `--out` flags
 
 ```bash
->torrentfile create -o /specific/path/name.torrent ./content
+torrentfile create -o /specific/path/name.torrent ./content
 ```
 
 - to create files using bittorrent v2 use `--meta-version 2`
 - likewise `--meta-version 3` creates a hybrid torrent file.
 
 ```bash
->torrentfile create --meta-version 2 /path/to/content
->torrentfile create --meta-version 3 /path/to/content
+torrentfile create --meta-version 2 /path/to/content
+torrentfile create --meta-version 3 /path/to/content
 ```
 
 - to output a magnet URI for the created torrent file use `--magnet`
 
 ```bash
->torrentfile create --t https://tracker1/annc https://tracker2/annc --magnet /path/to/content
+torrentfile create --t https://tracker1/annc https://tracker2/annc --magnet /path/to/content
 ```
 
 ### Check/Recheck Torrent
@@ -162,7 +168,7 @@ is saved to disk by comparing the the contents to a torrent metafile.
 - enter the metafile path first then the content path (the order matters)
 
 ```bash
->torrentfile recheck /path/to/some.torrent /path/to/content
+torrentfile recheck /path/to/some.torrent /path/to/content
 ```
 
 ### Edit Torrent
@@ -177,7 +183,7 @@ To create a magnet URI for a pre-existing torrent meta file, use the sub-command
 `magnet` or `m` with the path to the torrent file.
 
 ```bash
->torrentfile magnet /path/to/some.torrent
+torrentfile magnet /path/to/some.torrent
 ```
 
 #### Interactive Mode
@@ -188,5 +194,5 @@ allows users to specify program options one at a time from a series of prompts.
 - to activate interactive mode use `-i` or `--interactive` flag
 
 ```bash
->torrentfile -i
+torrentfile -i
 ```
