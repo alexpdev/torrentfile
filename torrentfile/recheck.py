@@ -44,9 +44,9 @@ class Checker:
 
     Parameters
     ----------
-    metafile : `str`
+    metafile : str
         Path to ".torrent" file.
-    path : `str`
+    path : str
         Path where the content is located in filesystem.
 
     Example
@@ -65,9 +65,9 @@ class Checker:
 
         Parameters
         ----------
-        metafile : `str`
+        metafile : str
             path to .torrent file
-        path : `str`
+        path : str
             path to content or contents parent directory.
         """
         self.metafile = metafile
@@ -103,7 +103,7 @@ class Checker:
 
         Parameters
         ----------
-        hook : `function`
+        hook : function
             callback function for the logging feature.
         """
         cls._hook = hook
@@ -113,7 +113,7 @@ class Checker:
 
         Returns
         -------
-        `hasher.Hasher`
+        hasher.Hasher
             the hashing implementation for specific torrent meta version.
         """
         if self.meta_version == 2:
@@ -127,7 +127,7 @@ class Checker:
 
         Returns
         -------
-        `HashChecker` || `FeedChecker`
+        HashChecker | FeedChecker
             Individual piece hasher.
         """
         if self.meta_version == 1:
@@ -156,9 +156,9 @@ class Checker:
 
         Parameters
         ----------
-        *args : `Iterable`[`str`]
+        args : dict
             formatting args for log message
-        level : `int`
+        level : int
             Log level for this message; default=`logging.INFO`
         """
         message = args[0]
@@ -187,12 +187,13 @@ class Checker:
 
         Parameters
         ----------
-        path : `str`
+        path : str
             root path to torrent content
 
         Returns
         -------
-            `str`: root path to content
+        str
+            root path to content
         """
         if not os.path.exists(path):
             self.log_msg("Could not locate torrent content %s.", path)
@@ -256,9 +257,9 @@ class Checker:
 
         Parameters
         ----------
-        tree : `dict`
+        tree : dict
             File Tree dict extracted from torrent file.
-        partials : `list`
+        partials : list
             list of intermediate pathnames.
         """
         for key, val in tree.items():
@@ -291,13 +292,13 @@ class Checker:
 
         Yields
         ------
-        chunck : `bytes`
+        chunck : bytes
             hash of data found on disk
-        piece : `bytes`
+        piece : bytes
             hash of data when complete and correct
-        path : `str`
+        path : str
             path to file being hashed
-        size : `int`
+        size : int
             length of bytes hashed for piece
         """
         matched = consumed = 0
@@ -333,9 +334,9 @@ class FeedChecker:
 
     Parameters
     ----------
-    checker : `object`
+    checker : object
         the checker class instance.
-    hasher : `Any`
+    hasher : Any
         hashing class for calculating piece hashes. default=None
     """
 
@@ -376,7 +377,7 @@ class FeedChecker:
 
         Yields
         ------
-        piece : `bytes`
+        piece : bytes
             hash digest for block of torrent data.
         """
         partial = bytearray()
@@ -404,14 +405,14 @@ class FeedChecker:
 
         Parameters
         ----------
-        path : `str`
+        path : str
             path to content.
-        partial : `bytes`
+        partial : bytes
             any remaining content from last file.
 
         Returns
         -------
-        partial : `bytes`
+        bytes
             Hash digest for block of .torrent contents.
         """
         read = 0
@@ -439,16 +440,16 @@ class FeedChecker:
 
         Parameters
         ----------
-        partial : `bytes`
+        partial : bytes
             any remaining data from last file processed.
-        length : `int`
+        length : int
             size of space that needs padding
-        read : `int`
+        read : int
             portion of length already padded
 
         Yields
         ------
-        `bytes`
+        bytes
             A piece length sized block of zeros.
         """
         while read < length:
@@ -470,9 +471,9 @@ class HashChecker:
 
     Parameters
     ----------
-    checker : `Object`
+    checker : Object
         the checker instance that maintains variables.
-    hasher : `Object`
+    hasher : Object
         the version specific hashing class for torrent content.
     """
 
@@ -509,7 +510,7 @@ class HashChecker:
 
         Yields
         ------
-        results : `tuple`
+        results : tuple
             The size of the file and result of match.
         """
         for i, path in enumerate(self.paths):

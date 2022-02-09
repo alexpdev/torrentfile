@@ -1,8 +1,14 @@
 # TorrentFile
 
-## Version 0.6.9
+## Version 0.6.10
 
-### Changed
+- Updates to documentation
+- Integrated Type hints in source code
+- Updated build and CI process
+
+---------------------
+
+## Version 0.6.9
 
 - The --progress flag is now --noprogress
 - Default behavior is to show progress bar
@@ -179,8 +185,6 @@
 
 ## Version 0.2.3
 
-### Fixed
-
 - Bug Fixes
 - Code Style and Formatting
 - Added more unittests
@@ -188,8 +192,6 @@
 ---------------------
 
 ## Version 0.2.1
-
-### Added
 
 - Bittorrent Protocol V2 Support
 - v2 metafile options to cli

@@ -47,11 +47,11 @@ class TorrentFileHelpFormatter(HelpFormatter):
 
         Parameters
         ----------
-        prog : `str`
+        prog : str
             Name of the program.
-        width : `int`
+        width : int
             Max width of help message output.
-        max_help_positions : `int`
+        max_help_positions : int
             max length until line wrap.
         """
         super().__init__(
@@ -63,9 +63,9 @@ class TorrentFileHelpFormatter(HelpFormatter):
 
         Parameters
         ----------
-        text : `str`
+        text : str
             text that needs to be split
-        _ : `int`
+        _ : int
             max width for line.
         """
         lines = text.split("\n")
@@ -76,12 +76,12 @@ class TorrentFileHelpFormatter(HelpFormatter):
 
         Parameters
         ----------
-        text : `str`
+        text : str
             Pre-formatted text.
 
         Returns
         -------
-        `str` :
+        str
             Formatted text from input.
         """
         text = text % dict(prog=self._prog) if "%(prog)" in text else text
@@ -93,12 +93,12 @@ class TorrentFileHelpFormatter(HelpFormatter):
 
         Parameters
         ----------
-        part_strings : `list`
+        part_strings : list
             List of argument help messages and headers.
 
         Returns
         -------
-        `str` :
+        str
             Fully formatted help message for CLI.
         """
         parts = self.format_headers(part_strings)
@@ -110,12 +110,12 @@ class TorrentFileHelpFormatter(HelpFormatter):
 
         Parameters
         ----------
-        parts : `list`
+        parts : list
             List of individual lines for help message.
 
         Returns
         -------
-        `list` :
+        list
             Input list with formatted section headers.
         """
         if parts and parts[0].startswith("usage:"):
@@ -133,12 +133,12 @@ def create_command(args):
 
     Parameters
     ----------
-    args : `Namespace`
+    args : argparse.Namespace
         positional and optional CLI arguments.
 
     Returns
     -------
-    `Result`
+    torrentfile.MetaFile
         object containing the path to created metafile and its contents.
     """
     kwargs = {
@@ -181,12 +181,12 @@ def edit_command(args):
 
     Parameters
     ----------
-    args : `Namespace`
+    args : Namespace
         positional and optional CLI arguments.
 
     Returns
     -------
-    `str`
+    str
         path to edited torrent file.
     """
     metafile = args.metafile
@@ -206,12 +206,12 @@ def recheck_command(args):
 
     Parameters
     ----------
-    args : `Namespace`
+    args : Namespace
         positional and optional arguments.
 
     Returns
     -------
-    `str` :
+    str
         The percentage of content currently saved to disk.
     """
     logger.debug("Program entering Recheck mode.")
@@ -232,12 +232,12 @@ def create_magnet(metafile):
 
     Parameters
     ----------
-    metafile : (`Namespace`||`str`)
+    metafile : (Namespace||str)
         Namespace class for CLI arguments.
 
     Returns
     -------
-    `str`
+    str
         created magnet URI.
     """
     import os
@@ -277,7 +277,7 @@ def main_script(args=None):
 
     Parameters
     ----------
-    args : `list`
+    args : list
         Commandline arguments. default=None
     """
     if not args:

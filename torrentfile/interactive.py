@@ -29,12 +29,12 @@ def get_input(*args):  # pragma: no cover
 
     Parameters
     ----------
-    args : `tuple`
+    args : tuple
         Arbitrary number of args to pass to next function
 
     Returns
     -------
-    `str`
+    str
         The results of the function call.
     """
     if len(args) == 2:
@@ -47,12 +47,12 @@ def _get_input(txt):  # pragma: no cover
 
     Parameters
     ----------
-    txt : `str`
+    txt : str
         The message usually containing instructions for the user.
 
     Returns
     -------
-    `str`
+    str
         The text input received from the user.
     """
     value = input(txt)
@@ -64,14 +64,14 @@ def _get_input_loop(txt, func):  # pragma: no cover
 
     Parameters
     ----------
-    txt : `str`
+    txt : str
         The message usually containing instructions for the user.
     func : function
         Validate/Check user input data, failure = retry, success = continue.
 
     Returns
     -------
-    `str`
+    str
         The text input received from the user.
     """
     while True:
@@ -88,7 +88,7 @@ def showtext(txt):
 
     Parameters
     ----------
-    txt : `str`
+    txt : str
         text to print to terminal.
     """
     sys.stdout.write(txt)
@@ -99,7 +99,7 @@ def showcenter(txt):
 
     Parameters
     ----------
-    txt : `str`
+    txt : str
         the preformated message to send to stdout.
     """
     termlen = shutil.get_terminal_size().columns
@@ -173,7 +173,7 @@ class InteractiveEditor:
 
         Parameters
         ----------
-        metafile : `str`
+        metafile : str
             user input string identifying the path to a torrent meta file.
         """
         self.metafile = metafile
@@ -202,9 +202,9 @@ class InteractiveEditor:
 
         Parameters
         ----------
-        key : `str`
+        key : str
             name of the property and attribute being eddited.
-        response : `str`
+        response : str
             User input value the property is being edited to.
         """
         if key in ["announce", "url-list"]:

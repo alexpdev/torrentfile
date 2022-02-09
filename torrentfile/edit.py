@@ -24,11 +24,11 @@ def filter_empty(args, meta, info):
 
     Parameters
     ----------
-    args : `dict`
+    args : dict
         Editable metafile properties from user.
-    meta : `dict`
+    meta : dict
         Metafile data dictionary.
-    info : `dict`
+    info : dict
         Metafile info dictionary.
     """
     for key, val in list(args.items()):
@@ -50,9 +50,9 @@ def edit_torrent(metafile, args):
 
     Parameters
     ----------
-    metafile : `str`
+    metafile : str
         path to the torrent meta file.
-    args : `dict`
+    args : dict
         key value pairs of the properties to be edited.
     """
     meta = pyben.load(metafile)

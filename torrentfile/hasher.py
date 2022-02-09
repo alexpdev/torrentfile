@@ -52,9 +52,9 @@ class Hasher(_CbMixin):
 
     Parameters
     ----------
-    paths : `list`
+    paths : list
         List of files.
-    piece_length : `int`
+    piece_length : int
         Size of chuncks to split the data into.
     """
 
@@ -76,7 +76,7 @@ class Hasher(_CbMixin):
 
         Returns
         -------
-        self : `iterator`
+        self : iterator
             Iterator for leaves/hash pieces.
         """
         return self
@@ -86,14 +86,14 @@ class Hasher(_CbMixin):
 
         Parameters
         ----------
-        arr : `bytearray`
+        arr : bytearray
             Incomplete piece containing partial data
-        partial : `int`
+        partial : int
             Size of incomplete piece_length
 
         Returns
         -------
-        digest : `bytes`
+        digest : bytes
             SHA1 digest of the complete piece.
         """
         while len(arr) < self.piece_length and self.next_file():
@@ -145,9 +145,9 @@ class HasherV2(_CbMixin):
 
     Parameters
     ----------
-    path : `str`
+    path : str
         Path to file.
-    piece_length : `int`
+    piece_length : int
         Size of layer hashes pieces.
     """
 
@@ -173,7 +173,7 @@ class HasherV2(_CbMixin):
 
         Parameters
         ----------
-        fd : `str`
+        fd : str
             Opened file in read mode.
         """
         while True:
@@ -234,9 +234,9 @@ class HasherHybrid(_CbMixin):
 
     Parameters
     ----------
-    path : `str`
+    path : str
         path to target file.
-    piece_length : `int`
+    piece_length : int
         piece length for data chunks.
     """
 
@@ -264,12 +264,12 @@ class HasherHybrid(_CbMixin):
 
         Parameters
         ----------
-        block_count : `int`
+        block_count : int
             current total number of blocks collected.
 
         Returns
         -------
-        padding : `bytes`
+        padding : bytes
             Padding to fill remaining portion of tree.
         """
         # when the there is only one block for file
@@ -284,7 +284,7 @@ class HasherHybrid(_CbMixin):
 
         Parameters
         ----------
-        data : `BytesIO`
+        data : BytesIO
             File opened in read mode.
         """
         while True:

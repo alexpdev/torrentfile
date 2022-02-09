@@ -28,10 +28,10 @@ Classes
 Constants
 ---------
 
-- BLOCK_SIZE : `int`
+- BLOCK_SIZE : int
     size of leaf hashes for merkle tree.
 
-- HASH_SIZE : `int`
+- HASH_SIZE : int
     Length of a sha256 hash.
 
 Bittorrent V2
@@ -199,21 +199,21 @@ class MetaFile:
 
     Parameters
     ----------
-    path : `str`
+    path : str
         target path to torrent content.  Default: None
-    announce : `str`
+    announce : str
         One or more tracker URL's.  Default: None
-    comment : `str`
+    comment : str
         A comment.  Default: None
-    piece_length : `int`
+    piece_length : int
         Size of torrent pieces.  Default: None
-    private : `bool`
+    private : bool
         For private trackers.  Default: None
-    outfile : `str`
+    outfile : str
         target path to write .torrent file. Default: None
-    source : `str`
+    source : str
         Private tracker source. Default: None
-    noprogress : `bool`
+    noprogress : bool
         If True disable showing the progress bar.
     """
 
@@ -297,7 +297,7 @@ class MetaFile:
 
         Raises
         ------
-        `Exception`
+        Exception
             NotImplementedError
         """
         raise NotImplementedError
@@ -314,14 +314,14 @@ class MetaFile:
 
         Parameters
         ----------
-        outfile : `str`
+        outfile : str
             Destination path for .torrent file. default=None
 
         Returns
         -------
-        outfile : `str`
+        outfile : str
             Where the .torrent file was writen.
-        meta : `dict`
+        meta : dict
             .torrent meta information.
         """
         if outfile is not None:
@@ -342,7 +342,7 @@ class TorrentFile(MetaFile):
 
     Parameters
     ----------
-    kwargs : `dict`
+    kwargs : dict
         Dictionary containing torrent file options.
     """
 
@@ -353,7 +353,7 @@ class TorrentFile(MetaFile):
 
         Parameters
         ----------
-        kwargs : `dict`
+        kwargs : dict
             dictionary of keyword args passed to superclass.
         """
         super().__init__(**kwargs)
@@ -365,7 +365,7 @@ class TorrentFile(MetaFile):
 
         Returns
         -------
-        `dict`
+        dict
             metadata dictionary for torrent file
         """
         info = self.meta["info"]
@@ -408,7 +408,7 @@ class TorrentFileV2(MetaFile):
 
     Parameters
     ----------
-    kwargs : `dict`
+    kwargs : dict
         Keyword arguments for torrent file options.
     """
 
@@ -419,7 +419,7 @@ class TorrentFileV2(MetaFile):
 
         Parameters
         ----------
-        kwargs : `dict`
+        kwargs : dict
             keywword arguments to pass to superclass.
         """
         super().__init__(**kwargs)
@@ -439,7 +439,7 @@ class TorrentFileV2(MetaFile):
 
         Returns
         -------
-        meta : `dict`
+        meta : dict
             Metainformation about the torrent.
         """
         info = self.meta["info"]
@@ -470,7 +470,7 @@ class TorrentFileV2(MetaFile):
 
         Parameters
         ----------
-        path : `str`
+        path : str
             Path to file or directory.
         """
         if os.path.isfile(path):
@@ -500,7 +500,7 @@ class TorrentFileHybrid(MetaFile):
 
     Parameters
     ----------
-    kwargs : `dict`
+    kwargs : dict
         Keyword arguments for torrent options.
     """
 
@@ -551,7 +551,7 @@ class TorrentFileHybrid(MetaFile):
 
         Parameters
         ----------
-        path : `str`
+        path : str
             Path to target file.
         """
         if os.path.isfile(path):

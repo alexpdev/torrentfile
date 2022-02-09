@@ -31,11 +31,11 @@ class MissingPathError(Exception):
 
     Parameters
     ----------
-    message : `any`
+    message : str
         Message for user (optional).
     """
 
-    def __init__(self, message=None):
+    def __init__(self, message: str = None):
         """Raise when creating a meta file without specifying target content.
 
         The `message` argument is a message to pass to Exception base class.
@@ -49,11 +49,11 @@ class PieceLengthValueError(Exception):
 
     Parameters
     ----------
-    message : `any`
+    message : str
         Message for user (optional).
     """
 
-    def __init__(self, message=None):
+    def __init__(self, message: str = None):
         """Raise when creating a meta file with incorrect piece length value.
 
         The `message` argument is a message to pass to Exception base class.
@@ -67,12 +67,12 @@ def humanize_bytes(amount: int) -> str:
 
     Parameters
     ----------
-    amount : `int`
+    amount : int
         total number of bytes.
 
     Returns
     -------
-    `str`
+    str
         human readable representation of the given amount of bytes.
     """
     if amount < 1024:
@@ -89,12 +89,12 @@ def normalize_piece_length(piece_length: int) -> int:
 
     Parameters
     ----------
-    piece_length : `int` | `str`
+    piece_length : int | str
         The piece length provided by user.
 
     Returns
     -------
-    piece_length : `int`
+    int
         normalized piece length.
 
     Raises
@@ -124,12 +124,12 @@ def get_piece_length(size: int) -> int:
 
     Parameters
     ----------
-    size : `int`
+    size : int
         Total bits of all files incluided in .torrent file.
 
     Returns
     -------
-    `int`
+    int
         Ideal piece length.
     """
     exp = 14
@@ -143,12 +143,12 @@ def filelist_total(pathstring: str) -> os.PathLike:
 
     Parameters
     ----------
-    pathstring : `str`
+    pathstring : str
         An existing filesystem path.
 
     Returns
     -------
-    `os.PathLike`
+    os.PathLike
         Input path converted to bytes format.
 
     Raises
@@ -167,14 +167,14 @@ def _filelist_total(path: str) -> tuple[int, list]:
 
     Parameters
     ----------
-    path : `str`
+    path : str
         Path to file or directory base
 
     Returns
     -------
-    `int`
+    int
         Sum of all filesizes in filelist.
-    `list`
+    list
         All file paths within directory tree.
     """
     if path.is_file():
@@ -195,12 +195,12 @@ def path_size(path: str) -> int:
 
     Parameters
     ----------
-    path : `str`
+    path : str
         path to target file or directory.
 
     Returns
     -------
-    `int`
+    int
         total size of files.
     """
     total_size, _ = filelist_total(path)
@@ -212,12 +212,12 @@ def get_file_list(path: str) -> list:
 
     Parameters
     ----------
-    path : `str`
+    path : str
         target file or directory.
 
     Returns
     -------
-    filelist : `list`
+    list
         sorted list of file paths.
     """
     _, filelist = filelist_total(path)
@@ -229,16 +229,16 @@ def path_stat(path: str) -> tuple[list, int, int]:
 
     Parameters
     ----------
-    path : `str`
+    path : str
         The path to start calculating from.
 
     Returns
     -------
-    `list`
+    list
         List of all files contained in Directory
-    `int`
+    int
         Total sum of bytes from all contents of dir
-    `int`
+    int
         The size of pieces of the torrent contents.
     """
     total_size, filelist = filelist_total(path)
@@ -251,12 +251,12 @@ def path_piece_length(path: str) -> int:
 
     Parameters
     ----------
-    path : `str`
+    path : str
         The absolute path to directory and contents.
 
     Returns
     -------
-    `int`
+    int
         The size of pieces of torrent content.
     """
     psize = path_size(path)
@@ -268,12 +268,12 @@ def next_power_2(value: int) -> int:
 
     Parameters
     ----------
-    value : `int`
+    value : int
         integer value that is less than some perfect power of 2.
 
     Returns
     -------
-    `int`
+    int
         The next power of 2 greater than value, or value if already power of 2.
     """
     if not value & (value - 1) and value:

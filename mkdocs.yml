@@ -3,9 +3,10 @@ site_url: https://alexpdev.github.io/torrentfile
 repo_url: https://github.com/alexpdev/torrentfile
 site_description: "TorrentFile CLI Documentation and Examples"
 copyright: alexpdev 2022
+extra_css: [stylesheets/extra.css]
 
 theme:
-  name: superhero
+  name: material
   logo: images/torrentfile.png
   favicon: images/favicon.ico
 
