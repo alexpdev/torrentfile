@@ -577,7 +577,7 @@ def main_script(args=None):
     args = parser.parse_args(args)
 
     if args.debug:
-        torrentfile.set_level(logging.DEBUG)
+        torrentfile.add_handler()
 
     logger.debug(str(args))
     if args.interactive:

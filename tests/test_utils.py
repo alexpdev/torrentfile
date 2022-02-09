@@ -127,6 +127,8 @@ def test_next_power_2(value):
         (1100, "1 KiB"),
         (1_100_000, "1 MiB"),
         (1_100_000_000, "1 GiB"),
+        (4_400_120_000, "4 GiB"),
+        (4_000_120_000, "3 GiB"),
     ],
 )
 def test_humanize_bytes(amount, result):
@@ -134,7 +136,7 @@ def test_humanize_bytes(amount, result):
     assert utils.humanize_bytes(amount) == result
 
 
-@pytest.mark.parametrize("amount, result", [(i, 2 ** i) for i in range(14, 21)])
+@pytest.mark.parametrize("amount, result", [(i, 2 ** i) for i in range(14, 25)])
 def test_normalize_piece_length_int(amount, result):
     """Test normalize piece length function.
 

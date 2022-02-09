@@ -238,13 +238,13 @@ Checker        </code>
   <tbody>
       <tr>
         <td><code>metafile</code></td>
-        <td><code>`str`</code></td>
+        <td><code>str</code></td>
         <td><p>Path to ".torrent" file.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>path</code></td>
-        <td><code>`str`</code></td>
+        <td><code>str</code></td>
         <td><p>Path where the content is located in filesystem.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -286,7 +286,7 @@ Checker        </code>
 
     <span class="n">_hook</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Validate data against hashes contained in .torrent file.</span>
 
 <span class="sd">        Parameters</span>
@@ -339,7 +339,7 @@ Checker        </code>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        `Class[Hasher]`</span>
+<span class="sd">        `hasher.Hasher`</span>
 <span class="sd">            the hashing implementation for specific torrent meta version.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
@@ -594,13 +594,13 @@ Checker        </code>
   <tbody>
       <tr>
         <td><code>metafile</code></td>
-        <td><code>`str`</code></td>
+        <td><code>str</code></td>
         <td><p>path to .torrent file</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>path</code></td>
-        <td><code>`str`</code></td>
+        <td><code>str</code></td>
         <td><p>path to content or contents parent directory.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -608,7 +608,7 @@ Checker        </code>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Validate data against hashes contained in .torrent file.</span>
 
 <span class="sd">    Parameters</span>
@@ -822,7 +822,7 @@ name.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>`Class[Hasher]`</code></td>
+      <td><code>`hasher.Hasher`</code></td>
       <td><p>the hashing implementation for specific torrent meta version.</p></td>
     </tr>
   </tbody>
@@ -834,7 +834,7 @@ name.</p>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    `Class[Hasher]`</span>
+<span class="sd">    `hasher.Hasher`</span>
 <span class="sd">        the hashing implementation for specific torrent meta version.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>

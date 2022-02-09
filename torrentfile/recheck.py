@@ -60,7 +60,7 @@ class Checker:
 
     _hook = None
 
-    def __init__(self, metafile, path):
+    def __init__(self, metafile: str, path: str):
         """Validate data against hashes contained in .torrent file.
 
         Parameters
@@ -113,7 +113,7 @@ class Checker:
 
         Returns
         -------
-        `Class[Hasher]`
+        `hasher.Hasher`
             the hashing implementation for specific torrent meta version.
         """
         if self.meta_version == 2:
