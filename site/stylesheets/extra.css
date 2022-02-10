@@ -1,49 +1,16 @@
-.md-typeset div details.quote {
-    margin-top: 15px;
-    font-size: 7pt;
+header.md-header[data-md-component=header]{
+    background-color: #333;
+    border-bottom-width: 3px;
+    border-bottom-color: #e62;
+    border-bottom-radius: 25px;
+    border-bottom-style: outset;
 }
 
-.wm-page-content {
-    max-width: 800;
+.md-nav.md-nav--primary {
+    border: 2px raised #a846b9;
 }
 
-.doc.doc-heading {
-    border-color: transparent;
-}
-
-.table.table-bordered {
-    border-color: #aaa;
-}
-
-.doc.doc-object {
-    margin-top: 25px;
-}
-
-.doc.doc-heading code {
-    border-color: transparent;
-    white-space: nowrap;
-}
-
-.quote summary code {
-    color: #a11
-}
-
-.mkapi-section-name-body {
-    font-size: 0.9em;
-}
-
-.mkapi-item-description {
-    font-size: .8rem;
-}
-
-.mkapi-node code.mkapi-item-name {
-    font-size: 0.8em;
-}
-
-.md-header {
-    background-color: #222;
-}
-
-.md-main {
-    background-color: #ccc;
+code.language-bash {
+    background-color: #6e7681;
+    color: #fff;
 }
