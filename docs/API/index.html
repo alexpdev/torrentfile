@@ -829,7 +829,19 @@ in the muliple file case, it's the name of a directory.</p>
 </div>
 <div class="mkapi-docstring">
 <div class="mkapi-section">
-      <div class="mkapi-section-body"><p>Edit torrent meta file.</p></div>
+      <div class="mkapi-section-body"><p>Edit torrent module.</p>
+<p>Provides a facility by which certain properties of a torrent meta file can be
+edited by the user. The various command line arguments indicate which fields
+should be edited, and what the new value should be.  Depending on what fields
+are chosen to edit, this command can trigger a new info hash which means the
+torrent will no longer be able to participate in the same swarm as the original
+unedited torrent.</p>
+<h2 id="keywords">Keywords</h2>
+<p>private
+comment
+source
+trackers
+web-seeds</p></div>
     </div>
   <div class="mkapi-section functions">
       <div class="mkapi-section-name functions">
@@ -837,7 +849,7 @@ in the muliple file case, it's the name of a directory.</p>
         </div>
       <div class="mkapi-section-body functions"><ul class="mkapi-items">
 <li class="function"><code class="mkapi-item-name">edit_torrent</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">metafile</code>, <code class="mkapi-object-signature">args</code><code class="mkapi-object-parenthesis">)</code>
-
+<span class="mkapi-item-type">(dict)</span>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Edit the properties and values in a torrent meta file.</span></li>
 
 <li class="function"><code class="mkapi-item-name">filter_empty</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code>, <code class="mkapi-object-signature">meta</code>, <code class="mkapi-object-signature">info</code><code class="mkapi-object-parenthesis">)</code>
@@ -1071,7 +1083,7 @@ at the end for the torrentfile as a whole.</p></div>
         </div>
       <div class="mkapi-section-body functions"><ul class="mkapi-items">
 <li class="function"><code class="mkapi-item-name">merkle_root</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">blocks</code><code class="mkapi-object-parenthesis">)</code>
-
+<span class="mkapi-item-type">(bytes)</span>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate the merkle root for a seq of sha256 hash digests.</span></li>
 
 

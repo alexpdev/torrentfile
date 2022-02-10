@@ -11,14 +11,30 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Edit torrent meta file."""
+"""Edit torrent module.
+
+Provides a facility by which certain properties of a torrent meta file can be
+edited by the user. The various command line arguments indicate which fields
+should be edited, and what the new value should be.  Depending on what fields
+are chosen to edit, this command can trigger a new info hash which means the
+torrent will no longer be able to participate in the same swarm as the original
+unedited torrent.
+
+Keywords
+--------
+private
+comment
+source
+trackers
+web-seeds
+"""
 
 import os
 
 import pyben
 
 
-def filter_empty(args, meta, info):
+def filter_empty(args: dict, meta: dict, info: dict):
     """
     Remove dictionary keys with empty values.
 
@@ -44,7 +60,7 @@ def filter_empty(args, meta, info):
             del args[key]
 
 
-def edit_torrent(metafile, args):
+def edit_torrent(metafile: str, args: dict) -> dict:
     """
     Edit the properties and values in a torrent meta file.
 
@@ -54,6 +70,11 @@ def edit_torrent(metafile, args):
         path to the torrent meta file.
     args : dict
         key value pairs of the properties to be edited.
+
+    Returns
+    -------
+    dict
+        The edited and nested Meta and info dictionaries.
     """
     meta = pyben.load(metafile)
     info = meta["info"]

@@ -128,7 +128,7 @@ class Hasher(_CbMixin):
                 return sha1(piece).digest()  # nosec
 
 
-def merkle_root(blocks):
+def merkle_root(blocks: list) -> bytes:
     """Calculate the merkle root for a seq of sha256 hash digests."""
     while len(blocks) > 1:
         blocks = [sha256(x + y).digest() for x, y in zip(*[iter(blocks)] * 2)]
@@ -151,7 +151,7 @@ class HasherV2(_CbMixin):
         Size of layer hashes pieces.
     """
 
-    def __init__(self, path, piece_length):
+    def __init__(self, path: str, piece_length: int):
         """Calculate and store hash information for specific file."""
         self.path = path
         self.root = None
