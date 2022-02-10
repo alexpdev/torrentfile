@@ -224,7 +224,7 @@ def get_file_list(path: str) -> list:
     return filelist
 
 
-def path_stat(path: str) -> tuple[list, int, int]:
+def path_stat(path: str) -> tuple:
     """Calculate directory statistics.
 
     Parameters
