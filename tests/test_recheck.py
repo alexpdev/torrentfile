@@ -445,7 +445,7 @@ def test_checker_empty_files(dir3, version, piece_length):
     def empty_files(root):
         """Dump contents of files."""
         if os.path.isfile(root):
-            with open(root, "wt") as _:
+            with open(root, "wb") as _:
                 pass
             assert os.path.getsize(root) == 0
         elif os.path.isdir(root):
