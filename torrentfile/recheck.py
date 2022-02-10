@@ -268,8 +268,9 @@ class Checker:
             if "" in val:
 
                 base = os.path.join(*partials, key)
-                roothash = val[""]["pieces root"]
+                roothash = None
                 length = val[""]["length"]
+                roothash = None if not length else val[""]["pieces root"]
                 full = str(self.root / base)
                 self.fileinfo[len(self.paths)] = {
                     "path": full,
@@ -522,7 +523,7 @@ class HashChecker:
             if roothash in self.piece_layers:
                 pieces = self.piece_layers[roothash]
             else:
-                pieces = roothash
+                pieces = roothash if roothash else bytes()
             amount = len(pieces) // SHA256
 
             if not os.path.exists(path):

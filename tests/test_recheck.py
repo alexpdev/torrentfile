@@ -434,3 +434,33 @@ def test_checker_simplest():
     outfile = mktorrent(args, v=1)
     checker = Checker(outfile, path)
     assert checker.results() == 100
+
+
+@pytest.mark.parametrize("version", [2, 3])
+@pytest.mark.parametrize("piece_length", [2 ** i for i in range(16, 22)])
+def test_checker_empty_files(dir3, version, piece_length):
+    """Test Checker when directory contains 0 length files."""
+    root = dir3
+
+    def empty_files(root):
+        """Dump contents of files."""
+        if os.path.isfile(root):
+            with open(root, "wt") as _:
+                pass
+            assert os.path.getsize(root) == 0
+        elif os.path.isdir(root):
+            for item in os.listdir(root):
+                return empty_files(os.path.join(root, item))
+        return root
+
+    empty_files(root)
+    args = {
+        "announce": "announce",
+        "private": True,
+        "piece_length": piece_length,
+        "path": root,
+    }
+    metafile = mktorrent(args, v=version)
+    checker = Checker(metafile, root)
+    assert checker.results() == 100
+    rmpath(metafile)

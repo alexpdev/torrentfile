@@ -130,9 +130,13 @@ class Hasher(_CbMixin):
 
 def merkle_root(blocks: list) -> bytes:
     """Calculate the merkle root for a seq of sha256 hash digests."""
-    while len(blocks) > 1:
-        blocks = [sha256(x + y).digest() for x, y in zip(*[iter(blocks)] * 2)]
-    return blocks[0]
+    if blocks:
+        while len(blocks) > 1:
+            blocks = [
+                sha256(x + y).digest() for x, y in zip(*[iter(blocks)] * 2)
+            ]
+        return blocks[0]
+    return blocks
 
 
 class HasherV2(_CbMixin):

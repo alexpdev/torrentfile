@@ -16,17 +16,17 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://alexpdev.github.io/torrentfile/Examples/</loc>
-         <lastmod>2022-02-10</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://alexpdev.github.io/torrentfile/LGPLv3/</loc>
          <lastmod>2022-02-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://alexpdev.github.io/torrentfile/changelog/</loc>
+         <lastmod>2022-02-10</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/examples/</loc>
          <lastmod>2022-02-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
