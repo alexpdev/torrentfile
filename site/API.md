@@ -1,12 +1,15 @@
 # TorrentFile API Documentation
 
+## `Torrent` Module
+
+![mkapi](torrentfile.torrent)
+
+------
+======
+
 ## `Utils` Module
 
 ![mkapi](torrentfile.utils)
-
-------
-
-::: torrentfile.utils
 
 ------
 ======
@@ -16,19 +19,11 @@
 ![mkapi](torrentfile.edit)
 
 ------
-
-::: torrentfile.edit
-
-------
 ======
 
 ## `Interactive` Module
 
 ![mkapi](torrentfile.interactive)
-
-------
-
-::: torrentfile.interactive
 
 ------
 ======
@@ -38,10 +33,6 @@
 ![mkapi](torrentfile.cli)
 
 ------
-
-::: torrentfile.cli
-
-------
 ======
 
 ## `Recheck` Module
@@ -49,5 +40,8 @@
 ![mkapi](torrentfile.recheck)
 
 ------
+======
 
-::: torrentfile.recheck
+## `Hasher` Module
+
+![mkapi](torrentfile.hasher)

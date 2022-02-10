@@ -162,7 +162,7 @@ def filelist_total(pathstring: str) -> os.PathLike:
     raise MissingPathError
 
 
-def _filelist_total(path: str) -> tuple[int, list]:
+def _filelist_total(path: str) -> tuple:
     """Search directory tree for files.
 
     Parameters

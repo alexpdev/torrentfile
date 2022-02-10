@@ -15,8 +15,6 @@ nav:
   - CLI : Commands.md
   - Examples : Examples.md
   - API : API.md
-  - HASHER API : HasherAPI.md
-  - TORRENT API : TorrentAPI.md
   - CHANGELOG : changelog.md
   - LICENSE : LGPLv3.md
 
