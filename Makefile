@@ -114,7 +114,7 @@ setup: clean test lint docs ## setup and build repo
 	pip install --pre --upgrade --force-reinstall --no-cache -rrequirements.txt
 	python setup.py sdist bdist_wheel bdist_egg
 	pip install -e .
-	twine upload --verbose dist/*
+	twine upload dist/*
 
 build: clean test lint docs
 	pip install --pre --upgrade --force-reinstall --no-cache -rrequirements.txt

@@ -3,6 +3,8 @@ include README.md
 include CHANGELOG.md
 include requirements.txt
 include pyproject.toml
+include Makefile
+include .prospector.yml
 include package.json
 include setup.py
 

@@ -1,5 +1,14 @@
 # TorrentFile
 
+## Version 0.6.11
+
+- Fixed bug that occured during recheck when file of 0 length is included.
+- Altered Recheck algorithm to process 0 length files.
+- Only effected meta version 2 and hybrid torrent files.
+- Added unittests to cover the situation.
+
+---------------------
+
 ## Version 0.6.10
 
 - Updates to documentation
