@@ -1,0 +1,1173 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="TorrentFile CLI Documentation and Examples">
+      
+      
+      
+        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/API/">
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.10">
+    
+    
+      
+        <title>API - TorrentFile Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.d6be258b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    
+      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    
+      <link rel="stylesheet" href="../css/mkapi-common.css">
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#torrentfile-api-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TorrentFile Docs" class="md-header__button md-logo" aria-label="TorrentFile Docs" data-md-component="logo">
+      
+  <img src="../images/torrentfile.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TorrentFile Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/alexpdev/torrentfile/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TorrentFile Docs" class="md-nav__button md-logo" aria-label="TorrentFile Docs" data-md-component="logo">
+      
+  <img src="../images/torrentfile.png" alt="logo">
+
+    </a>
+    TorrentFile Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/alexpdev/torrentfile/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        HOME
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Commands/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        API
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#torrent-module" class="md-nav__link">
+    Torrent Module
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    Classes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    Constants
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bittorrent-v2" class="md-nav__link">
+    Bittorrent V2
+  </a>
+  
+    <nav class="md-nav" aria-label="Bittorrent V2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#meta-version-2-dictionary" class="md-nav__link">
+    Meta Version 2 Dictionary:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bittorrent-v1" class="md-nav__link">
+    Bittorrent V1
+  </a>
+  
+    <nav class="md-nav" aria-label="Bittorrent V1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v1-meta-dictionary" class="md-nav__link">
+    v1 meta-dictionary
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        CHANGELOG
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LGPLv3/" class="md-nav__link">
+        LICENSE
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#torrent-module" class="md-nav__link">
+    Torrent Module
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    Classes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    Constants
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bittorrent-v2" class="md-nav__link">
+    Bittorrent V2
+  </a>
+  
+    <nav class="md-nav" aria-label="Bittorrent V2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#meta-version-2-dictionary" class="md-nav__link">
+    Meta Version 2 Dictionary:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bittorrent-v1" class="md-nav__link">
+    Bittorrent V1
+  </a>
+  
+    <nav class="md-nav" aria-label="Bittorrent V1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v1-meta-dictionary" class="md-nav__link">
+    v1 meta-dictionary
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/alexpdev/torrentfile/edit/master/docs/API.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="torrentfile-api-documentation">TorrentFile API Documentation</h1>
+<h2 id="torrent-module"><code>Torrent</code> Module</h2>
+<div class="mkapi-node" id="torrentfile.torrent">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object module code top">
+    <div class="mkapi-object-kind module top">module</div>
+    <div class="mkapi-object-body module top"><code class="mkapi-object-prefix">torrentfile.</code><code class="mkapi-object-name">torrent</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Classes and procedures pertaining to the creation of torrent meta files.</p>
+<h2 id="classes">Classes</h2>
+<ul>
+<li>
+<p><code>TorrentFile</code>
+    construct .torrent file.</p>
+</li>
+<li>
+<p><code>TorrentFileV2</code>
+    construct .torrent v2 files using provided data.</p>
+</li>
+<li>
+<p><code>MetaFile</code>
+    base class for all MetaFile classes.</p>
+</li>
+</ul>
+<h2 id="constants">Constants</h2>
+<ul>
+<li>
+<p>BLOCK_SIZE : int
+    size of leaf hashes for merkle tree.</p>
+</li>
+<li>
+<p>HASH_SIZE : int
+    Length of a sha256 hash.</p>
+</li>
+</ul>
+<h2 id="bittorrent-v2">Bittorrent V2</h2>
+<p><strong>From Bittorrent.org Documentation pages.</strong></p>
+<p><em>Implementation details for Bittorrent Protocol v2.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All strings in a .torrent file that contain text must be UTF-8 encoded.</p>
+</div>
+<h3 id="meta-version-2-dictionary">Meta Version 2 Dictionary:</h3>
+<ul>
+<li>
+<p>"announce":
+    The URL of the tracker.</p>
+</li>
+<li>
+<p>"info":
+    This maps to a dictionary, with keys described below.</p>
+<ul>
+<li>
+<p>"name":
+    A display name for the torrent. It is purely advisory.</p>
+</li>
+<li>
+<p>"piece length":
+    The number of bytes that each logical piece in the peer
+    protocol refers to. I.e. it sets the granularity of piece, request,
+    bitfield and have messages. It must be a power of two and at least
+    6KiB.</p>
+</li>
+<li>
+<p>"meta version":
+    An integer value, set to 2 to indicate compatibility
+    with the current revision of this specification. Version 1 is not
+    assigned to avoid confusion with BEP3. Future revisions will only
+    increment this issue to indicate an incompatible change has been made,
+    for example that hash algorithms were changed due to newly discovered
+    vulnerabilities. Lementations must check this field first and indicate
+    that a torrent is of a newer version than they can handle before
+    performing other idations which may result in more general messages
+    about invalid files. Files are mapped into this piece address space so
+    that each non-empty</p>
+</li>
+<li>
+<p>"file tree":
+    A tree of dictionaries where dictionary keys represent UTF-8
+    encoded path elements. Entries with zero-length keys describe the
+    properties of the composed path at that point. 'UTF-8 encoded'
+    context only means that if the native encoding is known at creation
+    time it must be converted to UTF-8. Keys may contain invalid UTF-8
+    sequences or characters and names that are reserved on specific
+    filesystems. Implementations must be prepared to sanitize them. On
+    platforms path components exactly matching '.' and '..' must be
+    sanitized since they could lead to directory traversal attacks and
+    conflicting path descriptions. On platforms that require UTF-8
+    path components this sanitizing step must happen after normalizing
+    overlong UTF-8 encodings.
+    File is aligned to a piece boundary and occurs in same order as
+    the file tree. The last piece of each file may be shorter than the
+    specified piece length, resulting in an alignment gap.</p>
+</li>
+<li>
+<p>"length":
+    Length of the file in bytes. Presence of this field indicates
+    that the dictionary describes a file, not a directory. Which means
+    it must not have any sibling entries.</p>
+</li>
+<li>
+<p>"pieces root":
+    For non-empty files this is the the root hash of a merkle
+    tree with a branching factor of 2, constructed from 16KiB blocks
+    of the file. The last block may be shorter than 16KiB. The
+    remaining leaf hashes beyond the end of the file required to
+    construct upper layers of the merkle tree are set to zero. As of
+    meta version 2 SHA2-256 is used as digest function for the merkle
+    tree. The hash is stored in its binary form, not as human-readable
+    string.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>"piece layers":
+    A dictionary of strings. For each file in the file tree that
+    is larger than the piece size it contains one string value.
+    The keys are the merkle roots while the values consist of concatenated
+    hashes of one layer within that merkle tree. The layer is chosen so
+    that one hash covers piece length bytes. For example if the piece
+    size is 16KiB then the leaf hashes are used. If a piece size of
+    128KiB is used then 3rd layer up from the leaf hashes is used. Layer
+    hashes which exclusively cover data beyond the end of file, i.e.
+    are only needed to balance the tree, are omitted. All hashes are
+    stored in their binary format. A torrent is not valid if this field is
+    absent, the contained hashes do not match the merkle roots or are
+    not from the correct layer.</p>
+</li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The file tree root dictionary itself must not be a file,
+i.e. it must not contain a zero-length key with a dictionary containing
+a length key.</p>
+</div>
+<h2 id="bittorrent-v1">Bittorrent V1</h2>
+<h3 id="v1-meta-dictionary">v1 meta-dictionary</h3>
+<ul>
+<li>
+<p>announce:
+    The URL of the tracker.</p>
+</li>
+<li>
+<p>info:
+    This maps to a dictionary, with keys described below.</p>
+<ul>
+<li>
+<p><code>name</code>:
+    maps to a UTF-8 encoded string which is the suggested name to
+    save the file (or directory) as. It is purely advisory.</p>
+</li>
+<li>
+<p><code>piece length</code>:
+    maps to the number of bytes in each piece the file is split
+    into. For the purposes of transfer, files are split into
+    fixed-size pieces which are all the same length except for
+    possibly the last one which may be truncated.</p>
+</li>
+<li>
+<p><code>piece length</code>:
+    is almost always a power of two, most commonly 2^18 = 256 K</p>
+</li>
+<li>
+<p><code>pieces</code>:
+    maps to a string whose length is a multiple of 20. It is to be
+    subdivided into strings of length 20, each of which is the SHA1
+    hash of the piece at the corresponding index.</p>
+</li>
+<li>
+<p><code>length</code>:
+    In the single file case, maps to the length of the file in bytes.</p>
+</li>
+<li>
+<p><code>files</code>:
+    If present then the download represents a single file, otherwise it
+    represents a set of files which go in a directory structure.
+    For the purposes of the other keys, the multi-file case is treated
+    as only having a single file by concatenating the files in the order
+    they appear in the files list. The files list is the value <code>files</code>
+    maps to, and is a list of dictionaries containing the following keys:</p>
+<ul>
+<li>
+<p><code>path</code>:
+    A list of UTF-8 encoded strings corresponding to subdirectory
+    names, the last of which is the actual file name</p>
+</li>
+<li>
+<p><code>length</code>:
+    Maps to the length of the file in bytes.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>length</code>:
+    Only present if the torrent contents is a single file. Maps to the length
+    of the file in bytes.</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the single file case, the name key is the name of a file,
+in the muliple file case, it's the name of a directory.</p>
+</div></div>
+    </div>
+  <div class="mkapi-section classes">
+      <div class="mkapi-section-name classes">
+          <span class="mkapi-section-name-body classes">Classes</span> 
+        </div>
+      <div class="mkapi-section-body classes"><ul class="mkapi-items">
+<li class="class"><code class="mkapi-item-name">MetaFile</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Base Class for all TorrentFile classes.</span></li>
+
+<li class="class"><code class="mkapi-item-name">TorrentFile</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Class for creating Bittorrent meta files.</span></li>
+
+<li class="class"><code class="mkapi-item-name">TorrentFileV2</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Class for creating Bittorrent meta v2 files.</span></li>
+
+<li class="class"><code class="mkapi-item-name">TorrentFileHybrid</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Construct the Hybrid torrent meta file with provided parameters.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+</div>
+
+<h1 id="-">------</h1>
+<h2 id="utils-module"><code>Utils</code> Module</h2>
+<div class="mkapi-node" id="torrentfile.utils">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object module code top">
+    <div class="mkapi-object-kind module top">module</div>
+    <div class="mkapi-object-body module top"><code class="mkapi-object-prefix">torrentfile.</code><code class="mkapi-object-name">utils</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Utility functions and classes used throughout package.</p>
+<p>Functions:
+  get_piece_length: calculate ideal piece length for torrent file.
+  sortfiles: traverse directory in sorted order yielding paths encountered.
+  path_size: Sum the sizes of each file in path.
+  get_file_list: Return list of all files contained in directory.
+  path_stat: Get ideal piece length, total size, and file list for directory.
+  path_piece_length: Get ideal piece length based on size of directory.</p></div>
+    </div>
+  <div class="mkapi-section classes">
+      <div class="mkapi-section-name classes">
+          <span class="mkapi-section-name-body classes">Classes</span> 
+        </div>
+      <div class="mkapi-section-body classes"><ul class="mkapi-items">
+<li class="class"><code class="mkapi-item-name">MissingPathError</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Path parameter is required to specify target content.</span></li>
+
+<li class="class"><code class="mkapi-item-name">PieceLengthValueError</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Piece Length parameter must equal a perfect power of 2.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section functions">
+      <div class="mkapi-section-name functions">
+          <span class="mkapi-section-name-body functions">Functions</span> 
+        </div>
+      <div class="mkapi-section-body functions"><ul class="mkapi-items">
+<li class="function"><code class="mkapi-item-name">filelist_total</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">pathstring</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(os.PathLike)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Perform error checking and format conversion to os.PathLike.</span></li>
+
+<li class="function"><code class="mkapi-item-name">get_file_list</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">path</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(list)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Return a sorted list of file paths contained in directory.</span></li>
+
+<li class="function"><code class="mkapi-item-name">get_piece_length</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">size</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(int)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate the ideal piece length for bittorrent data.</span></li>
+
+<li class="function"><code class="mkapi-item-name">humanize_bytes</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">amount</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(str)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Convert integer into human readable memory sized denomination.</span></li>
+
+<li class="function"><code class="mkapi-item-name">next_power_2</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">value</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(int)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate the next perfect power of 2 equal to or greater than value.</span></li>
+
+<li class="function"><code class="mkapi-item-name">normalize_piece_length</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">piece_length</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(int)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Verify input piece_length is valid and convert accordingly.</span></li>
+
+<li class="function"><code class="mkapi-item-name">path_piece_length</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">path</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(int)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate piece length for input path and contents.</span></li>
+
+<li class="function"><code class="mkapi-item-name">path_size</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">path</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(int)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Return the total size of all files in path recursively.</span></li>
+
+<li class="function"><code class="mkapi-item-name">path_stat</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">path</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(list)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate directory statistics.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+</div>
+
+<h1 id="-_1">------</h1>
+<h2 id="edit-module"><code>Edit</code> Module</h2>
+<div class="mkapi-node" id="torrentfile.edit">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object module code top">
+    <div class="mkapi-object-kind module top">module</div>
+    <div class="mkapi-object-body module top"><code class="mkapi-object-prefix">torrentfile.</code><code class="mkapi-object-name">edit</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Edit torrent module.</p>
+<p>Provides a facility by which certain properties of a torrent meta file can be
+edited by the user. The various command line arguments indicate which fields
+should be edited, and what the new value should be.  Depending on what fields
+are chosen to edit, this command can trigger a new info hash which means the
+torrent will no longer be able to participate in the same swarm as the original
+unedited torrent.</p>
+<h2 id="keywords">Keywords</h2>
+<p>private
+comment
+source
+trackers
+web-seeds</p></div>
+    </div>
+  <div class="mkapi-section functions">
+      <div class="mkapi-section-name functions">
+          <span class="mkapi-section-name-body functions">Functions</span> 
+        </div>
+      <div class="mkapi-section-body functions"><ul class="mkapi-items">
+<li class="function"><code class="mkapi-item-name">edit_torrent</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">metafile</code>, <code class="mkapi-object-signature">args</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(dict)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Edit the properties and values in a torrent meta file.</span></li>
+
+<li class="function"><code class="mkapi-item-name">filter_empty</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code>, <code class="mkapi-object-signature">meta</code>, <code class="mkapi-object-signature">info</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Remove dictionary keys with empty values.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+</div>
+
+<h1 id="-_2">------</h1>
+<h2 id="interactive-module"><code>Interactive</code> Module</h2>
+<div class="mkapi-node" id="torrentfile.interactive">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object module code top">
+    <div class="mkapi-object-kind module top">module</div>
+    <div class="mkapi-object-body module top"><code class="mkapi-object-prefix">torrentfile.</code><code class="mkapi-object-name">interactive</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Module contains the procedures used for Interactive Mode.</p></div>
+    </div>
+  <div class="mkapi-section classes">
+      <div class="mkapi-section-name classes">
+          <span class="mkapi-section-name-body classes">Classes</span> 
+        </div>
+      <div class="mkapi-section-body classes"><ul class="mkapi-items">
+<li class="class"><code class="mkapi-item-name">InteractiveEditor</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Interactive dialog class for torrent editing.</span></li>
+
+<li class="class"><code class="mkapi-item-name">InteractiveCreator</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Class namespace for interactive program options.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section functions">
+      <div class="mkapi-section-name functions">
+          <span class="mkapi-section-name-body functions">Functions</span> 
+        </div>
+      <div class="mkapi-section-body functions"><ul class="mkapi-items">
+<li class="function"><code class="mkapi-item-name">create_torrent</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create new torrent file interactively.</span></li>
+
+<li class="function"><code class="mkapi-item-name">edit_action</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Edit the editable values of the torrent meta file.</span></li>
+
+<li class="function"><code class="mkapi-item-name">get_input</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">*args</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(str)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Determine appropriate input function to call.</span></li>
+
+<li class="function"><code class="mkapi-item-name">recheck_torrent</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Check torrent download completed percentage.</span></li>
+
+<li class="function"><code class="mkapi-item-name">select_action</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Operate TorrentFile program interactively through terminal.</span></li>
+
+<li class="function"><code class="mkapi-item-name">showcenter</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">txt</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Prints text to screen in the center position of the terminal.</span></li>
+
+<li class="function"><code class="mkapi-item-name">showtext</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">txt</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Print contents of txt to screen.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+</div>
+
+<h1 id="-_3">------</h1>
+<h2 id="cli-module"><code>CLI</code> Module</h2>
+<div class="mkapi-node" id="torrentfile.cli">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object module code top">
+    <div class="mkapi-object-kind module top">module</div>
+    <div class="mkapi-object-body module top"><code class="mkapi-object-prefix">torrentfile.</code><code class="mkapi-object-name">cli</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Command Line Interface for TorrentFile project.</p>
+<p>This module provides the primary command line argument parser for
+the torrentfile package. The main_script function is automatically
+invoked when called from command line, and parses accompanying arguments.</p>
+<p>Functions:
+    main_script: process command line arguments and run program.</p></div>
+    </div>
+  <div class="mkapi-section classes">
+      <div class="mkapi-section-name classes">
+          <span class="mkapi-section-name-body classes">Classes</span> 
+        </div>
+      <div class="mkapi-section-body classes"><ul class="mkapi-items">
+<li class="class"><code class="mkapi-item-name">TorrentFileHelpFormatter</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Formatting class for help tips provided by the CLI.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section functions">
+      <div class="mkapi-section-name functions">
+          <span class="mkapi-section-name-body functions">Functions</span> 
+        </div>
+      <div class="mkapi-section-body functions"><ul class="mkapi-items">
+<li class="function"><code class="mkapi-item-name">create_command</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(torrentfile.MetaFile)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Execute the create CLI sub-command to create a new torrent metafile.</span></li>
+
+<li class="function"><code class="mkapi-item-name">create_magnet</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">metafile</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(str)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Create a magnet URI from a Bittorrent meta file.</span></li>
+
+<li class="function"><code class="mkapi-item-name">edit_command</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(str)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Execute the edit CLI sub-command with provided arguments.</span></li>
+
+<li class="function"><code class="mkapi-item-name">main</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initiate main function for CLI script.</span></li>
+
+<li class="function"><code class="mkapi-item-name">main_script</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code><code class="mkapi-object-parenthesis">)</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Initialize Command Line Interface for torrentfile.</span></li>
+
+<li class="function"><code class="mkapi-item-name">recheck_command</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">args</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(str)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Execute recheck CLI sub-command.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+</div>
+
+<h1 id="-_4">------</h1>
+<h2 id="recheck-module"><code>Recheck</code> Module</h2>
+<div class="mkapi-node" id="torrentfile.recheck">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object module code top">
+    <div class="mkapi-object-kind module top">module</div>
+    <div class="mkapi-object-body module top"><code class="mkapi-object-prefix">torrentfile.</code><code class="mkapi-object-name">recheck</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Module container Checker Class.</p>
+<p>The CheckerClass takes a torrentfile and tha path to it's contents.
+It will then iterate through every file and directory contained
+and compare their data to values contained within the torrent file.
+Completion percentages will be printed to screen for each file and
+at the end for the torrentfile as a whole.</p></div>
+    </div>
+  <div class="mkapi-section classes">
+      <div class="mkapi-section-name classes">
+          <span class="mkapi-section-name-body classes">Classes</span> 
+        </div>
+      <div class="mkapi-section-body classes"><ul class="mkapi-items">
+<li class="class"><code class="mkapi-item-name">Checker</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Check a given file or directory to see if it matches a torrentfile.</span></li>
+
+<li class="class"><code class="mkapi-item-name">FeedChecker</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Validates torrent content.</span></li>
+
+<li class="class"><code class="mkapi-item-name">HashChecker</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Verify that root hashes of content files match the .torrent files.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+</div>
+
+<h1 id="-_5">------</h1>
+<h2 id="hasher-module"><code>Hasher</code> Module</h2>
+<div class="mkapi-node" id="torrentfile.hasher">
+<div class='mkapi-object-container'>
+  <div class="mkapi-object module code top">
+    <div class="mkapi-object-kind module top">module</div>
+    <div class="mkapi-object-body module top"><code class="mkapi-object-prefix">torrentfile.</code><code class="mkapi-object-name">hasher</code></div>
+  </div>
+  
+</div>
+<div class="mkapi-docstring">
+<div class="mkapi-section">
+      <div class="mkapi-section-body"><p>Piece/File Hashers for Bittorrent meta file contents.</p></div>
+    </div>
+  <div class="mkapi-section classes">
+      <div class="mkapi-section-name classes">
+          <span class="mkapi-section-name-body classes">Classes</span> 
+        </div>
+      <div class="mkapi-section-body classes"><ul class="mkapi-items">
+<li class="class"><code class="mkapi-item-name">Hasher</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Piece hasher for Bittorrent V1 files.</span></li>
+
+<li class="class"><code class="mkapi-item-name">HasherV2</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate the root hash and piece layers for file contents.</span></li>
+
+<li class="class"><code class="mkapi-item-name">HasherHybrid</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate root and piece hashes for creating hybrid torrent file.</span></li>
+
+
+</ul></div>
+    </div>
+  <div class="mkapi-section functions">
+      <div class="mkapi-section-name functions">
+          <span class="mkapi-section-name-body functions">Functions</span> 
+        </div>
+      <div class="mkapi-section-body functions"><ul class="mkapi-items">
+<li class="function"><code class="mkapi-item-name">merkle_root</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">blocks</code><code class="mkapi-object-parenthesis">)</code>
+<span class="mkapi-item-type">(bytes)</span>
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate the merkle root for a seq of sha256 hash digests.</span></li>
+
+
+</ul></div>
+    </div>
+  </div>
+
+</div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../examples/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Examples" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Examples
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../changelog/" class="md-footer__link md-footer__link--next" aria-label="Next: CHANGELOG" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              CHANGELOG
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      alexpdev 2022
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e3b2bf44.min.js"></script>
+      
+        <script src="../js/mkapi.js"></script>
+      
+    
+  </body>
+</html>
