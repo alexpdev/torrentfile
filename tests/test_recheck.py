@@ -74,7 +74,7 @@ def test_checker_class(dir1, version):
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
-@pytest.mark.parametrize("piece_length", [2 ** i for i in range(14, 18)])
+@pytest.mark.parametrize("piece_length", [2**i for i in range(14, 18)])
 def test_checker_class_alt(dir3, version, piece_length):
     """Test Checker Class against meta files."""
     args = {
@@ -115,7 +115,7 @@ def test_checker_first_piece(dir2, version):
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
-@pytest.mark.parametrize("piece_length", [2 ** i for i in range(14, 18)])
+@pytest.mark.parametrize("piece_length", [2**i for i in range(14, 18)])
 def test_checker_first_piece_alt(dir3, version, piece_length):
     """Test Checker Class when first piece is slightly alterred."""
     path = str(dir3)
@@ -157,7 +157,7 @@ def test_metafile_checker(dir1, version):
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
-@pytest.mark.parametrize("piece_length", [2 ** i for i in range(14, 18)])
+@pytest.mark.parametrize("piece_length", [2**i for i in range(14, 18)])
 def test_metafile_checker_alt(dir3, version, piece_length):
     """Test metadata checker class."""
     path = str(dir3)
@@ -185,7 +185,7 @@ def test_partial_metafiles(dir2, version):
         with open(path, "rb") as bfile:
             data = bfile.read()
         with open(path, "wb") as bfile:
-            bfile.write(data[: -(2 ** 10)])
+            bfile.write(data[: -(2**10)])
 
     for item in os.listdir(path):
         full = os.path.join(path, item)
@@ -210,7 +210,7 @@ def test_checker_no_content(dir1, version):
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
-@pytest.mark.parametrize("piece_length", [2 ** i for i in range(14, 18)])
+@pytest.mark.parametrize("piece_length", [2**i for i in range(14, 18)])
 def test_checker_no_content_alt(dir3, version, piece_length):
     """Test Checker class with directory that points to nothing."""
     path = str(dir3)
@@ -306,7 +306,7 @@ def test_checker_missing(version, dir2):
         "announce": "announce",
         "path": path,
         "private": 1,
-        "piece_length": 2 ** 16,
+        "piece_length": 2**16,
     }
     outfile = mktorrent(args, v=version)
     count = 0
@@ -325,7 +325,7 @@ def test_checker_class_allfiles(version, dir2):
         "announce": "announce",
         "path": path,
         "private": 1,
-        "piece_length": 2 ** 16,
+        "piece_length": 2**16,
     }
     outfile = mktorrent(args, v=version)
 
@@ -350,7 +350,7 @@ def test_checker_class_allpaths(version, dir2):
         "announce": "announce",
         "path": str(dir2),
         "private": 1,
-        "piece_length": 2 ** 16,
+        "piece_length": 2**16,
     }
     outfile = mktorrent(args, v=version)
     for item in Path(str(dir2)).iterdir():
@@ -360,7 +360,7 @@ def test_checker_class_allpaths(version, dir2):
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
-@pytest.mark.parametrize("piece_length", [2 ** i for i in range(14, 19)])
+@pytest.mark.parametrize("piece_length", [2**i for i in range(14, 19)])
 @pytest.mark.parametrize("size", list(range(16, 22)))
 def test_checker_class_half_file(version, piece_length, size):
     """Test Checker class with half size single file."""
@@ -372,7 +372,7 @@ def test_checker_class_half_file(version, piece_length, size):
         "piece_length": piece_length,
     }
     outfile = mktorrent(args, v=version)
-    half = int((2 ** size) / 2)
+    half = int((2**size) / 2)
     barr = bytearray(half)
     with open(path, "rb") as content:
         content.readinto(barr)
@@ -383,7 +383,7 @@ def test_checker_class_half_file(version, piece_length, size):
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
-@pytest.mark.parametrize("piece_length", [2 ** i for i in range(16, 22)])
+@pytest.mark.parametrize("piece_length", [2**i for i in range(16, 22)])
 def test_checker_missing_singles(version, piece_length, dir3):
     """Test Checker class with half size single file."""
     path = str(dir3)
@@ -418,7 +418,7 @@ def test_checker_result_property(version):
         "announce": "announce",
         "path": path,
         "private": 1,
-        "piece_length": 2 ** 14,
+        "piece_length": 2**14,
     }
     outfile = mktorrent(args, v=version)
     checker = Checker(outfile, path)
@@ -437,7 +437,7 @@ def test_checker_simplest():
 
 
 @pytest.mark.parametrize("version", [2, 3])
-@pytest.mark.parametrize("piece_length", [2 ** i for i in range(16, 22)])
+@pytest.mark.parametrize("piece_length", [2**i for i in range(16, 22)])
 def test_checker_empty_files(dir3, version, piece_length):
     """Test Checker when directory contains 0 length files."""
     root = dir3

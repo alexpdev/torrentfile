@@ -20,52 +20,52 @@ from tests import dir1, dir2, rmpath
 from torrentfile import utils
 
 
-@pytest.mark.parametrize("size", [156634528, 2 ** 30, 67987, 16384, 8563945])
+@pytest.mark.parametrize("size", [156634528, 2**30, 67987, 16384, 8563945])
 def test_get_piece_length(size):
     """Test function for best piece length for given size."""
     value = utils.get_piece_length(size)
     assert value % 1024 == 0
 
 
-@pytest.mark.parametrize("size", [156634528, 2 ** 30, 67987, 16384, 8563945])
+@pytest.mark.parametrize("size", [156634528, 2**30, 67987, 16384, 8563945])
 def test_get_piece_length_max(size):
     """Test function for best piece length for given size maximum."""
     value = utils.get_piece_length(size)
-    assert value < 2 ** 27
+    assert value < 2**27
 
 
-@pytest.mark.parametrize("size", [156634528, 2 ** 30, 67987, 16384, 8563945])
+@pytest.mark.parametrize("size", [156634528, 2**30, 67987, 16384, 8563945])
 def test_get_piece_length_min(size):
     """Test function for best piece length for given size minimum."""
     value = utils.get_piece_length(size)
-    assert value >= 2 ** 14
+    assert value >= 2**14
 
 
 def test_get_path_length_mod(dir1):
     """Test function for the best piece length for provided path."""
-    assert utils.path_piece_length(dir1) % (2 ** 14) == 0
+    assert utils.path_piece_length(dir1) % (2**14) == 0
 
 
 def test_get_path_length_min(dir1):
     """Test function for getting piece length for folders min."""
-    assert utils.path_piece_length(dir1) >= (2 ** 14)
+    assert utils.path_piece_length(dir1) >= (2**14)
 
 
 def test_get_path_length_max(dir1):
     """Test function for getting piece length for folders max."""
-    assert utils.path_piece_length(dir1) <= (2 ** 27)
+    assert utils.path_piece_length(dir1) <= (2**27)
 
 
 def test_path_stat(dir1):
     """Test function for acquiring piece length information on folder."""
     _, _, piece_length = utils.path_stat(dir1)
-    assert piece_length % (2 ** 14) == 0
+    assert piece_length % (2**14) == 0
 
 
 def test_path_stat_size(dir1):
     """Test function for acquiring total size information on folder."""
     _, totalsize, _ = utils.path_stat(dir1)
-    assert totalsize == (2 ** 18) * 4
+    assert totalsize == (2**18) * 4
 
 
 def test_path_stat_filelist_size(dir1):
@@ -83,13 +83,13 @@ def test_get_filelist(dir1):
 def test_get_path_size(dir1):
     """Test function for getting total size of directory."""
     pathsize = utils.path_size(dir1)
-    assert pathsize == (2 ** 18) * 4
+    assert pathsize == (2**18) * 4
 
 
 def test_filelist_total(dir1):
     """Test function for acquiring a filelist for directory."""
     total, _ = utils.filelist_total(dir1)
-    assert total == (2 ** 18) * 4
+    assert total == (2**18) * 4
 
 
 def test_piecelength_error_fixtures():
@@ -136,7 +136,7 @@ def test_humanize_bytes(amount, result):
     assert utils.humanize_bytes(amount) == result
 
 
-@pytest.mark.parametrize("amount, result", [(i, 2 ** i) for i in range(14, 25)])
+@pytest.mark.parametrize("amount, result", [(i, 2**i) for i in range(14, 25)])
 def test_normalize_piece_length_int(amount, result):
     """Test normalize piece length function.
 
@@ -151,7 +151,7 @@ def test_normalize_piece_length_int(amount, result):
 
 
 @pytest.mark.parametrize(
-    "amount, result", [(str(i), 2 ** i) for i in range(14, 21)]
+    "amount, result", [(str(i), 2**i) for i in range(14, 21)]
 )
 def test_normalize_piece_length_str(amount, result):
     """Test normalize piece length function.

@@ -21,7 +21,7 @@ from hashlib import sha1, sha256  # nosec
 
 from torrentfile.utils import humanize_bytes, next_power_2
 
-BLOCK_SIZE = 2 ** 14  # 16KiB
+BLOCK_SIZE = 2**14  # 16KiB
 HASH_SIZE = 32
 
 logger = logging.getLogger(__name__)

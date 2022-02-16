@@ -75,7 +75,7 @@ def test_cli_private(folder):
     assert "private" in meta["info"]
 
 
-@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_piece_length(folder, piece_length, version):
     """Test piece length cli flag."""
@@ -97,7 +97,7 @@ def test_cli_piece_length(folder, piece_length, version):
     assert meta["info"]["piece length"] == piece_length
 
 
-@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_announce(folder, piece_length, version):
     """Test announce cli flag."""
@@ -143,7 +143,7 @@ def test_cli_announce_list(folder, version):
         assert url in [j for i in meta["announce-list"] for j in i]
 
 
-@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_comment(folder, piece_length, version):
     """Test comment cli flag."""
@@ -166,7 +166,7 @@ def test_cli_comment(folder, piece_length, version):
     assert meta["info"]["comment"] == "this is a comment"
 
 
-@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_outfile(folder, piece_length, version):
     """Test outfile cli flag."""
@@ -189,7 +189,7 @@ def test_cli_outfile(folder, piece_length, version):
     rmpath(outfile)
 
 
-@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_creation_date(folder, piece_length, version):
     """Test if torrents created get an accurate timestamp."""
@@ -216,7 +216,7 @@ def test_cli_creation_date(folder, piece_length, version):
     assert date.month == now.month
 
 
-@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_created_by(folder, piece_length, version):
     """Test if created torrents recieve a created by field in meta info."""
@@ -238,7 +238,7 @@ def test_cli_created_by(folder, piece_length, version):
     assert "TorrentFile" in meta["created by"]
 
 
-@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_web_seeds(folder, piece_length, version):
     """Test if created torrents recieve a created by field in meta info."""
@@ -262,7 +262,7 @@ def test_cli_web_seeds(folder, piece_length, version):
     assert "https://webseed.url/1" in meta["url-list"]
 
 
-@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_with_debug(folder, piece_length, version):
     """Test debug mode cli flag."""
@@ -284,7 +284,7 @@ def test_cli_with_debug(folder, piece_length, version):
     assert os.path.exists(torrent)
 
 
-@pytest.mark.parametrize("piece_length", [2 ** exp for exp in range(14, 21)])
+@pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_with_source(folder, piece_length, version):
     """Test source cli flag."""
