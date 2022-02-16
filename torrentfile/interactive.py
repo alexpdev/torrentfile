@@ -11,7 +11,9 @@
 # FROM, OUT OF OR IN commentION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Module contains the procedures used for Interactive Mode."""
+"""
+Module contains the procedures used for Interactive Mode.
+"""
 
 import os
 import shutil
@@ -25,7 +27,8 @@ from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
 
 def get_input(*args):  # pragma: no cover
-    """Determine appropriate input function to call.
+    """
+    Determine appropriate input function to call.
 
     Parameters
     ----------
@@ -43,7 +46,8 @@ def get_input(*args):  # pragma: no cover
 
 
 def _get_input(txt):  # pragma: no cover
-    """Gather information needed from user.
+    """
+    Gather information needed from user.
 
     Parameters
     ----------
@@ -60,7 +64,8 @@ def _get_input(txt):  # pragma: no cover
 
 
 def _get_input_loop(txt, func):  # pragma: no cover
-    """Gather information needed from user.
+    """
+    Gather information needed from user.
 
     Parameters
     ----------
@@ -84,7 +89,8 @@ def _get_input_loop(txt, func):  # pragma: no cover
 
 
 def showtext(txt):
-    """Print contents of txt to screen.
+    """
+    Print contents of txt to screen.
 
     Parameters
     ----------
@@ -95,7 +101,8 @@ def showtext(txt):
 
 
 def showcenter(txt):
-    """Prints text to screen in the center position of the terminal.
+    """
+    Prints text to screen in the center position of the terminal.
 
     Parameters
     ----------
@@ -109,7 +116,9 @@ def showcenter(txt):
 
 
 def select_action():
-    """Operate TorrentFile program interactively through terminal."""
+    """
+    Operate TorrentFile program interactively through terminal.
+    """
     showcenter("TorrentFile: Starting Interactive Mode")
     action = get_input(
         "Enter the action you wish to perform.\n"
@@ -125,7 +134,9 @@ def select_action():
 
 
 def recheck_torrent():
-    """Check torrent download completed percentage."""
+    """
+    Check torrent download completed percentage.
+    """
     showcenter("Check Torrent")
     msg = (
         "Enter absolute or relative path to torrent file content, and the "
@@ -143,7 +154,9 @@ def recheck_torrent():
 
 
 def create_torrent():
-    """Create new torrent file interactively."""
+    """
+    Create new torrent file interactively.
+    """
     showcenter("Create Torrent")
     showtext(
         "\nEnter values for each of the options for the torrent creator, "
@@ -157,7 +170,9 @@ def create_torrent():
 
 
 def edit_action():
-    """Edit the editable values of the torrent meta file."""
+    """
+    Edit the editable values of the torrent meta file.
+    """
     showcenter("Edit Torrent")
     metafile = get_input("Metafile(.torrent): ", os.path.exists)
     dialog = InteractiveEditor(metafile)
@@ -166,10 +181,13 @@ def edit_action():
 
 
 class InteractiveEditor:
-    """Interactive dialog class for torrent editing."""
+    """
+    Interactive dialog class for torrent editing.
+    """
 
     def __init__(self, metafile):
-        """Initialize the Interactive torrent editor guide.
+        """
+        Initialize the Interactive torrent editor guide.
 
         Parameters
         ----------
@@ -189,7 +207,9 @@ class InteractiveEditor:
         }
 
     def show_current(self):
-        """Display the current met file information to screen."""
+        """
+        Display the current met file information to screen.
+        """
         out = "Current properties and values:\n"
         longest = max([len(label) for label in self.args]) + 3
         for key, val in self.args.items():
@@ -198,7 +218,8 @@ class InteractiveEditor:
         showtext(out)
 
     def sanatize_response(self, key, response):
-        """Convert the input data into a form recognizable by the program.
+        """
+        Convert the input data into a form recognizable by the program.
 
         Parameters
         ----------
@@ -214,7 +235,9 @@ class InteractiveEditor:
         self.args[key] = val
 
     def edit_props(self):
-        """Loop continuosly for edits until user signals DONE."""
+        """
+        Loop continuosly for edits until user signals DONE.
+        """
         while True:
             showcenter(
                 "Choose the number for a propert the needs editing."
@@ -258,10 +281,14 @@ class InteractiveEditor:
 
 
 class InteractiveCreator:
-    """Class namespace for interactive program options."""
+    """
+    Class namespace for interactive program options.
+    """
 
     def __init__(self):
-        """Initialize interactive meta file creator dialog."""
+        """
+        Initialize interactive meta file creator dialog.
+        """
         self.kwargs = {
             "announce": None,
             "url_list": None,
@@ -275,7 +302,9 @@ class InteractiveCreator:
         self.outfile, self.meta = self.get_props()
 
     def get_props(self):
-        """Gather details for torrentfile from user."""
+        """
+        Gather details for torrentfile from user.
+        """
         piece_length = get_input(
             "Piece Length (empty=auto): ", lambda x: x.isdigit()
         )

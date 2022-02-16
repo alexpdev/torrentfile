@@ -11,6 +11,8 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Holds the release version number."""
+"""
+Holds the release version number.
+"""
 
 __version__ = "0.6.12"

@@ -52,7 +52,7 @@ def tempfile(path=None, exp=18):
         partial = partial / part
         if i == len(parts) - 1:
             with open(partial, "wb") as binfile:
-                size = 2 ** exp
+                size = 2**exp
                 while size > 0:
                     if len(seq) < size:
                         binfile.write(seq)

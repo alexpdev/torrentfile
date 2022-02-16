@@ -43,7 +43,8 @@ class TorrentFileHelpFormatter(HelpFormatter):
     """
 
     def __init__(self, prog, width=60, max_help_positions=40):
-        """Construct HelpFormat class for usage output.
+        """
+        Construct HelpFormat class for usage output.
 
         Parameters
         ----------
@@ -59,7 +60,8 @@ class TorrentFileHelpFormatter(HelpFormatter):
         )
 
     def _split_lines(self, text, _):
-        """Split multiline help messages and remove indentation.
+        """
+        Split multiline help messages and remove indentation.
 
         Parameters
         ----------
@@ -72,7 +74,8 @@ class TorrentFileHelpFormatter(HelpFormatter):
         return [line.strip() for line in lines if line]
 
     def _format_text(self, text):
-        """Format text for cli usage messages.
+        """
+        Format text for cli usage messages.
 
         Parameters
         ----------
@@ -89,7 +92,8 @@ class TorrentFileHelpFormatter(HelpFormatter):
         return text + "\n\n"
 
     def _join_parts(self, part_strings):
-        """Combine different sections of the help message.
+        """
+        Combine different sections of the help message.
 
         Parameters
         ----------
@@ -106,7 +110,8 @@ class TorrentFileHelpFormatter(HelpFormatter):
 
     @staticmethod
     def format_headers(parts):
-        """Format help message section headers.
+        """
+        Format help message section headers.
 
         Parameters
         ----------
@@ -129,7 +134,8 @@ class TorrentFileHelpFormatter(HelpFormatter):
 
 
 def create_command(args):
-    """Execute the create CLI sub-command to create a new torrent metafile.
+    """
+    Execute the create CLI sub-command to create a new torrent metafile.
 
     Parameters
     ----------
@@ -177,7 +183,8 @@ def create_command(args):
 
 
 def edit_command(args):
-    """Execute the edit CLI sub-command with provided arguments.
+    """
+    Execute the edit CLI sub-command with provided arguments.
 
     Parameters
     ----------
@@ -202,7 +209,8 @@ def edit_command(args):
 
 
 def recheck_command(args):
-    """Execute recheck CLI sub-command.
+    """
+    Execute recheck CLI sub-command.
 
     Parameters
     ----------
@@ -228,7 +236,8 @@ def recheck_command(args):
 
 
 def create_magnet(metafile):
-    """Create a magnet URI from a Bittorrent meta file.
+    """
+    Create a magnet URI from a Bittorrent meta file.
 
     Parameters
     ----------
@@ -273,7 +282,8 @@ def create_magnet(metafile):
 
 
 def main_script(args=None):
-    """Initialize Command Line Interface for torrentfile.
+    """
+    Initialize Command Line Interface for torrentfile.
 
     Parameters
     ----------
@@ -587,5 +597,7 @@ def main_script(args=None):
 
 
 def main():
-    """Initiate main function for CLI script."""
+    """
+    Initiate main function for CLI script.
+    """
     main_script()

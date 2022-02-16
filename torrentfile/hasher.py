@@ -11,7 +11,9 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Piece/File Hashers for Bittorrent meta file contents."""
+"""
+Piece/File Hashers for Bittorrent meta file contents.
+"""
 
 import logging
 import os
@@ -19,14 +21,16 @@ from hashlib import sha1, sha256  # nosec
 
 from torrentfile.utils import humanize_bytes, next_power_2
 
-BLOCK_SIZE = 2 ** 14  # 16KiB
+BLOCK_SIZE = 2**14  # 16KiB
 HASH_SIZE = 32
 
 logger = logging.getLogger(__name__)
 
 
 class _CbMixin:
-    """Mixin class to set a callback during hashing procedure."""
+    """
+    Mixin class to set a callback during hashing procedure.
+    """
 
     _cb = None
 
@@ -44,7 +48,8 @@ class _CbMixin:
 
 
 class Hasher(_CbMixin):
-    """Piece hasher for Bittorrent V1 files.
+    """
+    Piece hasher for Bittorrent V1 files.
 
     Takes a sorted list of all file paths, calculates sha1 hash
     for fixed size pieces of file data from each file
@@ -72,7 +77,8 @@ class Hasher(_CbMixin):
         )
 
     def __iter__(self):
-        """Iterate through feed pieces.
+        """
+        Iterate through feed pieces.
 
         Returns
         -------
@@ -82,7 +88,8 @@ class Hasher(_CbMixin):
         return self
 
     def _handle_partial(self, arr):
-        """Define the handling partial pieces that span 2 or more files.
+        """
+        Define the handling partial pieces that span 2 or more files.
 
         Parameters
         ----------
@@ -106,7 +113,9 @@ class Hasher(_CbMixin):
         return sha1(arr).digest()  # nosec
 
     def next_file(self):
-        """Seemlessly transition to next file in file list."""
+        """
+        Seemlessly transition to next file in file list.
+        """
         self.index += 1
         if self.index < len(self.paths):
             self.current.close()
@@ -115,7 +124,9 @@ class Hasher(_CbMixin):
         return False
 
     def __next__(self):
-        """Generate piece-length pieces of data from input file list."""
+        """
+        Generate piece-length pieces of data from input file list.
+        """
         while True:
             piece = bytearray(self.piece_length)
             size = self.current.readinto(piece)
@@ -129,7 +140,9 @@ class Hasher(_CbMixin):
 
 
 def merkle_root(blocks: list) -> bytes:
-    """Calculate the merkle root for a seq of sha256 hash digests."""
+    """
+    Calculate the merkle root for a seq of sha256 hash digests.
+    """
     if blocks:
         while len(blocks) > 1:
             blocks = [
@@ -140,7 +153,8 @@ def merkle_root(blocks: list) -> bytes:
 
 
 class HasherV2(_CbMixin):
-    """Calculate the root hash and piece layers for file contents.
+    """
+    Calculate the root hash and piece layers for file contents.
 
     Iterates over 16KiB blocks of data from given file, hashes the data,
     then creates a hash tree from the individual block hashes until size of
@@ -156,7 +170,9 @@ class HasherV2(_CbMixin):
     """
 
     def __init__(self, path: str, piece_length: int):
-        """Calculate and store hash information for specific file."""
+        """
+        Calculate and store hash information for specific file.
+        """
         self.path = path
         self.root = None
         self.piece_layer = None
@@ -173,7 +189,8 @@ class HasherV2(_CbMixin):
             self.process_file(fd)
 
     def process_file(self, fd):
-        """Calculate hashes over 16KiB chuncks of file content.
+        """
+        Calculate hashes over 16KiB chuncks of file content.
 
         Parameters
         ----------
@@ -217,7 +234,9 @@ class HasherV2(_CbMixin):
         self._calculate_root()
 
     def _calculate_root(self):
-        """Calculate root hash for the target file."""
+        """
+        Calculate root hash for the target file.
+        """
         self.piece_layer = b"".join(self.layer_hashes)
         hashes = len(self.layer_hashes)
         if hashes > 1:
@@ -230,7 +249,8 @@ class HasherV2(_CbMixin):
 
 
 class HasherHybrid(_CbMixin):
-    """Calculate root and piece hashes for creating hybrid torrent file.
+    """
+    Calculate root and piece hashes for creating hybrid torrent file.
 
     Create merkle tree layers from sha256 hashed 16KiB blocks of contents.
     With a branching factor of 2, merge layer hashes until blocks equal
@@ -245,7 +265,9 @@ class HasherHybrid(_CbMixin):
     """
 
     def __init__(self, path, piece_length):
-        """Construct Hasher class instances for each file in torrent."""
+        """
+        Construct Hasher class instances for each file in torrent.
+        """
         self.path = path
         self.piece_length = piece_length
         self.pieces = []
@@ -264,7 +286,8 @@ class HasherHybrid(_CbMixin):
             self.process_file(data)
 
     def _pad_remaining(self, block_count):
-        """Generate Hash sized, 0 filled bytes for padding.
+        """
+        Generate Hash sized, 0 filled bytes for padding.
 
         Parameters
         ----------
@@ -284,7 +307,8 @@ class HasherHybrid(_CbMixin):
         return [bytes(HASH_SIZE) for _ in range(remaining)]
 
     def process_file(self, data):
-        """Calculate layer hashes for contents of file.
+        """
+        Calculate layer hashes for contents of file.
 
         Parameters
         ----------
@@ -325,7 +349,9 @@ class HasherHybrid(_CbMixin):
         self._calculate_root()
 
     def _calculate_root(self):
-        """Calculate the root hash for opened file."""
+        """
+        Calculate the root hash for opened file.
+        """
         self.piece_layer = b"".join(self.layer_hashes)
 
         if len(self.layer_hashes) > 1:

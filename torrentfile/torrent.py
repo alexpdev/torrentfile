@@ -11,7 +11,8 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Classes and procedures pertaining to the creation of torrent meta files.
+"""
+Classes and procedures pertaining to the creation of torrent meta files.
 
 Classes
 -------
@@ -195,7 +196,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetaFile:
-    """Base Class for all TorrentFile classes.
+    """
+    Base Class for all TorrentFile classes.
 
     Parameters
     ----------
@@ -236,7 +238,9 @@ class MetaFile:
     def __init__(self, path=None, announce=None, private=False,
                  source=None, piece_length=None, comment=None,
                  outfile=None, url_list=None, noprogress=False):
-        """Construct MetaFile superclass and assign local attributes."""
+        """
+        Construct MetaFile superclass and assign local attributes.
+        """
         if not path:
             raise utils.MissingPathError
 
@@ -293,7 +297,8 @@ class MetaFile:
     # fmt: on
 
     def assemble(self):
-        """Overload in subclasses.
+        """
+        Overload in subclasses.
 
         Raises
         ------
@@ -310,7 +315,8 @@ class MetaFile:
         return meta
 
     def write(self, outfile=None):
-        """Write meta information to .torrent file.
+        """
+        Write meta information to .torrent file.
 
         Parameters
         ----------
@@ -336,7 +342,8 @@ class MetaFile:
 
 
 class TorrentFile(MetaFile):
-    """Class for creating Bittorrent meta files.
+    """
+    Class for creating Bittorrent meta files.
 
     Construct *Torrentfile* class instance object.
 
@@ -349,7 +356,8 @@ class TorrentFile(MetaFile):
     hasher = Hasher
 
     def __init__(self, **kwargs):
-        """Construct TorrentFile instance with given keyword args.
+        """
+        Construct TorrentFile instance with given keyword args.
 
         Parameters
         ----------
@@ -361,7 +369,8 @@ class TorrentFile(MetaFile):
         self.assemble()
 
     def assemble(self):
-        """Assemble components of torrent metafile.
+        """
+        Assemble components of torrent metafile.
 
         Returns
         -------
@@ -404,7 +413,8 @@ class TorrentFile(MetaFile):
 
 
 class TorrentFileV2(MetaFile):
-    """Class for creating Bittorrent meta v2 files.
+    """
+    Class for creating Bittorrent meta v2 files.
 
     Parameters
     ----------
@@ -415,7 +425,8 @@ class TorrentFileV2(MetaFile):
     hasher = HasherV2
 
     def __init__(self, **kwargs):
-        """Construct `TorrentFileV2` Class instance from given parameters.
+        """
+        Construct `TorrentFileV2` Class instance from given parameters.
 
         Parameters
         ----------
@@ -430,12 +441,15 @@ class TorrentFileV2(MetaFile):
         self.assemble()
 
     def update(self):
-        """Update for the progress bar."""
+        """
+        Update for the progress bar.
+        """
         if self.pbar:
             self.pbar.update(n=1)
 
     def assemble(self):
-        """Assemble then return the meta dictionary for encoding.
+        """
+        Assemble then return the meta dictionary for encoding.
 
         Returns
         -------
@@ -466,7 +480,8 @@ class TorrentFileV2(MetaFile):
         self.meta["piece layers"] = self.piece_layers
 
     def _traverse(self, path):
-        """Walk directory tree.
+        """
+        Walk directory tree.
 
         Parameters
         ----------
@@ -496,7 +511,8 @@ class TorrentFileV2(MetaFile):
 
 
 class TorrentFileHybrid(MetaFile):
-    """Construct the Hybrid torrent meta file with provided parameters.
+    """
+    Construct the Hybrid torrent meta file with provided parameters.
 
     Parameters
     ----------
@@ -507,7 +523,9 @@ class TorrentFileHybrid(MetaFile):
     hasher = HasherHybrid
 
     def __init__(self, **kwargs):
-        """Create Bittorrent v1 v2 hybrid metafiles."""
+        """
+        Create Bittorrent v1 v2 hybrid metafiles.
+        """
         super().__init__(**kwargs)
         logger.debug("Creating Hybrid torrent file.")
         self.name = os.path.basename(self.path)
@@ -519,7 +537,9 @@ class TorrentFileHybrid(MetaFile):
         self.assemble()
 
     def assemble(self):
-        """Assemble the parts of the torrentfile into meta dictionary."""
+        """
+        Assemble the parts of the torrentfile into meta dictionary.
+        """
         info = self.meta["info"]
         info["meta version"] = 2
 
@@ -547,7 +567,8 @@ class TorrentFileHybrid(MetaFile):
         return info
 
     def _traverse(self, path):
-        """Build meta dictionary while walking directory.
+        """
+        Build meta dictionary while walking directory.
 
         Parameters
         ----------
