@@ -11,7 +11,8 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Edit torrent module.
+"""
+Edit torrent module.
 
 Provides a facility by which certain properties of a torrent meta file can be
 edited by the user. The various command line arguments indicate which fields

@@ -11,7 +11,8 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Module container Checker Class.
+"""
+Module container Checker Class.
 
 The CheckerClass takes a torrentfile and tha path to it's contents.
 It will then iterate through every file and directory contained
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class Checker:
-    """Check a given file or directory to see if it matches a torrentfile.
+    """
+    Check a given file or directory to see if it matches a torrentfile.
 
     Public constructor for Checker class instance.
 
@@ -61,7 +63,8 @@ class Checker:
     _hook = None
 
     def __init__(self, metafile: str, path: str):
-        """Validate data against hashes contained in .torrent file.
+        """
+        Validate data against hashes contained in .torrent file.
 
         Parameters
         ----------
@@ -99,7 +102,8 @@ class Checker:
 
     @classmethod
     def register_callback(cls, hook):
-        """Register hooks from 3rd party programs to access generated info.
+        """
+        Register hooks from 3rd party programs to access generated info.
 
         Parameters
         ----------
@@ -109,7 +113,8 @@ class Checker:
         cls._hook = hook
 
     def hasher(self):
-        """Return the hasher class related to torrents meta version.
+        """
+        Return the hasher class related to torrents meta version.
 
         Returns
         -------
@@ -123,7 +128,8 @@ class Checker:
         return None
 
     def piece_checker(self):
-        """Check individual pieces of the torrent.
+        """
+        Check individual pieces of the torrent.
 
         Returns
         -------
@@ -135,7 +141,9 @@ class Checker:
         return HashChecker
 
     def results(self):
-        """Generate result percentage and store for future calls."""
+        """
+        Generate result percentage and store for future calls.
+        """
         if self.meta_version == 1:
             iterations = len(self.info["pieces"]) // SHA1
         else:
@@ -152,7 +160,8 @@ class Checker:
         return self._result
 
     def log_msg(self, *args, level=logging.INFO):
-        """Log message `msg` to logger and send `msg` to callback hook.
+        """
+        Log message `msg` to logger and send `msg` to callback hook.
 
         Parameters
         ----------
@@ -175,7 +184,8 @@ class Checker:
                 self._hook(message)
 
     def find_root(self, path):
-        """Check path for torrent content.
+        """
+        Check path for torrent content.
 
         The path can be a relative or absolute filesystem path.  In the case
         where the content is a single file, the path may point directly to the
@@ -211,7 +221,9 @@ class Checker:
         raise FileNotFoundError(root)
 
     def check_paths(self):
-        """Gather all file paths described in the torrent file."""
+        """
+        Gather all file paths described in the torrent file.
+        """
         finfo = self.fileinfo
 
         if "length" in self.info:
@@ -250,7 +262,8 @@ class Checker:
         self.walk_file_tree(self.info["file tree"], [])
 
     def walk_file_tree(self, tree: dict, partials: list):
-        """Traverse File Tree dictionary to get file details.
+        """
+        Traverse File Tree dictionary to get file details.
 
         Extract full pathnames, length, root hash, and layer hashes
         for each file included in the .torrent's file tree.
@@ -289,7 +302,8 @@ class Checker:
                 self.walk_file_tree(val, partials + [key])
 
     def iter_hashes(self):
-        """Produce results of comparing torrent contents piece by piece.
+        """
+        Produce results of comparing torrent contents piece by piece.
 
         Yields
         ------
@@ -328,7 +342,8 @@ class Checker:
 
 
 class FeedChecker:
-    """Validates torrent content.
+    """
+    Validates torrent content.
 
     Seemlesly validate torrent file contents by comparing hashes in
     metafile against data on disk.
@@ -342,7 +357,9 @@ class FeedChecker:
     """
 
     def __init__(self, checker, hasher=None):
-        """Generate hashes of piece length data from filelist contents."""
+        """
+        Generate hashes of piece length data from filelist contents.
+        """
         self.piece_length = checker.piece_length
         self.paths = checker.paths
         self.pieces = checker.info["pieces"]
@@ -354,12 +371,16 @@ class FeedChecker:
         self.it = None
 
     def __iter__(self):
-        """Assign iterator and return self."""
+        """
+        Assign iterator and return self.
+        """
         self.it = self.iter_pieces()
         return self
 
     def __next__(self):
-        """Yield back result of comparison."""
+        """
+        Yield back result of comparison.
+        """
         try:
             partial = next(self.it)
         except StopIteration as itererror:
@@ -374,7 +395,8 @@ class FeedChecker:
         return chunck, piece, path, len(partial)
 
     def iter_pieces(self):
-        """Iterate through, and hash pieces of torrent contents.
+        """
+        Iterate through, and hash pieces of torrent contents.
 
         Yields
         ------
@@ -402,7 +424,8 @@ class FeedChecker:
                         partial = pad
 
     def extract(self, path: str, partial: bytearray) -> bytearray:
-        """Split file paths contents into blocks of data for hash pieces.
+        """
+        Split file paths contents into blocks of data for hash pieces.
 
         Parameters
         ----------
@@ -437,7 +460,8 @@ class FeedChecker:
                 yield pad
 
     def _gen_padding(self, partial, length, read=0):
-        """Create padded pieces where file sizes do not match.
+        """
+        Create padded pieces where file sizes do not match.
 
         Parameters
         ----------
@@ -468,7 +492,8 @@ class FeedChecker:
 
 
 class HashChecker:
-    """Verify that root hashes of content files match the .torrent files.
+    """
+    Verify that root hashes of content files match the .torrent files.
 
     Parameters
     ----------
@@ -479,7 +504,9 @@ class HashChecker:
     """
 
     def __init__(self, checker, hasher=None):
-        """Construct a HybridChecker instance."""
+        """
+        Construct a HybridChecker instance.
+        """
         self.checker = checker
         self.paths = checker.paths
         self.hasher = hasher
@@ -494,12 +521,16 @@ class HashChecker:
         )
 
     def __iter__(self):
-        """Assign iterator and return self."""
+        """
+        Assign iterator and return self.
+        """
         self.it = self.iter_paths()
         return self
 
     def __next__(self):
-        """Provide the result of comparison."""
+        """
+        Provide the result of comparison.
+        """
         try:
             value = next(self.it)
             return value
@@ -507,7 +538,8 @@ class HashChecker:
             raise StopIteration() from stopiter
 
     def iter_paths(self):
-        """Iterate through and compare root file hashes to .torrent file.
+        """
+        Iterate through and compare root file hashes to .torrent file.
 
         Yields
         ------

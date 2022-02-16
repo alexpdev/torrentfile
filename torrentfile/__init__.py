@@ -47,7 +47,9 @@ logging.basicConfig(
 
 
 def add_handler():
-    """Adds a debug streamhandler to the logging facility."""
+    """
+    Adds a debug streamhandler to the logging facility.
+    """
     streamlog = logging.StreamHandler()
     streamlog.setLevel(logging.DEBUG)
     formatter = logging.Formatter("%(asctime)s: %(message)s")

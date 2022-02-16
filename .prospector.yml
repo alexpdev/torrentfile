@@ -13,6 +13,7 @@ bandit:
 pep257:
   run: true
   disable:
+    - D200
     - D210
     - D212
     - D213

@@ -8,7 +8,8 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Utility functions and classes used throughout package.
+"""
+Utility functions and classes used throughout package.
 
 Functions:
   get_piece_length: calculate ideal piece length for torrent file.
@@ -25,7 +26,8 @@ from pathlib import Path
 
 
 class MissingPathError(Exception):
-    """Path parameter is required to specify target content.
+    """
+    Path parameter is required to specify target content.
 
     Creating a .torrent file with no contents seems rather silly.
 
@@ -36,7 +38,8 @@ class MissingPathError(Exception):
     """
 
     def __init__(self, message: str = None):
-        """Raise when creating a meta file without specifying target content.
+        """
+        Raise when creating a meta file without specifying target content.
 
         The `message` argument is a message to pass to Exception base class.
         """
@@ -45,7 +48,8 @@ class MissingPathError(Exception):
 
 
 class PieceLengthValueError(Exception):
-    """Piece Length parameter must equal a perfect power of 2.
+    """
+    Piece Length parameter must equal a perfect power of 2.
 
     Parameters
     ----------
@@ -54,7 +58,8 @@ class PieceLengthValueError(Exception):
     """
 
     def __init__(self, message: str = None):
-        """Raise when creating a meta file with incorrect piece length value.
+        """
+        Raise when creating a meta file with incorrect piece length value.
 
         The `message` argument is a message to pass to Exception base class.
         """
@@ -63,7 +68,8 @@ class PieceLengthValueError(Exception):
 
 
 def humanize_bytes(amount: int) -> str:
-    """Convert integer into human readable memory sized denomination.
+    """
+    Convert integer into human readable memory sized denomination.
 
     Parameters
     ----------
@@ -85,7 +91,8 @@ def humanize_bytes(amount: int) -> str:
 
 
 def normalize_piece_length(piece_length: int) -> int:
-    """Verify input piece_length is valid and convert accordingly.
+    """
+    Verify input piece_length is valid and convert accordingly.
 
     Parameters
     ----------
@@ -120,7 +127,8 @@ def normalize_piece_length(piece_length: int) -> int:
 
 
 def get_piece_length(size: int) -> int:
-    """Calculate the ideal piece length for bittorrent data.
+    """
+    Calculate the ideal piece length for bittorrent data.
 
     Parameters
     ----------
@@ -139,7 +147,8 @@ def get_piece_length(size: int) -> int:
 
 
 def filelist_total(pathstring: str) -> os.PathLike:
-    """Perform error checking and format conversion to os.PathLike.
+    """
+    Perform error checking and format conversion to os.PathLike.
 
     Parameters
     ----------
@@ -163,7 +172,8 @@ def filelist_total(pathstring: str) -> os.PathLike:
 
 
 def _filelist_total(path: str) -> tuple:
-    """Search directory tree for files.
+    """
+    Search directory tree for files.
 
     Parameters
     ----------
@@ -191,7 +201,8 @@ def _filelist_total(path: str) -> tuple:
 
 
 def path_size(path: str) -> int:
-    """Return the total size of all files in path recursively.
+    """
+    Return the total size of all files in path recursively.
 
     Parameters
     ----------
@@ -208,7 +219,8 @@ def path_size(path: str) -> int:
 
 
 def get_file_list(path: str) -> list:
-    """Return a sorted list of file paths contained in directory.
+    """
+    Return a sorted list of file paths contained in directory.
 
     Parameters
     ----------
@@ -225,7 +237,8 @@ def get_file_list(path: str) -> list:
 
 
 def path_stat(path: str) -> tuple:
-    """Calculate directory statistics.
+    """
+    Calculate directory statistics.
 
     Parameters
     ----------
@@ -247,7 +260,8 @@ def path_stat(path: str) -> tuple:
 
 
 def path_piece_length(path: str) -> int:
-    """Calculate piece length for input path and contents.
+    """
+    Calculate piece length for input path and contents.
 
     Parameters
     ----------
@@ -264,7 +278,8 @@ def path_piece_length(path: str) -> int:
 
 
 def next_power_2(value: int) -> int:
-    """Calculate the next perfect power of 2 equal to or greater than value.
+    """
+    Calculate the next perfect power of 2 equal to or greater than value.
 
     Parameters
     ----------
