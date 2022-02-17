@@ -11,7 +11,9 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Unittest package init module."""
+"""
+Unittest package init module.
+"""
 
 import atexit
 import os
@@ -132,7 +134,9 @@ def tempdir(ext="1"):
 
 @atexit.register
 def teardown():  # pragma: nocover
-    """Remove all temporary directories and files."""
+    """
+    Remove all temporary directories and files.
+    """
     root = Path(__file__).parent / "TESTDIR"
     if os.path.exists(root):
         rmpath(root)
