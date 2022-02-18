@@ -1,3 +1,5 @@
+black
+isort
 bandit>=1.7.0
 coverage>=6.3.0
 mkapi>=1.0.14
@@ -10,5 +12,9 @@ pyinstaller>=4.9
 pylint>=3.0.0a4
 pyroma>=3.2
 pytest>=7.0.0
+pytest-randomly>=3.10.0
+pytest-clarity>=1.0.1
 pytest-cov>=3.0.0
+setuptools
 tqdm>=4.62.3
+wheel
