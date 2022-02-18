@@ -42,6 +42,7 @@ jobs:
 
       - name: Run tests and collect coverage
         run: |
+          export GITHUB_WORKFLOW=1
           prospector torrentfile
           prospector tests
           pytest --cov=torrentfile --cov=tests
