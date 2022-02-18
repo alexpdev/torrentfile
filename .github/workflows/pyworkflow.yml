@@ -45,7 +45,7 @@ jobs:
         run: |
           prospector torrentfile
           prospector tests
-          pytest --cov=torrentfile --cov=tests --pylint
+          pytest --cov=torrentfile --cov=tests
           coverage xml -o ./coverage.xml
 
       - name: Upload coverage to Codecov
