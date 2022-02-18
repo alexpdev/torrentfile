@@ -167,11 +167,11 @@ def test_inter_edit_full(metafile, announce, comment, source, url_list):
     ]
     input_iter(seq)
     select_action()
-    meta = pyben.load(metafile)
-    assert meta["info"]["source"] == source
-    assert meta["info"]["comment"] == comment
-    assert meta["url-list"] == url_list.split()
-    assert meta["info"]["private"] == 1
+    meta1 = pyben.load(metafile)
+    assert meta1["info"]["source"] == source
+    assert meta1["info"]["comment"] == comment
+    assert meta1["url-list"] == url_list.split()
+    assert meta1["info"]["private"] == 1
 
 
 @pytest.mark.parametrize("announce", ["urla urlb urlc", "urld url2"])
@@ -200,11 +200,11 @@ def test_inter_edit_cli(metafile, announce, comment, source, url_list):
     input_iter(seq)
     sys.argv = ["torrentfile", "-i"]
     main()
-    meta = pyben.load(metafile)
-    assert meta["info"]["source"] == source
-    assert meta["info"]["comment"] == comment
-    assert meta["url-list"] == url_list.split()
-    assert meta["info"]["private"] == 1
+    meta2 = pyben.load(metafile)
+    assert meta2["info"]["source"] == source
+    assert meta2["info"]["comment"] == comment
+    assert meta2["url-list"] == url_list.split()
+    assert meta2["info"]["private"] == 1
 
 
 @pytest.mark.parametrize("size", list(range(16, 22)))

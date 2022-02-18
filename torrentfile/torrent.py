@@ -531,7 +531,7 @@ class TorrentFileHybrid(MetaFile):
         self.name = os.path.basename(self.path)
         self.hashes = []
         self.piece_layers = {}
-        self.pbar = None
+        self.progbar = None
         self.pieces = []
         self.files = []
         self.assemble()
@@ -547,18 +547,18 @@ class TorrentFileHybrid(MetaFile):
             from tqdm import tqdm
 
             lst = utils.get_file_list(self.path)
-            self.pbar = tqdm(
+            self.progbar = tqdm(
                 desc="Hashing Files:",
                 total=len(lst),
-                leave=True,
+                leave=False,
                 unit="file",
             )
 
         if os.path.isfile(self.path):
             info["file tree"] = {self.name: self._traverse(self.path)}
             info["length"] = os.path.getsize(self.path)
-            if self.pbar:
-                self.pbar.update(n=1)
+            if self.progbar:
+                self.progbar.update(n=1)
         else:
             info["file tree"] = self._traverse(self.path)
             info["files"] = self.files
@@ -586,8 +586,8 @@ class TorrentFileHybrid(MetaFile):
             )
 
             if file_size == 0:
-                if self.pbar:
-                    self.pbar.update(n=1)
+                if self.progbar:
+                    self.progbar.update(n=1)
                 return {"": {"length": file_size}}
 
             file_hash = HasherHybrid(path, self.piece_length)
@@ -601,8 +601,8 @@ class TorrentFileHybrid(MetaFile):
             if file_hash.padding_file:
                 self.files.append(file_hash.padding_file)
 
-            if self.pbar:
-                self.pbar.update(n=1)
+            if self.progbar:
+                self.progbar.update(n=1)
 
             return {"": {"length": file_size, "pieces root": file_hash.root}}
 
