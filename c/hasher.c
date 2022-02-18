@@ -266,7 +266,6 @@ uint8 *get_pad_piece(unsigned n)
 HASHV2 *HasherV2(char *path, unsigned piece_length)
 {
     unsigned amount, next_pow2, total, remaining, blocks_per_piece;
-    Layer *layer;
     Layer *layer_hashes = newLayer();
     FILE *fptr = fopen(path, "rb");
     uint8 *buffer = (uint8 *)malloc(BLOCKSIZE);
@@ -274,7 +273,7 @@ HASHV2 *HasherV2(char *path, unsigned piece_length)
     blocks_per_piece = (unsigned) floor(piece_length / BLOCKSIZE);
     while (true)
     {
-        layer = newLayer();
+        Layer *layerv2 = newLayer();
         uint8 *piece;
         for (int i = 0; i < blocks_per_piece; i++)
         {
@@ -283,10 +282,10 @@ HASHV2 *HasherV2(char *path, unsigned piece_length)
             if (!amount) break;
             uint8 *hash = (uint8 *)malloc(amount);
             SHA256(hash, buffer, amount);
-            addNode(layer, hash);
+            addNode(layerv2, hash);
         }
-        if (!layer->count) break;
-        if (layer->count < blocks_per_piece)
+        if (!layerv2->count) break;
+        if (layerv2->count < blocks_per_piece)
         {
             if (!layer_hashes->count)
             {
@@ -295,26 +294,26 @@ HASHV2 *HasherV2(char *path, unsigned piece_length)
             }
             else
             {
-                remaining = blocks_per_piece - layer->count;
+                remaining = blocks_per_piece - layerv2->count;
             }
             uint8 *padding;
             for (int i = 0; i < remaining; i++)
             {
                 padding = get_padding();
-                addNode(layer, padding);
+                addNode(layerv2, padding);
             }
         }
-        piece = merkle_root(layer);
+        piece = merkle_root(layerv2);
         addNode(layer_hashes, piece);
     }
-    uint8 *piece_layer = (uint8 *)malloc(HASHSIZE * layer_hashes->count);
+    uint8 *piece_layerv2 = (uint8 *)malloc(HASHSIZE * layer_hashes->count);
     Node *current = layer_hashes->start;
     long index = 0;
     while (current != NULL)
     {
         for (int j = 0;j < HASHSIZE; j++)
         {
-            piece_layer[index] = current->hash[j];
+            piece_layerv2[index] = current->hash[j];
             index += 1;
         }
         current = current->next;
@@ -330,12 +329,12 @@ HASHV2 *HasherV2(char *path, unsigned piece_length)
             addNode(layer_hashes, piece);
         }
     }
-    uint8 *roothash;
-    roothash = merkle_root(layer_hashes);
+    uint8 *roothashv2;
+    roothashv2 = merkle_root(layer_hashes);
     // hexdigest(roothash);
     HASHV2 *result = (HASHV2 *)malloc(sizeof(HASHV2));
-    result->piece_layer = piece_layer;
-    result->pieces_root = roothash;
+    result->piece_layer = piece_layerv2;
+    result->pieces_root = roothashv2;
     return result;
 }
 

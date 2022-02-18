@@ -11,10 +11,13 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Testing functions for the command line interface."""
+"""
+Testing functions for the command line interface.
+"""
 
 import datetime
 import os
+import subprocess  # nosec
 import sys
 
 import pyben
@@ -25,13 +28,17 @@ from torrentfile.cli import main
 
 
 def test_fix():
-    """Test dir1 fixture is not None."""
+    """
+    Test dir1 fixture is not None.
+    """
     assert dir1
 
 
 @pytest.fixture(scope="package")
 def folder(dir1):
-    """Yield a folder object as fixture."""
+    """
+    Yield a folder object as fixture.
+    """
     sfolder = str(dir1)
     torrent = sfolder + ".torrent"
     yield (sfolder, torrent)
@@ -39,7 +46,9 @@ def folder(dir1):
 
 
 def test_cli_v1(folder):
-    """Basic create torrent cli command."""
+    """
+    Basic create torrent cli command.
+    """
     folder, torrent = folder
     args = ["torrentfile", "create", folder]
     sys.argv = args
@@ -48,7 +57,9 @@ def test_cli_v1(folder):
 
 
 def test_cli_v2(folder):
-    """Create torrent v2 cli command."""
+    """
+    Create torrent v2 cli command.
+    """
     folder, torrent = folder
     args = ["torrentfile", "create", folder, "--meta-version", "2"]
     sys.argv = args
@@ -57,7 +68,9 @@ def test_cli_v2(folder):
 
 
 def test_cli_v3(folder):
-    """Create hybrid torrent cli command."""
+    """
+    Create hybrid torrent cli command.
+    """
     folder, torrent = folder
     args = ["torrentfile", "create", folder, "--meta-version", "3"]
     sys.argv = args
@@ -66,7 +79,9 @@ def test_cli_v3(folder):
 
 
 def test_cli_private(folder):
-    """Test private cli flag."""
+    """
+    Test private cli flag.
+    """
     folder, torrent = folder
     args = ["torrentfile", "create", folder, "--private"]
     sys.argv = args
@@ -78,7 +93,9 @@ def test_cli_private(folder):
 @pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_piece_length(folder, piece_length, version):
-    """Test piece length cli flag."""
+    """
+    Test piece length cli flag.
+    """
     folder, torrent = folder
     args = [
         "torrentfile",
@@ -100,7 +117,9 @@ def test_cli_piece_length(folder, piece_length, version):
 @pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_announce(folder, piece_length, version):
-    """Test announce cli flag."""
+    """
+    Test announce cli flag.
+    """
     folder, torrent = folder
     args = [
         "torrentfile",
@@ -121,7 +140,9 @@ def test_cli_announce(folder, piece_length, version):
 
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_announce_list(folder, version):
-    """Test announce-list cli flag."""
+    """
+    Test announce-list cli flag.
+    """
     folder, torrent = folder
     trackers = [
         "https://announce.org/tracker",
@@ -146,7 +167,9 @@ def test_cli_announce_list(folder, version):
 @pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_comment(folder, piece_length, version):
-    """Test comment cli flag."""
+    """
+    Test comment cli flag.
+    """
     folder, torrent = folder
     args = [
         "torrentfile",
@@ -169,7 +192,9 @@ def test_cli_comment(folder, piece_length, version):
 @pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_outfile(folder, piece_length, version):
-    """Test outfile cli flag."""
+    """
+    Test outfile cli flag.
+    """
     folder, _ = folder
     outfile = folder + "test.torrent"
     args = [
@@ -192,7 +217,9 @@ def test_cli_outfile(folder, piece_length, version):
 @pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_creation_date(folder, piece_length, version):
-    """Test if torrents created get an accurate timestamp."""
+    """
+    Test if torrents created get an accurate timestamp.
+    """
     folder, torrent = folder
     args = [
         "torrentfile",
@@ -219,7 +246,9 @@ def test_cli_creation_date(folder, piece_length, version):
 @pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_created_by(folder, piece_length, version):
-    """Test if created torrents recieve a created by field in meta info."""
+    """
+    Test if created torrents recieve a created by field in meta info.
+    """
     folder, torrent = folder
     args = [
         "torrentfile",
@@ -241,7 +270,9 @@ def test_cli_created_by(folder, piece_length, version):
 @pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_web_seeds(folder, piece_length, version):
-    """Test if created torrents recieve a created by field in meta info."""
+    """
+    Test if created torrents recieve a web seeds field in meta info.
+    """
     folder, torrent = folder
     args = [
         "torrentfile",
@@ -265,7 +296,9 @@ def test_cli_web_seeds(folder, piece_length, version):
 @pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_with_debug(folder, piece_length, version):
-    """Test debug mode cli flag."""
+    """
+    Test debug mode cli flag.
+    """
     folder, torrent = folder
     args = [
         "torrentfile",
@@ -287,7 +320,9 @@ def test_cli_with_debug(folder, piece_length, version):
 @pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 def test_cli_with_source(folder, piece_length, version):
-    """Test source cli flag."""
+    """
+    Test source cli flag.
+    """
     folder, torrent = folder
     args = [
         "torrentfile",
@@ -307,7 +342,9 @@ def test_cli_with_source(folder, piece_length, version):
 
 
 def test_cli_help():
-    """Test showing help notice cli flag."""
+    """
+    Test showing help notice cli flag.
+    """
     args = ["-h"]
     sys.argv = args
     try:
@@ -321,7 +358,9 @@ def test_cli_help():
 @pytest.mark.parametrize("version", ["1", "2", "3"])
 @pytest.mark.parametrize("noprogress", [True, False])
 def test_cli_empty_files(dir2, version, noprogress):
-    """Test creating torrent with empty files."""
+    """
+    Test creating torrent with empty files.
+    """
     args = [
         "torrentfile",
         "create",
@@ -336,7 +375,9 @@ def test_cli_empty_files(dir2, version, noprogress):
         sys.argv.append("--noprogress")
 
     def walk(root, count):
-        """Traverse directory to edit files."""
+        """
+        Traverse directory to edit files.
+        """
         if root.is_file():
             with open(root, "wb") as _:
                 return 1
@@ -351,3 +392,18 @@ def test_cli_empty_files(dir2, version, noprogress):
     main()
     assert os.path.exists(str(dir2) + ".torrent")
     rmpath(str(dir2) + ".torrent")
+
+
+def test_cli_subprocess(dir2):
+    """
+    Test program from the command line through subprocess.
+    """
+    out = str(dir2) + ".torrent"
+    args = ["torrentfile", "create", "-o", out, str(dir2)]
+    command = " ".join(args)
+    if "GITHUB_WORKFLOW" not in os.environ:  # pragma: nocover
+        _ = subprocess.run(command, check=True)  # nosec
+        assert os.path.exists(out)
+        rmpath(out)
+    else:  # pragma: nocover
+        assert os.environ.get("GITHUB_WORKFLOW")

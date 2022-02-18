@@ -11,7 +11,9 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #####################################################################
-"""Unittest functions for testing torrentfile utils module."""
+"""
+Unittest functions for testing torrentfile utils module.
+"""
 import math
 
 import pytest
@@ -22,78 +24,104 @@ from torrentfile import utils
 
 @pytest.mark.parametrize("size", [156634528, 2**30, 67987, 16384, 8563945])
 def test_get_piece_length(size):
-    """Test function for best piece length for given size."""
+    """
+    Test function for best piece length for given size.
+    """
     value = utils.get_piece_length(size)
     assert value % 1024 == 0
 
 
 @pytest.mark.parametrize("size", [156634528, 2**30, 67987, 16384, 8563945])
 def test_get_piece_length_max(size):
-    """Test function for best piece length for given size maximum."""
+    """
+    Test function for best piece length for given size maximum.
+    """
     value = utils.get_piece_length(size)
     assert value < 2**27
 
 
 @pytest.mark.parametrize("size", [156634528, 2**30, 67987, 16384, 8563945])
 def test_get_piece_length_min(size):
-    """Test function for best piece length for given size minimum."""
+    """
+    Test function for best piece length for given size minimum.
+    """
     value = utils.get_piece_length(size)
     assert value >= 2**14
 
 
 def test_get_path_length_mod(dir1):
-    """Test function for the best piece length for provided path."""
+    """
+    Test function for the best piece length for provided path.
+    """
     assert utils.path_piece_length(dir1) % (2**14) == 0
 
 
 def test_get_path_length_min(dir1):
-    """Test function for getting piece length for folders min."""
+    """
+    Test function for getting piece length for folders min.
+    """
     assert utils.path_piece_length(dir1) >= (2**14)
 
 
 def test_get_path_length_max(dir1):
-    """Test function for getting piece length for folders max."""
+    """
+    Test function for getting piece length for folders max.
+    """
     assert utils.path_piece_length(dir1) <= (2**27)
 
 
 def test_path_stat(dir1):
-    """Test function for acquiring piece length information on folder."""
+    """
+    Test function for acquiring piece length information on folder.
+    """
     _, _, piece_length = utils.path_stat(dir1)
     assert piece_length % (2**14) == 0
 
 
 def test_path_stat_size(dir1):
-    """Test function for acquiring total size information on folder."""
+    """
+    Test function for acquiring total size information on folder.
+    """
     _, totalsize, _ = utils.path_stat(dir1)
     assert totalsize == (2**18) * 4
 
 
 def test_path_stat_filelist_size(dir1):
-    """Test function for acquiring file list information on folder."""
+    """
+    Test function for acquiring file list information on folder.
+    """
     filelist, _, _ = utils.path_stat(dir1)
     assert len(filelist) == 4
 
 
 def test_get_filelist(dir1):
-    """Test function for get a list of files in a directory."""
+    """
+    Test function for get a list of files in a directory.
+    """
     filelist = utils.get_file_list(dir1)
     assert len(filelist) == 4
 
 
 def test_get_path_size(dir1):
-    """Test function for getting total size of directory."""
+    """
+    Test function for getting total size of directory.
+    """
     pathsize = utils.path_size(dir1)
     assert pathsize == (2**18) * 4
 
 
 def test_filelist_total(dir1):
-    """Test function for acquiring a filelist for directory."""
+    """
+    Test function for acquiring a filelist for directory.
+    """
     total, _ = utils.filelist_total(dir1)
     assert total == (2**18) * 4
 
 
 def test_piecelength_error_fixtures():
-    """Test exception for uninterpretable piece length value."""
+    """
+    Test exception for uninterpretable piece length value.
+    """
     try:
         raise utils.PieceLengthValueError("message")
     except utils.PieceLengthValueError:
@@ -102,7 +130,9 @@ def test_piecelength_error_fixtures():
 
 
 def test_missing_path_error():
-    """Test exception for missing path parameter."""
+    """
+    Test exception for missing path parameter.
+    """
     try:
         raise utils.MissingPathError("message")
     except utils.MissingPathError:
@@ -112,7 +142,9 @@ def test_missing_path_error():
 
 @pytest.mark.parametrize("value", [5, 32, 18, 225, 16384, 256000])
 def test_next_power_2(value):
-    """Test next power of 2 function in utils module."""
+    """
+    Test next power of 2 function in utils module.
+    """
     result = utils.next_power_2(value)
     log = math.log2(result)
     assert log == int(log)
@@ -132,7 +164,9 @@ def test_next_power_2(value):
     ],
 )
 def test_humanize_bytes(amount, result):
-    """Test humanize bytes function."""
+    """
+    Test humanize bytes function.
+    """
     assert utils.humanize_bytes(amount) == result
 
 
