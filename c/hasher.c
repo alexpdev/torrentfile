@@ -266,7 +266,6 @@ uint8 *get_pad_piece(unsigned n)
 HASHV2 *HasherV2(char *path, unsigned piece_length)
 {
     unsigned amount, next_pow2, total, remaining, blocks_per_piece;
-    Layer *layerv2;
     Layer *layer_hashes = newLayer();
     FILE *fptr = fopen(path, "rb");
     uint8 *buffer = (uint8 *)malloc(BLOCKSIZE);
@@ -274,7 +273,7 @@ HASHV2 *HasherV2(char *path, unsigned piece_length)
     blocks_per_piece = (unsigned) floor(piece_length / BLOCKSIZE);
     while (true)
     {
-        layerv2 = newLayer();
+        Layer *layerv2 = newLayer();
         uint8 *piece;
         for (int i = 0; i < blocks_per_piece; i++)
         {
