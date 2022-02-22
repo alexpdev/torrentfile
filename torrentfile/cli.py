@@ -171,7 +171,7 @@ def create_command(args):
     outfile, meta = torrent.write()
 
     if args.magnet:
-        create_magnet(outfile)
+        magnet_command(outfile)
 
     args.torrent = torrent
     args.kwargs = kwargs
@@ -180,6 +180,32 @@ def create_command(args):
 
     logger.debug("New torrent file (%s) has been created.", str(outfile))
     return args
+
+
+def info_command(args):
+    """
+    Show torrent metafile details to user via stdout.
+
+    Parameters
+    ----------
+    args : dict
+        command line arguements provided by the user.
+    """
+    import pyben
+
+    metafile = args.metafile
+    meta = pyben.load(metafile)
+    info = meta["info"]
+    del meta["info"]
+    meta.update(info)
+    text = []
+    longest = max([len(i) for i in meta.keys()])
+    for key, val in meta.items():
+        if key not in ["pieces", "piece layers"]:
+            prefix = longest - len(key) + 1
+            string = key + (" " * prefix) + str(val)
+            text.append(string)
+    print("\n".join(text))
 
 
 def edit_command(args):
@@ -235,7 +261,7 @@ def recheck_command(args):
     return result
 
 
-def create_magnet(metafile):
+def magnet_command(metafile):
     """
     Create a magnet URI from a Bittorrent meta file.
 
@@ -557,7 +583,7 @@ def main_script(args=None):
         metavar="<*.torrent>",
     )
 
-    magnet_parser.set_defaults(func=create_magnet)
+    magnet_parser.set_defaults(func=magnet_command)
 
     check_parser = subparsers.add_parser(
         "r",
@@ -584,8 +610,27 @@ def main_script(args=None):
     )
 
     check_parser.set_defaults(func=recheck_command)
-    args = parser.parse_args(args)
 
+    info_parser = subparsers.add_parser(
+        "i",
+        help="""
+        Show detailed information about a torrent file.
+        """,
+        aliases=["info"],
+        prefix_chars="-",
+        formatter_class=TorrentFileHelpFormatter,
+    )
+
+    info_parser.add_argument(
+        "metafile",
+        action="store",
+        metavar="<*.torrent>",
+        help="path to pre-existing torrent file.",
+    )
+
+    info_parser.set_defaults(func=info_command)
+
+    args = parser.parse_args(args)
     if args.debug:
         torrentfile.add_handler()
 

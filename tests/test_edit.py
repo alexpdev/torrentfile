@@ -23,7 +23,7 @@ import pyben
 import pytest
 
 from tests import dir2, rmpath
-from torrentfile.cli import create_magnet, main, main_script
+from torrentfile.cli import magnet_command, main, main_script
 from torrentfile.edit import edit_torrent
 from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
@@ -227,7 +227,7 @@ def test_magnet_uri(torfile):
     """
     Test create magnet function digest.
     """
-    magnet_link = create_magnet(torfile)
+    magnet_link = magnet_command(torfile)
     meta = pyben.load(torfile)
     announce = meta["announce"]
     assert quote_plus(announce) in magnet_link
@@ -237,7 +237,7 @@ def test_magnet_hex(torfile):
     """
     Test create magnet function digest.
     """
-    magnet_link = create_magnet(torfile)
+    magnet_link = magnet_command(torfile)
     meta = pyben.load(torfile)
     info = meta["info"]
     binfo = sha1(pyben.dumps(info)).hexdigest().upper()
@@ -248,7 +248,7 @@ def test_magnet(torfile):
     """
     Test create magnet function scheme.
     """
-    magnet_link = create_magnet(torfile)
+    magnet_link = magnet_command(torfile)
     assert magnet_link.startswith("magnet")
 
 
@@ -259,7 +259,7 @@ def test_magnet_no_announce_list(torfile):
     meta = pyben.load(torfile)
     del meta["announce-list"]
     pyben.dump(meta, torfile)
-    magnet_link = create_magnet(torfile)
+    magnet_link = magnet_command(torfile)
     assert magnet_link.startswith("magnet")
 
 
@@ -268,7 +268,7 @@ def test_magnet_empty():
     Test create magnet function scheme.
     """
     try:
-        create_magnet("file_that_does_not_exist")
+        magnet_command("file_that_does_not_exist")
     except FileNotFoundError:
         assert True
 
