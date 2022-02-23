@@ -17,6 +17,7 @@ nav:
   - API : API.md
   - CHANGELOG : changelog.md
   - LICENSE : LGPLv3.md
+  - SOURCE : source.md
 
 
 plugins:

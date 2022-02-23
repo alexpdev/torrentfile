@@ -9,11 +9,10 @@
     torrentfile [-h] [-i] [-V] [-v]
                     <create> <edit> <magnet> <recheck> ...
 
-    CLI utility for editing, creating, checking, and other useful tools for Bittorrent meta files. 
-    TorrentFile supports all versions of torrent files.
+    CLI Tool for creating, checking, editing... Bittorrent meta files. TorrentFile supports all versions of torrent files.
 
-    Optional Arguments
-    ------------------
+    Options
+    -------
     -h, --help                          show this help message and exit
     -i, --interactive                   select program options interactively
     -V, --version                       show program version and exit
@@ -29,6 +28,8 @@
         m (magnet)                        Create magnet url from an existing Bittorrent meta file.
 
         r (recheck, check)                Calculate amount of torrent meta file's content is found on disk.
+
+        i (info)                          Show detailed information about a torrent file.
 
 -----
 

@@ -24,6 +24,8 @@ from pathlib import Path
 
 import pytest
 
+from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
+
 
 def tempfile(path=None, exp=18):
     """Create temporary file.
@@ -124,6 +126,7 @@ def tempdir(ext="1"):
             f"dir{ext}/subdir2/file3.mp3",
             f"dir{ext}/subdir2/file4.zip",
         ],
+        "4": [f"dir{ext}/file1.txt", f"dir{ext}/file2.rar"],
     }
     paths = []
     for path in layouts[ext]:
@@ -168,3 +171,29 @@ def dir2():
     root = tempdir(ext="2")
     yield Path(root)
     rmpath(root)
+
+
+def torrents():
+    """
+    Return seq of torrentfile objects.
+    """
+    return [TorrentFile, TorrentFileV2, TorrentFileHybrid]
+
+
+@pytest.fixture(scope="module", params=torrents())
+def metafile(request):
+    """
+    Create a standard metafile for testing.
+    """
+    root = tempdir(ext="4")
+    args = {
+        "path": root,
+        "announce": ["url1", "url2", "url4"],
+        "comment": "this is a comment",
+        "source": "SomeSource",
+    }
+    torrent_class = request.param
+    torrent = torrent_class(**args)
+    outfile, _ = torrent.write()
+    yield outfile
+    rmpath(outfile, root)

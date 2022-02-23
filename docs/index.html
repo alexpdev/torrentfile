@@ -329,7 +329,14 @@
     Create Magnet
   </a>
   
-    <nav class="md-nav" aria-label="Create Magnet">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrent-details" class="md-nav__link">
+    Torrent Details
+  </a>
+  
+    <nav class="md-nav" aria-label="Torrent Details">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -427,6 +434,21 @@
     <li class="md-nav__item">
       <a href="LGPLv3/" class="md-nav__link">
         LICENSE
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="source/" class="md-nav__link">
+        SOURCE
       </a>
     </li>
   
@@ -541,7 +563,14 @@
     Create Magnet
   </a>
   
-    <nav class="md-nav" aria-label="Create Magnet">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrent-details" class="md-nav__link">
+    Torrent Details
+  </a>
+  
+    <nav class="md-nav" aria-label="Torrent Details">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -622,20 +651,32 @@ or in the <em><code>docs</code></em> directory.</p>
     it's codebase between releases.</p>
 </blockquote>
 <h2 id="usage">🚀 Usage</h2>
-<pre><code class="language-bash">torrentfile [-h] [-i] [-V] [-v]  ...
+<pre><code class="language-sh">Usage
+=====
+   torrentfile [-h] [-i] [-V] [-v]
+                   &lt;create&gt; &lt;edit&gt; &lt;magnet&gt; &lt;recheck&gt; ...
 
-Sub-Commands:
+CLI Tool for creating, checking, editing... Bittorrent meta files. TorrentFile supports all versions of torrent files.
 
-    create           Create a new torrent file.
-    check            Check if file/folder contents match a torrent file.
-    edit             Edit a pre-existing torrent file.
-    magnet           Create Magnet URI for an existing torrent meta file.
+Options
+-------
+  -h, --help                          show this help message and exit
+  -i, --interactive                   select program options interactively
+  -V, --version                       show program version and exit
+  -v, --verbose                       output debug information
 
-optional arguments:
-  -h, --help         show this help message and exit
-  -V, --version      show program version and exit
-  -i, --interactive  select program options interactively
-  -v, --verbose      output debug information
+Actions
+-------
+  &lt;create&gt; &lt;edit&gt; &lt;magnet&gt; &lt;recheck&gt;
+    c (create, new)                   Create a torrent meta file.
+
+    e (edit)                          Edit existing torrent meta file.
+
+    m (magnet)                        Create magnet url from an existing Bittorrent meta file.
+
+    r (recheck, check)                Calculate amount of torrent meta files content is found on disk.
+
+    i (info)                          Show detailed information about a torrent file.
 </code></pre>
 <blockquote>
 <p>Usage examples can be found in the project documentation on the <a href="https://alexpdev.github.io/torrentfile/examples">examples page.</a></p>
@@ -685,7 +726,7 @@ torrentfile create -t http://tracker1 http://tracker2 /path/to/content #ERROR
 <li>to turn off the progress bar shown use <code>--noprogress</code></li>
 <li>this can improve the performance by a very small amount</li>
 </ul>
-<pre><code class="language-bash">torrentfile -t http://tracker.com --noprogress
+<pre><code class="language-bash">torrentfile -t &lt;url1&gt; &lt;url2&gt; --noprogress ./content
 </code></pre>
 <ul>
 <li>to specify the save location use the <code>-o</code> or <code>--out</code> flags</li>
@@ -721,6 +762,11 @@ of the same arguments.</p>
 <p>To create a magnet URI for a pre-existing torrent meta file, use the sub-command<br />
 <code>magnet</code> or <code>m</code> with the path to the torrent file.</p>
 <pre><code class="language-bash">torrentfile magnet /path/to/some.torrent
+</code></pre>
+<h3 id="torrent-details">Torrent Details</h3>
+<p>If you are just trying to get the details of a particular torrent file, such as<br />
+the trackers it has been assigned, or the number of files it contains, use <code>info</code> or <code>i</code>.</p>
+<pre><code class="language-bash">torrentfile info /path/to/some.torrent
 </code></pre>
 <h4 id="interactive-mode">Interactive Mode</h4>
 <p>Alternatively to supplying a bunch of command line arguments, <code>interactive mode</code>
