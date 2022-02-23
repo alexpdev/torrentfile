@@ -54,21 +54,33 @@ or in the _`docs`_ directory.
 
 ## 🚀 Usage
 
-```bash
-torrentfile [-h] [-i] [-V] [-v]  ...
+```sh
+Usage
+=====
+   torrentfile [-h] [-i] [-V] [-v]
+                   <create> <edit> <magnet> <recheck> ...
 
-Sub-Commands:
+CLI Tool for creating, checking, editing... Bittorrent meta files. TorrentFile supports all versions of torrent files.
 
-    create           Create a new torrent file.
-    check            Check if file/folder contents match a torrent file.
-    edit             Edit a pre-existing torrent file.
-    magnet           Create Magnet URI for an existing torrent meta file.
+Options
+-------
+  -h, --help                          show this help message and exit
+  -i, --interactive                   select program options interactively
+  -V, --version                       show program version and exit
+  -v, --verbose                       output debug information
 
-optional arguments:
-  -h, --help         show this help message and exit
-  -V, --version      show program version and exit
-  -i, --interactive  select program options interactively
-  -v, --verbose      output debug information
+Actions
+-------
+  <create> <edit> <magnet> <recheck>
+    c (create, new)                   Create a torrent meta file.
+
+    e (edit)                          Edit existing torrent meta file.
+
+    m (magnet)                        Create magnet url from an existing Bittorrent meta file.
+
+    r (recheck, check)                Calculate amount of torrent meta files content is found on disk.
+
+    i (info)                          Show detailed information about a torrent file.
 ```
 
 > Usage examples can be found in the project documentation on the [examples page.](https://alexpdev.github.io/torrentfile/examples)
@@ -136,7 +148,7 @@ torrentfile create --private --source /path/to/content --tracker https://tracker
 - this can improve the performance by a very small amount
 
 ```bash
-torrentfile -t http://tracker.com --noprogress
+torrentfile -t <url1> <url2> --noprogress ./content
 ```
 
 - to specify the save location use the `-o` or `--out` flags
@@ -184,6 +196,15 @@ To create a magnet URI for a pre-existing torrent meta file, use the sub-command
 
 ```bash
 torrentfile magnet /path/to/some.torrent
+```
+
+### Torrent Details
+
+If you are just trying to get the details of a particular torrent file, such as  
+the trackers it has been assigned, or the number of files it contains, use `info` or `i`.
+
+```bash
+torrentfile info /path/to/some.torrent
 ```
 
 #### Interactive Mode

@@ -16,84 +16,56 @@ Testing the edit torrent feature.
 """
 
 import sys
-from hashlib import sha1  # nosec
-from urllib.parse import quote_plus
 
 import pyben
 import pytest
 
-from tests import dir2, rmpath
-from torrentfile.cli import magnet_command, main, main_script
+from tests import dir2, metafile
+from torrentfile.cli import main
 from torrentfile.edit import edit_torrent
-from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
-
-
-def torrents():
-    """
-    Return seq of torrentfile objects.
-    """
-    return [TorrentFile, TorrentFileV2, TorrentFileHybrid]
-
-
-@pytest.fixture(scope="function", params=torrents())
-def torfile(dir2, request):
-    """
-    Create a standard metafile for testing.
-    """
-    args = {
-        "path": dir2,
-        "announce": ["url1", "url2", "url4"],
-        "comment": "this is a comment",
-        "source": "SomeSource",
-    }
-    torrent_class = request.param
-    torrent = torrent_class(**args)
-    outfile, _ = torrent.write()
-    yield outfile
-    rmpath(outfile)
 
 
 def test_fix():
     """
     Testing dir fixtures.
     """
-    assert dir2
+    assert dir2, metafile
 
 
 @pytest.mark.parametrize(
     "announce", [["urla"], ["urlb", "urlc"], ["urla", "urlb", "urlc"]]
 )
-def test_edit_torrent(torfile, announce):
+def test_edit_torrent(metafile, announce):
     """
     Test edit torrent with announce param.
     """
     edits = {"announce": announce}
-    data = edit_torrent(torfile, edits)
-    meta = pyben.load(torfile)
+    data = edit_torrent(metafile, edits)
+    meta = pyben.load(metafile)
     assert data == meta
     assert data["announce-list"] == [announce]
 
 
 @pytest.mark.parametrize("announce", ["urla", "urlb urlc", "urla urlb urlc"])
-def test_edit_torrent_str(torfile, announce):
+def test_edit_torrent_str(metafile, announce):
     """
     Test edit torrent with announce param as string.
     """
     edits = {"announce": announce}
-    data = edit_torrent(torfile, edits)
-    meta = pyben.load(torfile)
+    data = edit_torrent(metafile, edits)
+    meta = pyben.load(metafile)
     assert data == meta
     assert data["announce-list"] == [announce.split()]
 
 
 @pytest.mark.parametrize("url_list", ["urla", "urlb urlc", "urla urlb urlc"])
-def test_edit_urllist_str(torfile, url_list):
+def test_edit_urllist_str(metafile, url_list):
     """
     Test edit torrent with webseed param.
     """
     edits = {"url-list": url_list}
-    data = edit_torrent(torfile, edits)
-    meta = pyben.load(torfile)
+    data = edit_torrent(metafile, edits)
+    meta = pyben.load(metafile)
     assert data == meta
     assert data["url-list"] == url_list.split()
 
@@ -101,64 +73,64 @@ def test_edit_urllist_str(torfile, url_list):
 @pytest.mark.parametrize(
     "url_list", [["urla"], ["urlb", "urlc"], ["urla", "urlb", "urlc"]]
 )
-def test_edit_urllist(torfile, url_list):
+def test_edit_urllist(metafile, url_list):
     """
     Test edit torrent with webseed param as string.
     """
     edits = {"url-list": url_list}
-    data = edit_torrent(torfile, edits)
-    meta = pyben.load(torfile)
+    data = edit_torrent(metafile, edits)
+    meta = pyben.load(metafile)
     assert data == meta
     assert data["url-list"] == url_list
 
 
 @pytest.mark.parametrize("comment", ["COMMENT", "COMIT", "MITCO"])
-def test_edit_comment(torfile, comment):
+def test_edit_comment(metafile, comment):
     """
     Test edit torrent with comment param.
     """
     edits = {"comment": comment}
-    data = edit_torrent(torfile, edits)
-    meta = pyben.load(torfile)
+    data = edit_torrent(metafile, edits)
+    meta = pyben.load(metafile)
     assert data == meta
     assert data["info"]["comment"] == comment
 
 
 @pytest.mark.parametrize("source", ["SomeSource", "NoSouce", "MidSource"])
-def test_edit_source(torfile, source):
+def test_edit_source(metafile, source):
     """
     Test edit torrent with source param.
     """
     edits = {"source": source}
-    data = edit_torrent(torfile, edits)
-    meta = pyben.load(torfile)
+    data = edit_torrent(metafile, edits)
+    meta = pyben.load(metafile)
     assert data == meta
     assert data["info"]["source"] == source
 
 
-def test_edit_private_true(torfile):
+def test_edit_private_true(metafile):
     """
     Test edit torrent with private param.
     """
     edits = {"private": "1"}
-    data = edit_torrent(torfile, edits)
-    meta = pyben.load(torfile)
+    data = edit_torrent(metafile, edits)
+    meta = pyben.load(metafile)
     assert data == meta
     assert data["info"]["private"] == 1
 
 
-def test_edit_private_false(torfile):
+def test_edit_private_false(metafile):
     """
     Test edit torrent with private param False.
     """
     edits = {"private": ""}
-    data = edit_torrent(torfile, edits)
-    meta = pyben.load(torfile)
+    data = edit_torrent(metafile, edits)
+    meta = pyben.load(metafile)
     assert data == meta
     assert "private" not in data["info"]
 
 
-def test_edit_none(torfile):
+def test_edit_none(metafile):
     """
     Test edit torrent with None for all params.
     """
@@ -169,13 +141,13 @@ def test_edit_none(torfile):
         "source": None,
         "private": None,
     }
-    data = pyben.load(torfile)
-    edited = edit_torrent(torfile, edits)
-    meta = pyben.load(torfile)
+    data = pyben.load(metafile)
+    edited = edit_torrent(metafile, edits)
+    meta = pyben.load(metafile)
     assert data == meta == edited
 
 
-def test_edit_removal(torfile):
+def test_edit_removal(metafile):
     """
     Test edit torrent with empty for all params.
     """
@@ -186,8 +158,8 @@ def test_edit_removal(torfile):
         "source": "",
         "private": "",
     }
-    data = edit_torrent(torfile, edits)
-    meta = pyben.load(torfile)
+    data = edit_torrent(metafile, edits)
+    meta = pyben.load(metafile)
     assert data == meta
 
 
@@ -195,14 +167,14 @@ def test_edit_removal(torfile):
 @pytest.mark.parametrize("source", ["sourcea", "sourceb", "sourcec"])
 @pytest.mark.parametrize("announce", [["url1", "url2", "url3"], ["url1"]])
 @pytest.mark.parametrize("webseed", [["ftp1"], ["ftpa", "ftpb"]])
-def test_edit_cli(torfile, comment, source, announce, webseed):
+def test_edit_cli(metafile, comment, source, announce, webseed):
     """
     Test edit torrent with all params on cli.
     """
     sys.argv = [
         "torrentfile",
         "edit",
-        torfile,
+        metafile,
         "--comment",
         comment,
         "--source",
@@ -214,68 +186,10 @@ def test_edit_cli(torfile, comment, source, announce, webseed):
         "--private",
     ]
     main()
-    meta = pyben.load(torfile)
+    meta = pyben.load(metafile)
     info = meta["info"]
     assert comment == info.get("comment")
     assert source == info.get("source")
     assert info.get("private") == 1
     assert meta["announce-list"] == [[announce]]
     assert meta["url-list"] == [webseed]
-
-
-def test_magnet_uri(torfile):
-    """
-    Test create magnet function digest.
-    """
-    magnet_link = magnet_command(torfile)
-    meta = pyben.load(torfile)
-    announce = meta["announce"]
-    assert quote_plus(announce) in magnet_link
-
-
-def test_magnet_hex(torfile):
-    """
-    Test create magnet function digest.
-    """
-    magnet_link = magnet_command(torfile)
-    meta = pyben.load(torfile)
-    info = meta["info"]
-    binfo = sha1(pyben.dumps(info)).hexdigest().upper()
-    assert binfo in magnet_link
-
-
-def test_magnet(torfile):
-    """
-    Test create magnet function scheme.
-    """
-    magnet_link = magnet_command(torfile)
-    assert magnet_link.startswith("magnet")
-
-
-def test_magnet_no_announce_list(torfile):
-    """
-    Test create magnet function scheme.
-    """
-    meta = pyben.load(torfile)
-    del meta["announce-list"]
-    pyben.dump(meta, torfile)
-    magnet_link = magnet_command(torfile)
-    assert magnet_link.startswith("magnet")
-
-
-def test_magnet_empty():
-    """
-    Test create magnet function scheme.
-    """
-    try:
-        magnet_command("file_that_does_not_exist")
-    except FileNotFoundError:
-        assert True
-
-
-def test_magnet_cli(torfile):
-    """
-    Test cli args for maggnet.
-    """
-    sys.argv[1:] = ["magnet", str(torfile)]
-    assert "magnet" in main_script()

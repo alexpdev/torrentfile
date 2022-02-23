@@ -72,7 +72,7 @@ not this
 >torrentfile create --t https://tracker1/annc https://tracker2/annc --magnet /path/to/content
 ```
 
------
+-------------------------------------------------------------------------------------
 
 ### Check/Recheck Torrent
 
@@ -86,7 +86,7 @@ is saved to disk by comparing the the contents to a torrent metafile.
 >torrentfile recheck /path/to/some.torrent /path/to/content
 ```
 
------
+-------------------------------------------------------------------------------------
 
 ### Edit Torrent
 
@@ -94,7 +94,7 @@ Using the sub-command `edit` or `e` enables editting a pre-existing torrent file
 The edit sub-command works the same as the `create` sub-command and accepts many
 of the same arguments.
 
------
+-------------------------------------------------------------------------------------
 
 ### Create Magnet
 
@@ -105,7 +105,7 @@ To create a magnet URI for a pre-existing torrent meta file, use the sub-command
 >torrentfile magnet /path/to/some.torrent
 ```
 
------
+-------------------------------------------------------------------------------------
 
 #### Interactive Mode
 
