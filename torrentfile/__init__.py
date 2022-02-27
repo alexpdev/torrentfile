@@ -26,7 +26,6 @@ Modules:
     utils: Utilities used throughout package.
 """
 import logging
-import sys
 
 from torrentfile import interactive, utils
 from torrentfile.cli import main, main_script
@@ -48,7 +47,7 @@ logging.basicConfig(
 
 def add_handler():
     """
-    Adds a debug streamhandler to the logging facility.
+    Add a 'debug' streamhandler to the logging facility.
     """
     streamlog = logging.StreamHandler()
     streamlog.setLevel(logging.DEBUG)

@@ -6153,13 +6153,13 @@ as well as validate files and folders against metadata.</p>
 
     <div class="doc doc-contents ">
 
-      <p>Adds a debug streamhandler to the logging facility.</p>
+      <p>Add a 'debug' streamhandler to the logging facility.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\__init__.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_handler</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Adds a debug streamhandler to the logging facility.</span>
+<span class="sd">    Add a &#39;debug&#39; streamhandler to the logging facility.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">streamlog</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
     <span class="n">streamlog</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
@@ -6772,7 +6772,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Replace current list of web-seed urls with one or more space seperated url(s)</span>
+<span class="s2">        Replace current list of web-seed urls with one or more url(s)</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -7176,7 +7176,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Replace current list of web-seed urls with one or more space seperated url(s)</span>
+<span class="s2">        Replace current list of web-seed urls with one or more url(s)</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -9869,10 +9869,7 @@ InteractiveEditor        </code>
 <span class="sd">    Check torrent download completed percentage.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;Check Torrent&quot;</span><span class="p">)</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;Enter absolute or relative path to torrent file content, and the &quot;</span>
-        <span class="s2">&quot;corresponding torrent metafile.&quot;</span>
-    <span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Enter path to torrent contents, and corresponding torrent metafile.&quot;</span>
     <span class="n">showtext</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="n">metafile</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span>
         <span class="s2">&quot;Conent Path (downloads/complete/torrentname):&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span>
@@ -9913,15 +9910,20 @@ InteractiveEditor        </code>
     <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;TorrentFile: Starting Interactive Mode&quot;</span><span class="p">)</span>
     <span class="n">action</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span>
         <span class="s2">&quot;Enter the action you wish to perform.</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;Action (Create | Edit | Recheck): &quot;</span>
+        <span class="s2">&quot;Action ( Create (c) | Edit (e) | Recheck (r) ): &quot;</span>
     <span class="p">)</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;create&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;create&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">create_torrent</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="s2">&quot;check&quot;</span> <span class="ow">in</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s2">&quot;check&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">recheck_torrent</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">edit_action</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="s2">&quot;edit&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;e&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">edit_action</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to recognize input.  Please try again.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
 </code></pre></div>
         </details>
     </div>
@@ -9942,7 +9944,7 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Prints text to screen in the center position of the terminal.</p>
+      <p>Print text to screen in the center position of the terminal.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -9967,7 +9969,7 @@ InteractiveEditor        </code>
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">showcenter</span><span class="p">(</span><span class="n">txt</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Prints text to screen in the center position of the terminal.</span>
+<span class="sd">    Print text to screen in the center position of the terminal.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -12270,7 +12272,7 @@ a length key.</p>
 </li>
 <li>
 <p><code>length</code>:
-    Only present if the torrent contents is a single file. Maps to the length
+    Only present if the content is a single file. Maps to the length
     of the file in bytes.</p>
 </li>
 </ul>
@@ -16314,7 +16316,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Replace current list of web-seed urls with one or more space seperated url(s)</span>
+<span class="s2">        Replace current list of web-seed urls with one or more url(s)</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -16718,7 +16720,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Replace current list of web-seed urls with one or more space seperated url(s)</span>
+<span class="s2">        Replace current list of web-seed urls with one or more url(s)</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -18921,10 +18923,7 @@ InteractiveEditor        </code>
 <span class="sd">    Check torrent download completed percentage.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;Check Torrent&quot;</span><span class="p">)</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;Enter absolute or relative path to torrent file content, and the &quot;</span>
-        <span class="s2">&quot;corresponding torrent metafile.&quot;</span>
-    <span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Enter path to torrent contents, and corresponding torrent metafile.&quot;</span>
     <span class="n">showtext</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="n">metafile</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span>
         <span class="s2">&quot;Conent Path (downloads/complete/torrentname):&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span>
@@ -18965,15 +18964,20 @@ InteractiveEditor        </code>
     <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;TorrentFile: Starting Interactive Mode&quot;</span><span class="p">)</span>
     <span class="n">action</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span>
         <span class="s2">&quot;Enter the action you wish to perform.</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;Action (Create | Edit | Recheck): &quot;</span>
+        <span class="s2">&quot;Action ( Create (c) | Edit (e) | Recheck (r) ): &quot;</span>
     <span class="p">)</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;create&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;create&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">create_torrent</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="s2">&quot;check&quot;</span> <span class="ow">in</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s2">&quot;check&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">recheck_torrent</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">edit_action</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="s2">&quot;edit&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;e&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">edit_action</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to recognize input.  Please try again.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
 </code></pre></div>
         </details>
     </div>
@@ -18994,7 +18998,7 @@ InteractiveEditor        </code>
 
     <div class="doc doc-contents ">
 
-      <p>Prints text to screen in the center position of the terminal.</p>
+      <p>Print text to screen in the center position of the terminal.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -19019,7 +19023,7 @@ InteractiveEditor        </code>
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">showcenter</span><span class="p">(</span><span class="n">txt</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Prints text to screen in the center position of the terminal.</span>
+<span class="sd">    Print text to screen in the center position of the terminal.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -21322,7 +21326,7 @@ a length key.</p>
 </li>
 <li>
 <p><code>length</code>:
-    Only present if the torrent contents is a single file. Maps to the length
+    Only present if the content is a single file. Maps to the length
     of the file in bytes.</p>
 </li>
 </ul>
