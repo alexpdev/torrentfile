@@ -9869,10 +9869,7 @@ InteractiveEditor        </code>
 <span class="sd">    Check torrent download completed percentage.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;Check Torrent&quot;</span><span class="p">)</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;Enter absolute or relative path to torrent file content, and the &quot;</span>
-        <span class="s2">&quot;corresponding torrent metafile.&quot;</span>
-    <span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Enter path to torrent contents, and corresponding torrent metafile.&quot;</span>
     <span class="n">showtext</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="n">metafile</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span>
         <span class="s2">&quot;Conent Path (downloads/complete/torrentname):&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span>
@@ -9913,15 +9910,20 @@ InteractiveEditor        </code>
     <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;TorrentFile: Starting Interactive Mode&quot;</span><span class="p">)</span>
     <span class="n">action</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span>
         <span class="s2">&quot;Enter the action you wish to perform.</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;Action (Create | Edit | Recheck): &quot;</span>
+        <span class="s2">&quot;Action ( Create (c) | Edit (e) | Recheck (r) ): &quot;</span>
     <span class="p">)</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;create&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;create&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">create_torrent</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="s2">&quot;check&quot;</span> <span class="ow">in</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s2">&quot;check&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">recheck_torrent</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">edit_action</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="s2">&quot;edit&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;e&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">edit_action</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to recognize input.  Please try again.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
 </code></pre></div>
         </details>
     </div>
@@ -18921,10 +18923,7 @@ InteractiveEditor        </code>
 <span class="sd">    Check torrent download completed percentage.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;Check Torrent&quot;</span><span class="p">)</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;Enter absolute or relative path to torrent file content, and the &quot;</span>
-        <span class="s2">&quot;corresponding torrent metafile.&quot;</span>
-    <span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Enter path to torrent contents, and corresponding torrent metafile.&quot;</span>
     <span class="n">showtext</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="n">metafile</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span>
         <span class="s2">&quot;Conent Path (downloads/complete/torrentname):&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span>
@@ -18965,15 +18964,20 @@ InteractiveEditor        </code>
     <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;TorrentFile: Starting Interactive Mode&quot;</span><span class="p">)</span>
     <span class="n">action</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span>
         <span class="s2">&quot;Enter the action you wish to perform.</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;Action (Create | Edit | Recheck): &quot;</span>
+        <span class="s2">&quot;Action ( Create (c) | Edit (e) | Recheck (r) ): &quot;</span>
     <span class="p">)</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;create&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;create&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">create_torrent</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="s2">&quot;check&quot;</span> <span class="ow">in</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s2">&quot;check&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">recheck_torrent</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">edit_action</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="s2">&quot;edit&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;e&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">edit_action</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to recognize input.  Please try again.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
 </code></pre></div>
         </details>
     </div>

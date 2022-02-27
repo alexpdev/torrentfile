@@ -26,7 +26,6 @@ Modules:
     utils: Utilities used throughout package.
 """
 import logging
-import sys
 
 from torrentfile import interactive, utils
 from torrentfile.cli import main, main_script

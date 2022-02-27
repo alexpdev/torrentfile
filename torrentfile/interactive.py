@@ -122,15 +122,20 @@ def select_action():
     showcenter("TorrentFile: Starting Interactive Mode")
     action = get_input(
         "Enter the action you wish to perform.\n"
-        "Action (Create | Edit | Recheck): "
+        "Action ( Create (c) | Edit (e) | Recheck (r) ): "
     )
+    action = action.lower()
 
-    if action.lower() == "create":
+    if "create" in action or action == "c":
         return create_torrent()
 
-    if "check" in action.lower():
+    if "check" in action or action == "r":
         return recheck_torrent()
-    return edit_action()
+
+    if "edit" in action or action == "e":
+        return edit_action()
+    print("Unable to recognize input.  Please try again.")
+    return select_action()
 
 
 def recheck_torrent():
@@ -138,10 +143,7 @@ def recheck_torrent():
     Check torrent download completed percentage.
     """
     showcenter("Check Torrent")
-    msg = (
-        "Enter absolute or relative path to torrent file content, and the "
-        "corresponding torrent metafile."
-    )
+    msg = "Enter path to torrent contents, and corresponding torrent metafile."
     showtext(msg)
     metafile = get_input(
         "Conent Path (downloads/complete/torrentname):", os.path.exists
