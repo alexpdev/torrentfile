@@ -173,7 +173,7 @@ Bittorrent V1
             Maps to the length of the file in bytes.
 
     - `length`:
-        Only present if the torrent contents is a single file. Maps to the length
+        Only present if the content is a single file. Maps to the length
         of the file in bytes.
 
 !!!Note

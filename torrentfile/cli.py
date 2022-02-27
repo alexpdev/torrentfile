@@ -362,7 +362,7 @@ def execute(args=None):
         metavar="<url>",
         nargs="+",
         help="""
-        Replace current list of web-seed urls with one or more space seperated url(s)
+        Replace current list of web-seed urls with one or more url(s)
         """,
     )
 

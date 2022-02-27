@@ -102,7 +102,7 @@ def showtext(txt):
 
 def showcenter(txt):
     """
-    Prints text to screen in the center position of the terminal.
+    Print text to screen in the center position of the terminal.
 
     Parameters
     ----------
