@@ -26,7 +26,7 @@ from torrentfile.recheck import Checker
 from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
 
-def get_input(*args):  # pragma: no cover
+def get_input(*args: tuple):  # pragma: no cover
     """
     Determine appropriate input function to call.
 
@@ -45,7 +45,7 @@ def get_input(*args):  # pragma: no cover
     return _get_input(*args)
 
 
-def _get_input(txt):  # pragma: no cover
+def _get_input(txt: str):  # pragma: no cover
     """
     Gather information needed from user.
 
@@ -100,7 +100,7 @@ def showtext(txt):
     sys.stdout.write(txt)
 
 
-def showcenter(txt):
+def showcenter(txt: str):
     """
     Print text to screen in the center position of the terminal.
 
@@ -134,8 +134,8 @@ def select_action():
 
     if "edit" in action or action == "e":
         return edit_action()
-    print("Unable to recognize input.  Please try again.")
-    return select_action()
+    print("Unable to recognize input.  Please try again.")  # pragma: nocover
+    return select_action()  # pragma: nocover
 
 
 def recheck_torrent():
@@ -187,7 +187,7 @@ class InteractiveEditor:
     Interactive dialog class for torrent editing.
     """
 
-    def __init__(self, metafile):
+    def __init__(self, metafile: str):
         """
         Initialize the Interactive torrent editor guide.
 

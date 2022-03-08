@@ -314,7 +314,7 @@ class MetaFile:
         meta = dict(sorted(list(meta.items())))
         return meta
 
-    def write(self, outfile=None):
+    def write(self, outfile=None) -> tuple:
         """
         Write meta information to .torrent file.
 
@@ -479,7 +479,7 @@ class TorrentFileV2(MetaFile):
         info["meta version"] = 2
         self.meta["piece layers"] = self.piece_layers
 
-    def _traverse(self, path):
+    def _traverse(self, path: str) -> dict:
         """
         Walk directory tree.
 
@@ -566,7 +566,7 @@ class TorrentFileHybrid(MetaFile):
         self.meta["piece layers"] = self.piece_layers
         return info
 
-    def _traverse(self, path):
+    def _traverse(self, path: str) -> dict:
         """
         Build meta dictionary while walking directory.
 
