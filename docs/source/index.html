@@ -7359,7 +7359,7 @@ magnet_command</p>
   <tbody>
       <tr>
         <td><code>args</code></td>
-        <td><code>argparse.Namespace</code></td>
+        <td><code>list</code></td>
         <td><p>positional and optional CLI arguments.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -7382,7 +7382,7 @@ magnet_command</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\commands.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_command</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_command</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Execute the create CLI sub-command to create a new torrent metafile.</span>
 
@@ -7464,7 +7464,7 @@ magnet_command</p>
   <tbody>
       <tr>
         <td><code>args</code></td>
-        <td><code>Namespace</code></td>
+        <td><code>list</code></td>
         <td><p>positional and optional CLI arguments.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -7487,7 +7487,7 @@ magnet_command</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\commands.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">edit_command</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">edit_command</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Execute the edit CLI sub-command with provided arguments.</span>
 
@@ -7546,7 +7546,7 @@ magnet_command</p>
   <tbody>
       <tr>
         <td><code>args</code></td>
-        <td><code>dict</code></td>
+        <td><code>list</code></td>
         <td><p>command line arguements provided by the user.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -7554,7 +7554,7 @@ magnet_command</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\commands.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">info_command</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">info_command</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Show torrent metafile details to user via stdout.</span>
 
@@ -8120,7 +8120,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        Size of chuncks to split the data into.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generate hashes of piece length data from filelist contents.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="n">paths</span>
@@ -8144,7 +8144,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">_handle_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_handle_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Define the handling partial pieces that span 2 or more files.</span>
 
@@ -8152,12 +8152,10 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        ----------</span>
 <span class="sd">        arr : bytearray</span>
 <span class="sd">            Incomplete piece containing partial data</span>
-<span class="sd">        partial : int</span>
-<span class="sd">            Size of incomplete piece_length</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        digest : bytes</span>
+<span class="sd">        digest : bytearray</span>
 <span class="sd">            SHA1 digest of the complete piece.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_file</span><span class="p">():</span>
@@ -8228,7 +8226,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generate hashes of piece length data from filelist contents.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="n">paths</span>
@@ -8448,7 +8446,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 <span class="sd">        piece length for data chunks.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct Hasher class instances for each file in torrent.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -8469,7 +8467,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate Hash sized, 0 filled bytes for padding.</span>
 
@@ -8490,7 +8488,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
             <span class="n">remaining</span> <span class="o">=</span> <span class="n">power2</span> <span class="o">-</span> <span class="n">block_count</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
 
-    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate layer hashes for contents of file.</span>
 
@@ -8580,7 +8578,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct Hasher class instances for each file in torrent.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -8635,7 +8633,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
   <tbody>
       <tr>
         <td><code>data</code></td>
-        <td><code>BytesIO</code></td>
+        <td><code>bytearray</code></td>
         <td><p>File opened in read mode.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -8643,7 +8641,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate layer hashes for contents of file.</span>
 
@@ -8786,7 +8784,7 @@ root hash is calculated.</p>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate hashes over 16KiB chuncks of file content.</span>
 
@@ -8939,7 +8937,7 @@ root hash is calculated.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate hashes over 16KiB chuncks of file content.</span>
 
@@ -9350,7 +9348,7 @@ InteractiveEditor        </code>
 <span class="sd">    Interactive dialog class for torrent editing.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the Interactive torrent editor guide.</span>
 
@@ -9496,7 +9494,7 @@ InteractiveEditor        </code>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initialize the Interactive torrent editor guide.</span>
 
@@ -9823,7 +9821,7 @@ InteractiveEditor        </code>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_input</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_input</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Determine appropriate input function to call.</span>
 
@@ -9922,8 +9920,8 @@ InteractiveEditor        </code>
 
     <span class="k">if</span> <span class="s2">&quot;edit&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;e&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">edit_action</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to recognize input.  Please try again.&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to recognize input.  Please try again.&quot;</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
+    <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>  <span class="c1"># pragma: nocover</span>
 </code></pre></div>
         </details>
     </div>
@@ -9967,7 +9965,7 @@ InteractiveEditor        </code>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">showcenter</span><span class="p">(</span><span class="n">txt</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">showcenter</span><span class="p">(</span><span class="n">txt</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Print text to screen in the center position of the terminal.</span>
 
@@ -10285,7 +10283,7 @@ Checker        </code>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hook</span> <span class="ow">and</span> <span class="n">level</span> <span class="o">==</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_hook</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">find_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">find_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check path for torrent content.</span>
 
@@ -10403,7 +10401,7 @@ Checker        </code>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">walk_file_tree</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">partials</span> <span class="o">+</span> <span class="p">[</span><span class="n">key</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">iter_hashes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">iter_hashes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Produce results of comparing torrent contents piece by piece.</span>
 
@@ -10666,7 +10664,7 @@ name.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">find_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">find_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check path for torrent content.</span>
 
@@ -10787,14 +10785,14 @@ name.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>bytes</code></td>
+      <td><code>tuple</code></td>
       <td><p>hash of data found on disk</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">iter_hashes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">iter_hashes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Produce results of comparing torrent contents piece by piece.</span>
 
@@ -11193,7 +11191,7 @@ metafile against data on disk.</p>
   <tbody>
       <tr>
         <td><code>checker</code></td>
-        <td><code>object</code></td>
+        <td><code>Checker</code></td>
         <td><p>the checker class instance.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -11222,7 +11220,7 @@ metafile against data on disk.</p>
 <span class="sd">        hashing class for calculating piece hashes. default=None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">:</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate hashes of piece length data from filelist contents.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -11325,7 +11323,7 @@ metafile against data on disk.</p>
             <span class="k">for</span> <span class="n">pad</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen_padding</span><span class="p">(</span><span class="n">partial</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">read</span><span class="p">):</span>
                 <span class="k">yield</span> <span class="n">pad</span>
 
-    <span class="k">def</span> <span class="nf">_gen_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">partial</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">read</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_gen_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">partial</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">read</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create padded pieces where file sizes do not match.</span>
 
@@ -11389,7 +11387,7 @@ metafile against data on disk.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">:</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate hashes of piece length data from filelist contents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -11691,7 +11689,7 @@ HashChecker        </code>
   <tbody>
       <tr>
         <td><code>checker</code></td>
-        <td><code>Object</code></td>
+        <td><code>Checker</code></td>
         <td><p>the checker instance that maintains variables.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -11717,7 +11715,7 @@ HashChecker        </code>
 <span class="sd">        the version specific hashing class for torrent content.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">:</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a HybridChecker instance.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -11751,7 +11749,7 @@ HashChecker        </code>
         <span class="k">except</span> <span class="ne">StopIteration</span> <span class="k">as</span> <span class="n">stopiter</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">StopIteration</span><span class="p">()</span> <span class="kn">from</span> <span class="nn">stopiter</span>
 
-    <span class="k">def</span> <span class="nf">iter_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">iter_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate through and compare root file hashes to .torrent file.</span>
 
@@ -11852,7 +11850,7 @@ HashChecker        </code>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">:</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct a HybridChecker instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -11976,7 +11974,7 @@ HashChecker        </code>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">iter_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">iter_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterate through and compare root file hashes to .torrent file.</span>
 
@@ -12493,7 +12491,7 @@ MetaFile        </code>
         <span class="n">meta</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">items</span><span class="p">())))</span>
         <span class="k">return</span> <span class="n">meta</span>
 
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write meta information to .torrent file.</span>
 
@@ -12800,14 +12798,14 @@ MetaFile        </code>
   </thead>
   <tbody>
     <tr>
-      <td><code>str</code></td>
+      <td><code>tuple</code></td>
       <td><p>Where the .torrent file was writen.</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Write meta information to .torrent file.</span>
 
@@ -13034,7 +13032,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        Size of chuncks to split the data into.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generate hashes of piece length data from filelist contents.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="n">paths</span>
@@ -13058,7 +13056,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">_handle_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_handle_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Define the handling partial pieces that span 2 or more files.</span>
 
@@ -13066,12 +13064,10 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        ----------</span>
 <span class="sd">        arr : bytearray</span>
 <span class="sd">            Incomplete piece containing partial data</span>
-<span class="sd">        partial : int</span>
-<span class="sd">            Size of incomplete piece_length</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        digest : bytes</span>
+<span class="sd">        digest : bytearray</span>
 <span class="sd">            SHA1 digest of the complete piece.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_file</span><span class="p">():</span>
@@ -13142,7 +13138,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generate hashes of piece length data from filelist contents.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="n">paths</span>
@@ -13544,7 +13540,7 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;piece layers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span>
         <span class="k">return</span> <span class="n">info</span>
 
-    <span class="k">def</span> <span class="nf">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build meta dictionary while walking directory.</span>
 
@@ -13665,7 +13661,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 <span class="sd">        piece length for data chunks.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct Hasher class instances for each file in torrent.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -13686,7 +13682,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate Hash sized, 0 filled bytes for padding.</span>
 
@@ -13707,7 +13703,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
             <span class="n">remaining</span> <span class="o">=</span> <span class="n">power2</span> <span class="o">-</span> <span class="n">block_count</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
 
-    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate layer hashes for contents of file.</span>
 
@@ -13797,7 +13793,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct Hasher class instances for each file in torrent.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -13852,7 +13848,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
   <tbody>
       <tr>
         <td><code>data</code></td>
-        <td><code>BytesIO</code></td>
+        <td><code>bytearray</code></td>
         <td><p>File opened in read mode.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -13860,7 +13856,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate layer hashes for contents of file.</span>
 
@@ -14129,7 +14125,7 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;piece layers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span>
 
-    <span class="k">def</span> <span class="nf">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Walk directory tree.</span>
 
@@ -14255,7 +14251,7 @@ root hash is calculated.</p>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate hashes over 16KiB chuncks of file content.</span>
 
@@ -14408,7 +14404,7 @@ root hash is calculated.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate hashes over 16KiB chuncks of file content.</span>
 
@@ -17174,7 +17170,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        Size of chuncks to split the data into.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generate hashes of piece length data from filelist contents.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="n">paths</span>
@@ -17198,7 +17194,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">_handle_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_handle_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Define the handling partial pieces that span 2 or more files.</span>
 
@@ -17206,12 +17202,10 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        ----------</span>
 <span class="sd">        arr : bytearray</span>
 <span class="sd">            Incomplete piece containing partial data</span>
-<span class="sd">        partial : int</span>
-<span class="sd">            Size of incomplete piece_length</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        digest : bytes</span>
+<span class="sd">        digest : bytearray</span>
 <span class="sd">            SHA1 digest of the complete piece.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_file</span><span class="p">():</span>
@@ -17282,7 +17276,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generate hashes of piece length data from filelist contents.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="n">paths</span>
@@ -17502,7 +17496,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 <span class="sd">        piece length for data chunks.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct Hasher class instances for each file in torrent.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -17523,7 +17517,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate Hash sized, 0 filled bytes for padding.</span>
 
@@ -17544,7 +17538,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
             <span class="n">remaining</span> <span class="o">=</span> <span class="n">power2</span> <span class="o">-</span> <span class="n">block_count</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
 
-    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate layer hashes for contents of file.</span>
 
@@ -17634,7 +17628,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct Hasher class instances for each file in torrent.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -17689,7 +17683,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
   <tbody>
       <tr>
         <td><code>data</code></td>
-        <td><code>BytesIO</code></td>
+        <td><code>bytearray</code></td>
         <td><p>File opened in read mode.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -17697,7 +17691,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate layer hashes for contents of file.</span>
 
@@ -17840,7 +17834,7 @@ root hash is calculated.</p>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate hashes over 16KiB chuncks of file content.</span>
 
@@ -17993,7 +17987,7 @@ root hash is calculated.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate hashes over 16KiB chuncks of file content.</span>
 
@@ -18404,7 +18398,7 @@ InteractiveEditor        </code>
 <span class="sd">    Interactive dialog class for torrent editing.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the Interactive torrent editor guide.</span>
 
@@ -18550,7 +18544,7 @@ InteractiveEditor        </code>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initialize the Interactive torrent editor guide.</span>
 
@@ -18877,7 +18871,7 @@ InteractiveEditor        </code>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_input</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_input</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Determine appropriate input function to call.</span>
 
@@ -18976,8 +18970,8 @@ InteractiveEditor        </code>
 
     <span class="k">if</span> <span class="s2">&quot;edit&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;e&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">edit_action</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to recognize input.  Please try again.&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to recognize input.  Please try again.&quot;</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
+    <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>  <span class="c1"># pragma: nocover</span>
 </code></pre></div>
         </details>
     </div>
@@ -19021,7 +19015,7 @@ InteractiveEditor        </code>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\interactive.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">showcenter</span><span class="p">(</span><span class="n">txt</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">showcenter</span><span class="p">(</span><span class="n">txt</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Print text to screen in the center position of the terminal.</span>
 
@@ -19339,7 +19333,7 @@ Checker        </code>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hook</span> <span class="ow">and</span> <span class="n">level</span> <span class="o">==</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_hook</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">find_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">find_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check path for torrent content.</span>
 
@@ -19457,7 +19451,7 @@ Checker        </code>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">walk_file_tree</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">partials</span> <span class="o">+</span> <span class="p">[</span><span class="n">key</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">iter_hashes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">iter_hashes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Produce results of comparing torrent contents piece by piece.</span>
 
@@ -19720,7 +19714,7 @@ name.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">find_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">find_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check path for torrent content.</span>
 
@@ -19841,14 +19835,14 @@ name.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>bytes</code></td>
+      <td><code>tuple</code></td>
       <td><p>hash of data found on disk</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">iter_hashes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">iter_hashes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Produce results of comparing torrent contents piece by piece.</span>
 
@@ -20247,7 +20241,7 @@ metafile against data on disk.</p>
   <tbody>
       <tr>
         <td><code>checker</code></td>
-        <td><code>object</code></td>
+        <td><code>Checker</code></td>
         <td><p>the checker class instance.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -20276,7 +20270,7 @@ metafile against data on disk.</p>
 <span class="sd">        hashing class for calculating piece hashes. default=None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">:</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate hashes of piece length data from filelist contents.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -20379,7 +20373,7 @@ metafile against data on disk.</p>
             <span class="k">for</span> <span class="n">pad</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen_padding</span><span class="p">(</span><span class="n">partial</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">read</span><span class="p">):</span>
                 <span class="k">yield</span> <span class="n">pad</span>
 
-    <span class="k">def</span> <span class="nf">_gen_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">partial</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">read</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_gen_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">partial</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">read</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create padded pieces where file sizes do not match.</span>
 
@@ -20443,7 +20437,7 @@ metafile against data on disk.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">:</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate hashes of piece length data from filelist contents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -20745,7 +20739,7 @@ HashChecker        </code>
   <tbody>
       <tr>
         <td><code>checker</code></td>
-        <td><code>Object</code></td>
+        <td><code>Checker</code></td>
         <td><p>the checker instance that maintains variables.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -20771,7 +20765,7 @@ HashChecker        </code>
 <span class="sd">        the version specific hashing class for torrent content.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">:</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a HybridChecker instance.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -20805,7 +20799,7 @@ HashChecker        </code>
         <span class="k">except</span> <span class="ne">StopIteration</span> <span class="k">as</span> <span class="n">stopiter</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">StopIteration</span><span class="p">()</span> <span class="kn">from</span> <span class="nn">stopiter</span>
 
-    <span class="k">def</span> <span class="nf">iter_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">iter_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate through and compare root file hashes to .torrent file.</span>
 
@@ -20906,7 +20900,7 @@ HashChecker        </code>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checker</span><span class="p">:</span> <span class="n">Checker</span><span class="p">,</span> <span class="n">hasher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct a HybridChecker instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -21030,7 +21024,7 @@ HashChecker        </code>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">iter_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">iter_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterate through and compare root file hashes to .torrent file.</span>
 
@@ -21547,7 +21541,7 @@ MetaFile        </code>
         <span class="n">meta</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">items</span><span class="p">())))</span>
         <span class="k">return</span> <span class="n">meta</span>
 
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write meta information to .torrent file.</span>
 
@@ -21854,14 +21848,14 @@ MetaFile        </code>
   </thead>
   <tbody>
     <tr>
-      <td><code>str</code></td>
+      <td><code>tuple</code></td>
       <td><p>Where the .torrent file was writen.</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Write meta information to .torrent file.</span>
 
@@ -22088,7 +22082,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        Size of chuncks to split the data into.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generate hashes of piece length data from filelist contents.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="n">paths</span>
@@ -22112,7 +22106,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">_handle_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_handle_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Define the handling partial pieces that span 2 or more files.</span>
 
@@ -22120,12 +22114,10 @@ seemlessly until the last piece which may be smaller than others.</p>
 <span class="sd">        ----------</span>
 <span class="sd">        arr : bytearray</span>
 <span class="sd">            Incomplete piece containing partial data</span>
-<span class="sd">        partial : int</span>
-<span class="sd">            Size of incomplete piece_length</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        digest : bytes</span>
+<span class="sd">        digest : bytearray</span>
 <span class="sd">            SHA1 digest of the complete piece.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_file</span><span class="p">():</span>
@@ -22196,7 +22188,7 @@ seemlessly until the last piece which may be smaller than others.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generate hashes of piece length data from filelist contents.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">piece_length</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="n">paths</span>
@@ -22598,7 +22590,7 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;piece layers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span>
         <span class="k">return</span> <span class="n">info</span>
 
-    <span class="k">def</span> <span class="nf">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build meta dictionary while walking directory.</span>
 
@@ -22719,7 +22711,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 <span class="sd">        piece length for data chunks.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct Hasher class instances for each file in torrent.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -22740,7 +22732,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_pad_remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate Hash sized, 0 filled bytes for padding.</span>
 
@@ -22761,7 +22753,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
             <span class="n">remaining</span> <span class="o">=</span> <span class="n">power2</span> <span class="o">-</span> <span class="n">block_count</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HASH_SIZE</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">remaining</span><span class="p">)]</span>
 
-    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate layer hashes for contents of file.</span>
 
@@ -22851,7 +22843,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct Hasher class instances for each file in torrent.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -22906,7 +22898,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
   <tbody>
       <tr>
         <td><code>data</code></td>
-        <td><code>BytesIO</code></td>
+        <td><code>bytearray</code></td>
         <td><p>File opened in read mode.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -22914,7 +22906,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate layer hashes for contents of file.</span>
 
@@ -23183,7 +23175,7 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;piece layers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span>
 
-    <span class="k">def</span> <span class="nf">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Walk directory tree.</span>
 
@@ -23309,7 +23301,7 @@ root hash is calculated.</p>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate hashes over 16KiB chuncks of file content.</span>
 
@@ -23462,7 +23454,7 @@ root hash is calculated.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate hashes over 16KiB chuncks of file content.</span>
 

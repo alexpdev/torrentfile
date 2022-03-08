@@ -37,7 +37,7 @@ from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 logger = logging.getLogger(__name__)
 
 
-def create_command(args):
+def create_command(args: list):
     """
     Execute the create CLI sub-command to create a new torrent metafile.
 
@@ -86,7 +86,7 @@ def create_command(args):
     return args
 
 
-def info_command(args):
+def info_command(args: list):
     """
     Show torrent metafile details to user via stdout.
 
@@ -112,7 +112,7 @@ def info_command(args):
     return output
 
 
-def edit_command(args):
+def edit_command(args: list):
     """
     Execute the edit CLI sub-command with provided arguments.
 

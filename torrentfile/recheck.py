@@ -183,7 +183,7 @@ class Checker:
             if self._hook and level == logging.INFO:
                 self._hook(message)
 
-    def find_root(self, path):
+    def find_root(self, path: str) -> str:
         """
         Check path for torrent content.
 
@@ -301,7 +301,7 @@ class Checker:
             else:
                 self.walk_file_tree(val, partials + [key])
 
-    def iter_hashes(self):
+    def iter_hashes(self) -> tuple:
         """
         Produce results of comparing torrent contents piece by piece.
 
@@ -356,7 +356,7 @@ class FeedChecker:
         hashing class for calculating piece hashes. default=None
     """
 
-    def __init__(self, checker, hasher=None):
+    def __init__(self, checker: Checker, hasher=None):
         """
         Generate hashes of piece length data from filelist contents.
         """
@@ -459,7 +459,7 @@ class FeedChecker:
             for pad in self._gen_padding(partial, length, read):
                 yield pad
 
-    def _gen_padding(self, partial, length, read=0):
+    def _gen_padding(self, partial: bytes, length: int, read=0) -> bytes:
         """
         Create padded pieces where file sizes do not match.
 
@@ -503,7 +503,7 @@ class HashChecker:
         the version specific hashing class for torrent content.
     """
 
-    def __init__(self, checker, hasher=None):
+    def __init__(self, checker: Checker, hasher=None):
         """
         Construct a HybridChecker instance.
         """
@@ -537,7 +537,7 @@ class HashChecker:
         except StopIteration as stopiter:
             raise StopIteration() from stopiter
 
-    def iter_paths(self):
+    def iter_paths(self) -> tuple:
         """
         Iterate through and compare root file hashes to .torrent file.
 

@@ -63,7 +63,7 @@ class Hasher(_CbMixin):
         Size of chuncks to split the data into.
     """
 
-    def __init__(self, paths, piece_length):
+    def __init__(self, paths: list, piece_length: int):
         """Generate hashes of piece length data from filelist contents."""
         self.piece_length = piece_length
         self.paths = paths
@@ -87,7 +87,7 @@ class Hasher(_CbMixin):
         """
         return self
 
-    def _handle_partial(self, arr):
+    def _handle_partial(self, arr: bytearray) -> bytearray:
         """
         Define the handling partial pieces that span 2 or more files.
 
@@ -95,12 +95,10 @@ class Hasher(_CbMixin):
         ----------
         arr : bytearray
             Incomplete piece containing partial data
-        partial : int
-            Size of incomplete piece_length
 
         Returns
         -------
-        digest : bytes
+        digest : bytearray
             SHA1 digest of the complete piece.
         """
         while len(arr) < self.piece_length and self.next_file():
@@ -188,7 +186,7 @@ class HasherV2(_CbMixin):
         with open(self.path, "rb") as fd:
             self.process_file(fd)
 
-    def process_file(self, fd):
+    def process_file(self, fd: str):
         """
         Calculate hashes over 16KiB chuncks of file content.
 
@@ -264,7 +262,7 @@ class HasherHybrid(_CbMixin):
         piece length for data chunks.
     """
 
-    def __init__(self, path, piece_length):
+    def __init__(self, path: str, piece_length: int):
         """
         Construct Hasher class instances for each file in torrent.
         """
@@ -285,7 +283,7 @@ class HasherHybrid(_CbMixin):
         with open(path, "rb") as data:
             self.process_file(data)
 
-    def _pad_remaining(self, block_count):
+    def _pad_remaining(self, block_count: int):
         """
         Generate Hash sized, 0 filled bytes for padding.
 
@@ -306,7 +304,7 @@ class HasherHybrid(_CbMixin):
             remaining = power2 - block_count
         return [bytes(HASH_SIZE) for _ in range(remaining)]
 
-    def process_file(self, data):
+    def process_file(self, data: bytearray):
         """
         Calculate layer hashes for contents of file.
 
