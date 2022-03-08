@@ -117,7 +117,8 @@ def test_checker_first_piece(dir2, version):
             new = b"Something other than what was there before."
             with open(path, "rb") as bfile:
                 data = bfile.read()
-            content = b"".join([new, data[len(new) :]])
+            new_len = len(new)
+            content = b"".join([new, data[new_len:]])
             with open(path, "wb") as bdoc:
                 bdoc.write(content)
         elif path.is_dir():
