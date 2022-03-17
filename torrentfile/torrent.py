@@ -242,7 +242,16 @@ class MetaFile:
         Construct MetaFile superclass and assign local attributes.
         """
         if not path:
-            raise utils.MissingPathError
+            found = False
+            if announce or url_list:
+                if announce and os.path.exists(announce[-1]):
+                    path = announce.pop()
+                    found = True
+                elif url_list and os.path.exists(url_list[-1]):
+                    path = url_list.pop()
+                    found = True
+            if not found:
+                raise utils.MissingPathError
 
         # base path to torrent content.
         self.path = path
@@ -276,6 +285,7 @@ class MetaFile:
         self.comment = comment
         self.url_list = url_list
         self.source = source
+
         self.meta = {
             "announce": self.announce,
             "announce-list": self.announce_list,
@@ -292,8 +302,13 @@ class MetaFile:
             self.meta["info"]["source"] = source
         if url_list:
             self.meta["url-list"] = url_list
-        self.meta["info"]["name"] = os.path.basename(self.path)
         self.meta["info"]["piece length"] = self.piece_length
+
+        parent, name = os.path.split(self.path)
+        if not name:
+            name = os.path.basename(parent)
+        self.meta["info"]["name"] = name
+
     # fmt: on
 
     def assemble(self):
@@ -334,7 +349,8 @@ class MetaFile:
             self.outfile = outfile
 
         if self.outfile is None:
-            self.outfile = str(self.path) + ".torrent"
+            path = str(self.path).rstrip("\\/")
+            self.outfile = path + ".torrent"
 
         self.meta = self.sort_meta()
         pyben.dump(self.meta, self.outfile)
