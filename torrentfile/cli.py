@@ -146,7 +146,6 @@ def execute(args=None):
             args = sys.argv[1:]
         else:
             args = ["-h"]
-
     parser = ArgumentParser(
         "torrentfile",
         description="""
@@ -455,6 +454,10 @@ def execute(args=None):
     )
 
     info_parser.set_defaults(func=info_command)
+
+    for i, arg in enumerate(args):
+        if hasattr(arg, "decode"):
+            args[i] = args[i].decode("utf-8")  # pragma: nocover
 
     args = parser.parse_args(args)
     if args.debug:
