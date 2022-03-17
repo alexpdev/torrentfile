@@ -407,3 +407,34 @@ def test_cli_subprocess(dir2):
         rmpath(out)
     else:  # pragma: nocover
         assert os.environ.get("GITHUB_WORKFLOW")
+
+
+@pytest.mark.parametrize("ending", ["/", "\\"])
+def test_cli_slash_path(dir2, ending):
+    """
+    Test if output when path ends with a /.
+    """
+    if sys.platform != "win32" and ending == "\\":  # pragma: nocover
+        ending = "/"
+    args = [
+        "torrentfile",
+        "create",
+        "-t",
+        "https://announce1.org",
+        "--private",
+        str(dir2) + ending,
+    ]
+    sys.argv = args
+    main()
+    assert os.path.exists(str(dir2) + ".torrent")
+
+
+@pytest.mark.parametrize("flag", ["-t", "-w", "-a"])
+def test_cli_announce_path(dir2, flag):
+    """
+    Test CLI when path is placed after the trackers flag.
+    """
+    args = ["torrentfile", "create", flag, "https://announce1.org", str(dir2)]
+    sys.argv = args
+    main()
+    assert os.path.exists(str(dir2) + ".torrent")

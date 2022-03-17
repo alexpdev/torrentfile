@@ -321,6 +321,7 @@ def execute(args=None):
         "content",
         action="store",
         metavar="<content>",
+        nargs="?",
         help="Path to content file or directory",
     )
 
