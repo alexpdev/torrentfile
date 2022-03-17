@@ -1,5 +1,14 @@
 # TorrentFile
 
+## Version 0.6.13
+
+- Fixed bug that created a torrent file with no name.
+- Fixed bug that would error if cli path was listed after announce urls
+- Added full unicode support.
+- Added Unittests for new features and bug fixes
+
+---------------------
+
 ## Version 0.6.11
 
 - Fixed bug that occured during recheck when file of 0 length is included.

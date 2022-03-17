@@ -165,6 +165,8 @@ def filelist_total(pathstring: str) -> os.PathLike:
     MissingPathError
         File could not be found.
     """
+    if hasattr(pathstring, "decode"):
+        pathstring = pathstring.decode("utf-8")  # pragma: nocover
     if os.path.exists(pathstring):
         path = Path(pathstring)
         return _filelist_total(path)
