@@ -414,7 +414,7 @@ def test_cli_slash_path(dir2, ending):
     """
     Test if output when path ends with a /.
     """
-    if sys.platform != "win32" and ending == "\\":
+    if sys.platform != "win32" and ending == "\\":  # pragma: nocover
         ending = "/"
     args = [
         "torrentfile",
