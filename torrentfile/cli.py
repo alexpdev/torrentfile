@@ -31,7 +31,31 @@ from torrentfile.commands import (create_command, edit_command, info_command,
                                   magnet_command, recheck_command)
 from torrentfile.interactive import select_action
 
-logger = logging.getLogger(__name__)
+
+class Handlers:
+    """
+    Handlers and formatters for log messages.
+    """
+
+    logger = logging.getLogger()
+    file_handler = logging.FileHandler(
+        "torrentfile.log", mode="a+", encoding="utf-8"
+    )
+    console_handler = logging.StreamHandler(stream=sys.stderr)
+    file_formatter = logging.Formatter(
+        "%(asctime)s %(levelno)s %(module)s %(message)s",
+        datefmt="%m-%d %H:%M:%S",
+        style="%",
+    )
+    stream_formatter = logging.Formatter(
+        "%(asctime)s %(levelno)s %(module)s %(message)s",
+        datefmt="%m-%d %H:%M:%S",
+        style="%",
+    )
+    file_handler.setFormatter(file_formatter)
+    console_handler.setFormatter(stream_formatter)
+    file_handler.setLevel(logging.DEBUG)
+    console_handler.setLevel(logging.DEBUG)
 
 
 class TorrentFileHelpFormatter(HelpFormatter):
@@ -455,15 +479,14 @@ def execute(args=None):
 
     info_parser.set_defaults(func=info_command)
 
-    for i, arg in enumerate(args):
-        if hasattr(arg, "decode"):
-            args[i] = args[i].decode("utf-8")  # pragma: nocover
-
     args = parser.parse_args(args)
-    if args.debug:
-        torrentfile.add_handler()
 
-    logger.debug(str(args))
+    if args.debug:
+        Handlers.logger.setLevel(logging.DEBUG)
+        Handlers.logger.addHandler(Handlers.console_handler)
+        Handlers.logger.addHandler(Handlers.file_handler)
+        Handlers.logger.debug("Debug: ON")
+
     if args.interactive:
         return select_action()
 

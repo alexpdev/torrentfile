@@ -438,35 +438,3 @@ def test_cli_announce_path(dir2, flag):
     sys.argv = args
     main()
     assert os.path.exists(str(dir2) + ".torrent")
-
-
-@pytest.mark.parametrize("version", ["1", "2", "3"])
-def test_cli_unicode_path(version):
-    """
-    Test creating a new torrent file with unicode characters.
-    """
-    text = "丂七万丈三上下丌不与丏丑丒专且丕世丗丘丙业丛东丝丠両丢丣两严丩个丫丬中丮丯"
-    parent = os.path.dirname(__file__)
-    dest = os.path.join(parent, text)
-    with open(dest, "wb") as tempfile:
-        l = 0
-        out = text
-        while l < 1 << 18:
-            tempfile.write((out + "\n").encode("utf-8"))
-            l += len(out)
-            out += out
-    args = [
-        "torrentfile",
-        "create",
-        "--private",
-        "-a",
-        "https://tracker1.org",
-        "https://tracker2.org",
-        "--meta-version",
-        version,
-        dest,
-    ]
-    sys.argv = args
-    main()
-    assert os.path.exists(dest)
-    rmpath(dest)

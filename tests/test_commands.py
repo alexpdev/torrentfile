@@ -14,6 +14,7 @@
 """
 Testing functions for the sub-action commands from command line args.
 """
+import os
 import sys
 from hashlib import sha1  # nosec
 from urllib.parse import quote_plus
@@ -21,7 +22,7 @@ from urllib.parse import quote_plus
 import pyben
 import pytest
 
-from tests import dir1, metafile
+from tests import dir1, metafile, rmpath, tempfile
 from torrentfile.cli import execute
 from torrentfile.commands import info_command, magnet_command
 
@@ -31,6 +32,15 @@ def test_fix():
     Test dir1 fixture is not None.
     """
     assert dir1, metafile
+
+
+@pytest.fixture
+def tfile():
+    """
+    Provide a temporary file for testing as pytest fixture.
+    """
+    testfile = tempfile()
+    return testfile
 
 
 def test_magnet_uri(metafile):
@@ -114,3 +124,30 @@ def test_magnet_cli(metafile):
     sys.argv[1:] = ["m", str(metafile)]
     uri = execute()
     assert "magnet" in uri
+
+
+def test_torrent_creation_from_unicode_file(tfile):
+    """
+    Test Unicode information in CLI args.
+    """
+    parent = os.path.dirname(tfile)
+    filename = os.path.join(parent, "丂七万丈三与丏丑丒专且丕世丗両丢丣两严丩个丫丬中丮丯.torrent")
+    args = [
+        "torrentfile",
+        "-v",
+        "create",
+        "-a",
+        "tracker_url.com/announce_3456",
+        "tracker_url.net/announce_3456",
+        "--source",
+        "sourcetext",
+        "--comment",
+        "filename is 丂七万丈三与丏丑丒专且丕世丗両丢丣两严丩个丫丬中丮丯.torrent",
+        "-o",
+        str(filename),
+        str(tfile),
+    ]
+    sys.argv = args
+    execute()
+    assert os.path.exists(filename)
+    rmpath(tfile, filename)

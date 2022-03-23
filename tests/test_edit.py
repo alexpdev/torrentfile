@@ -193,3 +193,20 @@ def test_edit_cli(metafile, comment, source, announce, webseed):
     assert info.get("private") == 1
     assert meta["announce-list"] == [[announce]]
     assert meta["url-list"] == [webseed]
+
+
+def test_metafile_edit_with_unicode(metafile):
+    """
+    Test if editing full unicode works as it should.
+    """
+    edits = {
+        "comment": "丂七万丈三与丏丑丒专且丕世丗両丢丣两严丩个丫丬中丮丯.torrent",
+        "source": "丂七万丏丑严丩个丫丬中丮丯",
+    }
+    data = edit_torrent(metafile, edits)
+    meta = pyben.load(metafile)
+    assert (
+        data["info"]["comment"]
+        == meta["info"]["comment"]
+        == "丂七万丈三与丏丑丒专且丕世丗両丢丣两严丩个丫丬中丮丯.torrent"
+    )

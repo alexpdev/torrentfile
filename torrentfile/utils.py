@@ -18,6 +18,11 @@ Functions:
   get_file_list: Return list of all files contained in directory.
   path_stat: Get ideal piece length, total size, and file list for directory.
   path_piece_length: Get ideal piece length based on size of directory.
+
+Classes:
+    MissingPathError: Custom exception raised when no path was provided to CLI.
+    PieceLengthValueError: Custom exception raised when incorrect input value
+    used for piece length field.
 """
 
 import math
@@ -165,8 +170,6 @@ def filelist_total(pathstring: str) -> os.PathLike:
     MissingPathError
         File could not be found.
     """
-    if hasattr(pathstring, "decode"):
-        pathstring = pathstring.decode("utf-8")  # pragma: nocover
     if os.path.exists(pathstring):
         path = Path(pathstring)
         return _filelist_total(path)

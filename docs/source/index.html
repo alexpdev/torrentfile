@@ -352,19 +352,19 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#torrentfile.add_handler" class="md-nav__link">
-    add_handler()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#torrentfile.cli" class="md-nav__link">
     cli
   </a>
   
     <nav class="md-nav" aria-label="cli">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.Handlers" class="md-nav__link">
+    Handlers
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#torrentfile.cli.TorrentFileHelpFormatter" class="md-nav__link">
@@ -1371,6 +1371,13 @@
   
     <nav class="md-nav" aria-label="cli">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.Handlers" class="md-nav__link">
+    Handlers
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#torrentfile.cli.TorrentFileHelpFormatter" class="md-nav__link">
@@ -2481,13 +2488,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tests.test_cli.test_cli_unicode_path" class="md-nav__link">
-    test_cli_unicode_path()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#tests.test_cli.test_cli_v1" class="md-nav__link">
     test_cli_v1()
   </a>
@@ -2605,6 +2605,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tests.test_commands.test_torrent_creation_from_unicode_file" class="md-nav__link">
+    test_torrent_creation_from_unicode_file()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests.test_commands.tfile" class="md-nav__link">
+    tfile()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2698,6 +2712,13 @@
           <li class="md-nav__item">
   <a href="#tests.test_edit.test_fix" class="md-nav__link">
     test_fix()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests.test_edit.test_metafile_edit_with_unicode" class="md-nav__link">
+    test_metafile_edit_with_unicode()
   </a>
   
 </li>
@@ -3262,19 +3283,19 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#torrentfile.add_handler" class="md-nav__link">
-    add_handler()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#torrentfile.cli" class="md-nav__link">
     cli
   </a>
   
     <nav class="md-nav" aria-label="cli">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.Handlers" class="md-nav__link">
+    Handlers
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#torrentfile.cli.TorrentFileHelpFormatter" class="md-nav__link">
@@ -4281,6 +4302,13 @@
   
     <nav class="md-nav" aria-label="cli">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.Handlers" class="md-nav__link">
+    Handlers
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#torrentfile.cli.TorrentFileHelpFormatter" class="md-nav__link">
@@ -5391,13 +5419,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tests.test_cli.test_cli_unicode_path" class="md-nav__link">
-    test_cli_unicode_path()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#tests.test_cli.test_cli_v1" class="md-nav__link">
     test_cli_v1()
   </a>
@@ -5515,6 +5536,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tests.test_commands.test_torrent_creation_from_unicode_file" class="md-nav__link">
+    test_torrent_creation_from_unicode_file()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests.test_commands.tfile" class="md-nav__link">
+    tfile()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5608,6 +5643,13 @@
           <li class="md-nav__item">
   <a href="#tests.test_edit.test_fix" class="md-nav__link">
     test_fix()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests.test_edit.test_metafile_edit_with_unicode" class="md-nav__link">
+    test_metafile_edit_with_unicode()
   </a>
   
 </li>
@@ -6183,39 +6225,6 @@ as well as validate files and folders against metadata.</p>
 
 
 
-  <div class="doc doc-object doc-function">
-
-
-
-<h3 id="torrentfile.add_handler" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">add_handler</span><span class="p">()</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Add a 'debug' streamhandler to the logging facility.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>torrentfile\__init__.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_handler</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Add a &#39;debug&#39; streamhandler to the logging facility.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">streamlog</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
-    <span class="n">streamlog</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-    <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2">: </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">streamlog</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">streamlog</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
 
 
   <div class="doc doc-object doc-module">
@@ -6246,6 +6255,77 @@ invoked when called from command line, and parses accompanying arguments.</p>
 
 
 
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h4 id="torrentfile.cli.Handlers" class="doc doc-heading">
+        <code>
+Handlers        </code>
+
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Handlers and formatters for log messages.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Handlers</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handlers and formatters for log messages.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span>
+        <span class="s2">&quot;torrentfile.log&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a+&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span>
+    <span class="p">)</span>
+    <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="n">file_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(module)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">stream_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(module)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">file_formatter</span><span class="p">)</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">stream_formatter</span><span class="p">)</span>
+    <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 
@@ -6907,15 +6987,14 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <span class="n">info_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">info_command</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="s2">&quot;decode&quot;</span><span class="p">):</span>
-            <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
-
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-        <span class="n">torrentfile</span><span class="o">.</span><span class="n">add_handler</span><span class="p">()</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">console_handler</span><span class="p">)</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">file_handler</span><span class="p">)</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug: ON&quot;</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
 
@@ -7315,15 +7394,14 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <span class="n">info_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">info_command</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="s2">&quot;decode&quot;</span><span class="p">):</span>
-            <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
-
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-        <span class="n">torrentfile</span><span class="o">.</span><span class="n">add_handler</span><span class="p">()</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">console_handler</span><span class="p">)</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">file_handler</span><span class="p">)</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug: ON&quot;</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
 
@@ -7875,6 +7953,7 @@ web-seeds</p>
 
 
 
+
   <div class="doc doc-object doc-function">
 
 
@@ -7947,6 +8026,7 @@ web-seeds</p>
 <span class="sd">    dict</span>
 <span class="sd">        The edited and nested Meta and info dictionaries.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;editing torrent file </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">)</span>
     <span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
     <span class="n">filter_empty</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
@@ -8060,6 +8140,7 @@ web-seeds</p>
             <span class="k">elif</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">info</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
             <span class="k">del</span> <span class="n">args</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;removeing empty fields </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -14753,6 +14834,10 @@ root hash is calculated.</p>
   get_file_list: Return list of all files contained in directory.
   path_stat: Get ideal piece length, total size, and file list for directory.
   path_piece_length: Get ideal piece length based on size of directory.</p>
+<p>Classes:
+    MissingPathError: Custom exception raised when no path was provided to CLI.
+    PieceLengthValueError: Custom exception raised when incorrect input value
+    used for piece length field.</p>
 
 
 
@@ -15086,8 +15171,6 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 <span class="sd">    MissingPathError</span>
 <span class="sd">        File could not be found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pathstring</span><span class="p">,</span> <span class="s2">&quot;decode&quot;</span><span class="p">):</span>
-        <span class="n">pathstring</span> <span class="o">=</span> <span class="n">pathstring</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pathstring</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">pathstring</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">_filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
@@ -15829,6 +15912,77 @@ invoked when called from command line, and parses accompanying arguments.</p>
 
 
 
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="torrentfile.cli.Handlers" class="doc doc-heading">
+        <code>
+Handlers        </code>
+
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Handlers and formatters for log messages.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Handlers</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handlers and formatters for log messages.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span>
+        <span class="s2">&quot;torrentfile.log&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a+&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span>
+    <span class="p">)</span>
+    <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="n">file_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(module)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">stream_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(module)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">file_formatter</span><span class="p">)</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">stream_formatter</span><span class="p">)</span>
+    <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
 
   <div class="doc doc-object doc-class">
 
@@ -16488,15 +16642,14 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <span class="n">info_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">info_command</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="s2">&quot;decode&quot;</span><span class="p">):</span>
-            <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
-
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-        <span class="n">torrentfile</span><span class="o">.</span><span class="n">add_handler</span><span class="p">()</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">console_handler</span><span class="p">)</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">file_handler</span><span class="p">)</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug: ON&quot;</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
 
@@ -16896,15 +17049,14 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
     <span class="n">info_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">info_command</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="s2">&quot;decode&quot;</span><span class="p">):</span>
-            <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
-
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-        <span class="n">torrentfile</span><span class="o">.</span><span class="n">add_handler</span><span class="p">()</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">console_handler</span><span class="p">)</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">file_handler</span><span class="p">)</span>
+        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug: ON&quot;</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
 
@@ -16958,6 +17110,7 @@ web-seeds</p>
 
 
   <div class="doc doc-children">
+
 
 
 
@@ -17038,6 +17191,7 @@ web-seeds</p>
 <span class="sd">    dict</span>
 <span class="sd">        The edited and nested Meta and info dictionaries.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;editing torrent file </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">)</span>
     <span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
     <span class="n">filter_empty</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
@@ -17151,6 +17305,7 @@ web-seeds</p>
             <span class="k">elif</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">info</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
             <span class="k">del</span> <span class="n">args</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;removeing empty fields </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -23844,6 +23999,10 @@ root hash is calculated.</p>
   get_file_list: Return list of all files contained in directory.
   path_stat: Get ideal piece length, total size, and file list for directory.
   path_piece_length: Get ideal piece length based on size of directory.</p>
+<p>Classes:
+    MissingPathError: Custom exception raised when no path was provided to CLI.
+    PieceLengthValueError: Custom exception raised when incorrect input value
+    used for piece length field.</p>
 
 
 
@@ -24177,8 +24336,6 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 <span class="sd">    MissingPathError</span>
 <span class="sd">        File could not be found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pathstring</span><span class="p">,</span> <span class="s2">&quot;decode&quot;</span><span class="p">):</span>
-        <span class="n">pathstring</span> <span class="o">=</span> <span class="n">pathstring</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pathstring</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">pathstring</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">_filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
@@ -26021,60 +26178,6 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 
-<h4 id="tests.test_cli.test_cli_unicode_path" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_cli_unicode_path</span><span class="p">(</span><span class="n">version</span><span class="p">)</span></code>
-
-
-</h4>
-
-    <div class="doc doc-contents ">
-
-      <p>Test creating a new torrent file with unicode characters.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>tests\test_cli.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">test_cli_unicode_path</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Test creating a new torrent file with unicode characters.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;丂七万丈三上下丌不与丏丑丒专且丕世丗丘丙业丛东丝丠両丢丣两严丩个丫丬中丮丯&quot;</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
-    <span class="n">dest</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tempfile</span><span class="p">:</span>
-        <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">text</span>
-        <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">18</span><span class="p">:</span>
-            <span class="n">tempfile</span><span class="o">.</span><span class="n">write</span><span class="p">((</span><span class="n">out</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
-            <span class="n">l</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-            <span class="n">out</span> <span class="o">+=</span> <span class="n">out</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;create&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;https://tracker1.org&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;https://tracker2.org&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--meta-version&quot;</span><span class="p">,</span>
-        <span class="n">version</span><span class="p">,</span>
-        <span class="n">dest</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span>
-    <span class="n">main</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
-    <span class="n">rmpath</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
 <h4 id="tests.test_cli.test_cli_v1" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">test_cli_v1</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span></code>
 
@@ -26642,6 +26745,86 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="tests.test_commands.test_torrent_creation_from_unicode_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_torrent_creation_from_unicode_file</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Test Unicode information in CLI args.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_commands.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_torrent_creation_from_unicode_file</span><span class="p">(</span><span class="n">tfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test Unicode information in CLI args.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;丂七万丈三与丏丑丒专且丕世丗両丢丣两严丩个丫丬中丮丯.torrent&quot;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-v&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;create&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tracker_url.com/announce_3456&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tracker_url.net/announce_3456&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sourcetext&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;filename is 丂七万丈三与丏丑丒专且丕世丗両丢丣两严丩个丫丬中丮丯.torrent&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">tfile</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="n">execute</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">tfile</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="tests.test_commands.tfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tfile</span><span class="p">()</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Provide a temporary file for testing as pytest fixture.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_commands.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">tfile</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provide a temporary file for testing as pytest fixture.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">testfile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">testfile</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
 
 
 
@@ -27105,6 +27288,45 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 <span class="sd">    Testing dir fixtures.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">dir2</span><span class="p">,</span> <span class="n">metafile</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="tests.test_edit.test_metafile_edit_with_unicode" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_metafile_edit_with_unicode</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Test if editing full unicode works as it should.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_edit.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_metafile_edit_with_unicode</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if editing full unicode works as it should.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">edits</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;丂七万丈三与丏丑丒专且丕世丗両丢丣两严丩个丫丬中丮丯.torrent&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;丂七万丏丑严丩个丫丬中丮丯&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">edit_torrent</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">edits</span><span class="p">)</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span>
+        <span class="o">==</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span>
+        <span class="o">==</span> <span class="s2">&quot;丂七万丈三与丏丑丒专且丕世丗両丢丣两严丩个丫丬中丮丯.torrent&quot;</span>
+    <span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
