@@ -1,5 +1,15 @@
 # TorrentFile
 
+## Version 0.7.0
+
+- Fixed issues with logging to file.
+- Finished adding tests for Unicode Support
+- Deprecated some unneccessary code
+- Clean up documentation and README
+- removed config files no longer in use.
+
+---------------------
+
 ## Version 0.6.13
 
 - Fixed bug that created a torrent file with no name.

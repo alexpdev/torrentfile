@@ -16,15 +16,16 @@
 ## 🌐 Overview
 
 A `simple` and `convenient` tool for creating, reviewing, editing, and/or
-checking bittorrent meta files (aka torrent files). _`torrentfile`_
-supports all versions of Bittorrent files, including hybrid meta files.
+validating bittorrent meta files (aka torrent files). _`torrentfile`_
+supports all versions of Bittorrent files, including hybrid meta files, and has
+full unicode support.
 
 > A GUI frontend for this project can be found at [https://github.com/alexpdev/TorrentfileQt](https://github.com/alexpdev/TorrentfileQt)
 
 ## 🔌 Requirements
 
 - Python 3.7+
-- Tested on Linux and Windows
+- Tested on Linux and Windows and Mac
 
 ## 💻 Install
 

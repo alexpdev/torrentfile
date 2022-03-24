@@ -30,9 +30,12 @@ trackers
 web-seeds
 """
 
+import logging
 import os
 
 import pyben
+
+logger = logging.getLogger(__name__)
 
 
 def filter_empty(args: dict, meta: dict, info: dict):
@@ -59,6 +62,7 @@ def filter_empty(args: dict, meta: dict, info: dict):
             elif key in info:
                 del info[key]
             del args[key]
+            logger.debug("removeing empty fields %s", val)
 
 
 def edit_torrent(metafile: str, args: dict) -> dict:
@@ -77,6 +81,7 @@ def edit_torrent(metafile: str, args: dict) -> dict:
     dict
         The edited and nested Meta and info dictionaries.
     """
+    logger.debug("editing torrent file %s", metafile)
     meta = pyben.load(metafile)
     info = meta["info"]
     filter_empty(args, meta, info)

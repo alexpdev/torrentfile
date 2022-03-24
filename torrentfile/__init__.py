@@ -26,6 +26,7 @@ Modules:
     utils: Utilities used throughout package.
 """
 import logging
+import sys
 
 from torrentfile import interactive, utils
 from torrentfile.cli import main, main_script
@@ -35,22 +36,4 @@ from torrentfile.version import __version__
 
 __author__ = "alexpdev"
 
-logging.basicConfig(
-    filename="torrentfile.log",
-    format="%(asctime)s:: %(message)s",
-    datefmt="%m-%d %H:%M:%S",
-    style="%",
-    filemode="w",
-    level=logging.INFO,
-)
-
-
-def add_handler():
-    """
-    Add a 'debug' streamhandler to the logging facility.
-    """
-    streamlog = logging.StreamHandler()
-    streamlog.setLevel(logging.DEBUG)
-    formatter = logging.Formatter("%(asctime)s: %(message)s")
-    streamlog.setFormatter(formatter)
-    logging.getLogger(__name__).addHandler(streamlog)
+logging.basicConfig(level=logging.WARNING)
