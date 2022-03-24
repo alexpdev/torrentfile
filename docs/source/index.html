@@ -11417,9 +11417,13 @@ metafile against data on disk.</p>
         <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
         <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="k">else</span> <span class="n">partial</span>
+<<<<<<< HEAD
         <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
             <span class="k">raise</span> <span class="n">MissingPathError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+=======
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+>>>>>>> master
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">bitlength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
                 <span class="n">part</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bitlength</span><span class="p">)</span>
@@ -11672,9 +11676,13 @@ metafile against data on disk.</p>
     <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
     <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="k">else</span> <span class="n">partial</span>
+<<<<<<< HEAD
     <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
         <span class="k">raise</span> <span class="n">MissingPathError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+=======
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+>>>>>>> master
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">bitlength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
             <span class="n">part</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bitlength</span><span class="p">)</span>
@@ -20509,9 +20517,13 @@ metafile against data on disk.</p>
         <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
         <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="k">else</span> <span class="n">partial</span>
+<<<<<<< HEAD
         <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
             <span class="k">raise</span> <span class="n">MissingPathError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+=======
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+>>>>>>> master
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">bitlength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
                 <span class="n">part</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bitlength</span><span class="p">)</span>
@@ -20764,9 +20776,13 @@ metafile against data on disk.</p>
     <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
     <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="k">else</span> <span class="n">partial</span>
+<<<<<<< HEAD
     <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
         <span class="k">raise</span> <span class="n">MissingPathError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+=======
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+>>>>>>> master
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">bitlength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
             <span class="n">part</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bitlength</span><span class="p">)</span>
@@ -25044,7 +25060,11 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\__init__.py</code></summary>
+<<<<<<< HEAD
           <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;package&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">torrents</span><span class="p">())</span>
+=======
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">torrents</span><span class="p">())</span>
+>>>>>>> master
 <span class="k">def</span> <span class="nf">metafile</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a standard metafile for testing.</span>
@@ -26419,7 +26439,11 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="s2">&quot;field&quot;</span><span class="p">,</span>
     <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="s2">&quot;comment&quot;</span><span class="p">,</span> <span class="s2">&quot;private&quot;</span><span class="p">,</span> <span class="s2">&quot;announce-list&quot;</span><span class="p">],</span>
 <span class="p">)</span>
+<<<<<<< HEAD
 <span class="k">def</span> <span class="nf">test_info</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">tfile</span><span class="p">):</span>
+=======
+<span class="k">def</span> <span class="nf">test_info</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+>>>>>>> master
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test the info_command action from the Command Line Interface.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -26449,7 +26473,10 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <span class="n">output</span> <span class="o">=</span> <span class="n">info_command</span><span class="p">(</span><span class="n">Space</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">output</span>
+<<<<<<< HEAD
     <span class="n">rmpath</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span><span class="p">)</span>
+=======
+>>>>>>> master
 </code></pre></div>
         </details>
     </div>
