@@ -442,7 +442,7 @@ class FeedChecker:
         read = 0
         length = self.fileinfo[self.index]["length"]
         partial = bytearray() if len(partial) == self.piece_length else partial
-        with open(path, "rb") as current:
+        with open(str(path), "rb") as current:
             while True:
                 bitlength = self.piece_length - len(partial)
                 part = bytearray(bitlength)
