@@ -100,10 +100,15 @@ def info_command(args: list):
     info = meta["info"]
     del meta["info"]
     meta.update(info)
+    if "private" in meta and meta["private"] == 1:
+        meta["private"] = "True"
+    if "announce-list" in meta:
+        lst = meta["announce-list"]
+        meta["announce-list"] = ", ".join([j for i in lst for j in i])
     text = []
     longest = max([len(i) for i in meta.keys()])
     for key, val in meta.items():
-        if key not in ["pieces", "piece layers"]:
+        if key not in ["pieces", "piece layers", "files", "file tree"]:
             prefix = longest - len(key) + 1
             string = key + (" " * prefix) + str(val)
             text.append(string)
@@ -163,7 +168,7 @@ def recheck_command(args):
     result = checker.results()
     logger.info("Final result for %s recheck:  %s", metafile, result)
 
-    sys.stdout.write(str(result))
+    sys.stdout.write(str(result) + "% Match\n")
     sys.stdout.flush()
     return result
 

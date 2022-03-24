@@ -32,11 +32,10 @@ from torrentfile.commands import (create_command, edit_command, info_command,
 from torrentfile.interactive import select_action
 
 
-class Handlers:
+def activate_logger():
     """
-    Handlers and formatters for log messages.
+    Activate the builtin logging mechanism when passed debug flag from CLI.
     """
-
     logger = logging.getLogger()
     file_handler = logging.FileHandler(
         "torrentfile.log", mode="a+", encoding="utf-8"
@@ -56,6 +55,10 @@ class Handlers:
     console_handler.setFormatter(stream_formatter)
     file_handler.setLevel(logging.DEBUG)
     console_handler.setLevel(logging.DEBUG)
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
+    logger.debug("Debug: ON")
 
 
 class TorrentFileHelpFormatter(HelpFormatter):
@@ -482,10 +485,7 @@ def execute(args=None):
     args = parser.parse_args(args)
 
     if args.debug:
-        Handlers.logger.setLevel(logging.DEBUG)
-        Handlers.logger.addHandler(Handlers.console_handler)
-        Handlers.logger.addHandler(Handlers.file_handler)
-        Handlers.logger.debug("Debug: ON")
+        activate_logger()
 
     if args.interactive:
         return select_action()

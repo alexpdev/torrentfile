@@ -180,7 +180,7 @@ def torrents():
     return [TorrentFile, TorrentFileV2, TorrentFileHybrid]
 
 
-@pytest.fixture(scope="module", params=torrents())
+@pytest.fixture(params=torrents())
 def metafile(request):
     """
     Create a standard metafile for testing.
@@ -191,6 +191,7 @@ def metafile(request):
         "announce": ["url1", "url2", "url4"],
         "comment": "this is a comment",
         "source": "SomeSource",
+        "private": 1,
     }
     torrent_class = request.param
     torrent = torrent_class(**args)

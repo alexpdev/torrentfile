@@ -154,7 +154,7 @@ class Checker:
             iterable=self.iter_hashes(),
             desc="Calculating",
             total=iterations,
-            unit="piece",
+            unit="pieces",
         ):
             responses.append(response)
         return self._result

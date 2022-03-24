@@ -1,2 +1,3 @@
 pyben
 tqdm
+colorama
