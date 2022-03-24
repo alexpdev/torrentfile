@@ -173,12 +173,13 @@ def execute(args=None):
             args = sys.argv[1:]
         else:
             args = ["-h"]
+
     parser = ArgumentParser(
         "torrentfile",
-        description="""
-        CLI Tool for creating, checking, editing... Bittorrent meta files.
-        TorrentFile supports all versions of torrent files.
-        """,
+        description=(
+            "Command line tools for creating, editing, checking and "
+            "interacting with Bittorrent metainfo files"
+        ),
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
         conflict_handler="resolve",
@@ -321,9 +322,9 @@ def execute(args=None):
         dest="piece_length",
         metavar="<int>",
         help="""
-        Fixed amount of bytes for each chunk of data. (Default: None)
+        Number of bytes for each chunk of data. (Default: None)
         Acceptable input values include integers 14-24, which
-        will be interpreted as the exponent for 2^n, or any perfect
+        are interpreted as the exponent for 2ⁿ, or any perfect
         power of two integer between 16Kib and 16MiB (inclusive).
         Examples:: [--piece-length 14] [--piece-length 16777216]
         """,
@@ -337,9 +338,7 @@ def execute(args=None):
         metavar="<url>",
         nargs="+",
         help="""
-        One or more url(s) linking to a http server hosting
-        the torrent contents.  This is useful if the torrent
-        tracker is ever unreachable. Example:: -w url1 url2 url3
+        One or more url(s) linking to a hosting the torrent contents.
         """,
     )
 
@@ -490,7 +489,9 @@ def execute(args=None):
     if args.interactive:
         return select_action()
 
-    return args.func(args)
+    result = args.func(args)
+    print(result)
+    return result
 
 
 main_script = execute

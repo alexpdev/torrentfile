@@ -30,7 +30,7 @@ import pyben
 from tqdm import tqdm
 
 from torrentfile.hasher import HasherHybrid, HasherV2
-from torrentfile.utils import humanize_bytes
+from torrentfile.utils import MissingPathError, humanize_bytes
 
 SHA1 = 20
 SHA256 = 32
@@ -436,12 +436,14 @@ class FeedChecker:
 
         Returns
         -------
-        bytes
+        bytearray
             Hash digest for block of .torrent contents.
         """
         read = 0
         length = self.fileinfo[self.index]["length"]
         partial = bytearray() if len(partial) == self.piece_length else partial
+        if path not in self.paths:  # pragma: no cover
+            raise MissingPathError(path)
         with open(path, "rb") as current:
             while True:
                 bitlength = self.piece_length - len(partial)

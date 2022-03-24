@@ -243,16 +243,14 @@ class MetaFile:
         Construct MetaFile superclass and assign local attributes.
         """
         if not path:
-            found = False
-            if announce or url_list:
-                if announce and os.path.exists(announce[-1]):
-                    path = announce.pop()
-                    found = True
-                elif url_list and os.path.exists(url_list[-1]):
-                    path = url_list.pop()
-                    found = True
-            if not found:
-                raise utils.MissingPathError
+            if announce and len(announce) > 1 and os.path.exists(announce[-1]):
+                path = announce[-1]
+                announce = announce[:-1]
+            elif url_list and len(url_list) > 1 and os.path.exists(url_list[-1]):
+                path = url_list[-1]
+                url_list = url_list[:-1]
+            else:
+                raise utils.MissingPathError("Path to content is required.")
 
         # base path to torrent content.
         self.path = path

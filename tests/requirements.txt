@@ -7,8 +7,6 @@ pyben
 pylint
 pyroma
 pytest
-pytest-randomly
-pytest-clarity
 pytest-cov
 setuptools
 tqdm
