@@ -360,13 +360,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#torrentfile.cli.Handlers" class="md-nav__link">
-    Handlers
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#torrentfile.cli.TorrentFileHelpFormatter" class="md-nav__link">
     TorrentFileHelpFormatter
   </a>
@@ -390,6 +383,13 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.activate_logger" class="md-nav__link">
+    activate_logger()
+  </a>
   
 </li>
         
@@ -1373,13 +1373,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#torrentfile.cli.Handlers" class="md-nav__link">
-    Handlers
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#torrentfile.cli.TorrentFileHelpFormatter" class="md-nav__link">
     TorrentFileHelpFormatter
   </a>
@@ -1403,6 +1396,13 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.activate_logger" class="md-nav__link">
+    activate_logger()
+  </a>
   
 </li>
         
@@ -3291,13 +3291,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#torrentfile.cli.Handlers" class="md-nav__link">
-    Handlers
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#torrentfile.cli.TorrentFileHelpFormatter" class="md-nav__link">
     TorrentFileHelpFormatter
   </a>
@@ -3321,6 +3314,13 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.activate_logger" class="md-nav__link">
+    activate_logger()
+  </a>
   
 </li>
         
@@ -4304,13 +4304,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#torrentfile.cli.Handlers" class="md-nav__link">
-    Handlers
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#torrentfile.cli.TorrentFileHelpFormatter" class="md-nav__link">
     TorrentFileHelpFormatter
   </a>
@@ -4334,6 +4327,13 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.activate_logger" class="md-nav__link">
+    activate_logger()
+  </a>
   
 </li>
         
@@ -6261,78 +6261,6 @@ invoked when called from command line, and parses accompanying arguments.</p>
 
 
 
-<h4 id="torrentfile.cli.Handlers" class="doc doc-heading">
-        <code>
-Handlers        </code>
-
-
-
-</h4>
-
-    <div class="doc doc-contents ">
-
-      <p>Handlers and formatters for log messages.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>torrentfile\cli.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Handlers</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Handlers and formatters for log messages.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
-    <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span>
-        <span class="s2">&quot;torrentfile.log&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a+&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span>
-    <span class="p">)</span>
-    <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-    <span class="n">file_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
-        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(module)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
-        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">stream_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
-        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(module)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
-        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">file_formatter</span><span class="p">)</span>
-    <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">stream_formatter</span><span class="p">)</span>
-    <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-    <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
 <h4 id="torrentfile.cli.TorrentFileHelpFormatter" class="doc doc-heading">
         <code>
 TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFormatter</span>)
@@ -6356,7 +6284,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 <span class="sd">    Subclasses Argparse.HelpFormatter.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">35</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct HelpFormat class for usage output.</span>
 
@@ -6465,7 +6393,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
 
 <h5 id="torrentfile.cli.TorrentFileHelpFormatter.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -6498,19 +6426,19 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <td><code>width</code></td>
         <td><code>int</code></td>
         <td><p>Max width of help message output.</p></td>
-        <td><code>60</code></td>
+        <td><code>45</code></td>
       </tr>
       <tr>
         <td><code>max_help_positions</code></td>
         <td><code>int</code></td>
         <td><p>max length until line wrap.</p></td>
-        <td><code>40</code></td>
+        <td><code>35</code></td>
       </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\cli.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">35</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct HelpFormat class for usage output.</span>
 
@@ -6626,6 +6554,57 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
   </div>
 
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.cli.activate_logger" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">activate_logger</span><span class="p">()</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Activate the builtin logging mechanism when passed debug flag from CLI.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">activate_logger</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Activate the builtin logging mechanism when passed debug flag from CLI.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span>
+        <span class="s2">&quot;torrentfile.log&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a+&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span>
+    <span class="p">)</span>
+    <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="n">file_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(module)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">stream_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(module)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">file_formatter</span><span class="p">)</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">stream_formatter</span><span class="p">)</span>
+    <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console_handler</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug: ON&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -6990,10 +6969,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">console_handler</span><span class="p">)</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">file_handler</span><span class="p">)</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug: ON&quot;</span><span class="p">)</span>
+        <span class="n">activate_logger</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
@@ -7397,10 +7373,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">console_handler</span><span class="p">)</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">file_handler</span><span class="p">)</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug: ON&quot;</span><span class="p">)</span>
+        <span class="n">activate_logger</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
@@ -7696,10 +7669,15 @@ magnet_command</p>
     <span class="n">info</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
     <span class="k">del</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
     <span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;private&quot;</span> <span class="ow">in</span> <span class="n">meta</span> <span class="ow">and</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;private&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;private&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;True&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;announce-list&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+        <span class="n">lst</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce-list&quot;</span><span class="p">]</span>
+        <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce-list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">j</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lst</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="p">])</span>
     <span class="n">text</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">longest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">meta</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">meta</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">,</span> <span class="s2">&quot;piece layers&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">,</span> <span class="s2">&quot;piece layers&quot;</span><span class="p">,</span> <span class="s2">&quot;files&quot;</span><span class="p">,</span> <span class="s2">&quot;file tree&quot;</span><span class="p">]:</span>
             <span class="n">prefix</span> <span class="o">=</span> <span class="n">longest</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
             <span class="n">string</span> <span class="o">=</span> <span class="n">key</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">prefix</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
             <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
@@ -7893,7 +7871,7 @@ magnet_command</p>
     <span class="n">result</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Final result for </span><span class="si">%s</span><span class="s2"> recheck:  </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
 
-    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;% Match</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">result</span>
 </code></pre></div>
@@ -10385,7 +10363,7 @@ Checker        </code>
             <span class="n">iterable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_hashes</span><span class="p">(),</span>
             <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating&quot;</span><span class="p">,</span>
             <span class="n">total</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;piece&quot;</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;pieces&quot;</span><span class="p">,</span>
         <span class="p">):</span>
             <span class="n">responses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
@@ -11179,7 +11157,7 @@ name.</p>
         <span class="n">iterable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_hashes</span><span class="p">(),</span>
         <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating&quot;</span><span class="p">,</span>
         <span class="n">total</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span>
-        <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;piece&quot;</span><span class="p">,</span>
+        <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;pieces&quot;</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">responses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
@@ -11437,7 +11415,7 @@ metafile against data on disk.</p>
         <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
         <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="k">else</span> <span class="n">partial</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">bitlength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
                 <span class="n">part</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bitlength</span><span class="p">)</span>
@@ -11690,7 +11668,7 @@ metafile against data on disk.</p>
     <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
     <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="k">else</span> <span class="n">partial</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">bitlength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
             <span class="n">part</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bitlength</span><span class="p">)</span>
@@ -11912,13 +11890,6 @@ HashChecker        </code>
                         <span class="n">size</span> <span class="o">=</span> <span class="n">length</span>
                     <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
                     <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                        <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                        <span class="n">path</span><span class="p">,</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                    <span class="p">)</span>
                     <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 
             <span class="k">else</span><span class="p">:</span>
@@ -11939,13 +11910,6 @@ HashChecker        </code>
                             <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
                         <span class="n">size</span> <span class="o">=</span> <span class="n">plength</span> <span class="k">if</span> <span class="n">plength</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="k">else</span> <span class="n">length</span>
                         <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                            <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                        <span class="p">)</span>
                         <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 </code></pre></div>
         </details>
@@ -12137,13 +12101,6 @@ HashChecker        </code>
                     <span class="n">size</span> <span class="o">=</span> <span class="n">length</span>
                 <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
                 <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                    <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                    <span class="n">path</span><span class="p">,</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                <span class="p">)</span>
                 <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 
         <span class="k">else</span><span class="p">:</span>
@@ -12164,13 +12121,6 @@ HashChecker        </code>
                         <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
                     <span class="n">size</span> <span class="o">=</span> <span class="n">plength</span> <span class="k">if</span> <span class="n">plength</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="k">else</span> <span class="n">length</span>
                     <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                        <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                    <span class="p">)</span>
                     <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 </code></pre></div>
         </details>
@@ -13104,17 +13054,11 @@ TorrentFile            (<a title="torrentfile.torrent.MetaFile" href="#torrentfi
             <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">feeder</span><span class="p">:</span>
                 <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
             <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span>
                 <span class="n">iterable</span><span class="o">=</span><span class="n">feeder</span><span class="p">,</span>
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Content&quot;</span><span class="p">,</span>
-                <span class="n">total</span><span class="o">=</span><span class="n">size</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
-                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">,</span>
-                <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">unit_divisor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
-                <span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Torrent Pieces&quot;</span><span class="p">,</span>
+                <span class="n">total</span><span class="o">=</span><span class="p">(</span><span class="n">size</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;parts&quot;</span><span class="p">,</span>
             <span class="p">):</span>
                 <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pieces</span>
@@ -13576,17 +13520,11 @@ seemlessly until the last piece which may be smaller than others.</p>
         <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">feeder</span><span class="p">:</span>
             <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
         <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span>
             <span class="n">iterable</span><span class="o">=</span><span class="n">feeder</span><span class="p">,</span>
-            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Content&quot;</span><span class="p">,</span>
-            <span class="n">total</span><span class="o">=</span><span class="n">size</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">,</span>
-            <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">unit_divisor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
-            <span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Torrent Pieces&quot;</span><span class="p">,</span>
+            <span class="n">total</span><span class="o">=</span><span class="p">(</span><span class="n">size</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;parts&quot;</span><span class="p">,</span>
         <span class="p">):</span>
             <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
     <span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pieces</span>
@@ -13680,8 +13618,6 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
             <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
                 <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
@@ -14143,8 +14079,6 @@ piece_length bytes for the piece layer, and then the root hash.</p>
     <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
         <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
             <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
@@ -14267,8 +14201,6 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
         <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
             <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
                 <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
@@ -14734,8 +14666,6 @@ root hash is calculated.</p>
     <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
         <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
             <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
@@ -15916,78 +15846,6 @@ invoked when called from command line, and parses accompanying arguments.</p>
 
 
 
-<h3 id="torrentfile.cli.Handlers" class="doc doc-heading">
-        <code>
-Handlers        </code>
-
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Handlers and formatters for log messages.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>torrentfile\cli.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Handlers</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Handlers and formatters for log messages.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
-    <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span>
-        <span class="s2">&quot;torrentfile.log&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a+&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span>
-    <span class="p">)</span>
-    <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-    <span class="n">file_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
-        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(module)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
-        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">stream_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
-        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(module)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
-        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">file_formatter</span><span class="p">)</span>
-    <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">stream_formatter</span><span class="p">)</span>
-    <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-    <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
 <h3 id="torrentfile.cli.TorrentFileHelpFormatter" class="doc doc-heading">
         <code>
 TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFormatter</span>)
@@ -16011,7 +15869,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 <span class="sd">    Subclasses Argparse.HelpFormatter.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">35</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct HelpFormat class for usage output.</span>
 
@@ -16120,7 +15978,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
 
 <h4 id="torrentfile.cli.TorrentFileHelpFormatter.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -16153,19 +16011,19 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <td><code>width</code></td>
         <td><code>int</code></td>
         <td><p>Max width of help message output.</p></td>
-        <td><code>60</code></td>
+        <td><code>45</code></td>
       </tr>
       <tr>
         <td><code>max_help_positions</code></td>
         <td><code>int</code></td>
         <td><p>max length until line wrap.</p></td>
-        <td><code>40</code></td>
+        <td><code>35</code></td>
       </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\cli.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">35</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct HelpFormat class for usage output.</span>
 
@@ -16281,6 +16139,57 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
 
   </div>
 
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.cli.activate_logger" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">activate_logger</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Activate the builtin logging mechanism when passed debug flag from CLI.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>torrentfile\cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">activate_logger</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Activate the builtin logging mechanism when passed debug flag from CLI.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span>
+        <span class="s2">&quot;torrentfile.log&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a+&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span>
+    <span class="p">)</span>
+    <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="n">file_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(module)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">stream_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(module)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">file_formatter</span><span class="p">)</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">stream_formatter</span><span class="p">)</span>
+    <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console_handler</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug: ON&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -16645,10 +16554,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">console_handler</span><span class="p">)</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">file_handler</span><span class="p">)</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug: ON&quot;</span><span class="p">)</span>
+        <span class="n">activate_logger</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
@@ -17052,10 +16958,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">console_handler</span><span class="p">)</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">Handlers</span><span class="o">.</span><span class="n">file_handler</span><span class="p">)</span>
-        <span class="n">Handlers</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug: ON&quot;</span><span class="p">)</span>
+        <span class="n">activate_logger</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">interactive</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>
@@ -19550,7 +19453,7 @@ Checker        </code>
             <span class="n">iterable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_hashes</span><span class="p">(),</span>
             <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating&quot;</span><span class="p">,</span>
             <span class="n">total</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;piece&quot;</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;pieces&quot;</span><span class="p">,</span>
         <span class="p">):</span>
             <span class="n">responses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
@@ -20344,7 +20247,7 @@ name.</p>
         <span class="n">iterable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_hashes</span><span class="p">(),</span>
         <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating&quot;</span><span class="p">,</span>
         <span class="n">total</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span>
-        <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;piece&quot;</span><span class="p">,</span>
+        <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;pieces&quot;</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">responses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
@@ -20602,7 +20505,7 @@ metafile against data on disk.</p>
         <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
         <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="k">else</span> <span class="n">partial</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">bitlength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
                 <span class="n">part</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bitlength</span><span class="p">)</span>
@@ -20855,7 +20758,7 @@ metafile against data on disk.</p>
     <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
     <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="k">else</span> <span class="n">partial</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">bitlength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
             <span class="n">part</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bitlength</span><span class="p">)</span>
@@ -21077,13 +20980,6 @@ HashChecker        </code>
                         <span class="n">size</span> <span class="o">=</span> <span class="n">length</span>
                     <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
                     <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                        <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                        <span class="n">path</span><span class="p">,</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                    <span class="p">)</span>
                     <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 
             <span class="k">else</span><span class="p">:</span>
@@ -21104,13 +21000,6 @@ HashChecker        </code>
                             <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
                         <span class="n">size</span> <span class="o">=</span> <span class="n">plength</span> <span class="k">if</span> <span class="n">plength</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="k">else</span> <span class="n">length</span>
                         <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                            <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                        <span class="p">)</span>
                         <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 </code></pre></div>
         </details>
@@ -21302,13 +21191,6 @@ HashChecker        </code>
                     <span class="n">size</span> <span class="o">=</span> <span class="n">length</span>
                 <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
                 <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                    <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                    <span class="n">path</span><span class="p">,</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                <span class="p">)</span>
                 <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 
         <span class="k">else</span><span class="p">:</span>
@@ -21329,13 +21211,6 @@ HashChecker        </code>
                         <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
                     <span class="n">size</span> <span class="o">=</span> <span class="n">plength</span> <span class="k">if</span> <span class="n">plength</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="k">else</span> <span class="n">length</span>
                     <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                        <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                    <span class="p">)</span>
                     <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 </code></pre></div>
         </details>
@@ -22269,17 +22144,11 @@ TorrentFile            (<a title="torrentfile.torrent.MetaFile" href="#torrentfi
             <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">feeder</span><span class="p">:</span>
                 <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
             <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span>
                 <span class="n">iterable</span><span class="o">=</span><span class="n">feeder</span><span class="p">,</span>
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Content&quot;</span><span class="p">,</span>
-                <span class="n">total</span><span class="o">=</span><span class="n">size</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
-                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">,</span>
-                <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">unit_divisor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
-                <span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Torrent Pieces&quot;</span><span class="p">,</span>
+                <span class="n">total</span><span class="o">=</span><span class="p">(</span><span class="n">size</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;parts&quot;</span><span class="p">,</span>
             <span class="p">):</span>
                 <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pieces</span>
@@ -22741,17 +22610,11 @@ seemlessly until the last piece which may be smaller than others.</p>
         <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">feeder</span><span class="p">:</span>
             <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
         <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span>
             <span class="n">iterable</span><span class="o">=</span><span class="n">feeder</span><span class="p">,</span>
-            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Content&quot;</span><span class="p">,</span>
-            <span class="n">total</span><span class="o">=</span><span class="n">size</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">,</span>
-            <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">unit_divisor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">,</span>
-            <span class="n">initial</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Torrent Pieces&quot;</span><span class="p">,</span>
+            <span class="n">total</span><span class="o">=</span><span class="p">(</span><span class="n">size</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;parts&quot;</span><span class="p">,</span>
         <span class="p">):</span>
             <span class="n">pieces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
     <span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pieces</span>
@@ -22845,8 +22708,6 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
             <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
                 <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
@@ -23308,8 +23169,6 @@ piece_length bytes for the piece layer, and then the root hash.</p>
     <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
         <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
             <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
@@ -23432,8 +23291,6 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
         <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
             <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
                 <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
@@ -23899,8 +23756,6 @@ root hash is calculated.</p>
     <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
         <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
             <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
@@ -25185,7 +25040,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\__init__.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">torrents</span><span class="p">())</span>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">torrents</span><span class="p">())</span>
 <span class="k">def</span> <span class="nf">metafile</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a standard metafile for testing.</span>
@@ -25196,6 +25051,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
         <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;url1&quot;</span><span class="p">,</span> <span class="s2">&quot;url2&quot;</span><span class="p">,</span> <span class="s2">&quot;url4&quot;</span><span class="p">],</span>
         <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;this is a comment&quot;</span><span class="p">,</span>
         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;SomeSource&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">torrent_class</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span>
     <span class="n">torrent</span> <span class="o">=</span> <span class="n">torrent_class</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
@@ -26524,7 +26380,10 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_commands.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;field&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="s2">&quot;comment&quot;</span><span class="p">])</span>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span>
+    <span class="s2">&quot;field&quot;</span><span class="p">,</span>
+    <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="s2">&quot;comment&quot;</span><span class="p">,</span> <span class="s2">&quot;private&quot;</span><span class="p">,</span> <span class="s2">&quot;announce-list&quot;</span><span class="p">],</span>
+<span class="p">)</span>
 <span class="k">def</span> <span class="nf">test_info</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test the info_command action from the Command Line Interface.</span>
@@ -26545,7 +26404,6 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
     <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">output</span>
-    <span class="k">assert</span> <span class="n">d</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="ow">in</span> <span class="n">output</span>
 </code></pre></div>
         </details>
     </div>

@@ -154,7 +154,7 @@ class Checker:
             iterable=self.iter_hashes(),
             desc="Calculating",
             total=iterations,
-            unit="piece",
+            unit="pieces",
         ):
             responses.append(response)
         return self._result
@@ -442,7 +442,7 @@ class FeedChecker:
         read = 0
         length = self.fileinfo[self.index]["length"]
         partial = bytearray() if len(partial) == self.piece_length else partial
-        with open(path, "rb") as current:
+        with open(str(path), "rb") as current:
             while True:
                 bitlength = self.piece_length - len(partial)
                 part = bytearray(bitlength)
@@ -569,13 +569,6 @@ class HashChecker:
                         size = length
                     length -= size
                     block = sha256(bytearray(size)).digest()
-                    logging.debug(
-                        "Yielding: %s %s %s %s",
-                        str(block),
-                        str(piece),
-                        path,
-                        str(size),
-                    )
                     yield block, piece, path, size
 
             else:
@@ -596,11 +589,4 @@ class HashChecker:
                             block = sha256(bytearray(size)).digest()
                         size = plength if plength < length else length
                         length -= size
-                        logger.debug(
-                            "Yielding: %s, %s, %s, %s",
-                            str(block),
-                            str(piece),
-                            str(path),
-                            str(size),
-                        )
                         yield block, piece, path, size

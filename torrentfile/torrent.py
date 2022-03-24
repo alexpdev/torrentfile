@@ -187,6 +187,7 @@ from collections.abc import Sequence
 from datetime import datetime
 
 import pyben
+from tqdm import tqdm
 
 from torrentfile import utils
 from torrentfile.hasher import Hasher, HasherHybrid, HasherV2
@@ -412,17 +413,11 @@ class TorrentFile(MetaFile):
             for piece in feeder:
                 pieces.extend(piece)
         else:
-            from tqdm import tqdm
-
             for piece in tqdm(
                 iterable=feeder,
-                desc="Hashing Content",
-                total=size // self.piece_length,
-                unit="bytes",
-                unit_scale=True,
-                unit_divisor=self.piece_length,
-                initial=0,
-                leave=True,
+                desc="Torrent Pieces",
+                total=(size // self.piece_length) + 1,
+                unit="parts",
             ):
                 pieces.extend(piece)
         info["pieces"] = pieces
@@ -475,8 +470,6 @@ class TorrentFileV2(MetaFile):
         info = self.meta["info"]
 
         if not self.noprogress:
-            from tqdm import tqdm
-
             lst = utils.get_file_list(self.path)
             self.pbar = tqdm(
                 desc="Hashing Files:",
@@ -560,8 +553,6 @@ class TorrentFileHybrid(MetaFile):
         info["meta version"] = 2
 
         if not self.noprogress:
-            from tqdm import tqdm
-
             lst = utils.get_file_list(self.path)
             self.progbar = tqdm(
                 desc="Hashing Files:",

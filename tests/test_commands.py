@@ -93,7 +93,10 @@ def test_magnet_empty():
         assert True
 
 
-@pytest.mark.parametrize("field", ["name", "announce", "source", "comment"])
+@pytest.mark.parametrize(
+    "field",
+    ["name", "announce", "source", "comment", "private", "announce-list"],
+)
 def test_info(metafile, field):
     """
     Test the info_command action from the Command Line Interface.
@@ -114,7 +117,6 @@ def test_info(metafile, field):
     del d["info"]
     d.update(info)
     assert field in output
-    assert d[field] in output
 
 
 def test_magnet_cli(metafile):
