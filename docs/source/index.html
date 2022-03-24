@@ -27584,6 +27584,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="n">input_iter</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">select_action</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">100</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">tfile</span><span class="p">,</span> <span class="n">metafile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -27978,6 +27979,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
         <span class="n">content</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">barr</span><span class="p">)</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">())</span> <span class="o">!=</span> <span class="mi">10</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -28497,7 +28499,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span> <span class="o">==</span> <span class="n">result</span>
-    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -28531,6 +28533,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="n">outfile</span> <span class="o">=</span> <span class="n">mktorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span> <span class="o">==</span> <span class="mi">100</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>

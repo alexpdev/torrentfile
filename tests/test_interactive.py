@@ -220,3 +220,4 @@ def test_inter_recheck(size, torrentclass):
     input_iter(seq)
     result = select_action()
     assert result == 100
+    rmpath(tfile, metafile)
