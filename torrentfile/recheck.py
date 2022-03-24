@@ -569,13 +569,6 @@ class HashChecker:
                         size = length
                     length -= size
                     block = sha256(bytearray(size)).digest()
-                    logging.debug(
-                        "Yielding: %s %s %s %s",
-                        str(block),
-                        str(piece),
-                        path,
-                        str(size),
-                    )
                     yield block, piece, path, size
 
             else:
@@ -596,11 +589,4 @@ class HashChecker:
                             block = sha256(bytearray(size)).digest()
                         size = plength if plength < length else length
                         length -= size
-                        logger.debug(
-                            "Yielding: %s, %s, %s, %s",
-                            str(block),
-                            str(piece),
-                            str(path),
-                            str(size),
-                        )
                         yield block, piece, path, size

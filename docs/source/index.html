@@ -11890,13 +11890,6 @@ HashChecker        </code>
                         <span class="n">size</span> <span class="o">=</span> <span class="n">length</span>
                     <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
                     <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                        <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                        <span class="n">path</span><span class="p">,</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                    <span class="p">)</span>
                     <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 
             <span class="k">else</span><span class="p">:</span>
@@ -11917,13 +11910,6 @@ HashChecker        </code>
                             <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
                         <span class="n">size</span> <span class="o">=</span> <span class="n">plength</span> <span class="k">if</span> <span class="n">plength</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="k">else</span> <span class="n">length</span>
                         <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                            <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                        <span class="p">)</span>
                         <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 </code></pre></div>
         </details>
@@ -12115,13 +12101,6 @@ HashChecker        </code>
                     <span class="n">size</span> <span class="o">=</span> <span class="n">length</span>
                 <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
                 <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                    <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                    <span class="n">path</span><span class="p">,</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                <span class="p">)</span>
                 <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 
         <span class="k">else</span><span class="p">:</span>
@@ -12142,13 +12121,6 @@ HashChecker        </code>
                         <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
                     <span class="n">size</span> <span class="o">=</span> <span class="n">plength</span> <span class="k">if</span> <span class="n">plength</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="k">else</span> <span class="n">length</span>
                     <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                        <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                    <span class="p">)</span>
                     <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 </code></pre></div>
         </details>
@@ -21008,13 +20980,6 @@ HashChecker        </code>
                         <span class="n">size</span> <span class="o">=</span> <span class="n">length</span>
                     <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
                     <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                        <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                        <span class="n">path</span><span class="p">,</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                    <span class="p">)</span>
                     <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 
             <span class="k">else</span><span class="p">:</span>
@@ -21035,13 +21000,6 @@ HashChecker        </code>
                             <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
                         <span class="n">size</span> <span class="o">=</span> <span class="n">plength</span> <span class="k">if</span> <span class="n">plength</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="k">else</span> <span class="n">length</span>
                         <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                            <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
-                            <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                        <span class="p">)</span>
                         <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 </code></pre></div>
         </details>
@@ -21233,13 +21191,6 @@ HashChecker        </code>
                     <span class="n">size</span> <span class="o">=</span> <span class="n">length</span>
                 <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
                 <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                    <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                    <span class="n">path</span><span class="p">,</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                <span class="p">)</span>
                 <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 
         <span class="k">else</span><span class="p">:</span>
@@ -21260,13 +21211,6 @@ HashChecker        </code>
                         <span class="n">block</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
                     <span class="n">size</span> <span class="o">=</span> <span class="n">plength</span> <span class="k">if</span> <span class="n">plength</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="k">else</span> <span class="n">length</span>
                     <span class="n">length</span> <span class="o">-=</span> <span class="n">size</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                        <span class="s2">&quot;Yielding: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">piece</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
-                        <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
-                    <span class="p">)</span>
                     <span class="k">yield</span> <span class="n">block</span><span class="p">,</span> <span class="n">piece</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span>
 </code></pre></div>
         </details>
