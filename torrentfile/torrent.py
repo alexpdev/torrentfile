@@ -443,7 +443,7 @@ class TorrentFileV2(MetaFile):
             keywword arguments to pass to superclass.
         """
         super().__init__(**kwargs)
-        logger.debug("Create .torrent v2 file.")
+        logger.debug("creating v2 metafile")
         self.piece_layers = {}
         self.hashes = []
         self.pbar = None

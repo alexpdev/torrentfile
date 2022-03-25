@@ -489,9 +489,7 @@ def execute(args=None):
     if args.interactive:
         return select_action()
 
-    result = args.func(args)
-    print(result)
-    return result
+    return args.func(args)
 
 
 main_script = execute

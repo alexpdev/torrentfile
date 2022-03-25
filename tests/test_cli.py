@@ -388,8 +388,9 @@ def test_cli_empty_files(dir2, version, noprogress):
 
     walk(dir2, 0)
     main()
-    assert os.path.exists(str(dir2) + ".torrent")
-    rmpath(str(dir2) + ".torrent")
+    outfile = str(dir2) + ".torrent"
+    assert os.path.exists(outfile)
+    rmpath(outfile)
 
 
 def test_cli_subprocess(dir2):
@@ -424,7 +425,9 @@ def test_cli_slash_path(dir2, ending):
     ]
     sys.argv = args
     main()
-    assert os.path.exists(str(dir2) + ".torrent")
+    outfile = str(dir2) + ".torrent"
+    assert os.path.exists(outfile)
+    rmpath(outfile)
 
 
 @pytest.mark.parametrize("flag", ["-t", "-w", "--announce", "--web-seed"])
@@ -435,4 +438,6 @@ def test_cli_announce_path(dir2, flag):
     args = ["torrentfile", "create", flag, "https://announce1.org", str(dir2)]
     sys.argv = args
     main()
-    assert os.path.exists(str(dir2) + ".torrent")
+    outfile = str(dir2) + ".torrent"
+    assert os.path.exists(outfile)
+    rmpath(outfile)

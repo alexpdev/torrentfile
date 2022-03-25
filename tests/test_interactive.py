@@ -22,18 +22,10 @@ import pyben
 import pytest
 
 import torrentfile
-from tests import dir1, dir2, rmpath, tempfile
+from tests import dir1, dir2, rmpath, tempfile, torrents
 from torrentfile.cli import main
 from torrentfile.interactive import select_action
-from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 from torrentfile.utils import normalize_piece_length
-
-
-def torrents():
-    """
-    Return all versions of TorrentFile objects.
-    """
-    return [TorrentFile, TorrentFileV2, TorrentFileHybrid]
 
 
 def input_mapping(mapping):
