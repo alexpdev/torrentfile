@@ -26,7 +26,10 @@ recheck_command
 magnet_command
 """
 import logging
+import os
 import sys
+from hashlib import sha1  # nosec
+from urllib.parse import quote_plus
 
 import pyben
 
@@ -187,10 +190,6 @@ def magnet_command(metafile):
     str
         created magnet URI.
     """
-    import os
-    from hashlib import sha1  # nosec
-    from urllib.parse import quote_plus
-
     if hasattr(metafile, "metafile"):
         metafile = metafile.metafile
     if not os.path.exists(metafile):

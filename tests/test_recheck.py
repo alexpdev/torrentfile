@@ -435,6 +435,7 @@ def test_checker_class_half_file(version, piece_length, size):
         content.write(barr)
     checker = Checker(outfile, path)
     assert int(checker.results()) != 10
+    rmpath(path, outfile)
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
@@ -467,6 +468,7 @@ def test_checker_missing_singles(version, piece_length, dir3):
     walk(Path(dir3))
     checker = Checker(outfile, path)
     assert int(checker.results()) < 100
+    rmpath(outfile, path)
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
@@ -485,7 +487,7 @@ def test_checker_result_property(version):
     checker = Checker(outfile, path)
     result = checker.results()
     assert checker.results() == result
-    rmpath(outfile)
+    rmpath(outfile, path)
 
 
 def test_checker_simplest():
@@ -497,6 +499,7 @@ def test_checker_simplest():
     outfile = mktorrent(args, v=1)
     checker = Checker(outfile, path)
     assert checker.results() == 100
+    rmpath(path, outfile)
 
 
 @pytest.mark.parametrize("version", [2, 3])

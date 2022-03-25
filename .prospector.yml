@@ -1,5 +1,5 @@
 strictness: high
-autodetect: true
+autodetect: false
 doc-warnings: true
 test-warnings: true
 member-warnings: true
@@ -25,6 +25,7 @@ pep257:
 pycodestyle:
   disable:
     - E741
+    - E731
 
 pep8:
   run: true
