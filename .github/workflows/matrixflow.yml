@@ -26,6 +26,6 @@ jobs:
       - name: Run Tests
         run: |
           export GITHUB_WORKFLOW=1
-          prospector torrentfile
-          prospector tests
+          prospector torrentfile -X
+          prospector tests -X
           pytest --cov=torrentfile --cov=tests
