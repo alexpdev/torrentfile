@@ -34,13 +34,14 @@ from urllib.parse import quote_plus
 import pyben
 
 from torrentfile.edit import edit_torrent
+from torrentfile.interactive import select_action
 from torrentfile.recheck import Checker
 from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 
 logger = logging.getLogger(__name__)
 
 
-def create_command(args: list):
+def create(args: list):
     """
     Execute the create CLI sub-command to create a new torrent metafile.
 
@@ -78,7 +79,7 @@ def create_command(args: list):
     outfile, meta = torrent.write()
 
     if args.magnet:
-        magnet_command(outfile)
+        magnet(outfile)
 
     args.torrent = torrent
     args.kwargs = kwargs
@@ -89,7 +90,7 @@ def create_command(args: list):
     return args
 
 
-def info_command(args: list):
+def info(args: list):
     """
     Show torrent metafile details to user via stdout.
 
@@ -120,7 +121,7 @@ def info_command(args: list):
     return output
 
 
-def edit_command(args: list):
+def edit(args: list):
     """
     Execute the edit CLI sub-command with provided arguments.
 
@@ -146,7 +147,7 @@ def edit_command(args: list):
     return edit_torrent(metafile, editargs)
 
 
-def recheck_command(args):
+def recheck(args):
     """
     Execute recheck CLI sub-command.
 
@@ -176,7 +177,7 @@ def recheck_command(args):
     return result
 
 
-def magnet_command(metafile):
+def magnet(metafile):
     """
     Create a magnet URI from a Bittorrent meta file.
 
@@ -218,3 +219,6 @@ def magnet_command(metafile):
     logger.info("Created Magnet URI %s", full_uri)
     sys.stdout.write(full_uri)
     return full_uri
+
+
+interactive = select_action  # for clean import system

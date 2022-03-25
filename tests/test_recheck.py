@@ -21,7 +21,7 @@ from pathlib import Path
 
 import pytest
 
-from tests import dir1, dir2, rmpath, tempfile
+from tests import dir1, dir2, dir3, rmpath, tempfile
 from torrentfile import TorrentFile, TorrentFileHybrid, TorrentFileV2
 from torrentfile.cli import main_script as main
 from torrentfile.recheck import Checker
@@ -31,8 +31,7 @@ def test_fixtures():
     """
     Test fixtures exist.
     """
-    assert dir1
-    assert dir2
+    assert dir1 and dir2 and dir3
 
 
 def mktorrent(args, v=None):
@@ -48,27 +47,6 @@ def mktorrent(args, v=None):
     outfile = str(args["path"]) + ".torrent"
     torrent.write(outfile)
     return outfile
-
-
-@pytest.fixture
-def dir3():
-    """
-    Test fixture for directory structure.
-    """
-    files = [
-        "dir3/subdir1/file1.png",
-        "dir3/subdir1/file2.mp4",
-        "dir3/subdir2/file3.mp3",
-        "dir3/subdir2/file4.zip",
-        "dir3/file4.jpg",
-    ]
-    paths = []
-    for i, path in enumerate(files):
-        temps = tempfile(path=path, exp=15 + i)
-        paths.append(temps)
-    path = os.path.commonpath(paths)
-    yield path
-    rmpath(path)
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
@@ -97,7 +75,7 @@ def test_checker_class_alt(dir3, version, piece_length):
     outfile = mktorrent(args, v=version)
     checker = Checker(outfile, dir3)
     assert checker.results() == 100
-    rmpath(outfile)
+    rmpath(outfile, dir3)
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
@@ -163,7 +141,7 @@ def test_checker_first_piece_alt(dir3, version, piece_length):
     change(path)
     checker = Checker(outfile, path)
     assert checker.results() != 100
-    rmpath(outfile)
+    rmpath(outfile, dir3)
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
@@ -195,7 +173,7 @@ def test_metafile_checker_alt(dir3, version, piece_length):
     outfile = mktorrent(args, v=version)
     checker = Checker(outfile, path)
     assert checker.results() == 100
-    rmpath(outfile)
+    rmpath(outfile, dir3)
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
@@ -257,7 +235,7 @@ def test_checker_no_content_alt(dir3, version, piece_length):
     Checker.register_callback(lambda *x: print(x))
     checker = Checker(outfile, path)
     assert checker.results() == 100
-    rmpath(outfile)
+    rmpath(outfile, dir3)
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
@@ -468,7 +446,7 @@ def test_checker_missing_singles(version, piece_length, dir3):
     walk(Path(dir3))
     checker = Checker(outfile, path)
     assert int(checker.results()) < 100
-    rmpath(outfile, path)
+    rmpath(outfile, path, dir3)
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])
@@ -533,4 +511,4 @@ def test_checker_empty_files(dir3, version, piece_length):
     metafile = mktorrent(args, v=version)
     checker = Checker(metafile, root)
     assert checker.results() == 100
-    rmpath(metafile)
+    rmpath(metafile, dir3)

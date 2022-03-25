@@ -24,7 +24,7 @@ import pytest
 
 from tests import dir1, metafile, rmpath, tfile
 from torrentfile.cli import execute
-from torrentfile.commands import info_command, magnet_command
+from torrentfile.commands import info, magnet
 
 
 def test_fix():
@@ -38,7 +38,7 @@ def test_magnet_uri(metafile):
     """
     Test create magnet function digest.
     """
-    magnet_link = magnet_command(metafile)
+    magnet_link = magnet(metafile)
     meta = pyben.load(metafile)
     announce = meta["announce"]
     assert quote_plus(announce) in magnet_link
@@ -48,7 +48,7 @@ def test_magnet_hex(metafile):
     """
     Test create magnet function digest.
     """
-    magnet_link = magnet_command(metafile)
+    magnet_link = magnet(metafile)
     meta = pyben.load(metafile)
     info = meta["info"]
     binfo = sha1(pyben.dumps(info)).hexdigest().upper()
@@ -59,7 +59,7 @@ def test_magnet(metafile):
     """
     Test create magnet function scheme.
     """
-    magnet_link = magnet_command(metafile)
+    magnet_link = magnet(metafile)
     assert magnet_link.startswith("magnet")
 
 
@@ -70,7 +70,7 @@ def test_magnet_no_announce_list(metafile):
     meta = pyben.load(metafile)
     del meta["announce-list"]
     pyben.dump(meta, metafile)
-    magnet_link = magnet_command(metafile)
+    magnet_link = magnet(metafile)
     assert magnet_link.startswith("magnet")
 
 
@@ -79,7 +79,7 @@ def test_magnet_empty():
     Test create magnet function scheme.
     """
     try:
-        magnet_command("file_that_does_not_exist")
+        magnet("file_that_does_not_exist")
     except FileNotFoundError:
         assert True
 
@@ -116,7 +116,7 @@ def test_info(field, tfile):
 
         metafile = str(tfile) + ".torrent"
 
-    output = info_command(Space)
+    output = info(Space)
     assert field in output
     rmpath(str(tfile) + ".torrent")
 
@@ -130,7 +130,7 @@ def test_magnet_cli(metafile):
     assert "magnet" in uri
 
 
-def test_torrent_creation_from_unicode_file(tfile):
+def test_create_unicode_name(tfile):
     """
     Test Unicode information in CLI args.
     """

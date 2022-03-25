@@ -146,6 +146,13 @@ def teardown():  # pragma: nocover
             rmpath(path)
 
 
+def torrents():
+    """
+    Return seq of torrentfile objects.
+    """
+    return [TorrentFile, TorrentFileV2, TorrentFileHybrid]
+
+
 @pytest.fixture(scope="package")
 def dir1():
     """Create a specific temporary structured directory.
@@ -174,11 +181,24 @@ def dir2():
     rmpath(root)
 
 
-def torrents():
+@pytest.fixture
+def dir3():
     """
-    Return seq of torrentfile objects.
+    Test fixture for directory structure.
     """
-    return [TorrentFile, TorrentFileV2, TorrentFileHybrid]
+    files = [
+        "dir3/subdir1/file1.png",
+        "dir3/subdir1/file2.mp4",
+        "dir3/subdir2/file3.mp3",
+        "dir3/subdir2/file4.zip",
+        "dir3/file4.jpg",
+    ]
+    paths = []
+    for i, path in enumerate(files):
+        temps = tempfile(path=path, exp=15 + i)
+        paths.append(temps)
+    path = os.path.commonpath(paths)
+    return path
 
 
 @pytest.fixture(scope="package", params=torrents())

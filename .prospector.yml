@@ -10,7 +10,7 @@ bandit:
     config: pyproject.toml
 
 
-pep257:
+pydocstyle:
   run: true
   disable:
     - D200
@@ -26,11 +26,6 @@ pycodestyle:
   disable:
     - E741
     - E731
-
-pep8:
-  run: true
-  disable:
-    - E741
     - E203
 
 pylint:

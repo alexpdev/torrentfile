@@ -18,17 +18,9 @@ import os
 
 import pytest
 
-from tests import dir1, dir2, rmpath, tempfile
-from torrentfile.torrent import (MetaFile, TorrentFile, TorrentFileHybrid,
-                                 TorrentFileV2)
+from tests import dir1, dir2, rmpath, tempfile, torrents
+from torrentfile.torrent import MetaFile
 from torrentfile.utils import MissingPathError
-
-
-def torrents():
-    """
-    Return a list of classes for creating torrents.
-    """
-    return [TorrentFile, TorrentFileV2, TorrentFileHybrid]
 
 
 def test_fixtures():
