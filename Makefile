@@ -82,13 +82,14 @@ clean-build: ## remove build artifacts
 
 
 test: ## Get coverage report
+	python setup.py install
 	pytest --cov=torrentfile --cov=tests
 
 lint:
 	black torrentfile tests
 	isort torrentfile tests
-	prospector torrentfile
-	prospector tests
+	prospector torrentfile --no-autodetect
+	prospector tests --no-autodetect
 
 docs: ## Regenerate docs from changes
 	python -c "$$UPDATE_PACKAGE_VERSION"

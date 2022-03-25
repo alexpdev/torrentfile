@@ -19,6 +19,5 @@ testpaths = [
     "tests",
     "torrentfile",
 ]
-# log_cli = 1
 console_output_style = "progress"
 addopts = "--maxfail=5"

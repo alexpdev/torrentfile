@@ -31,7 +31,7 @@ def test_fix():
     """
     Test dir1 fixture is not None.
     """
-    assert dir1
+    assert dir1 and dir2
 
 
 @pytest.fixture(scope="package")
@@ -351,8 +351,6 @@ def test_cli_help():
         assert main()
     except SystemExit:
         assert True
-        assert folder
-        assert dir2
 
 
 @pytest.mark.parametrize("version", ["1", "2", "3"])
@@ -390,8 +388,9 @@ def test_cli_empty_files(dir2, version, noprogress):
 
     walk(dir2, 0)
     main()
-    assert os.path.exists(str(dir2) + ".torrent")
-    rmpath(str(dir2) + ".torrent")
+    outfile = str(dir2) + ".torrent"
+    assert os.path.exists(outfile)
+    rmpath(outfile)
 
 
 def test_cli_subprocess(dir2):
@@ -426,10 +425,12 @@ def test_cli_slash_path(dir2, ending):
     ]
     sys.argv = args
     main()
-    assert os.path.exists(str(dir2) + ".torrent")
+    outfile = str(dir2) + ".torrent"
+    assert os.path.exists(outfile)
+    rmpath(outfile)
 
 
-@pytest.mark.parametrize("flag", ["-t", "-w", "-a"])
+@pytest.mark.parametrize("flag", ["-t", "-w", "--announce", "--web-seed"])
 def test_cli_announce_path(dir2, flag):
     """
     Test CLI when path is placed after the trackers flag.
@@ -437,4 +438,6 @@ def test_cli_announce_path(dir2, flag):
     args = ["torrentfile", "create", flag, "https://announce1.org", str(dir2)]
     sys.argv = args
     main()
-    assert os.path.exists(str(dir2) + ".torrent")
+    outfile = str(dir2) + ".torrent"
+    assert os.path.exists(outfile)
+    rmpath(outfile)
