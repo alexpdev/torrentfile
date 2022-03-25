@@ -468,6 +468,7 @@ def test_checker_missing_singles(version, piece_length, dir3):
     walk(Path(dir3))
     checker = Checker(outfile, path)
     assert int(checker.results()) < 100
+    rmpath(outfile, path)
 
 
 @pytest.mark.parametrize("version", [1, 2, 3])

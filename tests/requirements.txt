@@ -2,12 +2,13 @@ black
 isort
 bandit
 coverage
-prospector
-pyben
-pylint
 pyroma
+pylint
+prospector
 pytest
+pyben
 pytest-cov
+pytest-clarity
 setuptools
 tqdm
 wheel
