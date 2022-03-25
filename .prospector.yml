@@ -1,5 +1,5 @@
 strictness: high
-autodetect: true
+autodetect: false
 doc-warnings: true
 test-warnings: true
 member-warnings: true
