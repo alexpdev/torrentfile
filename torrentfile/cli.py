@@ -26,10 +26,8 @@ import logging
 import sys
 from argparse import ArgumentParser, HelpFormatter
 
-import torrentfile
-from torrentfile.commands import (create_command, edit_command, info_command,
-                                  magnet_command, recheck_command)
-from torrentfile.interactive import select_action
+from torrentfile import (VERSION, create, edit, info, magnet, recheck,
+                         select_action)
 
 
 def activate_logger():
@@ -197,7 +195,7 @@ def execute(args=None):
         "-V",
         "--version",
         action="version",
-        version=f"torrentfile v{torrentfile.__version__}",
+        version=f"torrentfile v{VERSION}",
         help="show program version and exit",
     )
 
@@ -350,7 +348,7 @@ def execute(args=None):
         help="Path to content file or directory",
     )
 
-    create_parser.set_defaults(func=create_command)
+    create_parser.set_defaults(func=create)
 
     edit_parser = subparsers.add_parser(
         "e",
@@ -415,7 +413,7 @@ def execute(args=None):
         help="Replaces current source with <source>",
     )
 
-    edit_parser.set_defaults(func=edit_command)
+    edit_parser.set_defaults(func=edit)
 
     magnet_parser = subparsers.add_parser(
         "m",
@@ -434,7 +432,7 @@ def execute(args=None):
         metavar="<*.torrent>",
     )
 
-    magnet_parser.set_defaults(func=magnet_command)
+    magnet_parser.set_defaults(func=magnet)
 
     check_parser = subparsers.add_parser(
         "r",
@@ -460,7 +458,7 @@ def execute(args=None):
         help="path to content file or directory",
     )
 
-    check_parser.set_defaults(func=recheck_command)
+    check_parser.set_defaults(func=recheck)
 
     info_parser = subparsers.add_parser(
         "i",
@@ -479,7 +477,7 @@ def execute(args=None):
         help="path to pre-existing torrent file.",
     )
 
-    info_parser.set_defaults(func=info_command)
+    info_parser.set_defaults(func=info)
 
     args = parser.parse_args(args)
 

@@ -6,6 +6,6 @@ coverage
 pytest
 pytest-cov
 pyben
-pylint<=2.12
+pylint
 tqdm
 prospector
