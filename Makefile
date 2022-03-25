@@ -82,6 +82,7 @@ clean-build: ## remove build artifacts
 
 
 test: ## Get coverage report
+	python setup.py install
 	pytest --cov=torrentfile --cov=tests
 
 lint:
