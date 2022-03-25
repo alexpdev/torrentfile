@@ -2375,6 +2375,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tests.tfile" class="md-nav__link">
+    tfile()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#tests.torrents" class="md-nav__link">
     torrents()
   </a>
@@ -2612,13 +2619,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#tests.test_commands.tfile" class="md-nav__link">
-    tfile()
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2795,13 +2795,6 @@
           <li class="md-nav__item">
   <a href="#tests.test_interactive.test_interactive_create" class="md-nav__link">
     test_interactive_create()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tests.test_interactive.torrents" class="md-nav__link">
-    torrents()
   </a>
   
 </li>
@@ -5306,6 +5299,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tests.tfile" class="md-nav__link">
+    tfile()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#tests.torrents" class="md-nav__link">
     torrents()
   </a>
@@ -5543,13 +5543,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#tests.test_commands.tfile" class="md-nav__link">
-    tfile()
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -5726,13 +5719,6 @@
           <li class="md-nav__item">
   <a href="#tests.test_interactive.test_interactive_create" class="md-nav__link">
     test_interactive_create()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tests.test_interactive.torrents" class="md-nav__link">
-    torrents()
   </a>
   
 </li>
@@ -6657,12 +6643,13 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
             <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-h&quot;</span><span class="p">]</span>
+
     <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        CLI Tool for creating, checking, editing... Bittorrent meta files.</span>
-<span class="s2">        TorrentFile supports all versions of torrent files.</span>
-<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;Command line tools for creating, editing, checking and &quot;</span>
+            <span class="s2">&quot;interacting with Bittorrent metainfo files&quot;</span>
+        <span class="p">),</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
         <span class="n">conflict_handler</span><span class="o">=</span><span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
@@ -6805,9 +6792,9 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;piece_length&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;int&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Fixed amount of bytes for each chunk of data. (Default: None)</span>
+<span class="s2">        Number of bytes for each chunk of data. (Default: None)</span>
 <span class="s2">        Acceptable input values include integers 14-24, which</span>
-<span class="s2">        will be interpreted as the exponent for 2^n, or any perfect</span>
+<span class="s2">        are interpreted as the exponent for 2ⁿ, or any perfect</span>
 <span class="s2">        power of two integer between 16Kib and 16MiB (inclusive).</span>
 <span class="s2">        Examples:: [--piece-length 14] [--piece-length 16777216]</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
@@ -6821,9 +6808,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        One or more url(s) linking to a http server hosting</span>
-<span class="s2">        the torrent contents.  This is useful if the torrent</span>
-<span class="s2">        tracker is ever unreachable. Example:: -w url1 url2 url3</span>
+<span class="s2">        One or more url(s) linking to a hosting the torrent contents.</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -7061,12 +7046,13 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
             <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-h&quot;</span><span class="p">]</span>
+
     <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        CLI Tool for creating, checking, editing... Bittorrent meta files.</span>
-<span class="s2">        TorrentFile supports all versions of torrent files.</span>
-<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;Command line tools for creating, editing, checking and &quot;</span>
+            <span class="s2">&quot;interacting with Bittorrent metainfo files&quot;</span>
+        <span class="p">),</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
         <span class="n">conflict_handler</span><span class="o">=</span><span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
@@ -7209,9 +7195,9 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;piece_length&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;int&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Fixed amount of bytes for each chunk of data. (Default: None)</span>
+<span class="s2">        Number of bytes for each chunk of data. (Default: None)</span>
 <span class="s2">        Acceptable input values include integers 14-24, which</span>
-<span class="s2">        will be interpreted as the exponent for 2^n, or any perfect</span>
+<span class="s2">        are interpreted as the exponent for 2ⁿ, or any perfect</span>
 <span class="s2">        power of two integer between 16Kib and 16MiB (inclusive).</span>
 <span class="s2">        Examples:: [--piece-length 14] [--piece-length 16777216]</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
@@ -7225,9 +7211,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        One or more url(s) linking to a http server hosting</span>
-<span class="s2">        the torrent contents.  This is useful if the torrent</span>
-<span class="s2">        tracker is ever unreachable. Example:: -w url1 url2 url3</span>
+<span class="s2">        One or more url(s) linking to a hosting the torrent contents.</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -11409,13 +11393,15 @@ metafile against data on disk.</p>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        bytes</span>
+<span class="sd">        bytearray</span>
 <span class="sd">            Hash digest for block of .torrent contents.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
         <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="k">else</span> <span class="n">partial</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+            <span class="k">raise</span> <span class="n">MissingPathError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">bitlength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
                 <span class="n">part</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bitlength</span><span class="p">)</span>
@@ -11662,13 +11648,15 @@ metafile against data on disk.</p>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    bytes</span>
+<span class="sd">    bytearray</span>
 <span class="sd">        Hash digest for block of .torrent contents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
     <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="k">else</span> <span class="n">partial</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+        <span class="k">raise</span> <span class="n">MissingPathError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">bitlength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
             <span class="n">part</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bitlength</span><span class="p">)</span>
@@ -12500,16 +12488,14 @@ MetaFile        </code>
 <span class="sd">        Construct MetaFile superclass and assign local attributes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
-            <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="n">announce</span> <span class="ow">or</span> <span class="n">url_list</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">announce</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-                    <span class="n">path</span> <span class="o">=</span> <span class="n">announce</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-                    <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="k">elif</span> <span class="n">url_list</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-                    <span class="n">path</span> <span class="o">=</span> <span class="n">url_list</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-                    <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">MissingPathError</span>
+            <span class="k">if</span> <span class="n">announce</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">announce</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">announce</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">url_list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">url_list</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">MissingPathError</span><span class="p">(</span><span class="s2">&quot;Path to content is required.&quot;</span><span class="p">)</span>
 
         <span class="c1"># base path to torrent content.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
@@ -12655,16 +12641,14 @@ MetaFile        </code>
 <span class="sd">    Construct MetaFile superclass and assign local attributes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
-        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="n">announce</span> <span class="ow">or</span> <span class="n">url_list</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">announce</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-                <span class="n">path</span> <span class="o">=</span> <span class="n">announce</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">elif</span> <span class="n">url_list</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-                <span class="n">path</span> <span class="o">=</span> <span class="n">url_list</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">MissingPathError</span>
+        <span class="k">if</span> <span class="n">announce</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">announce</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">announce</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">url_list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">url_list</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">MissingPathError</span><span class="p">(</span><span class="s2">&quot;Path to content is required.&quot;</span><span class="p">)</span>
 
     <span class="c1"># base path to torrent content.</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
@@ -14176,7 +14160,7 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
 <span class="sd">            keywword arguments to pass to superclass.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Create .torrent v2 file.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;creating v2 metafile&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hashes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="kc">None</span>
@@ -14610,7 +14594,7 @@ root hash is calculated.</p>
 <span class="sd">        keywword arguments to pass to superclass.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Create .torrent v2 file.&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;creating v2 metafile&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">hashes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="kc">None</span>
@@ -16242,12 +16226,13 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
             <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-h&quot;</span><span class="p">]</span>
+
     <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        CLI Tool for creating, checking, editing... Bittorrent meta files.</span>
-<span class="s2">        TorrentFile supports all versions of torrent files.</span>
-<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;Command line tools for creating, editing, checking and &quot;</span>
+            <span class="s2">&quot;interacting with Bittorrent metainfo files&quot;</span>
+        <span class="p">),</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
         <span class="n">conflict_handler</span><span class="o">=</span><span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
@@ -16390,9 +16375,9 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;piece_length&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;int&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Fixed amount of bytes for each chunk of data. (Default: None)</span>
+<span class="s2">        Number of bytes for each chunk of data. (Default: None)</span>
 <span class="s2">        Acceptable input values include integers 14-24, which</span>
-<span class="s2">        will be interpreted as the exponent for 2^n, or any perfect</span>
+<span class="s2">        are interpreted as the exponent for 2ⁿ, or any perfect</span>
 <span class="s2">        power of two integer between 16Kib and 16MiB (inclusive).</span>
 <span class="s2">        Examples:: [--piece-length 14] [--piece-length 16777216]</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
@@ -16406,9 +16391,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        One or more url(s) linking to a http server hosting</span>
-<span class="s2">        the torrent contents.  This is useful if the torrent</span>
-<span class="s2">        tracker is ever unreachable. Example:: -w url1 url2 url3</span>
+<span class="s2">        One or more url(s) linking to a hosting the torrent contents.</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -16646,12 +16629,13 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
             <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-h&quot;</span><span class="p">]</span>
+
     <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        CLI Tool for creating, checking, editing... Bittorrent meta files.</span>
-<span class="s2">        TorrentFile supports all versions of torrent files.</span>
-<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;Command line tools for creating, editing, checking and &quot;</span>
+            <span class="s2">&quot;interacting with Bittorrent metainfo files&quot;</span>
+        <span class="p">),</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
         <span class="n">conflict_handler</span><span class="o">=</span><span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
@@ -16794,9 +16778,9 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;piece_length&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;int&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Fixed amount of bytes for each chunk of data. (Default: None)</span>
+<span class="s2">        Number of bytes for each chunk of data. (Default: None)</span>
 <span class="s2">        Acceptable input values include integers 14-24, which</span>
-<span class="s2">        will be interpreted as the exponent for 2^n, or any perfect</span>
+<span class="s2">        are interpreted as the exponent for 2ⁿ, or any perfect</span>
 <span class="s2">        power of two integer between 16Kib and 16MiB (inclusive).</span>
 <span class="s2">        Examples:: [--piece-length 14] [--piece-length 16777216]</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
@@ -16810,9 +16794,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        One or more url(s) linking to a http server hosting</span>
-<span class="s2">        the torrent contents.  This is useful if the torrent</span>
-<span class="s2">        tracker is ever unreachable. Example:: -w url1 url2 url3</span>
+<span class="s2">        One or more url(s) linking to a hosting the torrent contents.</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -20499,13 +20481,15 @@ metafile against data on disk.</p>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        bytes</span>
+<span class="sd">        bytearray</span>
 <span class="sd">            Hash digest for block of .torrent contents.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
         <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="k">else</span> <span class="n">partial</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+            <span class="k">raise</span> <span class="n">MissingPathError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">bitlength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
                 <span class="n">part</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bitlength</span><span class="p">)</span>
@@ -20752,13 +20736,15 @@ metafile against data on disk.</p>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    bytes</span>
+<span class="sd">    bytearray</span>
 <span class="sd">        Hash digest for block of .torrent contents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
     <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="k">else</span> <span class="n">partial</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+        <span class="k">raise</span> <span class="n">MissingPathError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">current</span><span class="p">:</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">bitlength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
             <span class="n">part</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bitlength</span><span class="p">)</span>
@@ -21590,16 +21576,14 @@ MetaFile        </code>
 <span class="sd">        Construct MetaFile superclass and assign local attributes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
-            <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="n">announce</span> <span class="ow">or</span> <span class="n">url_list</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">announce</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-                    <span class="n">path</span> <span class="o">=</span> <span class="n">announce</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-                    <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="k">elif</span> <span class="n">url_list</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-                    <span class="n">path</span> <span class="o">=</span> <span class="n">url_list</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-                    <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">MissingPathError</span>
+            <span class="k">if</span> <span class="n">announce</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">announce</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">announce</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">url_list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">url_list</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">MissingPathError</span><span class="p">(</span><span class="s2">&quot;Path to content is required.&quot;</span><span class="p">)</span>
 
         <span class="c1"># base path to torrent content.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
@@ -21745,16 +21729,14 @@ MetaFile        </code>
 <span class="sd">    Construct MetaFile superclass and assign local attributes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
-        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="n">announce</span> <span class="ow">or</span> <span class="n">url_list</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">announce</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-                <span class="n">path</span> <span class="o">=</span> <span class="n">announce</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">elif</span> <span class="n">url_list</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-                <span class="n">path</span> <span class="o">=</span> <span class="n">url_list</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">MissingPathError</span>
+        <span class="k">if</span> <span class="n">announce</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">announce</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">announce</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">url_list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">url_list</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">MissingPathError</span><span class="p">(</span><span class="s2">&quot;Path to content is required.&quot;</span><span class="p">)</span>
 
     <span class="c1"># base path to torrent content.</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
@@ -23266,7 +23248,7 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
 <span class="sd">            keywword arguments to pass to superclass.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Create .torrent v2 file.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;creating v2 metafile&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hashes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="kc">None</span>
@@ -23700,7 +23682,7 @@ root hash is calculated.</p>
 <span class="sd">        keywword arguments to pass to superclass.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Create .torrent v2 file.&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;creating v2 metafile&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">hashes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="kc">None</span>
@@ -25040,7 +25022,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\__init__.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">torrents</span><span class="p">())</span>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;package&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">torrents</span><span class="p">())</span>
 <span class="k">def</span> <span class="nf">metafile</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a standard metafile for testing.</span>
@@ -25093,7 +25075,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
   <tbody>
       <tr>
         <td><code>args</code></td>
-        <td><code>list[str]</code></td>
+        <td><code>list</code></td>
         <td><p>Filesystem locations for removing.</p></td>
         <td><code>()</code></td>
       </tr>
@@ -25106,7 +25088,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    args : list[str]</span>
+<span class="sd">    args : list</span>
 <span class="sd">        Filesystem locations for removing.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
@@ -25152,8 +25134,9 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 <span class="sd">    Remove all temporary directories and files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;TESTDIR&quot;</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
-        <span class="n">rmpath</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">[</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;torrentfile.log&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -25370,6 +25353,38 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 
+<h3 id="tests.tfile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">tfile</span><span class="p">()</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return the path to a temporary file.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\__init__.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">tfile</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the path to a temporary file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">()</span>
+    <span class="k">yield</span> <span class="n">path</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h3 id="tests.torrents" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">torrents</span><span class="p">()</span></code>
 
@@ -25566,7 +25581,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_cli.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;flag&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;-t&quot;</span><span class="p">,</span> <span class="s2">&quot;-w&quot;</span><span class="p">,</span> <span class="s2">&quot;-a&quot;</span><span class="p">])</span>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;flag&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;-t&quot;</span><span class="p">,</span> <span class="s2">&quot;-w&quot;</span><span class="p">,</span> <span class="s2">&quot;--announce&quot;</span><span class="p">,</span> <span class="s2">&quot;--web-seed&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">test_cli_announce_path</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">flag</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test CLI when path is placed after the trackers flag.</span>
@@ -25574,7 +25589,9 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="s2">&quot;https://announce1.org&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)]</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span>
     <span class="n">main</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -25778,8 +25795,9 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
     <span class="n">walk</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">main</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span><span class="p">)</span>
-    <span class="n">rmpath</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -25814,8 +25832,6 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
         <span class="k">assert</span> <span class="n">main</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
         <span class="k">assert</span> <span class="kc">True</span>
-        <span class="k">assert</span> <span class="n">folder</span>
-        <span class="k">assert</span> <span class="n">dir2</span>
 </code></pre></div>
         </details>
     </div>
@@ -25984,7 +26000,9 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="p">]</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span>
     <span class="n">main</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -26289,7 +26307,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test dir1 fixture is not None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="n">dir1</span>
+    <span class="k">assert</span> <span class="n">dir1</span> <span class="ow">and</span> <span class="n">dir2</span>
 </code></pre></div>
         </details>
     </div>
@@ -26355,7 +26373,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test dir1 fixture is not None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="n">dir1</span><span class="p">,</span> <span class="n">metafile</span>
+    <span class="k">assert</span> <span class="n">dir1</span> <span class="ow">and</span> <span class="n">metafile</span> <span class="ow">and</span> <span class="n">tfile</span>
 </code></pre></div>
         </details>
     </div>
@@ -26369,7 +26387,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_commands.test_info" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_info</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_info</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">tfile</span><span class="p">)</span></code>
 
 
 </h4>
@@ -26384,26 +26402,37 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="s2">&quot;field&quot;</span><span class="p">,</span>
     <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="s2">&quot;comment&quot;</span><span class="p">,</span> <span class="s2">&quot;private&quot;</span><span class="p">,</span> <span class="s2">&quot;announce-list&quot;</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="k">def</span> <span class="nf">test_info</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_info</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">tfile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test the info_command action from the Command Line Interface.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;create&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;url1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;url2&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;url3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ExampleComment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--source&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;examplesource&quot;</span><span class="p">,</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">tfile</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="n">execute</span><span class="p">()</span>
 
-    <span class="k">class</span> <span class="nc">Namespace</span><span class="p">:</span>
+    <span class="k">class</span> <span class="nc">Space</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Emulates the argparse Namespace class.</span>
+<span class="sd">        Stand in substitution for argparse.Namespace object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span> <span class="o">=</span> <span class="n">metafile</span>
+        <span class="n">metafile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
 
-    <span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">()</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">info_command</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
-    <span class="n">info</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
-    <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">info_command</span><span class="p">(</span><span class="n">Space</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">output</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -26643,38 +26672,6 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span>
     <span class="n">execute</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="n">rmpath</span><span class="p">(</span><span class="n">tfile</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
-<h4 id="tests.test_commands.tfile" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">tfile</span><span class="p">()</span></code>
-
-
-</h4>
-
-    <div class="doc doc-contents ">
-
-      <p>Provide a temporary file for testing as pytest fixture.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>tests\test_commands.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">tfile</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Provide a temporary file for testing as pytest fixture.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">testfile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">testfile</span>
 </code></pre></div>
         </details>
     </div>
@@ -27570,6 +27567,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="n">input_iter</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">select_action</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">100</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">tfile</span><span class="p">,</span> <span class="n">metafile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -27606,35 +27604,6 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="n">input_mapping</span><span class="p">(</span><span class="n">mapping</span><span class="p">)</span>
     <span class="n">select_action</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dir1</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
-<h4 id="tests.test_interactive.torrents" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">torrents</span><span class="p">()</span></code>
-
-
-</h4>
-
-    <div class="doc doc-contents ">
-
-      <p>Return all versions of TorrentFile objects.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>tests\test_interactive.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">torrents</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return all versions of TorrentFile objects.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">TorrentFile</span><span class="p">,</span> <span class="n">TorrentFileV2</span><span class="p">,</span> <span class="n">TorrentFileHybrid</span><span class="p">]</span>
 </code></pre></div>
         </details>
     </div>
@@ -27964,6 +27933,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
         <span class="n">content</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">barr</span><span class="p">)</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">())</span> <span class="o">!=</span> <span class="mi">10</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -28263,6 +28233,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="n">walk</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">dir3</span><span class="p">))</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">100</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -28483,7 +28454,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span> <span class="o">==</span> <span class="n">result</span>
-    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -28517,6 +28488,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="n">outfile</span> <span class="o">=</span> <span class="n">mktorrent</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span> <span class="o">==</span> <span class="mi">100</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>

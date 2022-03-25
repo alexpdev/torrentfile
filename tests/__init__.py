@@ -76,7 +76,7 @@ def rmpath(*args):
 
     Parameters
     ----------
-    args : list[str]
+    args : list
         Filesystem locations for removing.
     """
     for arg in args:
@@ -141,8 +141,9 @@ def teardown():  # pragma: nocover
     Remove all temporary directories and files.
     """
     root = Path(__file__).parent / "TESTDIR"
-    if os.path.exists(root):
-        rmpath(root)
+    for path in [root, "torrentfile.log"]:
+        if os.path.exists(path):
+            rmpath(path)
 
 
 @pytest.fixture(scope="package")
@@ -180,7 +181,7 @@ def torrents():
     return [TorrentFile, TorrentFileV2, TorrentFileHybrid]
 
 
-@pytest.fixture(params=torrents())
+@pytest.fixture(scope="package", params=torrents())
 def metafile(request):
     """
     Create a standard metafile for testing.
@@ -198,3 +199,13 @@ def metafile(request):
     outfile, _ = torrent.write()
     yield outfile
     rmpath(outfile, root)
+
+
+@pytest.fixture
+def tfile():
+    """
+    Return the path to a temporary file.
+    """
+    path = tempfile()
+    yield path
+    rmpath(path)

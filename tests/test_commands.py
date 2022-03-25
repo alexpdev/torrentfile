@@ -22,7 +22,7 @@ from urllib.parse import quote_plus
 import pyben
 import pytest
 
-from tests import dir1, metafile, rmpath, tempfile
+from tests import dir1, metafile, rmpath, tfile
 from torrentfile.cli import execute
 from torrentfile.commands import info_command, magnet_command
 
@@ -31,16 +31,7 @@ def test_fix():
     """
     Test dir1 fixture is not None.
     """
-    assert dir1, metafile
-
-
-@pytest.fixture
-def tfile():
-    """
-    Provide a temporary file for testing as pytest fixture.
-    """
-    testfile = tempfile()
-    return testfile
+    assert dir1 and metafile and tfile
 
 
 def test_magnet_uri(metafile):
@@ -97,26 +88,37 @@ def test_magnet_empty():
     "field",
     ["name", "announce", "source", "comment", "private", "announce-list"],
 )
-def test_info(metafile, field):
+def test_info(field, tfile):
     """
     Test the info_command action from the Command Line Interface.
     """
+    args = [
+        "torrentfile",
+        "create",
+        "-t",
+        "url1",
+        "url2",
+        "url3",
+        "--private",
+        "--comment",
+        "ExampleComment",
+        "--source",
+        "examplesource",
+        str(tfile),
+    ]
+    sys.argv = args
+    execute()
 
-    class Namespace:
+    class Space:
         """
-        Emulates the argparse Namespace class.
+        Stand in substitution for argparse.Namespace object.
         """
 
-        def __init__(self):
-            self.metafile = metafile
+        metafile = str(tfile) + ".torrent"
 
-    args = Namespace()
-    output = info_command(args)
-    d = pyben.load(metafile)
-    info = d["info"]
-    del d["info"]
-    d.update(info)
+    output = info_command(Space)
     assert field in output
+    rmpath(str(tfile) + ".torrent")
 
 
 def test_magnet_cli(metafile):
@@ -152,4 +154,3 @@ def test_torrent_creation_from_unicode_file(tfile):
     sys.argv = args
     execute()
     assert os.path.exists(filename)
-    rmpath(tfile, filename)

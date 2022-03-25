@@ -43,8 +43,8 @@ jobs:
       - name: Run tests and collect coverage
         run: |
           export GITHUB_WORKFLOW=1
-          prospector torrentfile
-          prospector tests
+          prospector torrentfile -X --no-autodetect
+          prospector tests -X --mo-autodetect
           pytest --cov=torrentfile --cov=tests
           coverage xml -o ./coverage.xml
 
