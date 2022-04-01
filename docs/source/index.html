@@ -288,7 +288,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../LGPLv3/" class="md-nav__link">
+      <a href="../Apache2/" class="md-nav__link">
         LICENSE
       </a>
     </li>
@@ -2453,6 +2453,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tests.test_cli.test_cli_cwd" class="md-nav__link">
+    test_cli_cwd()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#tests.test_cli.test_cli_empty_files" class="md-nav__link">
     test_cli_empty_files()
   </a>
@@ -2992,6 +2999,13 @@
   
     <nav class="md-nav" aria-label="test_torrent">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tests.test_torrent.test_create_cwd_fail" class="md-nav__link">
+    test_create_cwd_fail()
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#tests.test_torrent.test_fixtures" class="md-nav__link">
@@ -5356,6 +5370,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tests.test_cli.test_cli_cwd" class="md-nav__link">
+    test_cli_cwd()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#tests.test_cli.test_cli_empty_files" class="md-nav__link">
     test_cli_empty_files()
   </a>
@@ -5895,6 +5916,13 @@
   
     <nav class="md-nav" aria-label="test_torrent">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tests.test_torrent.test_create_cwd_fail" class="md-nav__link">
+    test_create_cwd_fail()
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#tests.test_torrent.test_fixtures" class="md-nav__link">
@@ -6705,7 +6733,15 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;outfile&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output path for created .torrent file&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output save path for created .torrent file&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cwd&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--current&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;cwd&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Save output .torrent file to current directory&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -7108,7 +7144,15 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;outfile&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output path for created .torrent file&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output save path for created .torrent file&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cwd&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--current&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;cwd&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Save output .torrent file to current directory&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -7451,9 +7495,10 @@ magnet_command</p>
         <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">private</span><span class="p">,</span>
         <span class="s2">&quot;outfile&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">outfile</span><span class="p">,</span>
         <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
+        <span class="s2">&quot;cwd&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">cwd</span><span class="p">,</span>
     <span class="p">}</span>
-
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Program has entered torrent creation mode.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Create new torrent file from </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
         <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileV2</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -7461,8 +7506,8 @@ magnet_command</p>
         <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileHybrid</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Completed torrent files meta info assembly.&quot;</span><span class="p">)</span>
     <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Torrent file creation complete.&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">magnet</span><span class="p">:</span>
         <span class="n">magnet</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
@@ -12393,6 +12438,12 @@ MetaFile        </code>
         <td><p>If True disable showing the progress bar.</p></td>
         <td><code>False</code></td>
       </tr>
+      <tr>
+        <td><code>cwd</code></td>
+        <td><code>bool</code></td>
+        <td><p>If True change default save location to current directory</p></td>
+        <td><code>False</code></td>
+      </tr>
   </tbody>
 </table>
         <details class="quote">
@@ -12419,6 +12470,8 @@ MetaFile        </code>
 <span class="sd">        Private tracker source. Default: None</span>
 <span class="sd">    noprogress : bool</span>
 <span class="sd">        If True disable showing the progress bar.</span>
+<span class="sd">    cwd : bool</span>
+<span class="sd">        If True change default save location to current directory</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">hasher</span> <span class="o">=</span> <span class="kc">None</span>
@@ -12436,10 +12489,19 @@ MetaFile        </code>
         <span class="k">if</span> <span class="s2">&quot;hasher&quot;</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">cls</span><span class="p">)[</span><span class="s2">&quot;hasher&quot;</span><span class="p">]:</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">hasher</span><span class="o">.</span><span class="n">set_callback</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
 
-    <span class="c1"># fmt: off</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                 <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">cwd</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct MetaFile superclass and assign local attributes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -12447,7 +12509,9 @@ MetaFile        </code>
             <span class="k">if</span> <span class="n">announce</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">announce</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
                 <span class="n">path</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">announce</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">elif</span> <span class="n">url_list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="n">url_list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="p">):</span>
                 <span class="n">path</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">url_list</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
@@ -12456,6 +12520,7 @@ MetaFile        </code>
         <span class="c1"># base path to torrent content.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">=</span> <span class="n">cwd</span>
         <span class="c1"># Format piece_length attribute.</span>
         <span class="k">if</span> <span class="n">piece_length</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">normalize_piece_length</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
@@ -12504,12 +12569,10 @@ MetaFile        </code>
             <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;url-list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">url_list</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span>
 
-        <span class="n">parent</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
-
-    <span class="c1"># fmt: on</span>
+        <span class="n">parent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
 
     <span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -12545,15 +12608,23 @@ MetaFile        </code>
 <span class="sd">        meta : dict</span>
 <span class="sd">            .torrent meta information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fallback</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
         <span class="k">if</span> <span class="n">outfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">/&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">fallback</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">/&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_meta</span><span class="p">()</span>
-        <span class="n">pyben</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pyben</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">fallback</span>
+            <span class="n">pyben</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="n">fallback</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>
 </code></pre></div>
         </details>
@@ -12576,7 +12647,7 @@ MetaFile        </code>
 
 
 <h5 id="torrentfile.torrent.MetaFile.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -12590,9 +12661,19 @@ MetaFile        </code>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-             <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">cwd</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct MetaFile superclass and assign local attributes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -12600,7 +12681,9 @@ MetaFile        </code>
         <span class="k">if</span> <span class="n">announce</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">announce</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">announce</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">url_list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="n">url_list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="p">):</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">url_list</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -12609,6 +12692,7 @@ MetaFile        </code>
     <span class="c1"># base path to torrent content.</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
 
+    <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">=</span> <span class="n">cwd</span>
     <span class="c1"># Format piece_length attribute.</span>
     <span class="k">if</span> <span class="n">piece_length</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">normalize_piece_length</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
@@ -12657,10 +12741,10 @@ MetaFile        </code>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;url-list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">url_list</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span>
 
-    <span class="n">parent</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="n">parent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
 </code></pre></div>
         </details>
     </div>
@@ -12872,15 +12956,23 @@ MetaFile        </code>
 <span class="sd">    meta : dict</span>
 <span class="sd">        .torrent meta information.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fallback</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
     <span class="k">if</span> <span class="n">outfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">/&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">fallback</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">/&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_meta</span><span class="p">()</span>
-    <span class="n">pyben</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pyben</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">fallback</span>
+        <span class="n">pyben</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="n">fallback</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>
 </code></pre></div>
         </details>
@@ -16285,7 +16377,15 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;outfile&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output path for created .torrent file&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output save path for created .torrent file&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cwd&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--current&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;cwd&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Save output .torrent file to current directory&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -16688,7 +16788,15 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;outfile&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output path for created .torrent file&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output save path for created .torrent file&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cwd&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--current&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;cwd&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Save output .torrent file to current directory&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -21481,6 +21589,12 @@ MetaFile        </code>
         <td><p>If True disable showing the progress bar.</p></td>
         <td><code>False</code></td>
       </tr>
+      <tr>
+        <td><code>cwd</code></td>
+        <td><code>bool</code></td>
+        <td><p>If True change default save location to current directory</p></td>
+        <td><code>False</code></td>
+      </tr>
   </tbody>
 </table>
         <details class="quote">
@@ -21507,6 +21621,8 @@ MetaFile        </code>
 <span class="sd">        Private tracker source. Default: None</span>
 <span class="sd">    noprogress : bool</span>
 <span class="sd">        If True disable showing the progress bar.</span>
+<span class="sd">    cwd : bool</span>
+<span class="sd">        If True change default save location to current directory</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">hasher</span> <span class="o">=</span> <span class="kc">None</span>
@@ -21524,10 +21640,19 @@ MetaFile        </code>
         <span class="k">if</span> <span class="s2">&quot;hasher&quot;</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">cls</span><span class="p">)[</span><span class="s2">&quot;hasher&quot;</span><span class="p">]:</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">hasher</span><span class="o">.</span><span class="n">set_callback</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
 
-    <span class="c1"># fmt: off</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                 <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">cwd</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct MetaFile superclass and assign local attributes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -21535,7 +21660,9 @@ MetaFile        </code>
             <span class="k">if</span> <span class="n">announce</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">announce</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
                 <span class="n">path</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">announce</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">elif</span> <span class="n">url_list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="n">url_list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="p">):</span>
                 <span class="n">path</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">url_list</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
@@ -21544,6 +21671,7 @@ MetaFile        </code>
         <span class="c1"># base path to torrent content.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">=</span> <span class="n">cwd</span>
         <span class="c1"># Format piece_length attribute.</span>
         <span class="k">if</span> <span class="n">piece_length</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">normalize_piece_length</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
@@ -21592,12 +21720,10 @@ MetaFile        </code>
             <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;url-list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">url_list</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span>
 
-        <span class="n">parent</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
-
-    <span class="c1"># fmt: on</span>
+        <span class="n">parent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
 
     <span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -21633,15 +21759,23 @@ MetaFile        </code>
 <span class="sd">        meta : dict</span>
 <span class="sd">            .torrent meta information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fallback</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
         <span class="k">if</span> <span class="n">outfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">/&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">fallback</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">/&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_meta</span><span class="p">()</span>
-        <span class="n">pyben</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pyben</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">fallback</span>
+            <span class="n">pyben</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="n">fallback</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>
 </code></pre></div>
         </details>
@@ -21664,7 +21798,7 @@ MetaFile        </code>
 
 
 <h4 id="torrentfile.torrent.MetaFile.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -21678,9 +21812,19 @@ MetaFile        </code>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-             <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">announce</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">piece_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">url_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">noprogress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">cwd</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct MetaFile superclass and assign local attributes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -21688,7 +21832,9 @@ MetaFile        </code>
         <span class="k">if</span> <span class="n">announce</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">announce</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">announce</span> <span class="o">=</span> <span class="n">announce</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">url_list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="n">url_list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="p">):</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">url_list</span> <span class="o">=</span> <span class="n">url_list</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -21697,6 +21843,7 @@ MetaFile        </code>
     <span class="c1"># base path to torrent content.</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
 
+    <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">=</span> <span class="n">cwd</span>
     <span class="c1"># Format piece_length attribute.</span>
     <span class="k">if</span> <span class="n">piece_length</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">normalize_piece_length</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
@@ -21745,10 +21892,10 @@ MetaFile        </code>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;url-list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">url_list</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span>
 
-    <span class="n">parent</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="n">parent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
 </code></pre></div>
         </details>
     </div>
@@ -21960,15 +22107,23 @@ MetaFile        </code>
 <span class="sd">    meta : dict</span>
 <span class="sd">        .torrent meta information.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fallback</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
     <span class="k">if</span> <span class="n">outfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">/&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">fallback</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">/&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_meta</span><span class="p">()</span>
-    <span class="n">pyben</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pyben</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">fallback</span>
+        <span class="n">pyben</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="n">fallback</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>
 </code></pre></div>
         </details>
@@ -25746,6 +25901,48 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 
+<h4 id="tests.test_cli.test_cli_cwd" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_cli_cwd</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Test outfile cli flag.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_cli.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_cwd</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test outfile cli flag.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">folder</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">folder</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;create&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--cwd&quot;</span><span class="p">,</span>
+        <span class="n">folder</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="n">outfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
+    <span class="n">main</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h4 id="tests.test_cli.test_cli_empty_files" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">test_cli_empty_files</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">noprogress</span><span class="p">)</span></code>
 
@@ -28686,6 +28883,48 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 
+<h4 id="tests.test_torrent.test_create_cwd_fail" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_create_cwd_fail</span><span class="p">()</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Test cwd argument with create command failure.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrent.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_create_cwd_fail</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test cwd argument with create command failure.&quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">SuFile</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;A mock admin file.&quot;&quot;&quot;</span>
+
+        <span class="nd">@staticmethod</span>
+        <span class="k">def</span> <span class="nf">__fspath__</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">PermissionError</span>
+
+    <span class="n">tfile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">()</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">tfile</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">MetaFile</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">tfile</span><span class="p">)</span>
+    <span class="n">sufile</span> <span class="o">=</span> <span class="n">SuFile</span><span class="p">()</span>
+    <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">outfile</span><span class="o">=</span><span class="n">sufile</span><span class="p">)</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">tfile</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h4 id="tests.test_torrent.test_fixtures" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">test_fixtures</span><span class="p">()</span></code>
 
@@ -29769,7 +30008,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../LGPLv3/" class="md-footer__link md-footer__link--prev" aria-label="Previous: LICENSE" rel="prev">
+        <a href="../Apache2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: LICENSE" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>

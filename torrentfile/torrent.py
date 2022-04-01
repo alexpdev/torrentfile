@@ -1,16 +1,21 @@
-#! usr/bin/python3
+#! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
-#####################################################################
-# THE SOFTWARE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-# OTHER DEALINGS IN THE SOFTWARE.
-#####################################################################
+##############################################################################
+#    Copyright (C) 2021-current alexpdev
+#
+#    Licensed under the Apache License, Version 2.0 (the "License");
+#    you may not use this file except in compliance with the License.
+#    You may obtain a copy of the License at
+#
+#        http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
+##############################################################################
 """
 Classes and procedures pertaining to the creation of torrent meta files.
 
@@ -218,6 +223,8 @@ class MetaFile:
         Private tracker source. Default: None
     noprogress : bool
         If True disable showing the progress bar.
+    cwd : bool
+        If True change default save location to current directory
     """
 
     hasher = None
@@ -235,10 +242,19 @@ class MetaFile:
         if "hasher" in vars(cls) and vars(cls)["hasher"]:
             cls.hasher.set_callback(func)
 
-    # fmt: off
-    def __init__(self, path=None, announce=None, private=False,
-                 source=None, piece_length=None, comment=None,
-                 outfile=None, url_list=None, noprogress=False):
+    def __init__(
+        self,
+        path=None,
+        announce=None,
+        private=False,
+        source=None,
+        piece_length=None,
+        comment=None,
+        outfile=None,
+        url_list=None,
+        noprogress=False,
+        cwd=False,
+    ):
         """
         Construct MetaFile superclass and assign local attributes.
         """
@@ -246,7 +262,9 @@ class MetaFile:
             if announce and len(announce) > 1 and os.path.exists(announce[-1]):
                 path = announce[-1]
                 announce = announce[:-1]
-            elif url_list and len(url_list) > 1 and os.path.exists(url_list[-1]):
+            elif (
+                url_list and len(url_list) > 1 and os.path.exists(url_list[-1])
+            ):
                 path = url_list[-1]
                 url_list = url_list[:-1]
             else:
@@ -255,6 +273,7 @@ class MetaFile:
         # base path to torrent content.
         self.path = path
 
+        self.cwd = cwd
         # Format piece_length attribute.
         if piece_length:
             self.piece_length = utils.normalize_piece_length(piece_length)
@@ -303,12 +322,10 @@ class MetaFile:
             self.meta["url-list"] = url_list
         self.meta["info"]["piece length"] = self.piece_length
 
-        parent, name = os.path.split(self.path)
-        if not name:
-            name = os.path.basename(parent)
-        self.meta["info"]["name"] = name
-
-    # fmt: on
+        parent, self.name = os.path.split(self.path)
+        if not self.name:
+            self.name = os.path.basename(parent)
+        self.meta["info"]["name"] = self.name
 
     def assemble(self):
         """
@@ -344,15 +361,23 @@ class MetaFile:
         meta : dict
             .torrent meta information.
         """
+        fallback = os.path.join(os.getcwd(), self.name) + ".torrent"
         if outfile is not None:
             self.outfile = outfile
 
         if self.outfile is None:
-            path = str(self.path).rstrip("\\/")
-            self.outfile = path + ".torrent"
+            if self.cwd:
+                self.outfile = fallback
+            else:
+                path = str(self.path).rstrip("\\/")
+                self.outfile = path + ".torrent"
 
         self.meta = self.sort_meta()
-        pyben.dump(self.meta, self.outfile)
+        try:
+            pyben.dump(self.meta, self.outfile)
+        except PermissionError:
+            self.outfile = fallback
+            pyben.dump(self.meta, fallback)
         return self.outfile, self.meta
 
 
