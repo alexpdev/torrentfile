@@ -31,6 +31,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Display Python Version
+        run: python --version
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r tests/requirements.txt
+          pip install -e .
+
+      - name: Run Tests
+        run: |
+          export GITHUB_WORKFLOW=1
+          pytest --cov=torrentfile --cov=tests
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2.1.0
         with:
