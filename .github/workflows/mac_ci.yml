@@ -1,12 +1,11 @@
-name: MatrixCI
+name: MacCI
 
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
         python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
 
     steps:

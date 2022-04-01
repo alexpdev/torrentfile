@@ -88,7 +88,7 @@ Actions
 
 ## 📝 License
 
-Distributed under the GNU LGPL v3. See `LICENSE` for more information.
+Distributed under Apache v2 software license. See `LICENSE` for more information.
 
 ## 💡 Issues
 
