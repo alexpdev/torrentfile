@@ -70,10 +70,8 @@ class Memo:
         Any :
             The results of calling the function with path.
         """
-        if path in self.cache:
+        if path in self.cache and os.path.exists(path):
             self.counter += 1
-            if self.counter and not self.counter % 100:
-                print(self.counter)
             return self.cache[path]
         result = self.func(path)
         self.cache[path] = result
