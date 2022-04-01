@@ -39,7 +39,7 @@ def test_fix():
     assert dir1 and dir2
 
 
-@pytest.fixture(scope="package")
+@pytest.fixture(scope="module")
 def folder(dir1):
     """
     Yield a folder object as fixture.
@@ -196,16 +196,15 @@ def test_cli_comment(folder, piece_length, version):
 
 @pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
 @pytest.mark.parametrize("version", ["1", "2", "3"])
-def test_cli_outfile(folder, piece_length, version):
+def test_cli_outfile(dir1, piece_length, version):
     """
     Test outfile cli flag.
     """
-    folder, _ = folder
-    outfile = folder + "test.torrent"
+    outfile = dir1 + "test.torrent"
     args = [
         "torrentfile",
         "create",
-        folder,
+        dir1,
         "--piece-length",
         str(piece_length),
         "--meta-version",
@@ -414,7 +413,7 @@ def test_cli_subprocess(dir2):
 
 
 @pytest.mark.parametrize("ending", ["/", "\\"])
-def test_cli_slash_path(dir2, ending):
+def test_cli_slash_path(dir1, ending):
     """
     Test if output when path ends with a /.
     """
@@ -426,24 +425,24 @@ def test_cli_slash_path(dir2, ending):
         "-t",
         "https://announce1.org",
         "--private",
-        str(dir2) + ending,
+        str(dir1) + ending,
     ]
     sys.argv = args
     main()
-    outfile = str(dir2) + ".torrent"
+    outfile = str(dir1) + ".torrent"
     assert os.path.exists(outfile)
     rmpath(outfile)
 
 
 @pytest.mark.parametrize("flag", ["-t", "-w", "--announce", "--web-seed"])
-def test_cli_announce_path(dir2, flag):
+def test_cli_announce_path(dir1, flag):
     """
     Test CLI when path is placed after the trackers flag.
     """
-    args = ["torrentfile", "create", flag, "https://announce1.org", str(dir2)]
+    args = ["torrentfile", "create", flag, "https://announce1.org", str(dir1)]
     sys.argv = args
     main()
-    outfile = str(dir2) + ".torrent"
+    outfile = str(dir1) + ".torrent"
     assert os.path.exists(outfile)
     rmpath(outfile)
 

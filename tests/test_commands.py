@@ -27,7 +27,7 @@ from urllib.parse import quote_plus
 import pyben
 import pytest
 
-from tests import dir1, metafile, rmpath, tfile
+from tests import dir1, dir2, file1, metafile1, metafile2
 from torrentfile.cli import execute
 from torrentfile.commands import info, magnet
 
@@ -36,46 +36,46 @@ def test_fix():
     """
     Test dir1 fixture is not None.
     """
-    assert dir1 and metafile and tfile
+    assert dir1 and metafile1 and file1 and metafile2 and dir2
 
 
-def test_magnet_uri(metafile):
+def test_magnet_uri(metafile1):
     """
     Test create magnet function digest.
     """
-    magnet_link = magnet(metafile)
-    meta = pyben.load(metafile)
+    magnet_link = magnet(metafile1)
+    meta = pyben.load(metafile1)
     announce = meta["announce"]
     assert quote_plus(announce) in magnet_link
 
 
-def test_magnet_hex(metafile):
+def test_magnet_hex(metafile1):
     """
     Test create magnet function digest.
     """
-    magnet_link = magnet(metafile)
-    meta = pyben.load(metafile)
+    magnet_link = magnet(metafile1)
+    meta = pyben.load(metafile1)
     info = meta["info"]
     binfo = sha1(pyben.dumps(info)).hexdigest().upper()
     assert binfo in magnet_link
 
 
-def test_magnet(metafile):
+def test_magnet(metafile1):
     """
     Test create magnet function scheme.
     """
-    magnet_link = magnet(metafile)
+    magnet_link = magnet(metafile1)
     assert magnet_link.startswith("magnet")
 
 
-def test_magnet_no_announce_list(metafile):
+def test_magnet_no_announce_list(metafile2):
     """
     Test create magnet function scheme.
     """
-    meta = pyben.load(metafile)
+    meta = pyben.load(metafile2)
     del meta["announce-list"]
-    pyben.dump(meta, metafile)
-    magnet_link = magnet(metafile)
+    pyben.dump(meta, metafile2)
+    magnet_link = magnet(metafile2)
     assert magnet_link.startswith("magnet")
 
 
@@ -93,7 +93,7 @@ def test_magnet_empty():
     "field",
     ["name", "announce", "source", "comment", "private", "announce-list"],
 )
-def test_info(field, tfile):
+def test_info(field, file1):
     """
     Test the info_command action from the Command Line Interface.
     """
@@ -109,7 +109,7 @@ def test_info(field, tfile):
         "ExampleComment",
         "--source",
         "examplesource",
-        str(tfile),
+        str(file1),
     ]
     sys.argv = args
     execute()
@@ -119,27 +119,26 @@ def test_info(field, tfile):
         Stand in substitution for argparse.Namespace object.
         """
 
-        metafile = str(tfile) + ".torrent"
+        metafile = str(file1) + ".torrent"
 
     output = info(Space)
     assert field in output
-    rmpath(str(tfile) + ".torrent")
 
 
-def test_magnet_cli(metafile):
+def test_magnet_cli(metafile1):
     """
     Test magnet creation through CLI interface.
     """
-    sys.argv[1:] = ["m", str(metafile)]
+    sys.argv[1:] = ["m", str(metafile1)]
     uri = execute()
     assert "magnet" in uri
 
 
-def test_create_unicode_name(tfile):
+def test_create_unicode_name(file1):
     """
     Test Unicode information in CLI args.
     """
-    parent = os.path.dirname(tfile)
+    parent = os.path.dirname(file1)
     filename = os.path.join(parent, "丂七万丈三与丏丑丒专且丕世丗両丢丣两严丩个丫丬中丮丯.torrent")
     args = [
         "torrentfile",
@@ -154,7 +153,7 @@ def test_create_unicode_name(tfile):
         "filename is 丂七万丈三与丏丑丒专且丕世丗両丢丣两严丩个丫丬中丮丯.torrent",
         "-o",
         str(filename),
-        str(tfile),
+        str(file1),
     ]
     sys.argv = args
     execute()

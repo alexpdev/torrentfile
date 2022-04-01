@@ -2,7 +2,7 @@
 
 ## Version 0.7.1
 
-- split CI integration into seperate platform specific files
+- split CI integration into separate platform specific files
 - added new cli argument `--cwd` which changes the default save
 to location to the current working directory (this will be default in future)
 - added unit tests to cover the new argument

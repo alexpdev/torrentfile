@@ -38,6 +38,48 @@ import os
 from pathlib import Path
 
 
+class Memo:
+    """
+    Memoice chache object.
+
+    Parameters
+    ----------
+    func : function
+        The function that is being memoized.
+    """
+
+    def __init__(self, func):
+        """
+        Construct for memoization.
+        """
+        self.func = func
+        self.counter = 0
+        self.cache = {}
+
+    def __call__(self, path):
+        """
+        Invoke each time memo function is called.
+
+        Parameters
+        ----------
+        path : str
+            The relative or absolute path being used as key in cache dict.
+
+        Returns
+        -------
+        Any :
+            The results of calling the function with path.
+        """
+        if path in self.cache:
+            self.counter += 1
+            if self.counter and not self.counter % 100:
+                print(self.counter)
+            return self.cache[path]
+        result = self.func(path)
+        self.cache[path] = result
+        return result
+
+
 class MissingPathError(Exception):
     """
     Path parameter is required to specify target content.
@@ -159,6 +201,7 @@ def get_piece_length(size: int) -> int:
     return 2**exp
 
 
+@Memo
 def filelist_total(pathstring: str) -> os.PathLike:
     """
     Perform error checking and format conversion to os.PathLike.

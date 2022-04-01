@@ -118,20 +118,17 @@ def tempdir(ext="1"):
             f"dir{ext}/file2.mp4",
             f"dir{ext}/file3.mp3",
             f"dir{ext}/file4.zip",
+            f"dir{ext}/file5.txt",
+            f"dir{ext}/subdir1/subdir2/file.7z",
+            f"dir{ext}/subdir/subdir/file4.rar",
+            f"dir{ext}/subdir/subdir/file4.r01",
         ],
         "2": [
             f"dir{ext}/file1.png",
+            f"dir{ext}/file2.jpg",
             f"dir{ext}/subdir/file2.mp4",
             f"dir{ext}/subdir/file3.mp3",
-            f"dir{ext}/subdir/subdir/file4.zip",
         ],
-        "3": [
-            f"dir{ext}/subdir1/file1.png",
-            f"dir{ext}/subdir2/file2.mp4",
-            f"dir{ext}/subdir2/file3.mp3",
-            f"dir{ext}/subdir2/file4.zip",
-        ],
-        "4": [f"dir{ext}/file1.txt", f"dir{ext}/file2.rar"],
     }
     paths = []
     for path in layouts[ext]:
@@ -158,6 +155,24 @@ def torrents():
     return [TorrentFile, TorrentFileV2, TorrentFileHybrid]
 
 
+@pytest.fixture(scope="package", params=[2**i for i in range(15, 20)])
+def sizes1(request):
+    """
+    Generate powers of 2 for file creation package scope.
+    """
+    size = request.param
+    yield size
+
+
+@pytest.fixture(params=[2**i for i in range(15, 20)])
+def sizes2(request):
+    """
+    Generate powers of 2 for file creation no scope.
+    """
+    size = request.param
+    yield size
+
+
 @pytest.fixture(scope="package")
 def dir1():
     """Create a specific temporary structured directory.
@@ -172,7 +187,7 @@ def dir1():
     rmpath(root)
 
 
-@pytest.fixture
+@pytest.fixture()
 def dir2():
     """Create a specific temporary structured directory.
 
@@ -186,51 +201,154 @@ def dir2():
     rmpath(root)
 
 
-@pytest.fixture
-def dir3():
-    """
-    Test fixture for directory structure.
-    """
-    files = [
-        "dir3/subdir1/file1.png",
-        "dir3/subdir1/file2.mp4",
-        "dir3/subdir2/file3.mp3",
-        "dir3/subdir2/file4.zip",
-        "dir3/file4.jpg",
-    ]
-    paths = []
-    for i, path in enumerate(files):
-        temps = tempfile(path=path, exp=15 + i)
-        paths.append(temps)
-    path = os.path.commonpath(paths)
-    return path
-
-
 @pytest.fixture(scope="package", params=torrents())
-def metafile(request):
+def metafile1(dir1, request):
     """
     Create a standard metafile for testing.
     """
-    root = tempdir(ext="4")
+    versions = torrents()
     args = {
-        "path": root,
+        "path": dir1,
         "announce": ["url1", "url2", "url4"],
+        "url_list": ["url5", "url6", "url7"],
         "comment": "this is a comment",
         "source": "SomeSource",
         "private": 1,
     }
     torrent_class = request.param
+    outfile = str(dir1) + str(versions.index(torrent_class)) + ".torrent"
     torrent = torrent_class(**args)
-    outfile, _ = torrent.write()
+    outfile, _ = torrent.write(outfile=outfile)
     yield outfile
-    rmpath(outfile, root)
+    rmpath(outfile)
 
 
-@pytest.fixture
-def tfile():
+@pytest.fixture(params=torrents())
+def metafile2(dir2, request):
     """
-    Return the path to a temporary file.
+    Create a standard metafile for testing.
+    """
+    args = {
+        "path": dir2,
+        "announce": ["url1", "url4"],
+        "url_list": ["url6", "url7"],
+        "comment": "this is a comment",
+        "source": "SomeSource",
+        "private": 1,
+    }
+    torrent_class = request.param
+    outfile = str(dir2) + ".torrent"
+    torrent = torrent_class(**args)
+    outfile, _ = torrent.write(outfile=outfile)
+    yield outfile
+    rmpath(outfile)
+
+
+@pytest.fixture(scope="package")
+def file1():
+    """
+    Return the path to a temporary file package scope.
     """
     path = tempfile()
     yield path
     rmpath(path)
+
+
+@pytest.fixture(scope="package", params=torrents())
+def filemeta1(file1, request):
+    """
+    Test fixture for generating metafile for all versions of torrents.
+    """
+    args = {
+        "path": file1,
+        "announce": ["url1", "url4"],
+        "url_list": ["url6", "url7"],
+        "comment": "this is a comment",
+        "source": "SomeSource",
+        "private": 1,
+    }
+    versions = torrents()
+    version = versions.index(request.param)
+    name = str(file1) + "file" + str(version) + ".torrent"
+    torrent = request.param(**args)
+    outfile, _ = torrent.write(outfile=name)
+    yield outfile
+    rmpath(outfile)
+
+
+@pytest.fixture(params=torrents())
+def filemeta2(file2, request):
+    """
+    Test fixture for generating a meta file no scope.
+    """
+    args = {
+        "path": file2,
+        "announce": ["url1", "url4"],
+        "url_list": ["url6", "url7"],
+        "comment": "this is a comment",
+        "source": "SomeSource",
+        "private": 1,
+    }
+    versions = torrents()
+    version = versions.index(request.param)
+    name = str(file2) + "file" + str(version) + ".torrent"
+    torrent = request.param(**args)
+    outfile, _ = torrent.write(outfile=name)
+    yield outfile
+    rmpath(outfile)
+
+
+@pytest.fixture()
+def file2():
+    """
+    Return the path to a temporary file no scope.
+    """
+    path = tempfile()
+    yield path
+    rmpath(path)
+
+
+@pytest.fixture(scope="package", params=torrents())
+def sizedfiles1(dir1, sizes1, request):
+    """
+    Generate variable sized meta files for testing, package scope.
+    """
+    versions = torrents()
+    args = {
+        "path": dir1,
+        "announce": ["url1", "url2", "url4"],
+        "url_list": ["url5", "url6", "url7"],
+        "comment": "this is a comment",
+        "source": "SomeSource",
+        "private": 1,
+        "piece_length": sizes1,
+    }
+    torrent_class = request.param
+    version = str(versions.index(torrent_class))
+    outfile = str(dir1) + version + str(sizes1) + ".torrent"
+    torrent = torrent_class(**args)
+    outfile, _ = torrent.write(outfile=outfile)
+    yield outfile
+
+
+@pytest.fixture(params=torrents())
+def sizedfiles2(dir2, sizes2, request):
+    """
+    Generate variable sized meta files for testing, no scope.
+    """
+    versions = torrents()
+    args = {
+        "path": dir2,
+        "announce": ["url1", "url2", "url4"],
+        "url_list": ["url5", "url6", "url7"],
+        "comment": "this is a comment",
+        "source": "SomeSource",
+        "private": 1,
+        "piece_length": sizes2,
+    }
+    torrent_class = request.param
+    version = str(versions.index(torrent_class))
+    outfile = str(dir2) + version + str(sizes2) + ".torrent"
+    torrent = torrent_class(**args)
+    outfile, _ = torrent.write(outfile=outfile)
+    yield outfile

@@ -88,7 +88,7 @@ def test_path_stat_size(dir1):
     Test function for acquiring total size information on folder.
     """
     _, totalsize, _ = utils.path_stat(dir1)
-    assert totalsize == (2**18) * 4
+    assert totalsize == (2**18) * 8
 
 
 def test_path_stat_filelist_size(dir1):
@@ -96,7 +96,7 @@ def test_path_stat_filelist_size(dir1):
     Test function for acquiring file list information on folder.
     """
     filelist, _, _ = utils.path_stat(dir1)
-    assert len(filelist) == 4
+    assert len(filelist) == 8
 
 
 def test_get_filelist(dir1):
@@ -104,7 +104,7 @@ def test_get_filelist(dir1):
     Test function for get a list of files in a directory.
     """
     filelist = utils.get_file_list(dir1)
-    assert len(filelist) == 4
+    assert len(filelist) == 8
 
 
 def test_get_path_size(dir1):
@@ -112,7 +112,7 @@ def test_get_path_size(dir1):
     Test function for getting total size of directory.
     """
     pathsize = utils.path_size(dir1)
-    assert pathsize == (2**18) * 4
+    assert pathsize == (2**18) * 8
 
 
 def test_filelist_total(dir1):
@@ -120,7 +120,7 @@ def test_filelist_total(dir1):
     Test function for acquiring a filelist for directory.
     """
     total, _ = utils.filelist_total(dir1)
-    assert total == (2**18) * 4
+    assert total == (2**18) * 8
 
 
 def test_piecelength_error_fixtures():
