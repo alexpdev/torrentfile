@@ -27,4 +27,3 @@ jobs:
           prospector torrentfile -X
           prospector tests -X
           pytest --cov=torrentfile --cov=tests
-          coverage xml -o ./coverage.xml

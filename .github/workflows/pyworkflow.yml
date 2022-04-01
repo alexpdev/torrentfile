@@ -42,6 +42,7 @@ jobs:
         run: |
           export GITHUB_WORKFLOW=1
           pytest --cov=torrentfile --cov=tests
+          coverage xml -o ./coverage.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2.1.0
