@@ -21,3 +21,34 @@ testpaths = [
 ]
 console_output_style = "progress"
 addopts = "--maxfail=5"
+
+
+[tool.pylint. 'MESSAGES CONTROL']
+disable = [
+    "R1729",
+    "redefined-outer-name",
+    "attribute-defined-outside-init",
+    "invalid-name",
+    "not-callable",
+    "consider-using-with"
+]
+
+[tool.pylint. 'VARIABLES']
+callbacks = ["cb_", "_cb", "hook_"]
+
+[tool.pylint. 'FORMAT']
+max-line-length = 80
+no-space-check = ["trailing-comma", "dict-separator"]
+single-line-if-stmt = true
+
+[tool.pylint.'SIMILARITIES']
+ignore-comments = true
+ignore-docstrings=true
+ignore-imports=true
+
+[tool.pylint. 'DESIGN']
+max-args=15
+min-public-methods=0
+max-attributes=20
+max-branches=20
+min-similarity-lines=4

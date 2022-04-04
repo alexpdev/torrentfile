@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 
 from tests import (dir1, dir2, file1, file2, filemeta1, filemeta2, metafile1,
-                   metafile2, rmpath, sizedfiles1, sizedfiles2, sizes1, sizes2)
+                   metafile2, rmpath, sizedfiles1, sizedfiles2, sizes)
 from torrentfile.cli import main_script as main
 from torrentfile.recheck import Checker
 
@@ -34,22 +34,9 @@ def test_fixtures():
     """
     Test fixtures exist.
     """
-    assert (
-        dir1
-        and dir2
-        and (
-            metafile1,
-            metafile2,
-            sizedfiles2,
-            sizedfiles1,
-            filemeta2,
-            filemeta1,
-            file2,
-            file1,
-            sizes1,
-            sizes2,
-        )
-    )
+    assert dir1 and dir2 and file1 and file2
+    assert filemeta1 and filemeta2 and metafile1
+    assert metafile2 and sizedfiles1 and sizes and sizedfiles2
 
 
 def test_checker_class(dir1, metafile1):
@@ -119,14 +106,6 @@ def test_checker_first_piece_alt(dir2, sizedfiles2):
     assert checker.results() != 100
 
 
-def test_metafile_checker(dir1, metafile1):
-    """
-    Test metadata checker class.
-    """
-    checker = Checker(metafile1, dir1)
-    assert checker.results() > 99
-
-
 def test_partial_metafiles(dir2, sizedfiles2):
     """
     Test Checker with data that is expected to be incomplete.
@@ -151,12 +130,12 @@ def test_partial_metafiles(dir2, sizedfiles2):
     assert checker.results() != 100
 
 
-def test_checker_no_content(dir1, sizedfiles1):
+def test_checker_callback(dir1, metafile1):
     """
     Test Checker class with directory that points to nothing.
     """
     Checker.register_callback(lambda *x: print(x))
-    checker = Checker(sizedfiles1, str(dir1))
+    checker = Checker(metafile1, str(dir1))
     assert checker.results() == 100
 
 

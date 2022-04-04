@@ -26,7 +26,7 @@ import sys
 import pyben
 import pytest
 
-from tests import rmpath, torrents
+from tests import file1, file2, filemeta2, torrents
 from torrentfile.cli import main
 from torrentfile.interactive import select_action
 from torrentfile.utils import normalize_piece_length
@@ -34,44 +34,14 @@ from torrentfile.utils import normalize_piece_length
 MOCK = "torrentfile.interactive.get_input"
 
 
-@pytest.fixture
-def testfile():
+def test_fixtures():
     """
-    Create temporary file for unit tests.
+    Test the fixtures used in module.
     """
-    parent = os.path.dirname(__file__)
-    testdir = os.path.join(parent, "ITDIR")
-    if not os.path.exists(testdir):
-        os.mkdir(testdir)
-    filename = os.path.join(testdir, "file123.dat")
-    with open(filename, "wb") as tfile:
-        sample = b"1234509876" * 37123
-        tfile.write(sample)
-    return filename
+    assert filemeta2 and file1 and file2
 
 
-@pytest.fixture(params=torrents())
-def metafile(testfile, request):
-    """
-    Fixture providing a torrent meta file for testing.
-    """
-    args = {
-        "piece_length": 16,
-        "announce": ["url1", "url2"],
-        "private": 1,
-        "comment": "Some comment here",
-        "source": "SomeTrackerSource",
-        "path": testfile,
-        "outfile": str(testfile) + ".torrent",
-    }
-    torrent = request.param(**args)
-    metafile, _ = torrent.write()
-    yield metafile
-    parent = os.path.dirname(testfile)
-    rmpath(parent)
-
-
-def test_interactive_create(monkeypatch, testfile):
+def test_interactive_create(monkeypatch, file1):
     """
     Test creating torrent interactively.
     """
@@ -83,16 +53,14 @@ def test_interactive_create(monkeypatch, testfile):
         "",
         "",
         "",
-        testfile,
-        str(testfile) + ".torrent",
+        file1,
+        str(file1) + ".torrent",
         "",
     ]
     it = iter(mapping)
     monkeypatch.setattr(MOCK, lambda *_: next(it))
     select_action()
-    assert os.path.exists(testfile + ".torrent")
-    parent = os.path.dirname(testfile)
-    rmpath(parent)
+    assert os.path.exists(str(file1) + ".torrent")
 
 
 @pytest.mark.parametrize("version", ["1", "2", "3"])
@@ -102,7 +70,7 @@ def test_interactive_create(monkeypatch, testfile):
 @pytest.mark.parametrize("comment", ["Some Comment", "No Comment"])
 @pytest.mark.parametrize("source", ["Do", "Ra", "Me"])
 def test_inter_create_full(
-    testfile,
+    file1,
     piece_length,
     announce,
     comment,
@@ -122,20 +90,18 @@ def test_inter_create_full(
         comment,
         source,
         "Y",
-        testfile,
-        str(testfile) + ".torrent",
+        file1,
+        str(file1) + ".torrent",
         version,
     ]
     it = iter(mapping)
     monkeypatch.setattr(MOCK, lambda *_: next(it))
     select_action()
-    meta = pyben.load(str(testfile) + ".torrent")
+    meta = pyben.load(str(file1) + ".torrent")
     assert meta["info"]["source"] == source
     assert meta["info"]["piece length"] == normalize_piece_length(piece_length)
     assert meta["info"]["comment"] == comment
     assert meta["url-list"] == url_list.split()
-    parent = os.path.dirname(testfile)
-    rmpath(parent)
 
 
 @pytest.mark.parametrize("announce", ["url1"])
@@ -143,14 +109,14 @@ def test_inter_create_full(
 @pytest.mark.parametrize("comment", ["Some Comment", "No Comment"])
 @pytest.mark.parametrize("source", ["Fa", "So", "La"])
 def test_inter_edit_full(
-    metafile, announce, comment, source, url_list, monkeypatch
+    filemeta2, announce, comment, source, url_list, monkeypatch
 ):
     """
     Test editing torrent file interactively.
     """
     seq = [
         "edit",
-        metafile,
+        filemeta2,
         "4",
         announce,
         "1",
@@ -166,7 +132,7 @@ def test_inter_edit_full(
     it = iter(seq)
     monkeypatch.setattr(MOCK, lambda *_: next(it))
     select_action()
-    meta1 = pyben.load(metafile)
+    meta1 = pyben.load(filemeta2)
     assert meta1["info"]["source"] == source
     assert meta1["info"]["comment"] == comment
     assert meta1["url-list"] == url_list.split()
@@ -178,14 +144,14 @@ def test_inter_edit_full(
 @pytest.mark.parametrize("comment", ["Some Comment"])
 @pytest.mark.parametrize("source", ["Do", "Ra"])
 def test_inter_edit_cli(
-    metafile, announce, comment, source, url_list, monkeypatch
+    filemeta2, announce, comment, source, url_list, monkeypatch
 ):
     """
     Test editing torrent interactively from CLI.
     """
     seq = [
         "edit",
-        metafile,
+        filemeta2,
         "4",
         announce,
         "1",
@@ -202,7 +168,7 @@ def test_inter_edit_cli(
     monkeypatch.setattr(MOCK, lambda *_: next(it))
     sys.argv = ["torrentfile", "-i"]
     main()
-    meta2 = pyben.load(metafile)
+    meta2 = pyben.load(filemeta2)
     assert meta2["info"]["source"] == source
     assert meta2["info"]["comment"] == comment
     assert meta2["url-list"] == url_list.split()
@@ -210,16 +176,14 @@ def test_inter_edit_cli(
 
 
 @pytest.mark.parametrize("torrentclass", torrents())
-def test_inter_recheck(torrentclass, monkeypatch, testfile):
+def test_inter_recheck(torrentclass, monkeypatch, file1):
     """
     Test interactive recheck function.
     """
-    torrent = torrentclass(path=testfile)
-    metafile, _ = torrent.write()
-    seq = ["recheck", metafile, str(testfile)]
+    torrent = torrentclass(path=file1)
+    filemeta, _ = torrent.write()
+    seq = ["recheck", filemeta, str(file1)]
     it = iter(seq)
     monkeypatch.setattr(MOCK, lambda *_: next(it))
     result = select_action()
     assert result == 100
-    parent = os.path.dirname(testfile)
-    rmpath(parent)

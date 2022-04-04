@@ -35,7 +35,7 @@ import pyben
 from tqdm import tqdm
 
 from torrentfile.hasher import HasherHybrid, HasherV2
-from torrentfile.utils import MissingPathError, humanize_bytes
+from torrentfile.utils import MissingPathError
 
 SHA1 = 20
 SHA256 = 32
@@ -261,7 +261,6 @@ class Checker:
                 }
 
                 self.paths.append(str(self.root / base))
-                self.log_msg("Including file path: %s", str(self.root / base))
             return
 
         self.walk_file_tree(self.info["file tree"], [])
@@ -297,12 +296,6 @@ class Checker:
                 }
                 self.paths.append(full)
                 self.total += length
-                self.log_msg(
-                    "Including: path - %s, length - %s",
-                    full,
-                    humanize_bytes(length),
-                )
-
             else:
                 self.walk_file_tree(val, partials + [key])
 
@@ -326,15 +319,10 @@ class Checker:
         hasher = self.hasher()
         for chunk, piece, path, size in checker(self, hasher):
             consumed += size
-            msg = "Match %s: %s %s"
-            humansize = humanize_bytes(size)
             matching = 0
             if chunk == piece:
                 matching += size
                 matched += size
-                logger.debug(msg, "Success", path, humansize)
-            else:
-                logger.debug(msg, "Fail", path, humansize)
             yield chunk, piece, path, size
             total_consumed = str(int(consumed / self.total * 100))
             percent_matched = str(int(matched / consumed * 100))
@@ -342,6 +330,7 @@ class Checker:
                 "Processed: %s%%, Matched: %s%%",
                 total_consumed,
                 percent_matched,
+                level=logging.DEBUG,
             )
         self._result = (matched / consumed) * 100 if consumed > 0 else 0
 
@@ -413,9 +402,9 @@ class FeedChecker:
             self.index = i
             if os.path.exists(path):
                 for piece in self.extract(path, partial):
-                    if len(piece) == self.piece_length:
-                        yield piece
-                    elif i + 1 == len(self.paths):
+                    if (len(piece) == self.piece_length) or (
+                        i + 1 == len(self.paths)
+                    ):
                         yield piece
                     else:
                         partial = piece
@@ -522,10 +511,6 @@ class HashChecker:
         self.piece_layers = checker.meta["piece layers"]
         self.piece_count = 0
         self.it = None
-        logger.debug(
-            "Starting Hash Checker. piece length: %s",
-            humanize_bytes(self.piece_length),
-        )
 
     def __iter__(self):
         """

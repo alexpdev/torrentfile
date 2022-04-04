@@ -210,8 +210,7 @@ def test_metafile_edit_with_unicode(metafile2):
     }
     data = edit_torrent(metafile2, edits)
     meta = pyben.load(metafile2)
-    assert (
-        data["info"]["comment"]
-        == meta["info"]["comment"]
-        == "丂七万丈三与丏丑丒专且丕世丗両丢丣两严丩个丫丬中丮丯.torrent"
-    )
+    com1 = data["info"]["comment"]
+    com2 = meta["info"]["comment"]
+    msg = edits["comment"]
+    assert com1 == com2 == msg

@@ -283,7 +283,7 @@ class HasherHybrid(_CbMixin):
         logger.debug(
             "Hashing: %s, Piece Size: %s",
             str(self.path),
-            humanize_bytes(self.piece_length)
+            humanize_bytes(self.piece_length),
         )
         with open(path, "rb") as data:
             self.process_file(data)
