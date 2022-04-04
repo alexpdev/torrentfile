@@ -75,6 +75,9 @@ clean-build: ## remove build artifacts
 	rm -fv corbertura.xml
 	rm -fr .pytest_cache
 	rm -rf Release
+	rm -rfv *.egg-info
+	rm -rfv .benchmarks
+	rm -rfv .codacy-coverage
 	rm -rf node_modules
 	rm -f torrentfile.log
 	rm -f -- *'.spec'
@@ -82,13 +85,7 @@ clean-build: ## remove build artifacts
 
 
 test: ## Get coverage report
-	pytest --cov=torrentfile --cov=tests
-
-lint:
-	black torrentfile tests
-	isort torrentfile tests
-	prospector torrentfile --no-autodetect
-	prospector tests --no-autodetect
+	tox
 
 docs: ## Regenerate docs from changes
 	python -c "$$UPDATE_PACKAGE_VERSION"
@@ -104,7 +101,7 @@ coverage: ## Get coverage report
 	coverage xml
 	bash coverage.sh report -r coverage.xml
 
-push: clean lint docs test coverage ## Push to github
+push: clean coverage docs test ## Push to github
 	git add .
 	git commit -m "$m"
 	git push

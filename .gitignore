@@ -15,6 +15,7 @@ temp/
 *.pyc
 __pycache__/
 *.py[cod]
+codacy.py
 *$py.class
 # Distribution / packaging
 codacy.sh
