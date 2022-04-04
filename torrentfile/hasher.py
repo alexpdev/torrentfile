@@ -281,9 +281,9 @@ class HasherHybrid(_CbMixin):
         self.padding_file = None
         self.amount = piece_length // BLOCK_SIZE
         logger.debug(
-            "Hashing partial Hybrid torrent file. Piece Length: %s Path: %s",
-            humanize_bytes(self.piece_length),
+            "Hashing: %s, Piece Size: %s",
             str(self.path),
+            humanize_bytes(self.piece_length)
         )
         with open(path, "rb") as data:
             self.process_file(data)
