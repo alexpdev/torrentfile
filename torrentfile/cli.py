@@ -45,19 +45,19 @@ def activate_logger():
     )
     console_handler = logging.StreamHandler(stream=sys.stderr)
     file_formatter = logging.Formatter(
-        "%(asctime)s %(levelno)s %(module)s %(message)s",
+        "%(asctime)s %(levelno)s %(message)s",
         datefmt="%m-%d %H:%M:%S",
         style="%",
     )
     stream_formatter = logging.Formatter(
-        "%(asctime)s %(levelno)s %(module)s %(message)s",
+        "%(asctime)s %(levelno)s %(message)s",
         datefmt="%m-%d %H:%M:%S",
         style="%",
     )
     file_handler.setFormatter(file_formatter)
     console_handler.setFormatter(stream_formatter)
     file_handler.setLevel(logging.DEBUG)
-    console_handler.setLevel(logging.DEBUG)
+    console_handler.setLevel(logging.INFO)
     logger.setLevel(logging.DEBUG)
     logger.addHandler(console_handler)
     logger.addHandler(file_handler)
@@ -219,12 +219,12 @@ def execute(args=None):
     )
 
     create_parser = subparsers.add_parser(
-        "c",
+        "create",
         help="""
         Create a torrent meta file.
         """,
         prefix_chars="-",
-        aliases=["create", "new"],
+        aliases=["c", "new"],
         formatter_class=TorrentFileHelpFormatter,
     )
 
@@ -261,7 +261,7 @@ def execute(args=None):
         "--magnet",
         action="store_true",
         dest="magnet",
-        help="Output Magnet Link after creation completes",
+        help="",
     )
 
     create_parser.add_argument(
@@ -364,11 +364,11 @@ def execute(args=None):
     create_parser.set_defaults(func=create)
 
     edit_parser = subparsers.add_parser(
-        "e",
+        "edit",
         help="""
         Edit existing torrent meta file.
         """,
-        aliases=["edit"],
+        aliases=["e"],
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )
@@ -429,11 +429,11 @@ def execute(args=None):
     edit_parser.set_defaults(func=edit)
 
     magnet_parser = subparsers.add_parser(
-        "m",
+        "magnet",
         help="""
-        Create magnet url from an existing Bittorrent meta file.
+        Generate magnet url from an existing Bittorrent meta file.
         """,
-        aliases=["magnet"],
+        aliases=["m"],
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )
@@ -448,11 +448,11 @@ def execute(args=None):
     magnet_parser.set_defaults(func=magnet)
 
     check_parser = subparsers.add_parser(
-        "r",
+        "recheck",
         help="""
         Calculate amount of torrent meta file's content is found on disk.
         """,
-        aliases=["recheck", "check"],
+        aliases=["r", "check"],
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )
@@ -474,11 +474,11 @@ def execute(args=None):
     check_parser.set_defaults(func=recheck)
 
     info_parser = subparsers.add_parser(
-        "i",
+        "info",
         help="""
         Show detailed information about a torrent file.
         """,
-        aliases=["info"],
+        aliases=["i"],
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )

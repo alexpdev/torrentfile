@@ -11,13 +11,12 @@ theme:
   favicon: images/favicon.ico
 
 nav:
-  - HOME : index.md
-  - CLI : Commands.md
-  - Examples : examples.md
-  - API : API.md
-  - CHANGELOG : changelog.md
-  - LICENSE : Apache2.md
-  - SOURCE : source.md
+  - Home : index.md
+  - Help Messages : Commands.md
+  - Man Page: man.md
+  - Changelog : changelog.md
+  - License : Apache2.md
+  - Source Code : source.md
 
 
 plugins:

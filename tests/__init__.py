@@ -143,7 +143,7 @@ def teardown():  # pragma: nocover
     Remove all temporary directories and files.
     """
     root = Path(__file__).parent / "TESTDIR"
-    for path in [root, "torrentfile.log"]:
+    for path in [root, "./torrentfile.log"]:
         if os.path.exists(path):
             rmpath(path)
 
@@ -156,18 +156,9 @@ def torrents():
 
 
 @pytest.fixture(scope="package", params=[2**i for i in range(15, 20)])
-def sizes1(request):
+def sizes(request):
     """
     Generate powers of 2 for file creation package scope.
-    """
-    size = request.param
-    yield size
-
-
-@pytest.fixture(params=[2**i for i in range(15, 20)])
-def sizes2(request):
-    """
-    Generate powers of 2 for file creation no scope.
     """
     size = request.param
     yield size
@@ -308,31 +299,8 @@ def file2():
     rmpath(path)
 
 
-@pytest.fixture(scope="package", params=torrents())
-def sizedfiles1(dir1, sizes1, request):
-    """
-    Generate variable sized meta files for testing, package scope.
-    """
-    versions = torrents()
-    args = {
-        "path": dir1,
-        "announce": ["url1", "url2", "url4"],
-        "url_list": ["url5", "url6", "url7"],
-        "comment": "this is a comment",
-        "source": "SomeSource",
-        "private": 1,
-        "piece_length": sizes1,
-    }
-    torrent_class = request.param
-    version = str(versions.index(torrent_class))
-    outfile = str(dir1) + version + str(sizes1) + ".torrent"
-    torrent = torrent_class(**args)
-    outfile, _ = torrent.write(outfile=outfile)
-    yield outfile
-
-
 @pytest.fixture(params=torrents())
-def sizedfiles2(dir2, sizes2, request):
+def sizedfiles(dir2, sizes, request):
     """
     Generate variable sized meta files for testing, no scope.
     """
@@ -344,11 +312,12 @@ def sizedfiles2(dir2, sizes2, request):
         "comment": "this is a comment",
         "source": "SomeSource",
         "private": 1,
-        "piece_length": sizes2,
+        "piece_length": sizes,
     }
     torrent_class = request.param
     version = str(versions.index(torrent_class))
-    outfile = str(dir2) + version + str(sizes2) + ".torrent"
+    outfile = str(dir2) + version + str(sizes) + ".torrent"
     torrent = torrent_class(**args)
     outfile, _ = torrent.write(outfile=outfile)
     yield outfile
+    rmpath(outfile)

@@ -104,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              HOME
+              Home
             
           </span>
         </div>
@@ -223,12 +223,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          HOME
+          Home
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="." class="md-nav__link md-nav__link--active">
-        HOME
+        Home
       </a>
       
         
@@ -289,18 +289,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#issues" class="md-nav__link">
-    💡 Issues
+  <a href="#issues-requsts" class="md-nav__link">
+    💡 Issues &amp; Requsts
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cli-usage-examples" class="md-nav__link">
-    ⚙️ CLI Usage Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="⚙️ CLI Usage Examples">
+    <nav class="md-nav" aria-label="💡 Issues &amp; Requsts">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -329,25 +322,25 @@
     Create Magnet
   </a>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrent-details" class="md-nav__link">
-    Torrent Details
-  </a>
-  
-    <nav class="md-nav" aria-label="Torrent Details">
+    <nav class="md-nav" aria-label="Create Magnet">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#interactive-mode" class="md-nav__link">
-    Interactive Mode
+  <a href="#interactive-mode-expiremental" class="md-nav__link">
+    Interactive Mode (expiremental)
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui" class="md-nav__link">
+    GUI
+  </a>
   
 </li>
         
@@ -373,7 +366,7 @@
   
     <li class="md-nav__item">
       <a href="Commands/" class="md-nav__link">
-        CLI
+        Help Messages
       </a>
     </li>
   
@@ -387,23 +380,8 @@
   
   
     <li class="md-nav__item">
-      <a href="examples/" class="md-nav__link">
-        Examples
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="API/" class="md-nav__link">
-        API
+      <a href="man/" class="md-nav__link">
+        Man Page
       </a>
     </li>
   
@@ -418,7 +396,7 @@
   
     <li class="md-nav__item">
       <a href="changelog/" class="md-nav__link">
-        CHANGELOG
+        Changelog
       </a>
     </li>
   
@@ -433,7 +411,7 @@
   
     <li class="md-nav__item">
       <a href="Apache2/" class="md-nav__link">
-        LICENSE
+        License
       </a>
     </li>
   
@@ -448,7 +426,7 @@
   
     <li class="md-nav__item">
       <a href="source/" class="md-nav__link">
-        SOURCE
+        Source Code
       </a>
     </li>
   
@@ -523,18 +501,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#issues" class="md-nav__link">
-    💡 Issues
+  <a href="#issues-requsts" class="md-nav__link">
+    💡 Issues &amp; Requsts
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cli-usage-examples" class="md-nav__link">
-    ⚙️ CLI Usage Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="⚙️ CLI Usage Examples">
+    <nav class="md-nav" aria-label="💡 Issues &amp; Requsts">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -563,25 +534,25 @@
     Create Magnet
   </a>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrent-details" class="md-nav__link">
-    Torrent Details
-  </a>
-  
-    <nav class="md-nav" aria-label="Torrent Details">
+    <nav class="md-nav" aria-label="Create Magnet">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#interactive-mode" class="md-nav__link">
-    Interactive Mode
+  <a href="#interactive-mode-expiremental" class="md-nav__link">
+    Interactive Mode (expiremental)
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui" class="md-nav__link">
+    GUI
+  </a>
   
 </li>
         
@@ -630,7 +601,7 @@ full unicode support.</p>
 <h2 id="requirements">🔌 Requirements</h2>
 <ul>
 <li>Python 3.7+</li>
-<li>Tested on Linux and Windows and Mac</li>
+<li>Tested on Linux, Windows and Mac</li>
 </ul>
 <h2 id="install">💻 Install</h2>
 <p><strong>via PyPi:</strong></p>
@@ -639,7 +610,7 @@ full unicode support.</p>
 <p><strong>via Git:</strong></p>
 <pre><code class="language-bash">git clone https://github.com/alexpdev/torrentfile.git
 cd torrentfile
-python setup.py install
+pip install .
 </code></pre>
 <blockquote>
 <p>Download pre-compiled binaries from the <a href="https://github.com/alexpdev/torrentfile/releases">release page</a>.</p>
@@ -648,135 +619,104 @@ python setup.py install
 <p>Documentation can be found  <a href="https://alexpdev.github.io/torrentfile">here</a>
 or in the <em><code>docs</code></em> directory.</p>
 <blockquote>
-<p><em>torrentfile</em> is under active development, and is subject to significant changes in<br />
-    it's codebase between releases.</p>
+<p><em>torrentfile</em> is under active development, and is subject to significant changes in the codebase between releases.</p>
 </blockquote>
 <h2 id="usage">🚀 Usage</h2>
 <pre><code class="language-sh">Usage
 =====
-   torrentfile [-h] [-i] [-V] [-v]
-                   &lt;create&gt; &lt;edit&gt; &lt;magnet&gt; &lt;recheck&gt; ...
+   torrentfile [-h] [-i] [-V] [-v] &lt;create&gt; &lt;edit&gt; &lt;magnet&gt; &lt;recheck&gt; ...
 
-CLI Tool for creating, checking, editing... Bittorrent meta files. TorrentFile supports all versions of torrent files.
-
-Options
--------
-  -h, --help                          show this help message and exit
-  -i, --interactive                   select program options interactively
-  -V, --version                       show program version and exit
-  -v, --verbose                       output debug information
+CLI Tool for creating, checking, editing... all versions of Bittorrent meta files.
 
 Actions
 -------
   &lt;create&gt; &lt;edit&gt; &lt;magnet&gt; &lt;recheck&gt;
-    c (create, new)                   Create a torrent meta file.
+    create (c, new)                   Create a torrent meta file.
 
-    e (edit)                          Edit existing torrent meta file.
+    edit (e)                          Edit existing torrent meta file.
 
-    m (magnet)                        Create magnet url from an existing Bittorrent meta file.
+    magnet (m)                        Create magnet url from an existing Bittorrent meta file.
 
-    r (recheck, check)                Calculate amount of torrent meta files content is found on disk.
+    recheck (r, check)                Calculate amount of torrent meta files content is found on disk.
 
-    i (info)                          Show detailed information about a torrent file.
+    info (i)                          Show detailed information about a torrent file.
 </code></pre>
 <blockquote>
 <p>Usage examples can be found in the project documentation on the <a href="https://alexpdev.github.io/torrentfile/examples">examples page.</a></p>
 </blockquote>
 <h2 id="license">📝 License</h2>
 <p>Distributed under Apache v2 software license. See <code>LICENSE</code> for more information.</p>
-<h2 id="issues">💡 Issues</h2>
+<h2 id="issues-requsts">💡 Issues &amp; Requsts</h2>
 <p>If you encounter any bugs or would like to request a new feature please open a new issue.</p>
 <p><a href="https://github.com/alexpdev/torrentfile/issues">https://github.com/alexpdev/torrentfile/issues</a></p>
 <hr />
-<h2 id="cli-usage-examples">⚙️ CLI Usage Examples</h2>
-<blockquote>
-<p>More examples can be found in the documentation.</p>
-</blockquote>
 <h3 id="creating-torrents">Creating Torrents</h3>
-<p>Using the sub-command <code>create</code> or <code>c</code> <em>TorrentFile</em> can create a new torrent<br />
-from the contents of a file or directory path. The following examples illustrate<br />
-some of the options available for creating torrents (AKA meta files).</p>
 <ul>
-<li>Create a torrent from any file or directory. example (<code>/path/to/content</code>)</li>
-<li>by default the save path will be the content path with a ".torrent" extension. (<code>/path/to/content.torrent</code>)</li>
-<li>by default torrents are created using bittorrent meta-version 1</li>
+<li>Basic torrent file createion</li>
 </ul>
-<pre><code class="language-bash">torrentfile create /path/to/content
+<pre><code class="language-bash">&gt; torrentfile create /path/to/content
 </code></pre>
 <ul>
-<li>The <code>-t</code> or <code>--tracker</code> flag adds one or more urls to tracker list.</li>
-<li>This flag will cause an error if the content path immediately follows it.</li>
+<li>The <code>-t</code> <code>--tracker</code> <code>-a</code> <code>--announce</code> flags add one or more urls to list of trackers.</li>
 </ul>
-<p>do this</p>
-<pre><code class="language-bash">torrentfile create /path/to/content --tracker http://tracker1.com
-</code></pre>
-<p>or this</p>
-<pre><code class="language-bash">torrentfile create -t http://tracker2 http://tracker3 --private /path/to/content
-</code></pre>
-<p>not this</p>
-<pre><code class="language-bash">torrentfile create --tracker http://tracker /path/to/content   #ERROR
-torrentfile create -t http://tracker1 http://tracker2 /path/to/content #ERROR
+<pre><code class="language-bash">&gt; torrentfile create /path/to/content --tracker http://tracker1.com
+
+&gt; torrentfile create -t http://tracker2 http://tracker3 --private /path/to/content
+
+&gt; torrentfile create --tracker http://tracker /path/to/content  
+
+&gt; torrentfile create -t http://tracker1 http://tracker2 /path/to/content
 </code></pre>
 <ul>
 <li>the <code>--private</code> flag indicates use by a private tracker</li>
 <li>the <code>--source</code> flag can be used to help with cross-seeding</li>
 </ul>
-<pre><code class="language-bash">torrentfile create --private --source /path/to/content --tracker https://tracker/url
+<pre><code class="language-bash">&gt; torrentfile create --private --source EXAMPLE --tracker https://url1 https://url2
 </code></pre>
 <ul>
 <li>to turn off the progress bar shown use <code>--noprogress</code></li>
-<li>this can improve the performance by a very small amount</li>
 </ul>
-<pre><code class="language-bash">torrentfile -t &lt;url1&gt; &lt;url2&gt; --noprogress ./content
+<pre><code class="language-bash">&gt; torrentfile -t http://tracker.com --noprogress /path/to/content
 </code></pre>
 <ul>
 <li>to specify the save location use the <code>-o</code> or <code>--out</code> flags</li>
 </ul>
-<pre><code class="language-bash">torrentfile create -o /specific/path/name.torrent ./content
+<pre><code class="language-bash">&gt; torrentfile create -o /specific/path/name.torrent ./content
 </code></pre>
 <ul>
 <li>to create files using bittorrent v2 use <code>--meta-version 2</code></li>
 <li>likewise <code>--meta-version 3</code> creates a hybrid torrent file.</li>
 </ul>
-<pre><code class="language-bash">torrentfile create --meta-version 2 /path/to/content
-torrentfile create --meta-version 3 /path/to/content
-</code></pre>
-<ul>
-<li>to output a magnet URI for the created torrent file use <code>--magnet</code></li>
-</ul>
-<pre><code class="language-bash">torrentfile create --t https://tracker1/annc https://tracker2/annc --magnet /path/to/content
+<pre><code class="language-bash">&gt; torrentfile create --meta-version 2 /path/to/content
+&gt; torrentfile create --meta-version 3 /path/to/content
 </code></pre>
 <h3 id="checkrecheck-torrent">Check/Recheck Torrent</h3>
-<p>Using the sub-command <code>recheck</code> or <code>check</code> or <code>r</code> you can check the percentage of a torrent<br />
-is saved to disk by comparing the the contents to a torrent metafile.</p>
 <ul>
 <li>recheck torrent file <code>/path/to/some.torrent</code> with <code>/path/to/content</code></li>
-<li>enter the metafile path first then the content path (the order matters)</li>
 </ul>
-<pre><code class="language-bash">torrentfile recheck /path/to/some.torrent /path/to/content
+<pre><code class="language-bash">&gt; torrentfile recheck /path/to/some.torrent /path/to/content
 </code></pre>
 <h3 id="edit-torrent">Edit Torrent</h3>
-<p>Using the sub-command <code>edit</code> or <code>e</code> enables editting a pre-existing torrent file.
-The edit sub-command works the same as the <code>create</code> sub-command and accepts many
-of the same arguments.</p>
+<ul>
+<li>edit a torrent file</li>
+</ul>
+<pre><code class="language-bash">&gt; torrentfile edit [-options] &lt;path&gt;
+</code></pre>
 <h3 id="create-magnet">Create Magnet</h3>
 <p>To create a magnet URI for a pre-existing torrent meta file, use the sub-command<br />
 <code>magnet</code> or <code>m</code> with the path to the torrent file.</p>
-<pre><code class="language-bash">torrentfile magnet /path/to/some.torrent
+<pre><code class="language-bash">&gt; torrentfile magnet /path/to/some.torrent
 </code></pre>
-<h3 id="torrent-details">Torrent Details</h3>
-<p>If you are just trying to get the details of a particular torrent file, such as<br />
-the trackers it has been assigned, or the number of files it contains, use <code>info</code> or <code>i</code>.</p>
-<pre><code class="language-bash">torrentfile info /path/to/some.torrent
-</code></pre>
-<h4 id="interactive-mode">Interactive Mode</h4>
+<h4 id="interactive-mode-expiremental">Interactive Mode (expiremental)</h4>
 <p>Alternatively to supplying a bunch of command line arguments, <code>interactive mode</code>
 allows users to specify program options one at a time from a series of prompts.</p>
 <ul>
 <li>to activate interactive mode use <code>-i</code> or <code>--interactive</code> flag</li>
 </ul>
-<pre><code class="language-bash">torrentfile -i
+<pre><code class="language-bash">&gt; torrentfile -i
 </code></pre>
+<h3 id="gui">GUI</h3>
+<p>If you prefer a windowed gui please check out the official GUI frontend <a href="https://github.com/alexpdev/TorrentFileQt">here</a></p>
 
               
             </article>
@@ -791,13 +731,13 @@ allows users to specify program options one at a time from a series of prompts.<
       
       
         
-        <a href="Commands/" class="md-footer__link md-footer__link--next" aria-label="Next: CLI" rel="next">
+        <a href="Commands/" class="md-footer__link md-footer__link--next" aria-label="Next: Help Messages" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              CLI
+              Help Messages
             </div>
           </div>
           <div class="md-footer__button md-icon">

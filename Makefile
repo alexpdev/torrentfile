@@ -75,6 +75,9 @@ clean-build: ## remove build artifacts
 	rm -fv corbertura.xml
 	rm -fr .pytest_cache
 	rm -rf Release
+	rm -rfv *.egg-info
+	rm -rfv .benchmarks
+	rm -rfv .codacy-coverage
 	rm -rf node_modules
 	rm -f torrentfile.log
 	rm -f -- *'.spec'
@@ -82,13 +85,7 @@ clean-build: ## remove build artifacts
 
 
 test: ## Get coverage report
-	pytest --cov=torrentfile --cov=tests
-
-lint:
-	black torrentfile tests
-	isort torrentfile tests
-	prospector torrentfile --no-autodetect
-	prospector tests --no-autodetect
+	tox
 
 docs: ## Regenerate docs from changes
 	python -c "$$UPDATE_PACKAGE_VERSION"
@@ -104,7 +101,7 @@ coverage: ## Get coverage report
 	coverage xml
 	bash coverage.sh report -r coverage.xml
 
-push: clean lint docs test coverage ## Push to github
+push: clean coverage docs test ## Push to github
 	git add .
 	git commit -m "$m"
 	git push
@@ -114,44 +111,3 @@ setup: clean test lint docs ## setup and build repo
 	python setup.py sdist bdist_wheel bdist_egg
 	pip install -e .
 	twine upload dist/*
-
-build: clean test lint docs
-	pip install --pre --upgrade --force-reinstall --no-cache -rrequirements.txt
-	pip install pyinstaller
-	python setup.py sdist bdist_wheel bdist_egg
-	rm -rfv ../runner
-	mkdir ../runner
-	touch ../runner/exe
-	cp ./assets/favicon.ico ../runner/favicon.ico
-	@echo "import torrentfile" >> ../runner/exe
-	@echo "torrentfile.main()" >> ../runner/exe
-	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
-		-F -n torrentfile -c -i ../runner/favicon.ico \
-		--specpath ../runner/ ../runner/exe
-	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
-		-D -n torrentfile -c -i ../runner/favicon.ico \
-		--specpath ../runner/ ../runner/exe
-	cp -rfv ../runner/dist/* ./dist/
-	python -c "$$FIX_BIN_VERSION_FILES"
-
-nixenv: ## activate unix python vurtual environment
-	source nixenv/bin/activate
-
-nixbuild:
-	pip install pyinstaller
-	python3 setup.py sdist bdist_wheel bdist_egg
-	pip install -e .
-	rm -rfv ../runner
-	mkdir ../runner
-	touch ../runner/exec
-	cp ./assets/favicon.png ../runner/favicon.png
-	@echo "import torrentfile" >> ../runner/exec
-	@echo "torrentfile.main()" >> ../runner/exec
-	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
-		-F -n torrentfile -c -i ../runner/favicon.png \
-		--specpath ../runner/ ../runner/exec
-	pyinstaller --distpath ../runner/dist --workpath ../runner/build \
-		-D -n torrentfile_linux -c -i ../runner/favicon.png \
-		--specpath ../runner/ ../runner/exec
-	cp -rfv ../runner/dist/* ./dist/
-	python3 -c "$$FIX_BIN_VERSION_FILES"

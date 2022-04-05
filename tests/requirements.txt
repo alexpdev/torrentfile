@@ -8,4 +8,4 @@ pytest-cov
 pyben
 pylint
 tqdm
-prospector
+tox
