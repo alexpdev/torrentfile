@@ -140,12 +140,10 @@ def test_inter_edit_full(
 
 
 @pytest.mark.parametrize("announce", ["urla urlb urlc", "urld url2"])
-@pytest.mark.parametrize("url_list", ["ftp url2", "ftp1 ftp2 ftp3"])
-@pytest.mark.parametrize("comment", ["Some Comment"])
-@pytest.mark.parametrize("source", ["Do", "Ra"])
-def test_inter_edit_cli(
-    filemeta2, announce, comment, source, url_list, monkeypatch
-):
+@pytest.mark.parametrize("urllist", ["ftp url2", "ftp1 ftp2 ftp3"])
+@pytest.mark.parametrize("cmnt", ["Some Comment"])
+@pytest.mark.parametrize("srce", ["Do", "Ra"])
+def test_inter_edit_cli(filemeta2, announce, cmnt, srce, urllist, monkeypatch):
     """
     Test editing torrent interactively from CLI.
     """
@@ -155,11 +153,11 @@ def test_inter_edit_cli(
         "4",
         announce,
         "1",
-        comment,
+        cmnt,
         "2",
-        source,
+        srce,
         "5",
-        url_list,
+        urllist,
         "6",
         "Y",
         "DONE",
@@ -169,9 +167,9 @@ def test_inter_edit_cli(
     sys.argv = ["torrentfile", "-i"]
     main()
     meta2 = pyben.load(filemeta2)
-    assert meta2["info"]["source"] == source
-    assert meta2["info"]["comment"] == comment
-    assert meta2["url-list"] == url_list.split()
+    assert meta2["info"]["source"] == srce
+    assert meta2["info"]["comment"] == cmnt
+    assert meta2["url-list"] == urllist.split()
     assert meta2["info"]["private"] == 1
 
 

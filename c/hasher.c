@@ -292,19 +292,19 @@ HASHV2 *HasherV2(char *path, unsigned piece_length)
     blocks_per_piece = (unsigned) floor(piece_length / BLOCKSIZE);
     while (true)
     {
-        Layer *layerv2 = newLayer();
+        Layer *layr2 = newLayer();
         uint8 *piece;
         for (int i = 0; i < blocks_per_piece; i++)
         {
-            amount = fread(buffer, 1, BLOCKSIZE, fptr);
-            total += amount;
-            if (!amount) break;
-            uint8 *hash = (uint8 *)malloc(amount);
-            SHA256(hash, buffer, amount);
-            addNode(layerv2, hash);
+            amnt = fread(buffer, 1, BLOCKSIZE, fptr);
+            total += amnt;
+            if (!amnt) break;
+            uint8 *hash = (uint8 *)malloc(amnt);
+            SHA256(hash, buffer, amnt);
+            addNode(layr2, hash);
         }
-        if (!layerv2->count) break;
-        if (layerv2->count < blocks_per_piece)
+        if (!layr2->count) break;
+        if (layr2->count < blocks_per_piece)
         {
             if (!layer_hashes->count)
             {
@@ -313,16 +313,16 @@ HASHV2 *HasherV2(char *path, unsigned piece_length)
             }
             else
             {
-                remaining = blocks_per_piece - layerv2->count;
+                remaining = blocks_per_piece - layr2->count;
             }
             uint8 *padding;
             for (int i = 0; i < remaining; i++)
             {
                 padding = get_padding();
-                addNode(layerv2, padding);
+                addNode(layr2, padding);
             }
         }
-        piece = merkle_root(layerv2);
+        piece = merkle_root(layr2);
         addNode(layer_hashes, piece);
     }
     uint8 *piece_layerv2 = (uint8 *)malloc(HASHSIZE * layer_hashes->count);

@@ -132,14 +132,14 @@ def test_torrentfile_single_extra(version, size, piece_length):
     rmpath(tfile, outfile)
 
 
-@pytest.mark.parametrize("size", list(range(17, 25)))
-@pytest.mark.parametrize("piece_length", [2**i for i in range(14, 18)])
-@pytest.mark.parametrize("version", torrents())
-def test_torrentfile_single_under(version, size, piece_length):
+@pytest.mark.parametrize("sze", list(range(17, 25)))
+@pytest.mark.parametrize("piecelength", [2**i for i in range(14, 18)])
+@pytest.mark.parametrize("ver", torrents())
+def test_torrentfile_single_under(ver, sze, piecelength):
     """
     Test creating a torrent file from less than a single file contents.
     """
-    tfile = tempfile(exp=size)
+    tfile = tempfile(exp=sze)
     with open(tfile, "rb") as binfile:
         data = binfile.read()
     with open(tfile, "wb") as binfile:
@@ -148,9 +148,9 @@ def test_torrentfile_single_under(version, size, piece_length):
         "path": tfile,
         "comment": "somecomment",
         "announce": "announce",
-        "piece_length": piece_length,
+        "piece_length": piecelength,
     }
-    torrent = version(**kwargs)
+    torrent = ver(**kwargs)
     outfile, _ = torrent.write()
     assert os.path.exists(outfile)
     rmpath(tfile, outfile)

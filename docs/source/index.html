@@ -22812,7 +22812,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_interactive.test_inter_edit_cli" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_inter_edit_cli</span><span class="p">(</span><span class="n">filemeta2</span><span class="p">,</span> <span class="n">announce</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">url_list</span><span class="p">,</span> <span class="n">monkeypatch</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_inter_edit_cli</span><span class="p">(</span><span class="n">filemeta2</span><span class="p">,</span> <span class="n">announce</span><span class="p">,</span> <span class="n">cmnt</span><span class="p">,</span> <span class="n">srce</span><span class="p">,</span> <span class="n">urllist</span><span class="p">,</span> <span class="n">monkeypatch</span><span class="p">)</span></code>
 
 
 </h4>
@@ -22824,11 +22824,11 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
         <details class="quote">
           <summary>Source code in <code>tests\test_interactive.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;urla urlb urlc&quot;</span><span class="p">,</span> <span class="s2">&quot;urld url2&quot;</span><span class="p">])</span>
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;url_list&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;ftp url2&quot;</span><span class="p">,</span> <span class="s2">&quot;ftp1 ftp2 ftp3&quot;</span><span class="p">])</span>
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;comment&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Some Comment&quot;</span><span class="p">])</span>
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Do&quot;</span><span class="p">,</span> <span class="s2">&quot;Ra&quot;</span><span class="p">])</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;urllist&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;ftp url2&quot;</span><span class="p">,</span> <span class="s2">&quot;ftp1 ftp2 ftp3&quot;</span><span class="p">])</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;cmnt&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Some Comment&quot;</span><span class="p">])</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;srce&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Do&quot;</span><span class="p">,</span> <span class="s2">&quot;Ra&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">test_inter_edit_cli</span><span class="p">(</span>
-    <span class="n">filemeta2</span><span class="p">,</span> <span class="n">announce</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">url_list</span><span class="p">,</span> <span class="n">monkeypatch</span>
+    <span class="n">filemeta2</span><span class="p">,</span> <span class="n">announce</span><span class="p">,</span> <span class="n">cmnt</span><span class="p">,</span> <span class="n">srce</span><span class="p">,</span> <span class="n">urllist</span><span class="p">,</span> <span class="n">monkeypatch</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test editing torrent interactively from CLI.</span>
@@ -22839,11 +22839,11 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
         <span class="s2">&quot;4&quot;</span><span class="p">,</span>
         <span class="n">announce</span><span class="p">,</span>
         <span class="s2">&quot;1&quot;</span><span class="p">,</span>
-        <span class="n">comment</span><span class="p">,</span>
+        <span class="n">cmnt</span><span class="p">,</span>
         <span class="s2">&quot;2&quot;</span><span class="p">,</span>
-        <span class="n">source</span><span class="p">,</span>
+        <span class="n">srce</span><span class="p">,</span>
         <span class="s2">&quot;5&quot;</span><span class="p">,</span>
-        <span class="n">url_list</span><span class="p">,</span>
+        <span class="n">urllist</span><span class="p">,</span>
         <span class="s2">&quot;6&quot;</span><span class="p">,</span>
         <span class="s2">&quot;Y&quot;</span><span class="p">,</span>
         <span class="s2">&quot;DONE&quot;</span><span class="p">,</span>
@@ -22853,9 +22853,9 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span> <span class="s2">&quot;-i&quot;</span><span class="p">]</span>
     <span class="n">main</span><span class="p">()</span>
     <span class="n">meta2</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filemeta2</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">meta2</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">source</span>
-    <span class="k">assert</span> <span class="n">meta2</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">comment</span>
-    <span class="k">assert</span> <span class="n">meta2</span><span class="p">[</span><span class="s2">&quot;url-list&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">url_list</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">meta2</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">srce</span>
+    <span class="k">assert</span> <span class="n">meta2</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cmnt</span>
+    <span class="k">assert</span> <span class="n">meta2</span><span class="p">[</span><span class="s2">&quot;url-list&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">urllist</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">meta2</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;private&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
 </code></pre></div>
         </details>
@@ -23666,7 +23666,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">dir1</span> <span class="ow">and</span> <span class="n">dir2</span> <span class="ow">and</span> <span class="n">file1</span> <span class="ow">and</span> <span class="n">file2</span>
     <span class="k">assert</span> <span class="n">filemeta1</span> <span class="ow">and</span> <span class="n">filemeta2</span> <span class="ow">and</span> <span class="n">metafile1</span>
-    <span class="k">assert</span> <span class="n">metafile2</span>  <span class="ow">and</span> <span class="n">sizes</span> <span class="ow">and</span> <span class="n">sizedfiles</span>
+    <span class="k">assert</span> <span class="n">metafile2</span> <span class="ow">and</span> <span class="n">sizes</span> <span class="ow">and</span> <span class="n">sizedfiles</span>
 </code></pre></div>
         </details>
     </div>
@@ -24074,7 +24074,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_torrent.test_torrentfile_single_under" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_torrentfile_single_under</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_torrentfile_single_under</span><span class="p">(</span><span class="n">ver</span><span class="p">,</span> <span class="n">sze</span><span class="p">,</span> <span class="n">piecelength</span><span class="p">)</span></code>
 
 
 </h4>
@@ -24085,14 +24085,14 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">25</span><span class="p">)))</span>
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;piece_length&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">18</span><span class="p">)])</span>
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">torrents</span><span class="p">())</span>
-<span class="k">def</span> <span class="nf">test_torrentfile_single_under</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;sze&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">25</span><span class="p">)))</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;piecelength&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">18</span><span class="p">)])</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;ver&quot;</span><span class="p">,</span> <span class="n">torrents</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">test_torrentfile_single_under</span><span class="p">(</span><span class="n">ver</span><span class="p">,</span> <span class="n">sze</span><span class="p">,</span> <span class="n">piecelength</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test creating a torrent file from less than a single file contents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">tfile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">(</span><span class="n">exp</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">tfile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">(</span><span class="n">exp</span><span class="o">=</span><span class="n">sze</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tfile</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">binfile</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">binfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tfile</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">binfile</span><span class="p">:</span>
@@ -24101,9 +24101,9 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
         <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tfile</span><span class="p">,</span>
         <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;somecomment&quot;</span><span class="p">,</span>
         <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="n">piece_length</span><span class="p">,</span>
+        <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="n">piecelength</span><span class="p">,</span>
     <span class="p">}</span>
-    <span class="n">torrent</span> <span class="o">=</span> <span class="n">version</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">ver</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">outfile</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
     <span class="n">rmpath</span><span class="p">(</span><span class="n">tfile</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
