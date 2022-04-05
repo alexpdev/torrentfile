@@ -61,7 +61,6 @@ def create(args: list):
         object containing the path to created metafile and its contents.
     """
     kwargs = vars(args)
-    print(args, kwargs)
     logger.debug("Create new torrent file from %s", args.content)
 
     if args.meta_version == "2":

@@ -1,5 +1,14 @@
 # TorrentFile
 
+## Version 0.7.2
+
+- cleaned up readme and help messages
+- removed useless print statements
+- improved CI tooling and checking
+- minor bug fixes
+
+---------------------
+
 ## Version 0.7.1
 
 - split CI integration into separate platform specific files
