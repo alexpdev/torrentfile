@@ -299,32 +299,8 @@ def file2():
     rmpath(path)
 
 
-@pytest.fixture(scope="package", params=torrents())
-def sizedfiles1(dir1, sizes, request):
-    """
-    Generate variable sized meta files for testing, package scope.
-    """
-    versions = torrents()
-    args = {
-        "path": dir1,
-        "announce": ["url1", "url2", "url4"],
-        "url_list": ["url5", "url6", "url7"],
-        "comment": "this is a comment",
-        "source": "SomeSource",
-        "private": 1,
-        "piece_length": sizes,
-    }
-    torrent_class = request.param
-    version = str(versions.index(torrent_class))
-    outfile = str(dir1) + version + str(sizes) + ".torrent"
-    torrent = torrent_class(**args)
-    outfile, _ = torrent.write(outfile=outfile)
-    yield outfile
-    rmpath(outfile)
-
-
 @pytest.fixture(params=torrents())
-def sizedfiles2(dir2, sizes, request):
+def sizedfiles(dir2, sizes, request):
     """
     Generate variable sized meta files for testing, no scope.
     """

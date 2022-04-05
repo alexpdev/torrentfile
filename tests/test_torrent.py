@@ -85,15 +85,15 @@ def test_torrentfile_extra(dir2, version):
     assert torrent.meta["announce"] == "announce"
 
 
-@pytest.mark.parametrize("size", list(range(17, 25)))
+@pytest.mark.parametrize("num", list(range(17, 25)))
 @pytest.mark.parametrize("piece_length", [2**i for i in range(14, 18)])
 @pytest.mark.parametrize("version", torrents())
 @pytest.mark.parametrize("noprogress", [True, False])
-def test_torrentfile_single(version, size, piece_length, noprogress, capsys):
+def test_torrentfile_single(version, num, piece_length, noprogress, capsys):
     """
     Test creating a torrent file from a single file contents.
     """
-    tfile = tempfile(exp=size)
+    tfile = tempfile(exp=num)
     with capsys.disabled():
         version.set_callback(print)
     args = {

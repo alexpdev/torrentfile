@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 
 from tests import (dir1, dir2, file1, file2, filemeta1, filemeta2, metafile1,
-                   metafile2, rmpath, sizedfiles1, sizedfiles2, sizes)
+                   metafile2, rmpath, sizedfiles, sizes)
 from torrentfile.cli import main_script as main
 from torrentfile.recheck import Checker
 
@@ -36,7 +36,7 @@ def test_fixtures():
     """
     assert dir1 and dir2 and file1 and file2
     assert filemeta1 and filemeta2 and metafile1
-    assert metafile2 and sizedfiles1 and sizes and sizedfiles2
+    assert metafile2 and sizes and sizedfiles
 
 
 def test_checker_class(dir1, metafile1):
@@ -47,15 +47,7 @@ def test_checker_class(dir1, metafile1):
     assert checker.results() == 100
 
 
-def test_checker_class_alt(dir1, sizedfiles1):
-    """
-    Test Checker Class against meta files.
-    """
-    checker = Checker(sizedfiles1, dir1)
-    assert checker.results() == 100
-
-
-def test_checker_first_piece(dir2, sizedfiles2):
+def test_checker_first_piece(dir2, sizedfiles):
     """
     Test Checker Class when first piece is slightly alterred.
     """
@@ -77,11 +69,11 @@ def test_checker_first_piece(dir2, sizedfiles2):
                 change(item)
 
     change(Path(dir2))
-    checker = Checker(sizedfiles2, dir2)
+    checker = Checker(sizedfiles, dir2)
     assert checker.results() != 100
 
 
-def test_checker_first_piece_alt(dir2, sizedfiles2):
+def test_checker_first_piece_alt(dir2, sizedfiles):
     """
     Test Checker Class when first piece is slightly alterred.
     """
@@ -102,11 +94,11 @@ def test_checker_first_piece_alt(dir2, sizedfiles2):
                 change(os.path.join(path, item))
 
     change(dir2)
-    checker = Checker(sizedfiles2, dir2)
+    checker = Checker(sizedfiles, dir2)
     assert checker.results() != 100
 
 
-def test_partial_metafiles(dir2, sizedfiles2):
+def test_partial_metafiles(dir2, sizedfiles):
     """
     Test Checker with data that is expected to be incomplete.
     """
@@ -126,7 +118,7 @@ def test_partial_metafiles(dir2, sizedfiles2):
             shortenfile(full)
 
     testdir = os.path.dirname(dir2)
-    checker = Checker(sizedfiles2, testdir)
+    checker = Checker(sizedfiles, testdir)
     assert checker.results() != 100
 
 
@@ -184,7 +176,7 @@ def test_checker_wrong_root_dir(metafile1):
         assert True
 
 
-def test_checker_missing(sizedfiles2, dir2):
+def test_checker_missing(sizedfiles, dir2):
     """
     Test Checker class when files are missing from contents.
     """
@@ -192,11 +184,11 @@ def test_checker_missing(sizedfiles2, dir2):
     for fd in Path(dir2).iterdir():
         if fd.is_file() and count < 2:
             rmpath(fd)
-    checker = Checker(sizedfiles2, dir2)
+    checker = Checker(sizedfiles, dir2)
     assert int(checker.results()) < 100
 
 
-def test_checker_class_allfiles(sizedfiles2, dir2):
+def test_checker_class_allfiles(sizedfiles, dir2):
     """
     Test Checker class when all files are missing from contents.
     """
@@ -212,17 +204,17 @@ def test_checker_class_allfiles(sizedfiles2, dir2):
                 traverse(item)
 
     traverse(dir2)
-    checker = Checker(sizedfiles2, dir2)
+    checker = Checker(sizedfiles, dir2)
     assert int(checker.results()) < 100
 
 
-def test_checker_class_allpaths(sizedfiles2, dir2):
+def test_checker_class_allpaths(sizedfiles, dir2):
     """
     Test Checker class when all files are missing from contents.
     """
     for item in Path(str(dir2)).iterdir():
         rmpath(item)
-    checker = Checker(sizedfiles2, dir2)
+    checker = Checker(sizedfiles, dir2)
     assert int(checker.results()) < 100
 
 
@@ -240,7 +232,7 @@ def test_checker_class_half_file(filemeta2, file2):
     assert int(checker.results()) != 10
 
 
-def test_checker_missing_singles(dir2, sizedfiles2):
+def test_checker_missing_singles(dir2, sizedfiles):
     """
     Test Checker class with half size single file.
     """
@@ -258,7 +250,7 @@ def test_checker_missing_singles(dir2, sizedfiles2):
         return False
 
     walk(Path(dir2))
-    checker = Checker(sizedfiles2, dir2)
+    checker = Checker(sizedfiles, dir2)
     assert int(checker.results()) < 100
 
 
@@ -279,7 +271,7 @@ def test_checker_simplest(dir1, metafile1):
     assert checker.results() == 100
 
 
-def test_checker_empty_files(dir2, sizedfiles2):
+def test_checker_empty_files(dir2, sizedfiles):
     """
     Test Checker when directory contains 0 length files.
     """
@@ -298,7 +290,7 @@ def test_checker_empty_files(dir2, sizedfiles2):
         return root
 
     empty_files(dir2)
-    checker = Checker(sizedfiles2, dir2)
+    checker = Checker(sizedfiles, dir2)
     assert checker.results() != 100
 
 

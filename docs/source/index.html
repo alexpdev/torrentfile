@@ -20522,54 +20522,8 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 
-<h3 id="tests.sizedfiles1" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">sizedfiles1</span><span class="p">(</span><span class="n">dir1</span><span class="p">,</span> <span class="n">sizes</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Generate variable sized meta files for testing, package scope.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>tests\__init__.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;package&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">torrents</span><span class="p">())</span>
-<span class="k">def</span> <span class="nf">sizedfiles1</span><span class="p">(</span><span class="n">dir1</span><span class="p">,</span> <span class="n">sizes</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generate variable sized meta files for testing, package scope.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">versions</span> <span class="o">=</span> <span class="n">torrents</span><span class="p">()</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">dir1</span><span class="p">,</span>
-        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;url1&quot;</span><span class="p">,</span> <span class="s2">&quot;url2&quot;</span><span class="p">,</span> <span class="s2">&quot;url4&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;url_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;url5&quot;</span><span class="p">,</span> <span class="s2">&quot;url6&quot;</span><span class="p">,</span> <span class="s2">&quot;url7&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;this is a comment&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;SomeSource&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="n">sizes</span><span class="p">,</span>
-    <span class="p">}</span>
-    <span class="n">torrent_class</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span>
-    <span class="n">version</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">versions</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">torrent_class</span><span class="p">))</span>
-    <span class="n">outfile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dir1</span><span class="p">)</span> <span class="o">+</span> <span class="n">version</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sizes</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
-    <span class="n">torrent</span> <span class="o">=</span> <span class="n">torrent_class</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
-    <span class="n">outfile</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">outfile</span><span class="o">=</span><span class="n">outfile</span><span class="p">)</span>
-    <span class="k">yield</span> <span class="n">outfile</span>
-    <span class="n">rmpath</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
-<h3 id="tests.sizedfiles2" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">sizedfiles2</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizes</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span></code>
+<h3 id="tests.sizedfiles" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">sizedfiles</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizes</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span></code>
 
 
 </h3>
@@ -20581,7 +20535,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
         <details class="quote">
           <summary>Source code in <code>tests\__init__.py</code></summary>
           <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">torrents</span><span class="p">())</span>
-<span class="k">def</span> <span class="nf">sizedfiles2</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizes</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">sizedfiles</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizes</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate variable sized meta files for testing, no scope.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -23151,7 +23105,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_recheck.test_checker_class_allfiles" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_checker_class_allfiles</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_checker_class_allfiles</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span></code>
 
 
 </h4>
@@ -23162,7 +23116,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_class_allfiles</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_class_allfiles</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test Checker class when all files are missing from contents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -23178,7 +23132,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
                 <span class="n">traverse</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
     <span class="n">traverse</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span>
-    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">100</span>
 </code></pre></div>
         </details>
@@ -23193,7 +23147,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_recheck.test_checker_class_allpaths" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_checker_class_allpaths</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_checker_class_allpaths</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span></code>
 
 
 </h4>
@@ -23204,44 +23158,14 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_class_allpaths</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_class_allpaths</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test Checker class when all files are missing from contents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">))</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
         <span class="n">rmpath</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">100</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
-<h4 id="tests.test_recheck.test_checker_class_alt" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_checker_class_alt</span><span class="p">(</span><span class="n">dir1</span><span class="p">,</span> <span class="n">sizedfiles1</span><span class="p">)</span></code>
-
-
-</h4>
-
-    <div class="doc doc-contents ">
-
-      <p>Test Checker Class against meta files.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>tests\test_recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_class_alt</span><span class="p">(</span><span class="n">dir1</span><span class="p">,</span> <span class="n">sizedfiles1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Test Checker Class against meta files.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles1</span><span class="p">,</span> <span class="n">dir1</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span> <span class="o">==</span> <span class="mi">100</span>
 </code></pre></div>
         </details>
     </div>
@@ -23322,7 +23246,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_recheck.test_checker_empty_files" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_checker_empty_files</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles2</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_checker_empty_files</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles</span><span class="p">)</span></code>
 
 
 </h4>
@@ -23333,7 +23257,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_empty_files</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles2</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_empty_files</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test Checker when directory contains 0 length files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -23352,7 +23276,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
         <span class="k">return</span> <span class="n">root</span>
 
     <span class="n">empty_files</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span>
-    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">100</span>
 </code></pre></div>
         </details>
@@ -23367,7 +23291,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_recheck.test_checker_first_piece" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_checker_first_piece</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles2</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_checker_first_piece</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles</span><span class="p">)</span></code>
 
 
 </h4>
@@ -23378,7 +23302,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_first_piece</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles2</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_first_piece</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test Checker Class when first piece is slightly alterred.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -23400,7 +23324,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
                 <span class="n">change</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
     <span class="n">change</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">dir2</span><span class="p">))</span>
-    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">100</span>
 </code></pre></div>
         </details>
@@ -23415,7 +23339,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_recheck.test_checker_first_piece_alt" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_checker_first_piece_alt</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles2</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_checker_first_piece_alt</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles</span><span class="p">)</span></code>
 
 
 </h4>
@@ -23426,7 +23350,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_first_piece_alt</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles2</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_first_piece_alt</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test Checker Class when first piece is slightly alterred.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -23447,7 +23371,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
                 <span class="n">change</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">item</span><span class="p">))</span>
 
     <span class="n">change</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span>
-    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">100</span>
 </code></pre></div>
         </details>
@@ -23462,7 +23386,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_recheck.test_checker_missing" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_checker_missing</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_checker_missing</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span></code>
 
 
 </h4>
@@ -23473,7 +23397,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_missing</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_missing</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test Checker class when files are missing from contents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -23481,7 +23405,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="k">for</span> <span class="n">fd</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">fd</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">and</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">rmpath</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
-    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">100</span>
 </code></pre></div>
         </details>
@@ -23496,7 +23420,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_recheck.test_checker_missing_singles" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_checker_missing_singles</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles2</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_checker_missing_singles</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles</span><span class="p">)</span></code>
 
 
 </h4>
@@ -23507,7 +23431,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_missing_singles</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles2</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_checker_missing_singles</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test Checker class with half size single file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -23525,7 +23449,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="n">walk</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">dir2</span><span class="p">))</span>
-    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">dir2</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">100</span>
 </code></pre></div>
         </details>
@@ -23742,7 +23666,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">dir1</span> <span class="ow">and</span> <span class="n">dir2</span> <span class="ow">and</span> <span class="n">file1</span> <span class="ow">and</span> <span class="n">file2</span>
     <span class="k">assert</span> <span class="n">filemeta1</span> <span class="ow">and</span> <span class="n">filemeta2</span> <span class="ow">and</span> <span class="n">metafile1</span>
-    <span class="k">assert</span> <span class="n">metafile2</span> <span class="ow">and</span> <span class="n">sizedfiles1</span> <span class="ow">and</span> <span class="n">sizes</span> <span class="ow">and</span> <span class="n">sizedfiles2</span>
+    <span class="k">assert</span> <span class="n">metafile2</span>  <span class="ow">and</span> <span class="n">sizes</span> <span class="ow">and</span> <span class="n">sizedfiles</span>
 </code></pre></div>
         </details>
     </div>
@@ -23756,7 +23680,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_recheck.test_partial_metafiles" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_partial_metafiles</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles2</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_partial_metafiles</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles</span><span class="p">)</span></code>
 
 
 </h4>
@@ -23767,7 +23691,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_recheck.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_partial_metafiles</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles2</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_partial_metafiles</span><span class="p">(</span><span class="n">dir2</span><span class="p">,</span> <span class="n">sizedfiles</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test Checker with data that is expected to be incomplete.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -23787,7 +23711,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
             <span class="n">shortenfile</span><span class="p">(</span><span class="n">full</span><span class="p">)</span>
 
     <span class="n">testdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span>
-    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles2</span><span class="p">,</span> <span class="n">testdir</span><span class="p">)</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">sizedfiles</span><span class="p">,</span> <span class="n">testdir</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">100</span>
 </code></pre></div>
         </details>
@@ -24059,7 +23983,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_torrent.test_torrentfile_single" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_torrentfile_single</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">,</span> <span class="n">noprogress</span><span class="p">,</span> <span class="n">capsys</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_torrentfile_single</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">,</span> <span class="n">noprogress</span><span class="p">,</span> <span class="n">capsys</span><span class="p">)</span></code>
 
 
 </h4>
@@ -24070,15 +23994,15 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_torrent.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">25</span><span class="p">)))</span>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;num&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">25</span><span class="p">)))</span>
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;piece_length&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">18</span><span class="p">)])</span>
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">torrents</span><span class="p">())</span>
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;noprogress&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">test_torrentfile_single</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">,</span> <span class="n">noprogress</span><span class="p">,</span> <span class="n">capsys</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_torrentfile_single</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">,</span> <span class="n">noprogress</span><span class="p">,</span> <span class="n">capsys</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test creating a torrent file from a single file contents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">tfile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">(</span><span class="n">exp</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">tfile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">(</span><span class="n">exp</span><span class="o">=</span><span class="n">num</span><span class="p">)</span>
     <span class="k">with</span> <span class="n">capsys</span><span class="o">.</span><span class="n">disabled</span><span class="p">():</span>
         <span class="n">version</span><span class="o">.</span><span class="n">set_callback</span><span class="p">(</span><span class="nb">print</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
