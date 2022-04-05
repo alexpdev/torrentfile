@@ -262,7 +262,7 @@ class MetaFile:
         httpseeds=None,
         url_list=None,
         content=None,
-        **kwargs,
+        **_,
     ):
         """
         Construct MetaFile superclass and assign local attributes.
@@ -291,8 +291,6 @@ class MetaFile:
 
         # base path to torrent content.
         self.path = path
-        if "name" in kwargs:
-            del kwargs["name"]
 
         # Format piece_length attribute.
         if piece_length:
