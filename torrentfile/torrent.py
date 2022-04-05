@@ -291,8 +291,8 @@ class MetaFile:
 
         # base path to torrent content.
         self.path = path
-        if kwargs:
-            del kwargs
+        if "name" in kwargs:
+            del kwargs["name"]
 
         # Format piece_length attribute.
         if piece_length:
