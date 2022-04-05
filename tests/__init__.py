@@ -202,6 +202,7 @@ def metafile1(dir1, request):
         "path": dir1,
         "announce": ["url1", "url2", "url4"],
         "url_list": ["url5", "url6", "url7"],
+        "httpseeds": ["url5", "url6", "url7"],
         "comment": "this is a comment",
         "source": "SomeSource",
         "private": 1,
@@ -224,6 +225,7 @@ def metafile2(dir2, request):
         "announce": ["url1", "url4"],
         "url_list": ["url6", "url7"],
         "comment": "this is a comment",
+        "httpseeds": ["url6", "url7"],
         "source": "SomeSource",
         "private": 1,
     }
@@ -254,6 +256,7 @@ def filemeta1(file1, request):
         "path": file1,
         "announce": ["url1", "url4"],
         "url_list": ["url6", "url7"],
+        "httpseeds": ["url6", "url7"],
         "comment": "this is a comment",
         "source": "SomeSource",
         "private": 1,
@@ -276,6 +279,7 @@ def filemeta2(file2, request):
         "path": file2,
         "announce": ["url1", "url4"],
         "url_list": ["url6", "url7"],
+        "httpseeds": ["url7", "url8"],
         "comment": "this is a comment",
         "source": "SomeSource",
         "private": 1,
@@ -306,7 +310,7 @@ def sizedfiles(dir2, sizes, request):
     """
     versions = torrents()
     args = {
-        "path": dir2,
+        "content": dir2,
         "announce": ["url1", "url2", "url4"],
         "url_list": ["url5", "url6", "url7"],
         "comment": "this is a comment",

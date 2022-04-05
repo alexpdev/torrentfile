@@ -225,6 +225,12 @@ class MetaFile:
         If True disable showing the progress bar.
     cwd : bool
         If True change default save location to current directory
+    httpsseeds : list
+        one or more web addresses where torrent content can be found.
+    url_list : list
+        one or more web addressess where torrent content exists.
+    content : str
+        alias for 'path' arg.
     """
 
     hasher = None
@@ -246,34 +252,46 @@ class MetaFile:
         self,
         path=None,
         announce=None,
-        private=False,
-        source=None,
-        piece_length=None,
         comment=None,
+        piece_length=None,
+        private=False,
         outfile=None,
+        source=None,
+        noprogress=None,
+        cwd=None,
+        httpseeds=None,
         url_list=None,
-        noprogress=False,
-        cwd=False,
+        content=None,
+        **_,
     ):
         """
         Construct MetaFile superclass and assign local attributes.
         """
+        self.private = private
+        self.cwd = cwd
+        self.outfile = outfile
+        self.noprogress = noprogress
+        self.comment = comment
+        self.source = source
+
+        if content:
+            path = content
         if not path:
             if announce and len(announce) > 1 and os.path.exists(announce[-1]):
                 path = announce[-1]
                 announce = announce[:-1]
-            elif (
-                url_list and len(url_list) > 1 and os.path.exists(url_list[-1])
-            ):
+            elif url_list and os.path.exists(url_list[-1]):
                 path = url_list[-1]
                 url_list = url_list[:-1]
+            elif httpseeds and os.path.exists(httpseeds[-1]):
+                path = httpseeds[-1]
+                httpseeds = httpseeds[:-1]
             else:
                 raise utils.MissingPathError("Path to content is required.")
 
         # base path to torrent content.
         self.path = path
 
-        self.cwd = cwd
         # Format piece_length attribute.
         if piece_length:
             self.piece_length = utils.normalize_piece_length(piece_length)
@@ -282,27 +300,14 @@ class MetaFile:
 
         # Assign announce URL to empty string if none provided.
         if not announce:
-            self.announce = ""
-            self.announce_list = [[""]]
+            self.announce, self.announce_list = "", [[""]]
 
         # Most torrent clients have editting trackers as a feature.
         elif isinstance(announce, str):
-            self.announce = announce
-            self.announce_list = [announce]
+            self.announce, self.announce_list = announce, [[announce]]
+
         elif isinstance(announce, Sequence):
-            self.announce = announce[0]
-            self.announce_list = [announce]
-
-        if private:
-            self.private = 1
-        else:
-            self.private = None
-
-        self.outfile = outfile
-        self.noprogress = noprogress
-        self.comment = comment
-        self.url_list = url_list
-        self.source = source
+            self.announce, self.announce_list = announce[0], [announce]
 
         self.meta = {
             "announce": self.announce,
@@ -311,7 +316,6 @@ class MetaFile:
             "creation date": int(datetime.timestamp(datetime.now())),
             "info": {},
         }
-        logger.debug("Announce list = %s", str(self.announce_list))
         if comment:
             self.meta["info"]["comment"] = comment
         if private:
@@ -320,6 +324,8 @@ class MetaFile:
             self.meta["info"]["source"] = source
         if url_list:
             self.meta["url-list"] = url_list
+        if httpseeds:
+            self.meta["httpseeds"] = httpseeds
         self.meta["info"]["piece length"] = self.piece_length
 
         parent, self.name = os.path.split(self.path)
@@ -580,7 +586,7 @@ class TorrentFileHybrid(MetaFile):
             self.progbar = tqdm(
                 desc="Hashing Files:",
                 total=len(lst),
-                leave=False,
+                leave=True,
                 unit="file",
             )
 

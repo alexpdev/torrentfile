@@ -158,6 +158,7 @@ class Checker:
         for response in tqdm(
             iterable=self.iter_hashes(),
             desc="Calculating",
+            leave=True,
             total=iterations,
             unit="pieces",
         ):
@@ -541,9 +542,7 @@ class HashChecker:
         for i, path in enumerate(self.paths):
             info = self.fileinfo[i]
             length, plength = info["length"], self.piece_length
-            logger.debug("%s length: %s", path, str(length))
             roothash = info["pieces root"]
-            logger.debug("%s root hash %s", path, str(roothash))
             if roothash in self.piece_layers:
                 pieces = self.piece_layers[roothash]
             else:

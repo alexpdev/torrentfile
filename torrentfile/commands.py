@@ -60,18 +60,7 @@ def create(args: list):
     torrentfile.MetaFile
         object containing the path to created metafile and its contents.
     """
-    kwargs = {
-        "noprogress": args.noprogress,
-        "url_list": args.url_list,
-        "path": args.content,
-        "announce": args.announce + args.tracker,
-        "piece_length": args.piece_length,
-        "source": args.source,
-        "private": args.private,
-        "outfile": args.outfile,
-        "comment": args.comment,
-        "cwd": args.cwd,
-    }
+    kwargs = vars(args)
     print(args, kwargs)
     logger.debug("Create new torrent file from %s", args.content)
 
@@ -82,6 +71,7 @@ def create(args: list):
     else:
         torrent = TorrentFile(**kwargs)
     outfile, meta = torrent.write()
+    print("Output path: ", str(outfile))
     logger.debug("Torrent file creation complete.")
 
     if args.magnet:
@@ -115,6 +105,10 @@ def info(args: list):
     if "announce-list" in meta:
         lst = meta["announce-list"]
         meta["announce-list"] = ", ".join([j for i in lst for j in i])
+    if "url-list" in meta:
+        meta["url-list"] = ", ".join(meta["url-list"])
+    if "httpseeds" in meta:
+        meta["httpseeds"] = ", ".join(meta["httpseeds"])
     text = []
     longest = max([len(i) for i in meta.keys()])
     for key, val in meta.items():
@@ -122,6 +116,8 @@ def info(args: list):
             prefix = longest - len(key) + 1
             string = key + (" " * prefix) + str(val)
             text.append(string)
+    most = max([len(i) for i in text])
+    text = ["-" * most, "\n"] + text + ["\n", "-" * most]
     output = "\n".join(text)
     print(output)
     return output
@@ -145,6 +141,7 @@ def edit(args: list):
     logger.info("Editing %s Meta File", str(args.metafile))
     editargs = {
         "url-list": args.url_list,
+        "httpseeds": args.httpseeds,
         "announce": args.announce,
         "source": args.source,
         "private": args.private,
@@ -223,7 +220,7 @@ def magnet(metafile):
 
     full_uri = "".join([scheme, hasharg, namearg] + announce_args)
     logger.info("Created Magnet URI %s", full_uri)
-    sys.stdout.write(full_uri)
+    sys.stdout.write("\n" + full_uri + "\n")
     return full_uri
 
 
