@@ -207,6 +207,7 @@ class InteractiveEditor:
 
         self.args = {
             "url-list": self.meta.get("url-list", None),
+            "httpseeds": self.meta.get("httpseeds", None),
             "announce": self.meta.get("announce-list", None),
             "source": self.info.get("source", None),
             "private": self.info.get("private", None),
@@ -235,7 +236,7 @@ class InteractiveEditor:
         response : str
             User input value the property is being edited to.
         """
-        if key in ["announce", "url-list"]:
+        if key in ["announce", "url-list", "httpseeds"]:
             val = response.split()
         else:
             val = response
@@ -257,6 +258,7 @@ class InteractiveEditor:
                 3: "private",
                 4: "tracker",
                 5: "web-seed",
+                6: "httpseeds",
             }
 
             args = {
@@ -265,6 +267,7 @@ class InteractiveEditor:
                 3: "private",
                 4: "announce",
                 5: "url-list",
+                6: "httpseeds",
             }
 
             txt = ", ".join((str(k) + ": " + v) for k, v in props.items())
@@ -305,6 +308,7 @@ class InteractiveCreator:
             "piece_length": None,
             "outfile": None,
             "path": None,
+            "httpseeds": None,
         }
         self.outfile, self.meta = self.get_props()
 
@@ -325,11 +329,17 @@ class InteractiveCreator:
             self.kwargs["announce"] = announce.split()
 
         url_list = get_input(
-            "Web Seed list (empty): ", lambda x: isinstance(x, str)
+            "Web Seed {GetRight} list (empty): ", lambda x: isinstance(x, str)
+        )
+
+        httpseeds = get_input(
+            "Web Seed {Hoffman} list (empty): ", lambda x: isinstance(x, str)
         )
 
         if url_list:
             self.kwargs["url_list"] = url_list.split()
+        if httpseeds:
+            self.kwargs["httpseeds"] = httpseeds.split()
         comment = get_input("Comment (empty): ", None)
 
         if comment:

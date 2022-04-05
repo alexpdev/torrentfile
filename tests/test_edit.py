@@ -75,6 +75,18 @@ def test_edit_urllist_str(metafile2, url_list):
     assert data["url-list"] == url_list.split()
 
 
+@pytest.mark.parametrize("httpseeds", ["urla", "urlb urlc", "urla urlb urlc"])
+def test_edit_httpseeds_str(metafile2, httpseeds):
+    """
+    Test edit torrent with webseed param.
+    """
+    edits = {"httpseeds": httpseeds}
+    data = edit_torrent(metafile2, edits)
+    meta = pyben.load(metafile2)
+    assert data == meta
+    assert data["httpseeds"] == httpseeds.split()
+
+
 @pytest.mark.parametrize(
     "url_list", [["urla"], ["urlb", "urlc"], ["urla", "urlb", "urlc"]]
 )
@@ -87,6 +99,20 @@ def test_edit_urllist(metafile2, url_list):
     meta = pyben.load(metafile2)
     assert data == meta
     assert data["url-list"] == url_list
+
+
+@pytest.mark.parametrize(
+    "httpseed", [["urla"], ["urlb", "urlc"], ["urla", "urlb", "urlc"]]
+)
+def test_edit_httpseeds(metafile2, httpseed):
+    """
+    Test edit torrent with webseed param as string.
+    """
+    edits = {"httpseeds": httpseed}
+    data = edit_torrent(metafile2, edits)
+    meta = pyben.load(metafile2)
+    assert data == meta
+    assert data["httpseeds"] == httpseed
 
 
 @pytest.mark.parametrize("comment", ["COMMENT", "COMIT", "MITCO"])
@@ -159,6 +185,7 @@ def test_edit_removal(metafile2):
     edits = {
         "announce": "",
         "url-list": "",
+        "httpseeds": "",
         "comment": "",
         "source": "",
         "private": "",
@@ -172,7 +199,8 @@ def test_edit_removal(metafile2):
 @pytest.mark.parametrize("source", ["sourcea", "sourceb", "sourcec"])
 @pytest.mark.parametrize("announce", [["url1", "url2", "url3"], ["url1"]])
 @pytest.mark.parametrize("webseed", [["ftp1"], ["ftpa", "ftpb"]])
-def test_edit_cli(metafile2, comment, source, announce, webseed):
+@pytest.mark.parametrize("httpseed", [["ftp1"], ["ftpa", "ftpb"]])
+def test_edit_cli(metafile2, comment, source, announce, webseed, httpseed):
     """
     Test edit torrent with all params on cli.
     """
@@ -186,6 +214,8 @@ def test_edit_cli(metafile2, comment, source, announce, webseed):
         source,
         "--web-seed",
         webseed,
+        "--http-seed",
+        httpseed,
         "--tracker",
         announce,
         "--private",

@@ -25,6 +25,7 @@ invoked when called from command line, and parses accompanying arguments.
 
 Functions:
     main_script: process command line arguments and run program.
+    activate_logger: turns on debug mode and logging facility.
 """
 
 import logging
@@ -71,7 +72,7 @@ class TorrentFileHelpFormatter(HelpFormatter):
     Subclasses Argparse.HelpFormatter.
     """
 
-    def __init__(self, prog, width=45, max_help_positions=35):
+    def __init__(self, prog, width=40, max_help_positions=30):
         """
         Construct HelpFormat class for usage output.
 
@@ -215,14 +216,12 @@ def execute(args=None):
     subparsers = parser.add_subparsers(
         title="Actions",
         dest="command",
-        metavar="<create> <edit> <magnet> <recheck>",
+        metavar="create, edit, magnet, recheck",
     )
 
     create_parser = subparsers.add_parser(
         "create",
-        help="""
-        Create a torrent meta file.
-        """,
+        help="""Generate a new torrent meta file.""",
         prefix_chars="-",
         aliases=["c", "new"],
         formatter_class=TorrentFileHelpFormatter,
@@ -230,13 +229,15 @@ def execute(args=None):
 
     create_parser.add_argument(
         "-a",
+        "-t",
         "--announce",
+        "--tracker",
         action="store",
         dest="announce",
         metavar="<url>",
         nargs="+",
         default=[],
-        help="Alias for -t/--tracker",
+        help="One or more space-seperated torrent tracker url(s).",
     )
 
     create_parser.add_argument(
@@ -244,7 +245,7 @@ def execute(args=None):
         "--private",
         action="store_true",
         dest="private",
-        help="Create a private torrent file",
+        help="Creates private torrent with multi-tracker and DHT turned off.",
     )
 
     create_parser.add_argument(
@@ -253,7 +254,7 @@ def execute(args=None):
         action="store",
         dest="source",
         metavar="<source>",
-        help="Useful for cross-seeding",
+        help="Add a source string. Useful for cross-seeding.",
     )
 
     create_parser.add_argument(
@@ -291,24 +292,10 @@ def execute(args=None):
     )
 
     create_parser.add_argument(
-        "-t",
-        "--tracker",
-        action="store",
-        dest="tracker",
-        metavar="<url>",
-        nargs="+",
-        default=[],
-        help="""One or more Bittorrent tracker announce url(s).""",
-    )
-
-    create_parser.add_argument(
         "--noprogress",
         action="store_true",
         dest="noprogress",
-        help="""
-        Disable showing the progress bar during torrent creation.
-        (Minimially improves performance of torrent file creation.)
-        """,
+        help="Disables the progress bar during torrent creation.",
     )
 
     create_parser.add_argument(
@@ -333,10 +320,9 @@ def execute(args=None):
         dest="piece_length",
         metavar="<int>",
         help="""
-        Number of bytes for each chunk of data. (Default: None)
-        Acceptable input values include integers 14-24, which
-        are interpreted as the exponent for 2ⁿ, or any perfect
-        power of two integer between 16Kib and 16MiB (inclusive).
+        (Default: None) Number of bytes for each chunk of data. Acceptable
+        values include integers 14-26 or any perfect power of two between
+        16Kib and 64MiB.   (e.g. 14 and 16384 are equal)
         Examples:: [--piece-length 14] [--piece-length 16777216]
         """,
     )
@@ -348,9 +334,16 @@ def execute(args=None):
         dest="url_list",
         metavar="<url>",
         nargs="+",
-        help="""
-        One or more url(s) linking to a hosting the torrent contents.
-        """,
+        help="list of web addresses where torrent data exists (GetRight).",
+    )
+
+    create_parser.add_argument(
+        "--http-seed",
+        action="store",
+        dest="httpseeds",
+        metavar="<url>",
+        nargs="+",
+        help="list of URLs, addresses where content can be found (Hoffman).",
     )
 
     create_parser.add_argument(
@@ -398,9 +391,16 @@ def execute(args=None):
         dest="url_list",
         metavar="<url>",
         nargs="+",
-        help="""
-        Replace current list of web-seed urls with one or more url(s)
-        """,
+        help="Replace current list of web-seed urls with one or more url(s)",
+    )
+
+    edit_parser.add_argument(
+        "--http-seed",
+        action="store",
+        dest="httpseeds",
+        metavar="<url>",
+        nargs="+",
+        help="replace all currently listed addresses with new list (Hoffman).",
     )
 
     edit_parser.add_argument(

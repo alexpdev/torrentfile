@@ -117,6 +117,13 @@ def edit_torrent(metafile: str, args: dict) -> dict:
         elif isinstance(val, list):
             meta["url-list"] = val
 
+    if "httpseeds" in args:
+        val = args.get("httpseeds")
+        if isinstance(val, str):
+            meta["httpseeds"] = val.split()
+        elif isinstance(val, list):
+            meta["httpseeds"] = val
+
     meta["info"] = info
     os.remove(metafile)
     pyben.dump(meta, metafile)
