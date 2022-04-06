@@ -22,6 +22,5 @@ Enable calling the package directly with python from the command line.
 
 from torrentfile.cli import execute
 
-
 if __name__ == "__main__":
     execute()  # pragma: nocover
