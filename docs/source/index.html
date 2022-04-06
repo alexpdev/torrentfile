@@ -1155,6 +1155,31 @@ as well as validate files and folders against metadata.</p>
 
 
 
+<h3 id="torrentfile.__main__" class="doc doc-heading">
+        <code>__main__</code>
+
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Enable calling the package directly with python from the command line.</p>
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
 <h3 id="torrentfile.cli" class="doc doc-heading">
         <code>cli</code>
 
@@ -2445,7 +2470,6 @@ magnet_command</p>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Output path: &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">outfile</span><span class="p">))</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Torrent file creation complete.&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">magnet</span><span class="p">:</span>
@@ -2456,6 +2480,7 @@ magnet_command</p>
     <span class="n">args</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
     <span class="n">args</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span>
 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Output path: &quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">outfile</span><span class="p">)))</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;New torrent file (</span><span class="si">%s</span><span class="s2">) has been created.&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">outfile</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">args</span>
 </code></pre></div>
@@ -8605,6 +8630,7 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
         <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assemble</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -8615,18 +8641,17 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-            <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
-                <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span>
-                <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
+                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating... &quot;</span><span class="p">,</span>
+                <span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">,</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;Files &quot;</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
             <span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)}</span>
             <span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">-=</span> <span class="mi">1</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
@@ -8656,6 +8681,7 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
 
             <span class="k">if</span> <span class="n">file_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">-=</span> <span class="mi">1</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
                 <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">file_size</span><span class="p">}}</span>
 
@@ -8671,6 +8697,7 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
                 <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_hash</span><span class="o">.</span><span class="n">padding_file</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">-=</span> <span class="mi">1</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">file_size</span><span class="p">,</span> <span class="s2">&quot;pieces root&quot;</span><span class="p">:</span> <span class="n">file_hash</span><span class="o">.</span><span class="n">root</span><span class="p">}}</span>
@@ -8679,6 +8706,9 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)):</span>
                 <span class="n">tree</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">tree</span>
 </code></pre></div>
         </details>
@@ -9043,6 +9073,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">assemble</span><span class="p">()</span>
 </code></pre></div>
         </details>
@@ -9076,18 +9107,17 @@ piece_length bytes for the piece layer, and then the root hash.</p>
     <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-        <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
-            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
-            <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span>
-            <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
+            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating... &quot;</span><span class="p">,</span>
+            <span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;Files &quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)}</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
@@ -9177,6 +9207,7 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hashes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assemble</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -9185,6 +9216,10 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -9196,14 +9231,11 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
 <span class="sd">            Metainformation about the torrent.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
-
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-            <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
-                <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span>
-                <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
+                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating... &quot;</span><span class="p">,</span>
+                <span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">,</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;files &quot;</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
@@ -9611,6 +9643,7 @@ root hash is calculated.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">hashes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">assemble</span><span class="p">()</span>
 </code></pre></div>
         </details>
@@ -9661,14 +9694,11 @@ root hash is calculated.</p>
 <span class="sd">        Metainformation about the torrent.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
-
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-        <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
-            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
-            <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span>
-            <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
+            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating... &quot;</span><span class="p">,</span>
+            <span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;files &quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
@@ -9710,6 +9740,10 @@ root hash is calculated.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
         </details>
     </div>
@@ -17878,6 +17912,7 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
         <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assemble</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -17888,18 +17923,17 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-            <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
-                <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span>
-                <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
+                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating... &quot;</span><span class="p">,</span>
+                <span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">,</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;Files &quot;</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
             <span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)}</span>
             <span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">-=</span> <span class="mi">1</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
@@ -17929,6 +17963,7 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
 
             <span class="k">if</span> <span class="n">file_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">-=</span> <span class="mi">1</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
                 <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">file_size</span><span class="p">}}</span>
 
@@ -17944,6 +17979,7 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
                 <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_hash</span><span class="o">.</span><span class="n">padding_file</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">-=</span> <span class="mi">1</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
             <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">file_size</span><span class="p">,</span> <span class="s2">&quot;pieces root&quot;</span><span class="p">:</span> <span class="n">file_hash</span><span class="o">.</span><span class="n">root</span><span class="p">}}</span>
@@ -17952,6 +17988,9 @@ TorrentFileHybrid            (<a title="torrentfile.torrent.MetaFile" href="#tor
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)):</span>
                 <span class="n">tree</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">tree</span>
 </code></pre></div>
         </details>
@@ -18316,6 +18355,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">assemble</span><span class="p">()</span>
 </code></pre></div>
         </details>
@@ -18349,18 +18389,17 @@ piece_length bytes for the piece layer, and then the root hash.</p>
     <span class="n">info</span><span class="p">[</span><span class="s2">&quot;meta version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-        <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
-            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
-            <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span>
-            <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
+            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating... &quot;</span><span class="p">,</span>
+            <span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;Files &quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)}</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
@@ -18450,6 +18489,7 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hashes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assemble</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -18458,6 +18498,10 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -18469,14 +18513,11 @@ TorrentFileV2            (<a title="torrentfile.torrent.MetaFile" href="#torrent
 <span class="sd">            Metainformation about the torrent.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
-
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-            <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
-                <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span>
-                <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
+                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating... &quot;</span><span class="p">,</span>
+                <span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">,</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;files &quot;</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
@@ -18884,6 +18925,7 @@ root hash is calculated.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">hashes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">assemble</span><span class="p">()</span>
 </code></pre></div>
         </details>
@@ -18934,14 +18976,11 @@ root hash is calculated.</p>
 <span class="sd">        Metainformation about the torrent.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
-
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">noprogress</span><span class="p">:</span>
-        <span class="n">lst</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_file_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
-            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Hashing Files:&quot;</span><span class="p">,</span>
-            <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span>
-            <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
+            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating... &quot;</span><span class="p">,</span>
+            <span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;files &quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
@@ -18983,6 +19022,10 @@ root hash is calculated.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pbar</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
         </details>
     </div>
@@ -21620,7 +21663,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 <span class="sd">    Test program from the command line through subprocess.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)]</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)]</span>
     <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="k">if</span> <span class="s2">&quot;GITHUB_WORKFLOW&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
         <span class="n">_</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># nosec</span>

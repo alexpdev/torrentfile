@@ -70,7 +70,6 @@ def create(args: list):
     else:
         torrent = TorrentFile(**kwargs)
     outfile, meta = torrent.write()
-    print("Output path: ", str(outfile))
     logger.debug("Torrent file creation complete.")
 
     if args.magnet:
@@ -81,6 +80,7 @@ def create(args: list):
     args.outfile = outfile
     args.meta = meta
 
+    print("\nOutput path: ", os.path.abspath(str(outfile)))
     logger.debug("New torrent file (%s) has been created.", str(outfile))
     return args
 

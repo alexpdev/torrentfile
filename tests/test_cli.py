@@ -402,7 +402,7 @@ def test_cli_subprocess(dir2):
     Test program from the command line through subprocess.
     """
     out = str(dir2) + ".torrent"
-    args = ["torrentfile", "create", "-o", out, str(dir2)]
+    args = ["python", "-m", "torrentfile", "create", "-o", out, str(dir2)]
     command = " ".join(args)
     if "GITHUB_WORKFLOW" not in os.environ:  # pragma: nocover
         _ = subprocess.run(command, check=True)  # nosec

@@ -478,6 +478,7 @@ class TorrentFileV2(MetaFile):
         self.piece_layers = {}
         self.hashes = []
         self.pbar = None
+        self.total = len(utils.get_file_list(self.path))
         self.assemble()
 
     def update(self):
@@ -486,6 +487,10 @@ class TorrentFileV2(MetaFile):
         """
         if self.pbar:
             self.pbar.update(n=1)
+            self.total -= 1
+            if self.total <= 0:
+                del self.pbar
+                self.pbar = None
 
     def assemble(self):
         """
@@ -497,14 +502,11 @@ class TorrentFileV2(MetaFile):
             Metainformation about the torrent.
         """
         info = self.meta["info"]
-
         if not self.noprogress:
-            lst = utils.get_file_list(self.path)
             self.pbar = tqdm(
-                desc="Hashing Files:",
-                total=len(lst),
-                leave=True,
-                unit="file",
+                desc="Calculating... ",
+                total=self.total,
+                unit="files ",
             )
 
         if os.path.isfile(self.path):
@@ -572,6 +574,7 @@ class TorrentFileHybrid(MetaFile):
         self.progbar = None
         self.pieces = []
         self.files = []
+        self.total = len(utils.get_file_list(self.path))
         self.assemble()
 
     def assemble(self):
@@ -582,18 +585,17 @@ class TorrentFileHybrid(MetaFile):
         info["meta version"] = 2
 
         if not self.noprogress:
-            lst = utils.get_file_list(self.path)
             self.progbar = tqdm(
-                desc="Hashing Files:",
-                total=len(lst),
-                leave=True,
-                unit="file",
+                desc="Calculating... ",
+                total=self.total,
+                unit="Files ",
             )
 
         if os.path.isfile(self.path):
             info["file tree"] = {self.name: self._traverse(self.path)}
             info["length"] = os.path.getsize(self.path)
             if self.progbar:
+                self.total -= 1
                 self.progbar.update(n=1)
         else:
             info["file tree"] = self._traverse(self.path)
@@ -623,6 +625,7 @@ class TorrentFileHybrid(MetaFile):
 
             if file_size == 0:
                 if self.progbar:
+                    self.total -= 1
                     self.progbar.update(n=1)
                 return {"": {"length": file_size}}
 
@@ -638,6 +641,7 @@ class TorrentFileHybrid(MetaFile):
                 self.files.append(file_hash.padding_file)
 
             if self.progbar:
+                self.total -= 1
                 self.progbar.update(n=1)
 
             return {"": {"length": file_size, "pieces root": file_hash.root}}
@@ -646,4 +650,7 @@ class TorrentFileHybrid(MetaFile):
         if os.path.isdir(path):
             for name in sorted(os.listdir(path)):
                 tree[name] = self._traverse(os.path.join(path, name))
+                if self.total <= 0:
+                    del self.progbar
+                    self.progbar = None
         return tree
