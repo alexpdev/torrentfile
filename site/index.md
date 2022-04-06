@@ -4,14 +4,14 @@
 
 ------
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Coverage)
-![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile)
-![GitHub License](https://img.shields.io/github/license/alexpdev/torrentfile)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/torrentfile)
-[![codecov](https://codecov.io/gh/alexpdev/torrentfile/branch/master/graph/badge.svg?token=EWF7NIL9SQ)](https://codecov.io/gh/alexpdev/torrentfile)
+![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile?color=orange)
+![GitHub License](https://img.shields.io/github/license/alexpdev/torrentfile?color=red&logo=apache)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/torrentfile?color=brown)
 [![CI](https://github.com/alexpdev/TorrentFile/actions/workflows/pyworkflow.yml/badge.svg?branch=master&event=push)](https://github.com/alexpdev/torrentfile/actions/workflows/pyworkflow.yml)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Coverage)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Grade)
 [![DeepSource](https://deepsource.io/gh/alexpdev/TorrentFile.svg/?label=active+issues&token=16Sl_dF7nTU8YgPilcqhvHm8)](https://deepsource.io/gh/alexpdev/torrentfile/)
+[![codecov](https://codecov.io/gh/alexpdev/torrentfile/branch/master/graph/badge.svg?token=EWF7NIL9SQ)](https://codecov.io/gh/alexpdev/torrentfile?color=navy&logo=codecov)
 
 ## 🌐 Overview
 
@@ -54,24 +54,22 @@ or in the _`docs`_ directory.
 
 ## 🚀 Usage
 
+![Basic Usage](https://github.com/alexpdev/torrentfile/blob/master/assets/TorrentFileBasicUsage.gif?raw=True)
+
 ```sh
 Usage
 =====
    torrentfile [-h] [-i] [-V] [-v] <create> <edit> <magnet> <recheck> ...
 
-CLI Tool for creating, checking, editing... all versions of Bittorrent meta files.
+Create, edit, show details, and check any version Bittorrent file from command line
 
 Actions
 -------
   <create> <edit> <magnet> <recheck>
     create (c, new)                   Create a torrent meta file.
-
     edit (e)                          Edit existing torrent meta file.
-
     magnet (m)                        Create magnet url from an existing Bittorrent meta file.
-
     recheck (r, check)                Calculate amount of torrent meta files content is found on disk.
-
     info (i)                          Show detailed information about a torrent file.
 ```
 
@@ -81,7 +79,7 @@ Actions
 
 Distributed under Apache v2 software license. See `LICENSE` for more information.
 
-## 💡 Issues & Requsts
+## 💡 Issues & Requests
 
 If you encounter any bugs or would like to request a new feature please open a new issue.
 
