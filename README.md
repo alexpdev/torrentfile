@@ -4,14 +4,14 @@
 
 ------
 
+![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile?color=orange)
+![GitHub License](https://img.shields.io/github/license/alexpdev/torrentfile?color=red&logo=apache)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/torrentfile?color=brown)
 [![CI](https://github.com/alexpdev/TorrentFile/actions/workflows/pyworkflow.yml/badge.svg?branch=master&event=push)](https://github.com/alexpdev/torrentfile/actions/workflows/pyworkflow.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Coverage)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Grade)
 [![DeepSource](https://deepsource.io/gh/alexpdev/TorrentFile.svg/?label=active+issues&token=16Sl_dF7nTU8YgPilcqhvHm8)](https://deepsource.io/gh/alexpdev/torrentfile/)
 [![codecov](https://codecov.io/gh/alexpdev/torrentfile/branch/master/graph/badge.svg?token=EWF7NIL9SQ)](https://codecov.io/gh/alexpdev/torrentfile?color=navy&logo=codecov)
-![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile?color=orange)
-![GitHub License](https://img.shields.io/github/license/alexpdev/torrentfile?color=red&logo=apache)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/torrentfile?color=brown)
 
 ## 🌐 Overview
 
@@ -54,7 +54,7 @@ or in the _`docs`_ directory.
 
 ## 🚀 Usage
 
-![torrentfile usage](https://github.com/alexpdev/torrentfile/blob/master/assets/torrentfile_usage.gif?raw=True)
+![Basic Usage](https://github.com/alexpdev/torrentfile/blob/master/assets/TorrentFileBasicUsage.gif?raw=True)
 
 ```sh
 Usage

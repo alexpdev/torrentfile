@@ -289,11 +289,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#issues-requsts" class="md-nav__link">
-    💡 Issues &amp; Requsts
+  <a href="#issues-requests" class="md-nav__link">
+    💡 Issues &amp; Requests
   </a>
   
-    <nav class="md-nav" aria-label="💡 Issues &amp; Requsts">
+    <nav class="md-nav" aria-label="💡 Issues &amp; Requests">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -501,11 +501,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#issues-requsts" class="md-nav__link">
-    💡 Issues &amp; Requsts
+  <a href="#issues-requests" class="md-nav__link">
+    💡 Issues &amp; Requests
   </a>
   
-    <nav class="md-nav" aria-label="💡 Issues &amp; Requsts">
+    <nav class="md-nav" aria-label="💡 Issues &amp; Requests">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -582,14 +582,14 @@
 <h1 id="torrentfile">TorrentFile</h1>
 <p><img alt="torrentfile" src="https://github.com/alexpdev/torrentfile/blob/master/assets/torrentfile.png?raw=true" /></p>
 <hr />
-<p><a href="https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Grade"><img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Grade/b67ff65b3d574025b65b6587266bbab7" /></a>
-<a href="https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Coverage"><img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Coverage/b67ff65b3d574025b65b6587266bbab7" /></a>
-<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/alexpdev/torrentfile" />
-<img alt="GitHub License" src="https://img.shields.io/github/license/alexpdev/torrentfile" />
-<img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/torrentfile" />
-<a href="https://codecov.io/gh/alexpdev/torrentfile"><img alt="codecov" src="https://codecov.io/gh/alexpdev/torrentfile/branch/master/graph/badge.svg?token=EWF7NIL9SQ" /></a>
+<p><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/alexpdev/torrentfile?color=orange" />
+<img alt="GitHub License" src="https://img.shields.io/github/license/alexpdev/torrentfile?color=red&amp;logo=apache" />
+<img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/torrentfile?color=brown" />
 <a href="https://github.com/alexpdev/torrentfile/actions/workflows/pyworkflow.yml"><img alt="CI" src="https://github.com/alexpdev/TorrentFile/actions/workflows/pyworkflow.yml/badge.svg?branch=master&amp;event=push" /></a>
-<a href="https://deepsource.io/gh/alexpdev/torrentfile/"><img alt="DeepSource" src="https://deepsource.io/gh/alexpdev/TorrentFile.svg/?label=active+issues&amp;token=16Sl_dF7nTU8YgPilcqhvHm8" /></a></p>
+<a href="https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Coverage"><img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Coverage/b67ff65b3d574025b65b6587266bbab7" /></a>
+<a href="https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Grade"><img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Grade/b67ff65b3d574025b65b6587266bbab7" /></a>
+<a href="https://deepsource.io/gh/alexpdev/torrentfile/"><img alt="DeepSource" src="https://deepsource.io/gh/alexpdev/TorrentFile.svg/?label=active+issues&amp;token=16Sl_dF7nTU8YgPilcqhvHm8" /></a>
+<a href="https://codecov.io/gh/alexpdev/torrentfile?color=navy&amp;logo=codecov"><img alt="codecov" src="https://codecov.io/gh/alexpdev/torrentfile/branch/master/graph/badge.svg?token=EWF7NIL9SQ" /></a></p>
 <h2 id="overview">🌐 Overview</h2>
 <p>A <code>simple</code> and <code>convenient</code> tool for creating, reviewing, editing, and/or
 validating bittorrent meta files (aka torrent files). <em><code>torrentfile</code></em>
@@ -622,23 +622,20 @@ or in the <em><code>docs</code></em> directory.</p>
 <p><em>torrentfile</em> is under active development, and is subject to significant changes in the codebase between releases.</p>
 </blockquote>
 <h2 id="usage">🚀 Usage</h2>
+<p><img alt="Basic Usage" src="https://github.com/alexpdev/torrentfile/blob/master/assets/TorrentFileBasicUsage.gif?raw=True" /></p>
 <pre><code class="language-sh">Usage
 =====
    torrentfile [-h] [-i] [-V] [-v] &lt;create&gt; &lt;edit&gt; &lt;magnet&gt; &lt;recheck&gt; ...
 
-CLI Tool for creating, checking, editing... all versions of Bittorrent meta files.
+Create, edit, show details, and check any version Bittorrent file from command line
 
 Actions
 -------
   &lt;create&gt; &lt;edit&gt; &lt;magnet&gt; &lt;recheck&gt;
     create (c, new)                   Create a torrent meta file.
-
     edit (e)                          Edit existing torrent meta file.
-
     magnet (m)                        Create magnet url from an existing Bittorrent meta file.
-
     recheck (r, check)                Calculate amount of torrent meta files content is found on disk.
-
     info (i)                          Show detailed information about a torrent file.
 </code></pre>
 <blockquote>
@@ -646,7 +643,7 @@ Actions
 </blockquote>
 <h2 id="license">📝 License</h2>
 <p>Distributed under Apache v2 software license. See <code>LICENSE</code> for more information.</p>
-<h2 id="issues-requsts">💡 Issues &amp; Requsts</h2>
+<h2 id="issues-requests">💡 Issues &amp; Requests</h2>
 <p>If you encounter any bugs or would like to request a new feature please open a new issue.</p>
 <p><a href="https://github.com/alexpdev/torrentfile/issues">https://github.com/alexpdev/torrentfile/issues</a></p>
 <hr />
