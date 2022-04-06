@@ -54,6 +54,8 @@ or in the _`docs`_ directory.
 
 ## 🚀 Usage
 
+![torrentfile usage](https://github.com/alexpdev/torrentfile/blob/master/assets/torrentfile_usage.gif?raw=True)
+
 ```sh
 Usage
 =====
