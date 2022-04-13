@@ -258,7 +258,7 @@ class MetaFile:
         outfile=None,
         source=None,
         noprogress=None,
-        cwd=None,
+        cwd=False,
         httpseeds=None,
         url_list=None,
         content=None,

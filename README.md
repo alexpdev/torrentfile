@@ -59,13 +59,12 @@ or in the _`docs`_ directory.
 ```sh
 Usage
 =====
-   torrentfile [-h] [-i] [-V] [-v] <create> <edit> <magnet> <recheck> ...
+   torrentfile [options] <command> [command-options] ...
 
 Create, edit, show details, and check any version Bittorrent file from command line
 
-Actions
--------
-  <create> <edit> <magnet> <recheck>
+Commands
+--------
     create (c, new)                   Create a torrent meta file.
     edit (e)                          Edit existing torrent meta file.
     magnet (m)                        Create magnet url from an existing Bittorrent meta file.
@@ -147,7 +146,7 @@ If you encounter any bugs or would like to request a new feature please open a n
 - edit a torrent file
 
 ```bash
-> torrentfile edit [-options] <path>
+> torrentfile edit [options] <path>
 ```
 
 ### Create Magnet

@@ -201,14 +201,12 @@ class HasherV2(_CbMixin):
             Opened file in read mode.
         """
         while True:
-            total = 0
             blocks = []
             leaf = bytearray(BLOCK_SIZE)
             # generate leaves of merkle tree
 
             for _ in range(self.num_blocks):
                 size = fd.readinto(leaf)
-                total += size
                 if not size:
                     break
                 blocks.append(sha256(leaf[:size]).digest())
@@ -344,7 +342,7 @@ class HasherHybrid(_CbMixin):
             if plength > 0:
                 self.padding_file = {
                     "attr": "p",
-                    "length": size,
+                    "length": plength,
                     "path": [".pad", str(plength)],
                 }
                 piece.update(bytes(plength))
