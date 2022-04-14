@@ -225,7 +225,7 @@ class MetaFile:
         If True disable showing the progress bar.
     cwd : bool
         If True change default save location to current directory
-    httpsseeds : list
+    httpseeds : list
         one or more web addresses where torrent content can be found.
     url_list : list
         one or more web addressess where torrent content exists.
@@ -368,16 +368,16 @@ class MetaFile:
             .torrent meta information.
         """
         fallback = os.path.join(os.getcwd(), self.name) + ".torrent"
-        if outfile is not None:
-            self.outfile = outfile
-
-        if self.outfile is None:
+        if not self.outfile and not outfile:
             if self.cwd:
                 self.outfile = fallback
             else:
                 path = str(self.path).rstrip("\\/")
                 self.outfile = path + ".torrent"
-
+        elif outfile:
+            self.outfile = outfile
+        if str(self.outfile)[-1] in "\\/":
+            self.outfile = self.outfile + (self.name + ".torrent")
         self.meta = self.sort_meta()
         try:
             pyben.dump(self.meta, self.outfile)

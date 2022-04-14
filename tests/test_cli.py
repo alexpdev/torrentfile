@@ -434,6 +434,33 @@ def test_cli_slash_path(dir1, ending):
     rmpath(outfile)
 
 
+def test_cli_slash_outpath(dir1):
+    """
+    Test if output when outpath ends with a /.
+    """
+    parent = os.path.dirname(dir1)
+    if not parent.endswith("\\/"):
+        if sys.platform == "win32":
+            parent += "\\"
+        else:
+            parent += "/"
+    args = [
+        "torrentfile",
+        "create",
+        "-t",
+        "https://announce1.org",
+        "--private",
+        "-o",
+        parent,
+        str(dir1),
+    ]
+    sys.argv = args
+    main()
+    outfile = str(dir1) + ".torrent"
+    assert os.path.exists(outfile)
+    rmpath(outfile)
+
+
 @pytest.mark.parametrize(
     "flag", ["-t", "-w", "--announce", "--web-seed", "--http-seed"]
 )

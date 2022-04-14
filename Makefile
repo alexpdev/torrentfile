@@ -66,7 +66,7 @@ coverage: ## Get coverage report
 	coverage xml
 	bash coverage.sh report -r coverage.xml
 
-push: clean coverage docs test ## Push to github
+push: clean docs test coverage ## Push to github
 	git add .
 	git commit -m "$m"
 	git push

@@ -120,6 +120,7 @@ If you encounter any bugs or would like to request a new feature please open a n
 ```
 
 - to specify the save location use the `-o` or `--out` flags
+- if the path points to directory the name of torrent is autofilled.
 
 ```bash
 > torrentfile create -o /specific/path/name.torrent ./content

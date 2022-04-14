@@ -166,6 +166,9 @@ def test_create_cwd_fail():
         def __fspath__():
             raise PermissionError
 
+        def __str__(self):
+            return "SuFile"
+
     tfile = tempfile()
     name = os.path.basename(tfile) + ".torrent"
     torrent = MetaFile(path=tfile)
