@@ -1527,6 +1527,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Activate the builtin logging mechanism when passed debug flag from CLI.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
     <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
     <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span>
         <span class="s2">&quot;torrentfile.log&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a+&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span>
@@ -1642,6 +1643,8 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;output debug information&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">)</span>
 
     <span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Actions&quot;</span><span class="p">,</span>
@@ -2052,6 +2055,8 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;output debug information&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">)</span>
 
     <span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Actions&quot;</span><span class="p">,</span>
@@ -11290,6 +11295,7 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Activate the builtin logging mechanism when passed debug flag from CLI.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
     <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
     <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span>
         <span class="s2">&quot;torrentfile.log&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a+&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span>
@@ -11405,6 +11411,8 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;output debug information&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">)</span>
 
     <span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Actions&quot;</span><span class="p">,</span>
@@ -11815,6 +11823,8 @@ TorrentFileHelpFormatter            (<span title="argparse.HelpFormatter">HelpFo
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;output debug information&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">)</span>
 
     <span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Actions&quot;</span><span class="p">,</span>
@@ -21587,7 +21597,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_cli.test_cli_slash_outpath" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_cli_slash_outpath</span><span class="p">(</span><span class="n">dir1</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_cli_slash_outpath</span><span class="p">(</span><span class="n">dir1</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span></code>
 
 
 </h4>
@@ -21598,16 +21608,14 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
         <details class="quote">
           <summary>Source code in <code>tests\test_cli.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_slash_outpath</span><span class="p">(</span><span class="n">dir1</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;sep&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_cli_slash_outpath</span><span class="p">(</span><span class="n">dir1</span><span class="p">,</span> <span class="n">sep</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test if output when outpath ends with a /.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">dir1</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">parent</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">/&quot;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;win32&quot;</span><span class="p">:</span>
-            <span class="n">parent</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">parent</span> <span class="o">+=</span> <span class="s2">&quot;/&quot;</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">!=</span> <span class="s2">&quot;win32&quot;</span><span class="p">:</span>
+        <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span>  <span class="c1"># pragma: nocover</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">dir1</span><span class="p">)</span> <span class="o">+</span> <span class="n">sep</span>
     <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
         <span class="s2">&quot;create&quot;</span><span class="p">,</span>

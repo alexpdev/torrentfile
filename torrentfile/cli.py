@@ -40,6 +40,7 @@ def activate_logger():
     """
     Activate the builtin logging mechanism when passed debug flag from CLI.
     """
+    logging.basicConfig(level=logging.WARNING)
     logger = logging.getLogger()
     file_handler = logging.FileHandler(
         "torrentfile.log", mode="a+", encoding="utf-8"
@@ -212,6 +213,8 @@ def execute(args=None):
         dest="debug",
         help="output debug information",
     )
+
+    parser.set_defaults(func=parser.print_help)
 
     subparsers = parser.add_subparsers(
         title="Actions",
