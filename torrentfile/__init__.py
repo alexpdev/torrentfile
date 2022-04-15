@@ -42,5 +42,3 @@ from torrentfile.version import __version__
 
 __author__ = "alexpdev"
 VERSION = __version__
-
-logging.basicConfig(level=logging.WARNING)

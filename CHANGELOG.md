@@ -1,5 +1,13 @@
 # TorrentFile
 
+## Version 0.7.5
+
+- updates to logging facility
+- fixed bug in created hybrid torrent files
+- fixed cli when subcomman not chosen
+- doc updates
+- unit test updates and improvements
+
 ## Version 0.7.2
 
 - cleaned up readme and help messages

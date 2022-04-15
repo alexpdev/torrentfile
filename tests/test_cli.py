@@ -439,8 +439,8 @@ def test_cli_slash_outpath(dir1, sep):
     """
     Test if output when outpath ends with a /.
     """
-    if sys.platform != 'win32':
-        sep = "/"
+    if sys.platform != "win32":
+        sep = "/"  # pragma: nocover
     parent = os.path.dirname(dir1) + sep
     args = [
         "torrentfile",
