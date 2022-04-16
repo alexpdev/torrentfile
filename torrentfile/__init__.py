@@ -34,11 +34,11 @@ import logging
 import sys
 
 from torrentfile import utils
+from torrentfile.cli import execute
 from torrentfile.commands import create, edit, info, magnet, recheck
 from torrentfile.interactive import select_action
-from torrentfile.recheck import Checker
-from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 from torrentfile.version import __version__
 
 __author__ = "alexpdev"
-VERSION = __version__
+
+__all__ = ["execute", "create", "edit", "info", "magnet", "recheck"]

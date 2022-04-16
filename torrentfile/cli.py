@@ -32,15 +32,16 @@ import logging
 import sys
 from argparse import ArgumentParser, HelpFormatter
 
-from torrentfile import (VERSION, create, edit, info, magnet, recheck,
-                         select_action)
+from torrentfile.commands import create, edit, info, magnet, recheck
+from torrentfile.interactive import select_action
+from torrentfile.version import __version__ as version
 
 
 def activate_logger():
     """
     Activate the builtin logging mechanism when passed debug flag from CLI.
     """
-    logging.basicConfig(level=logging.WARNING)
+    logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger()
     file_handler = logging.FileHandler(
         "torrentfile.log", mode="a+", encoding="utf-8"
@@ -202,7 +203,7 @@ def execute(args=None):
         "-V",
         "--version",
         action="version",
-        version=f"torrentfile v{VERSION}",
+        version=f"torrentfile v{version}",
         help="show program version and exit",
     )
 
