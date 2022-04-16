@@ -172,7 +172,6 @@ def recheck(args):
 
     logger.debug("Completed initialization of the Checker class")
     result = checker.results()
-    logger.info("Final result for %s recheck:  %s", metafile, result)
 
     sys.stdout.write(str(result) + "% Match\n")
     sys.stdout.flush()

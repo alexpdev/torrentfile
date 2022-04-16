@@ -21,6 +21,13 @@ if data['version'] != __version__:
 endef
 export UPDATE_PACKAGE_VERSION
 
+define RENAME_FILE
+import shutil
+from torrentfile.version import __version__
+shutil.copy("temp.zip", "torrentfile-v" + __version__ + "-win")
+endef
+export RENAME_FILE
+
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
 help:
@@ -47,6 +54,8 @@ clean-build: ## remove build artifacts
 	rm -fv torrentfile.log
 	rm -fv -- *'.spec'
 	rm -fvr -- *'/__pycache__'
+	rm -frv runner/build
+	rm -frv runner/dist
 
 
 test: ## Get coverage report
@@ -66,8 +75,19 @@ push: clean docs test ## Push to github
 	git commit -m "$m"
 	git push
 
-setup: clean test lint docs ## setup and build repo
+setup: clean test lint ## setup and build repo
 	pip install --pre --upgrade --force-reinstall --no-cache -rrequirements.txt
 	python setup.py sdist bdist_wheel bdist_egg
 	pip install -e .
 	twine upload dist/*
+
+release: clean test lint ## create executables for release
+	pip install pyinstaller
+	pip install -e .
+	cd runner
+	pyinstaller execf.spec
+	cd dist
+	mkdir temp
+	cp torrentfile.exe temp/
+	7z a temp.zip temp
+	python -c $$RENAME_FILE
