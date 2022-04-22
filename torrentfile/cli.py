@@ -266,7 +266,6 @@ def execute(args=None):
         "--magnet",
         action="store_true",
         dest="magnet",
-        help="",
     )
 
     create_parser.add_argument(
@@ -296,10 +295,19 @@ def execute(args=None):
     )
 
     create_parser.add_argument(
-        "--noprogress",
-        action="store_true",
-        dest="noprogress",
-        help="Disables the progress bar during torrent creation.",
+        "--progress",
+        "--prog",
+        choices=["0", "1", "2"],
+        default="1",
+        action="store",
+        dest="progress",
+        help="""
+        Set the progress bar level.
+        Options = 0, 1, 2
+        (0) = Do not display progress bar.
+        (1) = Display 1 progress bar for the whole torrent (default)
+        (2) = Display a progress bar for each file going into torrent
+        """,
     )
 
     create_parser.add_argument(
@@ -311,7 +319,7 @@ def execute(args=None):
         metavar="<int>",
         help="""
         Bittorrent metafile version.
-        Options = 1, 2 or 3.
+        Options = 1, 2, 3
         (1) = Bittorrent v1 (Default)
         (2) = Bittorrent v2
         (3) = Bittorrent v1 & v2 hybrid
@@ -324,10 +332,10 @@ def execute(args=None):
         dest="piece_length",
         metavar="<int>",
         help="""
-        (Default: None) Number of bytes for each chunk of data. Acceptable
-        values include integers 14-26 or any perfect power of two between
-        16Kib and 64MiB.   (e.g. 14 and 16384 are equal)
-        Examples:: [--piece-length 14] [--piece-length 16777216]
+        (Default: <blank>) Number of bytes for per chunk of data transmitted
+        by Bittorrent client. Acceptable values include integers 14-26 which
+        will be interpreted as a perfect power of 2.  e.g. 14 = 16KiB pieces.
+        Examples:: [--piece-length 14] [--piece-length 20]
         """,
     )
 

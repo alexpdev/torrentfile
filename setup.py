@@ -61,7 +61,7 @@ setup(
     packages=find_packages(exclude=[".env", "tests"]),
     include_package_data=True,
     entry_points={"console_scripts": ["torrentfile = torrentfile.cli:main"]},
-    install_requires=["pyben", "tqdm"],
+    install_requires=["pyben"],
     setup_requires=["setuptools", "wheel"],
     zip_safe=False
 )
