@@ -7,5 +7,4 @@ pytest
 pytest-cov
 pyben
 pylint
-tqdm
 tox

@@ -32,9 +32,9 @@ from hashlib import sha1, sha256  # nosec
 from pathlib import Path
 
 import pyben
-from tqdm import tqdm
 
 from torrentfile.hasher import HasherHybrid, HasherV2
+from torrentfile.mixins import ProgMixin
 from torrentfile.utils import MissingPathError
 
 SHA1 = 20
@@ -43,7 +43,7 @@ SHA256 = 32
 logger = logging.getLogger(__name__)
 
 
-class Checker:
+class Checker(ProgMixin):
     """
     Check a given file or directory to see if it matches a torrentfile.
 
@@ -149,19 +149,8 @@ class Checker:
         """
         Generate result percentage and store for future calls.
         """
-        if self.meta_version == 1:
-            iterations = len(self.info["pieces"]) // SHA1
-        else:
-            iterations = (self.total // self.piece_length) + 1
-
         responses = []
-        for response in tqdm(
-            iterable=self.iter_hashes(),
-            desc="Calculating",
-            leave=True,
-            total=iterations,
-            unit="pieces",
-        ):
+        for response in self.iter_hashes():
             responses.append(response)
 
         self.log_msg(
@@ -340,7 +329,7 @@ class Checker:
         self._result = (matched / consumed) * 100 if consumed > 0 else 0
 
 
-class FeedChecker:
+class FeedChecker(ProgMixin):
     """
     Validates torrent content.
 
@@ -404,9 +393,13 @@ class FeedChecker:
         """
         partial = bytearray()
         for i, path in enumerate(self.paths):
+            total = self.fileinfo[i]["length"]
+            title = os.path.basename(path)
+            self.prog_start(total, title, unit="bytes")
             self.index = i
             if os.path.exists(path):
                 for piece in self.extract(path, partial):
+                    self.prog_update(len(piece))
                     if (len(piece) == self.piece_length) or (
                         i + 1 == len(self.paths)
                     ):
@@ -421,6 +414,7 @@ class FeedChecker:
                         yield pad
                     else:
                         partial = pad
+            self.prog_close()
 
     def extract(self, path: str, partial: bytearray) -> bytearray:
         """
@@ -492,7 +486,7 @@ class FeedChecker:
                 yield partial
 
 
-class HashChecker:
+class HashChecker(ProgMixin):
     """
     Verify that root hashes of content files match the .torrent files.
 
@@ -544,9 +538,11 @@ class HashChecker:
             The size of the file and result of match.
         """
         for i, path in enumerate(self.paths):
+
             info = self.fileinfo[i]
             length, plength = info["length"], self.piece_length
             roothash = info["pieces root"]
+            self.prog_start(length, os.path.basename(path), unit="bytes")
             if roothash in self.piece_layers:
                 pieces = self.piece_layers[roothash]
             else:
@@ -572,6 +568,7 @@ class HashChecker:
                     block = hashed.root
                     piece = roothash
                     size = length
+                    self.prog_update(size)
                     yield block, piece, path, size
                 else:
                     for i in range(amount):
@@ -584,4 +581,5 @@ class HashChecker:
                             block = sha256(bytearray(size)).digest()
                         size = plength if plength < length else length
                         length -= size
+                        self.prog_update(size)
                         yield block, piece, path, size

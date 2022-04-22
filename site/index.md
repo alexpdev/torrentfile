@@ -113,10 +113,15 @@ If you encounter any bugs or would like to request a new feature please open a n
 > torrentfile create --private --source EXAMPLE --tracker https://url1 https://url2
 ```
 
-- to turn off the progress bar shown use `--noprogress`
+The 3 options for controlling the progress bar using `--prog` or `--progress`:
+
+- 0 : show no progress bar at all
+- 1 : show 1 progress bar measuring the entire creation process
+- 2 : show a progress bar for each file of the torrent content
 
 ```bash
-> torrentfile -t http://tracker.com --noprogress /path/to/content
+> torrentfile -t http://tracker.com --progress 2 /path/to/content
+> torrentfile --prog 0 /path/to/content
 ```
 
 - to specify the save location use the `-o` or `--out` flags

@@ -24,7 +24,7 @@ export UPDATE_PACKAGE_VERSION
 define RENAME_FILE
 import shutil
 from torrentfile.version import __version__
-shutil.copy("temp.zip", "torrentfile-v" + __version__ + "-win")
+shutil.copy("./dist/temp.zip", "./dist/torrentfile-v" + __version__ + "-win.zip")
 endef
 export RENAME_FILE
 
@@ -57,7 +57,6 @@ clean-build: ## remove build artifacts
 	rm -frv runner/build
 	rm -frv runner/dist
 
-
 test: ## Get coverage report
 	tox
 
@@ -84,10 +83,8 @@ setup: clean test lint ## setup and build repo
 release: clean test lint ## create executables for release
 	pip install pyinstaller
 	pip install -e .
-	cd runner
-	pyinstaller execf.spec
-	cd dist
-	mkdir temp
-	cp torrentfile.exe temp/
-	7z a temp.zip temp
+	pyinstaller ./runner/execf.spec
+	mkdir ./dist/temp
+	cp ./dist/torrentfile.exe ./dist/temp/
+	7z a ./dist/temp.zip ./dist/temp
 	python -c $$RENAME_FILE
