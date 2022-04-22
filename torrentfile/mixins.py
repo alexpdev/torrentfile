@@ -172,8 +172,6 @@ class ProgMixin:
             the total amount of units accumulating towards.
         path : str
             path to file being hashed.
-        indent : int
-            the level of padding needed before the title
         length : int
             the number of characters of the actual progress bar.
         unit : str
