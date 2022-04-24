@@ -1,5 +1,19 @@
 # TorrentFile
 
+## Version 0.7.7
+
+- more updates to logging
+- major improvements to progress bar
+- removed tqdm as dependency
+- implemented custom progress bar logic
+- new cli argument controlling the progress bar
+- support for pyben 0.3.1
+- added threading to recheck module
+- added mixins module
+- unit test updates and improvements
+
+---------------------
+
 ## Version 0.7.5
 
 - updates to logging facility
@@ -7,6 +21,8 @@
 - fixed cli when subcomman not chosen
 - doc updates
 - unit test updates and improvements
+
+---------------------
 
 ## Version 0.7.2
 

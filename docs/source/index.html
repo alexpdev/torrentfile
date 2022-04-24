@@ -5468,8 +5468,6 @@ prog_close</p>
 <span class="sd">            the total amount of units accumulating towards.</span>
 <span class="sd">        path : str</span>
 <span class="sd">            path to file being hashed.</span>
-<span class="sd">        indent : int</span>
-<span class="sd">            the level of padding needed before the title</span>
 <span class="sd">        length : int</span>
 <span class="sd">            the number of characters of the actual progress bar.</span>
 <span class="sd">        unit : str</span>
@@ -5477,9 +5475,8 @@ prog_close</p>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">title</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">width</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span>
-        <span class="n">extra</span> <span class="o">=</span> <span class="s2">&quot;[]/  &quot;</span>
-        <span class="n">begin</span> <span class="o">=</span> <span class="n">length</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">length</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="n">begin</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">length</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prog</span> <span class="o">=</span> <span class="n">ProgressBar</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">prog_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
@@ -5495,13 +5492,10 @@ prog_close</p>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">state</span><span class="p">:</span>
-                <span class="n">pbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">progbar</span><span class="p">()</span>
-                <span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
-                <span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">stats</span><span class="p">()</span>
-                <span class="n">output</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\r</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">pbar</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">stats</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+            <span class="n">pbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">pbar</span><span class="p">()</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">prefix</span><span class="si">}{</span><span class="n">pbar</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="se">\r</span><span class="s2">&quot;</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">prog_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -5653,12 +5647,6 @@ and deleting the progress bar object to clear a space for the next one.</p>
         <td><em>required</em></td>
       </tr>
       <tr>
-        <td><code>indent</code></td>
-        <td><code>int</code></td>
-        <td><p>the level of padding needed before the title</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
         <td><code>length</code></td>
         <td><code>int</code></td>
         <td><p>the number of characters of the actual progress bar.</p></td>
@@ -5684,8 +5672,6 @@ and deleting the progress bar object to clear a space for the next one.</p>
 <span class="sd">        the total amount of units accumulating towards.</span>
 <span class="sd">    path : str</span>
 <span class="sd">        path to file being hashed.</span>
-<span class="sd">    indent : int</span>
-<span class="sd">        the level of padding needed before the title</span>
 <span class="sd">    length : int</span>
 <span class="sd">        the number of characters of the actual progress bar.</span>
 <span class="sd">    unit : str</span>
@@ -5693,9 +5679,8 @@ and deleting the progress bar object to clear a space for the next one.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">title</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">width</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span>
-    <span class="n">extra</span> <span class="o">=</span> <span class="s2">&quot;[]/  &quot;</span>
-    <span class="n">begin</span> <span class="o">=</span> <span class="n">length</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">length</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="n">begin</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">length</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">prog</span> <span class="o">=</span> <span class="n">ProgressBar</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>
 </code></pre></div>
         </details>
@@ -5759,13 +5744,10 @@ and deleting the progress bar object to clear a space for the next one.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">state</span><span class="p">:</span>
-            <span class="n">pbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">progbar</span><span class="p">()</span>
-            <span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
-            <span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">stats</span><span class="p">()</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\r</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">pbar</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">stats</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="n">pbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">pbar</span><span class="p">()</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">prefix</span><span class="si">}{</span><span class="n">pbar</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="se">\r</span><span class="s2">&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 </code></pre></div>
         </details>
     </div>
@@ -5867,15 +5849,27 @@ ProgressBar        </code>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct the progress bar object and store state of it&#39;s properties.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">total</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fill</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">9608</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">empty</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">9617</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">unit</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># pragma: nocover</span>
+        <span class="k">elif</span> <span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;bytes&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">10000000</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="mi">1048576</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;MiB&quot;</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;KiB&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">suffix</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">start</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">[:</span> <span class="n">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">))</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">title</span><span class="p">,</span> <span class="n">padding</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -5888,7 +5882,7 @@ ProgressBar        </code>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">+=</span> <span class="n">value</span>
 
-    <span class="k">def</span> <span class="nf">progbar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">pbar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the size of the filled portion of the progress bar.</span>
 
@@ -5897,52 +5891,19 @@ ProgressBar        </code>
 <span class="sd">        str :</span>
 <span class="sd">            the progress bar characters</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">:</span>
             <span class="n">fill</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">fill</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+            <span class="n">fill</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
         <span class="n">empty</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">-</span> <span class="n">fill</span>
-        <span class="n">pbar</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fill</span> <span class="o">*</span> <span class="n">fill</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">empty</span> <span class="o">*</span> <span class="n">empty</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">pbar</span>
-
-    <span class="k">def</span> <span class="nf">center</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return the prefix plus the title plus the padding.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        str :</span>
-<span class="sd">            the prefix to the progress bar characters</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
-            <span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;MiB&quot;</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="mi">1048576</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;KiB&quot;</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
-        <span class="n">padding</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">))</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">title</span><span class="p">,</span> <span class="n">padding</span><span class="p">])</span>
-
-    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return the suffix after progress bar.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        str :</span>
-<span class="sd">            the suffix to the progress bar characters</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span>
-        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
-        <span class="n">unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;bytes&quot;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">100000</span><span class="p">:</span>
-                <span class="n">total</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="mi">1048576</span><span class="p">)</span>
-                <span class="n">state</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="mi">1048576</span><span class="p">)</span>
-                <span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;MiB&quot;</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
-                <span class="n">total</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">)</span>
-                <span class="n">state</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">)</span>
-                <span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;KiB&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
+        <span class="n">progbar</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fill</span> <span class="o">*</span> <span class="n">fill</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty</span> <span class="o">*</span> <span class="n">empty</span><span class="p">,</span> <span class="s2">&quot;] &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">state</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">progbar</span><span class="p">)</span>
 </code></pre></div>
         </details>
 
@@ -5981,54 +5942,27 @@ ProgressBar        </code>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct the progress bar object and store state of it&#39;s properties.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">total</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">fill</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">9608</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">empty</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">9617</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h5 id="torrentfile.mixins.ProgressBar.center" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">center</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-</h5>
-
-    <div class="doc doc-contents ">
-
-      <p>Return the prefix plus the title plus the padding.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>torrentfile\mixins.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">center</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return the prefix plus the title plus the padding.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    str :</span>
-<span class="sd">        the prefix to the progress bar characters</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
-    <span class="n">padding</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">))</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span>
-    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">title</span><span class="p">,</span> <span class="n">padding</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">unit</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># pragma: nocover</span>
+    <span class="k">elif</span> <span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;bytes&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">10000000</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="mi">1048576</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;MiB&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;KiB&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">suffix</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">start</span><span class="p">:</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">[:</span> <span class="n">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">))</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">title</span><span class="p">,</span> <span class="n">padding</span><span class="p">])</span>
 </code></pre></div>
         </details>
     </div>
@@ -6094,8 +6028,8 @@ ProgressBar        </code>
 
 
 
-<h5 id="torrentfile.mixins.ProgressBar.progbar" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">progbar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+<h5 id="torrentfile.mixins.ProgressBar.pbar" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">pbar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
 </h5>
@@ -6106,7 +6040,7 @@ ProgressBar        </code>
 
         <details class="quote">
           <summary>Source code in <code>torrentfile\mixins.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">progbar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">pbar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the size of the filled portion of the progress bar.</span>
 
@@ -6115,13 +6049,19 @@ ProgressBar        </code>
 <span class="sd">    str :</span>
 <span class="sd">        the progress bar characters</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">:</span>
         <span class="n">fill</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">fill</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+        <span class="n">fill</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
     <span class="n">empty</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">-</span> <span class="n">fill</span>
-    <span class="n">pbar</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fill</span> <span class="o">*</span> <span class="n">fill</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">empty</span> <span class="o">*</span> <span class="n">empty</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">pbar</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;MiB&quot;</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="mi">1048576</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;KiB&quot;</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
+    <span class="n">progbar</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fill</span> <span class="o">*</span> <span class="n">fill</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty</span> <span class="o">*</span> <span class="n">empty</span><span class="p">,</span> <span class="s2">&quot;] &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">state</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">progbar</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -6130,60 +6070,109 @@ ProgressBar        </code>
 
 
 
-  <div class="doc doc-object doc-method">
+
+
+  </div>
+
+    </div>
+
+  </div>
 
 
 
-<h5 id="torrentfile.mixins.ProgressBar.stats" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+  <div class="doc doc-object doc-function">
 
 
-</h5>
+
+<h4 id="torrentfile.mixins.waiting" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">waiting</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">180</span><span class="p">)</span></code>
+
+
+</h4>
 
     <div class="doc doc-contents ">
 
-      <p>Return the suffix after progress bar.</p>
+      <p>Show loading message while thread completes processing.</p>
 
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>msg</code></td>
+        <td><code>str</code></td>
+        <td><p>Message string printed before the progress bar</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>flag</code></td>
+        <td><code>list</code></td>
+        <td><p>Once flag is filled exit loop</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>timeout</code></td>
+        <td><code>int</code></td>
+        <td><p>max amount of time to run the function.</p></td>
+        <td><code>180</code></td>
+      </tr>
+  </tbody>
+</table>
         <details class="quote">
           <summary>Source code in <code>torrentfile\mixins.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">waiting</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">180</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return the suffix after progress bar.</span>
+<span class="sd">    Show loading message while thread completes processing.</span>
 
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    str :</span>
-<span class="sd">        the suffix to the progress bar characters</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    msg : str</span>
+<span class="sd">        Message string printed before the progress bar</span>
+<span class="sd">    flag : list</span>
+<span class="sd">        Once flag is filled exit loop</span>
+<span class="sd">    timeout : int</span>
+<span class="sd">        max amount of time to run the function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
-    <span class="n">unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;bytes&quot;</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">100000</span><span class="p">:</span>
-            <span class="n">total</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="mi">1048576</span><span class="p">)</span>
-            <span class="n">state</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="mi">1048576</span><span class="p">)</span>
-            <span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;MiB&quot;</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
-            <span class="n">total</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">)</span>
-            <span class="n">state</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">)</span>
-            <span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;KiB&quot;</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">then</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">codes</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">9617</span><span class="p">,</span> <span class="mi">9620</span><span class="p">)),</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">9619</span><span class="p">)</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">-</span> <span class="mi">20</span>
+
+    <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print parameter message to the console.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : str</span>
+<span class="sd">            output message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="n">output</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">flag</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.16</span><span class="p">)</span>
+        <span class="n">filled</span> <span class="o">=</span> <span class="p">(</span><span class="n">fill</span> <span class="o">*</span> <span class="n">size</span><span class="p">)</span> <span class="o">+</span> <span class="nb">chr</span><span class="p">(</span><span class="n">codes</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="n">total</span> <span class="o">-</span> <span class="n">size</span><span class="p">))</span>
+        <span class="n">output</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">filled</span><span class="si">}</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">size</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="n">total</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">then</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="n">output</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
 
   </div>
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
 
 
 
@@ -6322,17 +6311,23 @@ Checker            (<a title="torrentfile.mixins.ProgMixin" href="#torrentfile.m
 <span class="sd">        path : str</span>
 <span class="sd">            path to content or contents parent directory.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">pyben</span><span class="o">.</span><span class="n">loadinto</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">meta</span><span class="p">))</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_log</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Checking: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span> <span class="o">=</span> <span class="n">metafile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_log</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
+        <span class="n">thread2</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">waiting</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Extracting metadata&quot;</span><span class="p">,</span> <span class="n">meta</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">meta</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
+            <span class="n">thread2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="n">thread2</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span>
@@ -6346,7 +6341,6 @@ Checker            (<a title="torrentfile.mixins.ProgMixin" href="#torrentfile.m
             <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="mi">1</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_root</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Checking: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_paths</span><span class="p">()</span>
 
     <span class="nd">@classmethod</span>
@@ -6641,17 +6635,23 @@ Checker            (<a title="torrentfile.mixins.ProgMixin" href="#torrentfile.m
 <span class="sd">    path : str</span>
 <span class="sd">        path to content or contents parent directory.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">pyben</span><span class="o">.</span><span class="n">loadinto</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">meta</span><span class="p">))</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_log</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Checking: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span> <span class="o">=</span> <span class="n">metafile</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">last_log</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
-
-    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
+    <span class="n">thread2</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">waiting</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Extracting metadata&quot;</span><span class="p">,</span> <span class="n">meta</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">meta</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
+        <span class="n">thread2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">thread2</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span>
@@ -6665,7 +6665,6 @@ Checker            (<a title="torrentfile.mixins.ProgMixin" href="#torrentfile.m
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_root</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Checking: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">check_paths</span><span class="p">()</span>
 </code></pre></div>
         </details>
@@ -7386,12 +7385,10 @@ metafile against data on disk.</p>
         <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">):</span>
             <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
-            <span class="n">title</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">i</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">partial</span><span class="p">):</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">piece</span><span class="p">))</span>
                     <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
                         <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">)</span>
                     <span class="p">):</span>
@@ -7438,8 +7435,10 @@ metafile against data on disk.</p>
                 <span class="n">partial</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">part</span><span class="p">[:</span><span class="n">amount</span><span class="p">])</span>
                 <span class="k">if</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="n">bitlength</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">read</span> <span class="o">==</span> <span class="n">length</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
                         <span class="k">yield</span> <span class="n">partial</span>
                     <span class="k">break</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
                 <span class="k">yield</span> <span class="n">partial</span>
                 <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">length</span> <span class="o">!=</span> <span class="n">read</span><span class="p">:</span>
@@ -7693,8 +7692,10 @@ metafile against data on disk.</p>
             <span class="n">partial</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">part</span><span class="p">[:</span><span class="n">amount</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="n">bitlength</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">read</span> <span class="o">==</span> <span class="n">length</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
                     <span class="k">yield</span> <span class="n">partial</span>
                 <span class="k">break</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
             <span class="k">yield</span> <span class="n">partial</span>
             <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">length</span> <span class="o">!=</span> <span class="n">read</span><span class="p">:</span>
@@ -7751,12 +7752,10 @@ metafile against data on disk.</p>
     <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">):</span>
         <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">i</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">partial</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">piece</span><span class="p">))</span>
                 <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
                     <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">)</span>
                 <span class="p">):</span>
@@ -7890,7 +7889,7 @@ HashChecker            (<a title="torrentfile.mixins.ProgMixin" href="#torrentfi
             <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="n">length</span><span class="p">,</span> <span class="n">plength</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span>
             <span class="n">roothash</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces root&quot;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">roothash</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span><span class="p">:</span>
                 <span class="n">pieces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span><span class="p">[</span><span class="n">roothash</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
@@ -8099,7 +8098,7 @@ HashChecker            (<a title="torrentfile.mixins.ProgMixin" href="#torrentfi
         <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">length</span><span class="p">,</span> <span class="n">plength</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span>
         <span class="n">roothash</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces root&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">roothash</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span><span class="p">:</span>
             <span class="n">pieces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span><span class="p">[</span><span class="n">roothash</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -15815,17 +15814,23 @@ Checker            (<a title="torrentfile.mixins.ProgMixin" href="#torrentfile.m
 <span class="sd">        path : str</span>
 <span class="sd">            path to content or contents parent directory.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">pyben</span><span class="o">.</span><span class="n">loadinto</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">meta</span><span class="p">))</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_log</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Checking: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span> <span class="o">=</span> <span class="n">metafile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_log</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
+        <span class="n">thread2</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">waiting</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Extracting metadata&quot;</span><span class="p">,</span> <span class="n">meta</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">meta</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
+            <span class="n">thread2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="n">thread2</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span>
@@ -15839,7 +15844,6 @@ Checker            (<a title="torrentfile.mixins.ProgMixin" href="#torrentfile.m
             <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="mi">1</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_root</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Checking: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_paths</span><span class="p">()</span>
 
     <span class="nd">@classmethod</span>
@@ -16134,17 +16138,23 @@ Checker            (<a title="torrentfile.mixins.ProgMixin" href="#torrentfile.m
 <span class="sd">    path : str</span>
 <span class="sd">        path to content or contents parent directory.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">pyben</span><span class="o">.</span><span class="n">loadinto</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">meta</span><span class="p">))</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_log</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Checking: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span> <span class="o">=</span> <span class="n">metafile</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">last_log</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
-
-    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
+    <span class="n">thread2</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">waiting</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Extracting metadata&quot;</span><span class="p">,</span> <span class="n">meta</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">meta</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
+        <span class="n">thread2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">thread2</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;piece length&quot;</span><span class="p">]</span>
@@ -16158,7 +16168,6 @@ Checker            (<a title="torrentfile.mixins.ProgMixin" href="#torrentfile.m
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_root</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">log_msg</span><span class="p">(</span><span class="s2">&quot;Checking: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">check_paths</span><span class="p">()</span>
 </code></pre></div>
         </details>
@@ -16879,12 +16888,10 @@ metafile against data on disk.</p>
         <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">):</span>
             <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
-            <span class="n">title</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">i</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">partial</span><span class="p">):</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">piece</span><span class="p">))</span>
                     <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
                         <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">)</span>
                     <span class="p">):</span>
@@ -16931,8 +16938,10 @@ metafile against data on disk.</p>
                 <span class="n">partial</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">part</span><span class="p">[:</span><span class="n">amount</span><span class="p">])</span>
                 <span class="k">if</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="n">bitlength</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">read</span> <span class="o">==</span> <span class="n">length</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
                         <span class="k">yield</span> <span class="n">partial</span>
                     <span class="k">break</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
                 <span class="k">yield</span> <span class="n">partial</span>
                 <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">length</span> <span class="o">!=</span> <span class="n">read</span><span class="p">:</span>
@@ -17186,8 +17195,10 @@ metafile against data on disk.</p>
             <span class="n">partial</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">part</span><span class="p">[:</span><span class="n">amount</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="n">bitlength</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">read</span> <span class="o">==</span> <span class="n">length</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
                     <span class="k">yield</span> <span class="n">partial</span>
                 <span class="k">break</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
             <span class="k">yield</span> <span class="n">partial</span>
             <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">length</span> <span class="o">!=</span> <span class="n">read</span><span class="p">:</span>
@@ -17244,12 +17255,10 @@ metafile against data on disk.</p>
     <span class="n">partial</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">):</span>
         <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">i</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">partial</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">piece</span><span class="p">))</span>
                 <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
                     <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">)</span>
                 <span class="p">):</span>
@@ -17383,7 +17392,7 @@ HashChecker            (<a title="torrentfile.mixins.ProgMixin" href="#torrentfi
             <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="n">length</span><span class="p">,</span> <span class="n">plength</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span>
             <span class="n">roothash</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces root&quot;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">roothash</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span><span class="p">:</span>
                 <span class="n">pieces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span><span class="p">[</span><span class="n">roothash</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
@@ -17592,7 +17601,7 @@ HashChecker            (<a title="torrentfile.mixins.ProgMixin" href="#torrentfi
         <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">length</span><span class="p">,</span> <span class="n">plength</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_length</span>
         <span class="n">roothash</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces root&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prog_start</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">roothash</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span><span class="p">:</span>
             <span class="n">pieces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span><span class="p">[</span><span class="n">roothash</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -23041,43 +23050,6 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 
-<h4 id="tests.test_cli.test_cli_subprocess" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_cli_subprocess</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span></code>
-
-
-</h4>
-
-    <div class="doc doc-contents ">
-
-      <p>Test program from the command line through subprocess.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>tests\test_cli.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_cli_subprocess</span><span class="p">(</span><span class="n">dir2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Test program from the command line through subprocess.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.torrent&quot;</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">dir2</span><span class="p">)]</span>
-    <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s2">&quot;GITHUB_WORKFLOW&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>  <span class="c1"># nosec</span>
-        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-        <span class="n">rmpath</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
-        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;GITHUB_WORKFLOW&quot;</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
 <h4 id="tests.test_cli.test_cli_v1" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">test_cli_v1</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span></code>
 
@@ -25488,6 +25460,46 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 
+<h4 id="tests.test_torrent.test_mbtorrent" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_mbtorrent</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">progress</span><span class="p">)</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Test torrent creation for file size larger than 10MB.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrent.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">torrents</span><span class="p">())</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;progress&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_mbtorrent</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">progress</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test torrent creation for file size larger than 10MB.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tfile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="p">(</span><span class="n">exp</span><span class="o">=</span><span class="mi">26</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">tfile</span><span class="p">,</span>
+        <span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="n">progress</span><span class="p">,</span>
+        <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="s2">&quot;14&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">torrent</span> <span class="o">=</span> <span class="n">version</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="n">rmpath</span><span class="p">(</span><span class="n">tfile</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h4 id="tests.test_torrent.test_metafile_assemble" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">test_metafile_assemble</span><span class="p">(</span><span class="n">dir1</span><span class="p">)</span></code>
 
@@ -25555,7 +25567,6 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
         <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">dir2</span><span class="p">,</span>
         <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;somecomment&quot;</span><span class="p">,</span>
         <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;noprogress&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">torrent</span> <span class="o">=</span> <span class="n">version</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">torrent</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;announce&quot;</span>
@@ -25605,7 +25616,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
 
 
 <h4 id="tests.test_torrent.test_torrentfile_single" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">test_torrentfile_single</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">,</span> <span class="n">noprogress</span><span class="p">,</span> <span class="n">capsys</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">test_torrentfile_single</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">,</span> <span class="n">capsys</span><span class="p">)</span></code>
 
 
 </h4>
@@ -25619,8 +25630,7 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
           <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;num&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">25</span><span class="p">)))</span>
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;piece_length&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">18</span><span class="p">)])</span>
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">torrents</span><span class="p">())</span>
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;noprogress&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">test_torrentfile_single</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">,</span> <span class="n">noprogress</span><span class="p">,</span> <span class="n">capsys</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_torrentfile_single</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">,</span> <span class="n">capsys</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test creating a torrent file from a single file contents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -25632,7 +25642,6 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
         <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;somecomment&quot;</span><span class="p">,</span>
         <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="n">piece_length</span><span class="p">,</span>
-        <span class="s2">&quot;noprogress&quot;</span><span class="p">:</span> <span class="n">noprogress</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">trent</span> <span class="o">=</span> <span class="n">version</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
     <span class="n">trent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
@@ -25729,6 +25738,39 @@ PieceLengthValueError            (<span title="Exception">Exception</span>)
     <span class="n">outfile</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
     <span class="n">rmpath</span><span class="p">(</span><span class="n">tfile</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="tests.test_torrent.test_waiting_mixin" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_waiting_mixin</span><span class="p">()</span></code>
+
+
+</h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Test waiting function.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>tests\test_torrent.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test_waiting_mixin</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test waiting function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Testing message&quot;</span>
+    <span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">waiting</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">lst</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
 </code></pre></div>
         </details>
     </div>

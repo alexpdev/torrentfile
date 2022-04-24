@@ -22,7 +22,6 @@ Testing functions for the command line interface.
 
 import datetime
 import os
-import subprocess  # nosec
 import sys
 
 import pyben
@@ -400,21 +399,6 @@ def test_cli_empty_files(dir2, version, progress):
     outfile = str(dir2) + ".torrent"
     assert os.path.exists(outfile)
     rmpath(outfile)
-
-
-def test_cli_subprocess(dir2):
-    """
-    Test program from the command line through subprocess.
-    """
-    out = str(dir2) + ".torrent"
-    args = ["python", "-m", "torrentfile", "create", "-o", out, str(dir2)]
-    command = " ".join(args)
-    if "GITHUB_WORKFLOW" not in os.environ:  # pragma: nocover
-        _ = subprocess.run(command, check=True, encoding="utf-8")  # nosec
-        assert os.path.exists(out)
-        rmpath(out)
-    else:  # pragma: nocover
-        assert os.environ.get("GITHUB_WORKFLOW")
 
 
 @pytest.mark.parametrize("ending", ["/", "\\"])

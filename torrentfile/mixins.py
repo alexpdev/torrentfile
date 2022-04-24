@@ -26,6 +26,7 @@ import math
 import os
 import shutil
 import sys
+import time
 
 
 class CbMixin:
@@ -70,15 +71,27 @@ class ProgressBar:
         """
         Construct the progress bar object and store state of it's properties.
         """
-        self.active = True
         self.total = total
-        self.title = title
+        self.start = start
         self.length = length
-        self.unit = unit
         self.fill = chr(9608)
         self.empty = chr(9617)
         self.state = 0
-        self.start = start
+        self.unit = unit
+        if not unit:
+            self.unit = ""  # pragma: nocover
+        elif unit == "bytes":
+            if self.total > 10000000:
+                total = math.floor(self.total / 1048576)
+                self.unit = "MiB"
+            elif self.total > 10000:
+                total = math.floor(self.total / 1024)
+                self.unit = "KiB"
+        self.suffix = f"/{total} {self.unit}"
+        if len(title) > start:
+            title = title[: start - 1]
+        padding = (start - len(title)) * " "
+        self.prefix = "".join([title, padding])
 
     def increment(self, value):
         """
@@ -91,7 +104,7 @@ class ProgressBar:
         """
         self.state += value
 
-    def progbar(self):
+    def pbar(self):
         """
         Return the size of the filled portion of the progress bar.
 
@@ -100,52 +113,19 @@ class ProgressBar:
         str :
             the progress bar characters
         """
-        if self.state == self.total:
+        if self.state >= self.total:
             fill = self.length
         else:
-            fill = int((self.state / self.total) * self.length)
+            fill = math.ceil((self.state / self.total) * self.length)
         empty = self.length - fill
-        pbar = (self.fill * fill) + (self.empty * empty)
-        return pbar
-
-    def center(self):
-        """
-        Return the prefix plus the title plus the padding.
-
-        Returns
-        -------
-        str :
-            the prefix to the progress bar characters
-        """
-        if len(self.title) > self.length:
-            title = self.title[: self.length]
+        if self.unit == "MiB":
+            state = math.floor(self.state / 1048576)
+        elif self.unit == "KiB":
+            state = math.floor(self.state / 1024)
         else:
-            title = self.title
-        padding = (self.start - len(title)) * " "
-        return "".join([title, padding])
-
-    def stats(self):
-        """
-        Return the suffix after progress bar.
-
-        Returns
-        -------
-        str :
-            the suffix to the progress bar characters
-        """
-        total = self.total
-        state = self.state
-        unit = self.unit if self.unit else ""
-        if self.unit == "bytes":
-            if self.total > 100000:
-                total = math.floor(self.total / 1048576)
-                state = math.floor(self.state / 1048576)
-                unit = "MiB"
-            elif self.total > 10000:  # pragma: nocover
-                total = math.floor(self.total / 1024)
-                state = math.floor(self.state / 1024)
-                unit = "KiB"
-        return f" {state}/{total} {unit}"
+            state = self.state
+        progbar = ["[", self.fill * fill, self.empty * empty, "] ", str(state)]
+        return "".join(progbar)
 
 
 class ProgMixin:
@@ -179,9 +159,8 @@ class ProgMixin:
         """
         title = os.path.basename(path)
         width = shutil.get_terminal_size().columns
-        extra = "[]/  "
-        begin = length + len(extra) + (length // 2)
-        start = width - begin
+        length = min(length, width // 2)
+        start = width - int(length * 1.5)
         self.prog = ProgressBar(total, title, length, unit, start)
 
     def prog_update(self, val):
@@ -197,13 +176,10 @@ class ProgMixin:
         """
         if self.is_active():
             self.prog.increment(val)
-            if self.prog.total >= self.prog.state:
-                pbar = self.prog.progbar()
-                title = self.prog.center()
-                stats = self.prog.stats()
-                output = f"\r{title} [{pbar}] {stats}"
-                sys.stdout.write(output)
-                sys.stdout.flush()
+            pbar = self.prog.pbar()
+            output = f"{self.prog.prefix}{pbar}{self.prog.suffix}\r"
+            sys.stdout.write(output)
+            sys.stdout.flush()
 
     def prog_close(self):
         """
@@ -229,3 +205,45 @@ class ProgMixin:
         if hasattr(self, "prog"):
             return True
         return False
+
+
+def waiting(msg, flag, timeout=180):
+    """
+    Show loading message while thread completes processing.
+
+    Parameters
+    ----------
+    msg : str
+        Message string printed before the progress bar
+    flag : list
+        Once flag is filled exit loop
+    timeout : int
+        max amount of time to run the function.
+    """
+    then = time.time()
+    codes, fill = list(range(9617, 9620)), chr(9619)
+    size = idx = 0
+    total = shutil.get_terminal_size().columns - len(msg) - 20
+
+    def output(text):
+        """
+        Print parameter message to the console.
+
+        Parameters
+        ----------
+        text : str
+            output message
+        """
+        sys.stdout.write(text)
+        sys.stdout.flush()
+
+    output("\n")
+    while not flag:
+        time.sleep(0.16)
+        filled = (fill * size) + chr(codes[idx]) + (" " * (total - size))
+        output(f"{msg}: {filled}\r")
+        idx = idx + 1 if idx + 1 < len(codes) else 0
+        size = size + 1 if size < total else 0
+        if time.time() - then > timeout:
+            break
+    output("\n")

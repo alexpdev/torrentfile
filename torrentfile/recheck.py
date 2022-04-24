@@ -30,11 +30,12 @@ import logging
 import os
 from hashlib import sha1, sha256  # nosec
 from pathlib import Path
+from threading import Thread
 
 import pyben
 
 from torrentfile.hasher import HasherHybrid, HasherV2
-from torrentfile.mixins import ProgMixin
+from torrentfile.mixins import ProgMixin, waiting
 from torrentfile.utils import MissingPathError
 
 SHA1 = 20
@@ -78,17 +79,23 @@ class Checker(ProgMixin):
         path : str
             path to content or contents parent directory.
         """
+        if not os.path.exists(metafile):
+            raise FileNotFoundError
+        meta = []
+        thread = Thread(target=pyben.loadinto, args=(metafile, meta))
+        thread.start()
+        self.last_log = None
+        self.log_msg("Checking: %s, %s", metafile, path)
         self.metafile = metafile
         self.meta_version = None
         self.total = 0
         self.paths = []
         self.fileinfo = {}
-        self.last_log = None
-
-        if not os.path.exists(metafile):
-            raise FileNotFoundError
-
-        self.meta = pyben.load(metafile)
+        thread2 = Thread(target=waiting, args=("Extracting metadata", meta))
+        if not meta:  # pragma: nocover
+            thread2.start()
+            thread2.join()
+        self.meta = meta[0]
         self.info = self.meta["info"]
         self.name = self.info["name"]
         self.piece_length = self.info["piece length"]
@@ -102,7 +109,6 @@ class Checker(ProgMixin):
             self.meta_version = 1
 
         self.root = self.find_root(path)
-        self.log_msg("Checking: %s, %s", metafile, path)
         self.check_paths()
 
     @classmethod
@@ -394,12 +400,10 @@ class FeedChecker(ProgMixin):
         partial = bytearray()
         for i, path in enumerate(self.paths):
             total = self.fileinfo[i]["length"]
-            title = os.path.basename(path)
-            self.prog_start(total, title, unit="bytes")
+            self.prog_start(total, path, unit="bytes")
             self.index = i
             if os.path.exists(path):
                 for piece in self.extract(path, partial):
-                    self.prog_update(len(piece))
                     if (len(piece) == self.piece_length) or (
                         i + 1 == len(self.paths)
                     ):
@@ -446,8 +450,10 @@ class FeedChecker(ProgMixin):
                 partial.extend(part[:amount])
                 if amount < bitlength:
                     if amount > 0 and read == length:
+                        self.prog_update(amount)
                         yield partial
                     break
+                self.prog_update(amount)
                 yield partial
                 partial = bytearray(0)
         if length != read:
@@ -542,7 +548,7 @@ class HashChecker(ProgMixin):
             info = self.fileinfo[i]
             length, plength = info["length"], self.piece_length
             roothash = info["pieces root"]
-            self.prog_start(length, os.path.basename(path), unit="bytes")
+            self.prog_start(length, path, unit="bytes")
             if roothash in self.piece_layers:
                 pieces = self.piece_layers[roothash]
             else:

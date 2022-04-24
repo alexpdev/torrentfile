@@ -24,6 +24,7 @@ import os
 import pytest
 
 from tests import dir1, dir2, rmpath, tempfile, torrents
+from torrentfile.mixins import waiting
 from torrentfile.torrent import MetaFile
 from torrentfile.utils import MissingPathError
 
@@ -79,7 +80,6 @@ def test_torrentfile_extra(dir2, version):
         "path": dir2,
         "comment": "somecomment",
         "announce": "announce",
-        "noprogress": True,
     }
     torrent = version(**args)
     assert torrent.meta["announce"] == "announce"
@@ -88,8 +88,7 @@ def test_torrentfile_extra(dir2, version):
 @pytest.mark.parametrize("num", list(range(17, 25)))
 @pytest.mark.parametrize("piece_length", [2**i for i in range(14, 18)])
 @pytest.mark.parametrize("version", torrents())
-@pytest.mark.parametrize("noprogress", [True, False])
-def test_torrentfile_single(version, num, piece_length, noprogress, capsys):
+def test_torrentfile_single(version, num, piece_length, capsys):
     """
     Test creating a torrent file from a single file contents.
     """
@@ -101,7 +100,6 @@ def test_torrentfile_single(version, num, piece_length, noprogress, capsys):
         "comment": "somecomment",
         "announce": "announce",
         "piece_length": piece_length,
-        "noprogress": noprogress,
     }
     trent = version(**args)
     trent.write()
@@ -177,3 +175,32 @@ def test_create_cwd_fail():
     current = os.path.join(".", name)
     assert os.path.exists(current)
     rmpath(tfile, current)
+
+
+def test_waiting_mixin():
+    """
+    Test waiting function.
+    """
+    msg = "Testing message"
+    lst = []
+    timeout = 3
+    waiting(msg, lst, timeout=timeout)
+    assert len(lst) == 0
+
+
+@pytest.mark.parametrize("version", torrents())
+@pytest.mark.parametrize("progress", [0, 1, 2])
+def test_mbtorrent(version, progress):
+    """
+    Test torrent creation for file size larger than 10MB.
+    """
+    tfile = tempfile(exp=26)
+    args = {
+        "path": tfile,
+        "progress": progress,
+        "piece_length": "14",
+    }
+    torrent = version(**args)
+    outfile, _ = torrent.write()
+    assert os.path.exists(outfile)
+    rmpath(tfile, outfile)

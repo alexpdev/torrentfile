@@ -1,1 +1,1 @@
-pyben
+pyben>=0.3.1
