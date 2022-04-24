@@ -404,6 +404,7 @@ class FeedChecker(ProgMixin):
             self.index = i
             if os.path.exists(path):
                 for piece in self.extract(path, partial):
+                    self.prog_update(len(piece))
                     if (len(piece) == self.piece_length) or (
                         i + 1 == len(self.paths)
                     ):
