@@ -5,6 +5,6 @@ bandit
 coverage
 pytest
 pytest-cov
-pyben
+pyben>=0.3.1
 pylint
 tox
