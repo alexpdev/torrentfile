@@ -5487,8 +5487,6 @@ prog_close</p>
 <span class="sd">        ----------</span>
 <span class="sd">        val : int</span>
 <span class="sd">            the number of bytes count the progress bar should increase.</span>
-<span class="sd">        end : bool</span>
-<span class="sd">            if this is the last print of the progress bar</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
@@ -5721,12 +5719,6 @@ and deleting the progress bar object to clear a space for the next one.</p>
         <td><p>the number of bytes count the progress bar should increase.</p></td>
         <td><em>required</em></td>
       </tr>
-      <tr>
-        <td><code>end</code></td>
-        <td><code>bool</code></td>
-        <td><p>if this is the last print of the progress bar</p></td>
-        <td><em>required</em></td>
-      </tr>
   </tbody>
 </table>
         <details class="quote">
@@ -5739,8 +5731,6 @@ and deleting the progress bar object to clear a space for the next one.</p>
 <span class="sd">    ----------</span>
 <span class="sd">    val : int</span>
 <span class="sd">        the number of bytes count the progress bar should increase.</span>
-<span class="sd">    end : bool</span>
-<span class="sd">        if this is the last print of the progress bar</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
@@ -5817,12 +5807,6 @@ ProgressBar        </code>
         <td><p>the text representation incremented</p></td>
         <td><em>required</em></td>
       </tr>
-      <tr>
-        <td><code>padding</code></td>
-        <td><code>int</code></td>
-        <td><p>the size of the gap between title and progress bar</p></td>
-        <td><em>required</em></td>
-      </tr>
   </tbody>
 </table>
         <details class="quote">
@@ -5841,8 +5825,6 @@ ProgressBar        </code>
 <span class="sd">        the width of the progress bar</span>
 <span class="sd">    unit : str</span>
 <span class="sd">        the text representation incremented</span>
-<span class="sd">    padding : int</span>
-<span class="sd">        the size of the gap between title and progress bar</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>

@@ -63,8 +63,6 @@ class ProgressBar:
         the width of the progress bar
     unit : str
         the text representation incremented
-    padding : int
-        the size of the gap between title and progress bar
     """
 
     def __init__(self, total, title, length, unit, start):
@@ -171,8 +169,6 @@ class ProgMixin:
         ----------
         val : int
             the number of bytes count the progress bar should increase.
-        end : bool
-            if this is the last print of the progress bar
         """
         if self.is_active():
             self.prog.increment(val)
