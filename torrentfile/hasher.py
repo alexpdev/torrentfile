@@ -119,7 +119,7 @@ class Hasher(CbMixin, ProgMixin):
             self.current.close()
             if self.progress == 2:
                 self.prog_start(
-                    os.path.getsize(path), path, self.progress, unit="bytes"
+                    os.path.getsize(path), path, unit="bytes"
                 )
             self.current = open(path, "rb")
             return True
