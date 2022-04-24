@@ -1,6 +1,6 @@
 # TorrentFile
 
-## Version 0.7.7
+## Version 0.7.8
 
 - more updates to logging
 - major improvements to progress bar
