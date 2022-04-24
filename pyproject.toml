@@ -50,5 +50,6 @@ ignore-imports=true
 max-args=15
 min-public-methods=0
 max-attributes=20
+max-statements=75
 max-branches=20
 min-similarity-lines=4

@@ -1,3 +1,1 @@
-pyben
-tqdm
-colorama
+pyben>=0.3.1

@@ -24,6 +24,7 @@ import logging
 import os
 from hashlib import sha1, sha256  # nosec
 
+from torrentfile.mixins import CbMixin, ProgMixin
 from torrentfile.utils import humanize_bytes, next_power_2
 
 BLOCK_SIZE = 2**14  # 16KiB
@@ -32,27 +33,7 @@ HASH_SIZE = 32
 logger = logging.getLogger(__name__)
 
 
-class _CbMixin:
-    """
-    Mixin class to set a callback during hashing procedure.
-    """
-
-    _cb = None
-
-    @classmethod
-    def set_callback(cls, func):
-        """
-        Assign a callback to the Hashing class.
-
-        Parameters
-        ----------
-        func : function
-            the callback function
-        """
-        cls._cb = func
-
-
-class Hasher(_CbMixin):
+class Hasher(CbMixin, ProgMixin):
     """
     Piece hasher for Bittorrent V1 files.
 
@@ -66,15 +47,21 @@ class Hasher(_CbMixin):
         List of files.
     piece_length : int
         Size of chuncks to split the data into.
+    progress : int
+        default = None
     """
 
-    def __init__(self, paths: list, piece_length: int):
+    def __init__(self, paths: list, piece_length: int, progress: int = None):
         """Generate hashes of piece length data from filelist contents."""
         self.piece_length = piece_length
         self.paths = paths
+        self.progress = progress
         self.total = sum([os.path.getsize(i) for i in self.paths])
         self.index = 0
         self.current = open(self.paths[0], "rb")
+        if self.progress and self.progress == 2:
+            total = os.path.getsize(self.paths[0])
+            self.prog_start(total, self.paths[0], unit="bytes")
         logger.debug(
             "Hashing v1 torrent file. Size: %s Piece Length: %s",
             humanize_bytes(self.total),
@@ -111,24 +98,41 @@ class Hasher(_CbMixin):
             temp = bytearray(target)
             size = self.current.readinto(temp)
             arr.extend(temp[:size])
+            self.prog_update(size)
             if size == target:
                 break
         return sha1(arr).digest()  # nosec
 
-    def next_file(self):
+    def next_file(self) -> bool:
         """
         Seemlessly transition to next file in file list.
+
+        Returns
+        -------
+        bool:
+            True if there is a next file otherwise False.
         """
         self.index += 1
+        self.prog_close()
         if self.index < len(self.paths):
+            path = self.paths[self.index]
             self.current.close()
-            self.current = open(self.paths[self.index], "rb")
+            if self.progress == 2:
+                self.prog_start(
+                    os.path.getsize(path), path, self.progress, unit="bytes"
+                )
+            self.current = open(path, "rb")
             return True
         return False
 
-    def __next__(self):
+    def __next__(self) -> bytes:
         """
         Generate piece-length pieces of data from input file list.
+
+        Returns
+        -------
+        bytes
+            SHA1 hash of the piece extracted.
         """
         while True:
             piece = bytearray(self.piece_length)
@@ -137,8 +141,10 @@ class Hasher(_CbMixin):
                 if not self.next_file():
                     raise StopIteration
             elif size < self.piece_length:
+                self.prog_update(size)
                 return self._handle_partial(piece[:size])
             else:
+                self.prog_update(size)
                 return sha1(piece).digest()  # nosec
 
 
@@ -155,7 +161,7 @@ def merkle_root(blocks: list) -> bytes:
     return blocks
 
 
-class HasherV2(_CbMixin):
+class HasherV2(CbMixin, ProgMixin):
     """
     Calculate the root hash and piece layers for file contents.
 
@@ -170,9 +176,11 @@ class HasherV2(_CbMixin):
         Path to file.
     piece_length : int
         Size of layer hashes pieces.
+    progress : int
+        default = None
     """
 
-    def __init__(self, path: str, piece_length: int):
+    def __init__(self, path: str, piece_length: int, progress: int = None):
         """
         Calculate and store hash information for specific file.
         """
@@ -182,6 +190,8 @@ class HasherV2(_CbMixin):
         self.layer_hashes = []
         self.piece_length = piece_length
         self.num_blocks = piece_length // BLOCK_SIZE
+        if progress and progress == 2:
+            self.prog_start(os.path.getsize(path), path, unit="bytes")
         logger.debug(
             "Hashing partial v2 torrent file. Piece Length: %s Path: %s",
             humanize_bytes(self.piece_length),
@@ -207,6 +217,7 @@ class HasherV2(_CbMixin):
 
             for _ in range(self.num_blocks):
                 size = fd.readinto(leaf)
+                self.prog_update(size)
                 if not size:
                     break
                 blocks.append(sha256(leaf[:size]).digest())
@@ -225,6 +236,7 @@ class HasherV2(_CbMixin):
 
                 # pad the the rest with zeroes to fill remaining space.
                 padding = [bytes(32) for _ in range(remaining)]
+                self.prog_update(HASH_SIZE * remaining)
                 blocks.extend(padding)
             # calculate the root hash for the merkle tree up to piece-length
 
@@ -233,6 +245,7 @@ class HasherV2(_CbMixin):
                 self._cb(layer_hash)
             self.layer_hashes.append(layer_hash)
         self._calculate_root()
+        self.prog_close()
 
     def _calculate_root(self):
         """
@@ -249,7 +262,7 @@ class HasherV2(_CbMixin):
         self.root = merkle_root(self.layer_hashes)
 
 
-class HasherHybrid(_CbMixin):
+class HasherHybrid(CbMixin, ProgMixin):
     """
     Calculate root and piece hashes for creating hybrid torrent file.
 
@@ -263,9 +276,11 @@ class HasherHybrid(_CbMixin):
         path to target file.
     piece_length : int
         piece length for data chunks.
+    progress : int
+        default = None
     """
 
-    def __init__(self, path: str, piece_length: int):
+    def __init__(self, path: str, piece_length: int, progress: int = None):
         """
         Construct Hasher class instances for each file in torrent.
         """
@@ -277,6 +292,8 @@ class HasherHybrid(_CbMixin):
         self.root = None
         self.padding_piece = None
         self.padding_file = None
+        if progress and progress == 2:
+            self.prog_start(os.path.getsize(path), path, unit="bytes")
         self.amount = piece_length // BLOCK_SIZE
         logger.debug(
             "Hashing: %s, Piece Size: %s",
@@ -305,6 +322,7 @@ class HasherHybrid(_CbMixin):
         if not self.layer_hashes:
             power2 = next_power_2(block_count)
             remaining = power2 - block_count
+        self.prog_update(HASH_SIZE * remaining)
         return [bytes(HASH_SIZE) for _ in range(remaining)]
 
     def process_file(self, data: bytearray):
@@ -324,6 +342,7 @@ class HasherHybrid(_CbMixin):
             block = bytearray(BLOCK_SIZE)
             for _ in range(self.amount):
                 size = data.readinto(block)
+                self.prog_update(size)
                 if not size:
                     break
                 total += size
@@ -348,6 +367,7 @@ class HasherHybrid(_CbMixin):
                 piece.update(bytes(plength))
             self.pieces.append(piece.digest())  # nosec
         self._calculate_root()
+        self.prog_close()
 
     def _calculate_root(self):
         """

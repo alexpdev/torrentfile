@@ -669,10 +669,14 @@ Commands
 </ul>
 <pre><code class="language-bash">&gt; torrentfile create --private --source EXAMPLE --tracker https://url1 https://url2
 </code></pre>
+<p>The 3 options for controlling the progress bar using <code>--prog</code> or <code>--progress</code>:</p>
 <ul>
-<li>to turn off the progress bar shown use <code>--noprogress</code></li>
+<li>0 : show no progress bar at all</li>
+<li>1 : show 1 progress bar measuring the entire creation process</li>
+<li>2 : show a progress bar for each file of the torrent content</li>
 </ul>
-<pre><code class="language-bash">&gt; torrentfile -t http://tracker.com --noprogress /path/to/content
+<pre><code class="language-bash">&gt; torrentfile -t http://tracker.com --progress 2 /path/to/content
+&gt; torrentfile --prog 0 /path/to/content
 </code></pre>
 <ul>
 <li>to specify the save location use the <code>-o</code> or <code>--out</code> flags</li>

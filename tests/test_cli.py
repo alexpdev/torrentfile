@@ -22,14 +22,13 @@ Testing functions for the command line interface.
 
 import datetime
 import os
-import subprocess  # nosec
 import sys
 
 import pyben
 import pytest
 
 from tests import dir1, dir2, rmpath
-from torrentfile.cli import main
+from torrentfile import execute
 
 
 def test_fix():
@@ -57,7 +56,7 @@ def test_cli_v1(folder):
     folder, torrent = folder
     args = ["torrentfile", "create", folder]
     sys.argv = args
-    main()
+    execute()
     assert os.path.exists(torrent)
 
 
@@ -68,7 +67,7 @@ def test_cli_v2(folder):
     folder, torrent = folder
     args = ["torrentfile", "create", folder, "--meta-version", "2"]
     sys.argv = args
-    main()
+    execute()
     assert os.path.exists(torrent)
 
 
@@ -79,7 +78,7 @@ def test_cli_v3(folder):
     folder, torrent = folder
     args = ["torrentfile", "create", folder, "--meta-version", "3"]
     sys.argv = args
-    main()
+    execute()
     assert os.path.exists(torrent)
 
 
@@ -90,7 +89,7 @@ def test_cli_private(folder):
     folder, torrent = folder
     args = ["torrentfile", "create", folder, "--private"]
     sys.argv = args
-    main()
+    execute()
     meta = pyben.load(torrent)
     assert "private" in meta["info"]
 
@@ -111,10 +110,11 @@ def test_cli_piece_length(folder, piece_length, version):
         str(piece_length),
         "--meta-version",
         version,
-        "--noprogress",
+        "--progress",
+        "0",
     ]
     sys.argv = args
-    main()
+    execute()
     meta = pyben.load(torrent)
     assert meta["info"]["piece length"] == piece_length
 
@@ -138,7 +138,7 @@ def test_cli_announce(folder, piece_length, version):
         "https://announce.org/tracker",
     ]
     sys.argv = args
-    main()
+    execute()
     meta = pyben.load(torrent)
     assert meta["announce"] == "https://announce.org/tracker"
 
@@ -163,7 +163,7 @@ def test_cli_announce_list(folder, version):
         "--tracker",
     ] + trackers
     sys.argv = args
-    main()
+    execute()
     meta = pyben.load(torrent)
     for url in trackers:
         assert url in [j for i in meta["announce-list"] for j in i]
@@ -187,9 +187,11 @@ def test_cli_comment(folder, piece_length, version):
         "--magnet",
         "--comment",
         "this is a comment",
+        "--progress",
+        "2",
     ]
     sys.argv = args
-    main()
+    execute()
     meta = pyben.load(torrent)
     assert meta["info"]["comment"] == "this is a comment"
 
@@ -211,9 +213,11 @@ def test_cli_outfile(dir1, piece_length, version):
         version,
         "-o",
         outfile,
+        "--progress",
+        "1",
     ]
     sys.argv = args
-    main()
+    execute()
     assert os.path.exists(outfile)
     rmpath(outfile)
 
@@ -237,7 +241,7 @@ def test_cli_creation_date(folder, piece_length, version):
         "this is a comment",
     ]
     sys.argv = args
-    main()
+    execute()
     meta = pyben.load(torrent)
     num = float(meta["creation date"])
     date = datetime.datetime.fromtimestamp(num)
@@ -266,7 +270,7 @@ def test_cli_created_by(folder, piece_length, version):
         "this is a comment",
     ]
     sys.argv = args
-    main()
+    execute()
     meta = pyben.load(torrent)
     assert "TorrentFile" in meta["created by"]
 
@@ -292,7 +296,7 @@ def test_cli_web_seeds(folder, piece_length, version):
         "https://webseed.url/3",
     ]
     sys.argv = args
-    main()
+    execute()
     meta = pyben.load(torrent)
     assert "https://webseed.url/1" in meta["url-list"]
 
@@ -317,7 +321,7 @@ def test_cli_with_debug(folder, piece_length, version):
         "this is a comment",
     ]
     sys.argv = args
-    main()
+    execute()
     assert os.path.exists(torrent)
 
 
@@ -340,7 +344,7 @@ def test_cli_with_source(folder, piece_length, version):
         "somesource",
     ]
     sys.argv = args
-    main()
+    execute()
     meta = pyben.load(torrent)
     assert meta["info"]["source"] == "somesource"
 
@@ -352,14 +356,14 @@ def test_cli_help():
     args = ["-h"]
     sys.argv = args
     try:
-        assert main()
+        assert execute()
     except SystemExit:
         assert True
 
 
 @pytest.mark.parametrize("version", ["1", "2", "3"])
-@pytest.mark.parametrize("noprogress", [True, False])
-def test_cli_empty_files(dir2, version, noprogress):
+@pytest.mark.parametrize("progress", ["0", "1", "2"])
+def test_cli_empty_files(dir2, version, progress):
     """
     Test creating torrent with empty files.
     """
@@ -371,10 +375,10 @@ def test_cli_empty_files(dir2, version, noprogress):
         version,
         "--source",
         "somesource",
+        "--prog",
+        progress,
     ]
     sys.argv = args
-    if noprogress:
-        sys.argv.append("--noprogress")
 
     def walk(root, count):
         """
@@ -391,25 +395,10 @@ def test_cli_empty_files(dir2, version, noprogress):
         return count
 
     walk(dir2, 0)
-    main()
+    execute()
     outfile = str(dir2) + ".torrent"
     assert os.path.exists(outfile)
     rmpath(outfile)
-
-
-def test_cli_subprocess(dir2):
-    """
-    Test program from the command line through subprocess.
-    """
-    out = str(dir2) + ".torrent"
-    args = ["python", "-m", "torrentfile", "create", "-o", out, str(dir2)]
-    command = " ".join(args)
-    if "GITHUB_WORKFLOW" not in os.environ:  # pragma: nocover
-        _ = subprocess.run(command, check=True)  # nosec
-        assert os.path.exists(out)
-        rmpath(out)
-    else:  # pragma: nocover
-        assert os.environ.get("GITHUB_WORKFLOW")
 
 
 @pytest.mark.parametrize("ending", ["/", "\\"])
@@ -428,7 +417,7 @@ def test_cli_slash_path(dir1, ending):
         str(dir1) + ending,
     ]
     sys.argv = args
-    main()
+    execute()
     outfile = str(dir1) + ".torrent"
     assert os.path.exists(outfile)
     rmpath(outfile)
@@ -453,7 +442,7 @@ def test_cli_slash_outpath(dir1, sep):
         str(dir1),
     ]
     sys.argv = args
-    main()
+    execute()
     outfile = str(dir1) + ".torrent"
     assert os.path.exists(outfile)
     rmpath(outfile)
@@ -468,7 +457,7 @@ def test_cli_announce_path(dir1, flag):
     """
     args = ["torrentfile", "create", flag, "https://announce1.org", str(dir1)]
     sys.argv = args
-    main()
+    execute()
     outfile = str(dir1) + ".torrent"
     assert os.path.exists(outfile)
     rmpath(outfile)
@@ -489,6 +478,6 @@ def test_cli_cwd(folder):
     current = os.getcwd()
     name = os.path.basename(folder)
     outfile = os.path.join(current, name) + ".torrent"
-    main()
+    execute()
     assert os.path.exists(outfile)
     rmpath(outfile)

@@ -61,8 +61,7 @@ def create(args: list):
         object containing the path to created metafile and its contents.
     """
     kwargs = vars(args)
-    logger.debug("Create new torrent file from %s", args.content)
-
+    logger.debug("create command invoked with %s", args.content)
     if args.meta_version == "2":
         torrent = TorrentFileV2(**kwargs)
     elif args.meta_version == "3":
@@ -70,7 +69,7 @@ def create(args: list):
     else:
         torrent = TorrentFile(**kwargs)
     outfile, meta = torrent.write()
-    logger.debug("Torrent file creation complete.")
+    logger.debug("torrent creation complete.")
 
     if args.magnet:
         magnet(outfile)
@@ -81,7 +80,7 @@ def create(args: list):
     args.meta = meta
 
     print("\nOutput path: ", os.path.abspath(str(outfile)))
-    logger.debug("New torrent file (%s) has been created.", str(outfile))
+    logger.debug("file saved to %s", str(outfile))
     return args
 
 
