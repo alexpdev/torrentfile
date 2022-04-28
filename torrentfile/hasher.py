@@ -25,7 +25,7 @@ import os
 from hashlib import sha1, sha256  # nosec
 
 from torrentfile.mixins import CbMixin, ProgMixin
-from torrentfile.utils import humanize_bytes, next_power_2
+from torrentfile.utils import next_power_2
 
 BLOCK_SIZE = 2**14  # 16KiB
 HASH_SIZE = 32
@@ -62,11 +62,7 @@ class Hasher(CbMixin, ProgMixin):
         if self.progress and self.progress == 2:
             total = os.path.getsize(self.paths[0])
             self.prog_start(total, self.paths[0], unit="bytes")
-        logger.debug(
-            "Hashing v1 torrent file. Size: %s Piece Length: %s",
-            humanize_bytes(self.total),
-            humanize_bytes(self.piece_length),
-        )
+        logger.debug("Hashing %s", str(self.paths[0]))
 
     def __iter__(self):
         """
@@ -116,11 +112,10 @@ class Hasher(CbMixin, ProgMixin):
         self.prog_close()
         if self.index < len(self.paths):
             path = self.paths[self.index]
+            logger.debug("Hashing %s", str(path))
             self.current.close()
             if self.progress == 2:
-                self.prog_start(
-                    os.path.getsize(path), path, unit="bytes"
-                )
+                self.prog_start(os.path.getsize(path), path, unit="bytes")
             self.current = open(path, "rb")
             return True
         return False
@@ -151,6 +146,16 @@ class Hasher(CbMixin, ProgMixin):
 def merkle_root(blocks: list) -> bytes:
     """
     Calculate the merkle root for a seq of sha256 hash digests.
+
+    Parameters
+    ----------
+    blocks : list
+        a sequence of sha256 layer hashes.
+
+    Returns
+    -------
+    bytes
+        the sha256 root hash of the merkle tree.
     """
     if blocks:
         while len(blocks) > 1:
@@ -192,12 +197,6 @@ class HasherV2(CbMixin, ProgMixin):
         self.num_blocks = piece_length // BLOCK_SIZE
         if progress and progress == 2:
             self.prog_start(os.path.getsize(path), path, unit="bytes")
-        logger.debug(
-            "Hashing partial v2 torrent file. Piece Length: %s Path: %s",
-            humanize_bytes(self.piece_length),
-            str(self.path),
-        )
-
         with open(self.path, "rb") as fd:
             self.process_file(fd)
 
@@ -207,7 +206,7 @@ class HasherV2(CbMixin, ProgMixin):
 
         Parameters
         ----------
-        fd : str
+        fd : TextIOWrapper
             Opened file in read mode.
         """
         while True:
@@ -295,11 +294,6 @@ class HasherHybrid(CbMixin, ProgMixin):
         if progress and progress == 2:
             self.prog_start(os.path.getsize(path), path, unit="bytes")
         self.amount = piece_length // BLOCK_SIZE
-        logger.debug(
-            "Hashing: %s, Piece Size: %s",
-            str(self.path),
-            humanize_bytes(self.piece_length),
-        )
         with open(path, "rb") as data:
             self.process_file(data)
 

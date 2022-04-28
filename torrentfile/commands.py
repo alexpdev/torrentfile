@@ -61,7 +61,7 @@ def create(args: list):
         object containing the path to created metafile and its contents.
     """
     kwargs = vars(args)
-    logger.debug("create command invoked with %s", args.content)
+    logger.debug("Creating torrent from %s", args.content)
     if args.meta_version == "2":
         torrent = TorrentFileV2(**kwargs)
     elif args.meta_version == "3":
@@ -69,7 +69,6 @@ def create(args: list):
     else:
         torrent = TorrentFile(**kwargs)
     outfile, meta = torrent.write()
-    logger.debug("torrent creation complete.")
 
     if args.magnet:
         magnet(outfile)
@@ -80,7 +79,7 @@ def create(args: list):
     args.meta = meta
 
     print("\nOutput path: ", os.path.abspath(str(outfile)))
-    logger.debug("file saved to %s", str(outfile))
+    logger.debug("Output path: %s", str(outfile))
     return args
 
 
@@ -162,11 +161,9 @@ def recheck(args):
     str
         The percentage of content currently saved to disk.
     """
-    logger.debug("Program entering Recheck mode.")
     metafile = args.metafile
     content = args.content
-
-    logger.debug("Checking %s against %s contents", metafile, content)
+    logger.debug("Validating %s against %s contents", metafile, content)
     checker = Checker(metafile, content)
 
     logger.debug("Completed initialization of the Checker class")

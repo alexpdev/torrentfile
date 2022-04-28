@@ -421,7 +421,7 @@ class TorrentFile(MetaFile, ProgMixin):
             dictionary of keyword args passed to superclass.
         """
         super().__init__(**kwargs)
-        logger.debug("bittorrent version 1 file assembly")
+        logger.debug("Assembling bittorrent v1 torrent file")
         self.assemble()
 
     def assemble(self):
@@ -484,7 +484,7 @@ class TorrentFileV2(MetaFile, ProgMixin):
             keywword arguments to pass to superclass.
         """
         super().__init__(**kwargs)
-        logger.debug("bittorrent v2 file detected")
+        logger.debug("Assembling bittorrent v2 torrent file")
         self.piece_layers = {}
         self.hashes = []
         self.total = len(utils.get_file_list(self.path))
@@ -532,6 +532,7 @@ class TorrentFileV2(MetaFile, ProgMixin):
             if size == 0:
                 return {"": {"length": size}}
 
+            logger.debug("Hashing %s", str(path))
             fhash = HasherV2(path, self.piece_length, self.progress)
             self.prog_update(size)
 
@@ -563,7 +564,7 @@ class TorrentFileHybrid(MetaFile, ProgMixin):
         Create Bittorrent v1 v2 hybrid metafiles.
         """
         super().__init__(**kwargs)
-        logger.debug("hybrid bittorrent file detected")
+        logger.debug("Assembling bittorrent Hybrid file")
         self.name = os.path.basename(self.path)
         self.hashes = []
         self.piece_layers = {}
@@ -619,6 +620,7 @@ class TorrentFileHybrid(MetaFile, ProgMixin):
             if file_size == 0:
                 return {"": {"length": file_size}}
 
+            logger.debug("Hashing %s", str(path))
             file_hash = HasherHybrid(path, self.piece_length, self.progress)
             self.prog_update(file_size)
 
