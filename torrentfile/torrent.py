@@ -194,7 +194,7 @@ from datetime import datetime
 import pyben
 
 from torrentfile import utils
-from torrentfile.hasher import Hasher, HasherHybrid, HasherV2
+from torrentfile.hasher import Hasher, HasherHybrid, HasherV2, FileHasher
 from torrentfile.mixins import ProgMixin
 from torrentfile.version import __version__ as version
 
@@ -231,6 +231,8 @@ class MetaFile:
         one or more web addressess where torrent content exists.
     content : str
         alias for 'path' arg.
+    meta_version : int
+        indicates which Bittorrent protocol to use for hashing content
     """
 
     hasher = None
@@ -262,6 +264,7 @@ class MetaFile:
         httpseeds=None,
         url_list=None,
         content=None,
+        meta_version=None,
         **_,
     ):
         """
@@ -337,6 +340,7 @@ class MetaFile:
             logger.debug("httpseeds parameter found %s", str(httpseeds))
         self.meta["info"]["piece length"] = self.piece_length
 
+        self.meta_version = meta_version
         parent, self.name = os.path.split(self.path)
         if not self.name:
             self.name = os.path.basename(parent)
@@ -640,3 +644,109 @@ class TorrentFileHybrid(MetaFile, ProgMixin):
             for name in sorted(os.listdir(path)):
                 tree[name] = self._traverse(os.path.join(path, name))
         return tree
+
+
+class TorrentFileAdvanced(MetaFile, ProgMixin):
+    """
+    Construct the Hybrid torrent meta file with provided parameters.
+
+    Parameters
+    ----------
+    kwargs : dict
+        Keyword arguments for torrent options.
+    """
+
+    hasher = FileHasher
+
+    def __init__(self, **kwargs):
+        """
+        Create Bittorrent v1 v2 hybrid metafiles.
+        """
+        super().__init__(**kwargs)
+        logger.debug("Assembling bittorrent Hybrid file")
+        self.name = os.path.basename(self.path)
+        self.hashes = []
+        self.piece_layers = {}
+        self.pieces = bytearray()
+        self.files = []
+        self.hybrid = self.meta_version == 3
+        self.total = len(utils.get_file_list(self.path))
+        if self.progress == 1:
+            title = os.path.basename(self.path)
+            unit = "bytes"
+            self.prog_start(self.total, title, unit=unit)
+        self.assemble()
+
+    def assemble(self):
+        """
+        Assemble the parts of the torrentfile into meta dictionary.
+        """
+        info = self.meta["info"]
+        info["meta version"] = 2
+
+        if os.path.isfile(self.path):
+            info["file tree"] = {self.name: self._traverse(self.path)}
+            info["length"] = os.path.getsize(self.path)
+            self.prog_update(info["length"])
+
+        else:
+            info["file tree"] = self._traverse(self.path)
+            if self.hybrid:
+                info["files"] = self.files
+
+        if self.hybrid:
+            info["pieces"] = b"".join(self.pieces)
+        self.meta["piece layers"] = self.piece_layers
+        return info
+
+    def _traverse(self, path: str) -> dict:
+        """
+        Build meta dictionary while walking directory.
+
+        Parameters
+        ----------
+        path : str
+            Path to target file.
+        """
+        if os.path.isfile(path):
+            file_size = os.path.getsize(path)
+            if self.hybrid:
+                self.files.append(
+                    {
+                        "length": file_size,
+                        "path": os.path.relpath(path, self.path).split(os.sep),
+                    }
+                )
+
+            if file_size == 0:
+                return {"": {"length": file_size}}
+
+            logger.debug("Hashing %s", str(path))
+            hasher = FileHasher(
+                path,
+                self.piece_length,
+                progress=True,
+                hybrid=self.hybrid
+            )
+            layers = bytearray()
+            for layer_hash, piece in hasher:
+                layers.extend(layer_hash)
+                self.pieces.extend(piece)
+
+            self.piece_layers[hasher.root] = layers
+            if self.hybrid and hasher.padding_file:
+                self.files.append(hasher.padding_file)
+
+            return {"": {"length": file_size, "pieces root": hasher.root}}
+
+        tree = {}
+        if os.path.isdir(path):
+            for name in sorted(os.listdir(path)):
+                tree[name] = self._traverse(os.path.join(path, name))
+        return tree
+
+
+class Torrentz(MetaFile):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

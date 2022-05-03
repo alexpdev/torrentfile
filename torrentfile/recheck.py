@@ -517,14 +517,13 @@ class HashChecker(ProgMixin):
         self.fileinfo = checker.fileinfo
         self.piece_layers = checker.meta["piece layers"]
         self.piece_count = 0
-        self.current = None
-        self.index = 0
-
+        self.it = None
 
     def __iter__(self):
         """
         Assign iterator and return self.
         """
+        self.it = self.iter_paths()
         return self
 
     def __next__(self):
@@ -532,7 +531,8 @@ class HashChecker(ProgMixin):
         Provide the result of comparison.
         """
         try:
-            return self.iter_paths()
+            value = next(self.it)
+            return value
         except StopIteration as stopiter:
             raise StopIteration() from stopiter
 
@@ -545,23 +545,7 @@ class HashChecker(ProgMixin):
         results : tuple
             The size of the file and result of match.
         """
-
-        if not self.current:
-            self.current = open(self.paths[self.index], "rb")
-        filetotal = self.fileinfo[self.index]["length"]
-        amount = self.piece_length // BLOCK_SIZE
-        blocks = []
-        total = 0
-        block = bytearray(BLOCK_SIZE)
-        for _ in range(amount):
-            size = self.current.readinto(block)
-            if not size:
-                self.next_file()
-            blocks.append(sha256(block[:size]).digest())
-
-
-
-
+        for i, path in enumerate(self.paths):
             info = self.fileinfo[i]
             length, plength = info["length"], self.piece_length
             roothash = info["pieces root"]

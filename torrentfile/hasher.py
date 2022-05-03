@@ -377,3 +377,135 @@ class HasherHybrid(CbMixin, ProgMixin):
 
             self.layer_hashes += [pad_piece for _ in range(remainder)]
         self.root = merkle_root(self.layer_hashes)
+
+
+class FileHasher(CbMixin, ProgMixin):
+    """
+    Calculate root and piece hashes for creating hybrid torrent file.
+
+    Create merkle tree layers from sha256 hashed 16KiB blocks of contents.
+    With a branching factor of 2, merge layer hashes until blocks equal
+    piece_length bytes for the piece layer, and then the root hash.
+
+    Parameters
+    ----------
+    path : str
+        path to target file.
+    piece_length : int
+        piece length for data chunks.
+    progress : int
+        default = None
+    """
+
+    def __init__(
+        self,
+        path: str,
+        piece_length: int,
+        progress: bool = True,
+        hybrid: bool = False
+    ):
+        """
+        Construct Hasher class instances for each file in torrent.
+        """
+        self.path = path
+        self.piece_length = piece_length
+        self.pieces = []
+        self.layer_hashes = []
+        self.piece_layer = None
+        self.root = None
+        self.padding_piece = None
+        self.padding_file = None
+        self.amount = piece_length // BLOCK_SIZE
+        self.end = False
+        self.current = open(path, "rb")
+        self.hybrid = hybrid
+        if progress:
+            self.progressbar = True
+            self.prog_start(os.path.getsize(path), path, unit="bytes")
+
+    def __iter__(self):
+        return self
+
+    def _pad_remaining(self, block_count: int):
+        """
+        Generate Hash sized, 0 filled bytes for padding.
+
+        Parameters
+        ----------
+        block_count : int
+            current total number of blocks collected.
+
+        Returns
+        -------
+        padding : bytes
+            Padding to fill remaining portion of tree.
+        """
+        # when the there is only one block for file
+        remaining = self.amount - block_count
+        if not self.layer_hashes:
+            power2 = next_power_2(block_count)
+            remaining = power2 - block_count
+        self.prog_update(HASH_SIZE * remaining)
+        return [bytes(HASH_SIZE) for _ in range(remaining)]
+
+    def __iter__(self):
+        """
+        Calculate layer hashes for contents of file.
+
+        Parameters
+        ----------
+        data : BytesIO
+            File opened in read mode.
+        """
+        plength = self.piece_length
+        blocks = []
+        piece = sha1()  # nosec
+        total = 0
+        block = bytearray(BLOCK_SIZE)
+        for _ in range(self.amount):
+            size = self.current.readinto(block)
+            self.prog_update(size)
+            if not size:
+                self.end = True
+                break
+            total += size
+            plength -= size
+            blocks.append(sha256(block[:size]).digest())
+            if self.hybrid:
+                piece.update(block[:size])
+        if len(blocks) != self.amount:
+            padding = self._pad_remaining(len(blocks))
+            blocks.extend(padding)
+        layer_hash = merkle_root(blocks)
+        self.layer_hashes.append(layer_hash)
+        if self._cb:
+            self._cb(layer_hash)
+        if self.end:
+            self._calculate_root()
+            self.prog_close()
+        if self.hybrid:
+            if plength > 0:
+                self.padding_file = {
+                    "attr": "p",
+                    "length": plength,
+                    "path": [".pad", str(plength)],
+                }
+            piece = piece.update(bytes(plength)).digest() # nosec
+            self.pieces.append(piece)
+            return layer_hash, piece
+        return layer_hash
+
+    def _calculate_root(self):
+        """
+        Calculate the root hash for opened file.
+        """
+        self.piece_layer = b"".join(self.layer_hashes)
+
+        if len(self.layer_hashes) > 1:
+            pad_piece = merkle_root([bytes(32) for _ in range(self.amount)])
+
+            pow2 = next_power_2(len(self.layer_hashes))
+            remainder = pow2 - len(self.layer_hashes)
+
+            self.layer_hashes += [pad_piece for _ in range(remainder)]
+        self.root = merkle_root(self.layer_hashes)
