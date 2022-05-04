@@ -646,7 +646,7 @@ class TorrentFileHybrid(MetaFile, ProgMixin):
         return tree
 
 
-class TorrentFileAdvanced(MetaFile, ProgMixin):
+class TorrentAssembler(MetaFile, ProgMixin):
     """
     Construct the Hybrid torrent meta file with provided parameters.
 
@@ -695,7 +695,7 @@ class TorrentFileAdvanced(MetaFile, ProgMixin):
                 info["files"] = self.files
 
         if self.hybrid:
-            info["pieces"] = b"".join(self.pieces)
+            info["pieces"] =self.pieces
         self.meta["piece layers"] = self.piece_layers
         return info
 
@@ -744,9 +744,3 @@ class TorrentFileAdvanced(MetaFile, ProgMixin):
             for name in sorted(os.listdir(path)):
                 tree[name] = self._traverse(os.path.join(path, name))
         return tree
-
-
-class Torrentz(MetaFile):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)

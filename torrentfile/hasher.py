@@ -448,7 +448,7 @@ class FileHasher(CbMixin, ProgMixin):
         self.prog_update(HASH_SIZE * remaining)
         return [bytes(HASH_SIZE) for _ in range(remaining)]
 
-    def __iter__(self):
+    def __next__(self):
         """
         Calculate layer hashes for contents of file.
 
@@ -457,6 +457,9 @@ class FileHasher(CbMixin, ProgMixin):
         data : BytesIO
             File opened in read mode.
         """
+        if self.end:
+            self.end = False
+            raise StopIteration
         plength = self.piece_length
         blocks = []
         piece = sha1()  # nosec
@@ -490,7 +493,8 @@ class FileHasher(CbMixin, ProgMixin):
                     "length": plength,
                     "path": [".pad", str(plength)],
                 }
-            piece = piece.update(bytes(plength)).digest() # nosec
+                piece.update(bytes(plength))
+            piece = piece.digest()
             self.pieces.append(piece)
             return layer_hash, piece
         return layer_hash
