@@ -295,18 +295,16 @@ def execute(args=None):
     )
 
     create_parser.add_argument(
-        "--progress",
         "--prog",
-        choices=["0", "1", "2"],
+        "--progress",
         default="1",
         action="store",
         dest="progress",
         help="""
         Set the progress bar level.
-        Options = 0, 1, 2
+        Options = 0, 1
         (0) = Do not display progress bar.
-        (1) = Display 1 progress bar for the whole torrent (default)
-        (2) = Display a progress bar for each file going into torrent
+        (1) = Display progress bar.
         """,
     )
 

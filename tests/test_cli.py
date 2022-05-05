@@ -188,7 +188,7 @@ def test_cli_comment(folder, piece_length, version):
         "--comment",
         "this is a comment",
         "--progress",
-        "2",
+        "1",
     ]
     sys.argv = args
     execute()
@@ -213,7 +213,7 @@ def test_cli_outfile(dir1, piece_length, version):
         version,
         "-o",
         outfile,
-        "--progress",
+        "--prog",
         "1",
     ]
     sys.argv = args
@@ -362,7 +362,7 @@ def test_cli_help():
 
 
 @pytest.mark.parametrize("version", ["1", "2", "3"])
-@pytest.mark.parametrize("progress", ["0", "1", "2"])
+@pytest.mark.parametrize("progress", ["0", "1"])
 def test_cli_empty_files(dir2, version, progress):
     """
     Test creating torrent with empty files.

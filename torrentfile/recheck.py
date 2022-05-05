@@ -34,7 +34,7 @@ from threading import Thread
 
 import pyben
 
-from torrentfile.hasher import HasherHybrid, HasherV2
+from torrentfile.hasher import FileHasher, HasherHybrid, HasherV2
 from torrentfile.mixins import ProgMixin, waiting
 from torrentfile.utils import MissingPathError
 
@@ -88,7 +88,6 @@ class Checker(ProgMixin):
         self.last_log = None
         self.log_msg("Checking: %s, %s", metafile, path)
         self.metafile = metafile
-        self.meta_version = None
         self.total = 0
         self.paths = []
         self.fileinfo = {}
@@ -123,21 +122,6 @@ class Checker(ProgMixin):
             callback function for the logging feature.
         """
         cls._hook = hook
-
-    def hasher(self):
-        """
-        Return the hasher class related to torrents meta version.
-
-        Returns
-        -------
-        hasher.Hasher
-            the hashing implementation for specific torrent meta version.
-        """
-        if self.meta_version == 2:
-            return HasherV2
-        if self.meta_version == 3:
-            return HasherHybrid
-        return None
 
     def piece_checker(self):
         """
@@ -317,8 +301,7 @@ class Checker(ProgMixin):
         """
         matched = consumed = 0
         checker = self.piece_checker()
-        hasher = self.hasher()
-        for chunk, piece, path, size in checker(self, hasher):
+        for chunk, piece, path, size in checker(self):
             consumed += size
             matching = 0
             if chunk == piece:
@@ -351,7 +334,7 @@ class FeedChecker(ProgMixin):
         hashing class for calculating piece hashes. default=None
     """
 
-    def __init__(self, checker: Checker, hasher=None):
+    def __init__(self, checker: Checker):
         """
         Generate hashes of piece length data from filelist contents.
         """
@@ -359,7 +342,6 @@ class FeedChecker(ProgMixin):
         self.paths = checker.paths
         self.pieces = checker.info["pieces"]
         self.fileinfo = checker.fileinfo
-        self.hasher = hasher
         self.piece_map = {}
         self.index = 0
         self.piece_count = 0
@@ -506,13 +488,12 @@ class HashChecker(ProgMixin):
         the version specific hashing class for torrent content.
     """
 
-    def __init__(self, checker: Checker, hasher=None):
+    def __init__(self, checker: Checker):
         """
         Construct a HybridChecker instance.
         """
         self.checker = checker
         self.paths = checker.paths
-        self.hasher = hasher
         self.piece_length = checker.piece_length
         self.fileinfo = checker.fileinfo
         self.piece_layers = checker.meta["piece layers"]
@@ -566,27 +547,34 @@ class HashChecker(ProgMixin):
                     else:
                         size = length
                     length -= size
+                    self.prog_update(0)
                     block = sha256(bytearray(size)).digest()
                     yield block, piece, path, size
 
             else:
-                hashed = self.hasher(path, plength)
-                if len(hashed.layer_hashes) == 1:
-                    block = hashed.root
-                    piece = roothash
-                    size = length
+                hasher = FileHasher(path, plength, progress=0)
+                for i, result in enumerate(hasher):
+                    if len(result) == 2:
+                        print(result)
+                        layer, _ = result
+                    else:
+                        layer = result
+                    start = i * SHA256
+                    end = start + SHA256
+                    piece = pieces[start:end]
+                    size = plength if plength < length else length
+                    length -= size
                     self.prog_update(size)
-                    yield block, piece, path, size
-                else:
-                    for i in range(amount):
+                    yield layer, piece, path, size
+                if i < amount:
+                    for _ in range(amount - i):
                         start = i * SHA256
                         end = start + SHA256
                         piece = pieces[start:end]
-                        try:
-                            block = hashed.piece_layer[start:end]
-                        except IndexError:  # pragma: nocover
-                            block = sha256(bytearray(size)).digest()
                         size = plength if plength < length else length
                         length -= size
-                        self.prog_update(size)
-                        yield block, piece, path, size
+                        self.prog_update(0)
+                        yield sha256(
+                            bytearray(size)
+                        ).digest(), piece, path, size
+            self.prog_close()

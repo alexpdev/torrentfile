@@ -41,7 +41,8 @@ import pyben
 from torrentfile.edit import edit_torrent
 from torrentfile.interactive import select_action
 from torrentfile.recheck import Checker
-from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
+from torrentfile.torrent import (TorrentAssembler, TorrentFile,
+                                 TorrentFileHybrid, TorrentFileV2)
 
 logger = logging.getLogger(__name__)
 
@@ -62,12 +63,10 @@ def create(args: list):
     """
     kwargs = vars(args)
     logger.debug("Creating torrent from %s", args.content)
-    if args.meta_version == "2":
-        torrent = TorrentFileV2(**kwargs)
-    elif args.meta_version == "3":
-        torrent = TorrentFileHybrid(**kwargs)
-    else:
+    if args.meta_version == "1":
         torrent = TorrentFile(**kwargs)
+    else:
+        torrent = TorrentAssembler(**kwargs)
     outfile, meta = torrent.write()
 
     if args.magnet:
@@ -78,7 +77,7 @@ def create(args: list):
     args.outfile = outfile
     args.meta = meta
 
-    print("\nOutput path: ", os.path.abspath(str(outfile)))
+    print("\nTorrent Save Path: ", os.path.abspath(str(outfile)))
     logger.debug("Output path: %s", str(outfile))
     return args
 
