@@ -63,7 +63,6 @@ def test_torrentfile_one_empty(dir2, version):
     """
     Test creating a torrent meta file with given directory plus extra.
     """
-
     a = next(os.walk(dir2))
     if len(a[-1]) > 0:
         with open(os.path.join(a[0], a[-1][0]), "w", encoding="utf-8") as _:

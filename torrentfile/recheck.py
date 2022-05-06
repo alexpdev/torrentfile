@@ -619,5 +619,4 @@ class HashChecker(ProgMixin):
         else:
             size = self.length
             self.length -= self.length
-        assert size >= 0
         return piece, size
