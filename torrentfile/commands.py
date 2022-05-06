@@ -41,8 +41,7 @@ import pyben
 from torrentfile.edit import edit_torrent
 from torrentfile.interactive import select_action
 from torrentfile.recheck import Checker
-from torrentfile.torrent import (TorrentAssembler, TorrentFile,
-                                 TorrentFileHybrid, TorrentFileV2)
+from torrentfile.torrent import TorrentAssembler, TorrentFile
 
 logger = logging.getLogger(__name__)
 

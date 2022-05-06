@@ -442,6 +442,7 @@ class FileHasher(CbMixin, ProgMixin):
             self.prog_start(os.path.getsize(path), path, unit="bytes")
 
     def __iter__(self):
+        """Return `self`: needed to implement iterator implementation."""
         return self
 
     def _pad_remaining(self, block_count: int):

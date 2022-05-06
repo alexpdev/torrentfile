@@ -53,3 +53,4 @@ max-attributes=20
 max-statements=75
 max-branches=20
 min-similarity-lines=4
+max-locals=25

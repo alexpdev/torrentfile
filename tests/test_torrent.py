@@ -59,6 +59,25 @@ def test_metafile_assemble(dir1):
 
 
 @pytest.mark.parametrize("version", torrents())
+def test_torrentfile_one_empty(dir2, version):
+    """
+    Test creating a torrent meta file with given directory plus extra.
+    """
+
+    a = next(os.walk(dir2))
+    if len(a[-1]) > 0:
+        with open(os.path.join(a[0], a[-1][0]), "w", encoding="utf-8") as _:
+            pass
+    args = {
+        "path": dir2,
+        "comment": "somecomment",
+        "announce": "announce",
+    }
+    torrent = version(**args)
+    assert torrent.meta["announce"] == "announce"
+
+
+@pytest.mark.parametrize("version", torrents())
 def test_torrentfile_extra(dir2, version):
     """
     Test creating a torrent meta file with given directory plus extra.
