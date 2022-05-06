@@ -27,9 +27,11 @@ from urllib.parse import quote_plus
 import pyben
 import pytest
 
-from tests import dir1, dir2, file1, metafile1, metafile2
+from tests import (dir1, dir2, file1, metafile1, metafile2, rmpath, tempfile,
+                   torrents)
 from torrentfile.cli import execute
 from torrentfile.commands import info, magnet
+from torrentfile.hasher import merkle_root
 
 
 def test_fix():
@@ -164,3 +166,33 @@ def test_create_unicode_name(file1):
     sys.argv = args
     execute()
     assert os.path.exists(filename)
+
+
+@pytest.mark.parametrize("blocks", [[], [sha1(b"1010").digest()]])  # nosec
+def test_merkle_root_no_blocks(blocks):
+    """
+    Test running merkle root function with 1 and 0 len lists.
+    """
+    if blocks:
+        assert merkle_root(blocks)
+    else:
+        assert not merkle_root(blocks)
+
+
+@pytest.mark.parametrize("torrent", torrents())
+def test_mixins_progbar(torrent):
+    """
+    Test progbar mixins with small file.
+    """
+    tfile = tempfile(exp=14)
+    msg = "1234abcd" * 80
+    with open(tfile, "wb") as temp:
+        temp.write(msg.encode("utf-8"))
+    args = {
+        "path": tfile,
+        "--prog": "1",
+    }
+    metafile = torrent(**args)
+    output, _ = metafile.write()
+    assert output == str(tfile) + ".torrent"
+    rmpath(tfile)

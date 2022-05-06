@@ -27,6 +27,7 @@ import os
 import shutil
 import sys
 import time
+from pathlib import Path
 
 
 class CbMixin:
@@ -76,16 +77,17 @@ class ProgressBar:
         self.empty = chr(9617)
         self.state = 0
         self.unit = unit
+        self.show_total = total
         if not unit:
             self.unit = ""  # pragma: nocover
         elif unit == "bytes":
             if self.total > 10000000:
-                total = math.floor(self.total / 1048576)
+                self.show_total = math.floor(self.total / 1048576)
                 self.unit = "MiB"
             elif self.total > 10000:
-                total = math.floor(self.total / 1024)
+                self.show_total = math.floor(self.total / 1024)
                 self.unit = "KiB"
-        self.suffix = f"/{total} {self.unit}"
+        self.suffix = f"/{self.show_total} {self.unit}"
         if len(title) > start:
             title = title[: start - 1]
         padding = (start - len(title)) * " "
@@ -155,8 +157,13 @@ class ProgMixin:
         unit : str
             the text representation of the value being measured.
         """
-        title = os.path.basename(path)
+        title = path
         width = shutil.get_terminal_size().columns
+        if len(str(title)) >= width // 2:
+            parts = list(Path(title).parts)
+            while len("//".join(parts)) > width // 2 and len(parts) > 0:
+                del parts[0]
+            title = os.path.join(*parts)
         length = min(length, width // 2)
         start = width - int(length * 1.5)
         self.prog = ProgressBar(total, title, length, unit, start)

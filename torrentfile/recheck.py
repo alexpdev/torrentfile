@@ -34,12 +34,13 @@ from threading import Thread
 
 import pyben
 
-from torrentfile.hasher import HasherHybrid, HasherV2
+from torrentfile.hasher import FileHasher
 from torrentfile.mixins import ProgMixin, waiting
 from torrentfile.utils import MissingPathError
 
 SHA1 = 20
 SHA256 = 32
+BLOCK_SIZE = 2**14  # 16KiB
 
 logger = logging.getLogger(__name__)
 
@@ -87,7 +88,6 @@ class Checker(ProgMixin):
         self.last_log = None
         self.log_msg("Checking: %s, %s", metafile, path)
         self.metafile = metafile
-        self.meta_version = None
         self.total = 0
         self.paths = []
         self.fileinfo = {}
@@ -122,21 +122,6 @@ class Checker(ProgMixin):
             callback function for the logging feature.
         """
         cls._hook = hook
-
-    def hasher(self):
-        """
-        Return the hasher class related to torrents meta version.
-
-        Returns
-        -------
-        hasher.Hasher
-            the hashing implementation for specific torrent meta version.
-        """
-        if self.meta_version == 2:
-            return HasherV2
-        if self.meta_version == 3:
-            return HasherHybrid
-        return None
 
     def piece_checker(self):
         """
@@ -316,8 +301,7 @@ class Checker(ProgMixin):
         """
         matched = consumed = 0
         checker = self.piece_checker()
-        hasher = self.hasher()
-        for chunk, piece, path, size in checker(self, hasher):
+        for chunk, piece, path, size in checker(self):
             consumed += size
             matching = 0
             if chunk == piece:
@@ -350,7 +334,7 @@ class FeedChecker(ProgMixin):
         hashing class for calculating piece hashes. default=None
     """
 
-    def __init__(self, checker: Checker, hasher=None):
+    def __init__(self, checker: Checker):
         """
         Generate hashes of piece length data from filelist contents.
         """
@@ -358,7 +342,6 @@ class FeedChecker(ProgMixin):
         self.paths = checker.paths
         self.pieces = checker.info["pieces"]
         self.fileinfo = checker.fileinfo
-        self.hasher = hasher
         self.piece_map = {}
         self.index = 0
         self.piece_count = 0
@@ -505,88 +488,135 @@ class HashChecker(ProgMixin):
         the version specific hashing class for torrent content.
     """
 
-    def __init__(self, checker: Checker, hasher=None):
+    def __init__(self, checker: Checker):
         """
         Construct a HybridChecker instance.
         """
         self.checker = checker
         self.paths = checker.paths
-        self.hasher = hasher
         self.piece_length = checker.piece_length
         self.fileinfo = checker.fileinfo
         self.piece_layers = checker.meta["piece layers"]
-        self.piece_count = 0
-        self.it = None
+        self.current = None
+        self.index = -1
 
     def __iter__(self):
         """
         Assign iterator and return self.
         """
-        self.it = self.iter_paths()
         return self
 
     def __next__(self):
         """
         Provide the result of comparison.
         """
+        if self.current is None:
+            self.next_file()
         try:
-            value = next(self.it)
-            return value
-        except StopIteration as stopiter:
-            raise StopIteration() from stopiter
+            return self.process_current()
+        except StopIteration as itererr:
+            if self.next_file():
+                return self.process_current()
+            raise StopIteration from itererr
 
-    def iter_paths(self) -> tuple:
+    class Padder:
         """
-        Iterate through and compare root file hashes to .torrent file.
+        Padding class to generate padding hashes wherever needed.
 
-        Yields
-        ------
-        results : tuple
-            The size of the file and result of match.
+        Parameters
+        ----------
+        length: int
+            the total size of the mock file generating padding for.
+        piece_length : int
+            the block size that each hash represents.
         """
-        for i, path in enumerate(self.paths):
 
-            info = self.fileinfo[i]
-            length, plength = info["length"], self.piece_length
-            roothash = info["pieces root"]
-            self.prog_start(length, path, unit="bytes")
-            if roothash in self.piece_layers:
-                pieces = self.piece_layers[roothash]
+        def __init__(self, length, piece_length):
+            """
+            Construct padding class to Mock missing or incomplete files.
+            """
+            self.length = length
+            self.piece_length = piece_length
+            self.pad = sha256(bytearray(piece_length)).digest()
+
+        def __iter__(self):
+            """
+            Return self to correctly implement iterator type.
+            """
+            return self  # pragma: nocover
+
+        def __next__(self):
+            """
+            Iterate through seemingly endless sha256 hashes of zeros.
+            """
+            if self.length >= self.piece_length:
+                self.length -= self.piece_length
+                return self.pad
+            if self.length > 0:
+                pad = sha256(bytearray(self.length)).digest()
+                self.length -= self.length
+                return pad
+            raise StopIteration
+
+    def next_file(self):
+        """
+        Remove all references to  processed files and prepare for the next.
+        """
+        self.index += 1
+        self.prog_close()
+        if self.current is None or self.index < len(self.paths):
+            self.current = self.paths[self.index]
+            self.length = self.fileinfo[self.index]["length"]
+            self.root_hash = self.fileinfo[self.index]["pieces root"]
+            if self.length > self.piece_length:
+                self.pieces = self.piece_layers[self.root_hash]
             else:
-                pieces = roothash if roothash else bytes()
-            amount = len(pieces) // SHA256
-
-            if not os.path.exists(path):
-                for i in range(amount):
-                    start = i * SHA256
-                    end = start + SHA256
-                    piece = pieces[start:end]
-                    if length > plength:
-                        size = plength
-                    else:
-                        size = length
-                    length -= size
-                    block = sha256(bytearray(size)).digest()
-                    yield block, piece, path, size
-
+                self.pieces = self.root_hash
+            path = self.paths[self.index]
+            self.prog_start(self.length, path, unit="bytes")
+            self.count = 0
+            if os.path.exists(self.current):
+                self.hasher = FileHasher(path, self.piece_length, progress=0)
             else:
-                hashed = self.hasher(path, plength)
-                if len(hashed.layer_hashes) == 1:
-                    block = hashed.root
-                    piece = roothash
-                    size = length
-                    self.prog_update(size)
-                    yield block, piece, path, size
-                else:
-                    for i in range(amount):
-                        start = i * SHA256
-                        end = start + SHA256
-                        piece = pieces[start:end]
-                        try:
-                            block = hashed.piece_layer[start:end]
-                        except IndexError:  # pragma: nocover
-                            block = sha256(bytearray(size)).digest()
-                        size = plength if plength < length else length
-                        length -= size
-                        self.prog_update(size)
-                        yield block, piece, path, size
+                self.hasher = self.Padder(self.length, self.piece_length)
+            return True
+        if self.index >= len(self.paths):
+            del self.current
+            del self.length
+            del self.root_hash
+            del self.pieces
+        return False
+
+    def process_current(self):
+        """
+        Gather necessary information to compare to metafile details.
+        """
+        try:
+            layer = next(self.hasher)
+            piece, size = self.advance()
+            self.prog_update(size)
+            return layer, piece, self.current, size
+        except StopIteration as err:
+            if self.length > 0 and self.count * SHA256 < len(self.pieces):
+                self.hasher = self.Padder(self.length, self.piece_length)
+                piece, size = self.advance()
+                layer = next(self.hasher)
+                self.prog_update(0)
+                return layer, piece, self.current, size
+            raise StopIteration from err
+
+    def advance(self):
+        """
+        Increment the number of pieces processed for the current file.
+        """
+        start = self.count * SHA256
+        end = start + SHA256
+        piece = self.pieces[start:end]
+        self.count += 1
+        if self.length >= self.piece_length:
+            self.length -= self.piece_length
+            size = self.piece_length
+        else:
+            size = self.length
+            self.length -= self.length
+        return piece, size

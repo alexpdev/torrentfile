@@ -41,7 +41,7 @@ import pyben
 from torrentfile.edit import edit_torrent
 from torrentfile.interactive import select_action
 from torrentfile.recheck import Checker
-from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
+from torrentfile.torrent import TorrentAssembler, TorrentFile
 
 logger = logging.getLogger(__name__)
 
@@ -61,15 +61,12 @@ def create(args: list):
         object containing the path to created metafile and its contents.
     """
     kwargs = vars(args)
-    logger.debug("create command invoked with %s", args.content)
-    if args.meta_version == "2":
-        torrent = TorrentFileV2(**kwargs)
-    elif args.meta_version == "3":
-        torrent = TorrentFileHybrid(**kwargs)
-    else:
+    logger.debug("Creating torrent from %s", args.content)
+    if args.meta_version == "1":
         torrent = TorrentFile(**kwargs)
+    else:
+        torrent = TorrentAssembler(**kwargs)
     outfile, meta = torrent.write()
-    logger.debug("torrent creation complete.")
 
     if args.magnet:
         magnet(outfile)
@@ -79,8 +76,8 @@ def create(args: list):
     args.outfile = outfile
     args.meta = meta
 
-    print("\nOutput path: ", os.path.abspath(str(outfile)))
-    logger.debug("file saved to %s", str(outfile))
+    print("\nTorrent Save Path: ", os.path.abspath(str(outfile)))
+    logger.debug("Output path: %s", str(outfile))
     return args
 
 
@@ -162,11 +159,9 @@ def recheck(args):
     str
         The percentage of content currently saved to disk.
     """
-    logger.debug("Program entering Recheck mode.")
     metafile = args.metafile
     content = args.content
-
-    logger.debug("Checking %s against %s contents", metafile, content)
+    logger.debug("Validating %s against %s contents", metafile, content)
     checker = Checker(metafile, content)
 
     logger.debug("Completed initialization of the Checker class")

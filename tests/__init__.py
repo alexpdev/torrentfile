@@ -29,7 +29,8 @@ from pathlib import Path
 
 import pytest
 
-from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
+from torrentfile.torrent import (TorrentAssembler, TorrentFile,
+                                 TorrentFileHybrid, TorrentFileV2)
 
 
 def tempfile(path=None, exp=18):
@@ -152,7 +153,7 @@ def torrents():
     """
     Return seq of torrentfile objects.
     """
-    return [TorrentFile, TorrentFileV2, TorrentFileHybrid]
+    return [TorrentFile, TorrentFileV2, TorrentFileHybrid, TorrentAssembler]
 
 
 @pytest.fixture(scope="package", params=[2**i for i in range(15, 20)])
