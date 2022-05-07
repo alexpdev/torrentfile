@@ -40,7 +40,6 @@ testfile
 # Unit test / coverage reports
 output.json
 pytest_html_report.html
-
 htmlcov/
 .tox/
 .coverage

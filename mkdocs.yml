@@ -12,11 +12,11 @@ theme:
 
 nav:
   - Home : index.md
-  - Help Messages : Commands.md
-  - Man Page: man.md
+  - Help : Commands.md
+  - Details : man.md
   - Changelog : changelog.md
   - License : Apache2.md
-  - Source Code : source.md
+  - API : source.md
 
 
 plugins:
@@ -29,7 +29,8 @@ plugins:
           selection:
             docstring_style: numpy
           rendering:
-            show_root_heading: yes
+            show_root_heading: false
+            show_source: false
 
 docs_dir: site/
 site_dir: docs/

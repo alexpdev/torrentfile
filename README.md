@@ -1,6 +1,6 @@
 # TorrentFile
 
-![torrentfile](https://github.com/alexpdev/torrentfile/blob/master/assets/torrentfile.png?raw=true)
+![torrentfile](https://github.com/alexpdev/torrentfile/blob/master/site/images/torrentfile.png?raw=true)
 
 ------
 
@@ -54,13 +54,7 @@ or in the _`docs`_ directory.
 
 ## 🚀 Usage
 
-<!-- ![Basic Usage](https://github.com/alexpdev/torrentfile/blob/master/assets/TorrentFileBasicUsage.gif?raw=True) -->
-
-[![asciicast](https://asciinema.org/a/MPYXYeOaC32ehWKhxOBl4ePWx.svg)](https://asciinema.org/a/MPYXYeOaC32ehWKhxOBl4ePWx?autoplay=1&loop=0)
-
-<script id="asciicast-492745" src="https://asciinema.org/a/492745.js" async></script>
-
-<!-- [![asciicast](https://asciinema.org/a/492736.svg)](https://asciinema.org/a/492736) -->
+![Basic Usage](https://github.com/alexpdev/torrentfile/blob/master/assets/TorrentFileBasicUsage.gif?raw=True)
 
 ```sh
 Usage

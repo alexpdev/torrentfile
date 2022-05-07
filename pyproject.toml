@@ -1,5 +1,6 @@
 [build-system]
 requires = ["setuptools>=40.8.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [tool.bandit]
 skips = ["B101"]
@@ -26,6 +27,7 @@ addopts = "--maxfail=5"
 [tool.pylint. 'MESSAGES CONTROL']
 disable = [
     "R1729",
+    "W0108",
     "redefined-outer-name",
     "attribute-defined-outside-init",
     "invalid-name",

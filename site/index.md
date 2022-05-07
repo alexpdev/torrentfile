@@ -1,6 +1,6 @@
 # TorrentFile
 
-![torrentfile](https://github.com/alexpdev/torrentfile/blob/master/assets/torrentfile.png?raw=true)
+![torrentfile](https://github.com/alexpdev/torrentfile/blob/master/site/images/torrentfile.png?raw=true)
 
 ------
 

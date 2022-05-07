@@ -25,6 +25,14 @@ import pytest
 
 from tests import dir1, dir2, rmpath
 from torrentfile import utils
+from torrentfile.__main__ import main
+
+
+def test_main_exists():
+    """
+    Test if main exists
+    """
+    assert main
 
 
 @pytest.mark.parametrize("size", [156634528, 2**30, 67987, 16384, 8563945])

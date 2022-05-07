@@ -476,11 +476,11 @@ class FeedChecker(ProgMixin):
 
 class HashChecker(ProgMixin):
     """
-    Verify that root hashes of content files match the .torrent files.
+    Iterate through contents of meta data and verify with file contents.
 
     Parameters
     ----------
-    checker : Object
+    checker : Checker
         the checker instance that maintains variables.
     """
 
