@@ -470,11 +470,6 @@ class FileHasher(CbMixin, ProgMixin):
         """
         Calculate layer hashes for contents of file.
 
-        Parameters
-        ----------
-        data : BytesIO
-            File opened in read mode.
-
         Returns
         -------
         bytes

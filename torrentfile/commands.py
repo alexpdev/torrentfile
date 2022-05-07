@@ -145,7 +145,7 @@ def edit(args: list):
     return edit_torrent(metafile, editargs)
 
 
-def recheck(args):
+def recheck(args: list):
     """
     Execute recheck CLI sub-command.
 
@@ -172,7 +172,7 @@ def recheck(args):
     return result
 
 
-def magnet(metafile):
+def magnet(metafile: str):
     """
     Create a magnet URI from a Bittorrent meta file.
 

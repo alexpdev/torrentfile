@@ -82,7 +82,7 @@ def rmpath(*args):
 
     Parameters
     ----------
-    args : list
+    *args : list
         Filesystem locations for removing.
     """
     for arg in args:

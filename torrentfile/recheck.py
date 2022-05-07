@@ -155,7 +155,7 @@ class Checker(ProgMixin):
 
         Parameters
         ----------
-        args : dict
+        *args : dict
             formatting args for log message
         level : int
             Log level for this message; default=`logging.INFO`
@@ -330,8 +330,6 @@ class FeedChecker(ProgMixin):
     ----------
     checker : object
         the checker class instance.
-    hasher : Any
-        hashing class for calculating piece hashes. default=None
     """
 
     def __init__(self, checker: Checker):
@@ -484,8 +482,6 @@ class HashChecker(ProgMixin):
     ----------
     checker : Object
         the checker instance that maintains variables.
-    hasher : Object
-        the version specific hashing class for torrent content.
     """
 
     def __init__(self, checker: Checker):

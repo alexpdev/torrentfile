@@ -37,7 +37,7 @@ def get_input(*args: tuple):  # pragma: no cover
 
     Parameters
     ----------
-    args : tuple
+    *args : tuple
         Arbitrary number of args to pass to next function
 
     Returns
