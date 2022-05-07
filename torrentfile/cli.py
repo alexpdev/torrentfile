@@ -517,7 +517,7 @@ def execute(args=None) -> list:
 
     if hasattr(args, "func"):
         return args.func(args)
-    return args  # prog: nocover
+    return args  # pragma: nocover
 
 
 main_script = execute

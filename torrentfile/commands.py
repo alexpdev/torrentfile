@@ -92,9 +92,9 @@ def info(args: list):
     """
     metafile = args.metafile
     meta = pyben.load(metafile)
-    info = meta["info"]
+    data = meta["info"]
     del meta["info"]
-    meta.update(info)
+    meta.update(data)
     if "private" in meta and meta["private"] == 1:
         meta["private"] = "True"
     if "announce-list" in meta:
@@ -192,14 +192,14 @@ def magnet(metafile: str):
         raise FileNotFoundError
 
     meta = pyben.load(metafile)
-    info = meta["info"]
-    binfo = pyben.dumps(info)
+    data = meta["info"]
+    binfo = pyben.dumps(data)
     infohash = sha1(binfo).hexdigest().upper()  # nosec
 
     logger.info("Magnet Info Hash: %s", infohash)
     scheme = "magnet:"
     hasharg = "?xt=urn:btih:" + infohash
-    namearg = "&dn=" + quote_plus(info["name"])
+    namearg = "&dn=" + quote_plus(data["name"])
 
     if "announce-list" in meta:
         announce_args = [
