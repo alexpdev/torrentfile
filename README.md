@@ -55,7 +55,7 @@ or in the _`docs`_ directory.
 ## 🚀 Usage
 
 <!-- ![Basic Usage](https://github.com/alexpdev/torrentfile/blob/master/assets/TorrentFileBasicUsage.gif?raw=True) -->
-[![asciicast](https://asciinema.org/a/492737.svg)](https://asciinema.org/a/492737)
+[![asciicast](https://asciinema.org/a/MPYXYeOaC32ehWKhxOBl4ePWx.svg)](https://asciinema.org/a/MPYXYeOaC32ehWKhxOBl4ePWx?autoplay=1&loop=0)
 <!-- [![asciicast](https://asciinema.org/a/492736.svg)](https://asciinema.org/a/492736) -->
 
 ```sh
