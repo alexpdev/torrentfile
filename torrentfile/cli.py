@@ -43,27 +43,27 @@ def activate_logger():
     """
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger()
-    file_handler = logging.FileHandler(
-        "torrentfile.log", mode="a+", encoding="utf-8"
-    )
+    # file_handler = logging.FileHandler(
+    #     "torrentfile.log", mode="a+", encoding="utf-8"
+    # )
     console_handler = logging.StreamHandler(stream=sys.stderr)
-    file_formatter = logging.Formatter(
-        "%(asctime)s %(levelno)s %(message)s",
-        datefmt="%m-%d %H:%M:%S",
-        style="%",
-    )
+    # file_formatter = logging.Formatter(
+    #     "%(asctime)s %(levelno)s %(message)s",
+    #     datefmt="%m-%d %H:%M:%S",
+    #     style="%",
+    # )
     stream_formatter = logging.Formatter(
         "%(asctime)s %(levelno)s %(message)s",
         datefmt="%m-%d %H:%M:%S",
         style="%",
     )
-    file_handler.setFormatter(file_formatter)
+    # file_handler.setFormatter(file_formatter)
     console_handler.setFormatter(stream_formatter)
-    file_handler.setLevel(logging.INFO)
-    console_handler.setLevel(logging.INFO)
-    logger.setLevel(logging.INFO)
+    # file_handler.setLevel(logging.INFO)
+    console_handler.setLevel(logging.DEBUG)
+    logger.setLevel(logging.DEBUG)
     logger.addHandler(console_handler)
-    logger.addHandler(file_handler)
+    # logger.addHandler(file_handler)
     logger.debug("Debug: ON")
 
 
@@ -165,7 +165,7 @@ class TorrentFileHelpFormatter(HelpFormatter):
         return parts
 
 
-def execute(args=None):
+def execute(args=None) -> list:
     """
     Initialize Command Line Interface for torrentfile.
 
@@ -173,6 +173,11 @@ def execute(args=None):
     ----------
     args : list
         Commandline arguments. default=None
+
+    Returns
+    -------
+    list
+        Depends on what the command line args were.
     """
     if not args:
         if sys.argv[1:]:
@@ -510,7 +515,9 @@ def execute(args=None):
     if args.interactive:
         return select_action()
 
-    return args.func(args)
+    if hasattr(args, "func"):
+        return args.func(args)
+    return args
 
 
 main_script = execute

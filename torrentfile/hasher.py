@@ -464,10 +464,9 @@ class FileHasher(CbMixin, ProgMixin):
         if not self.layer_hashes:
             power2 = next_power_2(block_count)
             remaining = power2 - block_count
-        self.prog_update(HASH_SIZE * remaining)
         return [bytes(HASH_SIZE) for _ in range(remaining)]
 
-    def __next__(self):
+    def __next__(self) -> bytes:
         """
         Calculate layer hashes for contents of file.
 
@@ -475,6 +474,11 @@ class FileHasher(CbMixin, ProgMixin):
         ----------
         data : BytesIO
             File opened in read mode.
+
+        Returns
+        -------
+        bytes
+            The layer merckle root hash.
         """
         if self.end:
             self.end = False
@@ -486,7 +490,6 @@ class FileHasher(CbMixin, ProgMixin):
         block = bytearray(BLOCK_SIZE)
         for _ in range(self.amount):
             size = self.current.readinto(block)
-            self.prog_update(size)
             if not size:
                 self.end = True
                 break
@@ -498,6 +501,7 @@ class FileHasher(CbMixin, ProgMixin):
         if len(blocks) != self.amount:
             padding = self._pad_remaining(len(blocks))
             blocks.extend(padding)
+        self.prog_update(total)
         layer_hash = merkle_root(blocks)
         self.layer_hashes.append(layer_hash)
         if self._cb:

@@ -1,5 +1,19 @@
 # TorrentFile
 
+## Version 0.7.9
+
+- complete rewrite of the recheck procedures
+- Recheck now provides more accuracy and more details
+- improvements to the new custom progressbar
+- changed the cli argument for the progress bar
+- the options are now just 0 and 1
+- included new unit tests for all new features
+- marked unused functions as deprecated
+- added a new hasher object for v2 and hybrid torrents
+- minor bug fixes and styling changes
+
+---------------------
+
 ## Version 0.7.8
 
 - more updates to logging

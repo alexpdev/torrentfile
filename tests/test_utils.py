@@ -24,15 +24,7 @@ import math
 import pytest
 
 from tests import dir1, dir2, rmpath
-from torrentfile import __main__ as main
 from torrentfile import utils
-
-
-def test_main():
-    """
-    Test main module in torrentfile package.
-    """
-    assert vars(main)
 
 
 @pytest.mark.parametrize("size", [156634528, 2**30, 67987, 16384, 8563945])

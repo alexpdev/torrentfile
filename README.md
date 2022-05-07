@@ -78,9 +78,11 @@ Commands
 
 Distributed under Apache v2 software license. See `LICENSE` for more information.
 
-## 💡 Issues & Requests
+## 💡 Issues & Requests & PRs
 
 If you encounter any bugs or would like to request a new feature please open a new issue.
+
+> PRs and other contributions are welcome
 
 [https://github.com/alexpdev/torrentfile/issues](https://github.com/alexpdev/torrentfile/issues)
 
@@ -113,11 +115,10 @@ If you encounter any bugs or would like to request a new feature please open a n
 > torrentfile create --private --source EXAMPLE --tracker https://url1 https://url2
 ```
 
-The 3 options for controlling the progress bar using `--prog` or `--progress`:
+The options for controlling the progress bar using `--prog` or `--progress`:
 
 - 0 : show no progress bar at all
-- 1 : show 1 progress bar measuring the entire creation process
-- 2 : show a progress bar for each file of the torrent content
+- 1 : show progress bar (default)
 
 ```bash
 > torrentfile -t http://tracker.com --progress 2 /path/to/content
