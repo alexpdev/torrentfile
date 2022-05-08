@@ -410,7 +410,7 @@ class TorrentFile(MetaFile, ProgMixin):
 
     Parameters
     ----------
-    kwargs : dict
+    **kwargs : dict
         Dictionary containing torrent file options.
     """
 
@@ -422,7 +422,7 @@ class TorrentFile(MetaFile, ProgMixin):
 
         Parameters
         ----------
-        kwargs : dict
+        **kwargs : dict
             dictionary of keyword args passed to superclass.
         """
         super().__init__(**kwargs)
@@ -467,7 +467,7 @@ class TorrentFileV2(MetaFile, ProgMixin):
 
     Parameters
     ----------
-    kwargs : dict
+    **kwargs : dict
         Keyword arguments for torrent file options.
     """
 
@@ -481,7 +481,7 @@ class TorrentFileV2(MetaFile, ProgMixin):
 
         Parameters
         ----------
-        kwargs : dict
+        **kwargs : dict
             keywword arguments to pass to superclass.
         """
         super().__init__(**kwargs)
@@ -553,7 +553,7 @@ class TorrentFileHybrid(MetaFile, ProgMixin):
 
     Parameters
     ----------
-    kwargs : dict
+    **kwargs : dict
         Keyword arguments for torrent options.
     """
 
@@ -649,7 +649,7 @@ class TorrentAssembler(MetaFile):
 
     Parameters
     ----------
-    kwargs : dict
+    **kwargs : dict
         Keyword arguments for torrent options.
     """
 

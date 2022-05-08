@@ -11,9 +11,11 @@ archive/
 temp/
 .benchmarks/
 runner/
+run.py
 # Byte-compiled / optimized / DLL files
 *.bin
 *.pyc
+keyboard*
 __pycache__/
 *.py[cod]
 codacy.py
@@ -38,7 +40,6 @@ testfile
 # Unit test / coverage reports
 output.json
 pytest_html_report.html
-
 htmlcov/
 .tox/
 .coverage

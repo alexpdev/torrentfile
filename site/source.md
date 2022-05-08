@@ -51,22 +51,20 @@
 ------
 ------
 
-::: torrentfile
+## ::: torrentfile
 
-::: torrentfile.cli
+### ::: torrentfile.cli
 
-::: torrentfile.edit
+### ::: torrentfile.edit
 
-::: torrentfile.hasher
+### ::: torrentfile.hasher
 
-::: torrentfile.interactive
+### ::: torrentfile.interactive
 
-::: torrentfile.recheck
+### ::: torrentfile.recheck
 
-::: torrentfile.torrent
+### ::: torrentfile.torrent
 
-::: torrentfile.utils
+### ::: torrentfile.utils
 
-::: torrentfile.version
-
-::: tests
+### ::: torrentfile.version

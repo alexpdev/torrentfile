@@ -24,15 +24,15 @@ import math
 import pytest
 
 from tests import dir1, dir2, rmpath
-from torrentfile import __main__ as main
 from torrentfile import utils
+from torrentfile.__main__ import main
 
 
-def test_main():
+def test_main_exists():
     """
-    Test main module in torrentfile package.
+    Test if main exists
     """
-    assert vars(main)
+    assert main
 
 
 @pytest.mark.parametrize("size", [156634528, 2**30, 67987, 16384, 8563945])

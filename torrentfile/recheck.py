@@ -155,7 +155,7 @@ class Checker(ProgMixin):
 
         Parameters
         ----------
-        args : dict
+        *args : dict
             formatting args for log message
         level : int
             Log level for this message; default=`logging.INFO`
@@ -330,8 +330,6 @@ class FeedChecker(ProgMixin):
     ----------
     checker : object
         the checker class instance.
-    hasher : Any
-        hashing class for calculating piece hashes. default=None
     """
 
     def __init__(self, checker: Checker):
@@ -478,14 +476,12 @@ class FeedChecker(ProgMixin):
 
 class HashChecker(ProgMixin):
     """
-    Verify that root hashes of content files match the .torrent files.
+    Iterate through contents of meta data and verify with file contents.
 
     Parameters
     ----------
-    checker : Object
+    checker : Checker
         the checker instance that maintains variables.
-    hasher : Object
-        the version specific hashing class for torrent content.
     """
 
     def __init__(self, checker: Checker):
@@ -534,6 +530,13 @@ class HashChecker(ProgMixin):
         def __init__(self, length, piece_length):
             """
             Construct padding class to Mock missing or incomplete files.
+
+            Parameters
+            ----------
+            length : int
+                size of the file
+            piece_length : int
+                the piece length for each iteration.
             """
             self.length = length
             self.piece_length = piece_length
@@ -545,9 +548,18 @@ class HashChecker(ProgMixin):
             """
             return self  # pragma: nocover
 
-        def __next__(self):
+        def __next__(self) -> bytes:
             """
             Iterate through seemingly endless sha256 hashes of zeros.
+
+            Returns
+            -------
+            tuple :
+                returns the padding
+
+            Raises
+            ------
+            StopIteration
             """
             if self.length >= self.piece_length:
                 self.length -= self.piece_length
@@ -558,9 +570,14 @@ class HashChecker(ProgMixin):
                 return pad
             raise StopIteration
 
-    def next_file(self):
+    def next_file(self) -> bool:
         """
         Remove all references to  processed files and prepare for the next.
+
+        Returns
+        -------
+        bool
+            if there is a next file found
         """
         self.index += 1
         self.prog_close()
@@ -587,9 +604,18 @@ class HashChecker(ProgMixin):
             del self.pieces
         return False
 
-    def process_current(self):
+    def process_current(self) -> tuple:
         """
         Gather necessary information to compare to metafile details.
+
+        Returns
+        -------
+        tuple
+            a tuple containing the layer, piece, current path and size
+
+        Raises
+        ------
+        StopIteration
         """
         try:
             layer = next(self.hasher)
@@ -605,9 +631,14 @@ class HashChecker(ProgMixin):
                 return layer, piece, self.current, size
             raise StopIteration from err
 
-    def advance(self):
+    def advance(self) -> tuple:
         """
         Increment the number of pieces processed for the current file.
+
+        Returns
+        -------
+        tuple
+            the piece and size
         """
         start = self.count * SHA256
         end = start + SHA256

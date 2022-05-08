@@ -30,6 +30,8 @@ export RENAME_FILE
 
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
+RENAME := python -c "$$RENAME_FILE"
+
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
@@ -87,4 +89,4 @@ release: clean test lint ## create executables for release
 	mkdir ./dist/temp
 	cp ./dist/torrentfile.exe ./dist/temp/
 	7z a ./dist/temp.zip ./dist/temp
-	python -c $$RENAME_FILE
+	@python -c "$$RENAME_FILE"

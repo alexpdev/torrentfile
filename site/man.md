@@ -4,13 +4,13 @@
 
 ## Synopsis
 
-    torrentfile [options] <subcommand> [optional] <args>
+    torrentfile [options] <subcommand> [options] <args>
 
 ## Description
 
-torrentfile is a tool for creating and/or manipulating Bittorrent files(.torrent).
-It also provides tools for reviewing torrent file information, generating magnet links,
-and checking/validating torrent content against its companion torrent file.
+torrentfile is a CLI tool for creating, editing, validating, or reviewing Bittorrent files(.torrent).
+It supports all current versions of the Bittorrent Protocol files as well as hybrid files.
+Has support for generating magnet URI's for meta files.
 
 ### Options
 
@@ -21,7 +21,7 @@ displays all relevant command line options and subcommands.
 displays program and version.
 
 - `-v`
-enables verbose mode as well as a logfile.
+enables debug mode and outputs a large amount of information to the terminal.
 
 - `-i`
 activates interactive mode for selecting subcommands and options.
@@ -30,7 +30,7 @@ activates interactive mode for selecting subcommands and options.
 
 #### create
 
-alias: `c`
+alias: `c`, `new`
 
     torrentfile create [options] <path>
     torrentfile c [options] <path>
@@ -76,8 +76,8 @@ Example: if content is at `/home/user/torrents/content` the default would create
 Changes the default save location to the current working directory.
 Example: if content is at `/home/user/torrents/content` this option would create `./content.torrent`
 
-- `--noprogress`
-Turns off the progress bar indicator shown.
+- `--progress` `--prog`
+Options (0, 1):  No status bar will be shown if 0.  Otherwise the default and 1 argument means progress bar is shown
 
 #### info
 
@@ -123,7 +123,7 @@ Indicates that the torrent will be used on a private tracker.  Disables multi-tr
 
 #### recheck
 
-alias: `r`
+alias: `r`, `check`
 
     torrentfile recheck <path/to/*.torrent>  <path/to/contents>
     torrentfile r <path/to/*.torrent>  <path/to/contents>

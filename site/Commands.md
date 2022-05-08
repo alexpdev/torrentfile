@@ -57,8 +57,8 @@
     -c <comment>, --comment <comment>                   Include a comment in file metadata
     -o <path>, --out <path>                             Output path for created .torrent file
     -t <url> [<url> ...], --tracker <url> [<url> ...]   One or more Bittorrent tracker announce url(s).
-    --noprogress                                        Disable showing the progress bar during torrent creation.
-                                                        (Minimially improves performance of torrent file creation.)
+    --prog, --progress <level>                          (0) = no progress bar displayed
+                                                        (1) = progress bar is displayed (default)
     --meta-version <int>                                Bittorrent metafile version.
                                                         Options - {1, 2, 3}
                                                         (1) = Bittorrent v1 (Default)
