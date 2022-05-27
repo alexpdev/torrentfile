@@ -2,7 +2,7 @@ header.md-header[data-md-component=header]{
     background-color: #333;
     border-bottom-width: 3px;
     border-bottom-color: #e62;
-    border-bottom-radius: 25px;
+    border-end-start-radius: 25px;
     border-bottom-style: outset;
 }
 

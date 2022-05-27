@@ -27,7 +27,7 @@ import sys
 import pyben
 import pytest
 
-from tests import dir1, dir2, rmpath
+from tests import dir1, dir2, file1, filemeta1, metafile1, rmpath
 from torrentfile import execute
 
 
@@ -35,7 +35,7 @@ def test_fix():
     """
     Test dir1 fixture is not None.
     """
-    assert dir1 and dir2
+    assert dir1 and dir2 and metafile1 and filemeta1 and file1
 
 
 @pytest.fixture(scope="module")
@@ -481,3 +481,26 @@ def test_cli_cwd(folder):
     execute()
     assert os.path.exists(outfile)
     rmpath(outfile)
+
+
+@pytest.fixture
+def build(filemeta1, metafile1):
+    """Fixture for testing the build subcommand."""
+    basedir = os.path.dirname(filemeta1)
+    parent = os.path.dirname(basedir)
+    dest = os.path.join(parent, "dest")
+    assert os.path.dirname(metafile1) == basedir
+    if os.path.exists(dest):
+        rmpath(dest)
+    os.mkdir(dest)
+    yield basedir, dest
+    rmpath(dest)
+
+
+def test_rebuild_subcommand(build):
+    """Test the rebuild CLI subcommand."""
+    basedir, dest = build
+    args = ["torrentfile", "rebuild", basedir, basedir, dest]
+    sys.argv = args
+    counter = execute()
+    assert counter > 0

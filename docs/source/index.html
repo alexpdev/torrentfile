@@ -2199,6 +2199,72 @@ magnet_command</p>
 
 
 
+<h3 id="torrentfile.commands.rebuild" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">rebuild</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Attempt to rebuild a torrent based on the a torrent file.</p>
+<p>Recusively look through a directory for files that belong in
+a given torrent file, and rebuild as much of the torrent file
+as possible.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>args</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>Command line arguments including the paths neccessary</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>Total number of content files copied to the rebuild directory.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h3 id="torrentfile.commands.recheck" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">recheck</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></code>
 
@@ -4852,6 +4918,503 @@ and deleting the progress bar object to clear a space for the next one.</p>
     </div>
 
   </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h2 id="torrentfile.rebuild" class="doc doc-heading">
+        <code>rebuild</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Clases and functions for the rebuild or reassemble subcommand.</p>
+<p>Re-assemble a torrent into the propper directory structure as indicated by a
+torrent meta file, and validate the contents of each file allong the
+way. Displays a progress bar for each torrent.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="torrentfile.rebuild.Assembler" class="doc doc-heading">
+          <code>Assembler</code>
+
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+      <p>Does most of the work in attempting the structure of torrentfiles.</p>
+<p>Requires three paths as arguments.
+- torrent metafile or directory containing multiple meta files
+- directory containing the contents of meta file
+- directory where torrents will be re-assembled</p>
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.rebuild.Assembler.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">contents</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span></code>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Construct the assembler object.</p>
+<p>Takes two paths as parameters,
+- file or directory containing 1 or more torrent meta files
+- path to where the contents are belived to be located.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>metafile</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>path to torrent metafile or directory containing torrent metafiles.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>contents</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>path to content or directory containing content that belongs to
+torrentfile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>dest</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>path to the directory where rebuild will take place.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.rebuild.Assembler._compare_files" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">_compare_files</span><span class="p">(</span><span class="n">val</span><span class="p">)</span></code>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Compare all files with given filename.</p>
+<p>Compare and find which files with the same filename matches
+the length of the given files length and copy the file
+to the destination directory including it's relative file
+structure.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>val</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td><p>Details about a particular file listed in torrent metadata.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.rebuild.Assembler._get_metafiles" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">_get_metafiles</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Collect all .torrent meta files from give directory or file.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>metafile</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>path to a torrent meta file or directory containing torrent meta
+files.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.rebuild.Assembler._traverse_contents" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">_traverse_contents</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Traverse the contents directory.</p>
+<p>Recursively walk the directory collecting file names and
+sizes for comparing to contents of torrent file.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>path</code></td>
+          <td>
+                <code><span title="os.PathLike">PathLike</span></code>
+          </td>
+          <td><p>The current path being traversed.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.rebuild.Assembler.rebuild" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">rebuild</span><span class="p">()</span></code>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Build the torrent file structure from contents of directory.</p>
+<p>Traverse contents dir and compare discovered files
+with files listed in torrent metadata and copy
+the matches to the destination directory respecting folder
+structures along the way.</p>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="torrentfile.rebuild.Metadata" class="doc doc-heading">
+          <code>Metadata</code>
+
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+      <p>Class containing the metadata contents of a torrent file.</p>
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.rebuild.Metadata.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Construct metadata object for torrent info.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>path to the .torrent file.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.rebuild.Metadata._parse_tree" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">_parse_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">partials</span><span class="p">)</span></code>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Parse the file tree dictionary of the torrent metafile.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>tree</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td><p>the dictionary representation of a file tree.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>partials</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>list of paths leading up to the current key value.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.rebuild.Metadata.extract" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">extract</span><span class="p">()</span></code>
+
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Decode and extract information for the .torrent file.</p>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
 
 
 

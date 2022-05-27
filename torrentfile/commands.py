@@ -40,6 +40,7 @@ import pyben
 
 from torrentfile.edit import edit_torrent
 from torrentfile.interactive import select_action
+from torrentfile.rebuild import Assembler
 from torrentfile.recheck import Checker
 from torrentfile.torrent import TorrentAssembler, TorrentFile
 
@@ -214,6 +215,31 @@ def magnet(metafile: str):
     logger.info("Created Magnet URI %s", full_uri)
     sys.stdout.write("\n" + full_uri + "\n")
     return full_uri
+
+
+def rebuild(args: list) -> int:
+    """
+    Attempt to rebuild a torrent based on the a torrent file.
+
+    Recusively look through a directory for files that belong in
+    a given torrent file, and rebuild as much of the torrent file
+    as possible.
+
+    Parameters
+    ----------
+    args : list
+        Command line arguments including the paths neccessary
+
+    Returns
+    -------
+    int
+        Total number of content files copied to the rebuild directory.
+    """
+    metafiles = args.metafiles
+    dest = args.destination
+    contents = args.contents
+    assembler = Assembler(metafiles, contents, dest)
+    return assembler.rebuild()
 
 
 interactive = select_action  # for clean import system
