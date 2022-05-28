@@ -48,12 +48,9 @@ class Metadata:
         self.path = os.path.abspath(path)
         self.meta = None
         self.name = None
-        self.is_file = False
-        self.version = None
-        self.pieces = None
         self.length = 0
         self.files = []
-        self.filenames = []
+        self.filenames = set()
         self.extract()
 
     def extract(self):
@@ -63,14 +60,18 @@ class Metadata:
         self.meta = pyben.load(self.path)
         info = self.meta["info"]
         self.name = info["name"]
-        if "meta-version" in info:
-            self.version = 2
-        else:
-            self.version = 1
         if "length" in info:
             self.length += info["length"]
             self.is_file = True
-            self.filenames.append(info["name"])
+            self.filenames.add(info["name"])
+            self.files.append(
+                {
+                    "path": Path(self.name).parent,
+                    "filename": self.name,
+                    "full": self.name,
+                    "length": self.length,
+                }
+            )
         if "files" in info:
             for f in info["files"]:
                 path = f["path"]
@@ -84,7 +85,7 @@ class Metadata:
                     }
                 )
                 self.length += f["length"]
-                self.filenames.append(path[-1])
+                self.filenames.add(path[-1])
         elif "file tree" in info:
             self._parse_tree(info["file tree"], [self.name])
 
@@ -101,6 +102,7 @@ class Metadata:
         """
         for key, val in tree.items():
             if "" in val:
+                self.filenames.add(key)
                 path = Path(os.path.join(*partials))
                 full = Path(os.path.join(path, key))
                 length = val[""]["length"]
@@ -252,5 +254,5 @@ class Assembler:
             try:
                 for item in path.iterdir():
                     self._traverse_contents(item)
-            except PermissionError:
+            except PermissionError:  # pragma: nocover
                 print(f"Warning {str(path)} skipped due to Permission Error.")
