@@ -212,24 +212,20 @@ class Assembler:
                 continue
             full = os.path.join(self.dest, val["full"])
             if os.path.exists(full):
-                continue
+                print(f"File already found at location {val['filename']}")
+                break
             path = self.dest
             for part in val["path"].parts:
                 path = os.path.join(path, part)
                 if not os.path.exists(path):
                     os.mkdir(path)
-            try:
-                shutil.copy(entry["path"], path)
-                self.counter += 1
-                break
-            except PermissionError:
+            shutil.copy(entry["path"], path)
+            self.counter += 1
+            if self.counter and self.counter % 20 == 0:
                 print(
-                    f"Warning you do not have permission to copy {path}"
+                    f"Success {self.counter}: {entry['path']} -> {path}"
                 )  # pragma: nocover
-        if self.counter and self.counter % 20 == 0:
-            print(
-                f"Successfully copied {self.counter} files."
-            )  # pragma: nocover
+            break
 
     def _traverse_contents(self, path: PathLike):
         """
@@ -253,5 +249,8 @@ class Assembler:
             else:
                 self.fileinfo[path.name].append(info)
         elif path.is_dir():
-            for item in path.iterdir():
-                self._traverse_contents(item)
+            try:
+                for item in path.iterdir():
+                    self._traverse_contents(item)
+            except PermissionError:
+                print(f"Warning {str(path)} skipped due to Permission Error.")
