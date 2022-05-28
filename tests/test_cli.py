@@ -491,7 +491,7 @@ def build(filemeta1, metafile1):
     dest = os.path.join(parent, "dest")
     assert os.path.dirname(metafile1) == basedir
     if os.path.exists(dest):
-        rmpath(dest)
+        rmpath(dest)  # pragma: nocover
     os.mkdir(dest)
     yield basedir, dest
     rmpath(dest)

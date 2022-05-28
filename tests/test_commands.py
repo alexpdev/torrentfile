@@ -205,7 +205,7 @@ def build(dir2, metafile2):
     parent = os.path.dirname(basedir)
     dest = os.path.join(parent, "dest")
     if os.path.exists(dest):
-        rmpath(dest)
+        rmpath(dest)  # pragma: nocover
     os.mkdir(dest)
 
     class Namespace:

@@ -171,9 +171,10 @@ class Assembler:
                 for filename in os.listdir(path):
                     if filename.lower().endswith(".torrent"):
                         metafiles.append(os.path.join(path, filename))
-            elif os.path.isfile(metafile):
-                if metafile.lower().endswith(".torrent"):
-                    metafiles.append(metafile)
+            elif os.path.isfile(metafile) and metafile.lower().endswith(
+                ".torrent"
+            ):
+                metafiles.append(metafile)
         return metafiles
 
     def rebuild(self):
@@ -213,7 +214,7 @@ class Assembler:
             if entry["length"] != val["length"]:
                 continue
             full = os.path.join(self.dest, val["full"])
-            if os.path.exists(full):
+            if os.path.exists(full):  # pragma: nocover
                 print(f"File already found at location {val['filename']}")
                 break
             path = self.dest
