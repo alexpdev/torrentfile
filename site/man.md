@@ -1,6 +1,4 @@
-# Name
-
-- torrentfile
+# torrentfile Manual
 
 ## Synopsis
 
@@ -8,9 +6,12 @@
 
 ## Description
 
-torrentfile is a CLI tool for creating, editing, validating, or reviewing Bittorrent files(.torrent).
-It supports all current versions of the Bittorrent Protocol files as well as hybrid files.
-Has support for generating magnet URI's for meta files.
+**`torrentfile`** is a command line toolkit for working with Bittorrent files(.torrent).
+Some of the tools available include creating torrent files, editing portions of a
+torrent file, checking the integrity or completeness of downloaded torrent contents,
+displaying details of a torrentfile, generating magnet URLs for torrentfiles, and
+individual or batch rebuilding of torrent contents into their original directory
+structure.
 
 ### Options
 
@@ -86,21 +87,27 @@ alias: `i`
     torrentfile info <path>
     torrentfile i <path>
 
-There are no optional arguments for the info subcommand.
+Display detailed information about a torrentfile such as trackers,
+size of contents, Bittorrent version, any comments left, date the
+torrent file was created and more. There is only one positional perameter
+which is the path to the torrent file and there are no optional arguments.
 
 - `/path/to/*.torrent`
 The relative or absolute path to the torrent file.
 
 #### edit
 
+Edit some of the different information detailed in a torrent file. The fields that
+are editable each have option flags detialed below. Each option identifies the
+field to edit inside the torrent file and what the new value should be. If an
+option is not used then its field will be ommited in the newly created torrent
+file. As such if the file is marked as private and it should remain that way,
+the `-p` option should be used.
+
 alias: `e`
 
     torrentfile edit [options] <path>
     torrentfile e [options] <path>
-
-Each option identifies the field to edit inside the torrent file and what the new value should be.
-If an option is not used then its field will be ommited in the newly created torrent file. As such
-if the file is marked as private and it should remain that way, the `-p` option should be used.
 
 - `-a` `-t` `--announce` `--tracker`
 Adds the list of url's that follow to the list of trackers for the newly created torrent file.
@@ -123,12 +130,38 @@ Indicates that the torrent will be used on a private tracker.  Disables multi-tr
 
 #### recheck
 
+Recheck requires two paths as arguments. The first is the path to a torrent file, and
+and the second is a path to the file of directory containing the downloaded data
+from that torrentfile. `torrentfile` recursively validates each file with the hashes
+contained in the torrentfile, and displays the amount missing frome each file, plus
+a final percentage for the whole torrent at the conclusion. This will display a
+progress bar for each file including missing files. It is also permitted to use
+the contents parent directory which can help for batch processing many torrent files.
+
 alias: `r`, `check`
 
-    torrentfile recheck <path/to/*.torrent>  <path/to/contents>
-    torrentfile r <path/to/*.torrent>  <path/to/contents>
+    torrentfile recheck <*.torrent> <contents>
+    torrentfile r <*.torrent> <contents>
 
-There are only two arguments for the recheck command and both are mandatory.  The first is the absolute or relative
-`<path>` to the torrent file, and the second is the absolute or relative `<path>` to it's content. This will display a
-progress bar and at the end output what percent of the torrentfile's content it found at the path indicated. It is also
-permitted to use the contents parent directory as the second argument and the result will be the same.
+### Magnet
+
+Generate a magnet URL for a torrent file.
+
+alias: `m`
+
+    torrentfile magnet <path/to/*.torrent>
+
+### Rebuild
+
+Rebuild individual or batches of torrent contents into the original file structure.
+The program takes a path to a torrent file or directory containing torrent files,
+the directory containing the torrent contents, and the destination directory to
+where the rebuilt torrent content wil be located. The program will recursively
+traverse the content directory searching for file's that match one of the meta files
+and creates copies of the matches to the destination directory. The original files
+are not effected and any existing files in the target directory will not be
+overwritten.
+
+alias: `build`, `b`
+
+    torrentfile rebuild <metafiles> <contents> <destination>

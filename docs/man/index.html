@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#name" class="md-skip">
+        <a href="#torrentfile-manual" class="md-skip">
           Skip to content
         </a>
       
@@ -339,6 +339,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#magnet" class="md-nav__link">
+    Magnet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rebuild" class="md-nav__link">
+    Rebuild
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -486,6 +500,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#magnet" class="md-nav__link">
+    Magnet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rebuild" class="md-nav__link">
+    Rebuild
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -509,17 +537,17 @@
 
 
 
-<h1 id="name">Name</h1>
-<ul>
-<li>torrentfile</li>
-</ul>
+<h1 id="torrentfile-manual">torrentfile Manual</h1>
 <h2 id="synopsis">Synopsis</h2>
 <pre><code>torrentfile [options] &lt;subcommand&gt; [options] &lt;args&gt;
 </code></pre>
 <h2 id="description">Description</h2>
-<p>torrentfile is a CLI tool for creating, editing, validating, or reviewing Bittorrent files(.torrent).
-It supports all current versions of the Bittorrent Protocol files as well as hybrid files.
-Has support for generating magnet URI's for meta files.</p>
+<p><strong><code>torrentfile</code></strong> is a command line toolkit for working with Bittorrent files(.torrent).
+Some of the tools available include creating torrent files, editing portions of a
+torrent file, checking the integrity or completeness of downloaded torrent contents,
+displaying details of a torrentfile, generating magnet URLs for torrentfiles, and
+individual or batch rebuilding of torrent contents into their original directory
+structure.</p>
 <h3 id="options">Options</h3>
 <ul>
 <li>
@@ -605,19 +633,25 @@ Options (0, 1):  No status bar will be shown if 0.  Otherwise the default and 1 
 <pre><code>torrentfile info &lt;path&gt;
 torrentfile i &lt;path&gt;
 </code></pre>
-<p>There are no optional arguments for the info subcommand.</p>
+<p>Display detailed information about a torrentfile such as trackers,
+size of contents, Bittorrent version, any comments left, date the
+torrent file was created and more. There is only one positional perameter
+which is the path to the torrent file and there are no optional arguments.</p>
 <ul>
 <li><code>/path/to/*.torrent</code>
 The relative or absolute path to the torrent file.</li>
 </ul>
 <h4 id="edit">edit</h4>
+<p>Edit some of the different information detailed in a torrent file. The fields that
+are editable each have option flags detialed below. Each option identifies the
+field to edit inside the torrent file and what the new value should be. If an
+option is not used then its field will be ommited in the newly created torrent
+file. As such if the file is marked as private and it should remain that way,
+the <code>-p</code> option should be used.</p>
 <p>alias: <code>e</code></p>
 <pre><code>torrentfile edit [options] &lt;path&gt;
 torrentfile e [options] &lt;path&gt;
 </code></pre>
-<p>Each option identifies the field to edit inside the torrent file and what the new value should be.
-If an option is not used then its field will be ommited in the newly created torrent file. As such
-if the file is marked as private and it should remain that way, the <code>-p</code> option should be used.</p>
 <ul>
 <li>
 <p><code>-a</code> <code>-t</code> <code>--announce</code> <code>--tracker</code>
@@ -645,14 +679,34 @@ Indicates that the torrent will be used on a private tracker.  Disables multi-tr
 </li>
 </ul>
 <h4 id="recheck">recheck</h4>
+<p>Recheck requires two paths as arguments. The first is the path to a torrent file, and
+and the second is a path to the file of directory containing the downloaded data
+from that torrentfile. <code>torrentfile</code> recursively validates each file with the hashes
+contained in the torrentfile, and displays the amount missing frome each file, plus
+a final percentage for the whole torrent at the conclusion. This will display a
+progress bar for each file including missing files. It is also permitted to use
+the contents parent directory which can help for batch processing many torrent files.</p>
 <p>alias: <code>r</code>, <code>check</code></p>
-<pre><code>torrentfile recheck &lt;path/to/*.torrent&gt;  &lt;path/to/contents&gt;
-torrentfile r &lt;path/to/*.torrent&gt;  &lt;path/to/contents&gt;
+<pre><code>torrentfile recheck &lt;*.torrent&gt; &lt;contents&gt;
+torrentfile r &lt;*.torrent&gt; &lt;contents&gt;
 </code></pre>
-<p>There are only two arguments for the recheck command and both are mandatory.  The first is the absolute or relative
-<code>&lt;path&gt;</code> to the torrent file, and the second is the absolute or relative <code>&lt;path&gt;</code> to it's content. This will display a
-progress bar and at the end output what percent of the torrentfile's content it found at the path indicated. It is also
-permitted to use the contents parent directory as the second argument and the result will be the same.</p>
+<h3 id="magnet">Magnet</h3>
+<p>Generate a magnet URL for a torrent file.</p>
+<p>alias: <code>m</code></p>
+<pre><code>torrentfile magnet &lt;path/to/*.torrent&gt;
+</code></pre>
+<h3 id="rebuild">Rebuild</h3>
+<p>Rebuild individual or batches of torrent contents into the original file structure.
+The program takes a path to a torrent file or directory containing torrent files,
+the directory containing the torrent contents, and the destination directory to
+where the rebuilt torrent content wil be located. The program will recursively
+traverse the content directory searching for file's that match one of the meta files
+and creates copies of the matches to the destination directory. The original files
+are not effected and any existing files in the target directory will not be
+overwritten.</p>
+<p>alias: <code>build</code>, <code>b</code></p>
+<pre><code>torrentfile rebuild &lt;metafiles&gt; &lt;contents&gt; &lt;destination&gt;
+</code></pre>
 
               
             </article>

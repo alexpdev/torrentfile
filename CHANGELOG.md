@@ -1,5 +1,16 @@
 # TorrentFile
 
+## Version 0.7.10
+
+- Added rebuild module and subcommand see docs for more info
+- Added documentation entry for rebuild subcommand
+- improved logging messages
+- added unit tests
+- improved and expanded on type hints
+- minor bug fixes
+
+---------------------
+
 ## Version 0.7.9
 
 - complete rewrite of the recheck procedures

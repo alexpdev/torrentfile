@@ -147,6 +147,7 @@ class Checker(ProgMixin):
         self.log_msg(
             "Final result for %s recheck:  %s", self.metafile, self._result
         )
+
         return self._result
 
     def log_msg(self, *args, level=logging.INFO):

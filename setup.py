@@ -33,29 +33,13 @@ def load_info():
 INFO = load_info()
 
 setup(
-    name=INFO["name"],
     version=INFO["version"],
     description=INFO["description"],
     long_description=INFO["long_description"],
-    long_description_content_type="text/markdown",
-    classifiers=[
-        "Environment :: Console",
-        "Development Status :: 3 - Alpha",
-        "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Intended Audience :: End Users/Desktop",
-        "Intended Audience :: Developers",
-        "Topic :: Utilities",
-        "Topic :: Software Development :: Libraries :: Python Modules",
-        "License :: OSI Approved :: Apache Software License"
-    ],
-    keywords=INFO["keywords"],
+    url=INFO["url"],
     author=INFO["author"],
     author_email=INFO["email"],
-    url=INFO["url"],
+    long_description_content_type=INFO["long_description_content_type"],
     project_urls={"Source Code": "https://github.com/alexpdev/torrentfile"},
     license=INFO["license"],
     packages=find_packages(exclude=[".env", "tests"]),
@@ -63,5 +47,4 @@ setup(
     entry_points={"console_scripts": ["torrentfile = torrentfile.cli:main"]},
     install_requires=["pyben>=0.3.1"],
     setup_requires=["setuptools", "wheel"],
-    zip_safe=False
 )

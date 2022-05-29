@@ -30,7 +30,7 @@ import pytest
 from tests import (dir1, dir2, file1, metafile1, metafile2, rmpath, tempfile,
                    torrents)
 from torrentfile.cli import execute
-from torrentfile.commands import info, magnet
+from torrentfile.commands import info, magnet, rebuild
 from torrentfile.hasher import merkle_root
 
 
@@ -196,3 +196,30 @@ def test_mixins_progbar(torrent):
     output, _ = metafile.write()
     assert output == str(tfile) + ".torrent"
     rmpath(tfile)
+
+
+@pytest.fixture
+def build(dir2, metafile2):
+    """Create fixture for testing rebuild command."""
+    basedir = os.path.dirname(dir2)
+    parent = os.path.dirname(basedir)
+    dest = os.path.join(parent, "dest")
+    if os.path.exists(dest):
+        rmpath(dest)  # pragma: nocover
+    os.mkdir(dest)
+
+    class Namespace:
+        """Command line args for rebuild command."""
+
+        metafiles = os.path.dirname(metafile2)
+        contents = basedir
+        destination = dest
+
+    yield Namespace
+    rmpath(dest)
+
+
+def test_rebuild(build):
+    """Test the rebuild function in the commands module."""
+    counter = rebuild(build)
+    assert counter > 0

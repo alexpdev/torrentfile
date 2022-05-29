@@ -40,17 +40,3 @@ from torrentfile.interactive import select_action
 from torrentfile.version import __version__
 
 __all__ = ["execute", "create", "edit", "info", "magnet", "recheck"]
-
-
-##################################
-# torrentfile configuration data #
-##################################
-
-__author__ = "alexpdev"
-__author_email__ = "alexpdev@pm.me"
-__description__ = (
-    "With torrentfile you can create, edit, view, or verify the"
-    "contents of Bittorent v1, v2 and hybrid meta files."
-)
-__license__ = "Apache Software Foundation"
-__url__ = "https://github.com/alexpdev"
