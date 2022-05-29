@@ -142,7 +142,9 @@ class ProgMixin:
     prog_close
     """
 
-    def prog_start(self, total, path, length=50, unit=None):
+    def prog_start(
+        self, total: int, path: str, length: int = 50, unit: str = None
+    ):
         """
         Generate a new progress bar for the given file path.
 
@@ -168,7 +170,7 @@ class ProgMixin:
         start = width - int(length * 1.5)
         self.prog = ProgressBar(total, title, length, unit, start)
 
-    def prog_update(self, val):
+    def prog_update(self, val: int):
         """
         Update progress bar with given amount of progress.
 
@@ -210,7 +212,7 @@ class ProgMixin:
         return False
 
 
-def waiting(msg, flag, timeout=180):
+def waiting(msg: str, flag: bool, timeout: int = 180):
     """
     Show loading message while thread completes processing.
 

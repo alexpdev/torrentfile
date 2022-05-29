@@ -195,7 +195,7 @@ class Assembler:
                     self._compare_files(val)
         return self.counter
 
-    def _compare_files(self, val):
+    def _compare_files(self, val: dict):
         """
         Compare all files with given filename.
 

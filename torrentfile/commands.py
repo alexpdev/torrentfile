@@ -163,6 +163,7 @@ def recheck(args: list):
     metafile = args.metafile
     content = args.content
     logger.debug("Validating %s against %s contents", metafile, content)
+    sys.stdout.write(f"Rechecking {metafile}...")
     checker = Checker(metafile, content)
 
     logger.debug("Completed initialization of the Checker class")

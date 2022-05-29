@@ -68,7 +68,7 @@ def _get_input(txt: str):  # pragma: no cover
     return value
 
 
-def _get_input_loop(txt, func):  # pragma: no cover
+def _get_input_loop(txt: str, func):  # pragma: no cover
     """
     Gather information needed from user.
 
