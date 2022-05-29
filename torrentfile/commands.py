@@ -238,6 +238,9 @@ def rebuild(args: list) -> int:
     metafiles = args.metafiles
     dest = args.destination
     contents = args.contents
+    for path in [metafiles, dest, contents]:
+        if not os.path.exists(path):
+            raise FileNotFoundError(path)
     assembler = Assembler(metafiles, contents, dest)
     return assembler.rebuild()
 

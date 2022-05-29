@@ -25,6 +25,7 @@ import pyben
 import pytest
 
 from tests import dir1, file1, file2, filemeta1, filemeta2, rmpath
+from torrentfile.commands import rebuild
 from torrentfile.rebuild import Assembler
 
 
@@ -83,3 +84,21 @@ def test_single_file_smaller(single2):
     assembler = Assembler(*single2)
     counter = assembler.rebuild()
     assert counter == 0
+
+
+def test_wrong_path():
+    """Test rebuild command with incorrect paths."""
+
+    class Namespace:
+        """
+        Emulates the behaviour of argparse.Namespace.
+        """
+
+        metafiles = "/non/existent/path"
+        destination = "/non/existing/path"
+        contents = "/non/existing/path"
+
+    try:
+        rebuild(Namespace)
+    except FileNotFoundError:
+        assert True
