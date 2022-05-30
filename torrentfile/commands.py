@@ -24,14 +24,15 @@ features of the application.
 
 Functions
 ---------
-create_command
-info_command
-edit_command
-recheck_command
-magnet_command
+- create_command
+- info_command
+- edit_command
+- recheck_command
+- magnet_command
 """
 import logging
 import os
+import shutil
 import sys
 from hashlib import sha1  # nosec
 from urllib.parse import quote_plus
@@ -163,13 +164,14 @@ def recheck(args: list):
     metafile = args.metafile
     content = args.content
     logger.debug("Validating %s against %s contents", metafile, content)
-    sys.stdout.write(f"Rechecking {metafile}...")
+    msg = f"Rechecking {metafile}..."
+    termlength = shutil.get_terminal_size().columns
+    padding = termlength // 2 - len(msg) // 2
+    print(" " * padding + msg)
     checker = Checker(metafile, content)
-
     logger.debug("Completed initialization of the Checker class")
     result = checker.results()
-
-    sys.stdout.write(str(result) + "% Match\n")
+    sys.stdout.write(" " * padding + str(result) + "% Match\n")
     sys.stdout.flush()
     return result
 

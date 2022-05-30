@@ -23,8 +23,21 @@ export UPDATE_PACKAGE_VERSION
 
 define RENAME_FILE
 import shutil
+import sys
+import subprocess
+import time
 from torrentfile.version import __version__
-shutil.copy("./dist/temp.zip", "./dist/torrentfile-v" + __version__ + "-win.zip")
+if sys.platform == "win32":
+	subprocess.Popen(["7z", "a", "./dist/temp.zip", "./dist/torrentfile.exe"])
+	shutil.copy(
+		"./dist/temp.zip",
+		"./dist/torrentfile-v" + __version__ + "-win.zip")
+else:
+	subprocess.Popen(["zip", "./dist/temp.zip", "./dist/torrentfile"])
+	time.sleep(1)
+	shutil.copy(
+		"./dist/temp.zip",
+		"./dist/torrentfile-v" + __version__ + "-linux.zip")
 endef
 export RENAME_FILE
 
@@ -86,7 +99,4 @@ release: clean test lint ## create executables for release
 	pip install pyinstaller
 	pip install -e .
 	pyinstaller ./runner/execf.spec
-	mkdir ./dist/temp
-	cp ./dist/torrentfile.exe ./dist/temp/
-	7z a ./dist/temp.zip ./dist/temp
 	@python -c "$$RENAME_FILE"

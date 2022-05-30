@@ -56,20 +56,38 @@ or in the _`docs`_ directory.
 
 ![Basic Usage](https://github.com/alexpdev/torrentfile/blob/master/assets/TorrentFileBasicUsage.gif?raw=True)
 
-```sh
+```bash
 Usage
 =====
-   torrentfile [options] <command> [command-options] ...
+   torrentfile [-h] [-i] [-V] [-v]
+                   create, edit, magnet,
+                   recheck, rebuild ...
 
-Create, edit, show details, and check any version Bittorrent file from command line
+Command line tools for creating, editing, checking and interacting with Bittorrent metainfo files
 
-Commands
---------
-    create (c, new)                   Create a torrent meta file.
-    edit (e)                          Edit existing torrent meta file.
-    magnet (m)                        Create magnet url from an existing Bittorrent meta file.
-    recheck (r, check)                Calculate amount of torrent meta files content is found on disk.
-    info (i)                          Show detailed information about a torrent file.
+Options
+-------
+  -h, --help             show this help message and exit
+  -i, --interactive      select program options interactively
+  -V, --version          show program version and exit
+  -v, --verbose          output debug information
+
+Actions
+-------
+  create, edit, magnet, recheck, rebuild
+
+    create (c, new)      Generate a new torrent meta file.
+    edit (e)             Edit existing torrent meta file.
+
+    magnet (m)           Generate magnet url from an existing Bittorrent meta file.
+
+    recheck (r, check)   Calculate amount of torrent meta file's content is found on disk.
+
+    info (i)             Show detailed information about a torrent file.
+
+    rebuild (build, b)   Re-assemble files obtained from a bittorrent file into the
+                         appropriate file structure for re-seeding.  Read documentation
+                         for more information, or use cases.
 ```
 
 > Usage examples can be found in the project documentation on the [examples page.](https://alexpdev.github.io/torrentfile/examples)
@@ -121,8 +139,8 @@ The options for controlling the progress bar using `--prog` or `--progress`:
 - 1 : show progress bar (default)
 
 ```bash
-> torrentfile -t http://tracker.com --progress 2 /path/to/content
-> torrentfile --prog 0 /path/to/content
+> torrentfile create -t http://tracker.com --progress 2 /path/to/content
+> torrentfile create --prog 0 /path/to/content
 ```
 
 - to specify the save location use the `-o` or `--out` flags
