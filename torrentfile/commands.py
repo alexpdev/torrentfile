@@ -163,7 +163,7 @@ def recheck(args: list) -> list:
     """
     metafile = args.metafile
     content = args.content
-    logger.debug("Validating %s against %s contents", metafile, content)
+    logger.debug("Validating %s <---------------> %s contents", metafile, content)
     msg = f"Rechecking {metafile}..."
     termlength = shutil.get_terminal_size().columns
     padding = termlength // 2 - len(msg) // 2
@@ -171,7 +171,10 @@ def recheck(args: list) -> list:
     checker = Checker(metafile, content)
     logger.debug("Completed initialization of the Checker class")
     result = checker.results()
-    sys.stdout.write(" " * padding + str(result) + "% Match\n")
+    column_length = shutil.get_terminal_size().columns
+    message = " " * padding + str(result) + "% Match\n"
+    padding = int((column_length / 2) - (len(message) / 2)) * " "
+    sys.stdout.write(padding + message + "\n")
     sys.stdout.flush()
     return result
 
