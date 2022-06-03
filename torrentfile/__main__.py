@@ -22,7 +22,11 @@ Enable calling the package directly with python from the command line.
 
 from torrentfile.cli import execute
 
-main = lambda: execute()
+
+def main():
+    """Program entry point."""
+    execute()
+
 
 if __name__ == "__main__":
     execute()  # pragma: nocover

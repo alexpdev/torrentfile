@@ -24,14 +24,15 @@ features of the application.
 
 Functions
 ---------
-create_command
-info_command
-edit_command
-recheck_command
-magnet_command
+- create_command
+- info_command
+- edit_command
+- recheck_command
+- magnet_command
 """
 import logging
 import os
+import shutil
 import sys
 from hashlib import sha1  # nosec
 from urllib.parse import quote_plus
@@ -106,13 +107,13 @@ def info(args: list):
     if "httpseeds" in meta:
         meta["httpseeds"] = ", ".join(meta["httpseeds"])
     text = []
-    longest = max([len(i) for i in meta.keys()])
+    longest = max(len(i) for i in meta.keys())
     for key, val in meta.items():
         if key not in ["pieces", "piece layers", "files", "file tree"]:
             prefix = longest - len(key) + 1
             string = key + (" " * prefix) + str(val)
             text.append(string)
-    most = max([len(i) for i in text])
+    most = max(len(i) for i in text)
     text = ["-" * most, "\n"] + text + ["\n", "-" * most]
     output = "\n".join(text)
     print(output)
@@ -146,7 +147,7 @@ def edit(args: list):
     return edit_torrent(metafile, editargs)
 
 
-def recheck(args: list):
+def recheck(args: list) -> list:
     """
     Execute recheck CLI sub-command.
 
@@ -163,18 +164,19 @@ def recheck(args: list):
     metafile = args.metafile
     content = args.content
     logger.debug("Validating %s against %s contents", metafile, content)
-    sys.stdout.write(f"Rechecking {metafile}...")
+    msg = f"Rechecking {metafile}..."
+    termlength = shutil.get_terminal_size().columns
+    padding = termlength // 2 - len(msg) // 2
+    print(" " * padding + msg)
     checker = Checker(metafile, content)
-
     logger.debug("Completed initialization of the Checker class")
     result = checker.results()
-
-    sys.stdout.write(str(result) + "% Match\n")
+    sys.stdout.write(" " * padding + str(result) + "% Match\n")
     sys.stdout.flush()
     return result
 
 
-def magnet(metafile: str):
+def magnet(metafile: str) -> str:
     """
     Create a magnet URI from a Bittorrent meta file.
 

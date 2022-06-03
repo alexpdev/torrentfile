@@ -623,19 +623,37 @@ or in the <em><code>docs</code></em> directory.</p>
 </blockquote>
 <h2 id="usage">🚀 Usage</h2>
 <p><img alt="Basic Usage" src="https://github.com/alexpdev/torrentfile/blob/master/assets/TorrentFileBasicUsage.gif?raw=True" /></p>
-<pre><code class="language-sh">Usage
+<pre><code class="language-bash">Usage
 =====
-   torrentfile [options] &lt;command&gt; [command-options] ...
+   torrentfile [-h] [-i] [-V] [-v]
+                   create, edit, magnet,
+                   recheck, rebuild ...
 
-Create, edit, show details, and check any version Bittorrent file from command line
+Command line tools for creating, editing, checking and interacting with Bittorrent metainfo files
 
-Commands
---------
-    create (c, new)                   Create a torrent meta file.
-    edit (e)                          Edit existing torrent meta file.
-    magnet (m)                        Create magnet url from an existing Bittorrent meta file.
-    recheck (r, check)                Calculate amount of torrent meta files content is found on disk.
-    info (i)                          Show detailed information about a torrent file.
+Options
+-------
+  -h, --help             show this help message and exit
+  -i, --interactive      select program options interactively
+  -V, --version          show program version and exit
+  -v, --verbose          output debug information
+
+Actions
+-------
+  create, edit, magnet, recheck, rebuild
+
+    create (c, new)      Generate a new torrent meta file.
+    edit (e)             Edit existing torrent meta file.
+
+    magnet (m)           Generate magnet url from an existing Bittorrent meta file.
+
+    recheck (r, check)   Calculate amount of torrent meta file's content is found on disk.
+
+    info (i)             Show detailed information about a torrent file.
+
+    rebuild (build, b)   Re-assemble files obtained from a bittorrent file into the
+                         appropriate file structure for re-seeding.  Read documentation
+                         for more information, or use cases.
 </code></pre>
 <blockquote>
 <p>Usage examples can be found in the project documentation on the <a href="https://alexpdev.github.io/torrentfile/examples">examples page.</a></p>
@@ -677,8 +695,8 @@ Commands
 <li>0 : show no progress bar at all</li>
 <li>1 : show progress bar (default)</li>
 </ul>
-<pre><code class="language-bash">&gt; torrentfile -t http://tracker.com --progress 2 /path/to/content
-&gt; torrentfile --prog 0 /path/to/content
+<pre><code class="language-bash">&gt; torrentfile create -t http://tracker.com --progress 2 /path/to/content
+&gt; torrentfile create --prog 0 /path/to/content
 </code></pre>
 <ul>
 <li>to specify the save location use the <code>-o</code> or <code>--out</code> flags</li>

@@ -29,6 +29,7 @@ import pytest
 
 from tests import dir1, dir2, file1, filemeta1, metafile1, rmpath
 from torrentfile import execute
+from torrentfile.__main__ import main
 
 
 def test_fix():
@@ -89,7 +90,7 @@ def test_cli_private(folder):
     folder, torrent = folder
     args = ["torrentfile", "create", folder, "--private"]
     sys.argv = args
-    execute()
+    main()
     meta = pyben.load(torrent)
     assert "private" in meta["info"]
 

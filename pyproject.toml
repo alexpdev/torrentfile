@@ -40,7 +40,6 @@ callbacks = ["cb_", "_cb", "hook_"]
 
 [tool.pylint. 'FORMAT']
 max-line-length = 80
-no-space-check = ["trailing-comma", "dict-separator"]
 single-line-if-stmt = true
 
 [tool.pylint.'SIMILARITIES']
