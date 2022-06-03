@@ -219,7 +219,7 @@ class InteractiveEditor:
         Display the current met file information to screen.
         """
         out = "Current properties and values:\n"
-        longest = max([len(label) for label in self.args]) + 3
+        longest = max(len(label) for label in self.args) + 3
         for key, val in self.args.items():
             txt = (key.title() + ":").ljust(longest) + str(val)
             out += f"\t{txt}\n"

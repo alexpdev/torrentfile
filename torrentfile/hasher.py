@@ -56,7 +56,7 @@ class Hasher(CbMixin, ProgMixin):
         self.piece_length = piece_length
         self.paths = paths
         self.progress = progress
-        self.total = sum([os.path.getsize(i) for i in self.paths])
+        self.total = sum(os.path.getsize(i) for i in self.paths)
         self.index = 0
         self.current = open(self.paths[0], "rb")
         if self.progress:

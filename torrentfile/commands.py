@@ -107,13 +107,13 @@ def info(args: list):
     if "httpseeds" in meta:
         meta["httpseeds"] = ", ".join(meta["httpseeds"])
     text = []
-    longest = max([len(i) for i in meta.keys()])
+    longest = max(len(i) for i in meta.keys())
     for key, val in meta.items():
         if key not in ["pieces", "piece layers", "files", "file tree"]:
             prefix = longest - len(key) + 1
             string = key + (" " * prefix) + str(val)
             text.append(string)
-    most = max([len(i) for i in text])
+    most = max(len(i) for i in text)
     text = ["-" * most, "\n"] + text + ["\n", "-" * most]
     output = "\n".join(text)
     print(output)
