@@ -43,27 +43,18 @@ def activate_logger():
     """
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger()
-    # file_handler = logging.FileHandler(
-    #     "torrentfile.log", mode="a+", encoding="utf-8"
-    # )
+
     console_handler = logging.StreamHandler(stream=sys.stderr)
-    # file_formatter = logging.Formatter(
-    #     "%(asctime)s %(levelno)s %(message)s",
-    #     datefmt="%m-%d %H:%M:%S",
-    #     style="%",
-    # )
     stream_formatter = logging.Formatter(
         "%(asctime)s %(levelno)s %(message)s",
         datefmt="%m-%d %H:%M:%S",
         style="%",
     )
-    # file_handler.setFormatter(file_formatter)
     console_handler.setFormatter(stream_formatter)
-    # file_handler.setLevel(logging.INFO)
     console_handler.setLevel(logging.DEBUG)
+
     logger.setLevel(logging.DEBUG)
     logger.addHandler(console_handler)
-    # logger.addHandler(file_handler)
     logger.debug("Debug: ON")
 
 
@@ -74,7 +65,7 @@ class TorrentFileHelpFormatter(HelpFormatter):
     Subclasses Argparse.HelpFormatter.
     """
 
-    def __init__(self, prog, width=40, max_help_positions=30):
+    def __init__(self, prog, width=45, max_help_positions=45):
         """
         Construct HelpFormat class for usage output.
 

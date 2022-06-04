@@ -45,6 +45,7 @@ from torrentfile.interactive import select_action
 from torrentfile.rebuild import Assembler
 from torrentfile.recheck import Checker
 from torrentfile.torrent import TorrentAssembler, TorrentFile
+from torrentfile.utils import ArgumentError
 
 logger = logging.getLogger(__name__)
 
@@ -168,11 +169,18 @@ def recheck(args: Namespace) -> str:
     """
     metafile = args.metafile
     content = args.content
+
+    if os.path.isdir(metafile):
+        raise ArgumentError(
+            f"Error: Unable to parse directory {metafile}. "
+            "Check the order of the parameters."
+        )
+
     logger.debug(
         "Validating %s <---------------> %s contents", metafile, content
     )
 
-    msg = f"Rechecking  {metafile} ..."
+    msg = f"Rechecking  {metafile} ...\n"
     halfterm = shutil.get_terminal_size().columns / 2
     padding = int(halfterm - (len(msg) / 2)) * " "
     sys.stdout.write(padding + msg)

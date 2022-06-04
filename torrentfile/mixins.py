@@ -110,14 +110,14 @@ class ProgressBar:
             fill = self.length
         else:
             fill = math.ceil((self.state / self.total) * self.length)
-        empty = self.length - fill
+        empt = self.length - fill
         if self.unit == "MiB":
             state = math.floor(self.state / 1048576)
         elif self.unit == "KiB":
             state = math.floor(self.state / 1024)
         else:
             state = self.state
-        progbar = [self.fill * fill, self.empty * empty, str(state)]
+        progbar = ["|", self.fill * fill, self.empty * empt, "| ", str(state)]
         return "".join(progbar)
 
 
@@ -205,7 +205,7 @@ class ProgMixin:
         return False
 
 
-def waiting(msg: str, flag: bool, timeout: int = 180):
+def waiting(msg: str, flag: bool, timeout: int = 80):
     """
     Show loading message while thread completes processing.
 

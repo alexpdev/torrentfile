@@ -243,3 +243,18 @@ def test_filelisttotal_missing(dir2):
         utils.filelist_total(dir2)
     except utils.MissingPathError:
         assert True
+
+
+def test_argument_error():
+    """
+    Test Argument Error.
+
+    Raises
+    ------
+    utils.ArgumentError
+        Arg error
+    """
+    try:
+        raise utils.ArgumentError("This message raised by argument error")
+    except utils.ArgumentError:
+        assert True

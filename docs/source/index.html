@@ -1716,6 +1716,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#torrentfile.utils.ArgumentError" class="md-nav__link">
+    ArgumentError
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#torrentfile.utils.Memo" class="md-nav__link">
     Memo
   </a>
@@ -2868,6 +2875,13 @@
           <li class="md-nav__item">
   <a href="#torrentfile.utils" class="md-nav__link">
     torrentfile.utils
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.utils.ArgumentError" class="md-nav__link">
+    ArgumentError
   </a>
   
 </li>
@@ -4450,6 +4464,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#torrentfile.utils.ArgumentError" class="md-nav__link">
+    ArgumentError
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#torrentfile.utils.Memo" class="md-nav__link">
     Memo
   </a>
@@ -5607,6 +5628,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#torrentfile.utils.ArgumentError" class="md-nav__link">
+    ArgumentError
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#torrentfile.utils.Memo" class="md-nav__link">
     Memo
   </a>
@@ -6056,6 +6084,10 @@ in the muliple file case, it's the name of a directory.</p>
 <li class="class"><code class="mkapi-item-name">PieceLengthValueError</code>
 
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Piece Length parameter must equal a perfect power of 2.</span></li>
+
+<li class="class"><code class="mkapi-item-name">ArgumentError</code>
+
+<span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Exception for mismatched or mistyped CLI arguments.</span></li>
 
 
 </ul></div>
@@ -6765,7 +6797,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
 
 
 <h4 id="torrentfile.cli.TorrentFileHelpFormatter.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span></code>
 
 
 </h4>
@@ -6803,7 +6835,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
           </td>
           <td><p>Max width of help message output.</p></td>
           <td>
-                <code>40</code>
+                <code>45</code>
           </td>
         </tr>
         <tr>
@@ -6813,7 +6845,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
           </td>
           <td><p>max length until line wrap.</p></td>
           <td>
-                <code>30</code>
+                <code>45</code>
           </td>
         </tr>
     </tbody>
@@ -10103,7 +10135,7 @@ and deleting the progress bar object to clear a space for the next one.</p>
 
 
 <h3 id="torrentfile.mixins.waiting" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">waiting</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">180</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">waiting</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span></code>
 
 
 </h3>
@@ -10151,7 +10183,7 @@ and deleting the progress bar object to clear a space for the next one.</p>
           </td>
           <td><p>max amount of time to run the function.</p></td>
           <td>
-                <code>180</code>
+                <code>80</code>
           </td>
         </tr>
     </tbody>
@@ -13393,6 +13425,34 @@ it can be used as an iterator and works for both versions.</p>
 
 
 
+<h3 id="torrentfile.utils.ArgumentError" class="doc doc-heading">
+          <code>ArgumentError</code>
+
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+        <p class="doc doc-class-bases">
+          Bases: <code>Exception</code></p>
+
+
+      <p>Exception for mismatched or mistyped CLI arguments.</p>
+
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
 <h3 id="torrentfile.utils.Memo" class="doc doc-heading">
           <code>Memo</code>
 
@@ -14522,7 +14582,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
 
 
 <h4 id="torrentfile.cli.TorrentFileHelpFormatter.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span></code>
 
 
 </h4>
@@ -14560,7 +14620,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
           </td>
           <td><p>Max width of help message output.</p></td>
           <td>
-                <code>40</code>
+                <code>45</code>
           </td>
         </tr>
         <tr>
@@ -14570,7 +14630,7 @@ invoked when called from command line, and parses accompanying arguments.</p>
           </td>
           <td><p>max length until line wrap.</p></td>
           <td>
-                <code>30</code>
+                <code>45</code>
           </td>
         </tr>
     </tbody>
@@ -20089,6 +20149,34 @@ it can be used as an iterator and works for both versions.</p>
 
 
 
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="torrentfile.utils.ArgumentError" class="doc doc-heading">
+          <code>ArgumentError</code>
+
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+        <p class="doc doc-class-bases">
+          Bases: <code>Exception</code></p>
+
+
+      <p>Exception for mismatched or mistyped CLI arguments.</p>
+
+
+
+
+    </div>
+
+  </div>
 
 
 
