@@ -34,6 +34,7 @@ import logging
 import os
 import shutil
 import sys
+from argparse import Namespace
 from hashlib import sha1  # nosec
 from urllib.parse import quote_plus
 
@@ -48,13 +49,13 @@ from torrentfile.torrent import TorrentAssembler, TorrentFile
 logger = logging.getLogger(__name__)
 
 
-def create(args: list):
+def create(args: Namespace):
     """
     Execute the create CLI sub-command to create a new torrent metafile.
 
     Parameters
     ----------
-    args : argparse.Namespace
+    args : Namespace
         positional and optional CLI arguments.
 
     Returns
@@ -83,7 +84,7 @@ def create(args: list):
     return args
 
 
-def info(args: list):
+def info(args: Namespace):
     """
     Show torrent metafile details to user via stdout.
 
@@ -96,6 +97,7 @@ def info(args: list):
     meta = pyben.load(metafile)
     data = meta["info"]
     del meta["info"]
+
     meta.update(data)
     if "private" in meta and meta["private"] == 1:
         meta["private"] = "True"
@@ -106,13 +108,16 @@ def info(args: list):
         meta["url-list"] = ", ".join(meta["url-list"])
     if "httpseeds" in meta:
         meta["httpseeds"] = ", ".join(meta["httpseeds"])
+
     text = []
     longest = max(len(i) for i in meta.keys())
+
     for key, val in meta.items():
         if key not in ["pieces", "piece layers", "files", "file tree"]:
             prefix = longest - len(key) + 1
             string = key + (" " * prefix) + str(val)
             text.append(string)
+
     most = max(len(i) for i in text)
     text = ["-" * most, "\n"] + text + ["\n", "-" * most]
     output = "\n".join(text)
@@ -120,7 +125,7 @@ def info(args: list):
     return output
 
 
-def edit(args: list):
+def edit(args: Namespace) -> str:
     """
     Execute the edit CLI sub-command with provided arguments.
 
@@ -147,7 +152,7 @@ def edit(args: list):
     return edit_torrent(metafile, editargs)
 
 
-def recheck(args: list) -> list:
+def recheck(args: Namespace) -> str:
     """
     Execute recheck CLI sub-command.
 
@@ -163,14 +168,19 @@ def recheck(args: list) -> list:
     """
     metafile = args.metafile
     content = args.content
-    logger.debug("Validating %s <---------------> %s contents", metafile, content)
+    logger.debug(
+        "Validating %s <---------------> %s contents", metafile, content
+    )
+
     msg = f"Rechecking  {metafile} ..."
     halfterm = shutil.get_terminal_size().columns / 2
     padding = int(halfterm - (len(msg) / 2)) * " "
-    print(padding + msg)
+    sys.stdout.write(padding + msg)
+
     checker = Checker(metafile, content)
     logger.debug("Completed initialization of the Checker class")
     result = checker.results()
+
     message = f"{content} <- {result}% -> {metafile}"
     padding = int(halfterm - (len(message) / 2)) * " "
     sys.stdout.write(padding + message + "\n")
@@ -178,7 +188,7 @@ def recheck(args: list) -> list:
     return result
 
 
-def magnet(metafile: str) -> str:
+def magnet(metafile: Namespace) -> str:
     """
     Create a magnet URI from a Bittorrent meta file.
 
@@ -222,7 +232,7 @@ def magnet(metafile: str) -> str:
     return full_uri
 
 
-def rebuild(args: list) -> int:
+def rebuild(args: Namespace) -> int:
     """
     Attempt to rebuild a torrent based on the a torrent file.
 
@@ -232,7 +242,7 @@ def rebuild(args: list) -> int:
 
     Parameters
     ----------
-    args : list
+    args : Namespace
         Command line arguments including the paths neccessary
 
     Returns
