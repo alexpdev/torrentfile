@@ -30,8 +30,9 @@ import pytest
 from tests import (dir1, dir2, file1, metafile1, metafile2, rmpath, tempfile,
                    torrents)
 from torrentfile.cli import execute
-from torrentfile.commands import info, magnet, rebuild
+from torrentfile.commands import info, magnet, rebuild, recheck
 from torrentfile.hasher import merkle_root
+from torrentfile.utils import ArgumentError
 
 
 def test_fix():
@@ -223,3 +224,19 @@ def test_rebuild(build):
     """Test the rebuild function in the commands module."""
     counter = rebuild(build)
     assert counter > 0
+
+
+def test_recheck_with_dir():
+    """Test running the recheck command with a directory as the metafile."""
+    path = os.path.dirname(__file__)
+
+    class Namespace:
+        """Emulates the namespace class from argparse module."""
+
+        metafile = path
+        content = path
+
+    try:
+        recheck(Namespace)
+    except ArgumentError:
+        assert True

@@ -28,6 +28,7 @@ from tests import (dir1, dir2, file1, file2, filemeta1, filemeta2, metafile1,
                    metafile2, rmpath, sizedfiles, sizes)
 from torrentfile.cli import main_script as main
 from torrentfile.recheck import Checker
+from torrentfile.utils import ArgumentError
 
 
 def test_fixtures():
@@ -302,4 +303,15 @@ def test_recheck_wrong_dir(metafile1):
     try:
         _ = Checker(metafile1, grandparent)
     except FileNotFoundError:
+        assert True
+
+
+def test_recheck_mismatch_args(metafile1):
+    """
+    Test recheck function with mismatched directory.
+    """
+    grandparent = os.path.dirname(os.path.dirname(metafile1))
+    try:
+        _ = Checker(grandparent, metafile1)
+    except ArgumentError:
         assert True
