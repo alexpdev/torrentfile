@@ -236,6 +236,7 @@ def waiting(msg: str, flag: list, timeout: int = 20):
         sys.stdout.flush()
 
     output("\n")
+    time.sleep(0.16)
     while len(flag) == 0:
         time.sleep(0.16)
         filled = (fill * size) + chr(codes[idx]) + (" " * (total - size))
