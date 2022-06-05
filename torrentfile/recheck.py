@@ -95,7 +95,9 @@ class Checker(ProgMixin):
         self.total = 0
         self.paths = []
         self.fileinfo = {}
-        thread2 = Thread(target=waiting, args=("Extracting metadata", meta))
+        thread2 = Thread(
+            target=waiting, args=("Extracting metadata", meta, 30)
+        )
         if len(meta) == 0:  # pragma: nocover
             thread2.start()
             thread.join()

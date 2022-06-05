@@ -205,7 +205,7 @@ class ProgMixin:
         return False
 
 
-def waiting(msg: str, flag: bool, timeout: int = 80):
+def waiting(msg: str, flag: list, timeout: int = 20):
     """
     Show loading message while thread completes processing.
 
@@ -236,7 +236,7 @@ def waiting(msg: str, flag: bool, timeout: int = 80):
         sys.stdout.flush()
 
     output("\n")
-    while not flag:
+    while len(flag) == 0:
         time.sleep(0.16)
         filled = (fill * size) + chr(codes[idx]) + (" " * (total - size))
         output(f"{msg}: {filled}\r")

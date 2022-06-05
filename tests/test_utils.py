@@ -183,7 +183,9 @@ def test_humanize_bytes(amount, result):
     assert utils.humanize_bytes(amount) == result
 
 
-@pytest.mark.parametrize("amount, result", [(i, 2**i) for i in range(14, 25)])
+@pytest.mark.parametrize(
+    "amount, result", [(i, 2**i) for i in range(14, 25)]
+)
 def test_normalize_piece_length_int(amount, result):
     """Test normalize piece length function.
 
