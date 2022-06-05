@@ -64,9 +64,13 @@ class ProgressBar:
         the width of the progress bar
     unit : str
         the text representation incremented
+    start : int
+        column where the progress bar should be drawn
     """
 
-    def __init__(self, total, title, length, unit, start):
+    def __init__(
+        self, total: int, title: str, length: int, unit: str, start: int
+    ):
         """
         Construct the progress bar object and store state of it's properties.
         """
@@ -93,18 +97,7 @@ class ProgressBar:
         padding = (start - len(title)) * " "
         self.prefix = "".join([title, padding])
 
-    def increment(self, value):
-        """
-        Increase the state of the progress bar value.
-
-        Parameters
-        ----------
-        value : int
-            the amount to increment the state by.
-        """
-        self.state += value
-
-    def pbar(self):
+    def pbar(self) -> str:
         """
         Return the size of the filled portion of the progress bar.
 
@@ -117,14 +110,14 @@ class ProgressBar:
             fill = self.length
         else:
             fill = math.ceil((self.state / self.total) * self.length)
-        empty = self.length - fill
+        empt = self.length - fill
         if self.unit == "MiB":
             state = math.floor(self.state / 1048576)
         elif self.unit == "KiB":
             state = math.floor(self.state / 1024)
         else:
             state = self.state
-        progbar = ["[", self.fill * fill, self.empty * empty, "] ", str(state)]
+        progbar = ["|", self.fill * fill, self.empty * empt, "| ", str(state)]
         return "".join(progbar)
 
 
@@ -180,7 +173,7 @@ class ProgMixin:
             the number of bytes count the progress bar should increase.
         """
         if self.is_active():
-            self.prog.increment(val)
+            self.prog.state += val
             pbar = self.prog.pbar()
             output = f"{self.prog.prefix}{pbar}{self.prog.suffix}\r"
             sys.stdout.write(output)
@@ -198,7 +191,7 @@ class ProgMixin:
             sys.stdout.write("\n")
             del self.prog
 
-    def is_active(self):
+    def is_active(self) -> bool:
         """
         Test to see if there is an active progress bar for object.
 
@@ -212,7 +205,7 @@ class ProgMixin:
         return False
 
 
-def waiting(msg: str, flag: bool, timeout: int = 180):
+def waiting(msg: str, flag: list, timeout: int = 20):
     """
     Show loading message while thread completes processing.
 
@@ -230,7 +223,7 @@ def waiting(msg: str, flag: bool, timeout: int = 180):
     size = idx = 0
     total = shutil.get_terminal_size().columns - len(msg) - 20
 
-    def output(text):
+    def output(text: str):
         """
         Print parameter message to the console.
 
@@ -243,7 +236,8 @@ def waiting(msg: str, flag: bool, timeout: int = 180):
         sys.stdout.flush()
 
     output("\n")
-    while not flag:
+    time.sleep(0.16)
+    while len(flag) == 0:
         time.sleep(0.16)
         filled = (fill * size) + chr(codes[idx]) + (" " * (total - size))
         output(f"{msg}: {filled}\r")

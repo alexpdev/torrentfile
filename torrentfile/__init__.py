@@ -30,10 +30,6 @@ Modules:
     exceptions: Custom Exceptions used in package.
     utils: Utilities used throughout package.
 """
-import logging
-import sys
-
-from torrentfile import utils
 from torrentfile.cli import execute
 from torrentfile.commands import create, edit, info, magnet, recheck
 from torrentfile.interactive import select_action

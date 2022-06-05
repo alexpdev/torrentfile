@@ -183,7 +183,9 @@ def test_humanize_bytes(amount, result):
     assert utils.humanize_bytes(amount) == result
 
 
-@pytest.mark.parametrize("amount, result", [(i, 2**i) for i in range(14, 25)])
+@pytest.mark.parametrize(
+    "amount, result", [(i, 2**i) for i in range(14, 25)]
+)
 def test_normalize_piece_length_int(amount, result):
     """Test normalize piece length function.
 
@@ -242,4 +244,19 @@ def test_filelisttotal_missing(dir2):
     try:
         utils.filelist_total(dir2)
     except utils.MissingPathError:
+        assert True
+
+
+def test_argument_error():
+    """
+    Test Argument Error.
+
+    Raises
+    ------
+    utils.ArgumentError
+        Arg error
+    """
+    try:
+        raise utils.ArgumentError("This message raised by argument error")
+    except utils.ArgumentError:
         assert True

@@ -36,7 +36,7 @@ import pyben
 
 from torrentfile.hasher import FileHasher
 from torrentfile.mixins import ProgMixin, waiting
-from torrentfile.utils import MissingPathError
+from torrentfile.utils import ArgumentError, MissingPathError
 
 SHA1 = 20
 SHA256 = 32
@@ -82,6 +82,10 @@ class Checker(ProgMixin):
         """
         if not os.path.exists(metafile):
             raise FileNotFoundError
+        if os.path.isdir(metafile):
+            raise ArgumentError(
+                "The <metafile> must be a .torrent file. Not a directory"
+            )
         meta = []
         thread = Thread(target=pyben.loadinto, args=(metafile, meta))
         thread.start()
@@ -91,10 +95,12 @@ class Checker(ProgMixin):
         self.total = 0
         self.paths = []
         self.fileinfo = {}
-        thread2 = Thread(target=waiting, args=("Extracting metadata", meta))
-        if not meta:  # pragma: nocover
+        thread2 = Thread(
+            target=waiting, args=("Extracting metadata", meta, 30)
+        )
+        if len(meta) == 0:  # pragma: nocover
             thread2.start()
-            thread2.join()
+            thread.join()
         self.meta = meta[0]
         self.info = self.meta["info"]
         self.name = self.info["name"]
@@ -386,7 +392,6 @@ class FeedChecker(ProgMixin):
             self.index = i
             if os.path.exists(path):
                 for piece in self.extract(path, partial):
-                    self.prog_update(len(piece))
                     if (len(piece) == self.piece_length) or (
                         i + 1 == len(self.paths)
                     ):

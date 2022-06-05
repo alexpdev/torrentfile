@@ -12,8 +12,8 @@ theme:
 
 nav:
   - Home : index.md
-  - Help : Commands.md
-  - Details : man.md
+  - Commands : Commands.md
+  - Documentation : man.md
   - Changelog : changelog.md
   - License : Apache2.md
   - API : source.md

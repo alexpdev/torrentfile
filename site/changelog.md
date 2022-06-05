@@ -1,5 +1,17 @@
 # TorrentFile
 
+## Version 0.7.11
+
+- Fixed issue with progress bar displaying inaccurate details
+- Other minor bug fixes
+- Updated output for Recheck subcommand for better readability
+- Updated documentation
+- Updated Readme
+- Added unit test to fix coverage gaps
+- Fixed warnings created by pylint
+
+---------------------
+
 ## Version 0.7.10
 
 - Added rebuild module and subcommand see docs for more info

@@ -120,6 +120,12 @@ class PieceLengthValueError(Exception):
         super().__init__(message)
 
 
+class ArgumentError(Exception):
+    """
+    Exception for mismatched or mistyped CLI arguments.
+    """
+
+
 def humanize_bytes(amount: int) -> str:
     """
     Convert integer into human readable memory sized denomination.
