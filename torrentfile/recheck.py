@@ -30,12 +30,11 @@ import logging
 import os
 from hashlib import sha1, sha256  # nosec
 from pathlib import Path
-from threading import Thread
 
 import pyben
 
 from torrentfile.hasher import FileHasher
-from torrentfile.mixins import ProgMixin, waiting
+from torrentfile.mixins import ProgMixin
 from torrentfile.utils import ArgumentError, MissingPathError
 
 SHA1 = 20
@@ -86,22 +85,14 @@ class Checker(ProgMixin):
             raise ArgumentError(
                 "The <metafile> must be a .torrent file. Not a directory"
             )
-        meta = []
-        thread = Thread(target=pyben.loadinto, args=(metafile, meta))
-        thread.start()
         self.last_log = None
         self.log_msg("Checking: %s, %s", metafile, path)
         self.metafile = metafile
         self.total = 0
         self.paths = []
         self.fileinfo = {}
-        thread2 = Thread(
-            target=waiting, args=("Extracting metadata", meta, 30)
-        )
-        if len(meta) == 0:  # pragma: nocover
-            thread2.start()
-            thread.join()
-        self.meta = meta[0]
+        print("Extracting data from torrent file...")
+        self.meta = pyben.load(metafile)
         self.info = self.meta["info"]
         self.name = self.info["name"]
         self.piece_length = self.info["piece length"]

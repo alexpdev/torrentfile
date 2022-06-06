@@ -175,12 +175,12 @@ def execute(args=None) -> list:
             args = sys.argv[1:]
         else:
             args = ["-h"]
-
     parser = ArgumentParser(
         "torrentfile",
+        usage="torrentfile [options] command [command options]",
         description=(
-            "Command line tools for creating, editing, checking and "
-            "interacting with Bittorrent metainfo files"
+            "Command line tools for creating, editing, checking, building "
+            "and interacting with Bittorrent metainfo files"
         ),
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
@@ -211,9 +211,9 @@ def execute(args=None) -> list:
     parser.set_defaults(func=parser.print_help)
 
     subparsers = parser.add_subparsers(
-        title="Actions",
+        title="Commands",
         dest="command",
-        metavar="create, edit, magnet, recheck, rebuild",
+        metavar="create, edit, info, magnet, recheck, rebuild\n",
     )
     create_parser = subparsers.add_parser(
         "create",
@@ -346,9 +346,7 @@ def execute(args=None) -> list:
 
     edit_parser = subparsers.add_parser(
         "edit",
-        help="""
-        Edit existing torrent meta file.
-        """,
+        help="""Edit existing torrent meta file.""",
         aliases=["e"],
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
@@ -408,11 +406,24 @@ def execute(args=None) -> list:
     )
     edit_parser.set_defaults(func=edit)
 
+    info_parser = subparsers.add_parser(
+        "info",
+        help="Show detailed information about a torrent file.",
+        aliases=["i"],
+        prefix_chars="-",
+        formatter_class=TorrentFileHelpFormatter,
+    )
+    info_parser.add_argument(
+        "metafile",
+        action="store",
+        metavar="<*.torrent>",
+        help="path to pre-existing torrent file.",
+    )
+    info_parser.set_defaults(func=info)
+
     magnet_parser = subparsers.add_parser(
         "magnet",
-        help="""
-        Generate magnet url from an existing Bittorrent meta file.
-        """,
+        help="Generate magnet url from an existing Bittorrent meta file.",
         aliases=["m"],
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
@@ -427,10 +438,8 @@ def execute(args=None) -> list:
 
     check_parser = subparsers.add_parser(
         "recheck",
-        help="""
-        Calculate amount of torrent meta file's content is found on disk.
-        """,
-        aliases=["r", "check"],
+        help="Gives a detailed look at how much of the torrent is available.",
+        aliases=["check"],
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )
@@ -448,31 +457,12 @@ def execute(args=None) -> list:
     )
     check_parser.set_defaults(func=recheck)
 
-    info_parser = subparsers.add_parser(
-        "info",
-        help="""
-        Show detailed information about a torrent file.
-        """,
-        aliases=["i"],
-        prefix_chars="-",
-        formatter_class=TorrentFileHelpFormatter,
-    )
-    info_parser.add_argument(
-        "metafile",
-        action="store",
-        metavar="<*.torrent>",
-        help="path to pre-existing torrent file.",
-    )
-    info_parser.set_defaults(func=info)
-
     rebuild_parser = subparsers.add_parser(
         "rebuild",
-        aliases=["build", "b"],
-        help="""
-        Re-assemble files obtained from a bittorrent file into the
-        appropriate file structure for re-seeding.  Read documentation
-        for more information, or use cases.
-        """,
+        aliases=["build"],
+        help="""Re-assemble files obtained from a bittorrent file into the
+                appropriate file structure for re-seeding.  Read documentation
+                for more information, or use cases.""",
         formatter_class=TorrentFileHelpFormatter,
     )
     rebuild_parser.add_argument(
