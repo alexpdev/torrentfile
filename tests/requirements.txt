@@ -8,4 +8,3 @@ pytest-cov
 pyben>=0.3.1
 pylint
 tox
-mkdocstrings[python] >= 0.18
