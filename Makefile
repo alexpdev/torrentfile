@@ -1,4 +1,4 @@
-.PHONY: clean help lint test docs nixenv
+.PHONY: clean help test docs release
 .DEFAULT_GOAL := help
 
 define PRINT_HELP_PYSCRIPT
@@ -29,12 +29,13 @@ import time
 from torrentfile.version import __version__
 if sys.platform == "win32":
 	subprocess.Popen(["7z", "a", "./dist/temp.zip", "./dist/torrentfile.exe"])
+	time.sleep(2)
 	shutil.copy(
 		"./dist/temp.zip",
 		"./dist/torrentfile-v" + __version__ + "-win.zip")
 else:
 	subprocess.Popen(["zip", "./dist/temp.zip", "./dist/torrentfile"])
-	time.sleep(1)
+	time.sleep(2)
 	shutil.copy(
 		"./dist/temp.zip",
 		"./dist/torrentfile-v" + __version__ + "-linux.zip")
@@ -89,13 +90,13 @@ push: clean docs test ## Push to github
 	git commit -m "$m"
 	git push
 
-setup: clean test lint ## setup and build repo
+setup: clean test ## setup and build repo
 	pip install --pre --upgrade --force-reinstall --no-cache -rrequirements.txt
 	python setup.py sdist bdist_wheel bdist_egg
 	pip install -e .
 	twine upload dist/*
 
-release: clean test lint ## create executables for release
+release: clean test ## create executables for release
 	pip install pyinstaller
 	pip install -e .
 	pyinstaller ./runner/execf.spec

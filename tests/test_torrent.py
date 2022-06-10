@@ -24,7 +24,7 @@ import os
 import pytest
 
 from tests import dir1, dir2, rmpath, tempfile, torrents
-from torrentfile.mixins import waiting
+from torrentfile.mixins import ProgMixin, waiting
 from torrentfile.torrent import MetaFile
 from torrentfile.utils import MissingPathError
 
@@ -222,3 +222,13 @@ def test_mbtorrent(version, progress):
     outfile, _ = torrent.write()
     assert os.path.exists(outfile)
     rmpath(tfile, outfile)
+
+
+@pytest.mark.parametrize("total", [3**i for i in range(12, 18)])
+def test_progress_bar(total):
+    """Testing the prog mixin with various sizes."""
+    progbar = ProgMixin()
+    progbar.prog_start(total, "some/fake/path")
+    while progbar.prog.state < total:
+        progbar.prog_update(2**20)
+    assert progbar.prog.state >= total
