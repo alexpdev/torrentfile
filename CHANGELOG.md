@@ -7,6 +7,7 @@
 - Updated output for Recheck subcommand for better readability
 - Updated documentation
 - Updated Readme
+- added quiet mode to cli global options `-q`
 - Added unit test to fix coverage gaps
 - Fixed warnings created by pylint
 
