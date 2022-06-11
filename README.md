@@ -7,6 +7,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile?color=orange)
 ![GitHub License](https://img.shields.io/github/license/alexpdev/torrentfile?color=red&logo=apache)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/torrentfile?color=brown)
+![GitHub Last Commit](https://badgen.net/github/last-commit/alexpdev/torrentfile?color=blue&icon=github)
 [![CI](https://github.com/alexpdev/TorrentFile/actions/workflows/pyworkflow.yml/badge.svg?branch=master&event=push)](https://github.com/alexpdev/torrentfile/actions/workflows/pyworkflow.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Coverage)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Grade)
@@ -24,7 +25,7 @@ full unicode support.
 
 ## 🔌 Requirements
 
-- Python 3.7+
+- Python 3.6+
 - Tested on Linux, Windows and Mac
 
 ## 💻 Install
