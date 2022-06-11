@@ -261,6 +261,7 @@ def test_cli_created_by(folder, piece_length, version):
     folder, torrent = folder
     args = [
         "torrentfile",
+        "-q",
         "create",
         folder,
         "--piece-length",

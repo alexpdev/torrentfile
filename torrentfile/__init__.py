@@ -32,7 +32,6 @@ Modules:
 """
 from torrentfile.cli import execute
 from torrentfile.commands import create, edit, info, magnet, recheck
-from torrentfile.interactive import select_action
 from torrentfile.version import __version__
 
 __all__ = ["execute", "create", "edit", "info", "magnet", "recheck"]

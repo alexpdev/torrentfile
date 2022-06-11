@@ -28,6 +28,7 @@ Functions:
     activate_logger: turns on debug mode and logging facility.
 """
 
+import io
 import logging
 import sys
 from argparse import ArgumentParser, HelpFormatter
@@ -37,25 +38,44 @@ from torrentfile.interactive import select_action
 from torrentfile.version import __version__ as version
 
 
-def activate_logger():
+class Config:
     """
-    Activate the builtin logging mechanism when passed debug flag from CLI.
+    Class the controls the logging configuration and output settings.
+
+    Controls the logging level, or whether to app should operate in quiet mode.
     """
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger()
 
-    console_handler = logging.StreamHandler(stream=sys.stderr)
-    stream_formatter = logging.Formatter(
-        "%(asctime)s %(levelno)s %(message)s",
-        datefmt="%m-%d %H:%M:%S",
-        style="%",
-    )
-    console_handler.setFormatter(stream_formatter)
-    console_handler.setLevel(logging.DEBUG)
+    @staticmethod
+    def activate_quiet():
+        """
+        Activate quiet mode for the duration of the programs life.
 
-    logger.setLevel(logging.DEBUG)
-    logger.addHandler(console_handler)
-    logger.debug("Debug: ON")
+        When quiet mode is enabled, no logging, progress or state information
+        is output to the terminal
+        """
+        if sys.stdout or sys.stderr:
+            sys.stdout = io.StringIO()
+            sys.stderr = io.StringIO()
+
+    @staticmethod
+    def activate_logger():
+        """
+        Activate the builtin logging mechanism when passed debug flag from CLI.
+        """
+        logging.basicConfig(level=logging.INFO)
+        logger = logging.getLogger()
+        console_handler = logging.StreamHandler(stream=sys.stderr)
+        stream_formatter = logging.Formatter(
+            "%(asctime)s %(levelno)s %(message)s",
+            datefmt="%m-%d %H:%M:%S",
+            style="%",
+        )
+        console_handler.setFormatter(stream_formatter)
+        console_handler.setLevel(logging.DEBUG)
+
+        logger.setLevel(logging.DEBUG)
+        logger.addHandler(console_handler)
+        logger.debug("Debug: ON")
 
 
 class TorrentFileHelpFormatter(HelpFormatter):
@@ -193,6 +213,13 @@ def execute(args=None) -> list:
         action="store_true",
         dest="interactive",
         help="select program options interactively",
+    )
+    parser.add_argument(
+        "-q",
+        "--quiet",
+        help="Turn off all text output.",
+        dest="quiet",
+        action="store_true",
     )
     parser.add_argument(
         "-V",
@@ -487,8 +514,11 @@ def execute(args=None) -> list:
 
     args = parser.parse_args(args)
 
-    if args.debug:
-        activate_logger()
+    if args.quiet:
+        Config.activate_quiet()
+
+    elif args.debug:
+        Config.activate_logger()
 
     if args.interactive:
         return select_action()

@@ -69,6 +69,7 @@ Options
 -------
   -h, --help             show this help message and exit
   -i, --interactive      select program options interactively
+  -q, --quiet            activate quiet mode no terminal output
   -V, --version          show program version and exit
   -v, --verbose          output debug information
 

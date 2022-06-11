@@ -85,7 +85,10 @@ class ProgressBar:
         if not unit:
             self.unit = ""  # pragma: nocover
         elif unit == "bytes":
-            if self.total > 10000000:
+            if self.total > 1_000_000_000:
+                self.show_total = math.floor(self.total / (2**30))
+                self.unit = "GiB"
+            elif self.total > 1_000_000:
                 self.show_total = math.floor(self.total / 1048576)
                 self.unit = "MiB"
             elif self.total > 10000:
@@ -111,7 +114,9 @@ class ProgressBar:
         else:
             fill = math.ceil((self.state / self.total) * self.length)
         empt = self.length - fill
-        if self.unit == "MiB":
+        if self.unit == "GiB":
+            state = math.floor(self.state / (2**30))
+        elif self.unit == "MiB":
             state = math.floor(self.state / 1048576)
         elif self.unit == "KiB":
             state = math.floor(self.state / 1024)
