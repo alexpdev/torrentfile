@@ -44,7 +44,7 @@ BLOCK_SIZE = 2**14  # 16KiB
 logger = logging.getLogger(__name__)
 
 
-class Checker(ProgMixin):
+class Checker:
     """
     Check a given file or directory to see if it matches a torrentfile.
 
@@ -147,7 +147,7 @@ class Checker(ProgMixin):
 
         return self._result
 
-    def log_msg(self, *args, level=logging.INFO):
+    def log_msg(self, *args, level: int = logging.INFO):
         """
         Log message `msg` to logger and send `msg` to callback hook.
 
@@ -312,7 +312,6 @@ class Checker(ProgMixin):
                 "Processed: %s%%, Matched: %s%%",
                 total_consumed,
                 percent_matched,
-                level=logging.DEBUG,
             )
         self._result = (matched / consumed) * 100 if consumed > 0 else 0
 
