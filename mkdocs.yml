@@ -9,6 +9,19 @@ theme:
   name: material
   logo: images/torrentfile.png
   favicon: images/favicon.ico
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: maroon
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      toggle:
+        icon: material/lightbulb
+        name: Switch to light mode
 
 nav:
   - Home : index.md
@@ -23,14 +36,23 @@ plugins:
   - search
   - autorefs
   - mkapi
+  - coverage
+  - section-index
   - mkdocstrings:
       handlers:
         python:
           selection:
             docstring_style: numpy
+            inherited_members: true
           rendering:
-            show_root_heading: false
-            show_source: false
+            docstring_section_style: spacy
+            merge_init_into_class: false
+            show_signature_annotations: true
+            show_source: true
+            show_submodules: true
+            seperate_signature: true
+            docstring_options:
+            show_root_heading: true
 
 docs_dir: site/
 site_dir: docs/

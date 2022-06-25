@@ -311,7 +311,7 @@ class Checker:
             self.log_msg(
                 "Processed: %s%%, Matched: %s%%",
                 total_consumed,
-                percent_matched
+                percent_matched,
             )
         self._result = (matched / consumed) * 100 if consumed > 0 else 0
 
