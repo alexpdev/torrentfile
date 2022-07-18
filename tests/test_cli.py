@@ -55,7 +55,7 @@ def test_cli_v1(folder):
     Basic create torrent cli command.
     """
     folder, torrent = folder
-    args = ["torrentfile", "create", folder]
+    args = ["torrentfile", "create", folder, "-o", torrent]
     sys.argv = args
     execute()
     assert os.path.exists(torrent)
@@ -66,7 +66,15 @@ def test_cli_v2(folder):
     Create torrent v2 cli command.
     """
     folder, torrent = folder
-    args = ["torrentfile", "create", folder, "--meta-version", "2"]
+    args = [
+        "torrentfile",
+        "create",
+        folder,
+        "--meta-version",
+        "2",
+        "-o",
+        torrent,
+    ]
     sys.argv = args
     execute()
     assert os.path.exists(torrent)
@@ -77,7 +85,15 @@ def test_cli_v3(folder):
     Create hybrid torrent cli command.
     """
     folder, torrent = folder
-    args = ["torrentfile", "create", folder, "--meta-version", "3"]
+    args = [
+        "torrentfile",
+        "create",
+        folder,
+        "--meta-version",
+        "3",
+        "-o",
+        torrent,
+    ]
     sys.argv = args
     execute()
     assert os.path.exists(torrent)
@@ -88,7 +104,7 @@ def test_cli_private(folder):
     Test private cli flag.
     """
     folder, torrent = folder
-    args = ["torrentfile", "create", folder, "--private"]
+    args = ["torrentfile", "create", folder, "--private", "-o", torrent]
     sys.argv = args
     main()
     meta = pyben.load(torrent)
@@ -113,6 +129,8 @@ def test_cli_piece_length(folder, piece_length, version):
         version,
         "--progress",
         "0",
+        "-o",
+        torrent,
     ]
     sys.argv = args
     execute()
@@ -137,6 +155,8 @@ def test_cli_announce(folder, piece_length, version):
         version,
         "--tracker",
         "https://announce.org/tracker",
+        "-o",
+        torrent,
     ]
     sys.argv = args
     execute()
@@ -161,6 +181,8 @@ def test_cli_announce_list(folder, version):
         folder,
         "--meta-version",
         version,
+        "-o",
+        torrent,
         "--tracker",
     ] + trackers
     sys.argv = args
@@ -190,6 +212,8 @@ def test_cli_comment(folder, piece_length, version):
         "this is a comment",
         "--progress",
         "1",
+        "-o",
+        torrent,
     ]
     sys.argv = args
     execute()
@@ -240,6 +264,8 @@ def test_cli_creation_date(folder, piece_length, version):
         version,
         "--comment",
         "this is a comment",
+        "-o",
+        torrent,
     ]
     sys.argv = args
     execute()
@@ -270,6 +296,8 @@ def test_cli_created_by(folder, piece_length, version):
         version,
         "--comment",
         "this is a comment",
+        "-o",
+        torrent,
     ]
     sys.argv = args
     execute()
@@ -296,6 +324,8 @@ def test_cli_web_seeds(folder, piece_length, version):
         "https://webseed.url/1",
         "https://webseed.url/2",
         "https://webseed.url/3",
+        "-o",
+        torrent,
     ]
     sys.argv = args
     execute()
@@ -321,6 +351,8 @@ def test_cli_with_debug(folder, piece_length, version):
         version,
         "--comment",
         "this is a comment",
+        "-o",
+        torrent,
     ]
     sys.argv = args
     execute()
@@ -344,6 +376,8 @@ def test_cli_with_source(folder, piece_length, version):
         version,
         "--source",
         "somesource",
+        "-o",
+        torrent,
     ]
     sys.argv = args
     execute()
@@ -369,6 +403,7 @@ def test_cli_empty_files(dir2, version, progress):
     """
     Test creating torrent with empty files.
     """
+    outfile = str(dir2) + ".torrent"
     args = [
         "torrentfile",
         "create",
@@ -379,6 +414,8 @@ def test_cli_empty_files(dir2, version, progress):
         "somesource",
         "--prog",
         progress,
+        "-o",
+        outfile,
     ]
     sys.argv = args
 
@@ -398,7 +435,6 @@ def test_cli_empty_files(dir2, version, progress):
 
     walk(dir2, 0)
     execute()
-    outfile = str(dir2) + ".torrent"
     assert os.path.exists(outfile)
     rmpath(outfile)
 
@@ -408,11 +444,14 @@ def test_cli_slash_path(dir1, ending):
     """
     Test if output when path ends with a /.
     """
+    outfile = str(dir1) + ".torrent"
     if sys.platform != "win32" and ending == "\\":  # pragma: nocover
         ending = "/"
     args = [
         "torrentfile",
         "create",
+        "-o",
+        outfile,
         "-t",
         "https://announce1.org",
         "--private",
@@ -420,7 +459,6 @@ def test_cli_slash_path(dir1, ending):
     ]
     sys.argv = args
     execute()
-    outfile = str(dir1) + ".torrent"
     assert os.path.exists(outfile)
     rmpath(outfile)
 
@@ -457,10 +495,18 @@ def test_cli_announce_path(dir1, flag):
     """
     Test CLI when path is placed after the trackers flag.
     """
-    args = ["torrentfile", "create", flag, "https://announce1.org", str(dir1)]
+    outfile = str(dir1) + ".torrent"
+    args = [
+        "torrentfile",
+        "create",
+        "-o",
+        outfile,
+        flag,
+        "https://announce1.org",
+        str(dir1),
+    ]
     sys.argv = args
     execute()
-    outfile = str(dir1) + ".torrent"
     assert os.path.exists(outfile)
     rmpath(outfile)
 

@@ -303,7 +303,7 @@ def execute(args=None) -> list:
         "--current",
         action="store_true",
         dest="cwd",
-        help="Save output .torrent file to current directory",
+        help="*deprecated* Saving to current directory is default behaviour",
     )
     create_parser.add_argument(
         "--prog",
@@ -315,7 +315,7 @@ def execute(args=None) -> list:
         Set the progress bar level.
         Options = 0, 1
         (0) = Do not display progress bar.
-        (1) = Display progress bar.
+        (1) = Display progress bar.(default)
         """,
     )
     create_parser.add_argument(

@@ -40,12 +40,12 @@ from pathlib import Path
 
 class Memo:
     """
-    Memoice chache object.
+    Memoize cache.
 
     Parameters
     ----------
-    func : function
-        The function that is being memoized.
+    func : Callable
+        The results of this callable will be cached.
     """
 
     def __init__(self, func):
@@ -166,7 +166,7 @@ def normalize_piece_length(piece_length: int) -> int:
     Raises
     ------
     PieceLengthValueError :
-        If piece length is improper value.
+        Piece length is improper value.
     """
     if isinstance(piece_length, str):
         if piece_length.isnumeric():

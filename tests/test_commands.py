@@ -100,6 +100,7 @@ def test_info(field, file1):
     """
     Test the info_command action from the Command Line Interface.
     """
+    outfile = str(file1) + ".torrent"
     args = [
         "torrentfile",
         "create",
@@ -114,6 +115,8 @@ def test_info(field, file1):
         "url6",
         "url7",
         "--private",
+        "-o",
+        outfile,
         "--comment",
         "ExampleComment",
         "--source",
@@ -186,6 +189,7 @@ def test_mixins_progbar(torrent):
     Test progbar mixins with small file.
     """
     tfile = tempfile(exp=14)
+    outfile = str(tfile) + ".torrent"
     msg = "1234abcd" * 80
     with open(tfile, "wb") as temp:
         temp.write(msg.encode("utf-8"))
@@ -194,9 +198,9 @@ def test_mixins_progbar(torrent):
         "--prog": "1",
     }
     metafile = torrent(**args)
-    output, _ = metafile.write()
-    assert output == str(tfile) + ".torrent"
-    rmpath(tfile)
+    output, _ = metafile.write(outfile=outfile)
+    assert output == outfile
+    rmpath(tfile, outfile)
 
 
 @pytest.fixture

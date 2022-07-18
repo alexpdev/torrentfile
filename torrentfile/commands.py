@@ -50,7 +50,7 @@ from torrentfile.utils import ArgumentError
 logger = logging.getLogger(__name__)
 
 
-def create(args: Namespace):
+def create(args: Namespace) -> Namespace:
     """
     Execute the create CLI sub-command to create a new torrent metafile.
 
@@ -85,14 +85,22 @@ def create(args: Namespace):
     return args
 
 
-def info(args: Namespace):
+def info(args: Namespace) -> str:
     """
     Show torrent metafile details to user via stdout.
+
+    Prints full details of torrent file contents to the terminal in
+    a clean and readable format.
 
     Parameters
     ----------
     args : dict
         command line arguements provided by the user.
+
+    Returns
+    -------
+    str
+        The output printed to the terminal.
     """
     metafile = args.metafile
     meta = pyben.load(metafile)
@@ -130,6 +138,10 @@ def edit(args: Namespace) -> str:
     """
     Execute the edit CLI sub-command with provided arguments.
 
+    Provides functionality that can change the details of a torrentfile
+    that preserves all of the hash piece information so as not to break
+    the torrentfile.
+
     Parameters
     ----------
     args : Namespace
@@ -156,6 +168,10 @@ def edit(args: Namespace) -> str:
 def recheck(args: Namespace) -> str:
     """
     Execute recheck CLI sub-command.
+
+    Checks the piece hashes within a pre-existing torrent file
+    and does a piece by piece check with the contents of a file
+    or directory for completeness and validation.
 
     Parameters
     ----------

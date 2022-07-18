@@ -370,6 +370,10 @@ class MetaFile:
         """
         Write meta information to .torrent file.
 
+        Final step in the torrent file creation process.
+        After hashing and sorting every piece of content
+        write the contents to file using the bencode encoding.
+
         Parameters
         ----------
         outfile : str
@@ -382,23 +386,22 @@ class MetaFile:
         meta : dict
             .torrent meta information.
         """
-        fallback = os.path.join(os.getcwd(), self.name) + ".torrent"
-        if not self.outfile and not outfile:
-            if self.cwd:
-                self.outfile = fallback
-            else:
-                path = str(self.path).rstrip("\\/")
-                self.outfile = path + ".torrent"
-        elif outfile:
+        if outfile:
             self.outfile = outfile
+        elif self.outfile:
+            pass
+        else:
+            self.outfile = os.path.join(os.getcwd(), self.name) + ".torrent"
         if str(self.outfile)[-1] in "\\/":
             self.outfile = self.outfile + (self.name + ".torrent")
         self.meta = self.sort_meta()
         try:
             pyben.dump(self.meta, self.outfile)
-        except PermissionError:
-            self.outfile = fallback
-            pyben.dump(self.meta, fallback)
+        except PermissionError as excp:
+            logger.error(
+                "Permission Denied: Could not write to %s", self.outfile
+            )
+            raise PermissionError from excp
         return self.outfile, self.meta
 
 

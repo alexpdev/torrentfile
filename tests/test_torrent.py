@@ -113,15 +113,17 @@ def test_torrentfile_single(version, num, piece_length, capsys):
     tfile = tempfile(exp=num)
     with capsys.disabled():
         version.set_callback(print)
+    outfile = str(tfile) + ".torrent"
     args = {
         "path": tfile,
         "comment": "somecomment",
         "announce": "announce",
         "piece_length": piece_length,
+        "outfile": outfile,
     }
     trent = version(**args)
     trent.write()
-    assert os.path.exists(str(tfile) + ".torrent")
+    assert os.path.exists(outfile)
     rmpath(tfile, str(tfile) + ".torrent")
 
 
@@ -135,15 +137,16 @@ def test_torrentfile_single_extra(version, size, piece_length):
     tfile = tempfile(exp=size)
     with open(tfile, "ab") as binfile:
         binfile.write(bytes(str(tfile).encode("utf-8")))
+    outfile = str(tfile) + ".torrent"
     args = {
         "path": tfile,
         "comment": "somecomment",
         "announce": "announce",
         "piece_length": piece_length,
+        "outfile": outfile,
     }
     torrent = version(**args)
     torrent.write()
-    outfile = str(tfile) + ".torrent"
     assert os.path.exists(outfile)
     rmpath(tfile, outfile)
 
@@ -160,11 +163,13 @@ def test_torrentfile_single_under(ver, sze, piecelength):
         data = binfile.read()
     with open(tfile, "wb") as binfile:
         binfile.write(data[: -(2**9)])
+    outfile = str(tfile) + ".torrent"
     kwargs = {
         "path": tfile,
         "comment": "somecomment",
         "announce": "announce",
         "piece_length": piecelength,
+        "outfile": outfile,
     }
     torrent = ver(**kwargs)
     outfile, _ = torrent.write()
@@ -186,13 +191,13 @@ def test_create_cwd_fail():
             return "SuFile"
 
     tfile = tempfile()
-    name = os.path.basename(tfile) + ".torrent"
     torrent = MetaFile(path=tfile)
     sufile = SuFile()
-    torrent.write(outfile=sufile)
-    current = os.path.join(".", name)
-    assert os.path.exists(current)
-    rmpath(tfile, current)
+    try:
+        assert torrent.write(outfile=sufile)
+    except PermissionError:
+        assert True
+    rmpath(tfile)
 
 
 def test_waiting_mixin():
@@ -213,10 +218,12 @@ def test_mbtorrent(version, progress):
     Test torrent creation for file size larger than 10MB.
     """
     tfile = tempfile(exp=26)
+    outfile = str(tfile) + ".torrent"
     args = {
         "path": tfile,
         "progress": progress,
         "piece_length": "14",
+        "outfile": outfile,
     }
     torrent = version(**args)
     outfile, _ = torrent.write()
