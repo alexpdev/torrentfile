@@ -182,8 +182,9 @@ def test_inter_recheck(torrentclass, monkeypatch, file1):
     """
     Test interactive recheck function.
     """
-    torrent = torrentclass(path=file1)
-    filemeta, _ = torrent.write()
+    outpath = str(file1) + ".torrent"
+    torrent = torrentclass(path=file1, outfile=outpath)
+    filemeta, _ = torrent.write(outfile=outpath)
     seq = ["recheck", filemeta, str(file1)]
     it = iter(seq)
     monkeypatch.setattr(MOCK, lambda *_: next(it))

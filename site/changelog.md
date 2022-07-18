@@ -1,5 +1,14 @@
 # TorrentFile
 
+## Version 0.7.12
+
+- Changed default behavior to save torrent files to cwd
+- edited all unittests to reflect default behavior
+- added deprecation messages for the cli arg and class paramteter
+- last update to version 0.7.x 
+
+---------------------
+
 ## Version 0.7.11
 
 - Fixed issue with progress bar displaying inaccurate details

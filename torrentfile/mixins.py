@@ -44,7 +44,7 @@ class CbMixin:
 
         Parameters
         ----------
-        func : function
+        func : Callable
             the callback function
         """
         cls._cb = func  # pragma: nocover
