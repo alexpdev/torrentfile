@@ -38,7 +38,7 @@ torrentfile = "torrentfile.__main__:main"
 packages = ["torrentfile"]
 
 [tool.setuptools.dynamic]
-version = {attr = "torrentfile.version.__version__"}
+version = {attr = "torrentfile.version.VERSION"}
 
 [tool.bandit]
 skips = ["B101"]

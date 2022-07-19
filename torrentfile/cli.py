@@ -35,7 +35,7 @@ from argparse import ArgumentParser, HelpFormatter
 
 from torrentfile.commands import create, edit, info, magnet, rebuild, recheck
 from torrentfile.interactive import select_action
-from torrentfile.version import __version__ as version
+from torrentfile.version import VERSION as version
 
 
 class Config:

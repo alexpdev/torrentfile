@@ -302,7 +302,7 @@ def test_cli_created_by(folder, piece_length, version):
     sys.argv = args
     execute()
     meta = pyben.load(torrent)
-    assert "TorrentFile" in meta["created by"]
+    assert "Torrentfile" in meta["created by"]
 
 
 @pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])

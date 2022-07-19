@@ -196,7 +196,7 @@ import pyben
 from torrentfile import utils
 from torrentfile.hasher import FileHasher, Hasher, HasherHybrid, HasherV2
 from torrentfile.mixins import ProgMixin
-from torrentfile.version import __version__ as version
+from torrentfile.version import VERSION
 
 logger = logging.getLogger(__name__)
 
@@ -320,7 +320,7 @@ class MetaFile:
         self.meta = {
             "announce": self.announce,
             "announce-list": self.announce_list,
-            "created by": f"TorrentFile:v{version}",
+            "created by": f"Torrentfile_{VERSION}",
             "creation date": int(datetime.timestamp(datetime.now())),
             "info": {},
         }
