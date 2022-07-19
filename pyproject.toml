@@ -7,10 +7,10 @@ name = "torrentfile"
 authors = [{name = "alexpdev", email = "alexpdev@pm.me"}]
 description = "Create Bittorent v1, v2 and hybrid meta files."
 license = {file = "LICENSE"}
+version = "0.8.0"
 readme = "./README.md"
 requires-python = ">=3.6"
 keywords = ["Bittorrent", "torrent", "bittorrent-metafiles", "CLI"]
-dynamic = ["version"]
 classifiers = [
     "Environment :: Console",
     "Development Status :: 4 - Beta",
@@ -36,9 +36,6 @@ torrentfile = "torrentfile.__main__:main"
 
 [tool.setuptools]
 packages = ["torrentfile"]
-
-[tool.setuptools.dynamic]
-version = {attr = "torrentfile.version.VERSION"}
 
 [tool.bandit]
 skips = ["B101"]
