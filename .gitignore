@@ -12,6 +12,7 @@ temp/
 .benchmarks/
 runner/
 run.py
+venv/
 # Byte-compiled / optimized / DLL files
 *.bin
 *.pyc
