@@ -8,3 +8,11 @@ pytest-cov
 pyben>=0.3.1
 pylint
 tox
+flake8
+pyflakes
+mccabe
+torrentfile
+black
+autopep8
+yapf
+isort
