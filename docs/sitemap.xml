@@ -26,6 +26,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://alexpdev.github.io/torrentfile/commands/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://alexpdev.github.io/torrentfile/edit/</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>

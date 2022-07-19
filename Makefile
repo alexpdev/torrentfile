@@ -84,7 +84,7 @@ docs: ## Regenerate docs from changes
 	mkdocs build
 	touch docs/.nojekyll
 
-push: clean docs test ## Push to github
+push: clean test docs ## Push to github
 	git add .
 	git commit -m "$m"
 	git push
