@@ -1,9 +1,12 @@
-site_name: TorrentFile Docs
-site_url: https://alexpdev.github.io/torrentfile
-repo_url: https://github.com/alexpdev/torrentfile
+site_name: "TorrentFile Docs"
+site_url: "https://alexpdev.github.io/torrentfile"
+repo_url: "https://github.com/alexpdev/torrentfile"
+repo_name: "alexpdev/torrentfile"
 site_description: "TorrentFile CLI Documentation and Examples"
-copyright: alexpdev 2022
-extra_css: [stylesheets/extra.css]
+copyright: "alexpdev 2022"
+extra_css: ["stylesheets/extra.css"]
+docs_dir: "site"
+site_dir: "docs"
 
 theme:
   name: material
@@ -25,34 +28,58 @@ theme:
 
 nav:
   - Home : index.md
-  - Commands : Commands.md
-  - Documentation : man.md
+  - Usage : Usage.md
+  - Overview : Overview.md
   - Changelog : changelog.md
   - License : Apache2.md
   - API : source.md
+  - CLI : cli.md
+  - commands : commands.md
+  - edit : edit.md
+  - hasher : hasher.md
+  - interactive : interactive.md
+  - mixins : mixins.md
+  - rebuild : rebuild.md
+  - recheck : recheck.md
+  - torrent : torrent.md
+  - utils : utils.md
+  - version : version.md
+
+
+markdown_extensions:
+  - admonition
+  - callouts
+  - pymdownx.details
+  - pymdownx.emoji
+  - pymdownx.magiclink
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist
+  - toc:
+      permalink: "¤"
 
 
 plugins:
   - search
-  - autorefs
-  - mkapi
   - coverage
   - section-index
+  - autorefs
+  - mkapi
   - mkdocstrings:
       handlers:
         python:
-          selection:
+          options:
             docstring_style: numpy
             inherited_members: true
-          rendering:
-            docstring_section_style: spacy
-            merge_init_into_class: false
-            show_signature_annotations: true
-            show_source: true
-            show_submodules: true
-            seperate_signature: true
             docstring_options:
+              ignore_init_summary: yes
+            merge_init_into_class: yes
+            docstring_section_style: spacy
+            show_signature_annotations: true
+            show_source: false
+            show_submodules: no
+            seperate_signature: true
             show_root_heading: true
-
-docs_dir: site/
-site_dir: docs/

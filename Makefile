@@ -11,16 +11,6 @@ for line in sys.stdin:
 endef
 export PRINT_HELP_PYSCRIPT
 
-define UPDATE_PACKAGE_VERSION
-import json
-from torrentfile.version import __version__
-data = json.load(open("package.json"))
-if data['version'] != __version__:
-	data['version'] = __version__
-	json.dump(data, open("package.json", "wt"), indent=2)
-endef
-export UPDATE_PACKAGE_VERSION
-
 define RENAME_FILE
 import shutil
 import sys
@@ -77,7 +67,6 @@ test: ## Get coverage report
 	tox
 
 docs: ## Regenerate docs from changes
-	python -c "$$UPDATE_PACKAGE_VERSION"
 	rm -rfv docs/*
 	rm -rfv site/index.md
 	cp -rfv README.md site/index.md
@@ -85,7 +74,7 @@ docs: ## Regenerate docs from changes
 	mkdocs build
 	touch docs/.nojekyll
 
-push: clean docs test ## Push to github
+push: clean test docs ## Push to github
 	git add .
 	git commit -m "$m"
 	git push

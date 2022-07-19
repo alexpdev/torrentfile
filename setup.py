@@ -18,33 +18,8 @@
 ##############################################################################
 """Setup for Torrentfile package."""
 
-import json
-from setuptools import find_packages, setup
+
+from setuptools import setup
 
 
-def load_info():
-    """Extract information from package.json and README files."""
-    info = json.load(open("package.json"))
-    with open("README.md", "rt", encoding="utf-8") as readme:
-        info["long_description"] = readme.read()
-    return info
-
-
-INFO = load_info()
-
-setup(
-    version=INFO["version"],
-    description=INFO["description"],
-    long_description=INFO["long_description"],
-    url=INFO["url"],
-    author=INFO["author"],
-    author_email=INFO["email"],
-    long_description_content_type=INFO["long_description_content_type"],
-    project_urls={"Source Code": "https://github.com/alexpdev/torrentfile"},
-    license=INFO["license"],
-    packages=find_packages(exclude=[".env", "tests"]),
-    include_package_data=True,
-    entry_points={"console_scripts": ["torrentfile = torrentfile.cli:main"]},
-    install_requires=["pyben>=0.3.1"],
-    setup_requires=["setuptools", "wheel"],
-)
+setup()

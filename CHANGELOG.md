@@ -1,5 +1,13 @@
 # TorrentFile
 
+## Version 0.8.0
+
+- overhaul documentation
+- reconfigured CI files and configuration and packaging files
+- Convert to pyproject.toml setuptools packaging info source
+
+---------------------
+
 ## Version 0.7.12
 
 - Changed default behavior to save torrent files to cwd
