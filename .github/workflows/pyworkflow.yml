@@ -29,7 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.4.1
+      - name: Setup Python
+        uses: actions/setup-python@v4.1.0
 
       - name: Display Python Version
         run: python --version

@@ -1,0 +1,2238 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="TorrentFile CLI Documentation and Examples">
+      
+      
+      
+        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/recheck/">
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>recheck - TorrentFile Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    
+      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    
+      <link rel="stylesheet" href="../css/mkapi-common.css">
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="maroon" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#torrentfile.recheck" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TorrentFile Docs" class="md-header__button md-logo" aria-label="TorrentFile Docs" data-md-component="logo">
+      
+  <img src="../images/torrentfile.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TorrentFile Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              recheck
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="maroon" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/alexpdev/torrentfile" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    alexpdev/torrentfile
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TorrentFile Docs" class="md-nav__button md-logo" aria-label="TorrentFile Docs" data-md-component="logo">
+      
+  <img src="../images/torrentfile.png" alt="logo">
+
+    </a>
+    TorrentFile Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/alexpdev/torrentfile" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    alexpdev/torrentfile
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/" class="md-nav__link">
+        Usage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Apache2/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/" class="md-nav__link">
+        commands
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../edit/" class="md-nav__link">
+        edit
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hasher/" class="md-nav__link">
+        hasher
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interactive/" class="md-nav__link">
+        interactive
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mixins/" class="md-nav__link">
+        mixins
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rebuild/" class="md-nav__link">
+        rebuild
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          recheck
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        recheck
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.recheck" class="md-nav__link">
+    recheck
+  </a>
+  
+    <nav class="md-nav" aria-label="recheck">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker" class="md-nav__link">
+    Checker
+  </a>
+  
+    <nav class="md-nav" aria-label="Checker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker--example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.check_paths" class="md-nav__link">
+    check_paths()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.find_root" class="md-nav__link">
+    find_root()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.iter_hashes" class="md-nav__link">
+    iter_hashes()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.log_msg" class="md-nav__link">
+    log_msg()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.piece_checker" class="md-nav__link">
+    piece_checker()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.register_callback" class="md-nav__link">
+    register_callback()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.results" class="md-nav__link">
+    results()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.walk_file_tree" class="md-nav__link">
+    walk_file_tree()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.FeedChecker" class="md-nav__link">
+    FeedChecker
+  </a>
+  
+    <nav class="md-nav" aria-label="FeedChecker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.FeedChecker.__iter__" class="md-nav__link">
+    __iter__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.FeedChecker.__next__" class="md-nav__link">
+    __next__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.FeedChecker.extract" class="md-nav__link">
+    extract()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.FeedChecker.iter_pieces" class="md-nav__link">
+    iter_pieces()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker" class="md-nav__link">
+    HashChecker
+  </a>
+  
+    <nav class="md-nav" aria-label="HashChecker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.Padder" class="md-nav__link">
+    Padder
+  </a>
+  
+    <nav class="md-nav" aria-label="Padder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.Padder.__iter__" class="md-nav__link">
+    __iter__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.Padder.__next__" class="md-nav__link">
+    __next__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.__iter__" class="md-nav__link">
+    __iter__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.__next__" class="md-nav__link">
+    __next__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.advance" class="md-nav__link">
+    advance()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.next_file" class="md-nav__link">
+    next_file()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.process_current" class="md-nav__link">
+    process_current()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../torrent/" class="md-nav__link">
+        torrent
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils/" class="md-nav__link">
+        utils
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../version/" class="md-nav__link">
+        version
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.recheck" class="md-nav__link">
+    recheck
+  </a>
+  
+    <nav class="md-nav" aria-label="recheck">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker" class="md-nav__link">
+    Checker
+  </a>
+  
+    <nav class="md-nav" aria-label="Checker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker--example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.check_paths" class="md-nav__link">
+    check_paths()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.find_root" class="md-nav__link">
+    find_root()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.iter_hashes" class="md-nav__link">
+    iter_hashes()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.log_msg" class="md-nav__link">
+    log_msg()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.piece_checker" class="md-nav__link">
+    piece_checker()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.register_callback" class="md-nav__link">
+    register_callback()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.results" class="md-nav__link">
+    results()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.Checker.walk_file_tree" class="md-nav__link">
+    walk_file_tree()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.FeedChecker" class="md-nav__link">
+    FeedChecker
+  </a>
+  
+    <nav class="md-nav" aria-label="FeedChecker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.FeedChecker.__iter__" class="md-nav__link">
+    __iter__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.FeedChecker.__next__" class="md-nav__link">
+    __next__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.FeedChecker.extract" class="md-nav__link">
+    extract()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.FeedChecker.iter_pieces" class="md-nav__link">
+    iter_pieces()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker" class="md-nav__link">
+    HashChecker
+  </a>
+  
+    <nav class="md-nav" aria-label="HashChecker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.Padder" class="md-nav__link">
+    Padder
+  </a>
+  
+    <nav class="md-nav" aria-label="Padder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.Padder.__iter__" class="md-nav__link">
+    __iter__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.Padder.__next__" class="md-nav__link">
+    __next__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.__iter__" class="md-nav__link">
+    __iter__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.__next__" class="md-nav__link">
+    __next__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.advance" class="md-nav__link">
+    advance()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.next_file" class="md-nav__link">
+    next_file()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.recheck.HashChecker.process_current" class="md-nav__link">
+    process_current()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/alexpdev/torrentfile/edit/master/docs/recheck.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+  <h1>recheck</h1>
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="torrentfile.recheck" class="doc doc-heading">
+          <code>torrentfile.recheck</code>
+
+
+<a href="#torrentfile.recheck" class="headerlink" title="Permanent link">¤</a></h2>
+
+  <div class="doc doc-contents first">
+  
+      <p>Module container Checker Class.</p>
+<p>The CheckerClass takes a torrentfile and tha path to it's contents.
+It will then iterate through every file and directory contained
+and compare their data to values contained within the torrent file.
+Completion percentages will be printed to screen for each file and
+at the end for the torrentfile as a whole.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="torrentfile.recheck.Checker" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">Checker</span><span class="p">(</span><span class="n">metafile</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span></code>
+
+<a href="#torrentfile.recheck.Checker" class="headerlink" title="Permanent link">¤</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Check a given file or directory to see if it matches a torrentfile.</p>
+<p>Public constructor for Checker class instance.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>metafile</code></td>
+          <td class="doc-param-details">
+            <p>Path to ".torrent" file.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>str</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td><code>path</code></td>
+          <td class="doc-param-details">
+            <p>Path where the content is located in filesystem.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>str</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+      <h5 id="torrentfile.recheck.Checker--example">Example<a class="headerlink" href="#torrentfile.recheck.Checker--example" title="Permanent link">¤</a></h5>
+<pre><code>&gt;&gt; metafile = "/path/to/torrentfile/content_file_or_dir.torrent"
+&gt;&gt; location = "/path/to/location"
+&gt;&gt; os.path.exists("/path/to/location/content_file_or_dir")
+Out: True
+&gt;&gt; checker = Checker(metafile, location)
+</code></pre>
+
+  
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>metafile</code></td>
+          <td class="doc-param-details">
+            <p>path to .torrent file</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>str</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td><code>path</code></td>
+          <td class="doc-param-details">
+            <p>path to content or contents parent directory.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>str</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.Checker.check_paths" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">check_paths</span><span class="p">()</span></code>
+
+<a href="#torrentfile.recheck.Checker.check_paths" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Gather all file paths described in the torrent file.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.Checker.find_root" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">find_root</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span></code>
+
+<a href="#torrentfile.recheck.Checker.find_root" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Check path for torrent content.</p>
+<p>The path can be a relative or absolute filesystem path.  In the case
+where the content is a single file, the path may point directly to the
+the file, or it may point to the parent directory.  If content points
+to a directory.  The directory will be checked to see if it matches
+the torrent's name, if not the directories contents will be searched.
+The returned value will be the absolute path that matches the torrent's
+name.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>path</code></td>
+          <td class="doc-param-details">
+            <p>root path to torrent content</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>str</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RETURNS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>str</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <p>root path to content</p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.Checker.iter_hashes" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">iter_hashes</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span></code>
+
+<a href="#torrentfile.recheck.Checker.iter_hashes" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Produce results of comparing torrent contents piece by piece.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>YIELDS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <code>chunck</code>
+          </td>
+          <td class="doc-yields-details">
+            <p>hash of data found on disk</p>
+              <p>
+                <span class="doc-yields-annotation">
+                  <b>TYPE:</b>
+                    <code>bytes</code>
+                </span>
+              </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+              <code>piece</code>
+          </td>
+          <td class="doc-yields-details">
+            <p>hash of data when complete and correct</p>
+              <p>
+                <span class="doc-yields-annotation">
+                  <b>TYPE:</b>
+                    <code>bytes</code>
+                </span>
+              </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+              <code>path</code>
+          </td>
+          <td class="doc-yields-details">
+            <p>path to file being hashed</p>
+              <p>
+                <span class="doc-yields-annotation">
+                  <b>TYPE:</b>
+                    <code>str</code>
+                </span>
+              </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+              <code>size</code>
+          </td>
+          <td class="doc-yields-details">
+            <p>length of bytes hashed for piece</p>
+              <p>
+                <span class="doc-yields-annotation">
+                  <b>TYPE:</b>
+                    <code>int</code>
+                </span>
+              </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.Checker.log_msg" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">log_msg</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span></code>
+
+<a href="#torrentfile.recheck.Checker.log_msg" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Log message <code>msg</code> to logger and send <code>msg</code> to callback hook.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>*args</code></td>
+          <td class="doc-param-details">
+            <p>formatting args for log message</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>dict</code>
+                </span>
+                <span class="doc-param-default">
+                  <b>DEFAULT:</b> 
+                    <code>()</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td><code>level</code></td>
+          <td class="doc-param-details">
+            <p>Log level for this message; default=<code>logging.INFO</code></p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>int</code>
+                </span>
+                <span class="doc-param-default">
+                  <b>DEFAULT:</b> 
+                    <code>logging.INFO</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.Checker.piece_checker" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">piece_checker</span><span class="p">()</span></code>
+
+<a href="#torrentfile.recheck.Checker.piece_checker" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Check individual pieces of the torrent.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RETURNS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <span class="doc-returns-annotation">
+                  <code><a class="autorefs autorefs-internal" title="torrentfile.recheck.HashChecker" href="#torrentfile.recheck.HashChecker">HashChecker</a> | <a class="autorefs autorefs-internal" title="torrentfile.recheck.FeedChecker" href="#torrentfile.recheck.FeedChecker">FeedChecker</a></code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <p>Individual piece hasher.</p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.Checker.register_callback" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">register_callback</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#torrentfile.recheck.Checker.register_callback" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Register hooks from 3rd party programs to access generated info.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>hook</code></td>
+          <td class="doc-param-details">
+            <p>callback function for the logging feature.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>function</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.Checker.results" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">results</span><span class="p">()</span></code>
+
+<a href="#torrentfile.recheck.Checker.results" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Generate result percentage and store for future calls.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.Checker.walk_file_tree" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">walk_file_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">partials</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span></code>
+
+<a href="#torrentfile.recheck.Checker.walk_file_tree" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Traverse File Tree dictionary to get file details.</p>
+<p>Extract full pathnames, length, root hash, and layer hashes
+for each file included in the .torrent's file tree.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>tree</code></td>
+          <td class="doc-param-details">
+            <p>File Tree dict extracted from torrent file.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>dict</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td><code>partials</code></td>
+          <td class="doc-param-details">
+            <p>list of intermediate pathnames.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>list</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="torrentfile.recheck.FeedChecker" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">FeedChecker</span><span class="p">(</span><span class="n">checker</span><span class="p">:</span> <span class="n">Checker</span><span class="p">)</span></code>
+
+<a href="#torrentfile.recheck.FeedChecker" class="headerlink" title="Permanent link">¤</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="torrentfile.mixins.ProgMixin" href="../mixins/#torrentfile.mixins.ProgMixin">ProgMixin</a></code></p>
+
+  
+      <p>Validates torrent content.</p>
+<p>Seemlesly validate torrent file contents by comparing hashes in
+metafile against data on disk.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>checker</code></td>
+          <td class="doc-param-details">
+            <p>the checker class instance.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>object</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.FeedChecker.__iter__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__iter__</span><span class="p">()</span></code>
+
+<a href="#torrentfile.recheck.FeedChecker.__iter__" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Assign iterator and return self.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.FeedChecker.__next__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__next__</span><span class="p">()</span></code>
+
+<a href="#torrentfile.recheck.FeedChecker.__next__" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Yield back result of comparison.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.FeedChecker.extract" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">extract</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">partial</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span></code>
+
+<a href="#torrentfile.recheck.FeedChecker.extract" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Split file paths contents into blocks of data for hash pieces.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>path</code></td>
+          <td class="doc-param-details">
+            <p>path to content.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>str</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td><code>partial</code></td>
+          <td class="doc-param-details">
+            <p>any remaining content from last file.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>bytes</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RETURNS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>bytearray</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <p>Hash digest for block of .torrent contents.</p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.FeedChecker.iter_pieces" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">iter_pieces</span><span class="p">()</span></code>
+
+<a href="#torrentfile.recheck.FeedChecker.iter_pieces" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Iterate through, and hash pieces of torrent contents.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>YIELDS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <code>piece</code>
+          </td>
+          <td class="doc-yields-details">
+            <p>hash digest for block of torrent data.</p>
+              <p>
+                <span class="doc-yields-annotation">
+                  <b>TYPE:</b>
+                    <code>bytes</code>
+                </span>
+              </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="torrentfile.recheck.HashChecker" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">HashChecker</span><span class="p">(</span><span class="n">checker</span><span class="p">:</span> <span class="n">Checker</span><span class="p">)</span></code>
+
+<a href="#torrentfile.recheck.HashChecker" class="headerlink" title="Permanent link">¤</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="torrentfile.mixins.ProgMixin" href="../mixins/#torrentfile.mixins.ProgMixin">ProgMixin</a></code></p>
+
+  
+      <p>Iterate through contents of meta data and verify with file contents.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>checker</code></td>
+          <td class="doc-param-details">
+            <p>the checker instance that maintains variables.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code><a class="autorefs autorefs-internal" title="torrentfile.recheck.Checker" href="#torrentfile.recheck.Checker">Checker</a></code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h4 id="torrentfile.recheck.HashChecker.Padder" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">Padder</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">)</span></code>
+
+<a href="#torrentfile.recheck.HashChecker.Padder" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Padding class to generate padding hashes wherever needed.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>length</code></td>
+          <td class="doc-param-details">
+            <p>the total size of the mock file generating padding for.</p>
+            <p>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td><code>piece_length</code></td>
+          <td class="doc-param-details">
+            <p>the block size that each hash represents.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>int</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>length</code></td>
+          <td class="doc-param-details">
+            <p>size of the file</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>int</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td><code>piece_length</code></td>
+          <td class="doc-param-details">
+            <p>the piece length for each iteration.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>int</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h5 id="torrentfile.recheck.HashChecker.Padder.__iter__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__iter__</span><span class="p">()</span></code>
+
+<a href="#torrentfile.recheck.HashChecker.Padder.__iter__" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Return self to correctly implement iterator type.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h5 id="torrentfile.recheck.HashChecker.Padder.__next__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__next__</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bytes</span></code>
+
+<a href="#torrentfile.recheck.HashChecker.Padder.__next__" class="headerlink" title="Permanent link">¤</a></h5>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Iterate through seemingly endless sha256 hashes of zeros.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RETURNS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <code>tuple</code>
+          </td>
+          <td class="doc-returns-details">
+            <p>returns the padding</p>
+              <p>
+                <span class="doc-returns-annotation">
+                  <b>TYPE:</b>
+                    <code>bytes</code>
+                </span>
+              </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RAISES</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+            <span class="doc-raises-annotation">
+                <code>StopIteration</code>
+            </span>
+          </td>
+          <td class="doc-raises-details">
+            
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.HashChecker.__iter__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__iter__</span><span class="p">()</span></code>
+
+<a href="#torrentfile.recheck.HashChecker.__iter__" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Assign iterator and return self.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.HashChecker.__next__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__next__</span><span class="p">()</span></code>
+
+<a href="#torrentfile.recheck.HashChecker.__next__" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Provide the result of comparison.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.HashChecker.advance" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">advance</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span></code>
+
+<a href="#torrentfile.recheck.HashChecker.advance" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Increment the number of pieces processed for the current file.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RETURNS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>tuple</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <p>the piece and size</p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.HashChecker.next_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">next_file</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span></code>
+
+<a href="#torrentfile.recheck.HashChecker.next_file" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Remove all references to  processed files and prepare for the next.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RETURNS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>bool</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <p>if there is a next file found</p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.recheck.HashChecker.process_current" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">process_current</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span></code>
+
+<a href="#torrentfile.recheck.HashChecker.process_current" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Gather necessary information to compare to metafile details.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RETURNS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>tuple</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <p>a tuple containing the layer, piece, current path and size</p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RAISES</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+            <span class="doc-raises-annotation">
+                <code>StopIteration</code>
+            </span>
+          </td>
+          <td class="doc-raises-details">
+            
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../rebuild/" class="md-footer__link md-footer__link--prev" aria-label="Previous: rebuild" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              rebuild
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../torrent/" class="md-footer__link md-footer__link--next" aria-label="Next: torrent" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              torrent
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      alexpdev 2022
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+        <script src="../js/mkapi.js"></script>
+      
+    
+  </body>
+</html>

@@ -2,37 +2,92 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://alexpdev.github.io/torrentfile/</loc>
-         <lastmod>2022-07-18</lastmod>
+         <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://alexpdev.github.io/torrentfile/Apache2/</loc>
-         <lastmod>2022-07-18</lastmod>
+         <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://alexpdev.github.io/torrentfile/Commands/</loc>
-         <lastmod>2022-07-18</lastmod>
+         <loc>https://alexpdev.github.io/torrentfile/api/</loc>
+         <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://alexpdev.github.io/torrentfile/changelog/</loc>
-         <lastmod>2022-07-18</lastmod>
+         <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://alexpdev.github.io/torrentfile/man/</loc>
-         <lastmod>2022-07-18</lastmod>
+         <loc>https://alexpdev.github.io/torrentfile/cli/</loc>
+         <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://alexpdev.github.io/torrentfile/source/</loc>
-         <lastmod>2022-07-18</lastmod>
+         <loc>https://alexpdev.github.io/torrentfile/commands/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/edit/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/hasher/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/interactive/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/mixins/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/overview/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/rebuild/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/recheck/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/torrent/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/usage/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/utils/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://alexpdev.github.io/torrentfile/version/</loc>
+         <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://alexpdev.github.io/torrentfile/coverage/</loc>
-         <lastmod>2022-07-18</lastmod>
+         <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

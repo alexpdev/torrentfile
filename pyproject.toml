@@ -2,6 +2,38 @@
 requires = ["setuptools>=40.8.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "torrentfile"
+authors = [{name = "alexpdev", email = "alexpdev@pm.me"}]
+description = "Create Bittorent v1, v2 and hybrid meta files."
+license = {file = "LICENSE"}
+version = "0.8.0"
+readme = "./README.md"
+requires-python = ">=3.6"
+keywords = ["Bittorrent", "torrent", "bittorrent-metafiles", "CLI"]
+classifiers = [
+    "Environment :: Console",
+    "Development Status :: 4 - Beta",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3 :: Only",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Developers",
+    "Topic :: Utilities",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = ["pyben"]
+
+[project.scripts]
+torrentfile = "torrentfile.__main__:main"
+
 [tool.bandit]
 skips = ["B101"]
 
