@@ -10,14 +10,14 @@
       
       
       
-        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/coverage/">
+        <link rel="canonical" href="https://alexpdev.github.io/torrentfile/cli/">
       
       <link rel="icon" href="../images/favicon.ico">
       <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.9">
     
     
       
-        <title>Coverage - TorrentFile Docs</title>
+        <title>CLI - TorrentFile Docs</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#torrentfile.cli" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -105,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Coverage
+              CLI
             
           </span>
         </div>
@@ -324,11 +329,115 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          CLI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         CLI
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.cli" class="md-nav__link">
+    cli
+  </a>
+  
+    <nav class="md-nav" aria-label="cli">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.Config" class="md-nav__link">
+    Config
+  </a>
+  
+    <nav class="md-nav" aria-label="Config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.Config.activate_logger" class="md-nav__link">
+    activate_logger()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.Config.activate_quiet" class="md-nav__link">
+    activate_quiet()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.TorrentFileHelpFormatter" class="md-nav__link">
+    TorrentFileHelpFormatter
+  </a>
+  
+    <nav class="md-nav" aria-label="TorrentFileHelpFormatter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.TorrentFileHelpFormatter.format_headers" class="md-nav__link">
+    format_headers()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.execute" class="md-nav__link">
+    execute()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.main" class="md-nav__link">
+    main()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -501,6 +610,88 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#torrentfile.cli" class="md-nav__link">
+    cli
+  </a>
+  
+    <nav class="md-nav" aria-label="cli">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.Config" class="md-nav__link">
+    Config
+  </a>
+  
+    <nav class="md-nav" aria-label="Config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.Config.activate_logger" class="md-nav__link">
+    activate_logger()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.Config.activate_quiet" class="md-nav__link">
+    activate_quiet()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.TorrentFileHelpFormatter" class="md-nav__link">
+    TorrentFileHelpFormatter
+  </a>
+  
+    <nav class="md-nav" aria-label="TorrentFileHelpFormatter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.TorrentFileHelpFormatter.format_headers" class="md-nav__link">
+    format_headers()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.execute" class="md-nav__link">
+    execute()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli.main" class="md-nav__link">
+    main()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -511,43 +702,384 @@
             <article class="md-content__inner md-typeset">
               
                 
-  <a href="https://github.com/alexpdev/torrentfile/edit/master/docs/coverage.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/alexpdev/torrentfile/edit/master/docs/cli.md" title="Edit this page" class="md-content__button md-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
 
-  <h1>Coverage</h1>
+  <h1>CLI</h1>
 
-<style>
-.md-content {
-    max-width: none !important;
-}
-article h1, article > a {
-    display: none;
-}
-</style>
+<div class="doc doc-object doc-module">
 
-<p><iframe
-    id="coviframe"
-    src="covindex.html"
-    frameborder="0"
-    scrolling="no"
-    onload="resizeIframe();"
-    width="100%">
-</iframe>
-</p>
-<script>
-var coviframe = document.getElementById("coviframe");
 
-function resizeIframe() {
-    coviframe.style.height = coviframe.contentWindow.document.documentElement.offsetHeight + 'px';
-}
 
-coviframe.contentWindow.document.body.onclick = function() {
-    coviframe.contentWindow.location.reload();
-}
-</script>
+<h2 id="torrentfile.cli" class="doc doc-heading">
+          <code>torrentfile.cli</code>
+
+
+<a href="#torrentfile.cli" class="headerlink" title="Permanent link">¤</a></h2>
+
+  <div class="doc doc-contents first">
+  
+      <p>Command Line Interface for TorrentFile project.</p>
+<p>This module provides the primary command line argument parser for
+the torrentfile package. The main_script function is automatically
+invoked when called from command line, and parses accompanying arguments.</p>
+<p>Functions:
+    main_script: process command line arguments and run program.
+    activate_logger: turns on debug mode and logging facility.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="torrentfile.cli.Config" class="doc doc-heading">
+        <code>Config</code>
+
+
+<a href="#torrentfile.cli.Config" class="headerlink" title="Permanent link">¤</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Class the controls the logging configuration and output settings.</p>
+<p>Controls the logging level, or whether to app should operate in quiet mode.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.cli.Config.activate_logger" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">activate_logger</span><span class="p">()</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+<a href="#torrentfile.cli.Config.activate_logger" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Activate the builtin logging mechanism when passed debug flag from CLI.</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.cli.Config.activate_quiet" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">activate_quiet</span><span class="p">()</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+<a href="#torrentfile.cli.Config.activate_quiet" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Activate quiet mode for the duration of the programs life.</p>
+<p>When quiet mode is enabled, no logging, progress or state information
+is output to the terminal</p>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="torrentfile.cli.TorrentFileHelpFormatter" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">TorrentFileHelpFormatter</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">45</span><span class="p">,</span> <span class="n">max_help_positions</span> <span class="o">=</span> <span class="mi">45</span><span class="p">)</span></code>
+
+<a href="#torrentfile.cli.TorrentFileHelpFormatter" class="headerlink" title="Permanent link">¤</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="argparse.HelpFormatter">HelpFormatter</span></code></p>
+
+  
+      <p>Formatting class for help tips provided by the CLI.</p>
+<p>Subclasses Argparse.HelpFormatter.</p>
+
+  
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>prog</code></td>
+          <td class="doc-param-details">
+            <p>Name of the program.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>str</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td><code>width</code></td>
+          <td class="doc-param-details">
+            <p>Max width of help message output.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>int</code>
+                </span>
+                <span class="doc-param-default">
+                  <b>DEFAULT:</b> 
+                    <code>45</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td><code>max_help_positions</code></td>
+          <td class="doc-param-details">
+            <p>max length until line wrap.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>int</code>
+                </span>
+                <span class="doc-param-default">
+                  <b>DEFAULT:</b> 
+                    <code>45</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="torrentfile.cli.TorrentFileHelpFormatter.format_headers" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">format_headers</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+<a href="#torrentfile.cli.TorrentFileHelpFormatter.format_headers" class="headerlink" title="Permanent link">¤</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Format help message section headers.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>parts</code></td>
+          <td class="doc-param-details">
+            <p>List of individual lines for help message.</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>list</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RETURNS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>list</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <p>Input list with formatted section headers.</p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.cli.execute" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">execute</span><span class="p">(</span><span class="n">args</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span></code>
+
+<a href="#torrentfile.cli.execute" class="headerlink" title="Permanent link">¤</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Initialize Command Line Interface for torrentfile.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>args</code></td>
+          <td class="doc-param-details">
+            <p>Commandline arguments. default=None</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>list</code>
+                </span>
+                <span class="doc-param-default">
+                  <b>DEFAULT:</b> 
+                    <code>None</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RETURNS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>list</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <p>Depends on what the command line args were.</p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.cli.main" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">main</span><span class="p">()</span></code>
+
+<a href="#torrentfile.cli.main" class="headerlink" title="Permanent link">¤</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Initiate main function for CLI script.</p>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
 
               
             </article>
@@ -558,6 +1090,42 @@ coviframe.contentWindow.document.body.onclick = function() {
       </main>
       
         <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../api/" class="md-footer__link md-footer__link--prev" aria-label="Previous: API" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              API
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../edit/" class="md-footer__link md-footer__link--next" aria-label="Next: edit" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              edit
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">

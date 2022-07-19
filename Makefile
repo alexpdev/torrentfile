@@ -77,7 +77,6 @@ test: ## Get coverage report
 	tox
 
 docs: ## Regenerate docs from changes
-	python -c "$$UPDATE_PACKAGE_VERSION"
 	rm -rfv docs/*
 	rm -rfv site/index.md
 	cp -rfv README.md site/index.md

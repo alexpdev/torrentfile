@@ -187,14 +187,11 @@ def recheck(args: Namespace) -> str:
     content = args.content
 
     if os.path.isdir(metafile):
-        raise ArgumentError(
-            f"Error: Unable to parse directory {metafile}. "
-            "Check the order of the parameters."
-        )
+        raise ArgumentError(f"Error: Unable to parse directory {metafile}. "
+                            "Check the order of the parameters.")
 
-    logger.debug(
-        "Validating %s <---------------> %s contents", metafile, content
-    )
+    logger.debug("Validating %s <---------------> %s contents", metafile,
+                 content)
 
     msg = f"Rechecking  {metafile} ...\n"
     halfterm = shutil.get_terminal_size().columns / 2
@@ -243,8 +240,7 @@ def magnet(metafile: Namespace) -> str:
 
     if "announce-list" in meta:
         announce_args = [
-            "&tr=" + quote_plus(url)
-            for urllist in meta["announce-list"]
+            "&tr=" + quote_plus(url) for urllist in meta["announce-list"]
             for url in urllist
         ]
     else:
