@@ -745,19 +745,19 @@ structure.</p>
 <ul>
 <li>
 <p><code>-h</code>
-displays all relevant command line options and subcommands.</p>
+    displays all relevant command line options and subcommands.</p>
 </li>
 <li>
 <p><code>-V</code>
-displays program and version.</p>
+    displays program and version.</p>
 </li>
 <li>
 <p><code>-v</code>
-enables debug mode and outputs a large amount of information to the terminal.</p>
+    enables debug mode and outputs a large amount of information to the terminal.</p>
 </li>
 <li>
 <p><code>-i</code>
-activates interactive mode for selecting subcommands and options.</p>
+    activates interactive mode for selecting subcommands and options.</p>
 </li>
 </ul>
 <h3 id="sub-commands">Sub-commands<a class="headerlink" href="#sub-commands" title="Permanent link">¤</a></h3>
@@ -771,54 +771,54 @@ argument is the path(<code>&lt;path&gt;</code>) to the contents file or director
 <ul>
 <li>
 <p><code>-a</code> <code>-t</code> <code>--announce</code> <code>--tracker</code>
-Adds the list of url's that follow to the list of trackers for the newly created torrent file.
-Example <code>-t http://url1 https://url2 ...</code></p>
+    Adds the list of url's that follow to the list of trackers for the newly created torrent file.
+    Example <code>-t http://url1 https://url2 ...</code></p>
 </li>
 <li>
 <p><code>-w</code> <code>--web-seeds</code>
-Adds the list of urls that follow to the list of web-seed addresses for the newly created torrent file.</p>
+    Adds the list of urls that follow to the list of web-seed addresses for the newly created torrent file.</p>
 </li>
 <li>
 <p><code>--comment</code>
-Includes the comment that follows to the metadata saved in the newly created torrent file.
-Example: <code>--comment "Created for MyTrackerExample.com"</code></p>
+    Includes the comment that follows to the metadata saved in the newly created torrent file.
+    Example: <code>--comment "Created for MyTrackerExample.com"</code></p>
 </li>
 <li>
 <p><code>--source</code>
-Creates a source field in the info dictionary with the string that follows as the value. Frequently used for
-cross-seeding on private trackers.
-Example: <code>--source MyTrackerExample</code></p>
+    Creates a source field in the info dictionary with the string that follows as the value. Frequently used for
+    cross-seeding on private trackers.
+    Example: <code>--source MyTrackerExample</code></p>
 </li>
 <li>
 <p><code>-p</code> <code>--private</code>
-Indicates that the torrent will be used on a private tracker. Disables multi-tracker protocols and DHT.</p>
+    Indicates that the torrent will be used on a private tracker. Disables multi-tracker protocols and DHT.</p>
 </li>
 <li>
 <p><code>--piece-length</code>
-Uses the number that follows as the piece-length size for the newly created torrent file. If option isn't used
-the program will pick the ideal size. Acceptable values include 14-29 which is interpreted as the number to raise 2
-by (e.g. 14 is interpreted as 16384), or any perfect power of 2 greater than or equal to 16 KiB and less than 1 GiB.
-Example: <code>--piece-length 14</code> or <code>--piece-length 16384</code>.</p>
+    Uses the number that follows as the piece-length size for the newly created torrent file. If option isn't used
+    the program will pick the ideal size. Acceptable values include 14-29 which is interpreted as the number to raise 2
+    by (e.g. 14 is interpreted as 16384), or any perfect power of 2 greater than or equal to 16 KiB and less than 1 GiB.
+    Example: <code>--piece-length 14</code> or <code>--piece-length 16384</code>.</p>
 </li>
 <li>
 <p><code>--meta-version</code>
-Use the following number as the Bittorrent version the torrent will be used on. The default is 1.
-Options: 1 - Bittorrent v1,    2 - Bittorrent v2,    3 - Bittorrent v1 &amp; v2
-Examples: <code>--meta-version 1</code>, <code>--meta-version 2</code>, <code>--meta-version 3</code></p>
+    Use the following number as the Bittorrent version the torrent will be used on. The default is 1.
+    Options: 1 - Bittorrent v1,    2 - Bittorrent v2,    3 - Bittorrent v1 &amp; v2
+    Examples: <code>--meta-version 1</code>, <code>--meta-version 2</code>, <code>--meta-version 3</code></p>
 </li>
 <li>
 <p><code>-o</code> <code>--out</code>
-Specify the full path to the newly created torrent file.  The default is to save it adjacent to the content.
-Example: if content is at <code>/home/user/torrents/content</code> the default would create <code>/home/user/torrents/content.torrent</code></p>
+    Specify the full path to the newly created torrent file.  The default is to save it adjacent to the content.
+    Example: if content is at <code>/home/user/torrents/content</code> the default would create <code>/home/user/torrents/content.torrent</code></p>
 </li>
 <li>
 <p><code>--cwd</code> <code>--current</code>
-Changes the default save location to the current working directory.
-Example: if content is at <code>/home/user/torrents/content</code> this option would create <code>./content.torrent</code></p>
+    Changes the default save location to the current working directory.
+    Example: if content is at <code>/home/user/torrents/content</code> this option would create <code>./content.torrent</code></p>
 </li>
 <li>
 <p><code>--progress</code> <code>--prog</code>
-Options (0, 1):  No status bar will be shown if 0.  Otherwise the default and 1 argument means progress bar is shown</p>
+    Options (0, 1):  No status bar will be shown if 0.  Otherwise the default and 1 argument means progress bar is shown</p>
 </li>
 </ul>
 <h4 id="info">info<a class="headerlink" href="#info" title="Permanent link">¤</a></h4>
@@ -832,7 +832,7 @@ torrent file was created and more. There is only one positional perameter
 which is the path to the torrent file and there are no optional arguments.</p>
 <ul>
 <li><code>/path/to/*.torrent</code>
-The relative or absolute path to the torrent file.</li>
+    The relative or absolute path to the torrent file.</li>
 </ul>
 <h4 id="edit">edit<a class="headerlink" href="#edit" title="Permanent link">¤</a></h4>
 <p>Edit some of the different information detailed in a torrent file. The fields that
@@ -848,27 +848,27 @@ torrentfile e [options] &lt;path&gt;
 <ul>
 <li>
 <p><code>-a</code> <code>-t</code> <code>--announce</code> <code>--tracker</code>
-Adds the list of url's that follow to the list of trackers for the newly created torrent file.
-Example <code>-t http://url1 https://url2 ...</code></p>
+    Adds the list of url's that follow to the list of trackers for the newly created torrent file.
+    Example <code>-t http://url1 https://url2 ...</code></p>
 </li>
 <li>
 <p><code>-w</code> <code>--web-seeds</code>
-Adds the list of urls that follow to the list of web-seed addresses for the newly created torrent file.</p>
+    Adds the list of urls that follow to the list of web-seed addresses for the newly created torrent file.</p>
 </li>
 <li>
 <p><code>--comment</code>
-Includes the comment that follows to the metadata saved in the newly created torrent file.
-Example: <code>--comment "Created for MyTrackerExample.com"</code></p>
+    Includes the comment that follows to the metadata saved in the newly created torrent file.
+    Example: <code>--comment "Created for MyTrackerExample.com"</code></p>
 </li>
 <li>
 <p><code>--source</code>
-Creates a source field in the info dictionary with the string that follows as the value. Frequently used for
-cross-seeding on private trackers.
-Example: <code>--source MyTrackerExample</code></p>
+    Creates a source field in the info dictionary with the string that follows as the value. Frequently used for
+    cross-seeding on private trackers.
+    Example: <code>--source MyTrackerExample</code></p>
 </li>
 <li>
 <p><code>-p</code> <code>--private</code>
-Indicates that the torrent will be used on a private tracker.  Disables multi-tracker protocols and DHT.</p>
+    Indicates that the torrent will be used on a private tracker.  Disables multi-tracker protocols and DHT.</p>
 </li>
 </ul>
 <h4 id="recheck">recheck<a class="headerlink" href="#recheck" title="Permanent link">¤</a></h4>

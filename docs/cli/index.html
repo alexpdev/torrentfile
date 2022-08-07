@@ -369,6 +369,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#torrentfile.cli--functions" class="md-nav__link">
+    Functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli--classes" class="md-nav__link">
+    Classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#torrentfile.cli.Config" class="md-nav__link">
     Config
   </a>
@@ -625,6 +639,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#torrentfile.cli--functions" class="md-nav__link">
+    Functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.cli--classes" class="md-nav__link">
+    Classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#torrentfile.cli.Config" class="md-nav__link">
     Config
   </a>
@@ -726,9 +754,16 @@
 <p>This module provides the primary command line argument parser for
 the torrentfile package. The main_script function is automatically
 invoked when called from command line, and parses accompanying arguments.</p>
-<p>Functions:
-    main_script: process command line arguments and run program.
-    activate_logger: turns on debug mode and logging facility.</p>
+<h4 id="torrentfile.cli--functions">Functions<a class="headerlink" href="#torrentfile.cli--functions" title="Permanent link">¤</a></h4>
+<p>main_script :
+    process command line arguments and run program.
+activate_logger :
+    turns on debug mode and logging facility.</p>
+<h4 id="torrentfile.cli--classes">Classes<a class="headerlink" href="#torrentfile.cli--classes" title="Permanent link">¤</a></h4>
+<p>Config : class
+    controls logging configuration
+TorrentFileHelpFormatter : HelpFormatter
+    the command line help message formatter</p>
 
   
 
@@ -994,14 +1029,17 @@ is output to the terminal</p>
 
 
 <h3 id="torrentfile.cli.execute" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">execute</span><span class="p">(</span><span class="n">args</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span></code>
+<code class="highlight language-python"><span class="n">execute</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span></code>
 
 <a href="#torrentfile.cli.execute" class="headerlink" title="Permanent link">¤</a></h3>
 
 
   <div class="doc doc-contents ">
   
-      <p>Initialize Command Line Interface for torrentfile.</p>
+      <p>Execute program with provided list of arguments.</p>
+<p>If no arguments are given then it defaults to using
+sys.argv.  This is the main entrypoint for the program
+and command line interface.</p>
 
   <table>
     <thead>

@@ -423,6 +423,19 @@
     rebuild()
   </a>
   
+    <nav class="md-nav" aria-label="rebuild()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.commands.rebuild--todo" class="md-nav__link">
+    TODO
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -651,6 +664,19 @@
   <a href="#torrentfile.commands.rebuild" class="md-nav__link">
     rebuild()
   </a>
+  
+    <nav class="md-nav" aria-label="rebuild()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.commands.rebuild--todo" class="md-nav__link">
+    TODO
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -942,7 +968,7 @@ a clean and readable format.</p>
             <p>
                 <span class="doc-param-annotation">
                   <b>TYPE:</b>
-                    <code>(Namespace||str)</code>
+                    <code><span title="argparse.Namespace">Namespace</span></code>
                 </span>
             </p>
           </td>
@@ -990,7 +1016,12 @@ a clean and readable format.</p>
       <p>Attempt to rebuild a torrent based on the a torrent file.</p>
 <p>Recusively look through a directory for files that belong in
 a given torrent file, and rebuild as much of the torrent file
-as possible.</p>
+as possible. Currently only checks if the filename and file
+size are a match.</p>
+<h6 id="torrentfile.commands.rebuild--todo">TODO<a class="headerlink" href="#torrentfile.commands.rebuild--todo" title="Permanent link">¤</a></h6>
+<ol>
+<li>Check file hashes to improve accuracy</li>
+</ol>
 
   <table>
     <thead>
@@ -1003,7 +1034,7 @@ as possible.</p>
         <tr>
           <td><code>args</code></td>
           <td class="doc-param-details">
-            <p>Command line arguments including the paths neccessary</p>
+            <p>command line arguments including the paths neccessary</p>
             <p>
                 <span class="doc-param-annotation">
                   <b>TYPE:</b>
@@ -1030,7 +1061,7 @@ as possible.</p>
               </span>
           </td>
           <td class="doc-returns-details">
-            <p>Total number of content files copied to the rebuild directory.</p>
+            <p>total number of content files copied to the rebuild directory</p>
           </td>
         </tr>
     </tbody>

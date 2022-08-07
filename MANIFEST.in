@@ -1,7 +1,7 @@
 include CHANGELOG.md
 include requirements.txt
 include Makefile
-include .cbuld
+include .cbuild
 include tox.ini
 
 recursive-include assets *
