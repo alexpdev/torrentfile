@@ -23,14 +23,25 @@ This module provides the primary command line argument parser for
 the torrentfile package. The main_script function is automatically
 invoked when called from command line, and parses accompanying arguments.
 
-Functions:
-    main_script: process command line arguments and run program.
-    activate_logger: turns on debug mode and logging facility.
+Functions
+---------
+main_script :
+    process command line arguments and run program.
+activate_logger :
+    turns on debug mode and logging facility.
+
+Classes
+-------
+Config : class
+    controls logging configuration
+TorrentFileHelpFormatter : HelpFormatter
+    the command line help message formatter
 """
 
 import io
 import logging
 import sys
+from typing import Optional
 from argparse import ArgumentParser, HelpFormatter
 
 from torrentfile.commands import create, edit, info, magnet, rebuild, recheck
@@ -176,9 +187,13 @@ class TorrentFileHelpFormatter(HelpFormatter):
         return parts
 
 
-def execute(args=None) -> list:
+def execute(args: Optional[list] = None) -> list:
     """
-    Initialize Command Line Interface for torrentfile.
+    Execute program with provided list of arguments.
+
+    If no arguments are given then it defaults to using
+    sys.argv.  This is the main entrypoint for the program
+    and command line interface.
 
     Parameters
     ----------
@@ -195,6 +210,7 @@ def execute(args=None) -> list:
             args = sys.argv[1:]
         else:
             args = ["-h"]
+
     parser = ArgumentParser(
         "torrentfile",
         usage="torrentfile [options] command [command options]",
@@ -213,6 +229,7 @@ def execute(args=None) -> list:
         dest="interactive",
         help="select program options interactively",
     )
+
     parser.add_argument(
         "-q",
         "--quiet",
@@ -220,6 +237,7 @@ def execute(args=None) -> list:
         dest="quiet",
         action="store_true",
     )
+
     parser.add_argument(
         "-V",
         "--version",
@@ -227,6 +245,7 @@ def execute(args=None) -> list:
         version=f"torrentfile v{version}",
         help="show program version and exit",
     )
+
     parser.add_argument(
         "-v",
         "--verbose",
@@ -234,6 +253,7 @@ def execute(args=None) -> list:
         dest="debug",
         help="output debug information",
     )
+
     parser.set_defaults(func=parser.print_help)
 
     subparsers = parser.add_subparsers(
@@ -241,13 +261,15 @@ def execute(args=None) -> list:
         dest="command",
         metavar="create, edit, info, magnet, recheck, rebuild\n",
     )
+
     create_parser = subparsers.add_parser(
         "create",
-        help="""Generate a new torrent meta file.""",
+        help="Create a new Bittorrent file.",
         prefix_chars="-",
         aliases=["c", "new"],
         formatter_class=TorrentFileHelpFormatter,
     )
+
     create_parser.add_argument(
         "-a",
         "-t",
@@ -260,6 +282,7 @@ def execute(args=None) -> list:
         default=[],
         help="One or more space-seperated torrent tracker url(s).",
     )
+
     create_parser.add_argument(
         "-p",
         "--private",
@@ -267,6 +290,7 @@ def execute(args=None) -> list:
         dest="private",
         help="Creates private torrent with multi-tracker and DHT turned off.",
     )
+
     create_parser.add_argument(
         "-s",
         "--source",
@@ -275,12 +299,14 @@ def execute(args=None) -> list:
         metavar="<source>",
         help="Add a source string. Useful for cross-seeding.",
     )
+
     create_parser.add_argument(
         "-m",
         "--magnet",
         action="store_true",
         dest="magnet",
     )
+
     create_parser.add_argument(
         "-c",
         "--comment",
@@ -289,14 +315,16 @@ def execute(args=None) -> list:
         metavar="<comment>",
         help="Include a comment in file metadata",
     )
+
     create_parser.add_argument(
         "-o",
         "--out",
         action="store",
         dest="outfile",
         metavar="<path>",
-        help="Output save path for created .torrent file",
+        help="Explicitly specify the path to write the file.",
     )
+
     create_parser.add_argument(
         "--cwd",
         "--current",
@@ -304,6 +332,7 @@ def execute(args=None) -> list:
         dest="cwd",
         help="*deprecated* Saving to current directory is default behaviour",
     )
+
     create_parser.add_argument(
         "--prog",
         "--progress",
@@ -317,6 +346,7 @@ def execute(args=None) -> list:
         (1) = Display progress bar.(default)
         """,
     )
+
     create_parser.add_argument(
         "--meta-version",
         default="1",
@@ -332,6 +362,7 @@ def execute(args=None) -> list:
         (3) = Bittorrent v1 & v2 hybrid
         """,
     )
+
     create_parser.add_argument(
         "--piece-length",
         action="store",
@@ -344,6 +375,7 @@ def execute(args=None) -> list:
         Examples:: [--piece-length 14] [--piece-length 20]
         """,
     )
+
     create_parser.add_argument(
         "-w",
         "--web-seed",
@@ -353,6 +385,7 @@ def execute(args=None) -> list:
         nargs="+",
         help="list of web addresses where torrent data exists (GetRight).",
     )
+
     create_parser.add_argument(
         "--http-seed",
         action="store",
@@ -361,6 +394,7 @@ def execute(args=None) -> list:
         nargs="+",
         help="list of URLs, addresses where content can be found (Hoffman).",
     )
+
     create_parser.add_argument(
         "content",
         action="store",
@@ -368,6 +402,7 @@ def execute(args=None) -> list:
         nargs="?",
         help="Path to content file or directory",
     )
+
     create_parser.set_defaults(func=create)
 
     edit_parser = subparsers.add_parser(
@@ -377,12 +412,14 @@ def execute(args=None) -> list:
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )
+
     edit_parser.add_argument(
         "metafile",
         action="store",
         help="path to *.torrent file",
         metavar="<*.torrent>",
     )
+
     edit_parser.add_argument(
         "--tracker",
         action="store",
@@ -394,6 +431,7 @@ def execute(args=None) -> list:
         seperated Bittorrent tracker announce url(s).
         """,
     )
+
     edit_parser.add_argument(
         "--web-seed",
         action="store",
@@ -402,6 +440,7 @@ def execute(args=None) -> list:
         nargs="+",
         help="Replace current list of web-seed urls with one or more url(s)",
     )
+
     edit_parser.add_argument(
         "--http-seed",
         action="store",
@@ -410,12 +449,14 @@ def execute(args=None) -> list:
         nargs="+",
         help="replace all currently listed addresses with new list (Hoffman).",
     )
+
     edit_parser.add_argument(
         "--private",
         action="store_true",
         help="Make torrent private.",
         dest="private",
     )
+
     edit_parser.add_argument(
         "--comment",
         help="Replaces any existing comment with <comment>",
@@ -423,6 +464,7 @@ def execute(args=None) -> list:
         dest="comment",
         action="store",
     )
+
     edit_parser.add_argument(
         "--source",
         action="store",
@@ -430,6 +472,7 @@ def execute(args=None) -> list:
         metavar="<source>",
         help="Replaces current source with <source>",
     )
+
     edit_parser.set_defaults(func=edit)
 
     info_parser = subparsers.add_parser(
@@ -439,12 +482,14 @@ def execute(args=None) -> list:
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )
+
     info_parser.add_argument(
         "metafile",
         action="store",
         metavar="<*.torrent>",
         help="path to pre-existing torrent file.",
     )
+
     info_parser.set_defaults(func=info)
 
     magnet_parser = subparsers.add_parser(
@@ -454,12 +499,14 @@ def execute(args=None) -> list:
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )
+
     magnet_parser.add_argument(
         "metafile",
         action="store",
         help="Path to Bittorrent meta file.",
         metavar="<*.torrent>",
     )
+
     magnet_parser.set_defaults(func=magnet)
 
     check_parser = subparsers.add_parser(
@@ -469,18 +516,21 @@ def execute(args=None) -> list:
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )
+
     check_parser.add_argument(
         "metafile",
         action="store",
         metavar="<*.torrent>",
         help="path to .torrent file.",
     )
+
     check_parser.add_argument(
         "content",
         action="store",
         metavar="<content>",
         help="path to content file or directory",
     )
+
     check_parser.set_defaults(func=recheck)
 
     rebuild_parser = subparsers.add_parser(
@@ -491,24 +541,28 @@ def execute(args=None) -> list:
                 for more information, or use cases.""",
         formatter_class=TorrentFileHelpFormatter,
     )
+
     rebuild_parser.add_argument(
         "metafiles",
         action="store",
         metavar="<*.torrent>",
         help="path to .torrent file. or directory containing .torrent files",
     )
+
     rebuild_parser.add_argument(
         "contents",
         action="store",
         metavar="<contents>",
         help="directory that contains some or all of the torrents contents",
     )
+
     rebuild_parser.add_argument(
         "destination",
         action="store",
         metavar="<destination>",
         help="path to where torrents will be re-assembled",
     )
+
     rebuild_parser.set_defaults(func=rebuild)
 
     args = parser.parse_args(args)

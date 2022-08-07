@@ -215,7 +215,7 @@ def magnet(metafile: Namespace) -> str:
 
     Parameters
     ----------
-    metafile : (Namespace||str)
+    metafile : Namespace
         Namespace class for CLI arguments.
 
     Returns
@@ -258,17 +258,21 @@ def rebuild(args: Namespace) -> int:
 
     Recusively look through a directory for files that belong in
     a given torrent file, and rebuild as much of the torrent file
-    as possible.
+    as possible. Currently only checks if the filename and file
+    size are a match.
+
+    #### TODO
+    1. Check file hashes to improve accuracy
 
     Parameters
     ----------
     args : Namespace
-        Command line arguments including the paths neccessary
+        command line arguments including the paths neccessary
 
     Returns
     -------
     int
-        Total number of content files copied to the rebuild directory.
+        total number of content files copied to the rebuild directory
     """
     metafiles = args.metafiles
     dest = args.destination
