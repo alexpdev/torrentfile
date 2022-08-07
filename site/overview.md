@@ -15,17 +15,17 @@ structure.
 
 ### Options
 
-- `-h`
-displays all relevant command line options and subcommands.
+-   `-h`
+    displays all relevant command line options and subcommands.
 
-- `-V`
-displays program and version.
+-   `-V`
+    displays program and version.
 
-- `-v`
-enables debug mode and outputs a large amount of information to the terminal.
+-   `-v`
+    enables debug mode and outputs a large amount of information to the terminal.
 
-- `-i`
-activates interactive mode for selecting subcommands and options.
+-   `-i`
+    activates interactive mode for selecting subcommands and options.
 
 ### Sub-commands
 
@@ -39,46 +39,46 @@ alias: `c`, `new`
 The create subcommand is used for generating new torrent files. The only required
 argument is the path(`<path>`) to the contents file or directory.
 
-- `-a` `-t` `--announce` `--tracker`
-Adds the list of url's that follow to the list of trackers for the newly created torrent file.
-Example `-t http://url1 https://url2 ...`
+-   `-a` `-t` `--announce` `--tracker`
+    Adds the list of url's that follow to the list of trackers for the newly created torrent file.
+    Example `-t http://url1 https://url2 ...`
 
-- `-w` `--web-seeds`
-Adds the list of urls that follow to the list of web-seed addresses for the newly created torrent file.
+-   `-w` `--web-seeds`
+    Adds the list of urls that follow to the list of web-seed addresses for the newly created torrent file.
 
-- `--comment`
-Includes the comment that follows to the metadata saved in the newly created torrent file.
-Example: `--comment "Created for MyTrackerExample.com"`
+-   `--comment`
+    Includes the comment that follows to the metadata saved in the newly created torrent file.
+    Example: `--comment "Created for MyTrackerExample.com"`
 
-- `--source`
-Creates a source field in the info dictionary with the string that follows as the value. Frequently used for
-cross-seeding on private trackers.
-Example: `--source MyTrackerExample`
+-   `--source`
+    Creates a source field in the info dictionary with the string that follows as the value. Frequently used for
+    cross-seeding on private trackers.
+    Example: `--source MyTrackerExample`
 
-- `-p` `--private`
-Indicates that the torrent will be used on a private tracker. Disables multi-tracker protocols and DHT.
+-   `-p` `--private`
+    Indicates that the torrent will be used on a private tracker. Disables multi-tracker protocols and DHT.
 
-- `--piece-length`
-Uses the number that follows as the piece-length size for the newly created torrent file. If option isn't used
-the program will pick the ideal size. Acceptable values include 14-29 which is interpreted as the number to raise 2
-by (e.g. 14 is interpreted as 16384), or any perfect power of 2 greater than or equal to 16 KiB and less than 1 GiB.
-Example: `--piece-length 14` or `--piece-length 16384`.
+-   `--piece-length`
+    Uses the number that follows as the piece-length size for the newly created torrent file. If option isn't used
+    the program will pick the ideal size. Acceptable values include 14-29 which is interpreted as the number to raise 2
+    by (e.g. 14 is interpreted as 16384), or any perfect power of 2 greater than or equal to 16 KiB and less than 1 GiB.
+    Example: `--piece-length 14` or `--piece-length 16384`.
 
-- `--meta-version`
-Use the following number as the Bittorrent version the torrent will be used on. The default is 1.
-Options: 1 - Bittorrent v1,    2 - Bittorrent v2,    3 - Bittorrent v1 & v2
-Examples: `--meta-version 1`, `--meta-version 2`, `--meta-version 3`
+-   `--meta-version`
+    Use the following number as the Bittorrent version the torrent will be used on. The default is 1.
+    Options: 1 - Bittorrent v1,    2 - Bittorrent v2,    3 - Bittorrent v1 & v2
+    Examples: `--meta-version 1`, `--meta-version 2`, `--meta-version 3`
 
-- `-o` `--out`
-Specify the full path to the newly created torrent file.  The default is to save it adjacent to the content.
-Example: if content is at `/home/user/torrents/content` the default would create `/home/user/torrents/content.torrent`
+-   `-o` `--out`
+    Specify the full path to the newly created torrent file.  The default is to save it adjacent to the content.
+    Example: if content is at `/home/user/torrents/content` the default would create `/home/user/torrents/content.torrent`
 
-- `--cwd` `--current`
-Changes the default save location to the current working directory.
-Example: if content is at `/home/user/torrents/content` this option would create `./content.torrent`
+-   `--cwd` `--current`
+    Changes the default save location to the current working directory.
+    Example: if content is at `/home/user/torrents/content` this option would create `./content.torrent`
 
-- `--progress` `--prog`
-Options (0, 1):  No status bar will be shown if 0.  Otherwise the default and 1 argument means progress bar is shown
+-   `--progress` `--prog`
+    Options (0, 1):  No status bar will be shown if 0.  Otherwise the default and 1 argument means progress bar is shown
 
 #### info
 
@@ -92,8 +92,8 @@ size of contents, Bittorrent version, any comments left, date the
 torrent file was created and more. There is only one positional perameter
 which is the path to the torrent file and there are no optional arguments.
 
-- `/path/to/*.torrent`
-The relative or absolute path to the torrent file.
+-   `/path/to/*.torrent`
+    The relative or absolute path to the torrent file.
 
 #### edit
 
@@ -109,24 +109,24 @@ alias: `e`
     torrentfile edit [options] <path>
     torrentfile e [options] <path>
 
-- `-a` `-t` `--announce` `--tracker`
-Adds the list of url's that follow to the list of trackers for the newly created torrent file.
-Example `-t http://url1 https://url2 ...`
+-   `-a` `-t` `--announce` `--tracker`
+    Adds the list of url's that follow to the list of trackers for the newly created torrent file.
+    Example `-t http://url1 https://url2 ...`
 
-- `-w` `--web-seeds`
-Adds the list of urls that follow to the list of web-seed addresses for the newly created torrent file.
+-   `-w` `--web-seeds`
+    Adds the list of urls that follow to the list of web-seed addresses for the newly created torrent file.
 
-- `--comment`
-Includes the comment that follows to the metadata saved in the newly created torrent file.
-Example: `--comment "Created for MyTrackerExample.com"`
+-   `--comment`
+    Includes the comment that follows to the metadata saved in the newly created torrent file.
+    Example: `--comment "Created for MyTrackerExample.com"`
 
-- `--source`
-Creates a source field in the info dictionary with the string that follows as the value. Frequently used for
-cross-seeding on private trackers.
-Example: `--source MyTrackerExample`
+-   `--source`
+    Creates a source field in the info dictionary with the string that follows as the value. Frequently used for
+    cross-seeding on private trackers.
+    Example: `--source MyTrackerExample`
 
-- `-p` `--private`
-Indicates that the torrent will be used on a private tracker.  Disables multi-tracker protocols and DHT.
+-   `-p` `--private`
+    Indicates that the torrent will be used on a private tracker.  Disables multi-tracker protocols and DHT.
 
 #### recheck
 

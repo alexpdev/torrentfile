@@ -31,7 +31,7 @@
 
         i (info)                          Show detailed information about a torrent file.
 
------
+* * *
 
 ### Create
 
@@ -72,7 +72,7 @@
                                                         the torrent contents.  This is useful if the torrent
                                                         tracker is ever unreachable. Example:: -w url1 url2 url3
 
------
+* * *
 
 ## Edit
 
@@ -99,7 +99,7 @@
     --comment <comment>           Replaces any existing comment with <comment>
     --source <source>             Replaces current source with <source>
 
------
+* * *
 
 ## Recheck
 
@@ -116,7 +116,7 @@
     ------------------
     -h, --help   show this help message and exit
 
------
+* * *
 
 ## Magnet
 

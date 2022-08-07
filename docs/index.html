@@ -885,10 +885,10 @@ therefore by default torrentfile uses the version 1 format.  However if you are 
 Bittorrent client and tracker then you may wish to use the newest version Bittorrent V2 or 
 a combination of the two.  To do this simply use the <code>--meta-version</code> flag with the appropriate<br />
 version.  Options include <code>1</code>(v1 default), <code>2</code>(v2), or <code>3</code>(v1 &amp; v2).</p>
-<p><div class="highlight"><pre><span></span><code>torrentfile create /path/to/content --meta-version <span class="m">2</span>
+<div class="highlight"><pre><span></span><code>torrentfile create /path/to/content --meta-version <span class="m">2</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>torrentfile create /path/to/content --meta-version <span class="m">3</span> 
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="checkrecheck-torrent">Check/Recheck Torrent<a class="headerlink" href="#checkrecheck-torrent" title="Permanent link">¤</a></h3>
 <p>The <code>recheck</code> subcommand allows you to scan a Bittorrent file and compare it's contents, 
 against a file or directory containing the contents the torrent file was created from.
@@ -903,8 +903,8 @@ subcommand you can specify the field with one of the available field flags, for 
 <div class="highlight"><pre><span></span><code>torrentfile edit /path/to/content --tracker https://new.tracker.url1.com  https://newtracker.url/2
 </code></pre></div>
 <p>You can use the <code>-h</code> flag for a full list of available fields that can be edited.</p>
-<div class="highlight"><pre><span></span><code>torrentfile edit -h
-</code></pre></div>
+<pre><code>torrentfile edit -h
+</code></pre>
 <h3 id="create-magnet">Create Magnet<a class="headerlink" href="#create-magnet" title="Permanent link">¤</a></h3>
 <p>To create a magnet URI for a pre-existing torrent meta file, use the sub-command<br />
 <code>magnet</code> or <code>m</code> with the path to the torrent file.</p>

@@ -2,7 +2,7 @@
 
 ![torrentfile](https://github.com/alexpdev/torrentfile/blob/master/site/images/torrentfile.png?raw=true)
 
-------
+* * *
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile?color=orange)
 ![GitHub License](https://img.shields.io/github/license/alexpdev/torrentfile?color=red&logo=apache)
@@ -10,7 +10,7 @@
 ![GitHub Last Commit](https://badgen.net/github/last-commit/alexpdev/torrentfile?color=blue&icon=github)
 [![CI](https://github.com/alexpdev/TorrentFile/actions/workflows/pyworkflow.yml/badge.svg?branch=master&event=push)](https://github.com/alexpdev/torrentfile/actions/workflows/pyworkflow.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Coverage)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexpdev/torrentfile&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Grade)
 [![DeepSource](https://deepsource.io/gh/alexpdev/TorrentFile.svg/?label=active+issues&token=16Sl_dF7nTU8YgPilcqhvHm8)](https://deepsource.io/gh/alexpdev/torrentfile/)
 [![codecov](https://codecov.io/gh/alexpdev/torrentfile/branch/master/graph/badge.svg?token=EWF7NIL9SQ)](https://codecov.io/gh/alexpdev/torrentfile?color=navy&logo=codecov)
 
@@ -21,22 +21,22 @@ validating bittorrent meta files (aka torrent files). _`torrentfile`_
 supports all versions of Bittorrent files, including hybrid meta files, and has
 full unicode support.
 
-> A GUI frontend for this project can be found at [https://github.com/alexpdev/TorrentfileQt](https://github.com/alexpdev/TorrentfileQt)
+> A GUI frontend for this project can be found at <https://github.com/alexpdev/TorrentfileQt>
 
 ## 🔌 Requirements
 
-- Python 3.6+
-- Tested on Linux, Windows and Mac
+-   Python 3.6+
+-   Tested on Linux, Windows and Mac
 
 ## 💻 Install
 
-__via PyPi:__
+**via PyPi:**
 
 ```bash
 pip install torrentfile
 ```
 
-__via Git:__
+**via Git:**
 
 ```bash
 git clone https://github.com/alexpdev/torrentfile.git
@@ -51,7 +51,7 @@ pip install .
 Documentation can be found  [here](https://alexpdev.github.io/torrentfile)
 or in the _`docs`_ directory.
 
->_torrentfile_ is under active development, and is subject to significant changes in the codebase between releases.
+> _torrentfile_ is under active development, and is subject to significant changes in the codebase between releases.
 
 ## 🚀 Usage
 
@@ -69,9 +69,9 @@ If you encounter any bugs or would like to request a new feature please open a n
 
 > PRs and other contributions are welcome
 
-[https://github.com/alexpdev/torrentfile/issues](https://github.com/alexpdev/torrentfile/issues)
+<https://github.com/alexpdev/torrentfile/issues>
 
-------
+* * *
 
 ## Usage Examples
 
@@ -99,7 +99,7 @@ multitracker protocols.
 torrentfile create /path/to/content --private
 ```
 
-By default __`torrentfile`__ displays a progress bar indicating how much of the content  
+By default **`torrentfile`** displays a progress bar indicating how much of the content  
 has already been processed.  To turn off this display you can either use `--quiet` mode in  
 as a global flag or you can set the `--prog` flag to 0.
 
@@ -111,7 +111,7 @@ torrentfile --quiet create /path/to/content
 torrentfile create /path/to/content --prog 0
 ```
 
-__`torrentfile`__ automatically extracts the name of the file or directory  
+**`torrentfile`** automatically extracts the name of the file or directory  
 if the content and saves the file to the current working directory with the 
 extracted title.
 
@@ -146,6 +146,7 @@ version.  Options include `1`(v1 default), `2`(v2), or `3`(v1 & v2).
 ```bash
 torrentfile create /path/to/content --meta-version 2
 ```
+
 ```bash
 torrentfile create /path/to/content --meta-version 3 
 ```
@@ -173,9 +174,7 @@ torrentfile edit /path/to/content --tracker https://new.tracker.url1.com  https:
 
 You can use the `-h` flag for a full list of available fields that can be edited.
 
-```
-torrentfile edit -h
-```
+    torrentfile edit -h
 
 ### Create Magnet
 
