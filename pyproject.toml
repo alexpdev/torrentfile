@@ -8,7 +8,6 @@ authors = [{name = "alexpdev", email = "alexpdev@pm.me"}]
 description = "Terminal based command line tool for creating Bittorrent files."
 license = {file = "LICENSE"}
 version = "0.8.0"
-url = "https://github.com/alexpdev/torrentfile"
 readme = "./README.md"
 requires-python = ">=3.6"
 keywords = ["Bittorrent", "torrent", "bittorrent-metafiles", "CLI"]

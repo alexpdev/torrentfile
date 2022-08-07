@@ -41,8 +41,8 @@ TorrentFileHelpFormatter : HelpFormatter
 import io
 import logging
 import sys
-from typing import Optional
 from argparse import ArgumentParser, HelpFormatter
+from typing import Optional
 
 from torrentfile.commands import create, edit, info, magnet, rebuild, recheck
 from torrentfile.interactive import select_action

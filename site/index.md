@@ -57,46 +57,11 @@ or in the _`docs`_ directory.
 
 ![Basic Usage](https://github.com/alexpdev/torrentfile/blob/master/assets/TorrentFileBasicUsage.gif?raw=True)
 
-```bash
-Usage
-=====
-   torrentfile [-h] [-i] [-V] [-v]
-                   create, edit, magnet,
-                   recheck, rebuild ...
-
-Command line tools for creating, editing, checking and interacting with Bittorrent metainfo files
-
-Options
--------
-  -h, --help             show this help message and exit
-  -i, --interactive      select program options interactively
-  -q, --quiet            activate quiet mode no terminal output
-  -V, --version          show program version and exit
-  -v, --verbose          output debug information
-
-Actions
--------
-  create, edit, magnet, recheck, rebuild
-
-    create (c, new)      Generate a new torrent meta file.
-    edit (e)             Edit existing torrent meta file.
-
-    magnet (m)           Generate magnet url from an existing Bittorrent meta file.
-
-    recheck (r, check)   Calculate amount of torrent meta files content is found on disk.
-
-    info (i)             Show detailed information about a torrent file.
-
-    rebuild (build, b)   Re-assemble files obtained from a bittorrent file into the
-                         appropriate file structure for re-seeding.  Read documentation
-                         for more information, or use cases.
-```
-
-> Usage examples can be found in the project documentation on the [examples page.](https://alexpdev.github.io/torrentfile/examples)
+> Usage examples can be found in the project documentation on the [examples page.](https://alexpdev.github.io/torrentfile/usage)
 
 ## 📝 License
 
-Distributed under Apache v2 software license. See `LICENSE` for more information.
+Apache Software License v2.0 - See [LICENSE]("https://github.com/alexpdev/torrentfile/blob/master/LICENSE")
 
 ## 💡 Issues & Requests & PRs
 
@@ -108,72 +73,108 @@ If you encounter any bugs or would like to request a new feature please open a n
 
 ------
 
-### Creating Torrents
+## Usage Examples
 
-- Basic torrent file createion
+### Creating Bittorrent Files
+
+Basic torrent file creation is as easy and using the `create` sub-commnand and providing  
+the path to the contents.
 
 ```bash
-> torrentfile create /path/to/content
+torrentfile create /path/to/content
 ```
 
-- The `-t` `--tracker` `-a` `--announce` flags add one or more urls to list of trackers.
+You can add one or more trackers by using any one of `-t`, `--tracker`, `-a`, `--announce` 
+flags and listing their URL as a space separated list.
 
 ```bash
-> torrentfile create /path/to/content --tracker http://tracker1.com
-
-> torrentfile create -t http://tracker2 http://tracker3 --private /path/to/content
-
-> torrentfile create --tracker http://tracker /path/to/content  
-
-> torrentfile create -t http://tracker1 http://tracker2 /path/to/content
+torrentfile create /path/to/content -a http://tracker1.com http://tracker2.net
 ```
 
-- the `--private` flag indicates use by a private tracker
-- the `--source` flag can be used to help with cross-seeding
+If you intend to distribute the file on a private tracker then you should use one  
+of `-p`, `--private` flags, which tells your Bittorrent clients to disable DHT and  
+multitracker protocols.
 
 ```bash
-> torrentfile create --private --source EXAMPLE --tracker https://url1 https://url2
+torrentfile create /path/to/content --private
 ```
 
-The options for controlling the progress bar using `--prog` or `--progress`:
-
-- 0 : show no progress bar at all
-- 1 : show progress bar (default)
+By default __`torrentfile`__ displays a progress bar indicating how much of the content  
+has already been processed.  To turn off this display you can either use `--quiet` mode in  
+as a global flag or you can set the `--prog` flag to 0.
 
 ```bash
-> torrentfile create -t http://tracker.com --progress 2 /path/to/content
-> torrentfile create --prog 0 /path/to/content
+torrentfile --quiet create /path/to/content
 ```
 
-- to specify the save location use the `-o` or `--out` flags
-- if the path points to directory the name of torrent is autofilled.
-
 ```bash
-> torrentfile create -o /specific/path/name.torrent ./content
+torrentfile create /path/to/content --prog 0
 ```
 
-- to create files using bittorrent v2 use `--meta-version 2`
-- likewise `--meta-version 3` creates a hybrid torrent file.
+__`torrentfile`__ automatically extracts the name of the file or directory  
+if the content and saves the file to the current working directory with the 
+extracted title.
+
+For example running the follwing command would create `./content.torrent`.
 
 ```bash
-> torrentfile create --meta-version 2 /path/to/content
-> torrentfile create --meta-version 3 /path/to/content
+torrentfile create /path/to/content
+```
+
+To specify an alternative path or filename you may use the `-o`, `--out` flags  
+followed by the relative or absolute path to your preferred output location.
+
+```bash
+torrentfile create /path/to/content -o /some/other/path/torrent.torrent
+```
+
+If the path you specified with the `-o` flag already exists and is a directory,  
+then torrentfile will save the output to that directory with the default extracted title.
+
+For example the following command would create a Bittorrent file at `/some/other/path/content.torrent`.
+
+```bash
+torrentfile create /path/to/content -o /some/other/path/
+```
+
+Bittorrent V1 is still the most common version of torrent files and the most widely accepted,  
+therefore by default torrentfile uses the version 1 format.  However if you are using a modern 
+Bittorrent client and tracker then you may wish to use the newest version Bittorrent V2 or 
+a combination of the two.  To do this simply use the `--meta-version` flag with the appropriate  
+version.  Options include `1`(v1 default), `2`(v2), or `3`(v1 & v2).
+
+```bash
+torrentfile create /path/to/content --meta-version 2
+```
+```bash
+torrentfile create /path/to/content --meta-version 3 
 ```
 
 ### Check/Recheck Torrent
 
-- recheck torrent file `/path/to/some.torrent` with `/path/to/content`
+The `recheck` subcommand allows you to scan a Bittorrent file and compare it's contents, 
+against a file or directory containing the contents the torrent file was created from.
+The output provided by this process gives a detailed perspective if any files are missing
+or have been corrupted in any way.  Supports any version of Bittorrent file.
 
 ```bash
-> torrentfile recheck /path/to/some.torrent /path/to/content
+torrentfile recheck /path/to/some.torrent /path/to/content
 ```
 
 ### Edit Torrent
 
-- edit a torrent file
+To edit specific fields of the torrent file, there is the `edit` subcommand.  Using this
+subcommand you can specify the field with one of the available field flags, for example
+`--tracker` and specify the value you wish to change it to.
 
 ```bash
-> torrentfile edit [options] <path>
+torrentfile edit /path/to/content --tracker https://new.tracker.url1.com  https://newtracker.url/2
+```
+
+You can use the `-h` flag for a full list of available fields that can be edited.
+
+```
+torrentfile edit -h
 ```
 
 ### Create Magnet
@@ -182,20 +183,19 @@ To create a magnet URI for a pre-existing torrent meta file, use the sub-command
 `magnet` or `m` with the path to the torrent file.
 
 ```bash
-> torrentfile magnet /path/to/some.torrent
+torrentfile magnet /path/to/some.torrent
 ```
 
 #### Interactive Mode (expiremental)
 
-Alternatively to supplying a bunch of command line arguments, `interactive mode`
-allows users to specify program options one at a time from a series of prompts.
-
-- to activate interactive mode use `-i` or `--interactive` flag
+Alternatively to supplying a bunch of command line arguments, interactive mode
+allows users to specify program options one at a time from a series of prompts. Use the 
+`-i` or `--interactive` flags to activate interactive mode.
 
 ```bash
-> torrentfile -i
+torrentfile -i
 ```
 
 ### GUI
 
-If you prefer a windowed gui please check out the official GUI frontend [here](https://github.com/alexpdev/TorrentFileQt)
+If you prefer a windowed GUI please check out the official GUI frontend [here](https://github.com/alexpdev/TorrentFileQt)
