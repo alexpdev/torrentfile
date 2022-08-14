@@ -200,7 +200,7 @@ def get_piece_length(size: int) -> int:
         Ideal piece length.
     """
     exp = 14
-    while size / (2**exp) > 200 and exp < 25:
+    while size / (2**exp) > 1000 and exp < 24:
         exp += 1
     return 2**exp
 

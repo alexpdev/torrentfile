@@ -489,7 +489,8 @@ def test_cli_slash_outpath(dir1, sep):
 
 
 @pytest.mark.parametrize(
-    "flag", ["-t", "-w", "--announce", "--web-seed", "--http-seed"])
+    "flag", ["-t", "-w", "--announce", "--web-seed", "--http-seed"]
+)
 def test_cli_announce_path(dir1, flag):
     """
     Test CLI when path is placed after the trackers flag.
@@ -551,3 +552,12 @@ def test_rebuild_subcommand(build):
     sys.argv = args
     counter = execute()
     assert counter > 0
+
+
+def test_empty_maker(dir1):
+    """Test empty create cli."""
+    args = ["torrentfile", "create", dir1, "-o", dir1 + ".torrent"]
+    sys.argv = args
+    execute()
+    assert os.path.exists(dir1 + ".torrent")
+    rmpath(dir1 + ".torrent")

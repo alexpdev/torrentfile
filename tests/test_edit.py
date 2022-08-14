@@ -37,9 +37,9 @@ def test_fix():
     assert dir2 and metafile2 and dir1
 
 
-@pytest.mark.parametrize("announce",
-                         [["urla"], ["urlb", "urlc"], ["urla", "urlb", "urlc"]]
-                         )
+@pytest.mark.parametrize(
+    "announce", [["urla"], ["urlb", "urlc"], ["urla", "urlb", "urlc"]]
+)
 def test_edit_torrent(metafile2, announce):
     """
     Test edit torrent with announce param.
@@ -87,9 +87,9 @@ def test_edit_httpseeds_str(metafile2, httpseeds):
     assert data["httpseeds"] == httpseeds.split()
 
 
-@pytest.mark.parametrize("url_list",
-                         [["urla"], ["urlb", "urlc"], ["urla", "urlb", "urlc"]]
-                         )
+@pytest.mark.parametrize(
+    "url_list", [["urla"], ["urlb", "urlc"], ["urla", "urlb", "urlc"]]
+)
 def test_edit_urllist(metafile2, url_list):
     """
     Test edit torrent with webseed param as string.
@@ -101,9 +101,9 @@ def test_edit_urllist(metafile2, url_list):
     assert data["url-list"] == url_list
 
 
-@pytest.mark.parametrize("httpseed",
-                         [["urla"], ["urlb", "urlc"], ["urla", "urlb", "urlc"]]
-                         )
+@pytest.mark.parametrize(
+    "httpseed", [["urla"], ["urlb", "urlc"], ["urla", "urlb", "urlc"]]
+)
 def test_edit_httpseeds(metafile2, httpseed):
     """
     Test edit torrent with webseed param as string.

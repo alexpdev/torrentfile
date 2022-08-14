@@ -64,22 +64,26 @@ class Metadata:
             self.length += info["length"]
             self.is_file = True
             self.filenames.add(info["name"])
-            self.files.append({
-                "path": Path(self.name).parent,
-                "filename": self.name,
-                "full": self.name,
-                "length": self.length,
-            })
+            self.files.append(
+                {
+                    "path": Path(self.name).parent,
+                    "filename": self.name,
+                    "full": self.name,
+                    "length": self.length,
+                }
+            )
         if "files" in info:
             for f in info["files"]:
                 path = f["path"]
                 full = os.path.join(self.name, *path)
-                self.files.append({
-                    "path": Path(full).parent,
-                    "filename": path[-1],
-                    "full": full,
-                    "length": f["length"],
-                })
+                self.files.append(
+                    {
+                        "path": Path(full).parent,
+                        "filename": path[-1],
+                        "full": full,
+                        "length": f["length"],
+                    }
+                )
                 self.length += f["length"]
                 self.filenames.add(path[-1])
         elif "file tree" in info:
@@ -102,12 +106,14 @@ class Metadata:
                 path = Path(os.path.join(*partials))
                 full = Path(os.path.join(path, key))
                 length = val[""]["length"]
-                self.files.append({
-                    "path": path,
-                    "full": full,
-                    "filename": key,
-                    "length": length,
-                })
+                self.files.append(
+                    {
+                        "path": path,
+                        "full": full,
+                        "filename": key,
+                        "length": length,
+                    }
+                )
                 self.length += length
             else:
                 self._parse_tree(val, partials + [key])
@@ -166,7 +172,8 @@ class Assembler:
                     if filename.lower().endswith(".torrent"):
                         metafiles.append(os.path.join(path, filename))
             elif os.path.isfile(metafile) and metafile.lower().endswith(
-                    ".torrent"):
+                ".torrent"
+            ):
                 metafiles.append(metafile)
         return metafiles
 
@@ -218,8 +225,9 @@ class Assembler:
             shutil.copy(entry["path"], path)
             self.counter += 1
             if self.counter and self.counter % 20 == 0:
-                print(f"Success {self.counter}: {entry['path']} -> {path}"
-                      )  # pragma: nocover
+                print(
+                    f"Success {self.counter}: {entry['path']} -> {path}"
+                )  # pragma: nocover
             break
 
     def _traverse_contents(self, path: PathLike):

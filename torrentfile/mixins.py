@@ -68,8 +68,9 @@ class ProgressBar:
         column where the progress bar should be drawn
     """
 
-    def __init__(self, total: int, title: str, length: int, unit: str,
-                 start: int):
+    def __init__(
+        self, total: int, title: str, length: int, unit: str, start: int
+    ):
         """
         Construct the progress bar object and store state of it's properties.
         """
@@ -95,7 +96,7 @@ class ProgressBar:
                 self.unit = "KiB"
         self.suffix = f"/{self.show_total} {self.unit}"
         if len(title) > start:
-            title = title[:start - 1]
+            title = title[: start - 1]
         padding = (start - len(title)) * " "
         self.prefix = "".join([title, padding])
 
@@ -139,11 +140,9 @@ class ProgMixin:
     prog_close
     """
 
-    def prog_start(self,
-                   total: int,
-                   path: str,
-                   length: int = 50,
-                   unit: str = None):
+    def prog_start(
+        self, total: int, path: str, length: int = 50, unit: str = None
+    ):
         """
         Generate a new progress bar for the given file path.
 

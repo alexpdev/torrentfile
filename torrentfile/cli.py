@@ -109,9 +109,9 @@ class TorrentFileHelpFormatter(HelpFormatter):
         max_help_positions : int
             max length until line wrap.
         """
-        super().__init__(prog,
-                         width=width,
-                         max_help_position=max_help_positions)
+        super().__init__(
+            prog, width=width, max_help_position=max_help_positions
+        )
 
     def _split_lines(self, text, _):
         """
@@ -216,7 +216,8 @@ def execute(args: Optional[list] = None) -> list:
         usage="torrentfile [options] command [command options]",
         description=(
             "Command line tools for creating, editing, checking, building "
-            "and interacting with Bittorrent metainfo files"),
+            "and interacting with Bittorrent metainfo files"
+        ),
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
         conflict_handler="resolve",
@@ -564,7 +565,7 @@ def execute(args: Optional[list] = None) -> list:
     )
 
     rebuild_parser.set_defaults(func=rebuild)
-
+    print(args)
     args = parser.parse_args(args)
 
     if args.quiet:

@@ -22,6 +22,7 @@ __pycache__/
 codacy.py
 *$py.class
 .benchmarks/
+start.py
 # Distribution / packaging
 codacy.sh
 build/
