@@ -68,9 +68,8 @@ class ProgressBar:
         column where the progress bar should be drawn
     """
 
-    def __init__(
-        self, total: int, title: str, length: int, unit: str, start: int
-    ):
+    def __init__(self, total: int, title: str, length: int, unit: str,
+                 start: int):
         """
         Construct the progress bar object and store state of it's properties.
         """
@@ -96,7 +95,7 @@ class ProgressBar:
                 self.unit = "KiB"
         self.suffix = f"/{self.show_total} {self.unit}"
         if len(title) > start:
-            title = title[: start - 1]
+            title = title[:start - 1]
         padding = (start - len(title)) * " "
         self.prefix = "".join([title, padding])
 
@@ -140,9 +139,11 @@ class ProgMixin:
     prog_close
     """
 
-    def prog_start(
-        self, total: int, path: str, length: int = 50, unit: str = None
-    ):
+    def prog_start(self,
+                   total: int,
+                   path: str,
+                   length: int = 50,
+                   unit: str = None):
         """
         Generate a new progress bar for the given file path.
 
@@ -161,9 +162,12 @@ class ProgMixin:
         width = shutil.get_terminal_size().columns
         if len(str(title)) >= width // 2:
             parts = list(Path(title).parts)
-            while len("//".join(parts)) > width // 2 and len(parts) > 0:
+            while (len("//".join(parts)) > (width // 2)) and (len(parts) > 0):
                 del parts[0]
-            title = os.path.join(*parts)
+            if parts:
+                title = os.path.join(*parts)
+            else:
+                title = os.path.basename(path)  # pragma: nocover
         length = min(length, width // 2)
         start = width - int(length * 1.5)
         self.prog = ProgressBar(total, title, length, unit, start)

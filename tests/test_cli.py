@@ -489,8 +489,7 @@ def test_cli_slash_outpath(dir1, sep):
 
 
 @pytest.mark.parametrize(
-    "flag", ["-t", "-w", "--announce", "--web-seed", "--http-seed"]
-)
+    "flag", ["-t", "-w", "--announce", "--web-seed", "--http-seed"])
 def test_cli_announce_path(dir1, flag):
     """
     Test CLI when path is placed after the trackers flag.
