@@ -99,7 +99,7 @@ class ProgressBar:
         padding = (start - len(title)) * " "
         self.prefix = "".join([title, padding])
 
-    def pbar(self) -> str:
+    def get_progress(self) -> str:
         """
         Return the size of the filled portion of the progress bar.
 
@@ -131,12 +131,6 @@ class ProgMixin:
 
     Displays progress of hashing individual files, usefull when hashing
     really big files.
-
-    Methods
-    -------
-    prog_start
-    prog_update
-    prog_close
     """
 
     def prog_start(self,
@@ -174,7 +168,9 @@ class ProgMixin:
 
     def prog_update(self, val: int):
         """
-        Update progress bar with given amount of progress.
+        Update progress bar.
+
+        Using the value provided, increment the progress bar by that value.
 
         Parameters
         ----------
@@ -183,7 +179,7 @@ class ProgMixin:
         """
         if self.is_active():
             self.prog.state += val
-            pbar = self.prog.pbar()
+            pbar = self.prog.get_progress()
             output = f"{self.prog.prefix}{pbar}{self.prog.suffix}\r"
             sys.stdout.write(output)
             sys.stdout.flush()

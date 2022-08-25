@@ -289,7 +289,7 @@ def get_file_list(path: str) -> list:
 
     Returns
     -------
-    list
+    list :
         sorted list of file paths.
     """
     _, filelist = filelist_total(path)

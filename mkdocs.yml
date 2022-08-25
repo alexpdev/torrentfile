@@ -12,6 +12,12 @@ theme:
   name: material
   logo: images/torrentfile.png
   favicon: images/favicon.ico
+  features:
+    - header.autohide
+    - toc.integrate
+    - navigation-expand
+    - navigation-tabs
+    - navigation-instant
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -40,6 +46,7 @@ nav:
   - interactive : interactive.md
   - mixins : mixins.md
   - rebuild : rebuild.md
+  - Coverage: coverage.md
   - recheck : recheck.md
   - torrent : torrent.md
   - utils : utils.md
@@ -47,24 +54,40 @@ nav:
 
 
 markdown_extensions:
-  - admonition
+  - pymdownx.tabbed
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      linenums: true
+  - toc:
+      permalink: "#"
   - callouts
   - pymdownx.details
   - pymdownx.emoji
   - pymdownx.magiclink
+  - pymdownx.caret
+  - attr_list
+  - def_list
+  - meta
+  - abbr
+  - codehilite
+  - smarty
+  - sane_lists
+  - pymdownx.inlinehilite
+  - admonition
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.betterem:
+      smart_enable: all
   - pymdownx.snippets:
       check_paths: true
-  - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true
   - pymdownx.tasklist
-  - toc:
-      permalink: "¤"
 
 
 plugins:
   - search
-  - coverage
+  - coverage:
+      page_name: coverage
+      html_report_dir: htmlcov
   - section-index
   - autorefs
   - mkapi
@@ -74,12 +97,11 @@ plugins:
           options:
             docstring_style: numpy
             inherited_members: true
-            docstring_options:
-              ignore_init_summary: yes
             merge_init_into_class: yes
             docstring_section_style: spacy
             show_signature_annotations: true
-            show_source: false
-            show_submodules: no
-            seperate_signature: true
+            show_source: true
+            heading_level: 2
+            seperate_signature: false
+            show_root_full_path: false
             show_root_heading: true

@@ -209,7 +209,9 @@
                     
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="TorrentFile Docs" class="md-nav__button md-logo" aria-label="TorrentFile Docs" data-md-component="logo">
       
@@ -519,6 +521,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../coverage/" class="md-nav__link">
+        Coverage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../recheck/" class="md-nav__link">
         recheck
       </a>
@@ -578,83 +595,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#torrentfile.rebuild" class="md-nav__link">
-    rebuild
-  </a>
-  
-    <nav class="md-nav" aria-label="rebuild">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.rebuild.Assembler" class="md-nav__link">
-    Assembler
-  </a>
-  
-    <nav class="md-nav" aria-label="Assembler">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.rebuild.Assembler.rebuild" class="md-nav__link">
-    rebuild()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.rebuild.Metadata" class="md-nav__link">
-    Metadata
-  </a>
-  
-    <nav class="md-nav" aria-label="Metadata">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.rebuild.Metadata.extract" class="md-nav__link">
-    extract()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -673,10 +613,10 @@
 
 
 <h2 id="torrentfile.rebuild" class="doc doc-heading">
-          <code>torrentfile.rebuild</code>
+          <code>rebuild</code>
 
 
-<a href="#torrentfile.rebuild" class="headerlink" title="Permanent link">¤</a></h2>
+<a href="#torrentfile.rebuild" class="headerlink" title="Permanent link">#</a></h2>
 
   <div class="doc doc-contents first">
   
@@ -703,7 +643,7 @@ way. Displays a progress bar for each torrent.</p>
 <h3 id="torrentfile.rebuild.Assembler" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">Assembler</span><span class="p">(</span><span class="n">metafile</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dest</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span></code>
 
-<a href="#torrentfile.rebuild.Assembler" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.rebuild.Assembler" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -716,7 +656,8 @@ way. Displays a progress bar for each torrent.</p>
 - directory where torrents will be re-assembled</p>
 
   
-      <p>Takes two paths as parameters,
+      <p>Construct the assembler object.</p>
+<p>Takes two paths as parameters,
 - file or directory containing 1 or more torrent meta files
 - path to where the contents are belived to be located.</p>
 
@@ -768,6 +709,55 @@ torrentfile.</p>
     </tbody>
   </table>
 
+          <details class="quote">
+            <summary>Source code in <code>torrentfile\rebuild.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dest</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct the assembler object.</span>
+
+<span class="sd">    Takes two paths as parameters,</span>
+<span class="sd">    - file or directory containing 1 or more torrent meta files</span>
+<span class="sd">    - path to where the contents are belived to be located.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    metafile : str</span>
+<span class="sd">        path to torrent metafile or directory containing torrent metafiles.</span>
+<span class="sd">    contents : str</span>
+<span class="sd">        path to content or directory containing content that belongs to</span>
+<span class="sd">        torrentfile.</span>
+<span class="sd">    dest: str</span>
+<span class="sd">        path to the directory where rebuild will take place.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">metafiles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_metafiles</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="n">contents</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dest</span> <span class="o">=</span> <span class="n">dest</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></td></tr></table></div>
+          </details>
 
   
 
@@ -788,7 +778,7 @@ torrentfile.</p>
 <h4 id="torrentfile.rebuild.Assembler.rebuild" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">rebuild</span><span class="p">()</span></code>
 
-<a href="#torrentfile.rebuild.Assembler.rebuild" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#torrentfile.rebuild.Assembler.rebuild" class="headerlink" title="Permanent link">#</a></h4>
 
 
   <div class="doc doc-contents ">
@@ -799,6 +789,43 @@ with files listed in torrent metadata and copy
 the matches to the destination directory respecting folder
 structures along the way.</p>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\rebuild.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">rebuild</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Build the torrent file structure from contents of directory.</span>
+
+<span class="sd">    Traverse contents dir and compare discovered files</span>
+<span class="sd">    with files listed in torrent metadata and copy</span>
+<span class="sd">    the matches to the destination directory respecting folder</span>
+<span class="sd">    structures along the way.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_traverse_contents</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metafiles</span><span class="p">:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">Metadata</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">metadata</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileinfo</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_compare_files</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -818,7 +845,7 @@ structures along the way.</p>
 <h3 id="torrentfile.rebuild.Metadata" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">Metadata</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span></code>
 
-<a href="#torrentfile.rebuild.Metadata" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.rebuild.Metadata" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -827,6 +854,7 @@ structures along the way.</p>
       <p>Class containing the metadata contents of a torrent file.</p>
 
   
+      <p>Construct metadata object for torrent info.</p>
 
   <table>
     <thead>
@@ -851,6 +879,41 @@ structures along the way.</p>
     </tbody>
   </table>
 
+          <details class="quote">
+            <summary>Source code in <code>torrentfile\rebuild.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct metadata object for torrent info.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        path to the .torrent file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">filenames</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+          </details>
 
   
 
@@ -871,13 +934,78 @@ structures along the way.</p>
 <h4 id="torrentfile.rebuild.Metadata.extract" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">extract</span><span class="p">()</span></code>
 
-<a href="#torrentfile.rebuild.Metadata.extract" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#torrentfile.rebuild.Metadata.extract" class="headerlink" title="Permanent link">#</a></h4>
 
 
   <div class="doc doc-contents ">
   
       <p>Decode and extract information for the .torrent file.</p>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\rebuild.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decode and extract information for the .torrent file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s2">&quot;length&quot;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">+=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_file</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span>
+            <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;full&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+        <span class="p">})</span>
+    <span class="k">if</span> <span class="s2">&quot;files&quot;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
+            <span class="n">full</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">Path</span><span class="p">(</span><span class="n">full</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span>
+                <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                <span class="s2">&quot;full&quot;</span><span class="p">:</span> <span class="n">full</span><span class="p">,</span>
+                <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">],</span>
+            <span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">+=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="s2">&quot;file tree&quot;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parse_tree</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -929,13 +1057,13 @@ structures along the way.</p>
       
       
         
-        <a href="../recheck/" class="md-footer__link md-footer__link--next" aria-label="Next: recheck" rel="next">
+        <a href="../coverage/" class="md-footer__link md-footer__link--next" aria-label="Next: Coverage" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              recheck
+              Coverage
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -969,7 +1097,7 @@ structures along the way.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["header.autohide", "toc.integrate", "navigation-expand", "navigation-tabs", "navigation-instant"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>

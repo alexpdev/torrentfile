@@ -209,7 +209,9 @@
                     
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="TorrentFile Docs" class="md-nav__button md-logo" aria-label="TorrentFile Docs" data-md-component="logo">
       
@@ -472,13 +474,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#torrentfile.mixins.ProgMixin--methods" class="md-nav__link">
-    Methods
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#torrentfile.mixins.ProgMixin.is_active" class="md-nav__link">
     is_active()
   </a>
@@ -520,8 +515,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#torrentfile.mixins.ProgressBar.pbar" class="md-nav__link">
-    pbar()
+  <a href="#torrentfile.mixins.ProgressBar.get_progress" class="md-nav__link">
+    get_progress()
   </a>
   
 </li>
@@ -561,6 +556,21 @@
     <li class="md-nav__item">
       <a href="../rebuild/" class="md-nav__link">
         rebuild
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coverage/" class="md-nav__link">
+        Coverage
       </a>
     </li>
   
@@ -633,138 +643,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#torrentfile.mixins" class="md-nav__link">
-    mixins
-  </a>
-  
-    <nav class="md-nav" aria-label="mixins">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.mixins.CbMixin" class="md-nav__link">
-    CbMixin
-  </a>
-  
-    <nav class="md-nav" aria-label="CbMixin">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.mixins.CbMixin.set_callback" class="md-nav__link">
-    set_callback()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.mixins.ProgMixin" class="md-nav__link">
-    ProgMixin
-  </a>
-  
-    <nav class="md-nav" aria-label="ProgMixin">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.mixins.ProgMixin--methods" class="md-nav__link">
-    Methods
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.mixins.ProgMixin.is_active" class="md-nav__link">
-    is_active()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.mixins.ProgMixin.prog_close" class="md-nav__link">
-    prog_close()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.mixins.ProgMixin.prog_start" class="md-nav__link">
-    prog_start()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.mixins.ProgMixin.prog_update" class="md-nav__link">
-    prog_update()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.mixins.ProgressBar" class="md-nav__link">
-    ProgressBar
-  </a>
-  
-    <nav class="md-nav" aria-label="ProgressBar">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.mixins.ProgressBar.pbar" class="md-nav__link">
-    pbar()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.mixins.waiting" class="md-nav__link">
-    waiting()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -783,10 +661,10 @@
 
 
 <h2 id="torrentfile.mixins" class="doc doc-heading">
-          <code>torrentfile.mixins</code>
+          <code>mixins</code>
 
 
-<a href="#torrentfile.mixins" class="headerlink" title="Permanent link">¤</a></h2>
+<a href="#torrentfile.mixins" class="headerlink" title="Permanent link">#</a></h2>
 
   <div class="doc doc-contents first">
   
@@ -813,7 +691,7 @@ progress bar mixin.  And any class is eligible to use the callback mixin.</p>
         <code>CbMixin</code>
 
 
-<a href="#torrentfile.mixins.CbMixin" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.mixins.CbMixin" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -846,7 +724,7 @@ progress bar mixin.  And any class is eligible to use the callback mixin.</p>
       <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
   </span>
 
-<a href="#torrentfile.mixins.CbMixin.set_callback" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#torrentfile.mixins.CbMixin.set_callback" class="headerlink" title="Permanent link">#</a></h4>
 
 
   <div class="doc doc-contents ">
@@ -876,6 +754,31 @@ progress bar mixin.  And any class is eligible to use the callback mixin.</p>
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\mixins.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">set_callback</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assign a callback to the Hashing class.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    func : Callable</span>
+<span class="sd">        the callback function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">_cb</span> <span class="o">=</span> <span class="n">func</span>  <span class="c1"># pragma: nocover</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -896,7 +799,7 @@ progress bar mixin.  And any class is eligible to use the callback mixin.</p>
         <code>ProgMixin</code>
 
 
-<a href="#torrentfile.mixins.ProgMixin" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.mixins.ProgMixin" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -905,10 +808,6 @@ progress bar mixin.  And any class is eligible to use the callback mixin.</p>
       <p>Progress bar mixin class.</p>
 <p>Displays progress of hashing individual files, usefull when hashing
 really big files.</p>
-<h5 id="torrentfile.mixins.ProgMixin--methods">Methods<a class="headerlink" href="#torrentfile.mixins.ProgMixin--methods" title="Permanent link">¤</a></h5>
-<p>prog_start
-prog_update
-prog_close</p>
 
 
 
@@ -931,7 +830,7 @@ prog_close</p>
 <h4 id="torrentfile.mixins.ProgMixin.is_active" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">is_active</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span></code>
 
-<a href="#torrentfile.mixins.ProgMixin.is_active" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#torrentfile.mixins.ProgMixin.is_active" class="headerlink" title="Permanent link">#</a></h4>
 
 
   <div class="doc doc-contents ">
@@ -963,6 +862,33 @@ prog_close</p>
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\mixins.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test to see if there is an active progress bar for object.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool :</span>
+<span class="sd">        True if there is, otherwise False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;prog&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -974,7 +900,7 @@ prog_close</p>
 <h4 id="torrentfile.mixins.ProgMixin.prog_close" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">prog_close</span><span class="p">()</span></code>
 
-<a href="#torrentfile.mixins.ProgMixin.prog_close" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#torrentfile.mixins.ProgMixin.prog_close" class="headerlink" title="Permanent link">#</a></h4>
 
 
   <div class="doc doc-contents ">
@@ -983,6 +909,31 @@ prog_close</p>
 <p>Increment the terminal by one line leaving the progress bar in place,
 and deleting the progress bar object to clear a space for the next one.</p>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\mixins.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prog_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Finalize the last bits of progress bar.</span>
+
+<span class="sd">    Increment the terminal by one line leaving the progress bar in place,</span>
+<span class="sd">    and deleting the progress bar object to clear a space for the next one.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span><span class="p">():</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -994,7 +945,7 @@ and deleting the progress bar object to clear a space for the next one.</p>
 <h4 id="torrentfile.mixins.ProgMixin.prog_start" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">prog_start</span><span class="p">(</span><span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span></code>
 
-<a href="#torrentfile.mixins.ProgMixin.prog_start" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#torrentfile.mixins.ProgMixin.prog_start" class="headerlink" title="Permanent link">#</a></h4>
 
 
   <div class="doc doc-contents ">
@@ -1068,6 +1019,73 @@ and deleting the progress bar object to clear a space for the next one.</p>
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\mixins.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prog_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+               <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+               <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+               <span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+               <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a new progress bar for the given file path.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    total : int</span>
+<span class="sd">        the total amount of units accumulating towards.</span>
+<span class="sd">    path : str</span>
+<span class="sd">        path to file being hashed.</span>
+<span class="sd">    length : int</span>
+<span class="sd">        the number of characters of the actual progress bar.</span>
+<span class="sd">    unit : str</span>
+<span class="sd">        the text representation of the value being measured.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">path</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">title</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="n">width</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">parts</span><span class="p">)</span>
+        <span class="k">while</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;//&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">))</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">width</span> <span class="o">//</span> <span class="mi">2</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">del</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">parts</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">parts</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">length</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">prog</span> <span class="o">=</span> <span class="n">ProgressBar</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1079,12 +1097,13 @@ and deleting the progress bar object to clear a space for the next one.</p>
 <h4 id="torrentfile.mixins.ProgMixin.prog_update" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">prog_update</span><span class="p">(</span><span class="n">val</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span></code>
 
-<a href="#torrentfile.mixins.ProgMixin.prog_update" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#torrentfile.mixins.ProgMixin.prog_update" class="headerlink" title="Permanent link">#</a></h4>
 
 
   <div class="doc doc-contents ">
   
-      <p>Update progress bar with given amount of progress.</p>
+      <p>Update progress bar.</p>
+<p>Using the value provided, increment the progress bar by that value.</p>
 
   <table>
     <thead>
@@ -1109,6 +1128,43 @@ and deleting the progress bar object to clear a space for the next one.</p>
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\mixins.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">prog_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update progress bar.</span>
+
+<span class="sd">    Using the value provided, increment the progress bar by that value.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    val : int</span>
+<span class="sd">        the number of bytes count the progress bar should increase.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">state</span> <span class="o">+=</span> <span class="n">val</span>
+        <span class="n">pbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">get_progress</span><span class="p">()</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">prefix</span><span class="si">}{</span><span class="n">pbar</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">prog</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="se">\r</span><span class="s2">&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1128,7 +1184,7 @@ and deleting the progress bar object to clear a space for the next one.</p>
 <h3 id="torrentfile.mixins.ProgressBar" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">ProgressBar</span><span class="p">(</span><span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span></code>
 
-<a href="#torrentfile.mixins.ProgressBar" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.mixins.ProgressBar" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -1207,7 +1263,72 @@ and deleting the progress bar object to clear a space for the next one.</p>
     </tbody>
   </table>
 
+  
+      <p>Construct the progress bar object and store state of it&rsquo;s properties.</p>
 
+          <details class="quote">
+            <summary>Source code in <code>torrentfile\mixins.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct the progress bar object and store state of it&#39;s properties.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">total</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fill</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">9608</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">empty</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">9617</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">show_total</span> <span class="o">=</span> <span class="n">total</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">unit</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># pragma: nocover</span>
+    <span class="k">elif</span> <span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;bytes&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">1_000_000_000</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_total</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">30</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;GiB&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">1_000_000</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_total</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="mi">1048576</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;MiB&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_total</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;KiB&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">suffix</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">show_total</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">start</span><span class="p">:</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">[:</span><span class="n">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">))</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">title</span><span class="p">,</span> <span class="n">padding</span><span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+          </details>
 
   
 
@@ -1225,10 +1346,10 @@ and deleting the progress bar object to clear a space for the next one.</p>
 
 
 
-<h4 id="torrentfile.mixins.ProgressBar.pbar" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">pbar</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span></code>
+<h4 id="torrentfile.mixins.ProgressBar.get_progress" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_progress</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span></code>
 
-<a href="#torrentfile.mixins.ProgressBar.pbar" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#torrentfile.mixins.ProgressBar.get_progress" class="headerlink" title="Permanent link">#</a></h4>
 
 
   <div class="doc doc-contents ">
@@ -1260,6 +1381,57 @@ and deleting the progress bar object to clear a space for the next one.</p>
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\mixins.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the size of the filled portion of the progress bar.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str :</span>
+<span class="sd">        the progress bar characters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">:</span>
+        <span class="n">fill</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fill</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+    <span class="n">empt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">-</span> <span class="n">fill</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;GiB&quot;</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">30</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;MiB&quot;</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="mi">1048576</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;KiB&quot;</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
+    <span class="n">progbar</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;|&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fill</span> <span class="o">*</span> <span class="n">fill</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty</span> <span class="o">*</span> <span class="n">empt</span><span class="p">,</span> <span class="s2">&quot;| &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">state</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">progbar</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1280,7 +1452,7 @@ and deleting the progress bar object to clear a space for the next one.</p>
 <h3 id="torrentfile.mixins.waiting" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">waiting</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">flag</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span></code>
 
-<a href="#torrentfile.mixins.waiting" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.mixins.waiting" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -1338,6 +1510,91 @@ and deleting the progress bar object to clear a space for the next one.</p>
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\mixins.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">waiting</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">flag</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show loading message while thread completes processing.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    msg : str</span>
+<span class="sd">        Message string printed before the progress bar</span>
+<span class="sd">    flag : list</span>
+<span class="sd">        Once flag is filled exit loop</span>
+<span class="sd">    timeout : int</span>
+<span class="sd">        max amount of time to run the function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">then</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">codes</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">9617</span><span class="p">,</span> <span class="mi">9620</span><span class="p">)),</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">9619</span><span class="p">)</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">-</span> <span class="mi">20</span>
+
+    <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print parameter message to the console.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : str</span>
+<span class="sd">            output message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="n">output</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.16</span><span class="p">)</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.16</span><span class="p">)</span>
+        <span class="n">filled</span> <span class="o">=</span> <span class="p">(</span><span class="n">fill</span> <span class="o">*</span> <span class="n">size</span><span class="p">)</span> <span class="o">+</span> <span class="nb">chr</span><span class="p">(</span><span class="n">codes</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="n">total</span> <span class="o">-</span> <span class="n">size</span><span class="p">))</span>
+        <span class="n">output</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">filled</span><span class="si">}</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">size</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="n">total</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">then</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="n">output</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1420,7 +1677,7 @@ and deleting the progress bar object to clear a space for the next one.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["header.autohide", "toc.integrate", "navigation-expand", "navigation-tabs", "navigation-instant"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>

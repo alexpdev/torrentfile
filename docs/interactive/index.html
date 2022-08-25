@@ -209,7 +209,9 @@
                     
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="TorrentFile Docs" class="md-nav__button md-logo" aria-label="TorrentFile Docs" data-md-component="logo">
       
@@ -582,6 +584,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../coverage/" class="md-nav__link">
+        Coverage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../recheck/" class="md-nav__link">
         recheck
       </a>
@@ -641,146 +658,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#torrentfile.interactive" class="md-nav__link">
-    interactive
-  </a>
-  
-    <nav class="md-nav" aria-label="interactive">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.InteractiveCreator" class="md-nav__link">
-    InteractiveCreator
-  </a>
-  
-    <nav class="md-nav" aria-label="InteractiveCreator">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.InteractiveCreator.get_props" class="md-nav__link">
-    get_props()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.InteractiveEditor" class="md-nav__link">
-    InteractiveEditor
-  </a>
-  
-    <nav class="md-nav" aria-label="InteractiveEditor">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.InteractiveEditor.edit_props" class="md-nav__link">
-    edit_props()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.InteractiveEditor.sanatize_response" class="md-nav__link">
-    sanatize_response()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.InteractiveEditor.show_current" class="md-nav__link">
-    show_current()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.create_torrent" class="md-nav__link">
-    create_torrent()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.edit_action" class="md-nav__link">
-    edit_action()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.get_input" class="md-nav__link">
-    get_input()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.recheck_torrent" class="md-nav__link">
-    recheck_torrent()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.select_action" class="md-nav__link">
-    select_action()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.showcenter" class="md-nav__link">
-    showcenter()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.interactive.showtext" class="md-nav__link">
-    showtext()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -799,10 +676,10 @@
 
 
 <h2 id="torrentfile.interactive" class="doc doc-heading">
-          <code>torrentfile.interactive</code>
+          <code>interactive</code>
 
 
-<a href="#torrentfile.interactive" class="headerlink" title="Permanent link">¤</a></h2>
+<a href="#torrentfile.interactive" class="headerlink" title="Permanent link">#</a></h2>
 
   <div class="doc doc-contents first">
   
@@ -826,7 +703,7 @@
 <h3 id="torrentfile.interactive.InteractiveCreator" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">InteractiveCreator</span><span class="p">()</span></code>
 
-<a href="#torrentfile.interactive.InteractiveCreator" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.interactive.InteractiveCreator" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -834,7 +711,44 @@
   
       <p>Class namespace for interactive program options.</p>
 
+  
+      <p>Initialize interactive meta file creator dialog.</p>
 
+          <details class="quote">
+            <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize interactive meta file creator dialog.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;url_list&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;piece_length&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;outfile&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;httpseeds&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outfile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_props</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+          </details>
 
   
 
@@ -855,13 +769,140 @@
 <h4 id="torrentfile.interactive.InteractiveCreator.get_props" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">get_props</span><span class="p">()</span></code>
 
-<a href="#torrentfile.interactive.InteractiveCreator.get_props" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#torrentfile.interactive.InteractiveCreator.get_props" class="headerlink" title="Permanent link">#</a></h4>
 
 
   <div class="doc doc-contents ">
   
       <p>Gather details for torrentfile from user.</p>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_props</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gather details for torrentfile from user.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">piece_length</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Piece Length (empty=auto): &quot;</span><span class="p">,</span>
+                             <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;piece_length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">piece_length</span>
+    <span class="n">announce</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Tracker list (empty): &quot;</span><span class="p">,</span>
+                         <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">announce</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">announce</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+    <span class="n">url_list</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Web Seed </span><span class="si">{GetRight}</span><span class="s2"> list (empty): &quot;</span><span class="p">,</span>
+                         <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span>
+
+    <span class="n">httpseeds</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Web Seed </span><span class="si">{Hoffman}</span><span class="s2"> list (empty): &quot;</span><span class="p">,</span>
+                          <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">url_list</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;url_list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">url_list</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">httpseeds</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;httpseeds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">httpseeds</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">comment</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Comment (empty): &quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">comment</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">comment</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Source (empty): &quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">source</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">source</span>
+
+    <span class="n">private</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Private Torrent? {Y/N}: (N)&quot;</span><span class="p">,</span>
+                        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="s2">&quot;yYnN&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">private</span> <span class="ow">and</span> <span class="n">private</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;private&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">contents</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Content Path: &quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">contents</span>
+
+    <span class="n">outfile</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Output Path (</span><span class="si">{</span><span class="n">contents</span><span class="si">}</span><span class="s2">.torrent): &quot;</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">outfile</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;outfile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">outfile</span>
+
+    <span class="n">meta_version</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Meta Version {1,2,3}: (1)&quot;</span><span class="p">,</span>
+                             <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="s2">&quot;123&quot;</span><span class="p">)</span>
+
+    <span class="n">showcenter</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;creating </span><span class="si">{</span><span class="n">outfile</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileHybrid</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFileV2</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -881,7 +922,7 @@
 <h3 id="torrentfile.interactive.InteractiveEditor" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">InteractiveEditor</span><span class="p">(</span><span class="n">metafile</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span></code>
 
-<a href="#torrentfile.interactive.InteractiveEditor" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.interactive.InteractiveEditor" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -890,6 +931,7 @@
       <p>Interactive dialog class for torrent editing.</p>
 
   
+      <p>Initialize the Interactive torrent editor guide.</p>
 
   <table>
     <thead>
@@ -914,6 +956,51 @@
     </tbody>
   </table>
 
+          <details class="quote">
+            <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metafile</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize the Interactive torrent editor guide.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    metafile : str</span>
+<span class="sd">        user input string identifying the path to a torrent meta file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">metafile</span> <span class="o">=</span> <span class="n">metafile</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;url-list&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url-list&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="s2">&quot;httpseeds&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;httpseeds&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;announce-list&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;private&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;comment&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+          </details>
 
   
 
@@ -934,13 +1021,102 @@
 <h4 id="torrentfile.interactive.InteractiveEditor.edit_props" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">edit_props</span><span class="p">()</span></code>
 
-<a href="#torrentfile.interactive.InteractiveEditor.edit_props" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#torrentfile.interactive.InteractiveEditor.edit_props" class="headerlink" title="Permanent link">#</a></h4>
 
 
   <div class="doc doc-contents ">
   
       <p>Loop continuosly for edits until user signals DONE.</p>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">edit_props</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loop continuosly for edits until user signals DONE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;Choose the number for a propert the needs editing.&quot;</span>
+                   <span class="s2">&quot;Enter DONE when all editing has been completed.&quot;</span><span class="p">)</span>
+
+        <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+            <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+            <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;private&quot;</span><span class="p">,</span>
+            <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;tracker&quot;</span><span class="p">,</span>
+            <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;web-seed&quot;</span><span class="p">,</span>
+            <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;httpseeds&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;comment&quot;</span><span class="p">,</span>
+            <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+            <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;private&quot;</span><span class="p">,</span>
+            <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;announce&quot;</span><span class="p">,</span>
+            <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;url-list&quot;</span><span class="p">,</span>
+            <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;httpseeds&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">txt</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">props</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;done&quot;</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">prop</span><span class="p">)]</span>
+            <span class="n">key2</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">prop</span><span class="p">)]</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key2</span><span class="p">)</span>
+            <span class="n">showtext</span><span class="p">(</span>
+                <span class="s2">&quot;Enter new property value or leave empty for no value.&quot;</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">): &quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sanatize_response</span><span class="p">(</span><span class="n">key2</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">showtext</span><span class="p">(</span><span class="s2">&quot;Invalid input: Try again.&quot;</span><span class="p">)</span>
+    <span class="n">edit_torrent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metafile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -952,7 +1128,7 @@
 <h4 id="torrentfile.interactive.InteractiveEditor.sanatize_response" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">sanatize_response</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span></code>
 
-<a href="#torrentfile.interactive.InteractiveEditor.sanatize_response" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#torrentfile.interactive.InteractiveEditor.sanatize_response" class="headerlink" title="Permanent link">#</a></h4>
 
 
   <div class="doc doc-contents ">
@@ -994,6 +1170,41 @@
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">sanatize_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert the input data into a form recognizable by the program.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    key : str</span>
+<span class="sd">        name of the property and attribute being eddited.</span>
+<span class="sd">    response : str</span>
+<span class="sd">        User input value the property is being edited to.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span> <span class="s2">&quot;url-list&quot;</span><span class="p">,</span> <span class="s2">&quot;httpseeds&quot;</span><span class="p">]:</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">response</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1005,13 +1216,36 @@
 <h4 id="torrentfile.interactive.InteractiveEditor.show_current" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">show_current</span><span class="p">()</span></code>
 
-<a href="#torrentfile.interactive.InteractiveEditor.show_current" class="headerlink" title="Permanent link">¤</a></h4>
+<a href="#torrentfile.interactive.InteractiveEditor.show_current" class="headerlink" title="Permanent link">#</a></h4>
 
 
   <div class="doc doc-contents ">
   
       <p>Display the current met file information to screen.</p>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">show_current</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display the current met file information to screen.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;Current properties and values:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">longest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">longest</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">{</span><span class="n">txt</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">showtext</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1032,13 +1266,42 @@
 <h3 id="torrentfile.interactive.create_torrent" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">create_torrent</span><span class="p">()</span></code>
 
-<a href="#torrentfile.interactive.create_torrent" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.interactive.create_torrent" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
   
       <p>Create new torrent file interactively.</p>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_torrent</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create new torrent file interactively.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;Create Torrent&quot;</span><span class="p">)</span>
+    <span class="n">showtext</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Enter values for each of the options for the torrent creator, &quot;</span>
+        <span class="s2">&quot;or leave blank for program defaults.</span><span class="se">\n</span><span class="s2">Spaces are considered item &quot;</span>
+        <span class="s2">&quot;seperators for options that accept a list of values.</span><span class="se">\n</span><span class="s2">Values &quot;</span>
+        <span class="s2">&quot;enclosed in () indicate the default value, while </span><span class="si">{}</span><span class="s2"> holds all &quot;</span>
+        <span class="s2">&quot;valid choices available for the option.</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">creator</span> <span class="o">=</span> <span class="n">InteractiveCreator</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">creator</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1050,13 +1313,34 @@
 <h3 id="torrentfile.interactive.edit_action" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">edit_action</span><span class="p">()</span></code>
 
-<a href="#torrentfile.interactive.edit_action" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.interactive.edit_action" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
   
       <p>Edit the editable values of the torrent meta file.</p>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">edit_action</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Edit the editable values of the torrent meta file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;Edit Torrent&quot;</span><span class="p">)</span>
+    <span class="n">metafile</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Metafile(.torrent): &quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">)</span>
+    <span class="n">dialog</span> <span class="o">=</span> <span class="n">InteractiveEditor</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">show_current</span><span class="p">()</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">edit_props</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1068,7 +1352,7 @@
 <h3 id="torrentfile.interactive.get_input" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">get_input</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">)</span></code>
 
-<a href="#torrentfile.interactive.get_input" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.interactive.get_input" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -1123,6 +1407,43 @@
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_input</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine appropriate input function to call.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    *args : tuple</span>
+<span class="sd">        Arbitrary number of args to pass to next function</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The results of the function call.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_get_input_loop</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_get_input</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1134,13 +1455,44 @@
 <h3 id="torrentfile.interactive.recheck_torrent" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">recheck_torrent</span><span class="p">()</span></code>
 
-<a href="#torrentfile.interactive.recheck_torrent" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.interactive.recheck_torrent" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
   
       <p>Check torrent download completed percentage.</p>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">recheck_torrent</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check torrent download completed percentage.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;Check Torrent&quot;</span><span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Enter path to torrent contents, and corresponding torrent metafile.&quot;</span>
+    <span class="n">showtext</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">metafile</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Conent Path (downloads/complete/torrentname):&quot;</span><span class="p">,</span>
+                         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">)</span>
+    <span class="n">contents</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Metafile (*.torrent): &quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">)</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">contents</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
+    <span class="n">showtext</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Completion for </span><span class="si">{</span><span class="n">metafile</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">results</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1152,13 +1504,54 @@
 <h3 id="torrentfile.interactive.select_action" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">select_action</span><span class="p">()</span></code>
 
-<a href="#torrentfile.interactive.select_action" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.interactive.select_action" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
   
       <p>Operate TorrentFile program interactively through terminal.</p>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">select_action</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Operate TorrentFile program interactively through terminal.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">showcenter</span><span class="p">(</span><span class="s2">&quot;TorrentFile: Starting Interactive Mode&quot;</span><span class="p">)</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">get_input</span><span class="p">(</span><span class="s2">&quot;Enter the action you wish to perform.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                       <span class="s2">&quot;Action ( Create (c) | Edit (e) | Recheck (r) ): &quot;</span><span class="p">)</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="s2">&quot;create&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">create_torrent</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="s2">&quot;check&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">recheck_torrent</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="s2">&quot;edit&quot;</span> <span class="ow">in</span> <span class="n">action</span> <span class="ow">or</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;e&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">edit_action</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to recognize input.  Please try again.&quot;</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
+    <span class="k">return</span> <span class="n">select_action</span><span class="p">()</span>  <span class="c1"># pragma: nocover</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1170,7 +1563,7 @@
 <h3 id="torrentfile.interactive.showcenter" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">showcenter</span><span class="p">(</span><span class="n">txt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span></code>
 
-<a href="#torrentfile.interactive.showcenter" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.interactive.showcenter" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -1200,6 +1593,35 @@
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">showcenter</span><span class="p">(</span><span class="n">txt</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print text to screen in the center position of the terminal.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    txt : str</span>
+<span class="sd">        the preformated message to send to stdout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">termlen</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span>
+    <span class="n">padding</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(((</span><span class="n">termlen</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">txt</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">txt</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">])</span>
+    <span class="n">showtext</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1211,7 +1633,7 @@
 <h3 id="torrentfile.interactive.showtext" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">showtext</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></code>
 
-<a href="#torrentfile.interactive.showtext" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.interactive.showtext" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -1241,6 +1663,29 @@
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\interactive.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">showtext</span><span class="p">(</span><span class="n">txt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print contents of txt to screen.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    txt : str</span>
+<span class="sd">        text to print to terminal.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1323,7 +1768,7 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["header.autohide", "toc.integrate", "navigation-expand", "navigation-tabs", "navigation-instant"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
