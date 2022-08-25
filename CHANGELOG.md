@@ -1,5 +1,15 @@
 # TorrentFile
 
+## Version 0.8.1
+
+-   Further improvements to documentation
+-   Fixed bug that interrupted the creation process when using gui version
+-   Added unittests
+-   Improved docstrings and docstring formatting
+-   Renamed a couple of methods
+
+* * *
+
 ## Version 0.8.0
 
 -   overhaul documentation

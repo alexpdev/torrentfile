@@ -99,7 +99,7 @@ class ProgressBar:
         padding = (start - len(title)) * " "
         self.prefix = "".join([title, padding])
 
-    def pbar(self) -> str:
+    def get_progress(self) -> str:
         """
         Return the size of the filled portion of the progress bar.
 
@@ -131,12 +131,6 @@ class ProgMixin:
 
     Displays progress of hashing individual files, usefull when hashing
     really big files.
-
-    Methods
-    -------
-    prog_start
-    prog_update
-    prog_close
     """
 
     def prog_start(self,
@@ -162,16 +156,21 @@ class ProgMixin:
         width = shutil.get_terminal_size().columns
         if len(str(title)) >= width // 2:
             parts = list(Path(title).parts)
-            while len("//".join(parts)) > width // 2 and len(parts) > 0:
+            while (len("//".join(parts)) > (width // 2)) and (len(parts) > 0):
                 del parts[0]
-            title = os.path.join(*parts)
+            if parts:
+                title = os.path.join(*parts)
+            else:
+                title = os.path.basename(path)  # pragma: nocover
         length = min(length, width // 2)
         start = width - int(length * 1.5)
         self.prog = ProgressBar(total, title, length, unit, start)
 
     def prog_update(self, val: int):
         """
-        Update progress bar with given amount of progress.
+        Update progress bar.
+
+        Using the value provided, increment the progress bar by that value.
 
         Parameters
         ----------
@@ -180,7 +179,7 @@ class ProgMixin:
         """
         if self.is_active():
             self.prog.state += val
-            pbar = self.prog.pbar()
+            pbar = self.prog.get_progress()
             output = f"{self.prog.prefix}{pbar}{self.prog.suffix}\r"
             sys.stdout.write(output)
             sys.stdout.flush()

@@ -564,7 +564,7 @@ def execute(args: Optional[list] = None) -> list:
     )
 
     rebuild_parser.set_defaults(func=rebuild)
-
+    print(args)
     args = parser.parse_args(args)
 
     if args.quiet:

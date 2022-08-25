@@ -209,7 +209,9 @@
                     
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="TorrentFile Docs" class="md-nav__button md-logo" aria-label="TorrentFile Docs" data-md-component="logo">
       
@@ -601,6 +603,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../coverage/" class="md-nav__link">
+        Coverage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../recheck/" class="md-nav__link">
         recheck
       </a>
@@ -660,163 +677,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#api-and-source" class="md-nav__link">
-    API and Source
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#torrent-module" class="md-nav__link">
-    Torrent Module
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#classes" class="md-nav__link">
-    Classes
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#constants" class="md-nav__link">
-    Constants
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bittorrent-v2" class="md-nav__link">
-    Bittorrent V2
-  </a>
-  
-    <nav class="md-nav" aria-label="Bittorrent V2">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#meta-version-2-dictionary" class="md-nav__link">
-    Meta Version 2 Dictionary:
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bittorrent-v1" class="md-nav__link">
-    Bittorrent V1
-  </a>
-  
-    <nav class="md-nav" aria-label="Bittorrent V1">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#v1-meta-dictionary" class="md-nav__link">
-    v1 meta-dictionary
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utils-module" class="md-nav__link">
-    Utils Module
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#edit-module" class="md-nav__link">
-    Edit Module
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#keywords" class="md-nav__link">
-    Keywords
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#interactive-module" class="md-nav__link">
-    Interactive Module
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cli-module" class="md-nav__link">
-    CLI Module
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#functions" class="md-nav__link">
-    Functions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#classes_1" class="md-nav__link">
-    Classes
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recheck-module" class="md-nav__link">
-    Recheck Module
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hasher-module" class="md-nav__link">
-    Hasher Module
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -828,9 +688,9 @@
 
 
 
-<h1 id="torrentfile">TorrentFile<a class="headerlink" href="#torrentfile" title="Permanent link">¤</a></h1>
-<h2 id="api-and-source">API and Source<a class="headerlink" href="#api-and-source" title="Permanent link">¤</a></h2>
-<h2 id="torrent-module"><code>Torrent</code> Module<a class="headerlink" href="#torrent-module" title="Permanent link">¤</a></h2>
+<h1 id="torrentfile">TorrentFile<a class="headerlink" href="#torrentfile" title="Permanent link">#</a></h1>
+<h2 id="api-and-source">API and Source<a class="headerlink" href="#api-and-source" title="Permanent link">#</a></h2>
+<h2 id="torrent-module"><code>Torrent</code> Module<a class="headerlink" href="#torrent-module" title="Permanent link">#</a></h2>
 <div class="mkapi-node" id="torrentfile.torrent">
 <div class='mkapi-object-container'>
   <div class="mkapi-object module code top">
@@ -842,7 +702,7 @@
 <div class="mkapi-docstring">
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Classes and procedures pertaining to the creation of torrent meta files.</p>
-<h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">¤</a></h2>
+<h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">#</a></h2>
 <ul>
 <li>
 <p><code>TorrentFile</code>
@@ -857,7 +717,7 @@
     base class for all MetaFile classes.</p>
 </li>
 </ul>
-<h2 id="constants">Constants<a class="headerlink" href="#constants" title="Permanent link">¤</a></h2>
+<h2 id="constants">Constants<a class="headerlink" href="#constants" title="Permanent link">#</a></h2>
 <ul>
 <li>
 <p>BLOCK_SIZE : int
@@ -868,36 +728,36 @@
     Length of a sha256 hash.</p>
 </li>
 </ul>
-<h2 id="bittorrent-v2">Bittorrent V2<a class="headerlink" href="#bittorrent-v2" title="Permanent link">¤</a></h2>
+<h2 id="bittorrent-v2">Bittorrent V2<a class="headerlink" href="#bittorrent-v2" title="Permanent link">#</a></h2>
 <p><strong>From Bittorrent.org Documentation pages.</strong></p>
 <p><em>Implementation details for Bittorrent Protocol v2.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>All strings in a .torrent file that contain text must be UTF-8 encoded.</p>
 </div>
-<h3 id="meta-version-2-dictionary">Meta Version 2 Dictionary:<a class="headerlink" href="#meta-version-2-dictionary" title="Permanent link">¤</a></h3>
+<h3 id="meta-version-2-dictionary">Meta Version 2 Dictionary:<a class="headerlink" href="#meta-version-2-dictionary" title="Permanent link">#</a></h3>
 <ul>
 <li>
-<p>"announce":
+<p>&ldquo;announce&rdquo;:
     The URL of the tracker.</p>
 </li>
 <li>
-<p>"info":
+<p>&ldquo;info&rdquo;:
     This maps to a dictionary, with keys described below.</p>
 <ul>
 <li>
-<p>"name":
+<p>&ldquo;name&rdquo;:
     A display name for the torrent. It is purely advisory.</p>
 </li>
 <li>
-<p>"piece length":
+<p>&ldquo;piece length&rdquo;:
     The number of bytes that each logical piece in the peer
     protocol refers to. I.e. it sets the granularity of piece, request,
     bitfield and have messages. It must be a power of two and at least
     6KiB.</p>
 </li>
 <li>
-<p>"meta version":
+<p>&ldquo;meta version&rdquo;:
     An integer value, set to 2 to indicate compatibility
     with the current revision of this specification. Version 1 is not
     assigned to avoid confusion with BEP3. Future revisions will only
@@ -910,15 +770,15 @@
     that each non-empty</p>
 </li>
 <li>
-<p>"file tree":
+<p>&ldquo;file tree&rdquo;:
     A tree of dictionaries where dictionary keys represent UTF-8
     encoded path elements. Entries with zero-length keys describe the
-    properties of the composed path at that point. 'UTF-8 encoded'
+    properties of the composed path at that point. &lsquo;UTF-8 encoded&rsquo;
     context only means that if the native encoding is known at creation
     time it must be converted to UTF-8. Keys may contain invalid UTF-8
     sequences or characters and names that are reserved on specific
     filesystems. Implementations must be prepared to sanitize them. On
-    platforms path components exactly matching '.' and '..' must be
+    platforms path components exactly matching &lsquo;.&rsquo; and &lsquo;..&rsquo; must be
     sanitized since they could lead to directory traversal attacks and
     conflicting path descriptions. On platforms that require UTF-8
     path components this sanitizing step must happen after normalizing
@@ -928,13 +788,13 @@
     specified piece length, resulting in an alignment gap.</p>
 </li>
 <li>
-<p>"length":
+<p>&ldquo;length&rdquo;:
     Length of the file in bytes. Presence of this field indicates
     that the dictionary describes a file, not a directory. Which means
     it must not have any sibling entries.</p>
 </li>
 <li>
-<p>"pieces root":
+<p>&ldquo;pieces root&rdquo;:
     For non-empty files this is the the root hash of a merkle
     tree with a branching factor of 2, constructed from 16KiB blocks
     of the file. The last block may be shorter than 16KiB. The
@@ -947,7 +807,7 @@
 </ul>
 </li>
 <li>
-<p>"piece layers":
+<p>&ldquo;piece layers&rdquo;:
     A dictionary of strings. For each file in the file tree that
     is larger than the piece size it contains one string value.
     The keys are the merkle roots while the values consist of concatenated
@@ -968,8 +828,8 @@
 i.e. it must not contain a zero-length key with a dictionary containing
 a length key.</p>
 </div>
-<h2 id="bittorrent-v1">Bittorrent V1<a class="headerlink" href="#bittorrent-v1" title="Permanent link">¤</a></h2>
-<h3 id="v1-meta-dictionary">v1 meta-dictionary<a class="headerlink" href="#v1-meta-dictionary" title="Permanent link">¤</a></h3>
+<h2 id="bittorrent-v1">Bittorrent V1<a class="headerlink" href="#bittorrent-v1" title="Permanent link">#</a></h2>
+<h3 id="v1-meta-dictionary">v1 meta-dictionary<a class="headerlink" href="#v1-meta-dictionary" title="Permanent link">#</a></h3>
 <ul>
 <li>
 <p>announce:
@@ -1036,7 +896,7 @@ a length key.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In the single file case, the name key is the name of a file,
-in the muliple file case, it's the name of a directory.</p>
+in the muliple file case, it&rsquo;s the name of a directory.</p>
 </div></div>
     </div>
   <div class="mkapi-section classes">
@@ -1071,7 +931,7 @@ in the muliple file case, it's the name of a directory.</p>
 
 </div>
 
-<h2 id="utils-module"><code>Utils</code> Module<a class="headerlink" href="#utils-module" title="Permanent link">¤</a></h2>
+<h2 id="utils-module"><code>Utils</code> Module<a class="headerlink" href="#utils-module" title="Permanent link">#</a></h2>
 <div class="mkapi-node" id="torrentfile.utils">
 <div class='mkapi-object-container'>
   <div class="mkapi-object module code top">
@@ -1125,7 +985,7 @@ in the muliple file case, it's the name of a directory.</p>
         </div>
       <div class="mkapi-section-body functions"><ul class="mkapi-items">
 <li class="function"><code class="mkapi-item-name">get_file_list</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">path</code><code class="mkapi-object-parenthesis">)</code>
-<span class="mkapi-item-type">(list)</span>
+<span class="mkapi-item-type">(list :)</span>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Return a sorted list of file paths contained in directory.</span></li>
 
 <li class="function"><code class="mkapi-item-name">get_piece_length</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">size</code><code class="mkapi-object-parenthesis">)</code>
@@ -1163,7 +1023,7 @@ in the muliple file case, it's the name of a directory.</p>
 
 </div>
 
-<h2 id="edit-module"><code>Edit</code> Module<a class="headerlink" href="#edit-module" title="Permanent link">¤</a></h2>
+<h2 id="edit-module"><code>Edit</code> Module<a class="headerlink" href="#edit-module" title="Permanent link">#</a></h2>
 <div class="mkapi-node" id="torrentfile.edit">
 <div class='mkapi-object-container'>
   <div class="mkapi-object module code top">
@@ -1181,7 +1041,7 @@ should be edited, and what the new value should be.  Depending on what fields
 are chosen to edit, this command can trigger a new info hash which means the
 torrent will no longer be able to participate in the same swarm as the original
 unedited torrent.</p>
-<h2 id="keywords">Keywords<a class="headerlink" href="#keywords" title="Permanent link">¤</a></h2>
+<h2 id="keywords">Keywords<a class="headerlink" href="#keywords" title="Permanent link">#</a></h2>
 <p>private
 comment
 source
@@ -1208,7 +1068,7 @@ web-seeds</p></div>
 
 </div>
 
-<h2 id="interactive-module"><code>Interactive</code> Module<a class="headerlink" href="#interactive-module" title="Permanent link">¤</a></h2>
+<h2 id="interactive-module"><code>Interactive</code> Module<a class="headerlink" href="#interactive-module" title="Permanent link">#</a></h2>
 <div class="mkapi-node" id="torrentfile.interactive">
 <div class='mkapi-object-container'>
   <div class="mkapi-object module code top">
@@ -1277,7 +1137,7 @@ web-seeds</p></div>
 
 </div>
 
-<h2 id="cli-module"><code>CLI</code> Module<a class="headerlink" href="#cli-module" title="Permanent link">¤</a></h2>
+<h2 id="cli-module"><code>CLI</code> Module<a class="headerlink" href="#cli-module" title="Permanent link">#</a></h2>
 <div class="mkapi-node" id="torrentfile.cli">
 <div class='mkapi-object-container'>
   <div class="mkapi-object module code top">
@@ -1292,12 +1152,12 @@ web-seeds</p></div>
 <p>This module provides the primary command line argument parser for
 the torrentfile package. The main_script function is automatically
 invoked when called from command line, and parses accompanying arguments.</p>
-<h2 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">¤</a></h2>
+<h2 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">#</a></h2>
 <p>main_script :
     process command line arguments and run program.
 activate_logger :
     turns on debug mode and logging facility.</p>
-<h2 id="classes_1">Classes<a class="headerlink" href="#classes_1" title="Permanent link">¤</a></h2>
+<h2 id="classes_1">Classes<a class="headerlink" href="#classes_1" title="Permanent link">#</a></h2>
 <p>Config : class
     controls logging configuration
 TorrentFileHelpFormatter : HelpFormatter
@@ -1343,7 +1203,7 @@ TorrentFileHelpFormatter : HelpFormatter
 
 </div>
 
-<h2 id="recheck-module"><code>Recheck</code> Module<a class="headerlink" href="#recheck-module" title="Permanent link">¤</a></h2>
+<h2 id="recheck-module"><code>Recheck</code> Module<a class="headerlink" href="#recheck-module" title="Permanent link">#</a></h2>
 <div class="mkapi-node" id="torrentfile.recheck">
 <div class='mkapi-object-container'>
   <div class="mkapi-object module code top">
@@ -1355,7 +1215,7 @@ TorrentFileHelpFormatter : HelpFormatter
 <div class="mkapi-docstring">
 <div class="mkapi-section">
       <div class="mkapi-section-body"><p>Module container Checker Class.</p>
-<p>The CheckerClass takes a torrentfile and tha path to it's contents.
+<p>The CheckerClass takes a torrentfile and tha path to it&rsquo;s contents.
 It will then iterate through every file and directory contained
 and compare their data to values contained within the torrent file.
 Completion percentages will be printed to screen for each file and
@@ -1385,7 +1245,7 @@ at the end for the torrentfile as a whole.</p></div>
 
 </div>
 
-<h2 id="hasher-module"><code>Hasher</code> Module<a class="headerlink" href="#hasher-module" title="Permanent link">¤</a></h2>
+<h2 id="hasher-module"><code>Hasher</code> Module<a class="headerlink" href="#hasher-module" title="Permanent link">#</a></h2>
 <div class="mkapi-node" id="torrentfile.hasher">
 <div class='mkapi-object-container'>
   <div class="mkapi-object module code top">
@@ -1508,7 +1368,7 @@ at the end for the torrentfile as a whole.</p></div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["header.autohide", "toc.integrate", "navigation-expand", "navigation-tabs", "navigation-instant"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>

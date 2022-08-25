@@ -209,7 +209,9 @@
                     
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="TorrentFile Docs" class="md-nav__button md-logo" aria-label="TorrentFile Docs" data-md-component="logo">
       
@@ -518,6 +520,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../coverage/" class="md-nav__link">
+        Coverage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../recheck/" class="md-nav__link">
         recheck
       </a>
@@ -577,80 +594,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#help-messages" class="md-nav__link">
-    Help Messages
-  </a>
-  
-    <nav class="md-nav" aria-label="Help Messages">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#main" class="md-nav__link">
-    Main
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create" class="md-nav__link">
-    Create
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#edit" class="md-nav__link">
-    Edit
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recheck" class="md-nav__link">
-    Recheck
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#magnet" class="md-nav__link">
-    Magnet
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -662,10 +605,35 @@
 
 
 
-<h1 id="torrentfile-cli-menu">TorrentFile CLI Menu<a class="headerlink" href="#torrentfile-cli-menu" title="Permanent link">¤</a></h1>
-<h2 id="help-messages">Help Messages<a class="headerlink" href="#help-messages" title="Permanent link">¤</a></h2>
-<h3 id="main">Main<a class="headerlink" href="#main" title="Permanent link">¤</a></h3>
-<pre><code>Usage
+<h1 id="torrentfile-cli-menu">TorrentFile CLI Menu<a class="headerlink" href="#torrentfile-cli-menu" title="Permanent link">#</a></h1>
+<h2 id="help-messages">Help Messages<a class="headerlink" href="#help-messages" title="Permanent link">#</a></h2>
+<h3 id="main">Main<a class="headerlink" href="#main" title="Permanent link">#</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code>Usage
 =====
 torrentfile [-h] [-i] [-V] [-v]
                 &lt;create&gt; &lt;edit&gt; &lt;magnet&gt; &lt;recheck&gt; ...
@@ -688,13 +656,48 @@ Actions
 
     m (magnet)                        Create magnet url from an existing Bittorrent meta file.
 
-    r (recheck, check)                Calculate amount of torrent meta file's content is found on disk.
+    r (recheck, check)                Calculate amount of torrent meta file&#39;s content is found on disk.
 
     i (info)                          Show detailed information about a torrent file.
-</code></pre>
+</code></pre></div></td></tr></table></div>
 <hr />
-<h3 id="create">Create<a class="headerlink" href="#create" title="Permanent link">¤</a></h3>
-<pre><code>Usage
+<h3 id="create">Create<a class="headerlink" href="#create" title="Permanent link">#</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code>Usage
 =====
 torrentfile c [-h] [-a &lt;url&gt; [&lt;url&gt; ...]] [-p] [-s &lt;source&gt;] [-m]
                     [-c &lt;comment&gt;] [-o &lt;path&gt;] [-t &lt;url&gt; [&lt;url&gt; ...]]
@@ -730,10 +733,31 @@ Optional Arguments
 -w &lt;url&gt; [&lt;url&gt; ...], --web-seed &lt;url&gt; [&lt;url&gt; ...]  One or more url(s) linking to a http server hosting
                                                     the torrent contents.  This is useful if the torrent
                                                     tracker is ever unreachable. Example:: -w url1 url2 url3
-</code></pre>
+</code></pre></div></td></tr></table></div>
 <hr />
-<h2 id="edit">Edit<a class="headerlink" href="#edit" title="Permanent link">¤</a></h2>
-<pre><code>Usage
+<h2 id="edit">Edit<a class="headerlink" href="#edit" title="Permanent link">#</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code>Usage
 =====
 torrentfile e [-h] [--tracker &lt;url&gt; [&lt;url&gt; ...]]
                     [--web-seed &lt;url&gt; [&lt;url&gt; ...]] [--private]
@@ -755,10 +779,21 @@ Optional Arguments
 --private                     Make torrent private.
 --comment &lt;comment&gt;           Replaces any existing comment with &lt;comment&gt;
 --source &lt;source&gt;             Replaces current source with &lt;source&gt;
-</code></pre>
+</code></pre></div></td></tr></table></div>
 <hr />
-<h2 id="recheck">Recheck<a class="headerlink" href="#recheck" title="Permanent link">¤</a></h2>
-<pre><code>Usage
+<h2 id="recheck">Recheck<a class="headerlink" href="#recheck" title="Permanent link">#</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code>Usage
 =====
 torrentfile r [-h] &lt;*.torrent&gt; &lt;content&gt;
 
@@ -770,10 +805,20 @@ Positional Arguments
 Optional Arguments
 ------------------
 -h, --help   show this help message and exit
-</code></pre>
+</code></pre></div></td></tr></table></div>
 <hr />
-<h2 id="magnet">Magnet<a class="headerlink" href="#magnet" title="Permanent link">¤</a></h2>
-<pre><code>Usage
+<h2 id="magnet">Magnet<a class="headerlink" href="#magnet" title="Permanent link">#</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code>Usage
 =====
 torrentfile m [-h] &lt;*.torrent&gt;
 
@@ -784,7 +829,7 @@ Positional Arguments
 Optional Arguments
 ------------------
 -h, --help   show this help message and exit
-</code></pre>
+</code></pre></div></td></tr></table></div>
 
               
             </article>
@@ -856,7 +901,7 @@ Optional Arguments
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["header.autohide", "toc.integrate", "navigation-expand", "navigation-tabs", "navigation-instant"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>

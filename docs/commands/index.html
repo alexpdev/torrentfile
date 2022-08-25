@@ -209,7 +209,9 @@
                     
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="TorrentFile Docs" class="md-nav__button md-logo" aria-label="TorrentFile Docs" data-md-component="logo">
       
@@ -541,6 +543,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../coverage/" class="md-nav__link">
+        Coverage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../recheck/" class="md-nav__link">
         recheck
       </a>
@@ -600,105 +617,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#torrentfile.commands" class="md-nav__link">
-    commands
-  </a>
-  
-    <nav class="md-nav" aria-label="commands">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.commands--functions" class="md-nav__link">
-    Functions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.commands.create" class="md-nav__link">
-    create()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.commands.edit" class="md-nav__link">
-    edit()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.commands.info" class="md-nav__link">
-    info()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.commands.magnet" class="md-nav__link">
-    magnet()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.commands.rebuild" class="md-nav__link">
-    rebuild()
-  </a>
-  
-    <nav class="md-nav" aria-label="rebuild()">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.commands.rebuild--todo" class="md-nav__link">
-    TODO
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#torrentfile.commands.recheck" class="md-nav__link">
-    recheck()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -717,17 +635,17 @@
 
 
 <h2 id="torrentfile.commands" class="doc doc-heading">
-          <code>torrentfile.commands</code>
+          <code>commands</code>
 
 
-<a href="#torrentfile.commands" class="headerlink" title="Permanent link">¤</a></h2>
+<a href="#torrentfile.commands" class="headerlink" title="Permanent link">#</a></h2>
 
   <div class="doc doc-contents first">
   
       <p>The commands module contains the Action Commands executed by the CLI script.</p>
 <p>Each function pertains to a command line action/subcommand and drives specific
 features of the application.</p>
-<h4 id="torrentfile.commands--functions">Functions<a class="headerlink" href="#torrentfile.commands--functions" title="Permanent link">¤</a></h4>
+<h4 id="torrentfile.commands--functions">Functions<a class="headerlink" href="#torrentfile.commands--functions" title="Permanent link">#</a></h4>
 <ul>
 <li>create_command</li>
 <li>info_command</li>
@@ -755,7 +673,7 @@ features of the application.</p>
 <h3 id="torrentfile.commands.create" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">create</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Namespace</span></code>
 
-<a href="#torrentfile.commands.create" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.commands.create" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -806,6 +724,75 @@ features of the application.</p>
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\commands.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Namespace</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Execute the create CLI sub-command to create a new torrent metafile.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : Namespace</span>
+<span class="sd">        positional and optional CLI arguments.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    torrentfile.MetaFile</span>
+<span class="sd">        object containing the path to created metafile and its contents.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Creating torrent from </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentFile</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentAssembler</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">torrent</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">magnet</span><span class="p">:</span>
+        <span class="n">magnet</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+
+    <span class="n">args</span><span class="o">.</span><span class="n">torrent</span> <span class="o">=</span> <span class="n">torrent</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">outfile</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Torrent Save Path: &quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">outfile</span><span class="p">)))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Output path: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">outfile</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">args</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -817,7 +804,7 @@ features of the application.</p>
 <h3 id="torrentfile.commands.edit" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">edit</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span></code>
 
-<a href="#torrentfile.commands.edit" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.commands.edit" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -871,6 +858,67 @@ the torrentfile.</p>
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\commands.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Execute the edit CLI sub-command with provided arguments.</span>
+
+<span class="sd">    Provides functionality that can change the details of a torrentfile</span>
+<span class="sd">    that preserves all of the hash piece information so as not to break</span>
+<span class="sd">    the torrentfile.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : Namespace</span>
+<span class="sd">        positional and optional CLI arguments.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        path to edited torrent file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metafile</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">metafile</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Editing </span><span class="si">%s</span><span class="s2"> Meta File&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">metafile</span><span class="p">))</span>
+    <span class="n">editargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;url-list&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">url_list</span><span class="p">,</span>
+        <span class="s2">&quot;httpseeds&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">httpseeds</span><span class="p">,</span>
+        <span class="s2">&quot;announce&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">announce</span><span class="p">,</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
+        <span class="s2">&quot;private&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">private</span><span class="p">,</span>
+        <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">edit_torrent</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">editargs</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -882,7 +930,7 @@ the torrentfile.</p>
 <h3 id="torrentfile.commands.info" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">info</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span></code>
 
-<a href="#torrentfile.commands.info" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.commands.info" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -935,6 +983,103 @@ a clean and readable format.</p>
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\commands.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show torrent metafile details to user via stdout.</span>
+
+<span class="sd">    Prints full details of torrent file contents to the terminal in</span>
+<span class="sd">    a clean and readable format.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : dict</span>
+<span class="sd">        command line arguements provided by the user.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The output printed to the terminal.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metafile</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">metafile</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
+    <span class="k">del</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
+
+    <span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;private&quot;</span> <span class="ow">in</span> <span class="n">meta</span> <span class="ow">and</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;private&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;private&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;True&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;announce-list&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+        <span class="n">lst</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce-list&quot;</span><span class="p">]</span>
+        <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce-list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">j</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lst</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s2">&quot;url-list&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+        <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;url-list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;url-list&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s2">&quot;httpseeds&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+        <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;httpseeds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;httpseeds&quot;</span><span class="p">])</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">longest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">meta</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">meta</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">,</span> <span class="s2">&quot;piece layers&quot;</span><span class="p">,</span> <span class="s2">&quot;files&quot;</span><span class="p">,</span> <span class="s2">&quot;file tree&quot;</span><span class="p">]:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="n">longest</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">key</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">prefix</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+
+    <span class="n">most</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="n">most</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">text</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="n">most</span><span class="p">]</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -946,7 +1091,7 @@ a clean and readable format.</p>
 <h3 id="torrentfile.commands.magnet" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">magnet</span><span class="p">(</span><span class="n">metafile</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span></code>
 
-<a href="#torrentfile.commands.magnet" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.commands.magnet" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -997,6 +1142,91 @@ a clean and readable format.</p>
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\commands.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">magnet</span><span class="p">(</span><span class="n">metafile</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a magnet URI from a Bittorrent meta file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    metafile : Namespace</span>
+<span class="sd">        Namespace class for CLI arguments.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        created magnet URI.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="s2">&quot;metafile&quot;</span><span class="p">):</span>
+        <span class="n">metafile</span> <span class="o">=</span> <span class="n">metafile</span><span class="o">.</span><span class="n">metafile</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
+
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metafile</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span>
+    <span class="n">binfo</span> <span class="o">=</span> <span class="n">pyben</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">infohash</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">(</span><span class="n">binfo</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>  <span class="c1"># nosec</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Magnet Info Hash: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">infohash</span><span class="p">)</span>
+    <span class="n">scheme</span> <span class="o">=</span> <span class="s2">&quot;magnet:&quot;</span>
+    <span class="n">hasharg</span> <span class="o">=</span> <span class="s2">&quot;?xt=urn:btih:&quot;</span> <span class="o">+</span> <span class="n">infohash</span>
+    <span class="n">namearg</span> <span class="o">=</span> <span class="s2">&quot;&amp;dn=&quot;</span> <span class="o">+</span> <span class="n">quote_plus</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="s2">&quot;announce-list&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+        <span class="n">announce_args</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;&amp;tr=&quot;</span> <span class="o">+</span> <span class="n">quote_plus</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">for</span> <span class="n">urllist</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce-list&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urllist</span>
+        <span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">announce_args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&amp;tr=&quot;</span> <span class="o">+</span> <span class="n">quote_plus</span><span class="p">(</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce&quot;</span><span class="p">])]</span>
+
+    <span class="n">full_uri</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">scheme</span><span class="p">,</span> <span class="n">hasharg</span><span class="p">,</span> <span class="n">namearg</span><span class="p">]</span> <span class="o">+</span> <span class="n">announce_args</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Created Magnet URI </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">full_uri</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">full_uri</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">full_uri</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1008,7 +1238,7 @@ a clean and readable format.</p>
 <h3 id="torrentfile.commands.rebuild" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">rebuild</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span></code>
 
-<a href="#torrentfile.commands.rebuild" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.commands.rebuild" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -1018,7 +1248,7 @@ a clean and readable format.</p>
 a given torrent file, and rebuild as much of the torrent file
 as possible. Currently only checks if the filename and file
 size are a match.</p>
-<h6 id="torrentfile.commands.rebuild--todo">TODO<a class="headerlink" href="#torrentfile.commands.rebuild--todo" title="Permanent link">¤</a></h6>
+<h6 id="torrentfile.commands.rebuild--todo">TODO<a class="headerlink" href="#torrentfile.commands.rebuild--todo" title="Permanent link">#</a></h6>
 <ol>
 <li>Check file hashes to improve accuracy</li>
 </ol>
@@ -1067,6 +1297,69 @@ size are a match.</p>
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\commands.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">rebuild</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attempt to rebuild a torrent based on the a torrent file.</span>
+
+<span class="sd">    Recusively look through a directory for files that belong in</span>
+<span class="sd">    a given torrent file, and rebuild as much of the torrent file</span>
+<span class="sd">    as possible. Currently only checks if the filename and file</span>
+<span class="sd">    size are a match.</span>
+
+<span class="sd">    #### TODO</span>
+<span class="sd">    1. Check file hashes to improve accuracy</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : Namespace</span>
+<span class="sd">        command line arguments including the paths neccessary</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        total number of content files copied to the rebuild directory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metafiles</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">metafiles</span>
+    <span class="n">dest</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">destination</span>
+    <span class="n">contents</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">contents</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">[</span><span class="n">metafiles</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">contents</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">assembler</span> <span class="o">=</span> <span class="n">Assembler</span><span class="p">(</span><span class="n">metafiles</span><span class="p">,</span> <span class="n">contents</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">assembler</span><span class="o">.</span><span class="n">rebuild</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1078,7 +1371,7 @@ size are a match.</p>
 <h3 id="torrentfile.commands.recheck" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">recheck</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span></code>
 
-<a href="#torrentfile.commands.recheck" class="headerlink" title="Permanent link">¤</a></h3>
+<a href="#torrentfile.commands.recheck" class="headerlink" title="Permanent link">#</a></h3>
 
 
   <div class="doc doc-contents ">
@@ -1132,6 +1425,93 @@ or directory for completeness and validation.</p>
     </tbody>
   </table>
 
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\commands.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">recheck</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Execute recheck CLI sub-command.</span>
+
+<span class="sd">    Checks the piece hashes within a pre-existing torrent file</span>
+<span class="sd">    and does a piece by piece check with the contents of a file</span>
+<span class="sd">    or directory for completeness and validation.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : Namespace</span>
+<span class="sd">        positional and optional arguments.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The percentage of content currently saved to disk.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metafile</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">metafile</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">content</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Unable to parse directory </span><span class="si">{</span><span class="n">metafile</span><span class="si">}</span><span class="s2">. &quot;</span>
+                            <span class="s2">&quot;Check the order of the parameters.&quot;</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Validating </span><span class="si">%s</span><span class="s2"> &lt;---------------&gt; </span><span class="si">%s</span><span class="s2"> contents&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span>
+                 <span class="n">content</span><span class="p">)</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Rechecking  </span><span class="si">{</span><span class="n">metafile</span><span class="si">}</span><span class="s2"> ...</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">halfterm</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">padding</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">halfterm</span> <span class="o">-</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">padding</span> <span class="o">+</span> <span class="n">msg</span><span class="p">)</span>
+
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">Checker</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Completed initialization of the Checker class&quot;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">checker</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
+
+    <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">content</span><span class="si">}</span><span class="s2"> &lt;- </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">% -&gt; </span><span class="si">{</span><span class="n">metafile</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">padding</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">halfterm</span> <span class="o">-</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">padding</span> <span class="o">+</span> <span class="n">message</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -1214,7 +1594,7 @@ or directory for completeness and validation.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["header.autohide", "toc.integrate", "navigation-expand", "navigation-tabs", "navigation-instant"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
