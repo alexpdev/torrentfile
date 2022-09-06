@@ -113,7 +113,7 @@ class TorrentFileHelpFormatter(HelpFormatter):
                          width=width,
                          max_help_position=max_help_positions)
 
-    def _split_lines(self, text, _):
+    def _split_lines(self, text: str, _: int) -> list:
         """
         Split multiline help messages and remove indentation.
 
@@ -123,11 +123,16 @@ class TorrentFileHelpFormatter(HelpFormatter):
             text that needs to be split
         _ : int
             max width for line.
+
+        Returns
+        -------
+        list :
+            split into multiline text list
         """
         lines = text.split("\n")
         return [line.strip() for line in lines if line]
 
-    def _format_text(self, text):
+    def _format_text(self, text: str) -> str:
         """
         Format text for cli usage messages.
 
@@ -145,7 +150,7 @@ class TorrentFileHelpFormatter(HelpFormatter):
         text = self._whitespace_matcher.sub(" ", text).strip()
         return text + "\n\n"
 
-    def _join_parts(self, part_strings):
+    def _join_parts(self, part_strings: list) -> str:
         """
         Combine different sections of the help message.
 
@@ -159,11 +164,11 @@ class TorrentFileHelpFormatter(HelpFormatter):
         str
             Fully formatted help message for CLI.
         """
-        parts = self.format_headers(part_strings)
+        parts = self._format_headers(part_strings)
         return super()._join_parts(parts)
 
     @staticmethod
-    def format_headers(parts):
+    def _format_headers(parts: list) -> list:
         """
         Format help message section headers.
 
@@ -564,7 +569,6 @@ def execute(args: Optional[list] = None) -> list:
     )
 
     rebuild_parser.set_defaults(func=rebuild)
-    print(args)
     args = parser.parse_args(args)
 
     if args.quiet:
