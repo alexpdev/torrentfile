@@ -68,7 +68,6 @@ clean-build: ## remove build artifacts
 	rm -rfv .codacy-coverage
 	rm -rfv node_modules
 	rm -fv torrentfile.log
-	rm -fv -- *'.spec'
 	rm -fvr -- *'/__pycache__'
 	rm -frv runner/build
 	rm -frv runner/dist

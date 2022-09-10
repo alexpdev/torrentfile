@@ -20,7 +20,7 @@
 Enable calling the package directly with python from the command line.
 """
 
-from torrentfile.cli import execute
+from torrentfile import execute
 
 
 def main():
@@ -29,4 +29,4 @@ def main():
 
 
 if __name__ == "__main__":
-    execute()  # pragma: nocover
+    main()  # pragma: nocover
