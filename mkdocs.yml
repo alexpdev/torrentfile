@@ -39,18 +39,20 @@ nav:
   - Changelog : changelog.md
   - License : Apache2.md
   - API : api.md
-  - CLI : cli.md
-  - commands : commands.md
-  - edit : edit.md
-  - hasher : hasher.md
-  - interactive : interactive.md
-  - mixins : mixins.md
-  - rebuild : rebuild.md
   - Coverage: coverage.md
-  - recheck : recheck.md
-  - torrent : torrent.md
-  - utils : utils.md
-  - version : version.md
+  - Source:
+    - Source/index.md
+    - Source/cli.md
+    - Source/commands.md
+    - Source/edit.md
+    - Source/hasher.md
+    - Source/interactive.md
+    - Source/mixins.md
+    - Source/rebuild.md
+    - Source/recheck.md
+    - Source/torrent.md
+    - Source/utils.md
+    - Source/version.md
 
 
 markdown_extensions:
