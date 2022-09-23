@@ -83,7 +83,8 @@ class Checker:
             raise FileNotFoundError
         if os.path.isdir(metafile):
             raise ArgumentError(
-                "The <metafile> must be a .torrent file. Not a directory")
+                "The <metafile> must be a .torrent file. Not a directory"
+            )
         self.last_log = None
         self.log_msg("Checking: %s, %s", metafile, path)
         self.metafile = metafile
@@ -140,8 +141,9 @@ class Checker:
         for response in self.iter_hashes():
             responses.append(response)
 
-        self.log_msg("Final result for %s recheck:  %s", self.metafile,
-                     self._result)
+        self.log_msg(
+            "Final result for %s recheck:  %s", self.metafile, self._result
+        )
 
         return self._result
 
@@ -380,8 +382,9 @@ class FeedChecker(ProgMixin):
             self.index = i
             if os.path.exists(path):
                 for piece in self.extract(path, partial):
-                    if (len(piece) == self.piece_length) or (i + 1 == len(
-                            self.paths)):
+                    if (len(piece) == self.piece_length) or (
+                        i + 1 == len(self.paths)
+                    ):
                         yield piece
                     else:
                         partial = piece

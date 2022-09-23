@@ -109,9 +109,9 @@ class TorrentFileHelpFormatter(HelpFormatter):
         max_help_positions : int
             max length until line wrap.
         """
-        super().__init__(prog,
-                         width=width,
-                         max_help_position=max_help_positions)
+        super().__init__(
+            prog, width=width, max_help_position=max_help_positions
+        )
 
     def _split_lines(self, text: str, _: int) -> list:
         """
@@ -221,7 +221,8 @@ def execute(args: Optional[list] = None) -> list:
         usage="torrentfile [options] command [command options]",
         description=(
             "Command line tools for creating, editing, checking, building "
-            "and interacting with Bittorrent metainfo files"),
+            "and interacting with Bittorrent metainfo files"
+        ),
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
         conflict_handler="resolve",
@@ -548,22 +549,32 @@ def execute(args: Optional[list] = None) -> list:
     )
 
     rebuild_parser.add_argument(
-        "metafiles",
+        "-m",
+        "--metafiles",
         action="store",
         metavar="<*.torrent>",
-        help="path to .torrent file. or directory containing .torrent files",
+        nargs="+",
+        dest="metafiles",
+        required=True,
+        help="path(s) to .torrent file(s)/folder(s) containing .torrent files",
     )
 
     rebuild_parser.add_argument(
-        "contents",
+        "-c" "--contents",
         action="store",
+        dest="contents",
+        nargs="+",
+        required=True,
         metavar="<contents>",
-        help="directory that contains some or all of the torrents contents",
+        help="folders that might contain the source contents needed to rebuld",
     )
 
     rebuild_parser.add_argument(
-        "destination",
+        "-d",
+        "--destination",
         action="store",
+        dest="destination",
+        required=True,
         metavar="<destination>",
         help="path to where torrents will be re-assembled",
     )

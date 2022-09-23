@@ -111,7 +111,7 @@ def test_partial_metafiles(dir2, sizedfiles):
         with open(path, "rb") as bfile:
             data = bfile.read()
         with open(path, "wb") as bfile:
-            bfile.write(data[:-(2**10)])
+            bfile.write(data[: -(2**10)])
 
     for item in os.listdir(dir2):
         full = os.path.join(dir2, item)

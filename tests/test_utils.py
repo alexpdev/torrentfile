@@ -183,7 +183,9 @@ def test_humanize_bytes(amount, result):
     assert utils.humanize_bytes(amount) == result
 
 
-@pytest.mark.parametrize("amount, result", [(i, 2**i) for i in range(14, 25)])
+@pytest.mark.parametrize(
+    "amount, result", [(i, 2**i) for i in range(14, 25)]
+)
 def test_normalize_piece_length_int(amount, result):
     """Test normalize piece length function.
 
@@ -197,8 +199,9 @@ def test_normalize_piece_length_int(amount, result):
     assert utils.normalize_piece_length(amount) == result
 
 
-@pytest.mark.parametrize("amount, result",
-                         [(str(i), 2**i) for i in range(14, 21)])
+@pytest.mark.parametrize(
+    "amount, result", [(str(i), 2**i) for i in range(14, 21)]
+)
 def test_normalize_piece_length_str(amount, result):
     """Test normalize piece length function.
 
@@ -212,8 +215,9 @@ def test_normalize_piece_length_str(amount, result):
     assert utils.normalize_piece_length(amount) == result
 
 
-@pytest.mark.parametrize("amount",
-                         ["hello", 11, 0, 100000, 28, "zero", "fifteen"])
+@pytest.mark.parametrize(
+    "amount", ["hello", 11, 0, 100000, 28, "zero", "fifteen"]
+)
 def test_norm_plength_errors(amount):
     """Test function to normalize piece length errors.
 

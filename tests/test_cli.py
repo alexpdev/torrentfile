@@ -489,7 +489,8 @@ def test_cli_slash_outpath(dir1, sep):
 
 
 @pytest.mark.parametrize(
-    "flag", ["-t", "-w", "--announce", "--web-seed", "--http-seed"])
+    "flag", ["-t", "-w", "--announce", "--web-seed", "--http-seed"]
+)
 def test_cli_announce_path(dir1, flag):
     """
     Test CLI when path is placed after the trackers flag.
@@ -530,7 +531,7 @@ def test_cli_cwd(folder):
     rmpath(outfile)
 
 
-@pytest.fixture
+@pytest.fixture(scope="package")
 def build(filemeta1, metafile1):
     """Fixture for testing the build subcommand."""
     basedir = os.path.dirname(filemeta1)
@@ -547,7 +548,7 @@ def build(filemeta1, metafile1):
 def test_rebuild_subcommand(build):
     """Test the rebuild CLI subcommand."""
     basedir, dest = build
-    args = ["torrentfile", "rebuild", basedir, basedir, dest]
+    args = ["torrentfile", "rebuild", "-m", basedir, "-c", basedir, "-d", dest]
     sys.argv = args
     counter = execute()
     assert counter > 0

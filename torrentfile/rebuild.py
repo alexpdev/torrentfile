@@ -24,11 +24,14 @@ torrent meta file, and validate the contents of each file allong the
 way. Displays a progress bar for each torrent.
 """
 import os
-import shutil
-from os import PathLike
+from copy import deepcopy
+from hashlib import sha1
 from pathlib import Path
 
 import pyben
+
+from torrentfile.hasher import HasherV2
+from torrentfile.utils import copypath
 
 
 class Metadata:
@@ -48,6 +51,7 @@ class Metadata:
         self.path = os.path.abspath(path)
         self.meta = None
         self.name = None
+        self.info = None
         self.length = 0
         self.files = []
         self.filenames = set()
@@ -59,27 +63,34 @@ class Metadata:
         """
         self.meta = pyben.load(self.path)
         info = self.meta["info"]
+        self.piece_length = info["piece length"]
         self.name = info["name"]
+        self.meta_version = info.get("meta-version", 1)
+        self.pieces = info.get("pieces", bytes())
         if "length" in info:
             self.length += info["length"]
             self.is_file = True
             self.filenames.add(info["name"])
-            self.files.append({
-                "path": Path(self.name).parent,
-                "filename": self.name,
-                "full": self.name,
-                "length": self.length,
-            })
+            self.files.append(
+                {
+                    "path": Path(self.name).parent,
+                    "filename": self.name,
+                    "full": self.name,
+                    "length": self.length,
+                }
+            )
         if "files" in info:
             for f in info["files"]:
                 path = f["path"]
                 full = os.path.join(self.name, *path)
-                self.files.append({
-                    "path": Path(full).parent,
-                    "filename": path[-1],
-                    "full": full,
-                    "length": f["length"],
-                })
+                self.files.append(
+                    {
+                        "path": Path(full).parent,
+                        "filename": path[-1],
+                        "full": full,
+                        "length": f["length"],
+                    }
+                )
                 self.length += f["length"]
                 self.filenames.add(path[-1])
         elif "file tree" in info:
@@ -102,12 +113,16 @@ class Metadata:
                 path = Path(os.path.join(*partials))
                 full = Path(os.path.join(path, key))
                 length = val[""]["length"]
-                self.files.append({
-                    "path": path,
-                    "full": full,
-                    "filename": key,
-                    "length": length,
-                })
+                root = val[""]["pieces root"]
+                self.files.append(
+                    {
+                        "path": path,
+                        "full": full,
+                        "filename": key,
+                        "length": length,
+                        "root": root,
+                    }
+                )
                 self.length += length
             else:
                 self._parse_tree(val, partials + [key])
@@ -123,7 +138,7 @@ class Assembler:
     - directory where torrents will be re-assembled
     """
 
-    def __init__(self, metafile: str, contents: str, dest: str):
+    def __init__(self, metafiles: list, contents: list, dest: str):
         """
         Construct the assembler object.
 
@@ -133,7 +148,7 @@ class Assembler:
 
         Parameters
         ----------
-        metafile : str
+        metafiles : str
             path to torrent metafile or directory containing torrent metafiles.
         contents : str
             path to content or directory containing content that belongs to
@@ -141,36 +156,55 @@ class Assembler:
         dest: str
             path to the directory where rebuild will take place.
         """
-        self.metafiles = self._get_metafiles(metafile)
         self.contents = contents
+        self.filemap = _index_contents(self.contents)
+        self.metafiles = _get_metafiles(metafiles)
         self.dest = dest
-        self.fileinfo = {}
         self.counter = 0
 
-    @staticmethod
-    def _get_metafiles(metafile: str):
+    def assemble_torrents(self) -> int:
         """
-        Collect all .torrent meta files from give directory or file.
+        Assemble collection of torrent files into original structure.
+
+        Returns
+        -------
+        int
+            number of files copied
+        """
+        for metafile in self.metafiles:
+            self.rebuild(metafile)
+        return self.counter
+
+    def _rebuild_v2(self, metafile: Metadata) -> None:
+        """
+        Rebuild method for torrent v2 files.
 
         Parameters
         ----------
-        metafile : str
-            path to a torrent meta file or directory containing torrent meta
-            files.
+        metafile : Metadata
+            the metafile object
         """
-        metafiles = []
-        if os.path.exists(metafile):
-            if os.path.isdir(metafile):
-                path = os.path.abspath(metafile)
-                for filename in os.listdir(path):
-                    if filename.lower().endswith(".torrent"):
-                        metafiles.append(os.path.join(path, filename))
-            elif os.path.isfile(metafile) and metafile.lower().endswith(
-                    ".torrent"):
-                metafiles.append(metafile)
-        return metafiles
+        for entry in metafile.files:
+            filename = entry["filename"]
+            length = entry["length"]
+            if filename in self.filemap:
+                paths = self.filemap[filename]
+            else:
+                continue
+            for path, size in paths:
+                if size == length:
+                    hasher = HasherV2(path, metafile.piece_length, True)
+                    if entry["root"] == hasher.root:
+                        dest_path = os.path.join(self.dest, entry["full"])
+                        copypath(entry["path"], dest_path)
+                        self.counter += 1
+                        break
+            if self.counter and self.counter % 20 == 0:
+                print(
+                    f"Success {self.counter}: {entry['path']} -> {path}"
+                )  # pragma: nocover
 
-    def rebuild(self):
+    def rebuild(self, metafile: Metadata) -> None:
         """
         Build the torrent file structure from contents of directory.
 
@@ -179,73 +213,194 @@ class Assembler:
         the matches to the destination directory respecting folder
         structures along the way.
         """
-        if not self.fileinfo:
-            self._traverse_contents(Path(self.contents))
-        for path in self.metafiles:
-            metadata = Metadata(path)
-            for val in metadata.files:
-                if val["filename"] in self.fileinfo:
-                    self._compare_files(val)
-        return self.counter
+        if metafile.meta_version == 2:
+            self._rebuild_v2(metafile)
+        else:
+            self._rebuild_v1(metafile)
 
-    def _compare_files(self, val: dict):
+    def _rebuild_v1(self, metafile: Metadata) -> None:
         """
-        Compare all files with given filename.
-
-        Compare and find which files with the same filename matches
-        the length of the given files length and copy the file
-        to the destination directory including it's relative file
-        structure.
+        Rebuild method for torrent v1 files.
 
         Parameters
         ----------
+        metafile : Metadata
+            metafile object
+        """
+        partial = bytes()
+        for val in metafile.files:
+            found = False
+            if val["filename"] in self.filemap:
+                for path, size in self.filemap[val["filename"]]:
+                    if size == val["length"]:
+                        pieces = deepcopy(metafile.pieces)
+                        pl = metafile.piece_length
+                        result = self.check_hashes(path, pieces, partial, pl)
+                        if len(result) == 0:
+                            continue
+                        partial, metafile.pieces = result[0], result[1]
+                        dest_path = os.path.join(self.dest, val["full"])
+                        found = True
+                        copypath(path, dest_path)
+                        self.counter += 1
+                        break
+            if not found:
+                partial = self.is_missing(partial, val, metafile)
+
+    def check_hashes(
+        self, path: str, pieces: bytes, partial: bytes, pl: int
+    ) -> list:
+        """
+        Check each hash of the provided document to match against metafile.
+
+        Parameters
+        ----------
+        path : str
+            path to content
+        pieces : bytes
+            metafile hashes
+        partial : bytes
+            leftover bytes from previous hashes
+        pl : int
+            size in bytes of the hash contents
+
+        Returns
+        -------
+        list
+            partial bytes and pieces remaining
+        """
+        matches = count = 0
+        with open(path, "br") as contentfile:
+            while True:
+                diff = pl - len(partial)
+                content = contentfile.read(diff)
+                if len(content) < pl:
+                    if len(content) == 0:
+                        break
+                    partial += content
+                    break
+                partial += content
+                blok = sha1(partial).digest()
+                if blok == pieces[: len(blok)]:
+                    pieces = pieces[len(blok) :]
+                    matches += 1
+                pieces = pieces[len(blok) :]
+                partial = bytes()
+                count += 1
+        if count and matches == 0:
+            return []
+        return [partial, pieces]
+
+    def is_missing(
+        self, partial: bytes, val: dict, metafile: Metadata
+    ) -> bytes:
+        """
+        Run this method if the path is no good or filename doesn't exist.
+
+        Parameters
+        ----------
+        partial : bytes
+            bytes left over from previous hash
         val : dict
-            Details about a particular file listed in torrent metadata.
-        """
-        info = self.fileinfo[val["filename"]]
-        for entry in info:
-            if entry["length"] != val["length"]:
-                continue
-            full = os.path.join(self.dest, val["full"])
-            if os.path.exists(full):  # pragma: nocover
-                print(f"File already found at location {val['filename']}")
-                break
-            path = self.dest
-            for part in val["path"].parts:
-                path = os.path.join(path, part)
-                if not os.path.exists(path):
-                    os.mkdir(path)
-            shutil.copy(entry["path"], path)
-            self.counter += 1
-            if self.counter and self.counter % 20 == 0:
-                print(f"Success {self.counter}: {entry['path']} -> {path}"
-                      )  # pragma: nocover
-            break
+            metafile information
+        metafile : Metadata
+            the metafile
 
-    def _traverse_contents(self, path: PathLike):
+        Returns
+        -------
+        bytes
+            partial bytes from this hash
         """
-        Traverse the contents directory.
-
-        Recursively walk the directory collecting file names and
-        sizes for comparing to contents of torrent file.
-
-        Parameters
-        ----------
-        path : PathLike
-            The current path being traversed.
-        """
-        if path.is_file():
-            info = {
-                "path": str(path.resolve()),
-                "length": os.path.getsize(path),
-            }
-            if path.name not in self.fileinfo:
-                self.fileinfo[path.name] = [info]
+        pl = metafile.piece_length
+        if val["length"] == 0:
+            return partial
+        length = val["length"]
+        while length > 0:
+            diff = pl - len(partial)
+            if length > diff:
+                partial += bytes(diff)
+                hash_ = sha1(partial).digest()
+                metafile.pieces = metafile.pieces[len(hash_) :]
+                partial = bytes()
+                length -= diff
             else:
-                self.fileinfo[path.name].append(info)
-        elif path.is_dir():
-            try:
-                for item in path.iterdir():
-                    self._traverse_contents(item)
-            except PermissionError:  # pragma: nocover
-                print(f"Warning {str(path)} skipped due to Permission Error.")
+                partial += bytes(length)
+                length -= length
+        return partial
+
+
+def _get_metafiles(metafiles: list) -> None:
+    """
+    Collect all .torrent meta files from give directory or file.
+
+    Parameters
+    ----------
+    metafiles : str
+        path to a torrent metafile or directory containing torrent metafiles.
+    """
+    torrent_files = []
+    for path in metafiles:
+        if os.path.exists(path):
+            if os.path.isdir(path):
+                for filename in os.listdir(path):
+                    if filename.lower().endswith(".torrent"):
+                        metafile = Metadata(os.path.join(path, filename))
+                        torrent_files.append(metafile)
+            elif os.path.isfile(path) and path.lower().endswith(".torrent"):
+                metafile = Metadata(path)
+                torrent_files.append(metafile)
+    return torrent_files
+
+
+def _index_contents(contents: list) -> dict:
+    """
+    Collect all of the filenames and their respective paths.
+
+    Parameters
+    ----------
+    contents : list
+        paths to traverse looking for filenames
+
+    Returns
+    -------
+    dict
+        all filenames and their respective paths.
+    """
+    mapping = {}
+    for dirpath in contents:
+        mapped = _index_content(dirpath)
+        for key, value in mapped.items():
+            mapping.setdefault(key, [])
+            mapping[key].extend(value)
+    return mapping
+
+
+def _index_content(root: str) -> dict:
+    """
+    Collect filenames from directory or file.
+
+    Parameters
+    ----------
+    root : str
+        path to search for filenames
+
+    Returns
+    -------
+    dict
+        filenames and their respective paths
+    """
+    filemap = {}
+    if os.path.isfile(root):
+        name = os.path.basename(root)
+        size = os.path.getsize(root)
+        filemap.setdefault(name, [])
+        filemap[name].append((root, size))
+        return filemap
+    if os.path.isdir(root):
+        for path in os.listdir(root):
+            fullpath = os.path.join(root, path)
+            resultmap = _index_content(fullpath)
+            for key, value in resultmap.items():
+                filemap.setdefault(key, [])
+                filemap[key].extend(value)
+    return filemap

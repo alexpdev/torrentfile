@@ -43,7 +43,7 @@ def get_params(path):
     if os.path.exists(out):
         rmpath(out)  # pragma: nocover
     os.mkdir(out)
-    return (path, base, out)
+    return ([path], [base], out)
 
 
 @pytest.fixture()
@@ -67,7 +67,7 @@ def test_single_file(single1):
     Test functionality of single file torrent and single torrent.
     """
     assembler = Assembler(*single1)
-    counter = assembler.rebuild()
+    counter = assembler.assemble_torrents()
     assert counter > 0
 
 
@@ -75,14 +75,14 @@ def test_single_file_smaller(single2):
     """
     Test functionality of single file torrent and single torrent.
     """
-    name = pyben.load(single2[0])["info"]["name"]
-    contents = os.path.join(single2[1], name)
+    name = pyben.load(single2[0][0])["info"]["name"]
+    contents = os.path.join(single2[1][0], name)
     with open(contents, "rb") as content:
         data = content.read()
     with open(contents, "wb") as content:
-        content.write(data[:len(data) // 2])
+        content.write(data[: len(data) // 2])
     assembler = Assembler(*single2)
-    counter = assembler.rebuild()
+    counter = assembler.assemble_torrents()
     assert counter == 0
 
 

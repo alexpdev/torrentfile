@@ -216,8 +216,8 @@ def build(dir2, metafile2):
     class Namespace:
         """Command line args for rebuild command."""
 
-        metafiles = os.path.dirname(metafile2)
-        contents = basedir
+        metafiles = [os.path.dirname(metafile2)]
+        contents = [basedir]
         destination = dest
 
     yield Namespace

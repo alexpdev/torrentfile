@@ -45,7 +45,7 @@ logger = logging.getLogger(__name__)
 
 def filter_empty(args: dict, meta: dict, info: dict):
     """
-    Remove dictionary keys with empty values.
+    Remove the fields that were not used by the original file creator.
 
     Parameters
     ----------
