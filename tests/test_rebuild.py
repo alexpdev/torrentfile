@@ -88,16 +88,14 @@ def get_params(path):
 def single1(filemeta1):
     """Test fixture for testing the build subcommand."""
     params = get_params(filemeta1)
-    yield params
-    rmpath(params[-1])
+    return params
 
 
 @pytest.fixture()
 def single2(filemeta2):
     """Test fixture testing build with mismatched file size."""
     params = get_params(filemeta2)
-    yield params
-    rmpath(params[-1])
+    return params
 
 
 def test_single_file(single1):
