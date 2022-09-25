@@ -148,8 +148,7 @@ def test_file1_hashers(file1, size):
     hasher1 = HasherHybrid(file1, size, progress=False)
     hasher2 = HasherV2(file1, size, progress=False)
     hasher3 = FileHasher(file1, size, progress=False)
-    for _ in hasher3:
-        pass
+    _ = list(hasher3)
     lst = [hasher1.root, hasher2.root, hasher3.root]
     print(lst)
     assert len(set(lst)) == 1

@@ -388,7 +388,10 @@ def copypath(source: str, dest: str) -> None:
         shutil.copy(source, dest)  # pragma: nocover
         return  # pragma: nocover
     path_parts = iter(Path(dest).parts[:-1])
-    root = next(path_parts)
+    try:
+        root = next(path_parts)
+    except StopIteration:
+        return  # pragma: nocover
     if not os.path.exists(root):
         os.mkdir(root)  # pragma: nocover
     for part in path_parts:

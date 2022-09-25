@@ -235,7 +235,7 @@ class Assembler:
                     if size == val["length"]:
                         pieces = deepcopy(metafile.pieces)
                         pl = metafile.piece_length
-                        result = self.check_hashes(path, pieces, partial, pl)
+                        result = check_hashes(path, pieces, partial, pl)
                         if len(result) == 0:
                             continue
                         partial, metafile.pieces = result[0], result[1]
@@ -245,88 +245,86 @@ class Assembler:
                         self.counter += 1
                         break
             if not found:
-                partial = self.is_missing(partial, val, metafile)
+                partial = is_missing(partial, val, metafile)
 
-    def check_hashes(
-        self, path: str, pieces: bytes, partial: bytes, pl: int
-    ) -> list:
-        """
-        Check each hash of the provided document to match against metafile.
 
-        Parameters
-        ----------
-        path : str
-            path to content
-        pieces : bytes
-            metafile hashes
-        partial : bytes
-            leftover bytes from previous hashes
-        pl : int
-            size in bytes of the hash contents
+def check_hashes(path: str, pieces: bytes, partial: bytes, pl: int) -> list:
+    """
+    Check each hash of the provided document to match against metafile.
 
-        Returns
-        -------
-        list
-            partial bytes and pieces remaining
-        """
-        matches = count = 0
-        with open(path, "br") as contentfile:
-            while True:
-                diff = pl - len(partial)
-                content = contentfile.read(diff)
-                if len(content) < pl:
-                    if len(content) == 0:
-                        break
-                    partial += content  # pragma: nocover
-                    break  # pragma: nocover
-                partial += content
-                blok = sha1(partial).digest()  # nosec
-                if blok == pieces[: len(blok)]:
-                    pieces = pieces[len(blok):]
-                    matches += 1
-                pieces = pieces[len(blok):]
-                partial = bytes()
-                count += 1
-        if count and matches == 0:
-            return []
-        return [partial, pieces]
+    Parameters
+    ----------
+    path : str
+        path to content
+    pieces : bytes
+        metafile hashes
+    partial : bytes
+        leftover bytes from previous hashes
+    pl : int
+        size in bytes of the hash contents
 
-    def is_missing(
-        self, partial: bytes, val: dict, metafile: Metadata
-    ) -> bytes:
-        """
-        Run this method if the path is no good or filename doesn't exist.
-
-        Parameters
-        ----------
-        partial : bytes
-            bytes left over from previous hash
-        val : dict
-            metafile information
-        metafile : Metadata
-            the metafile
-
-        Returns
-        -------
-        bytes
-            partial bytes from this hash
-        """
-        pl = metafile.piece_length
-        if val["length"] == 0:
-            return partial  # pragma: nocover
-        length = val["length"]
-        while length > 0:
+    Returns
+    -------
+    list
+        partial bytes and pieces remaining
+    """
+    matches = count = 0
+    with open(path, "br") as contentfile:
+        while True:
             diff = pl - len(partial)
-            if length > diff:
-                partial += bytes(diff)
-                hash_ = sha1(partial).digest()  # nosec
-                metafile.pieces = metafile.pieces[len(hash_):]
-                partial = bytes()
-                length -= diff
-            else:
-                partial += bytes(length)
-                length -= length
-        return partial
+            content = contentfile.read(diff)
+            if len(content) < pl:
+                if len(content) == 0:
+                    break
+                partial += content  # pragma: nocover
+                break  # pragma: nocover
+            partial += content
+            blok = sha1(partial).digest()  # nosec
+            if blok == pieces[: len(blok)]:
+                pieces = pieces[len(blok):]
+                matches += 1
+            pieces = pieces[len(blok):]
+            partial = bytes()
+            count += 1
+    if count and matches == 0:
+        return []
+    return [partial, pieces]
+
+
+def is_missing(partial: bytes, val: dict, metafile: Metadata) -> bytes:
+    """
+    Run this method if the path is no good or filename doesn't exist.
+
+    Parameters
+    ----------
+    partial : bytes
+        bytes left over from previous hash
+    val : dict
+        metafile information
+    metafile : Metadata
+        the metafile
+
+    Returns
+    -------
+    bytes
+        partial bytes from this hash
+    """
+    pl = metafile.piece_length
+    if val["length"] == 0:
+        return partial  # pragma: nocover
+    length = val["length"]
+    while length > 0:
+        diff = pl - len(partial)
+        if length > diff:
+            partial += bytes(diff)
+            hash_ = sha1(partial).digest()  # nosec
+            metafile.pieces = metafile.pieces[len(hash_):]
+            partial = bytes()
+            length -= diff
+        else:
+            partial += bytes(length)
+            length -= length
+    return partial
 
 
 def _get_metafiles(metafiles: list) -> None:
