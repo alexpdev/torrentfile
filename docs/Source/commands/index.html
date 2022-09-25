@@ -1275,7 +1275,7 @@ a clean and readable format.</p>
   <div class="doc doc-contents ">
   
       <p>Attempt to rebuild a torrent based on the a torrent file.</p>
-<p>Recusively look through a directory for files that belong in
+<p>Recursively look through a directory for files that belong in
 a given torrent file, and rebuild as much of the torrent file
 as possible. Currently only checks if the filename and file
 size are a match.</p>
@@ -1363,7 +1363,7 @@ size are a match.</p>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Attempt to rebuild a torrent based on the a torrent file.</span>
 
-<span class="sd">    Recusively look through a directory for files that belong in</span>
+<span class="sd">    Recursively look through a directory for files that belong in</span>
 <span class="sd">    a given torrent file, and rebuild as much of the torrent file</span>
 <span class="sd">    as possible. Currently only checks if the filename and file</span>
 <span class="sd">    size are a match.</span>
@@ -1384,11 +1384,11 @@ size are a match.</p>
     <span class="n">metafiles</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">metafiles</span>
     <span class="n">dest</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">destination</span>
     <span class="n">contents</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">contents</span>
-    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">[</span><span class="n">metafiles</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">contents</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">[</span><span class="o">*</span><span class="n">metafiles</span><span class="p">,</span> <span class="o">*</span><span class="n">contents</span><span class="p">]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">assembler</span> <span class="o">=</span> <span class="n">Assembler</span><span class="p">(</span><span class="n">metafiles</span><span class="p">,</span> <span class="n">contents</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">assembler</span><span class="o">.</span><span class="n">rebuild</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">assembler</span><span class="o">.</span><span class="n">assemble_torrents</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>

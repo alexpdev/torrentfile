@@ -65,36 +65,32 @@ class Metadata:
         info = self.meta["info"]
         self.piece_length = info["piece length"]
         self.name = info["name"]
-        self.meta_version = info.get("meta-version", 1)
+        self.meta_version = info.get("meta version", 1)
         self.pieces = info.get("pieces", bytes())
-        if "length" in info:
+        if self.meta_version == 2:
+            self._parse_tree(info["file tree"], [self.name])
+        elif "length" in info:
             self.length += info["length"]
             self.is_file = True
             self.filenames.add(info["name"])
-            self.files.append(
-                {
-                    "path": Path(self.name).parent,
-                    "filename": self.name,
-                    "full": self.name,
-                    "length": self.length,
-                }
-            )
-        if "files" in info:
+            self.files.append({
+                "path": Path(self.name).parent,
+                "filename": self.name,
+                "full": self.name,
+                "length": self.length,
+            })
+        elif "files" in info:
             for f in info["files"]:
                 path = f["path"]
                 full = os.path.join(self.name, *path)
-                self.files.append(
-                    {
-                        "path": Path(full).parent,
-                        "filename": path[-1],
-                        "full": full,
-                        "length": f["length"],
-                    }
-                )
+                self.files.append({
+                    "path": Path(full).parent,
+                    "filename": path[-1],
+                    "full": full,
+                    "length": f["length"],
+                })
                 self.length += f["length"]
                 self.filenames.add(path[-1])
-        elif "file tree" in info:
-            self._parse_tree(info["file tree"], [self.name])
 
     def _parse_tree(self, tree: dict, partials: list):
         """
@@ -114,15 +110,13 @@ class Metadata:
                 full = Path(os.path.join(path, key))
                 length = val[""]["length"]
                 root = val[""]["pieces root"]
-                self.files.append(
-                    {
-                        "path": path,
-                        "full": full,
-                        "filename": key,
-                        "length": length,
-                        "root": root,
-                    }
-                )
+                self.files.append({
+                    "path": path,
+                    "full": full,
+                    "filename": key,
+                    "length": length,
+                    "root": root,
+                })
                 self.length += length
             else:
                 self._parse_tree(val, partials + [key])
@@ -199,10 +193,9 @@ class Assembler:
                         copypath(entry["path"], dest_path)
                         self.counter += 1
                         break
-            if self.counter and self.counter % 20 == 0:
-                print(
-                    f"Success {self.counter}: {entry['path']} -> {path}"
-                )  # pragma: nocover
+                if self.counter and self.counter % 20 == 0:
+                    print(f"Success {self.counter}: {entry['path']} -> {path}"
+                          )  # pragma: nocover
 
     def rebuild(self, metafile: Metadata) -> None:
         """
@@ -247,9 +240,8 @@ class Assembler:
             if not found:
                 partial = self.is_missing(partial, val, metafile)
 
-    def check_hashes(
-        self, path: str, pieces: bytes, partial: bytes, pl: int
-    ) -> list:
+    def check_hashes(self, path: str, pieces: bytes, partial: bytes,
+                     pl: int) -> list:
         """
         Check each hash of the provided document to match against metafile.
 
@@ -280,20 +272,19 @@ class Assembler:
                     partial += content
                     break
                 partial += content
-                blok = sha1(partial).digest()
-                if blok == pieces[: len(blok)]:
-                    pieces = pieces[len(blok) :]
+                blok = sha1(partial).digest()  # nosec
+                if blok == pieces[:len(blok)]:
+                    pieces = pieces[len(blok):]
                     matches += 1
-                pieces = pieces[len(blok) :]
+                pieces = pieces[len(blok):]
                 partial = bytes()
                 count += 1
         if count and matches == 0:
             return []
         return [partial, pieces]
 
-    def is_missing(
-        self, partial: bytes, val: dict, metafile: Metadata
-    ) -> bytes:
+    def is_missing(self, partial: bytes, val: dict,
+                   metafile: Metadata) -> bytes:
         """
         Run this method if the path is no good or filename doesn't exist.
 
@@ -319,8 +310,8 @@ class Assembler:
             diff = pl - len(partial)
             if length > diff:
                 partial += bytes(diff)
-                hash_ = sha1(partial).digest()
-                metafile.pieces = metafile.pieces[len(hash_) :]
+                hash_ = sha1(partial).digest()  # nosec
+                metafile.pieces = metafile.pieces[len(hash_):]
                 partial = bytes()
                 length -= diff
             else:

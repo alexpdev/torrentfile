@@ -53,7 +53,7 @@ testpaths = [
     "torrentfile",
 ]
 console_output_style = "progress"
-addopts = "--maxfail=5"
+addopts = "--maxfail=3"
 
 
 [tool.pylint. 'MESSAGES CONTROL']
@@ -64,7 +64,8 @@ disable = [
     "attribute-defined-outside-init",
     "invalid-name",
     "not-callable",
-    "consider-using-with"
+    "consider-using-with",
+    "implicit-str-concat"
 ]
 
 [tool.pylint. 'VARIABLES']

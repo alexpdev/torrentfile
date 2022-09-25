@@ -493,6 +493,9 @@ class FileHasher(CbMixin, ProgMixin):
             blocks.append(sha256(block[:size]).digest())
             if self.hybrid:
                 piece.update(block[:size])
+        if not blocks:
+            self._calculate_root()
+            raise StopIteration
         if len(blocks) != self.amount:
             padding = self._pad_remaining(len(blocks))
             blocks.extend(padding)
