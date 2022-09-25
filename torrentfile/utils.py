@@ -390,8 +390,8 @@ def copypath(source: str, dest: str) -> None:
     path_parts = iter(Path(dest).parts[:-1])
     try:
         root = next(path_parts)
-    except StopIteration:
-        return  # pragma: nocover
+    except StopIteration:  # pragma: nocover
+        return
     if not os.path.exists(root):
         os.mkdir(root)  # pragma: nocover
     for part in path_parts:

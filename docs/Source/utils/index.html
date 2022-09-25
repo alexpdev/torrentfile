@@ -1243,8 +1243,8 @@ ignored, however if dest is smaller than source, dest will be overwritten.</p>
     <span class="n">path_parts</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span><span class="o">.</span><span class="n">parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">root</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">path_parts</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
-        <span class="k">return</span>  <span class="c1"># pragma: nocover</span>
+    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
+        <span class="k">return</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
     <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">path_parts</span><span class="p">:</span>
