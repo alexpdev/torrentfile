@@ -1235,12 +1235,12 @@ ignored, however if dest is smaller than source, dest will be overwritten.</p>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dest</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">dest</span><span class="p">):</span>
             <span class="k">return</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
+        <span class="k">return</span>  <span class="c1"># pragma: nocover</span>
     <span class="n">path_parts</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span><span class="o">.</span><span class="n">parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">root</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">path_parts</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
     <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">path_parts</span><span class="p">:</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">part</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
@@ -1946,7 +1946,7 @@ ignored, however if dest is smaller than source, dest will be overwritten.</p>
             <span class="k">raise</span> <span class="n">PieceLengthValueError</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">piece_length</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">14</span><span class="p">):</span>
-        <span class="k">if</span> <span class="mi">2</span><span class="o">**</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span> <span class="o">==</span> <span class="n">piece_length</span><span class="p">:</span>
+        <span class="k">if</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span> <span class="o">==</span> <span class="n">piece_length</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">piece_length</span>
         <span class="k">raise</span> <span class="n">PieceLengthValueError</span><span class="p">(</span><span class="n">piece_length</span><span class="p">)</span>
 

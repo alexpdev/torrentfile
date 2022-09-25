@@ -1175,10 +1175,7 @@ a clean and readable format.</p>
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\commands.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">212</span>
-<span class="normal">213</span>
-<span class="normal">214</span>
-<span class="normal">215</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">215</span>
 <span class="normal">216</span>
 <span class="normal">217</span>
 <span class="normal">218</span>
@@ -1215,7 +1212,11 @@ a clean and readable format.</p>
 <span class="normal">249</span>
 <span class="normal">250</span>
 <span class="normal">251</span>
-<span class="normal">252</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">magnet</span><span class="p">(</span><span class="n">metafile</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">magnet</span><span class="p">(</span><span class="n">metafile</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a magnet URI from a Bittorrent meta file.</span>
 
@@ -1246,7 +1247,8 @@ a clean and readable format.</p>
 
     <span class="k">if</span> <span class="s2">&quot;announce-list&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
         <span class="n">announce_args</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s2">&quot;&amp;tr=&quot;</span> <span class="o">+</span> <span class="n">quote_plus</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">for</span> <span class="n">urllist</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce-list&quot;</span><span class="p">]</span>
+            <span class="s2">&quot;&amp;tr=&quot;</span> <span class="o">+</span> <span class="n">quote_plus</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">urllist</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;announce-list&quot;</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urllist</span>
         <span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1330,11 +1332,7 @@ size are a match.</p>
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\commands.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">255</span>
-<span class="normal">256</span>
-<span class="normal">257</span>
-<span class="normal">258</span>
-<span class="normal">259</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">259</span>
 <span class="normal">260</span>
 <span class="normal">261</span>
 <span class="normal">262</span>
@@ -1359,7 +1357,11 @@ size are a match.</p>
 <span class="normal">281</span>
 <span class="normal">282</span>
 <span class="normal">283</span>
-<span class="normal">284</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">rebuild</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">rebuild</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Attempt to rebuild a torrent based on the a torrent file.</span>
 
@@ -1499,7 +1501,10 @@ or directory for completeness and validation.</p>
 <span class="normal">206</span>
 <span class="normal">207</span>
 <span class="normal">208</span>
-<span class="normal">209</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">recheck</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">recheck</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Execute recheck CLI sub-command.</span>
 
@@ -1521,11 +1526,14 @@ or directory for completeness and validation.</p>
     <span class="n">content</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">content</span>
 
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">metafile</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Unable to parse directory </span><span class="si">{</span><span class="n">metafile</span><span class="si">}</span><span class="s2">. &quot;</span>
-                            <span class="s2">&quot;Check the order of the parameters.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Error: Unable to parse directory </span><span class="si">{</span><span class="n">metafile</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="s2">&quot;Check the order of the parameters.&quot;</span>
+        <span class="p">)</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Validating </span><span class="si">%s</span><span class="s2"> &lt;---------------&gt; </span><span class="si">%s</span><span class="s2"> contents&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span>
-                 <span class="n">content</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Validating </span><span class="si">%s</span><span class="s2"> &lt;---------------&gt; </span><span class="si">%s</span><span class="s2"> contents&quot;</span><span class="p">,</span> <span class="n">metafile</span><span class="p">,</span> <span class="n">content</span>
+    <span class="p">)</span>
 
     <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Rechecking  </span><span class="si">{</span><span class="n">metafile</span><span class="si">}</span><span class="s2"> ...</span><span class="se">\n</span><span class="s2">&quot;</span>
     <span class="n">halfterm</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span> <span class="o">/</span> <span class="mi">2</span>

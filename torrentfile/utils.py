@@ -176,7 +176,7 @@ def normalize_piece_length(piece_length: int) -> int:
             raise PieceLengthValueError(piece_length)
 
     if piece_length > (1 << 14):
-        if 2**math.log2(piece_length) == piece_length:
+        if 2 ** math.log2(piece_length) == piece_length:
             return piece_length
         raise PieceLengthValueError(piece_length)
 
@@ -385,12 +385,12 @@ def copypath(source: str, dest: str) -> None:
     if os.path.exists(dest):
         if os.path.getsize(source) <= os.path.getsize(dest):
             return
-        shutil.copy(source, dest)
-        return
+        shutil.copy(source, dest)  # pragma: nocover
+        return  # pragma: nocover
     path_parts = iter(Path(dest).parts[:-1])
     root = next(path_parts)
     if not os.path.exists(root):
-        os.mkdir(root)
+        os.mkdir(root)  # pragma: nocover
     for part in path_parts:
         path = os.path.join(root, part)
         if not os.path.exists(path):

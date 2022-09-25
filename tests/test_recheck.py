@@ -24,8 +24,19 @@ import os
 import sys
 from pathlib import Path
 
-from tests import (dir1, dir2, file1, file2, filemeta1, filemeta2, metafile1,
-                   metafile2, rmpath, sizedfiles, sizes)
+from tests import (
+    dir1,
+    dir2,
+    file1,
+    file2,
+    filemeta1,
+    filemeta2,
+    metafile1,
+    metafile2,
+    rmpath,
+    sizedfiles,
+    sizes,
+)
 from torrentfile.cli import main_script as main
 from torrentfile.recheck import Checker
 from torrentfile.utils import ArgumentError
@@ -111,7 +122,7 @@ def test_partial_metafiles(dir2, sizedfiles):
         with open(path, "rb") as bfile:
             data = bfile.read()
         with open(path, "wb") as bfile:
-            bfile.write(data[:-(2**10)])
+            bfile.write(data[: -(2**10)])
 
     for item in os.listdir(dir2):
         full = os.path.join(dir2, item)

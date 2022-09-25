@@ -956,9 +956,9 @@ is output to the terminal</p>
 <span class="sd">    max_help_positions : int</span>
 <span class="sd">        max length until line wrap.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span>
-                     <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
-                     <span class="n">max_help_position</span><span class="o">=</span><span class="n">max_help_positions</span><span class="p">)</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">max_help_position</span><span class="o">=</span><span class="n">max_help_positions</span>
+    <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
           </details>
 
@@ -1480,7 +1480,8 @@ and command line interface.</p>
         <span class="n">usage</span><span class="o">=</span><span class="s2">&quot;torrentfile [options] command [command options]&quot;</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="p">(</span>
             <span class="s2">&quot;Command line tools for creating, editing, checking, building &quot;</span>
-            <span class="s2">&quot;and interacting with Bittorrent metainfo files&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;and interacting with Bittorrent metainfo files&quot;</span>
+        <span class="p">),</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
         <span class="n">conflict_handler</span><span class="o">=</span><span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
@@ -1818,8 +1819,7 @@ and command line interface.</p>
     <span class="p">)</span>
 
     <span class="n">rebuild_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-c&quot;</span>
-        <span class="s2">&quot;--contents&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-c&quot;</span> <span class="s2">&quot;--contents&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;contents&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>

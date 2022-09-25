@@ -489,7 +489,8 @@ def test_cli_slash_outpath(dir1, sep):
 
 
 @pytest.mark.parametrize(
-    "flag", ["-t", "-w", "--announce", "--web-seed", "--http-seed"])
+    "flag", ["-t", "-w", "--announce", "--web-seed", "--http-seed"]
+)
 def test_cli_announce_path(dir1, flag):
     """
     Test CLI when path is placed after the trackers flag.
@@ -536,7 +537,7 @@ def build(dir2):
     dest = os.path.join(os.path.dirname(__file__), "dest")
     if os.path.exists(dest):
         rmpath(dest)
-        os.mkdir(dest)
+        os.makedirs(dest)
     return os.path.dirname(dir2), dest, dir2
 
 
