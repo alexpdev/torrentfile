@@ -29,8 +29,12 @@ from pathlib import Path
 
 import pytest
 
-from torrentfile.torrent import (TorrentAssembler, TorrentFile,
-                                 TorrentFileHybrid, TorrentFileV2)
+from torrentfile.torrent import (
+    TorrentAssembler,
+    TorrentFile,
+    TorrentFileHybrid,
+    TorrentFileV2,
+)
 
 
 def tempfile(path=None, exp=18):
@@ -144,7 +148,9 @@ def teardown():  # pragma: nocover
     Remove all temporary directories and files.
     """
     root = Path(__file__).parent / "TESTDIR"
-    for path in [root, "./torrentfile.log"]:
+    dest = Path(__file__).parent / "dest"
+    dest2 = Path(__file__).parent / "dest2"
+    for path in [root, "./torrentfile.log", dest, dest2]:
         if os.path.exists(path):
             rmpath(path)
 

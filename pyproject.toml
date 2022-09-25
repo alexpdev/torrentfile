@@ -7,7 +7,7 @@ name = "torrentfile"
 authors = [{name = "alexpdev", email = "alexpdev@pm.me"}]
 description = "Terminal based command line tool for creating Bittorrent files."
 license = {file = "LICENSE"}
-version = "0.8.1"
+version = "0.8.2"
 readme = "README.md"
 requires-python = ">=3.6"
 keywords = ["Bittorrent", "torrent", "bittorrent-metafiles", "CLI"]
@@ -53,7 +53,7 @@ testpaths = [
     "torrentfile",
 ]
 console_output_style = "progress"
-addopts = "--maxfail=5"
+addopts = "--maxfail=3"
 
 
 [tool.pylint. 'MESSAGES CONTROL']
@@ -64,7 +64,8 @@ disable = [
     "attribute-defined-outside-init",
     "invalid-name",
     "not-callable",
-    "consider-using-with"
+    "consider-using-with",
+    "implicit-str-concat"
 ]
 
 [tool.pylint. 'VARIABLES']

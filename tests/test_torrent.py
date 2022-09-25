@@ -162,7 +162,7 @@ def test_torrentfile_single_under(ver, sze, piecelength):
     with open(tfile, "rb") as binfile:
         data = binfile.read()
     with open(tfile, "wb") as binfile:
-        binfile.write(data[:-(2**9)])
+        binfile.write(data[: -(2**9)])
     outfile = str(tfile) + ".torrent"
     kwargs = {
         "path": tfile,

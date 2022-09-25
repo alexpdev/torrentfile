@@ -489,7 +489,8 @@ def test_cli_slash_outpath(dir1, sep):
 
 
 @pytest.mark.parametrize(
-    "flag", ["-t", "-w", "--announce", "--web-seed", "--http-seed"])
+    "flag", ["-t", "-w", "--announce", "--web-seed", "--http-seed"]
+)
 def test_cli_announce_path(dir1, flag):
     """
     Test CLI when path is placed after the trackers flag.
@@ -530,24 +531,35 @@ def test_cli_cwd(folder):
     rmpath(outfile)
 
 
-@pytest.fixture
-def build(filemeta1, metafile1):
+@pytest.fixture()
+def build(dir2):
     """Fixture for testing the build subcommand."""
-    basedir = os.path.dirname(filemeta1)
-    parent = os.path.dirname(basedir)
-    dest = os.path.join(parent, "dest")
-    assert os.path.dirname(metafile1) == basedir
+    dest = os.path.join(os.path.dirname(__file__), "dest")
     if os.path.exists(dest):
-        rmpath(dest)  # pragma: nocover
-    os.mkdir(dest)
-    yield basedir, dest
-    rmpath(dest)
+        rmpath(dest)
+        os.makedirs(dest)
+    return os.path.dirname(dir2), dest, dir2
 
 
-def test_rebuild_subcommand(build):
+@pytest.mark.parametrize("size", list(range(15, 19)))
+@pytest.mark.parametrize("version", [1, 2])
+def test_rebuild_subcommand(build, version, size):
     """Test the rebuild CLI subcommand."""
-    basedir, dest = build
-    args = ["torrentfile", "rebuild", basedir, basedir, dest]
+    basedir, dest, content = build
+    args = [
+        "torrentfile",
+        "create",
+        str(content),
+        "--meta-version",
+        str(version),
+        "--piece-length",
+        str(size),
+        "-o",
+        str(content) + ".torrent",
+    ]
+    sys.argv = args
+    execute()
+    args = ["torrentfile", "rebuild", "-m", basedir, "-c", basedir, "-d", dest]
     sys.argv = args
     counter = execute()
     assert counter > 0

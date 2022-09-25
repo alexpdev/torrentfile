@@ -1,5 +1,16 @@
 # TorrentFile
 
+## Version 0.8.2
+
+-   Rebuild subcommand now checks on a hash by hash basis 
+-   Fixed coverage issues
+-   Added unittests for the rebuild command
+-   Fixed bug with torrentfile creation when a file was a perfect power of 2
+-   Reconfigured the rebuild module
+-   Reconfigured the rebuild cli flags and arguments
+
+* * *
+
 ## Version 0.8.1
 
 -   Further improvements to documentation

@@ -35,6 +35,7 @@ Classes:
 
 import math
 import os
+import shutil
 from pathlib import Path
 
 
@@ -173,6 +174,11 @@ def normalize_piece_length(piece_length: int) -> int:
             piece_length = int(piece_length)
         else:
             raise PieceLengthValueError(piece_length)
+
+    if piece_length > (1 << 14):
+        if 2 ** math.log2(piece_length) == piece_length:
+            return piece_length
+        raise PieceLengthValueError(piece_length)
 
     if 13 < piece_length < 26:
         return 2**piece_length
@@ -357,3 +363,40 @@ def next_power_2(value: int) -> int:
     while start < value:
         start <<= 1
     return start
+
+
+def copypath(source: str, dest: str) -> None:
+    """
+    Copy the file located at source to dest.
+
+    If one or more directory paths don't exist in dest, they will be created.
+    If dest already exists and dest and source are the same size, it will be
+    ignored, however if dest is smaller than source, dest will be overwritten.
+
+    Parameters
+    ----------
+    source : str
+        path to source file
+    dest : str
+        path to target destination
+    """
+    if not os.path.exists(source):
+        return
+    if os.path.exists(dest):
+        if os.path.getsize(source) <= os.path.getsize(dest):
+            return
+        shutil.copy(source, dest)  # pragma: nocover
+        return  # pragma: nocover
+    path_parts = iter(Path(dest).parts[:-1])
+    try:
+        root = next(path_parts)
+    except StopIteration:  # pragma: nocover
+        return
+    if not os.path.exists(root):
+        os.mkdir(root)  # pragma: nocover
+    for part in path_parts:
+        path = os.path.join(root, part)
+        if not os.path.exists(path):
+            os.mkdir(path)
+        root = path
+    shutil.copy(source, dest)

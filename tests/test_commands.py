@@ -27,8 +27,16 @@ from urllib.parse import quote_plus
 import pyben
 import pytest
 
-from tests import (dir1, dir2, file1, metafile1, metafile2, rmpath, tempfile,
-                   torrents)
+from tests import (
+    dir1,
+    dir2,
+    file1,
+    metafile1,
+    metafile2,
+    rmpath,
+    tempfile,
+    torrents,
+)
 from torrentfile.cli import execute
 from torrentfile.commands import info, magnet, rebuild, recheck
 from torrentfile.hasher import merkle_root
@@ -216,8 +224,8 @@ def build(dir2, metafile2):
     class Namespace:
         """Command line args for rebuild command."""
 
-        metafiles = os.path.dirname(metafile2)
-        contents = basedir
+        metafiles = [os.path.dirname(metafile2)]
+        contents = [basedir]
         destination = dest
 
     yield Namespace
