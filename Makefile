@@ -28,12 +28,14 @@ import subprocess
 import time
 from torrentfile.version import __version__
 if sys.platform == "win32":
+	time.sleep(2)
 	subprocess.Popen(["7z", "a", "./dist/temp.zip", "./dist/torrentfile.exe"])
 	time.sleep(2)
 	shutil.copy(
 		"./dist/temp.zip",
 		"./dist/torrentfile-v" + __version__ + "-win.zip")
 else:
+	time.sleep(2)
 	subprocess.Popen(["zip", "./dist/temp.zip", "./dist/torrentfile"])
 	time.sleep(2)
 	shutil.copy(
