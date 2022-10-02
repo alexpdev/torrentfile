@@ -141,11 +141,11 @@ def test_wrong_path():
 
 
 @pytest.mark.parametrize("size", [2**i for i in range(14, 21)])
-def test_file1_hashers(file1, size):
+def test_file1_hashers(file2, size):
     """Test that all three of the version2 hashers produce the same result."""
-    hasher1 = HasherHybrid(file1, size, progress=False)
-    hasher2 = HasherV2(file1, size, progress=False)
-    hasher3 = FileHasher(file1, size, progress=False)
+    hasher1 = HasherHybrid(file2, size, progress=False)
+    hasher2 = HasherV2(file2, size, progress=False)
+    hasher3 = FileHasher(file2, size, progress=False)
     _ = list(hasher3)
     lst = [hasher1.root, hasher2.root, hasher3.root]
     print(lst)
