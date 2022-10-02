@@ -23,6 +23,7 @@ Re-assemble a torrent into the propper directory structure as indicated by a
 torrent meta file, and validate the contents of each file allong the
 way. Displays a progress bar for each torrent.
 """
+import logging
 import os
 from copy import deepcopy
 from hashlib import sha1
@@ -31,7 +32,10 @@ from pathlib import Path
 import pyben
 
 from torrentfile.hasher import HasherV2
+from torrentfile.mixins import CbMixin
 from torrentfile.utils import copypath
+
+logger = logging.getLogger(__name__)
 
 
 class Metadata:
@@ -128,7 +132,7 @@ class Metadata:
                 self._parse_tree(val, partials + [key])
 
 
-class Assembler:
+class Assembler(CbMixin):
     """
     Does most of the work in attempting the structure of torrentfiles.
 
@@ -157,10 +161,22 @@ class Assembler:
             path to the directory where rebuild will take place.
         """
         self.contents = contents
+        self.log_message("Indexing contents...")
         self.filemap = _index_contents(self.contents)
+        self.log_message("Extracting metadata contents...")
         self.metafiles = _get_metafiles(metafiles)
         self.dest = dest
         self.counter = 0
+
+    def log_message(
+        self, message: str, *args: tuple, level: int = logging.INFO
+    ):
+        """Log messages to the logger and callback."""
+        if args:
+            message = message.format(*args)
+        logging.log(level, message)
+        if self._cb is not None:  # pragma: nocover
+            self._cb(message)
 
     def assemble_torrents(self) -> int:
         """
@@ -172,6 +188,9 @@ class Assembler:
             number of files copied
         """
         for metafile in self.metafiles:
+            self.log_message(
+                "#{0} Searching contents for {1}", self.counter, metafile.name
+            )
             self.rebuild(metafile)
         return self.counter
 
@@ -193,6 +212,7 @@ class Assembler:
                 continue  # pragma: nocover
             for path, size in paths:
                 if size == length:
+                    self.log_message("Found match: {0}", filename)
                     hasher = HasherV2(path, metafile.piece_length, True)
                     if entry["root"] == hasher.root:
                         dest_path = os.path.join(self.dest, entry["full"])
@@ -233,6 +253,7 @@ class Assembler:
             if val["filename"] in self.filemap:
                 for path, size in self.filemap[val["filename"]]:
                     if size == val["length"]:
+                        self.log_message("Found match: {0}", val["filename"])
                         pieces = deepcopy(metafile.pieces)
                         pl = metafile.piece_length
                         result = check_hashes(path, pieces, partial, pl)
