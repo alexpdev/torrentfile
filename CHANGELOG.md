@@ -1,5 +1,13 @@
 # TorrentFile
 
+## Version 0.8.3
+
+
+-   Added the callback mixin to the rebuild module
+-   Fix compatability with GUI frontend torrentfileQt.
+
+* * *
+
 ## Version 0.8.2
 
 -   Rebuild subcommand now checks on a hash by hash basis 
