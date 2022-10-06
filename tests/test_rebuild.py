@@ -20,11 +20,12 @@
 Testing functions for the rebuild sub-action commands from command line args.
 """
 import os
+import string
 
 import pyben
 import pytest
 
-from tests import dir1, file1, file2, filemeta1, filemeta2, rmpath
+from tests import dir1, dir2, file1, file2, filemeta1, filemeta2, rmpath
 from torrentfile.commands import rebuild
 from torrentfile.hasher import FileHasher, HasherHybrid, HasherV2
 from torrentfile.rebuild import Assembler
@@ -33,7 +34,7 @@ from torrentfile.torrent import TorrentAssembler, TorrentFile
 
 def test_fix():
     """Test that the fixtures import properly."""
-    assert filemeta2 and dir1 and file1 and filemeta1 and file2
+    assert filemeta2 and dir1 and file1 and filemeta1 and file2 and dir2
 
 
 def create_torrentfile(path, creator, dest, piece_length):
@@ -150,3 +151,26 @@ def test_file1_hashers(file2, size):
     lst = [hasher1.root, hasher2.root, hasher3.root]
     print(lst)
     assert len(set(lst)) == 1
+
+
+@pytest.mark.parametrize("creator", [TorrentFile, TorrentAssembler])
+@pytest.mark.parametrize("size", list(range(15, 19)))
+def test_rebuild_extra_dir(dir2, creator, size):
+    """Test rebuild with dir2 and an extra smaller file."""
+    data = string.printable.encode("utf-8")
+    path = os.path.join(dir2, "otherfile.pdf")
+    if not os.path.exists(path):
+        with open(path, "wb") as fd:
+            start = 0
+            while start < 2**10:
+                fd.write(data)
+                start += len(data)
+                data += data
+    dest = create_dest()
+    contents = [os.path.dirname(dir2)]
+    outfile = str(dir2) + ".torrent"
+    create_torrentfile(dir2, creator, outfile, size)
+    assembler = Assembler(contents, contents, dest)
+    counter = assembler.assemble_torrents()
+    assert counter > 0
+    rmpath(dir2)

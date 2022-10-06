@@ -37,7 +37,8 @@ class CbMixin:
 
     @classmethod
     def cb(cls, *args, **kwargs):
-        pass   # pragma: nocover
+        """Do nothing."""
+        return args, kwargs
 
     @classmethod
     def set_callback(cls, func):

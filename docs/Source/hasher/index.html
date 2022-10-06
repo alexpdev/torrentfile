@@ -808,7 +808,9 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 
           <details class="quote">
             <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">418</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
 <span class="normal">419</span>
 <span class="normal">420</span>
 <span class="normal">421</span>
@@ -830,9 +832,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 <span class="normal">437</span>
 <span class="normal">438</span>
 <span class="normal">439</span>
-<span class="normal">440</span>
-<span class="normal">441</span>
-<span class="normal">442</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">440</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -888,9 +888,9 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">444</span>
-<span class="normal">445</span>
-<span class="normal">446</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return `self`: needed to implement iterator implementation.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span>
 </code></pre></div></td></tr></table></div>
@@ -936,7 +936,9 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">469</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span>
 <span class="normal">470</span>
 <span class="normal">471</span>
 <span class="normal">472</span>
@@ -985,10 +987,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 <span class="normal">515</span>
 <span class="normal">516</span>
 <span class="normal">517</span>
-<span class="normal">518</span>
-<span class="normal">519</span>
-<span class="normal">520</span>
-<span class="normal">521</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="normal">518</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate layer hashes for contents of file.</span>
 
@@ -1024,8 +1023,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">prog_update</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
     <span class="n">layer_hash</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cb</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cb</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cb</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_root</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prog_close</span><span class="p">()</span>
@@ -1491,7 +1489,8 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 
           <details class="quote">
             <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">292</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">291</span>
+<span class="normal">292</span>
 <span class="normal">293</span>
 <span class="normal">294</span>
 <span class="normal">295</span>
@@ -1508,8 +1507,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 <span class="normal">306</span>
 <span class="normal">307</span>
 <span class="normal">308</span>
-<span class="normal">309</span>
-<span class="normal">310</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="normal">309</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct Hasher class instances for each file in torrent.</span>
 
@@ -1583,7 +1581,8 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\hasher.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">336</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">335</span>
+<span class="normal">336</span>
 <span class="normal">337</span>
 <span class="normal">338</span>
 <span class="normal">339</span>
@@ -1625,9 +1624,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
 <span class="normal">375</span>
 <span class="normal">376</span>
 <span class="normal">377</span>
-<span class="normal">378</span>
-<span class="normal">379</span>
-<span class="normal">380</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">):</span>
+<span class="normal">378</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate layer hashes for contents of file.</span>
 
@@ -1659,8 +1656,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
             <span class="n">padding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pad_remaining</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">))</span>
             <span class="n">blocks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span>
         <span class="n">layer_hash</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cb</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_cb</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cb</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">plength</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">padding_file</span> <span class="o">=</span> <span class="p">{</span>
@@ -1896,8 +1892,7 @@ root hash is calculated.</p>
 <span class="normal">249</span>
 <span class="normal">250</span>
 <span class="normal">251</span>
-<span class="normal">252</span>
-<span class="normal">253</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="normal">252</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate hashes over 16KiB chuncks of file content.</span>
 
@@ -1939,8 +1934,7 @@ root hash is calculated.</p>
         <span class="c1"># calculate the root hash for the merkle tree up to piece-length</span>
 
         <span class="n">layer_hash</span> <span class="o">=</span> <span class="n">merkle_root</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cb</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_cb</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cb</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layer_hashes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer_hash</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_root</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">prog_close</span><span class="p">()</span>

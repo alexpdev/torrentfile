@@ -32,8 +32,7 @@ import pyben
 
 from torrentfile.hasher import HasherV2
 from torrentfile.mixins import CbMixin
-from torrentfile.utils import copypath, Memo
-
+from torrentfile.utils import copypath
 
 logger = logging.getLogger(__name__)
 SHA1 = 20
@@ -44,8 +43,15 @@ class PathNode:
     Base class representing information regarding a file included in torrent.
     """
 
-    def __init__(self, start: int = None, stop: int = None, full: str = None,
-                 filename: str = None, path: str = None, length: int = None):
+    def __init__(
+        self,
+        start: int = None,
+        stop: int = None,
+        full: str = None,
+        filename: str = None,
+        path: str = None,
+        length: int = None,
+    ):
         """
         Hold file information that contributes to the contents of torrent.
 
@@ -85,7 +91,7 @@ class PathNode:
         bytes
             part of the file's contents
         """
-        with open(path, 'rb') as fd:
+        with open(path, "rb") as fd:
             if self.start:
                 fd.read(self.start)
             if self.stop != -1:
@@ -156,13 +162,13 @@ class PieceNode(CbMixin):
         bool
             success state
         """
-        if not len(paths):
-            piece_hash = sha1(data).digest()
+        if not paths:
+            piece_hash = sha1(data).digest()  # nosec
             return piece_hash == self.piece
         pathnode = paths[0]
         filename = pathnode.filename
         if filename not in filemap:
-            return False
+            return False  # pragma: nocover
         for loc, size in filemap[filename]:
             if size != len(pathnode):
                 continue
@@ -261,14 +267,14 @@ class Metadata(CbMixin):
         """
         total_pieces = len(self.pieces) // SHA1
         remainder = file_index = 0
-        current = None
+        current = {}
         for i in range(total_pieces):
             begin = SHA1 * i
-            piece = PieceNode(self.pieces[begin:begin+SHA1])
+            piece = PieceNode(self.pieces[begin: begin + SHA1])
             target = self.piece_length
             if remainder:
                 start = current["length"] - remainder
-                if remainder < target:
+                if remainder < target:  # pragma: nocover
                     stop = -1
                     target -= remainder
                     remainder = 0
@@ -282,7 +288,7 @@ class Metadata(CbMixin):
             while target > 0 and file_index < len(self.files):
                 start = 0
                 current = self.files[file_index]
-                size = current['length']
+                size = current["length"]
                 if size < target:
                     stop = -1
                     target -= size
@@ -294,7 +300,6 @@ class Metadata(CbMixin):
                 pathnode = PathNode(start=start, stop=stop, **current)
                 piece.append(pathnode)
             self.piece_nodes.append(piece)
-
 
     def _parse_tree(self, tree: dict, partials: list):
         """
@@ -365,6 +370,7 @@ class Metadata(CbMixin):
                     if entry["root"] == hasher.root:
                         dest_path = os.path.join(dest, entry["full"])
                         copypath(entry["path"], dest_path)
+                        self.cb(path, dest_path)
                         break
 
 
@@ -397,11 +403,13 @@ class Assembler(CbMixin):
             path to the directory where rebuild will take place.
         """
         self.counter = 0
-        self._laslog = None
+        self._lastlog = None
         self.contents = contents
         PieceNode.set_callback(self._callback)
+        Metadata.set_callback(self._callback)
         self.dest = dest
-        self.metafiles = self._get_metafiles(metafiles)
+        self.meta_paths = metafiles
+        self.metafiles = self._get_metafiles()
         filenames = set()
         for meta in self.metafiles:
             filenames |= meta.filenames
@@ -424,13 +432,12 @@ class Assembler(CbMixin):
         int
             number of files copied
         """
-        for metafile in self._get_metafiles():
-            self.log_message(
-                "#{0} Searching contents for {1}", self.counter, metafile.name
+        for metafile in self.metafiles:
+            logger.info(
+                "#%s Searching contents for %s", self.counter, metafile.name
             )
             self.rebuild(metafile)
         return self.counter
-
 
     def rebuild(self, metafile: Metadata) -> None:
         """
@@ -451,18 +458,18 @@ class Assembler(CbMixin):
         Collect all .torrent meta files from give directory or file.
         """
         metafiles = []
-        for path in self.metafiles:
+        end = ".torrent"
+        for path in self.meta_paths:
             if os.path.exists(path):
                 if os.path.isdir(path):
                     for filename in os.listdir(path):
-                        if filename.lower().endswith(".torrent"):
+                        if filename.lower().endswith(end):
                             meta = Metadata(os.path.join(path, filename))
                             metafiles.append(meta)
-                elif os.path.isfile(path) and path.lower().endswith(".torrent"):
+                elif os.path.isfile(path) and path.lower().endswith(end):
                     meta = Metadata(path)
                     metafiles.append(meta)
         return metafiles
-
 
 
 def _index_contents(contents: list, filenames: set) -> dict:
@@ -473,6 +480,8 @@ def _index_contents(contents: list, filenames: set) -> dict:
     ----------
     contents : list
         paths to traverse looking for filenames
+    filenames : set
+        set of filenames to look for
 
     Returns
     -------
@@ -496,6 +505,8 @@ def _index_content(root: str, filenames: set) -> dict:
     ----------
     root : str
         path to search for filenames
+    filenames : set
+        set of filenames to search for
 
     Returns
     -------
