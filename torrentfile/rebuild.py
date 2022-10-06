@@ -31,7 +31,7 @@ from pathlib import Path
 import pyben
 
 from torrentfile.hasher import HasherV2
-from torrentfile.mixins import CbMixin
+from torrentfile.mixins import CbMixin, ProgMixin
 from torrentfile.utils import copypath
 
 logger = logging.getLogger(__name__)
@@ -117,7 +117,7 @@ class PieceNode(CbMixin):
     Base class representing a single SHA1 hash block of data from a torrent.
     """
 
-    def __init__(self, piece: bytes):
+    def __init__(self, piece: bytes, parent: "Metadata"):
         """
         Store information about an individual SHA1 hash for a torrent file.
 
@@ -127,7 +127,10 @@ class PieceNode(CbMixin):
         ----------
         piece : bytes
             SHA1 hash bytes
+        parent : Metadata
+            Parent node
         """
+        self.parent = parent
         self.piece = piece
         self.paths = []
         self.result = None
@@ -177,6 +180,7 @@ class PieceNode(CbMixin):
             if val:
                 dest_path = os.path.join(self.dest, pathnode.full)
                 copypath(loc, dest_path)
+                self.parent.prog_update(1)
                 self.cb(filename, dest_path)
             return val
         return False
@@ -196,7 +200,7 @@ class PieceNode(CbMixin):
         self.result = self._find_matches(filemap, self.paths[:], bytes())
 
 
-class Metadata(CbMixin):
+class Metadata(CbMixin, ProgMixin):
     """
     Class containing the metadata contents of a torrent file.
     """
@@ -270,7 +274,7 @@ class Metadata(CbMixin):
         current = {}
         for i in range(total_pieces):
             begin = SHA1 * i
-            piece = PieceNode(self.pieces[begin: begin + SHA1])
+            piece = PieceNode(self.pieces[begin: begin + SHA1], self)
             target = self.piece_length
             if remainder:
                 start = current["length"] - remainder
@@ -332,7 +336,7 @@ class Metadata(CbMixin):
             else:
                 self._parse_tree(val, partials + [key])
 
-    def find_matches(self, filemap: dict, dest: str):
+    def _match_v1(self, filemap: dict, dest: str):
         """
         Check each of the nodes against the filemap dictionary for matches.
 
@@ -347,7 +351,7 @@ class Metadata(CbMixin):
         for node in self.piece_nodes:
             node.find_matches(filemap, dest)
 
-    def rebuild(self, filemap: dict, dest: str):
+    def _match_v2(self, filemap: dict, dest: str):
         """
         Rebuild method for torrent v2 files.
 
@@ -370,8 +374,31 @@ class Metadata(CbMixin):
                     if entry["root"] == hasher.root:
                         dest_path = os.path.join(dest, entry["full"])
                         copypath(entry["path"], dest_path)
+                        self.prog_update(1)
                         self.cb(path, dest_path)
                         break
+
+    def rebuild(self, filemap: dict, dest: str):
+        """
+        Rebuild torrent file contents from filemap at dest.
+
+        Searches through the contents of the meta file and compares filenames
+        with those in the filemap dict, and if found checks their contents,
+        and copies them to the destination path.
+
+        Parameters
+        ----------
+        filemap : dict
+            filesystem information
+        dest : str
+            destiantion path
+        """
+        self.prog_start(len(self.filenames), self.name, unit="files")
+        if self.meta_version == 2:
+            self._match_v2(filemap, dest)
+        else:
+            self._match_v1(filemap, dest)
+        self.prog_close()
 
 
 class Assembler(CbMixin):
@@ -458,10 +485,7 @@ class Assembler(CbMixin):
         the matches to the destination directory respecting folder
         structures along the way.
         """
-        if metafile.meta_version == 2:
-            metafile.rebuild(self.filemap, self.dest)
-        else:
-            metafile.find_matches(self.filemap, self.dest)
+        metafile.rebuild(self.filemap, self.dest)
 
     def _get_metafiles(self) -> list:
         """
