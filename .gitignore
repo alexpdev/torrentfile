@@ -52,8 +52,8 @@ htmlcov/
 *.cover
 .pytest_cache/
 *.log
-# Jupyter Notebook
 .codacy-coverage/
+# Jupyter Notebook
 .env
 env/
 # IDE settings
