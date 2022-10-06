@@ -35,7 +35,10 @@ class CbMixin:
     Mixin class to set a callback during hashing procedure.
     """
 
-    _cb = None
+    @classmethod
+    def cb(cls, *args, **kwargs):
+        """Do nothing."""
+        return args, kwargs
 
     @classmethod
     def set_callback(cls, func):
@@ -47,7 +50,7 @@ class CbMixin:
         func : Callable
             the callback function
         """
-        cls._cb = func  # pragma: nocover
+        cls.cb = func  # pragma: nocover
 
 
 class ProgressBar:

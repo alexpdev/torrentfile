@@ -24,7 +24,7 @@ import os
 import pyben
 import pytest
 
-from tests import dir1, file1, file2, filemeta1, filemeta2, rmpath
+from tests import dir1, file1, file2, filemeta1, filemeta2, rmpath, tempfile
 from torrentfile.commands import rebuild
 from torrentfile.hasher import FileHasher, HasherHybrid, HasherV2
 from torrentfile.rebuild import Assembler
@@ -150,3 +150,36 @@ def test_file1_hashers(file2, size):
     lst = [hasher1.root, hasher2.root, hasher3.root]
     print(lst)
     assert len(set(lst)) == 1
+
+
+@pytest.fixture(scope="package")
+def dextra():
+    """Text fixture for creating testing directory."""
+    paths = [
+        "dir3/file1.bin",
+        "dir3/subdir1/file2.xls",
+        "dir3/subdir1/file3.mov",
+        "dir3/subdir2/file4.txt",
+        "dir3/subdir2/file5.md",
+        "dir3/file6.png",
+        "dir3/file7.nfo",
+    ]
+    temps, start = [], 13
+    for path in paths:
+        temp = tempfile(path=path, exp=start)
+        start += 1
+        temps.append(temp)
+    return os.path.commonpath(temps)
+
+
+@pytest.mark.parametrize("creator", [TorrentFile, TorrentAssembler])
+@pytest.mark.parametrize("size", list(range(15, 19)))
+def test_rebuild_extra_dir(dextra, creator, size):
+    """Test rebuild with dir2 and an extra smaller file."""
+    dest = create_dest()
+    contents = [os.path.dirname(dextra)]
+    outfile = str(dextra) + ".torrent"
+    create_torrentfile(dextra, creator, outfile, size)
+    assembler = Assembler(contents, contents, dest)
+    counter = assembler.assemble_torrents()
+    assert counter > 0

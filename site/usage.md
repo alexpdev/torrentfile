@@ -131,3 +131,7 @@
     Optional Arguments
     ------------------
     -h, --help   show this help message and exit
+
+* * *
+
+[Coverage](https://codecov.io/gh/alexpdev/torrentfile/branch/master/graphs/icicle.svg?token=EWF7NIL9SQ)
