@@ -246,8 +246,7 @@ class HasherV2(CbMixin, ProgMixin):
             # calculate the root hash for the merkle tree up to piece-length
 
             layer_hash = merkle_root(blocks)
-            if self._cb:
-                self._cb(layer_hash)
+            self.cb(layer_hash)
             self.layer_hashes.append(layer_hash)
         self._calculate_root()
         self.prog_close()
@@ -365,8 +364,7 @@ class HasherHybrid(CbMixin, ProgMixin):
                 padding = self._pad_remaining(len(blocks))
                 blocks.extend(padding)
             layer_hash = merkle_root(blocks)
-            if self._cb:
-                self._cb(layer_hash)
+            self.cb(layer_hash)
             self.layer_hashes.append(layer_hash)
             if plength > 0:
                 self.padding_file = {
@@ -502,8 +500,7 @@ class FileHasher(CbMixin, ProgMixin):
         self.prog_update(total)
         layer_hash = merkle_root(blocks)
         self.layer_hashes.append(layer_hash)
-        if self._cb:
-            self._cb(layer_hash)
+        self.cb(layer_hash)
         if self.end:
             self._calculate_root()
             self.prog_close()

@@ -32,7 +32,7 @@ import pyben
 
 from torrentfile.hasher import HasherV2
 from torrentfile.mixins import CbMixin
-from torrentfile.utils import copypath
+from torrentfile.utils import copypath, Memo
 
 
 logger = logging.getLogger(__name__)
@@ -106,7 +106,7 @@ class PathNode:
         return self.length
 
 
-class PieceNode:
+class PieceNode(CbMixin):
     """
     Base class representing a single SHA1 hash block of data from a torrent.
     """
@@ -171,6 +171,7 @@ class PieceNode:
             if val:
                 dest_path = os.path.join(self.dest, pathnode.full)
                 copypath(loc, dest_path)
+                self.cb(filename, dest_path)
             return val
         return False
 
@@ -189,7 +190,7 @@ class PieceNode:
         self.result = self._find_matches(filemap, self.paths[:], bytes())
 
 
-class Metadata:
+class Metadata(CbMixin):
     """
     Class containing the metadata contents of a torrent file.
     """
@@ -208,6 +209,7 @@ class Metadata:
         self.name = None
         self.info = None
         self.piece_nodes = []
+        self.counter = 0
         self.length = 0
         self.current = 0
         self.files = []
@@ -252,7 +254,6 @@ class Metadata:
                 )
                 self.length += f["length"]
                 self.filenames.add(path[-1])
-            self._map_pieces()
 
     def _map_pieces(self):
         """
@@ -337,6 +338,7 @@ class Metadata:
         dest : str
             target destination path
         """
+        self._map_pieces()
         for node in self.piece_nodes:
             node.find_matches(filemap, dest)
 
@@ -394,10 +396,24 @@ class Assembler(CbMixin):
         dest: str
             path to the directory where rebuild will take place.
         """
+        self.counter = 0
+        self._laslog = None
         self.contents = contents
-        self.metafiles = metafiles
+        PieceNode.set_callback(self._callback)
         self.dest = dest
-        self.filemap = _index_contents(self.contents)
+        self.metafiles = self._get_metafiles(metafiles)
+        filenames = set()
+        for meta in self.metafiles:
+            filenames |= meta.filenames
+        self.filemap = _index_contents(self.contents, filenames)
+
+    def _callback(self, filename, dest):
+        self.counter += 1
+        message = f"Matched: {filename} -> {dest}"
+        if message != self._lastlog:
+            self._lastlog = message
+            logger.info(message)
+        self.cb(message)
 
     def assemble_torrents(self):
         """
@@ -413,7 +429,7 @@ class Assembler(CbMixin):
                 "#{0} Searching contents for {1}", self.counter, metafile.name
             )
             self.rebuild(metafile)
-        return 100
+        return self.counter
 
 
     def rebuild(self, metafile: Metadata) -> None:
@@ -430,23 +446,26 @@ class Assembler(CbMixin):
         else:
             metafile.find_matches(self.filemap, self.dest)
 
-    def _get_metafiles(self) -> Metadata:
+    def _get_metafiles(self) -> list:
         """
         Collect all .torrent meta files from give directory or file.
         """
+        metafiles = []
         for path in self.metafiles:
             if os.path.exists(path):
                 if os.path.isdir(path):
                     for filename in os.listdir(path):
                         if filename.lower().endswith(".torrent"):
-                            metafile = Metadata(os.path.join(path, filename))
-                            yield metafile
+                            meta = Metadata(os.path.join(path, filename))
+                            metafiles.append(meta)
                 elif os.path.isfile(path) and path.lower().endswith(".torrent"):
-                    metafile = Metadata(path)
-                    yield metafile
+                    meta = Metadata(path)
+                    metafiles.append(meta)
+        return metafiles
 
 
-def _index_contents(contents: list) -> dict:
+
+def _index_contents(contents: list, filenames: set) -> dict:
     """
     Collect all of the filenames and their respective paths.
 
@@ -462,14 +481,14 @@ def _index_contents(contents: list) -> dict:
     """
     mapping = {}
     for dirpath in contents:
-        mapped = _index_content(dirpath)
+        mapped = _index_content(dirpath, filenames)
         for key, value in mapped.items():
             mapping.setdefault(key, [])
             mapping[key].extend(value)
     return mapping
 
 
-def _index_content(root: str) -> dict:
+def _index_content(root: str, filenames: set) -> dict:
     """
     Collect filenames from directory or file.
 
@@ -486,14 +505,15 @@ def _index_content(root: str) -> dict:
     filemap = {}
     if os.path.isfile(root):
         name = os.path.basename(root)
-        size = os.path.getsize(root)
-        filemap.setdefault(name, [])
-        filemap[name].append((root, size))
+        if name in filenames:
+            size = os.path.getsize(root)
+            filemap.setdefault(name, [])
+            filemap[name].append((root, size))
         return filemap
     if os.path.isdir(root):
         for path in os.listdir(root):
             fullpath = os.path.join(root, path)
-            resultmap = _index_content(fullpath)
+            resultmap = _index_content(fullpath, filenames)
             for key, value in resultmap.items():
                 filemap.setdefault(key, [])
                 filemap[key].extend(value)
