@@ -97,7 +97,7 @@ class PathNode:
             if self.stop != -1:
                 partial = fd.read(self.stop - self.start)
             else:
-                partial = fd.read()
+                partial = fd.read()  # pragma: nocover
         return partial
 
     def __len__(self) -> int:
@@ -289,7 +289,7 @@ class Metadata(CbMixin):
                 start = 0
                 current = self.files[file_index]
                 size = current["length"]
-                if size < target:
+                if size < target:  # pragma: nocover
                     stop = -1
                     target -= size
                     file_index += 1
