@@ -20,12 +20,11 @@
 Testing functions for the rebuild sub-action commands from command line args.
 """
 import os
-import string
 
 import pyben
 import pytest
 
-from tests import dir1, dir2, file1, file2, filemeta1, filemeta2, rmpath
+from tests import dir1, file1, file2, filemeta1, filemeta2, rmpath, tempfile
 from torrentfile.commands import rebuild
 from torrentfile.hasher import FileHasher, HasherHybrid, HasherV2
 from torrentfile.rebuild import Assembler
@@ -34,7 +33,7 @@ from torrentfile.torrent import TorrentAssembler, TorrentFile
 
 def test_fix():
     """Test that the fixtures import properly."""
-    assert filemeta2 and dir1 and file1 and filemeta1 and file2 and dir2
+    assert filemeta2 and dir1 and file1 and filemeta1 and file2
 
 
 def create_torrentfile(path, creator, dest, piece_length):
@@ -153,24 +152,34 @@ def test_file1_hashers(file2, size):
     assert len(set(lst)) == 1
 
 
+@pytest.fixture(scope="package")
+def dextra():
+    """Text fixture for creating testing directory."""
+    paths = [
+        "dir3/file1.bin",
+        "dir3/subdir1/file2.xls",
+        "dir3/subdir1/file3.mov",
+        "dir3/subdir2/file4.txt",
+        "dir3/subdir2/file5.md",
+        "dir3/file6.png",
+        "dir3/file7.nfo",
+    ]
+    temps, start = [], 13
+    for path in paths:
+        temp = tempfile(path=path, exp=start)
+        start += 1
+        temps.append(temp)
+    return os.path.commonpath(temps)
+
+
 @pytest.mark.parametrize("creator", [TorrentFile, TorrentAssembler])
 @pytest.mark.parametrize("size", list(range(15, 19)))
-def test_rebuild_extra_dir(dir2, creator, size):
+def test_rebuild_extra_dir(dextra, creator, size):
     """Test rebuild with dir2 and an extra smaller file."""
-    data = string.printable.encode("utf-8")
-    path = os.path.join(dir2, "otherfile.pdf")
-    if not os.path.exists(path):
-        with open(path, "wb") as fd:
-            start = 0
-            while start < 2**10:
-                fd.write(data)
-                start += len(data)
-                data += data
     dest = create_dest()
-    contents = [os.path.dirname(dir2)]
-    outfile = str(dir2) + ".torrent"
-    create_torrentfile(dir2, creator, outfile, size)
+    contents = [os.path.dirname(dextra)]
+    outfile = str(dextra) + ".torrent"
+    create_torrentfile(dextra, creator, outfile, size)
     assembler = Assembler(contents, contents, dest)
     counter = assembler.assemble_torrents()
     assert counter > 0
-    rmpath(dir2)

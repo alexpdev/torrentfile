@@ -97,7 +97,7 @@ class PathNode:
             if self.stop != -1:
                 partial = fd.read(self.stop - self.start)
             else:
-                partial = fd.read()  # pragma: nocover
+                partial = fd.read()
         return partial
 
     def __len__(self) -> int:
@@ -274,7 +274,7 @@ class Metadata(CbMixin):
             target = self.piece_length
             if remainder:
                 start = current["length"] - remainder
-                if remainder < target:  # pragma: nocover
+                if remainder < target:
                     stop = -1
                     target -= remainder
                     remainder = 0
@@ -289,7 +289,7 @@ class Metadata(CbMixin):
                 start = 0
                 current = self.files[file_index]
                 size = current["length"]
-                if size < target:  # pragma: nocover
+                if size < target:
                     stop = -1
                     target -= size
                     file_index += 1
@@ -415,7 +415,17 @@ class Assembler(CbMixin):
             filenames |= meta.filenames
         self.filemap = _index_contents(self.contents, filenames)
 
-    def _callback(self, filename, dest):
+    def _callback(self, filename: str, dest: str):
+        """
+        Run the callback functions associated with Mixin for copied files.
+
+        Parameters
+        ----------
+        filename : str
+            filename
+        dest : str
+            destination path
+        """
         self.counter += 1
         message = f"Matched: {filename} -> {dest}"
         if message != self._lastlog:
