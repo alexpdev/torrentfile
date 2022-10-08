@@ -229,7 +229,7 @@ class Metadata(CbMixin, ProgMixin):
         if self.meta_version == 2:
             self.num_pieces = len(self.filenames)
         else:
-            self.num_pieces = math.ceil(len(self.pieces) / self.piece_length)
+            self.num_pieces = math.ceil(len(self.pieces) / SHA1)
 
     def extract(self):
         """
@@ -352,18 +352,20 @@ class Metadata(CbMixin, ProgMixin):
         dest : str
             target destination path
         """
-        copied_files = set()
         self._map_pieces()
+        copied = []
         for piece_node in self.piece_nodes:
-            paths = set()
-            for pathnode in piece_node.paths:
-                if pathnode.path not in copied_files:
-                    paths.add(pathnode.path)
-            if paths and piece_node.find_matches(filemap, dest):
-                for path in paths:
-                    self._update()
-                    self.cb(path, os.path.join(dest, path))
-                    copied_files.add(path)
+            paths = piece_node.paths
+            if len(paths) == 1 and paths[0].path in copied:
+                self._update()
+                continue
+            if piece_node.find_matches(filemap, dest):
+                for pathnode in paths:
+                    if pathnode.path not in copied:
+                        copied.append(pathnode.path)
+                        dest_path = os.path.join(dest, pathnode.path)
+                        self._update()
+                        self.cb(pathnode.path, dest_path, self.num_pieces)
 
     def _match_v2(self, filemap: dict, dest: str):
         """
@@ -389,7 +391,7 @@ class Metadata(CbMixin, ProgMixin):
                         dest_path = os.path.join(dest, entry["full"])
                         copypath(entry["path"], dest_path)
                         self._update()
-                        self.cb(path, dest_path)
+                        self.cb(path, dest_path, self.num_pieces)
                         break
 
     def rebuild(self, filemap: dict, dest: str):
@@ -418,7 +420,8 @@ class Metadata(CbMixin, ProgMixin):
     def _update(self):
         """Start and updating the progress bar."""
         if self._prog is None:
-            self.prog_start(len(self.filenames), self.name, unit="file")
+            self._prog = True
+            self.prog_start(self.num_pieces, self.name, unit="piece")
         self.prog_update(1)
 
 
@@ -462,7 +465,7 @@ class Assembler(CbMixin):
             filenames |= meta.filenames
         self.filemap = _index_contents(self.contents, filenames)
 
-    def _callback(self, filename: str, dest: str):
+    def _callback(self, filename: str, dest: str, num_pieces: int):
         """
         Run the callback functions associated with Mixin for copied files.
 
@@ -472,9 +475,11 @@ class Assembler(CbMixin):
             filename
         dest : str
             destination path
+        num_pieces : int
+            number of hash pieces
         """
         self.counter += 1
-        message = f"Matched: {filename} -> {dest}"
+        message = f"Matched:{num_pieces} {filename} -> {dest}"
         if message != self._lastlog:
             self._lastlog = message
             # logger.info(message)
