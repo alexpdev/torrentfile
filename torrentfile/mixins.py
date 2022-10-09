@@ -38,7 +38,6 @@ class CbMixin:
     @classmethod
     def cb(cls, *args, **kwargs):
         """Do nothing."""
-        return args, kwargs
 
     @classmethod
     def set_callback(cls, func):

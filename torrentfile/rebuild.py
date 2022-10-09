@@ -24,6 +24,7 @@ torrent meta file, and validate the contents of each file allong the
 way. Displays a progress bar for each torrent.
 """
 import logging
+import math
 import os
 from hashlib import sha1
 from pathlib import Path
@@ -112,12 +113,12 @@ class PathNode:
         return self.length
 
 
-class PieceNode(CbMixin):
+class PieceNode:
     """
     Base class representing a single SHA1 hash block of data from a torrent.
     """
 
-    def __init__(self, piece: bytes, parent: "Metadata"):
+    def __init__(self, piece: bytes):
         """
         Store information about an individual SHA1 hash for a torrent file.
 
@@ -127,10 +128,7 @@ class PieceNode(CbMixin):
         ----------
         piece : bytes
             SHA1 hash bytes
-        parent : Metadata
-            Parent node
         """
-        self.parent = parent
         self.piece = piece
         self.paths = []
         self.result = None
@@ -180,12 +178,10 @@ class PieceNode(CbMixin):
             if val:
                 dest_path = os.path.join(self.dest, pathnode.full)
                 copypath(loc, dest_path)
-                self.parent.prog_update(1)
-                self.cb(filename, dest_path)
             return val
         return False
 
-    def find_matches(self, filemap: dict, dest: str):
+    def find_matches(self, filemap: dict, dest: str) -> bool:
         """
         Find the matching files for each path in the node.
 
@@ -195,9 +191,15 @@ class PieceNode(CbMixin):
             filename and details
         dest : str
             target destination path
+
+        Returns
+        -------
+        bool
+            success status
         """
         self.dest = dest
         self.result = self._find_matches(filemap, self.paths[:], bytes())
+        return self.result
 
 
 class Metadata(CbMixin, ProgMixin):
@@ -215,23 +217,26 @@ class Metadata(CbMixin, ProgMixin):
             path to the .torrent file.
         """
         self.path = os.path.abspath(path)
-        self.meta = None
         self.name = None
-        self.info = None
+        self.piece_length = 1
+        self.meta_version = 1
+        self.pieces = b""
         self.piece_nodes = []
-        self.counter = 0
         self.length = 0
-        self.current = 0
         self.files = []
         self.filenames = set()
         self.extract()
+        if self.meta_version == 2:
+            self.num_pieces = len(self.filenames)
+        else:
+            self.num_pieces = math.ceil(len(self.pieces) / SHA1)
 
     def extract(self):
         """
         Decode and extract information for the .torrent file.
         """
-        self.meta = pyben.load(self.path)
-        info = self.meta["info"]
+        meta = pyben.load(self.path)
+        info = meta["info"]
         self.piece_length = info["piece length"]
         self.name = info["name"]
         self.meta_version = info.get("meta version", 1)
@@ -274,7 +279,7 @@ class Metadata(CbMixin, ProgMixin):
         current = {}
         for i in range(total_pieces):
             begin = SHA1 * i
-            piece = PieceNode(self.pieces[begin: begin + SHA1], self)
+            piece = PieceNode(self.pieces[begin: begin + SHA1])
             target = self.piece_length
             if remainder:
                 start = current["length"] - remainder
@@ -348,8 +353,19 @@ class Metadata(CbMixin, ProgMixin):
             target destination path
         """
         self._map_pieces()
-        for node in self.piece_nodes:
-            node.find_matches(filemap, dest)
+        copied = []
+        for piece_node in self.piece_nodes:
+            paths = piece_node.paths
+            if len(paths) == 1 and paths[0].path in copied:
+                self._update()
+                continue
+            if piece_node.find_matches(filemap, dest):
+                for pathnode in paths:
+                    if pathnode.path not in copied:
+                        copied.append(pathnode.path)
+                        dest_path = os.path.join(dest, pathnode.path)
+                        self._update()
+                        self.cb(pathnode.path, dest_path, self.num_pieces)
 
     def _match_v2(self, filemap: dict, dest: str):
         """
@@ -374,8 +390,8 @@ class Metadata(CbMixin, ProgMixin):
                     if entry["root"] == hasher.root:
                         dest_path = os.path.join(dest, entry["full"])
                         copypath(entry["path"], dest_path)
-                        self.prog_update(1)
-                        self.cb(path, dest_path)
+                        self._update()
+                        self.cb(path, dest_path, self.num_pieces)
                         break
 
     def rebuild(self, filemap: dict, dest: str):
@@ -393,12 +409,20 @@ class Metadata(CbMixin, ProgMixin):
         dest : str
             destiantion path
         """
-        self.prog_start(len(self.filenames), self.name, unit="files")
+        self._prog = None
         if self.meta_version == 2:
             self._match_v2(filemap, dest)
         else:
             self._match_v1(filemap, dest)
-        self.prog_close()
+        if self._prog is not None:
+            self.prog_close()
+
+    def _update(self):
+        """Start and updating the progress bar."""
+        if self._prog is None:
+            self._prog = True
+            self.prog_start(self.num_pieces, self.name, unit="piece")
+        self.prog_update(1)
 
 
 class Assembler(CbMixin):
@@ -432,7 +456,6 @@ class Assembler(CbMixin):
         self.counter = 0
         self._lastlog = None
         self.contents = contents
-        PieceNode.set_callback(self._callback)
         Metadata.set_callback(self._callback)
         self.dest = dest
         self.meta_paths = metafiles
@@ -442,7 +465,7 @@ class Assembler(CbMixin):
             filenames |= meta.filenames
         self.filemap = _index_contents(self.contents, filenames)
 
-    def _callback(self, filename: str, dest: str):
+    def _callback(self, filename: str, dest: str, num_pieces: int):
         """
         Run the callback functions associated with Mixin for copied files.
 
@@ -452,12 +475,14 @@ class Assembler(CbMixin):
             filename
         dest : str
             destination path
+        num_pieces : int
+            number of hash pieces
         """
         self.counter += 1
-        message = f"Matched: {filename} -> {dest}"
+        message = f"Matched:{num_pieces} {filename} -> {dest}"
         if message != self._lastlog:
             self._lastlog = message
-            logger.info(message)
+            # logger.info(message)
         self.cb(message)
 
     def assemble_torrents(self):
@@ -487,20 +512,40 @@ class Assembler(CbMixin):
         """
         metafile.rebuild(self.filemap, self.dest)
 
+    def _iter_files(self, path: str) -> list:
+        """
+        Iterate through metfiles directory createing Metafile objects.
+
+        Parameters
+        ----------
+        path : str
+            fs path
+
+        Returns
+        -------
+        list
+            list of Metadata Object
+        """
+        metafiles = []
+        for filename in os.listdir(path):
+            if filename.lower().endswith(".torrent"):
+                try:
+                    meta = Metadata(os.path.join(path, filename))
+                    metafiles.append(meta)
+                except ValueError:  # pragma: nocover
+                    self.counter -= 1
+        return metafiles
+
     def _get_metafiles(self) -> list:
         """
         Collect all .torrent meta files from give directory or file.
         """
         metafiles = []
-        end = ".torrent"
         for path in self.meta_paths:
             if os.path.exists(path):
                 if os.path.isdir(path):
-                    for filename in os.listdir(path):
-                        if filename.lower().endswith(end):
-                            meta = Metadata(os.path.join(path, filename))
-                            metafiles.append(meta)
-                elif os.path.isfile(path) and path.lower().endswith(end):
+                    metafiles += self._iter_files(path)
+                elif path.lower().endswith(".torrent"):
                     meta = Metadata(path)
                     metafiles.append(meta)
         return metafiles
