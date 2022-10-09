@@ -533,7 +533,7 @@ class Assembler(CbMixin):
                     meta = Metadata(os.path.join(path, filename))
                     metafiles.append(meta)
                 except ValueError:  # pragma: nocover
-                    continue
+                    self.counter -= 1
         return metafiles
 
     def _get_metafiles(self) -> list:
