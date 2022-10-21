@@ -1,5 +1,24 @@
 # TorrentFile
 
+## Version 0.8.5
+
+-   Fixed bug with linux platforms not installing a binary cli command
+-   Fixed debug logging errors with the rebuild command
+-   Improved log message readability
+-   Compatability upgrades for torrentfileQt synchronization
+-   Added coverage details to documentation folder
+
+* * *
+
+## Version 0.8.4
+
+-   Documentation Updates
+-   Fixed logging issues with rebuild module.
+-   Improved algorithm for rebuild module.
+-   Improved testing for rebuild module.
+
+* * *
+
 ## Version 0.8.3
 
 

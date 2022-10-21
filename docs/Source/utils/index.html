@@ -594,6 +594,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#torrentfile.utils.debug_is_on" class="md-nav__link">
+    debug_is_on()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#torrentfile.utils.filelist_total" class="md-nav__link">
     filelist_total()
   </a>
@@ -652,6 +659,13 @@
           <li class="md-nav__item">
   <a href="#torrentfile.utils.path_stat" class="md-nav__link">
     path_stat()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#torrentfile.utils.toggle_debug_mode" class="md-nav__link">
+    toggle_debug_mode()
   </a>
   
 </li>
@@ -1253,6 +1267,68 @@ ignored, however if dest is smaller than source, dest will be overwritten.</p>
             <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">root</span> <span class="o">=</span> <span class="n">path</span>
     <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.debug_is_on" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">debug_is_on</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span></code>
+
+<a href="#torrentfile.utils.debug_is_on" class="headerlink" title="Permanent link">#</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Return True if debug mode is on in environment variables.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RETURNS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>bool</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <p>is debug mode on</p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\utils.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">debug_is_on</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return True if debug mode is on in environment variables.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        is debug mode on</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TORRENTFILE_DEBUG&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ON&quot;</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -2286,6 +2362,70 @@ ignored, however if dest is smaller than source, dest will be overwritten.</p>
     <span class="n">total_size</span><span class="p">,</span> <span class="n">filelist</span> <span class="o">=</span> <span class="n">filelist_total</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">piece_length</span> <span class="o">=</span> <span class="n">get_piece_length</span><span class="p">(</span><span class="n">total_size</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">filelist</span><span class="p">,</span> <span class="n">total_size</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.toggle_debug_mode" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">toggle_debug_mode</span><span class="p">(</span><span class="n">switch_on</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span></code>
+
+<a href="#torrentfile.utils.toggle_debug_mode" class="headerlink" title="Permanent link">#</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Switch the environment variable debug indicator on or off.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>switch_on</code></td>
+          <td class="doc-param-details">
+            <p>if true turn debug mode on otherwise off</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>bool</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\utils.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">toggle_debug_mode</span><span class="p">(</span><span class="n">switch_on</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Switch the environment variable debug indicator on or off.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    switch_on : bool</span>
+<span class="sd">        if true turn debug mode on otherwise off</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TORRENTFILE_DEBUG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;ON&quot;</span> <span class="k">if</span> <span class="n">switch_on</span> <span class="k">else</span> <span class="s2">&quot;OFF&quot;</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>

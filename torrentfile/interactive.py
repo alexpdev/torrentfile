@@ -123,8 +123,15 @@ def showcenter(txt: str):
 def select_action():
     """
     Operate TorrentFile program interactively through terminal.
+
+    DEPRECATION WARNING: The interactive CLI feature will be deprecated
+    in the future.
     """
     showcenter("TorrentFile: Starting Interactive Mode")
+    showcenter(
+        "DEPRECATION WARNING: The interactive feature will be"
+        "deprecated in the near future."
+    )
     action = get_input(
         "Enter the action you wish to perform.\n"
         "Action ( Create (c) | Edit (e) | Recheck (r) ): "

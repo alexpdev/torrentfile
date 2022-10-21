@@ -46,6 +46,7 @@ from typing import Optional
 
 from torrentfile.commands import create, edit, info, magnet, rebuild, recheck
 from torrentfile.interactive import select_action
+from torrentfile.utils import toggle_debug_mode
 from torrentfile.version import __version__ as version
 
 
@@ -73,20 +74,20 @@ class Config:
         """
         Activate the builtin logging mechanism when passed debug flag from CLI.
         """
-        logging.basicConfig(level=logging.INFO)
+        logging.basicConfig(level=logging.WARNING)
         logger = logging.getLogger()
         console_handler = logging.StreamHandler(stream=sys.stderr)
         stream_formatter = logging.Formatter(
-            "%(asctime)s %(levelno)s %(message)s",
-            datefmt="%m-%d %H:%M:%S",
+            "[%(asctime)s] [%(levelno)s] %(message)s",
+            datefmt="%H:%M:%S",
             style="%",
         )
         console_handler.setFormatter(stream_formatter)
         console_handler.setLevel(logging.DEBUG)
-
         logger.setLevel(logging.DEBUG)
         logger.addHandler(console_handler)
         logger.debug("Debug: ON")
+        toggle_debug_mode(True)
 
 
 class TorrentFileHelpFormatter(HelpFormatter):
@@ -210,6 +211,7 @@ def execute(args: Optional[list] = None) -> list:
     list
         Depends on what the command line args were.
     """
+    toggle_debug_mode(False)
     if not args:
         if sys.argv[1:]:
             args = sys.argv[1:]
@@ -218,7 +220,7 @@ def execute(args: Optional[list] = None) -> list:
 
     parser = ArgumentParser(
         "torrentfile",
-        usage="torrentfile [options] command [command options]",
+        usage="torrentfile <options>",
         description=(
             "Command line tools for creating, editing, checking, building "
             "and interacting with Bittorrent metainfo files"
@@ -272,7 +274,7 @@ def execute(args: Optional[list] = None) -> list:
         "create",
         help="Create a new Bittorrent file.",
         prefix_chars="-",
-        aliases=["c", "new"],
+        aliases=["c", "new", "build"],
         formatter_class=TorrentFileHelpFormatter,
     )
 
@@ -518,7 +520,7 @@ def execute(args: Optional[list] = None) -> list:
     check_parser = subparsers.add_parser(
         "recheck",
         help="Gives a detailed look at how much of the torrent is available.",
-        aliases=["check"],
+        aliases=["check", "r"],
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )

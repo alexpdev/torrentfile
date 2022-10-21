@@ -94,7 +94,7 @@ class PathNode:
         """
         with open(path, "rb") as fd:
             if self.start:
-                fd.read(self.start)
+                fd.seek(self.start)
             if self.stop != -1:
                 partial = fd.read(self.stop - self.start)
             else:
@@ -437,8 +437,10 @@ class Assembler(CbMixin):
 
     def __init__(self, metafiles: list, contents: list, dest: str):
         """
-        Construct the assembler object.
+        Reassemble given torrent file from given cli arguments.
 
+        Rebuild metafiles and contents into their original directory
+        structure as much as possible in the destination directory.
         Takes two paths as parameters,
         - file or directory containing 1 or more torrent meta files
         - path to where the contents are belived to be located.
@@ -482,8 +484,7 @@ class Assembler(CbMixin):
         message = f"Matched:{num_pieces} {filename} -> {dest}"
         if message != self._lastlog:
             self._lastlog = message
-            # logger.info(message)
-        self.cb(message)
+            logger.debug(message)
 
     def assemble_torrents(self):
         """
@@ -538,7 +539,12 @@ class Assembler(CbMixin):
 
     def _get_metafiles(self) -> list:
         """
-        Collect all .torrent meta files from give directory or file.
+        Collect all .torrent meta files from given directory or file.
+
+        Returns
+        -------
+        list
+            metafile objects
         """
         metafiles = []
         for path in self.meta_paths:

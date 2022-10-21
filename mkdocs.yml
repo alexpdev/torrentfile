@@ -41,7 +41,7 @@ nav:
   - API : api.md
   - Coverage: coverage.md
   - Source:
-    - Source/index.md 
+    - Source/index.md
     - Source/cli.md
     - Source/commands.md
     - Source/edit.md
@@ -89,7 +89,7 @@ plugins:
   - search
   - coverage:
       page_name: coverage
-      html_report_dir: htmlcov
+      html_report_dir: htmlcover
   - section-index
   - autorefs
   - mkapi

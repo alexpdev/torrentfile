@@ -29,6 +29,8 @@ import sys
 import time
 from pathlib import Path
 
+from torrentfile.utils import debug_is_on
+
 
 class CbMixin:
     """
@@ -206,7 +208,7 @@ class ProgMixin:
         bool :
             True if there is, otherwise False.
         """
-        if hasattr(self, "prog"):
+        if not debug_is_on() and hasattr(self, "prog"):
             return True
         return False
 

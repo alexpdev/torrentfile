@@ -311,22 +311,8 @@
     Synopsis
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    Description
-  </a>
-  
-    <nav class="md-nav" aria-label="Description">
+    <nav class="md-nav" aria-label="Synopsis">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
-    Options
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#sub-commands" class="md-nav__link">
@@ -670,110 +656,144 @@
 
 <h1 id="torrentfile-manual">torrentfile Manual<a class="headerlink" href="#torrentfile-manual" title="Permanent link">#</a></h1>
 <h2 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">#</a></h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile [options] &lt;subcommand&gt; [options] &lt;args&gt;
-</code></pre></div></td></tr></table></div>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p><strong><code>torrentfile</code></strong> is a command line toolkit for working with Bittorrent files(.torrent).
+<p><strong><code>torrentfile</code></strong> is a command line utility for working with Bittorrent files(.torrent).
 Some of the tools available include creating torrent files, editing portions of a
-torrent file, checking the integrity or completeness of downloaded torrent contents,
+torrent files, checking the integrity or completeness of downloaded torrent contents,
 displaying details of a torrentfile, generating magnet URLs for torrentfiles, and
 individual or batch rebuilding of torrent contents into their original directory
 structure.</p>
-<h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">#</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile [options] &lt;subcommand&gt; [options] &lt;args&gt;
+</code></pre></div></td></tr></table></div>
 <ul>
 <li>
-<p><code>-h</code>
-    displays all relevant command line options and subcommands.</p>
+<p><code>-h</code></p>
+<ul>
+<li>displays all relevant command line options and subcommands.</li>
+</ul>
 </li>
 <li>
-<p><code>-V</code>
-    displays program and version.</p>
+<p><code>-V</code></p>
+<ul>
+<li>displays program and version.</li>
+</ul>
 </li>
 <li>
-<p><code>-v</code>
-    enables debug mode and outputs a large amount of information to the terminal.</p>
+<p><code>-v</code></p>
+<ul>
+<li>enables debug mode and outputs a large amount of information to the terminal.</li>
+</ul>
 </li>
 <li>
-<p><code>-i</code>
-    activates interactive mode for selecting subcommands and options.</p>
+<p><code>-i</code></p>
+<ul>
+<li>activates interactive mode for selecting subcommands and options.  #Deprecated</li>
+</ul>
 </li>
 </ul>
+<hr />
 <h3 id="sub-commands">Sub-commands<a class="headerlink" href="#sub-commands" title="Permanent link">#</a></h3>
 <h4 id="create">create<a class="headerlink" href="#create" title="Permanent link">#</a></h4>
-<p>alias: <code>c</code>, <code>new</code></p>
+<p>alias: <code>c</code></p>
+<p>The create subcommand is used for generating new torrent files. The only required
+argument is the path(<code>&lt;path&gt;</code>) to the contents file or directory.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile create [options] &lt;path&gt;
 torrentfile c [options] &lt;path&gt;
 </code></pre></div></td></tr></table></div>
-<p>The create subcommand is used for generating new torrent files. The only required
-argument is the path(<code>&lt;path&gt;</code>) to the contents file or directory.</p>
 <ul>
 <li>
-<p><code>-a</code> <code>-t</code> <code>--announce</code> <code>--tracker</code>
-    Adds the list of url&rsquo;s that follow to the list of trackers for the newly created torrent file.
-    Example <code>-t http://url1 https://url2 ...</code></p>
+<p><code>-a</code> <code>-t</code> <code>--announce</code> <code>--tracker</code></p>
+<ul>
+<li>Adds the list of url&rsquo;s that follow to the list of trackers for the newly created torrent file.</li>
+<li>Example <code>-t http://url1 https://url2 ...</code></li>
+</ul>
 </li>
 <li>
-<p><code>-w</code> <code>--web-seeds</code>
-    Adds the list of urls that follow to the list of web-seed addresses for the newly created torrent file.</p>
+<p><code>-p</code> <code>--private</code></p>
+<ul>
+<li>Indicates that the torrent will be used on a private tracker. Disables multi-tracker protocols and DHT.</li>
+</ul>
 </li>
 <li>
-<p><code>--comment</code>
-    Includes the comment that follows to the metadata saved in the newly created torrent file.
-    Example: <code>--comment "Created for MyTrackerExample.com"</code></p>
+<p><code>-w</code> <code>--web-seeds</code></p>
+<ul>
+<li>Adds the list of urls that follow to the list of web-seed addresses for the newly created torrent file.</li>
+</ul>
 </li>
 <li>
-<p><code>--source</code>
-    Creates a source field in the info dictionary with the string that follows as the value. Frequently used for
-    cross-seeding on private trackers.
-    Example: <code>--source MyTrackerExample</code></p>
+<p><code>--http-seed</code></p>
+<ul>
+<li>Same as the <code>-w</code> argument except using Hoffman style web-seeds.</li>
+</ul>
 </li>
 <li>
-<p><code>-p</code> <code>--private</code>
-    Indicates that the torrent will be used on a private tracker. Disables multi-tracker protocols and DHT.</p>
+<p><code>-c</code> <code>--comment</code></p>
+<ul>
+<li>Includes the comment that follows to the metadata saved in the newly created torrent file.</li>
+<li>Example: <code>--comment "Created for MyTrackerExample.com"</code></li>
+</ul>
 </li>
 <li>
-<p><code>--piece-length</code>
-    Uses the number that follows as the piece-length size for the newly created torrent file. If option isn&rsquo;t used
-    the program will pick the ideal size. Acceptable values include 14-29 which is interpreted as the number to raise 2
-    by (e.g. 14 is interpreted as 16384), or any perfect power of 2 greater than or equal to 16 KiB and less than 1 GiB.
-    Example: <code>--piece-length 14</code> or <code>--piece-length 16384</code>.</p>
+<p><code>--source</code></p>
+<ul>
+<li>Creates a source field in the info dictionary with the string that follows as the value. Frequently used for cross-seeding on private trackers.</li>
+<li>Example: <code>--source MyTrackerExample</code></li>
+</ul>
 </li>
 <li>
-<p><code>--meta-version</code>
-    Use the following number as the Bittorrent version the torrent will be used on. The default is 1.
-    Options: 1 - Bittorrent v1,    2 - Bittorrent v2,    3 - Bittorrent v1 &amp; v2
-    Examples: <code>--meta-version 1</code>, <code>--meta-version 2</code>, <code>--meta-version 3</code></p>
+<p><code>--piece-length</code></p>
+<ul>
+<li>Uses the number that follows as the piece-length size for the newly created torrent file. If option isn&rsquo;t used the program will pick the ideal size.  Acceptable values include 14-29 which is interpreted as the number to raise 2 by  (e.g. 14 is interpreted as 16384), or any perfect power of 2 greater than or equal  to 16 KiB and less than 1 GiB.</li>
+<li>Example: <code>--piece-length 14</code> or <code>--piece-length 16384</code>.</li>
+</ul>
 </li>
 <li>
-<p><code>-o</code> <code>--out</code>
-    Specify the full path to the newly created torrent file.  The default is to save it adjacent to the content.
-    Example: if content is at <code>/home/user/torrents/content</code> the default would create <code>/home/user/torrents/content.torrent</code></p>
+<p><code>--meta-version</code></p>
+<ul>
+<li>Use the following number as the Bittorrent version the torrent will be used on. The default is 1.</li>
+<li>Options: 1 - Bittorrent v1,    2 - Bittorrent v2,    3 - Bittorrent v1 &amp; v2</li>
+<li>Examples: <code>--meta-version 1</code>, <code>--meta-version 2</code>, <code>--meta-version 3</code></li>
+</ul>
 </li>
 <li>
-<p><code>--cwd</code> <code>--current</code>
-    Changes the default save location to the current working directory.
-    Example: if content is at <code>/home/user/torrents/content</code> this option would create <code>./content.torrent</code></p>
+<p><code>-o</code> <code>--out</code></p>
+<ul>
+<li>Specify the full path to the newly created torrent file.  The default is to save it adjacent to the content.</li>
+<li>Example: if content is at <code>/home/user/torrents/content</code> the default would create <code>/home/user/torrents/content.torrent</code></li>
+</ul>
 </li>
 <li>
-<p><code>--progress</code> <code>--prog</code>
-    Options (0, 1):  No status bar will be shown if 0.  Otherwise the default and 1 argument means progress bar is shown</p>
+<p><code>--cwd</code> <code>--current</code>  #deprecated</p>
+<ul>
+<li>This is now the default behaviour. Changes the default save location to the current working directory. </li>
+<li>Example: if content is at <code>/home/user/torrents/content</code> this option would create <code>./content.torrent</code></li>
+</ul>
+</li>
+<li>
+<p><code>--progress</code> <code>--prog</code></p>
+<ul>
+<li>Options (0, 1):  No status bar will be shown if 0.  Otherwise the default and 1 argument means progress bar is shown</li>
+</ul>
 </li>
 </ul>
+<hr />
 <h4 id="info">info<a class="headerlink" href="#info" title="Permanent link">#</a></h4>
 <p>alias: <code>i</code></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile info &lt;path&gt;
-torrentfile i &lt;path&gt;
-</code></pre></div></td></tr></table></div>
 <p>Display detailed information about a torrentfile such as trackers,
 size of contents, Bittorrent version, any comments left, date the
 torrent file was created and more. There is only one positional perameter
 which is the path to the torrent file and there are no optional arguments.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile info &lt;path&gt;
+torrentfile i &lt;path&gt;
+</code></pre></div></td></tr></table></div>
 <ul>
-<li><code>/path/to/*.torrent</code>
-    The relative or absolute path to the torrent file.</li>
+<li><code>/path/to/*.torrent</code><ul>
+<li>The relative or absolute path to the torrent file.</li>
 </ul>
+</li>
+</ul>
+<hr />
 <h4 id="edit">edit<a class="headerlink" href="#edit" title="Permanent link">#</a></h4>
 <p>Edit some of the different information detailed in a torrent file. The fields that
 are editable each have option flags detialed below. Each option identifies the
@@ -788,48 +808,63 @@ torrentfile e [options] &lt;path&gt;
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>
-<p><code>-a</code> <code>-t</code> <code>--announce</code> <code>--tracker</code>
-    Adds the list of url&rsquo;s that follow to the list of trackers for the newly created torrent file.
-    Example <code>-t http://url1 https://url2 ...</code></p>
+<p><code>-a</code> <code>-t</code> <code>--announce</code> <code>--tracker</code></p>
+<ul>
+<li>Adds the list of url&rsquo;s that follow to the list of trackers for the newly created torrent file.</li>
+<li>Example <code>-t http://url1 https://url2 ...</code></li>
+</ul>
 </li>
 <li>
-<p><code>-w</code> <code>--web-seeds</code>
-    Adds the list of urls that follow to the list of web-seed addresses for the newly created torrent file.</p>
+<p><code>-w</code> <code>--web-seeds</code></p>
+<ul>
+<li>Adds the list of urls that follow to the list of web-seed addresses for 
+    the newly created torrent file.</li>
+</ul>
 </li>
 <li>
-<p><code>--comment</code>
-    Includes the comment that follows to the metadata saved in the newly created torrent file.
-    Example: <code>--comment "Created for MyTrackerExample.com"</code></p>
+<p><code>--comment</code></p>
+<ul>
+<li>Includes the comment that follows to the metadata saved in the newly 
+    created torrent file.</li>
+<li>Example: <code>--comment "Created for MyTrackerExample.com"</code></li>
+</ul>
 </li>
 <li>
-<p><code>--source</code>
-    Creates a source field in the info dictionary with the string that follows as the value. Frequently used for
-    cross-seeding on private trackers.
-    Example: <code>--source MyTrackerExample</code></p>
+<p><code>--source</code></p>
+<ul>
+<li>Creates a source field in the info dictionary with the string that follows as the value. Frequently used for cross-seeding on private trackers.</li>
+<li>Example: <code>--source MyTrackerExample</code></li>
+</ul>
 </li>
 <li>
-<p><code>-p</code> <code>--private</code>
-    Indicates that the torrent will be used on a private tracker.  Disables multi-tracker protocols and DHT.</p>
+<p><code>-p</code> <code>--private</code></p>
+<ul>
+<li>Indicates that the torrent will be used on a private tracker.  Disables multi-tracker protocols and DHT.</li>
+</ul>
 </li>
 </ul>
+<hr />
 <h4 id="recheck">recheck<a class="headerlink" href="#recheck" title="Permanent link">#</a></h4>
+<p>This feature is identical to the &lsquo;recheck&rsquo; function provided by torrent clients. It 
+validates that the file/directory contents match those described in the torrent file.</p>
 <p>Recheck requires two paths as arguments. The first is the path to a torrent file, and
 and the second is a path to the file of directory containing the downloaded data
 from that torrentfile. <code>torrentfile</code> recursively validates each file with the hashes
-contained in the torrentfile, and displays the amount missing frome each file, plus
-a final percentage for the whole torrent at the conclusion. This will display a
-progress bar for each file including missing files. It is also permitted to use
+contained in the torrentfile, and displays the total percentage of the file that 
+matches the information from the torrent file. It is also permitted to use
 the contents parent directory which can help for batch processing many torrent files.</p>
 <p>alias: <code>r</code>, <code>check</code></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile recheck &lt;*.torrent&gt; &lt;contents&gt;
 torrentfile r &lt;*.torrent&gt; &lt;contents&gt;
 </code></pre></div></td></tr></table></div>
+<hr />
 <h3 id="magnet">Magnet<a class="headerlink" href="#magnet" title="Permanent link">#</a></h3>
 <p>Generate a magnet URL for a torrent file.</p>
 <p>alias: <code>m</code></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile magnet &lt;path/to/*.torrent&gt;
 </code></pre></div></td></tr></table></div>
+<hr />
 <h3 id="rebuild">Rebuild<a class="headerlink" href="#rebuild" title="Permanent link">#</a></h3>
 <p>Rebuild individual or batches of torrent contents into the original file structure.
 The program takes a path to a torrent file or directory containing torrent files,
@@ -840,8 +875,31 @@ and creates copies of the matches to the destination directory. The original fil
 are not effected and any existing files in the target directory will not be
 overwritten.</p>
 <p>alias: <code>build</code>, <code>b</code></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile rebuild &lt;metafiles&gt; &lt;contents&gt; &lt;destination&gt;
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile rebuild -m &lt;metafiles&gt; -c &lt;contents&gt; -d &lt;destination&gt;
 </code></pre></div></td></tr></table></div>
+<ul>
+<li>
+<p><code>-m</code> <code>--metafiles</code></p>
+<ul>
+<li>path to a torrent file or a directory containing torrent files for batch processing.</li>
+</ul>
+</li>
+<li>
+<p><code>-c</code> <code>--content</code></p>
+<ul>
+<li>path to where the contents for the torrentfile can be found.  If the path is 
+    for a directory, the directory will be searched recusively for files that match. 
+    For deeply nested directories with lot&rsquo;s of files in them, this can take time.</li>
+</ul>
+</li>
+<li>
+<p><code>-d</code> <code>-destination</code></p>
+<ul>
+<li>path to a directory where the torrent will be rebuilt. Files will be copied 
+    from their original location, not moved.</li>
+</ul>
+</li>
+</ul>
 
               
             </article>
