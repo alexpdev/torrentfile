@@ -185,16 +185,6 @@ To create a magnet URI for a pre-existing torrent meta file, use the sub-command
 torrentfile magnet /path/to/some.torrent
 ```
 
-#### Interactive Mode (expiremental)
-
-Alternatively to supplying a bunch of command line arguments, interactive mode
-allows users to specify program options one at a time from a series of prompts. Use the 
-`-i` or `--interactive` flags to activate interactive mode.
-
-```bash
-torrentfile -i
-```
-
 ### GUI
 
 If you prefer a windowed GUI please check out the official GUI frontend [here](https://github.com/alexpdev/TorrentFileQt)

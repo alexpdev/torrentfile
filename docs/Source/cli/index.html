@@ -750,8 +750,7 @@ TorrentFileHelpFormatter : HelpFormatter
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\cli.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">71</span>
-<span class="normal">72</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">72</span>
 <span class="normal">73</span>
 <span class="normal">74</span>
 <span class="normal">75</span>
@@ -768,25 +767,26 @@ TorrentFileHelpFormatter : HelpFormatter
 <span class="normal">86</span>
 <span class="normal">87</span>
 <span class="normal">88</span>
-<span class="normal">89</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="normal">89</span>
+<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span> <span class="nf">activate_logger</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Activate the builtin logging mechanism when passed debug flag from CLI.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
     <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
     <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
     <span class="n">stream_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
-        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelno)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2">] [</span><span class="si">%(levelno)s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">,</span>
         <span class="n">style</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">stream_formatter</span><span class="p">)</span>
     <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-
     <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console_handler</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug: ON&quot;</span><span class="p">)</span>
+    <span class="n">toggle_debug_mode</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -815,8 +815,7 @@ is output to the terminal</p>
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\cli.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">59</span>
-<span class="normal">60</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">60</span>
 <span class="normal">61</span>
 <span class="normal">62</span>
 <span class="normal">63</span>
@@ -825,7 +824,8 @@ is output to the terminal</p>
 <span class="normal">66</span>
 <span class="normal">67</span>
 <span class="normal">68</span>
-<span class="normal">69</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="normal">69</span>
+<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span> <span class="nf">activate_quiet</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Activate quiet mode for the duration of the programs life.</span>
@@ -928,8 +928,7 @@ is output to the terminal</p>
 
           <details class="quote">
             <summary>Source code in <code>torrentfile\cli.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 99</span>
-<span class="normal">100</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
 <span class="normal">103</span>
@@ -943,7 +942,8 @@ is output to the terminal</p>
 <span class="normal">111</span>
 <span class="normal">112</span>
 <span class="normal">113</span>
-<span class="normal">114</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">45</span><span class="p">):</span>
+<span class="normal">114</span>
+<span class="normal">115</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prog</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">max_help_positions</span><span class="o">=</span><span class="mi">45</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct HelpFormat class for usage output.</span>
 
@@ -1050,8 +1050,7 @@ and command line interface.</p>
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\cli.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">195</span>
-<span class="normal">196</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">196</span>
 <span class="normal">197</span>
 <span class="normal">198</span>
 <span class="normal">199</span>
@@ -1451,7 +1450,9 @@ and command line interface.</p>
 <span class="normal">593</span>
 <span class="normal">594</span>
 <span class="normal">595</span>
-<span class="normal">596</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="normal">596</span>
+<span class="normal">597</span>
+<span class="normal">598</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Execute program with provided list of arguments.</span>
 
@@ -1469,6 +1470,7 @@ and command line interface.</p>
 <span class="sd">    list</span>
 <span class="sd">        Depends on what the command line args were.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">toggle_debug_mode</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
             <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
@@ -1875,11 +1877,11 @@ and command line interface.</p>
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\cli.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">602</span>
-<span class="normal">603</span>
-<span class="normal">604</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">604</span>
 <span class="normal">605</span>
-<span class="normal">606</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="normal">606</span>
+<span class="normal">607</span>
+<span class="normal">608</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initiate main function for CLI script.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

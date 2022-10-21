@@ -400,3 +400,27 @@ def copypath(source: str, dest: str) -> None:
             os.mkdir(path)
         root = path
     shutil.copy(source, dest)
+
+
+def toggle_debug_mode(switch_on: bool):
+    """
+    Switch the environment variable debug indicator on or off.
+
+    Parameters
+    ----------
+    switch_on : bool
+        if true turn debug mode on otherwise off
+    """
+    os.environ["TORRENTFILE_DEBUG"] = "ON" if switch_on else "OFF"
+
+
+def debug_is_on() -> bool:
+    """
+    Return True if debug mode is on in environment variables.
+
+    Returns
+    -------
+    bool
+        is debug mode on
+    """
+    return os.environ["TORRENTFILE_DEBUG"] == "ON"
