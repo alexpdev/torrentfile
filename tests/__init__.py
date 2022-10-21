@@ -241,7 +241,6 @@ def metafile2(dir2, request):
     torrent = torrent_class(**args)
     outfile, _ = torrent.write(outfile=outfile)
     yield outfile
-    rmpath(outfile)
 
 
 @pytest.fixture(scope="package")
@@ -251,7 +250,6 @@ def file1():
     """
     path = tempfile()
     yield path
-    rmpath(path)
 
 
 @pytest.fixture(scope="package", params=torrents())
