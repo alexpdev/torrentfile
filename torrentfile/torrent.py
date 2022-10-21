@@ -466,8 +466,6 @@ class TorrentFileV2(MetaFile, ProgMixin):
     """
     Class for creating Bittorrent meta v2 files.
 
-    **DEPRECATED**
-
     Parameters
     ----------
     **kwargs : dict
@@ -479,8 +477,6 @@ class TorrentFileV2(MetaFile, ProgMixin):
     def __init__(self, **kwargs):
         """
         Construct `TorrentFileV2` Class instance from given parameters.
-
-        **DEPRECATED**
 
         Parameters
         ----------
@@ -497,8 +493,6 @@ class TorrentFileV2(MetaFile, ProgMixin):
     def assemble(self):
         """
         Assemble then return the meta dictionary for encoding.
-
-        **DEPRECATED**
 
         Returns
         -------
@@ -519,8 +513,6 @@ class TorrentFileV2(MetaFile, ProgMixin):
     def _traverse(self, path: str) -> dict:
         """
         Walk directory tree.
-
-        **DEPRECATED**
 
         Parameters
         ----------
@@ -552,8 +544,6 @@ class TorrentFileHybrid(MetaFile, ProgMixin):
     """
     Construct the Hybrid torrent meta file with provided parameters.
 
-    **DEPRECATED**
-
     Parameters
     ----------
     **kwargs : dict
@@ -579,8 +569,6 @@ class TorrentFileHybrid(MetaFile, ProgMixin):
     def assemble(self):
         """
         Assemble the parts of the torrentfile into meta dictionary.
-
-        **DEPRECATED**
         """
         info = self.meta["info"]
         info["meta version"] = 2
@@ -600,8 +588,6 @@ class TorrentFileHybrid(MetaFile, ProgMixin):
     def _traverse(self, path: str) -> dict:
         """
         Build meta dictionary while walking directory.
-
-        **DEPRECATED**
 
         Parameters
         ----------

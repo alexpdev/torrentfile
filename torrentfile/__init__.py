@@ -30,8 +30,8 @@ Modules:
     exceptions: Custom Exceptions used in package.
     utils: Utilities used throughout package.
 """
-from torrentfile.cli import execute
+from torrentfile.cli import execute, main
 from torrentfile.commands import create, edit, info, magnet, recheck
 from torrentfile.version import __version__
 
-__all__ = ["execute", "create", "edit", "info", "magnet", "recheck"]
+__all__ = ["execute", "create", "edit", "info", "magnet", "recheck", "main"]

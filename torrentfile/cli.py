@@ -218,7 +218,7 @@ def execute(args: Optional[list] = None) -> list:
 
     parser = ArgumentParser(
         "torrentfile",
-        usage="torrentfile [options] command [command options]",
+        usage="torrentfile <options>",
         description=(
             "Command line tools for creating, editing, checking, building "
             "and interacting with Bittorrent metainfo files"
@@ -272,7 +272,7 @@ def execute(args: Optional[list] = None) -> list:
         "create",
         help="Create a new Bittorrent file.",
         prefix_chars="-",
-        aliases=["c", "new"],
+        aliases=["c", "new", "build"],
         formatter_class=TorrentFileHelpFormatter,
     )
 
@@ -518,7 +518,7 @@ def execute(args: Optional[list] = None) -> list:
     check_parser = subparsers.add_parser(
         "recheck",
         help="Gives a detailed look at how much of the torrent is available.",
-        aliases=["check"],
+        aliases=["check", "r"],
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )

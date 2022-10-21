@@ -306,36 +306,8 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#create" class="md-nav__link">
-    Create
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#edit" class="md-nav__link">
-    Edit
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recheck" class="md-nav__link">
-    Recheck
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#magnet" class="md-nav__link">
-    Magnet
-  </a>
   
 </li>
       
@@ -664,33 +636,33 @@
 <span class="normal">25</span>
 <span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code>Usage
 =====
-torrentfile [-h] [-i] [-V] [-v]
-                &lt;create&gt; &lt;edit&gt; &lt;magnet&gt; &lt;recheck&gt; ...
+    torrentfile [options] command [command options]
 
-CLI Tool for creating, checking, editing... Bittorrent meta files. TorrentFile supports all versions of torrent files.
+Command line tools for creating, editing, checking, building and interacting with Bittorrent metainfo files
 
 Options
 -------
--h, --help                          show this help message and exit
--i, --interactive                   select program options interactively
--V, --version                       show program version and exit
--v, --verbose                       output debug information
+    -h, --help             show this help message and exit
+    -i, --interactive      select program options interactively
+    -q, --quiet            Turn off all text output.
+    -V, --version          show program version and exit
+    -v, --verbose          output debug information
 
-Actions
--------
-&lt;create&gt; &lt;edit&gt; &lt;magnet&gt; &lt;recheck&gt;
-    c (create, new)                   Create a torrent meta file.
+Commands
+--------
+create, edit, info, magnet, recheck, rebuild
 
-    e (edit)                          Edit existing torrent meta file.
-
-    m (magnet)                        Create magnet url from an existing Bittorrent meta file.
-
-    r (recheck, check)                Calculate amount of torrent meta file&#39;s content is found on disk.
-
-    i (info)                          Show detailed information about a torrent file.
+    create (c, new)      Create a new Bittorrent file.
+    edit (e)             Edit existing torrent meta file.
+    info (i)             Show detailed information about a torrent file.
+    magnet (m)           Generate magnet url from an existing Bittorrent meta file.
+    recheck (check)      Gives a detailed look at how much of the torrent is available.
+    rebuild (build)      Re-assemble files obtained from a bittorrent file into the
+                        appropriate file structure for re-seeding.  Read documentation
+                        for more information, or use cases.
 </code></pre></div></td></tr></table></div>
 <hr />
-<h3 id="create">Create<a class="headerlink" href="#create" title="Permanent link">#</a></h3>
+<h1 id="create">Create<a class="headerlink" href="#create" title="Permanent link">#</a></h1>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -726,42 +698,74 @@ Actions
 <span class="normal">33</span>
 <span class="normal">34</span>
 <span class="normal">35</span>
-<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code>Usage
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span></pre></div></td><td class="code"><div><pre><span></span><code>Usage
 =====
-torrentfile c [-h] [-a &lt;url&gt; [&lt;url&gt; ...]] [-p] [-s &lt;source&gt;] [-m]
-                    [-c &lt;comment&gt;] [-o &lt;path&gt;] [-t &lt;url&gt; [&lt;url&gt; ...]]
-                    [--noprogress] [--meta-version &lt;int&gt;]
-                    [--piece-length &lt;int&gt;] [-w &lt;url&gt; [&lt;url&gt; ...]]
-                    &lt;content&gt;
+
+    torrentfile [options] create
+    [-h] [-a &lt;url&gt; [&lt;url&gt; ...]] [-p]
+    [-s &lt;source&gt;] [-m] [-c &lt;comment&gt;]
+    [-o &lt;path&gt;] [--cwd] [--prog PROGRESS]
+    [--meta-version &lt;int&gt;]
+    [--piece-length &lt;int&gt;]
+    [-w &lt;url&gt; [&lt;url&gt; ...]]
+    [--http-seed &lt;url&gt; [&lt;url&gt; ...]]
+    [&lt;content&gt;]
 
 Positional Arguments
 --------------------
-&lt;content&gt;                                           Path to content file or directory
+&lt;content&gt;              Path to content file or directory
 
-Optional Arguments
-------------------
--h, --help                                          show this help message and exit
--a &lt;url&gt; [&lt;url&gt; ...], --announce &lt;url&gt; [&lt;url&gt; ...]  Alias for -t/--tracker
--p, --private                                       Create a private torrent file
--s &lt;source&gt;, --source &lt;source&gt;                      Useful for cross-seeding
--m, --magnet                                        Output Magnet Link after creation completes
--c &lt;comment&gt;, --comment &lt;comment&gt;                   Include a comment in file metadata
--o &lt;path&gt;, --out &lt;path&gt;                             Output path for created .torrent file
--t &lt;url&gt; [&lt;url&gt; ...], --tracker &lt;url&gt; [&lt;url&gt; ...]   One or more Bittorrent tracker announce url(s).
---prog, --progress &lt;level&gt;                          (0) = no progress bar displayed
-                                                    (1) = progress bar is displayed (default)
---meta-version &lt;int&gt;                                Bittorrent metafile version.
-                                                    Options - {1, 2, 3}
-                                                    (1) = Bittorrent v1 (Default)
-                                                    (2) = Bittorrent v2
-                                                    (3) = Bittorrent v1 &amp; v2 hybrid
---piece-length &lt;int&gt;                                Number of bytes per piece. (Default: None)
-                                                    Acceptable inputs include {14 - 24} as exponent for 2^n,
-                                                    or any acceptable integer value (must be power of 2).
-                                                    Examples:: [--piece-length 14] [--piece-length 16777216]
--w &lt;url&gt; [&lt;url&gt; ...], --web-seed &lt;url&gt; [&lt;url&gt; ...]  One or more url(s) linking to a http server hosting
-                                                    the torrent contents.  This is useful if the torrent
-                                                    tracker is ever unreachable. Example:: -w url1 url2 url3
+Options
+-------
+    -h, --help             show this help message and exit
+    -a &lt;url&gt; [&lt;url&gt; ...], -t &lt;url&gt; [&lt;url&gt; ...], --announce &lt;url&gt; [&lt;url&gt; ...], --tracker &lt;url&gt; [&lt;url&gt; ...]
+                        One or more space-seperated torrent tracker url(s).
+    -p, --private          Creates private torrent with multi-tracker and DHT turned off.
+    -s &lt;source&gt;, --source &lt;source&gt;
+                        Add a source string. Useful for cross-seeding.
+    -m, --magnet
+    -c &lt;comment&gt;, --comment &lt;comment&gt;
+                        Include a comment in file metadata
+    -o &lt;path&gt;, --out &lt;path&gt;
+                        Explicitly specify the path to write the file.
+    --cwd, --current       *deprecated* Saving to current directory is default behaviour
+    --prog PROGRESS, --progress PROGRESS
+                        Set the progress bar level.
+                        Options = 0, 1
+                        (0) = Do not display progress bar.
+                        (1) = Display progress bar.(default)
+
+    --meta-version &lt;int&gt;   Bittorrent metafile version.
+                        Options = 1, 2, 3
+                        (1) = Bittorrent v1 (Default)
+                        (2) = Bittorrent v2
+                        (3) = Bittorrent v1 &amp; v2 hybrid
+
+    --piece-length &lt;int&gt;   (Default: &lt;blank&gt;) Number of bytes for per chunk of data transmitted
+                        by Bittorrent client. Acceptable values include integers 14-26 which
+                        will be interpreted as a perfect power of 2.  e.g. 14 = 16KiB pieces.
+                        Examples:: [--piece-length 14] [--piece-length 20]
+
+    -w &lt;url&gt; [&lt;url&gt; ...], --web-seed &lt;url&gt; [&lt;url&gt; ...]
+                        list of web addresses where torrent data exists (GetRight).
+    --http-seed &lt;url&gt; [&lt;url&gt; ...]
+                        list of URLs, addresses where content can be found (Hoffman).
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="edit">Edit<a class="headerlink" href="#edit" title="Permanent link">#</a></h2>
@@ -860,7 +864,6 @@ Optional Arguments
 -h, --help   show this help message and exit
 </code></pre></div></td></tr></table></div>
 <hr />
-<p><a href="https://codecov.io/gh/alexpdev/torrentfile/branch/master/graphs/icicle.svg?token=EWF7NIL9SQ">Coverage</a></p>
 
               
             </article>
