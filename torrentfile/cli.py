@@ -235,7 +235,7 @@ def execute(args: Optional[list] = None) -> list:
         "--interactive",
         action="store_true",
         dest="interactive",
-        help="select program options interactively",
+        help="#Deprecated\t select program options interactively",
     )
 
     parser.add_argument(
