@@ -1,5 +1,15 @@
 # TorrentFile
 
+## Version 0.8.6
+
+-   Fixed bug with argument parser that allowed for duplicate aliases
+-   Added support for python 3.11
+-   Updated CI/CD Workflow
+-   Updated documentation
+-   Deprecated the -i interactive argument option and added warnings in documentation
+
+* * *
+
 ## Version 0.8.5
 
 -   Fixed bug with linux platforms not installing a binary cli command
