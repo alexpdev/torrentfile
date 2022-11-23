@@ -89,7 +89,7 @@ plugins:
   - search
   - coverage:
       page_name: coverage
-      html_report_dir: htmlcover
+      html_report_dir: htmlcov
   - section-index
   - autorefs
   - mkapi
