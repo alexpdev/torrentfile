@@ -53,9 +53,9 @@ or in the _`docs`_ directory.
 
 > _torrentfile_ is under active development, and is subject to significant changes in the codebase between releases.
 
-## 🚀 Usage
+## 🚀 Usage & Documentation
 
-![Basic Usage](https://github.com/alexpdev/torrentfile/blob/master/assets/TorrentFileBasicUsage.gif?raw=True)
+![Basic Usage](https://github.com/alexpdev/torrentfile/blob/master/assets/Torrentfile.gif?raw=True)
 
 > Usage examples can be found in the project documentation on the [examples page.](https://alexpdev.github.io/torrentfile/usage)
 

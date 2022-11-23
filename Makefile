@@ -75,7 +75,7 @@ clean-build: ## remove build artifacts
 	rm -frv runner/dist
 
 test: ## Get coverage report
-	# pip install torrentfile torrentfileQt QStyler ebookatty --force-reinstall --no-cache --upgrade
+	pip install torrentfile torrentfileQt QStyler ebookatty --force-reinstall --no-cache --upgrade
 	tox
 
 docs: ## Regenerate docs from changes
@@ -83,7 +83,8 @@ docs: ## Regenerate docs from changes
 	rm -rfv site/index.md
 	cp -rfv README.md site/index.md
 	cp -rfv CHANGELOG.md site/changelog.md
-	mv -fv htmlcov site/htmlcover
+	rm -rfv site/htmlcov
+	mv -fv htmlcov site/
 	mkdocs build
 	touch docs/.nojekyll
 

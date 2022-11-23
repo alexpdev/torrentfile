@@ -18,6 +18,8 @@
 ##############################################################################
 """
 Module contains the procedures used for Interactive Mode.
+
+## This module has been deprecated.
 """
 
 import os
@@ -34,6 +36,8 @@ from torrentfile.torrent import TorrentFile, TorrentFileHybrid, TorrentFileV2
 def get_input(*args: tuple):  # pragma: no cover
     """
     Determine appropriate input function to call.
+
+    @Deprecated
 
     Parameters
     ----------
@@ -54,6 +58,8 @@ def _get_input(txt: str):  # pragma: no cover
     """
     Gather information needed from user.
 
+    @Deprecated
+
     Parameters
     ----------
     txt : str
@@ -71,6 +77,8 @@ def _get_input(txt: str):  # pragma: no cover
 def _get_input_loop(txt: str, func):  # pragma: no cover
     """
     Gather information needed from user.
+
+    @Deprecated
 
     Parameters
     ----------
@@ -97,6 +105,8 @@ def showtext(txt):
     """
     Print contents of txt to screen.
 
+    @Deprecated
+
     Parameters
     ----------
     txt : str
@@ -108,6 +118,8 @@ def showtext(txt):
 def showcenter(txt: str):
     """
     Print text to screen in the center position of the terminal.
+
+    @Deprecated
 
     Parameters
     ----------
@@ -153,6 +165,8 @@ def select_action():
 def recheck_torrent():
     """
     Check torrent download completed percentage.
+
+    @Deprecated
     """
     showcenter("Check Torrent")
     msg = "Enter path to torrent contents, and corresponding torrent metafile."
@@ -170,6 +184,8 @@ def recheck_torrent():
 def create_torrent():
     """
     Create new torrent file interactively.
+
+    @Deprecated
     """
     showcenter("Create Torrent")
     showtext(
@@ -186,6 +202,8 @@ def create_torrent():
 def edit_action():
     """
     Edit the editable values of the torrent meta file.
+
+    @Deprecated
     """
     showcenter("Edit Torrent")
     metafile = get_input("Metafile(.torrent): ", os.path.exists)
@@ -197,11 +215,15 @@ def edit_action():
 class InteractiveEditor:
     """
     Interactive dialog class for torrent editing.
+
+    @Deprecated
     """
 
     def __init__(self, metafile: str):
         """
         Initialize the Interactive torrent editor guide.
+
+        @Deprecated
 
         Parameters
         ----------
@@ -224,6 +246,8 @@ class InteractiveEditor:
     def show_current(self):
         """
         Display the current met file information to screen.
+
+        @Deprecated
         """
         out = "Current properties and values:\n"
         longest = max(len(label) for label in self.args) + 3
@@ -235,6 +259,8 @@ class InteractiveEditor:
     def sanatize_response(self, key, response):
         """
         Convert the input data into a form recognizable by the program.
+
+        @ Deprecated
 
         Parameters
         ----------
@@ -252,6 +278,8 @@ class InteractiveEditor:
     def edit_props(self):
         """
         Loop continuosly for edits until user signals DONE.
+
+        @Deprecated
         """
         while True:
             showcenter(
@@ -300,11 +328,15 @@ class InteractiveEditor:
 class InteractiveCreator:
     """
     Class namespace for interactive program options.
+
+    @Deprecated
     """
 
     def __init__(self):
         """
         Initialize interactive meta file creator dialog.
+
+        @Deprecated
         """
         self.kwargs = {
             "announce": None,
@@ -322,6 +354,8 @@ class InteractiveCreator:
     def get_props(self):
         """
         Gather details for torrentfile from user.
+
+        @Deprecated
         """
         piece_length = get_input(
             "Piece Length (empty=auto): ", lambda x: x.isdigit()

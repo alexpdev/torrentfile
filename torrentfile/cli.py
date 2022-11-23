@@ -235,7 +235,7 @@ def execute(args: Optional[list] = None) -> list:
         "--interactive",
         action="store_true",
         dest="interactive",
-        help="select program options interactively",
+        help="#Deprecated\t select program options interactively",
     )
 
     parser.add_argument(
@@ -274,7 +274,7 @@ def execute(args: Optional[list] = None) -> list:
         "create",
         help="Create a new Bittorrent file.",
         prefix_chars="-",
-        aliases=["c", "new", "build"],
+        aliases=["c", "new"],
         formatter_class=TorrentFileHelpFormatter,
     )
 
