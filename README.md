@@ -55,7 +55,7 @@ or in the _`docs`_ directory.
 
 ## 🚀 Usage & Documentation
 
-![Basic Usage](https://github.com/alexpdev/torrentfile/blob/master/assets/TorrentFile.gif?raw=True)
+![Basic Usage](https://github.com/alexpdev/torrentfile/blob/master/assets/Torrentfile.gif?raw=True)
 
 > Usage examples can be found in the project documentation on the [examples page.](https://alexpdev.github.io/torrentfile/usage)
 
