@@ -274,7 +274,7 @@ def execute(args: Optional[list] = None) -> list:
         "create",
         help="Create a new Bittorrent file.",
         prefix_chars="-",
-        aliases=["c", "new", "build"],
+        aliases=["c", "new"],
         formatter_class=TorrentFileHelpFormatter,
     )
 
