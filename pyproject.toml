@@ -33,6 +33,10 @@ dependencies = ["pyben"]
 
 [project.scripts]
 torrentfile = "torrentfile:main"
+tfile = "torrentfile:main"
+
+[tool.setuptools]
+packages = ["torrentfile"]
 
 [tool.bandit]
 skips = ["B101"]

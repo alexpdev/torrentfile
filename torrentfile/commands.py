@@ -212,6 +212,33 @@ def recheck(args: Namespace) -> str:
     return result
 
 
+def rename(args: Namespace) -> str:
+    """
+    Rename a torrent file to it's original name found in metadata.
+
+    Parameters
+    ----------
+    args: Namespace
+        cli arguments
+
+    Returns
+    -------
+    str
+        renamed file path
+    """
+    target = args.target
+    if not target or not os.path.exists(target):
+        raise FileNotFoundError  # pragma: nocover
+    meta = pyben.load(target)
+    name = meta["info"]["name"]
+    parent = os.path.dirname(target)
+    new_path = os.path.join(parent, name + ".torrent")
+    if os.path.exists(new_path):
+        raise FileExistsError  # pragma: nocover
+    os.rename(target, new_path)
+    return new_path
+
+
 def magnet(metafile: Namespace) -> str:
     """
     Create a magnet URI from a Bittorrent meta file.
