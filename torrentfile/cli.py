@@ -44,7 +44,15 @@ import sys
 from argparse import ArgumentParser, HelpFormatter
 from typing import Optional
 
-from torrentfile.commands import create, edit, info, magnet, rebuild, recheck
+from torrentfile.commands import (
+    create,
+    edit,
+    info,
+    magnet,
+    rebuild,
+    recheck,
+    rename,
+)
 from torrentfile.interactive import select_action
 from torrentfile.utils import toggle_debug_mode
 from torrentfile.version import __version__ as version
@@ -582,6 +590,23 @@ def execute(args: Optional[list] = None) -> list:
     )
 
     rebuild_parser.set_defaults(func=rebuild)
+
+    rename_parser = subparsers.add_parser(
+        "rename",
+        help="""Rename a torrent file to it's original name provided in the
+                metadata/the same name you see in your torrent client.""",
+        formatter_class=TorrentFileHelpFormatter,
+    )
+
+    rename_parser.add_argument(
+        "target",
+        action="store",
+        metavar="<target>",
+        help="path to file that needs renaming.",
+    )
+
+    rename_parser.set_defaults(func=rename)
+
     args = parser.parse_args(args)
 
     if args.quiet:

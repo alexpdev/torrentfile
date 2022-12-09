@@ -1,5 +1,12 @@
 # TorrentFile
 
+## Version 0.8.7
+
+-   Added the rename subcommand
+-   Added unittests for the new subcommand
+
+* * *
+
 ## Version 0.8.6
 
 -   Fixed bug with argument parser that allowed for duplicate aliases

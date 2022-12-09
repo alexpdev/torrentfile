@@ -27,7 +27,7 @@ import sys
 import pyben
 import pytest
 
-from tests import dir1, dir2, file1, filemeta1, metafile1, rmpath
+from tests import dir1, dir2, file1, filemeta1, metafile1, rmpath, tempfile
 from torrentfile import execute
 from torrentfile.__main__ import main
 
@@ -572,3 +572,22 @@ def test_empty_maker(dir1):
     execute()
     assert os.path.exists(dir1 + ".torrent")
     rmpath(dir1 + ".torrent")
+
+
+def test_rename():
+    """Test the rename command."""
+    tfile = str(tempfile())
+    args = ["torrentfile", "create", tfile, "-o", tfile + ".torrent"]
+    sys.argv = args
+    execute()
+    assert os.path.exists(tfile + ".torrent")
+    parent = os.path.dirname(tfile)
+    temp_path = os.path.join(parent, "renamed.torrent")
+    os.rename(tfile + ".torrent", temp_path)
+    print(os.listdir(parent))
+    args = ["torrentfile", "rename", temp_path]
+    sys.argv = args
+    execute()
+    assert os.path.exists(tfile + ".torrent")
+    assert not os.path.exists(temp_path)
+    rmpath(tfile + ".torrent", tfile)

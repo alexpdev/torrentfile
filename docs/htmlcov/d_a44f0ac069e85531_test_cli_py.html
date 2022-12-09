@@ -54,8 +54,8 @@
             </div>
         </aside>
         <h2>
-            <span class="text">224 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">224<span class="text"> run</span></button>
+            <span class="text">240 statements &nbsp;</span>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">240<span class="text"> run</span></button>
             <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">0<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">3<span class="text"> excluded</span></button>
         </h2>
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="d_a44f0ac069e85531_test_commands_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io">coverage.py v6.5.0</a>,
-            created at 2022-11-22 16:41 -0800
+            created at 2022-12-08 22:25 -0800
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -109,7 +109,7 @@
     <p class="run"><span class="n"><a id="t27" href="#t27">27</a></span><span class="t"><span class="key">import</span> <span class="nam">pyben</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t28" href="#t28">28</a></span><span class="t"><span class="key">import</span> <span class="nam">pytest</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t29" href="#t29">29</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t30" href="#t30">30</a></span><span class="t"><span class="key">from</span> <span class="nam">tests</span> <span class="key">import</span> <span class="nam">dir1</span><span class="op">,</span> <span class="nam">dir2</span><span class="op">,</span> <span class="nam">file1</span><span class="op">,</span> <span class="nam">filemeta1</span><span class="op">,</span> <span class="nam">metafile1</span><span class="op">,</span> <span class="nam">rmpath</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t30" href="#t30">30</a></span><span class="t"><span class="key">from</span> <span class="nam">tests</span> <span class="key">import</span> <span class="nam">dir1</span><span class="op">,</span> <span class="nam">dir2</span><span class="op">,</span> <span class="nam">file1</span><span class="op">,</span> <span class="nam">filemeta1</span><span class="op">,</span> <span class="nam">metafile1</span><span class="op">,</span> <span class="nam">rmpath</span><span class="op">,</span> <span class="nam">tempfile</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t31" href="#t31">31</a></span><span class="t"><span class="key">from</span> <span class="nam">torrentfile</span> <span class="key">import</span> <span class="nam">execute</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t32" href="#t32">32</a></span><span class="t"><span class="key">from</span> <span class="nam">torrentfile</span><span class="op">.</span><span class="nam">__main__</span> <span class="key">import</span> <span class="nam">main</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t33" href="#t33">33</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -654,6 +654,25 @@
     <p class="run"><span class="n"><a id="t572" href="#t572">572</a></span><span class="t">    <span class="nam">execute</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t573" href="#t573">573</a></span><span class="t">    <span class="key">assert</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">exists</span><span class="op">(</span><span class="nam">dir1</span> <span class="op">+</span> <span class="str">".torrent"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t574" href="#t574">574</a></span><span class="t">    <span class="nam">rmpath</span><span class="op">(</span><span class="nam">dir1</span> <span class="op">+</span> <span class="str">".torrent"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t575" href="#t575">575</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t576" href="#t576">576</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t577" href="#t577">577</a></span><span class="t"><span class="key">def</span> <span class="nam">test_rename</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t578" href="#t578">578</a></span><span class="t">    <span class="str">"""Test the rename command."""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t579" href="#t579">579</a></span><span class="t">    <span class="nam">tfile</span> <span class="op">=</span> <span class="nam">str</span><span class="op">(</span><span class="nam">tempfile</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t580" href="#t580">580</a></span><span class="t">    <span class="nam">args</span> <span class="op">=</span> <span class="op">[</span><span class="str">"torrentfile"</span><span class="op">,</span> <span class="str">"create"</span><span class="op">,</span> <span class="nam">tfile</span><span class="op">,</span> <span class="str">"-o"</span><span class="op">,</span> <span class="nam">tfile</span> <span class="op">+</span> <span class="str">".torrent"</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t581" href="#t581">581</a></span><span class="t">    <span class="nam">sys</span><span class="op">.</span><span class="nam">argv</span> <span class="op">=</span> <span class="nam">args</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t582" href="#t582">582</a></span><span class="t">    <span class="nam">execute</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t583" href="#t583">583</a></span><span class="t">    <span class="key">assert</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">exists</span><span class="op">(</span><span class="nam">tfile</span> <span class="op">+</span> <span class="str">".torrent"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t584" href="#t584">584</a></span><span class="t">    <span class="nam">parent</span> <span class="op">=</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">dirname</span><span class="op">(</span><span class="nam">tfile</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t585" href="#t585">585</a></span><span class="t">    <span class="nam">temp_path</span> <span class="op">=</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">join</span><span class="op">(</span><span class="nam">parent</span><span class="op">,</span> <span class="str">"renamed.torrent"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t586" href="#t586">586</a></span><span class="t">    <span class="nam">os</span><span class="op">.</span><span class="nam">rename</span><span class="op">(</span><span class="nam">tfile</span> <span class="op">+</span> <span class="str">".torrent"</span><span class="op">,</span> <span class="nam">temp_path</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t587" href="#t587">587</a></span><span class="t">    <span class="nam">print</span><span class="op">(</span><span class="nam">os</span><span class="op">.</span><span class="nam">listdir</span><span class="op">(</span><span class="nam">parent</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t588" href="#t588">588</a></span><span class="t">    <span class="nam">args</span> <span class="op">=</span> <span class="op">[</span><span class="str">"torrentfile"</span><span class="op">,</span> <span class="str">"rename"</span><span class="op">,</span> <span class="nam">temp_path</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t589" href="#t589">589</a></span><span class="t">    <span class="nam">sys</span><span class="op">.</span><span class="nam">argv</span> <span class="op">=</span> <span class="nam">args</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t590" href="#t590">590</a></span><span class="t">    <span class="nam">execute</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t591" href="#t591">591</a></span><span class="t">    <span class="key">assert</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">exists</span><span class="op">(</span><span class="nam">tfile</span> <span class="op">+</span> <span class="str">".torrent"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t592" href="#t592">592</a></span><span class="t">    <span class="key">assert</span> <span class="key">not</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">exists</span><span class="op">(</span><span class="nam">temp_path</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t593" href="#t593">593</a></span><span class="t">    <span class="nam">rmpath</span><span class="op">(</span><span class="nam">tfile</span> <span class="op">+</span> <span class="str">".torrent"</span><span class="op">,</span> <span class="nam">tfile</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -663,7 +682,7 @@
             <a id="nextFileLink" class="nav" href="d_a44f0ac069e85531_test_commands_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io">coverage.py v6.5.0</a>,
-            created at 2022-11-22 16:41 -0800
+            created at 2022-12-08 22:25 -0800
         </p>
     </div>
 </footer>
