@@ -20,6 +20,7 @@
 Testing functions for the sub-action commands from command line args.
 """
 import os
+import shutil
 import sys
 from hashlib import sha1  # nosec
 from urllib.parse import quote_plus
@@ -202,13 +203,40 @@ def test_mixins_progbar(torrent):
     with open(tfile, "wb") as temp:
         temp.write(msg.encode("utf-8"))
     args = {
-        "path": tfile,
+        "path": str(tfile),
         "--prog": "1",
     }
     metafile = torrent(**args)
     output, _ = metafile.write(outfile=outfile)
     assert output == outfile
     rmpath(tfile, outfile)
+
+
+@pytest.mark.parametrize("torrent", torrents())
+def test_mixins_progbar_deep_nesting(torrent):
+    """
+    Test progbar mixins with small file.
+    """
+    tfile = tempfile(exp=14)
+    dirname = os.path.dirname(tfile)
+    nested = "some_super_long_name_to_test_path_length_limits"
+    nesting = os.path.join(dirname, nested)
+    if not os.path.exists(nesting):
+        os.mkdir(nesting)
+    tmpfile = os.path.join(nesting, os.path.basename(tfile))
+    shutil.move(tfile, tmpfile)
+    outfile = str(tmpfile) + ".torrent"
+    msg = "1234abcd" * 80
+    with open(tmpfile, "wb") as temp:
+        temp.write(msg.encode("utf-8"))
+    args = {
+        "path": str(tmpfile),
+        "--prog": "1",
+    }
+    metafile = torrent(**args)
+    output, _ = metafile.write(outfile=outfile)
+    assert output == outfile
+    rmpath(tmpfile, outfile)
 
 
 @pytest.fixture

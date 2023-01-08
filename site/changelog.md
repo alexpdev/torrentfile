@@ -4,6 +4,9 @@
 
 -   Added the rename subcommand
 -   Added unittests for the new subcommand
+-   Default command is now "create" when user ommits entering subcommand
+-   Added unittests for default command
+-   Added shortcut command `tfile` as an alternative to `torrentfile`
 
 * * *
 

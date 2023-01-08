@@ -62,7 +62,6 @@ markdown_extensions:
       linenums: true
   - toc:
       permalink: "#"
-  - callouts
   - pymdownx.details
   - pymdownx.emoji
   - pymdownx.magiclink

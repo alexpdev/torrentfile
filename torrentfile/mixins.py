@@ -99,8 +99,9 @@ class ProgressBar:
                 self.show_total = math.floor(self.total / 1024)
                 self.unit = "KiB"
         self.suffix = f"/{self.show_total} {self.unit}"
+        title = str(title)
         if len(title) > start:
-            title = title[: start - 1]
+            title = title[: start - 1]  # pragma: nocover
         padding = (start - len(title)) * " "
         self.prefix = "".join([title, padding])
 
