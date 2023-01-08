@@ -605,6 +605,7 @@ def execute(args: list = None) -> list:
 
     rename_parser.set_defaults(func=rename)
 
+<<<<<<< HEAD
     all_commands = [
         "create",
         "new",
@@ -630,6 +631,8 @@ def execute(args: list = None) -> list:
             start += 1
         args.insert(start, "create")
 
+=======
+>>>>>>> master
     args = parser.parse_args(args)
 
     if args.quiet:
