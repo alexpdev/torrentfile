@@ -54,8 +54,8 @@
             </div>
         </aside>
         <h2>
-            <span class="text">240 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">240<span class="text"> run</span></button>
+            <span class="text">247 statements &nbsp;</span>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">247<span class="text"> run</span></button>
             <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">0<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">3<span class="text"> excluded</span></button>
         </h2>
@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="d_a44f0ac069e85531_test_commands_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io">coverage.py v6.5.0</a>,
-            created at 2022-12-08 22:25 -0800
+            <a class="nav" href="https://coverage.readthedocs.io">coverage.py v7.0.4</a>,
+            created at 2023-01-08 09:29 -0800
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -673,6 +673,24 @@
     <p class="run"><span class="n"><a id="t591" href="#t591">591</a></span><span class="t">    <span class="key">assert</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">exists</span><span class="op">(</span><span class="nam">tfile</span> <span class="op">+</span> <span class="str">".torrent"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t592" href="#t592">592</a></span><span class="t">    <span class="key">assert</span> <span class="key">not</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">exists</span><span class="op">(</span><span class="nam">temp_path</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t593" href="#t593">593</a></span><span class="t">    <span class="nam">rmpath</span><span class="op">(</span><span class="nam">tfile</span> <span class="op">+</span> <span class="str">".torrent"</span><span class="op">,</span> <span class="nam">tfile</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t594" href="#t594">594</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t595" href="#t595">595</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t596" href="#t596">596</a></span><span class="t"><span class="op">@</span><span class="nam">pytest</span><span class="op">.</span><span class="nam">mark</span><span class="op">.</span><span class="nam">parametrize</span><span class="op">(</span><span class="str">"version"</span><span class="op">,</span> <span class="op">[</span><span class="str">"1"</span><span class="op">,</span> <span class="str">"2"</span><span class="op">,</span> <span class="str">"3"</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t597" href="#t597">597</a></span><span class="t"><span class="key">def</span> <span class="nam">test_cli_default_command</span><span class="op">(</span><span class="nam">folder</span><span class="op">,</span> <span class="nam">version</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t598" href="#t598">598</a></span><span class="t">    <span class="str">"""Test default command by ommitting command."""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t599" href="#t599">599</a></span><span class="t">    <span class="nam">folder</span><span class="op">,</span> <span class="nam">torrent</span> <span class="op">=</span> <span class="nam">folder</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t600" href="#t600">600</a></span><span class="t">    <span class="nam">args</span> <span class="op">=</span> <span class="op">[</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t601" href="#t601">601</a></span><span class="t">        <span class="str">"torrentfile"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t602" href="#t602">602</a></span><span class="t">        <span class="str">"-q"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t603" href="#t603">603</a></span><span class="t">        <span class="nam">folder</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t604" href="#t604">604</a></span><span class="t">        <span class="str">"--meta-version"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t605" href="#t605">605</a></span><span class="t">        <span class="nam">version</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t606" href="#t606">606</a></span><span class="t">        <span class="str">"-o"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t607" href="#t607">607</a></span><span class="t">        <span class="nam">torrent</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t608" href="#t608">608</a></span><span class="t">    <span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t609" href="#t609">609</a></span><span class="t">    <span class="nam">sys</span><span class="op">.</span><span class="nam">argv</span> <span class="op">=</span> <span class="nam">args</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t610" href="#t610">610</a></span><span class="t">    <span class="nam">execute</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t611" href="#t611">611</a></span><span class="t">    <span class="key">assert</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">exists</span><span class="op">(</span><span class="nam">torrent</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -681,8 +699,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="d_a44f0ac069e85531_test_commands_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io">coverage.py v6.5.0</a>,
-            created at 2022-12-08 22:25 -0800
+            <a class="nav" href="https://coverage.readthedocs.io">coverage.py v7.0.4</a>,
+            created at 2023-01-08 09:29 -0800
         </p>
     </div>
 </footer>

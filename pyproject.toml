@@ -7,7 +7,7 @@ name = "torrentfile"
 authors = [{name = "alexpdev", email = "alexpdev@pm.me"}]
 description = "Terminal based command line tool for creating Bittorrent files."
 license = {file = "LICENSE"}
-version = "0.8.6"
+version = "0.8.7"
 readme = "README.md"
 requires-python = ">=3.6"
 keywords = ["Bittorrent", "torrent", "bittorrent-metafiles", "CLI"]
@@ -34,6 +34,13 @@ dependencies = ["pyben"]
 [project.scripts]
 torrentfile = "torrentfile:main"
 tfile = "torrentfile:main"
+
+[project.urls]
+homepage = "https://github.com/alexpdev/torrentfile"
+repository = "https://github.com"
+documentation = "https://alexpdev.github.io/torrentfile"
+changelog = "https://alexpdev.github.io/torrentfile/changelog/"
+issues = "https://github.com/alexpdev/torrentfile/issues"
 
 [tool.setuptools]
 packages = ["torrentfile"]

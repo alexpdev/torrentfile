@@ -42,7 +42,6 @@ import io
 import logging
 import sys
 from argparse import ArgumentParser, HelpFormatter
-from typing import Optional
 
 from torrentfile.commands import (
     create,
@@ -201,7 +200,7 @@ class TorrentFileHelpFormatter(HelpFormatter):
         return parts
 
 
-def execute(args: Optional[list] = None) -> list:
+def execute(args: list = None) -> list:
     """
     Execute program with provided list of arguments.
 
@@ -275,7 +274,7 @@ def execute(args: Optional[list] = None) -> list:
     subparsers = parser.add_subparsers(
         title="Commands",
         dest="command",
-        metavar="create, edit, info, magnet, recheck, rebuild\n",
+        metavar="create, edit, info, magnet, recheck, rebuild, rename\n",
     )
 
     create_parser = subparsers.add_parser(
@@ -551,7 +550,6 @@ def execute(args: Optional[list] = None) -> list:
 
     rebuild_parser = subparsers.add_parser(
         "rebuild",
-        aliases=["build"],
         help="""Re-assemble files obtained from a bittorrent file into the
                 appropriate file structure for re-seeding.  Read documentation
                 for more information, or use cases.""",
@@ -606,6 +604,31 @@ def execute(args: Optional[list] = None) -> list:
     )
 
     rename_parser.set_defaults(func=rename)
+
+    all_commands = [
+        "create",
+        "new",
+        "c",
+        "edit",
+        "e",
+        "info",
+        "i",
+        "magnet",
+        "m",
+        "recheck",
+        "check",
+        "r",
+        "rename",
+        "rebuild",
+        "-i",
+        "-h",
+        "-V",
+    ]
+    if not any(i for i in all_commands if i in args):
+        start = 0
+        while args[start] in ["-v", "-q"]:
+            start += 1
+        args.insert(start, "create")
 
     args = parser.parse_args(args)
 
