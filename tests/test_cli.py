@@ -591,7 +591,6 @@ def test_rename():
     assert os.path.exists(tfile + ".torrent")
     assert not os.path.exists(temp_path)
     rmpath(tfile + ".torrent", tfile)
-<<<<<<< HEAD
 
 
 @pytest.mark.parametrize("version", ["1", "2", "3"])
@@ -610,5 +609,3 @@ def test_cli_default_command(folder, version):
     sys.argv = args
     execute()
     assert os.path.exists(torrent)
-=======
->>>>>>> master

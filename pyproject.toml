@@ -35,7 +35,6 @@ dependencies = ["pyben"]
 torrentfile = "torrentfile:main"
 tfile = "torrentfile:main"
 
-<<<<<<< HEAD
 [project.urls]
 homepage = "https://github.com/alexpdev/torrentfile"
 repository = "https://github.com"
@@ -43,8 +42,6 @@ documentation = "https://alexpdev.github.io/torrentfile"
 changelog = "https://alexpdev.github.io/torrentfile/changelog/"
 issues = "https://github.com/alexpdev/torrentfile/issues"
 
-=======
->>>>>>> master
 [tool.setuptools]
 packages = ["torrentfile"]
 
