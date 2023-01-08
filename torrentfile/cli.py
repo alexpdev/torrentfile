@@ -624,7 +624,7 @@ def execute(args: list = None) -> list:
         "-h",
         "-V",
     ]
-    if not any([i for i in all_commands if i in args]):
+    if not any(i for i in all_commands if i in args):
         start = 0
         while args[start] in ["-v", "-q"]:
             start += 1

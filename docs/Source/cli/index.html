@@ -1924,7 +1924,7 @@ and command line interface.</p>
         <span class="s2">&quot;-h&quot;</span><span class="p">,</span>
         <span class="s2">&quot;-V&quot;</span><span class="p">,</span>
     <span class="p">]</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">all_commands</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">all_commands</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">args</span><span class="p">):</span>
         <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span> <span class="n">args</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;-q&quot;</span><span class="p">]:</span>
             <span class="n">start</span> <span class="o">+=</span> <span class="mi">1</span>
