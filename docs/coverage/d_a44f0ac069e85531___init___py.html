@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="d_a44f0ac069e85531_test_cli_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io">coverage.py v7.0.5</a>,
-            created at 2023-01-13 02:34 -0800
+            created at 2023-01-13 03:05 -0800
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -240,7 +240,7 @@
     <p class="run"><span class="n"><a id="t158" href="#t158">158</a></span><span class="t">    <span class="key">return</span> <span class="op">[</span><span class="nam">TorrentFile</span><span class="op">,</span> <span class="nam">TorrentFileV2</span><span class="op">,</span> <span class="nam">TorrentFileHybrid</span><span class="op">,</span> <span class="nam">TorrentAssembler</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t159" href="#t159">159</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t160" href="#t160">160</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t161" href="#t161">161</a></span><span class="t"><span class="op">@</span><span class="nam">pytest</span><span class="op">.</span><span class="nam">fixture</span><span class="op">(</span><span class="nam">scope</span><span class="op">=</span><span class="str">"package"</span><span class="op">,</span> <span class="nam">params</span><span class="op">=</span><span class="op">[</span><span class="num">2</span><span class="op">**</span><span class="nam">i</span> <span class="key">for</span> <span class="nam">i</span> <span class="key">in</span> <span class="nam">range</span><span class="op">(</span><span class="num">15</span><span class="op">,</span> <span class="num">20</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t161" href="#t161">161</a></span><span class="t"><span class="op">@</span><span class="nam">pytest</span><span class="op">.</span><span class="nam">fixture</span><span class="op">(</span><span class="nam">params</span><span class="op">=</span><span class="op">[</span><span class="num">2</span><span class="op">**</span><span class="nam">i</span> <span class="key">for</span> <span class="nam">i</span> <span class="key">in</span> <span class="nam">range</span><span class="op">(</span><span class="num">15</span><span class="op">,</span> <span class="num">20</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t162" href="#t162">162</a></span><span class="t"><span class="key">def</span> <span class="nam">sizes</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t"><span class="str">    Generate powers of 2 for file creation package scope.</span>&nbsp;</span><span class="r"></span></p>
@@ -249,7 +249,7 @@
     <p class="run"><span class="n"><a id="t167" href="#t167">167</a></span><span class="t">    <span class="key">yield</span> <span class="nam">size</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t168" href="#t168">168</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t"><span class="op">@</span><span class="nam">pytest</span><span class="op">.</span><span class="nam">fixture</span><span class="op">(</span><span class="nam">scope</span><span class="op">=</span><span class="str">"package"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t"><span class="op">@</span><span class="nam">pytest</span><span class="op">.</span><span class="nam">fixture</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t171" href="#t171">171</a></span><span class="t"><span class="key">def</span> <span class="nam">dir1</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t">    <span class="str">"""Create a specific temporary structured directory.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t173" href="#t173">173</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -277,7 +277,7 @@
     <p class="run"><span class="n"><a id="t195" href="#t195">195</a></span><span class="t">    <span class="nam">rmpath</span><span class="op">(</span><span class="nam">root</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t196" href="#t196">196</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t197" href="#t197">197</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t198" href="#t198">198</a></span><span class="t"><span class="op">@</span><span class="nam">pytest</span><span class="op">.</span><span class="nam">fixture</span><span class="op">(</span><span class="nam">scope</span><span class="op">=</span><span class="str">"package"</span><span class="op">,</span> <span class="nam">params</span><span class="op">=</span><span class="nam">torrents</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t198" href="#t198">198</a></span><span class="t"><span class="op">@</span><span class="nam">pytest</span><span class="op">.</span><span class="nam">fixture</span><span class="op">(</span><span class="nam">params</span><span class="op">=</span><span class="nam">torrents</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t199" href="#t199">199</a></span><span class="t"><span class="key">def</span> <span class="nam">metafile1</span><span class="op">(</span><span class="nam">dir1</span><span class="op">,</span> <span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t200" href="#t200">200</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t201" href="#t201">201</a></span><span class="t"><span class="str">    Create a standard metafile for testing.</span>&nbsp;</span><span class="r"></span></p>
@@ -321,7 +321,7 @@
     <p class="run"><span class="n"><a id="t239" href="#t239">239</a></span><span class="t">    <span class="key">yield</span> <span class="nam">outfile</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t240" href="#t240">240</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t241" href="#t241">241</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t242" href="#t242">242</a></span><span class="t"><span class="op">@</span><span class="nam">pytest</span><span class="op">.</span><span class="nam">fixture</span><span class="op">(</span><span class="nam">scope</span><span class="op">=</span><span class="str">"package"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t242" href="#t242">242</a></span><span class="t"><span class="op">@</span><span class="nam">pytest</span><span class="op">.</span><span class="nam">fixture</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t243" href="#t243">243</a></span><span class="t"><span class="key">def</span> <span class="nam">file1</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t244" href="#t244">244</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t245" href="#t245">245</a></span><span class="t"><span class="str">    Return the path to a temporary file package scope.</span>&nbsp;</span><span class="r"></span></p>
@@ -330,7 +330,7 @@
     <p class="run"><span class="n"><a id="t248" href="#t248">248</a></span><span class="t">    <span class="key">yield</span> <span class="nam">path</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t249" href="#t249">249</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t250" href="#t250">250</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t251" href="#t251">251</a></span><span class="t"><span class="op">@</span><span class="nam">pytest</span><span class="op">.</span><span class="nam">fixture</span><span class="op">(</span><span class="nam">scope</span><span class="op">=</span><span class="str">"package"</span><span class="op">,</span> <span class="nam">params</span><span class="op">=</span><span class="nam">torrents</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t251" href="#t251">251</a></span><span class="t"><span class="op">@</span><span class="nam">pytest</span><span class="op">.</span><span class="nam">fixture</span><span class="op">(</span><span class="nam">params</span><span class="op">=</span><span class="nam">torrents</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t252" href="#t252">252</a></span><span class="t"><span class="key">def</span> <span class="nam">filemeta1</span><span class="op">(</span><span class="nam">file1</span><span class="op">,</span> <span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t253" href="#t253">253</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t254" href="#t254">254</a></span><span class="t"><span class="str">    Test fixture for generating metafile for all versions of torrents.</span>&nbsp;</span><span class="r"></span></p>
@@ -417,7 +417,7 @@
             <a id="nextFileLink" class="nav" href="d_a44f0ac069e85531_test_cli_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io">coverage.py v7.0.5</a>,
-            created at 2023-01-13 02:34 -0800
+            created at 2023-01-13 03:05 -0800
         </p>
     </div>
 </footer>

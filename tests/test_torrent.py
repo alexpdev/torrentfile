@@ -231,11 +231,11 @@ def test_mbtorrent(version, progress):
     rmpath(tfile, outfile)
 
 
-@pytest.mark.parametrize("total", [2**i for i in range(31, 33)])
+@pytest.mark.parametrize("total", [2**i for i in range(30,33)])
 def test_progress_bar(total):
     """Testing the prog mixin with various sizes."""
     progbar = ProgMixin()
     progbar.prog_start(total, "some/fake/path", unit="bytes")
     while progbar.prog.state < total:
-        progbar.prog_update(2**27)
+        progbar.prog_update(2**10)
     assert progbar.prog.state >= total

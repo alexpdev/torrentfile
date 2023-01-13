@@ -39,7 +39,7 @@ def test_fix():
     assert dir1 and dir2 and metafile1 and filemeta1 and file1
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture()
 def folder(dir1):
     """
     Yield a folder object as fixture.
