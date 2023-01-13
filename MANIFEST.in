@@ -6,7 +6,3 @@ include tox.ini
 
 recursive-include assets *
 recursive-include c *
-
-recursive-exclude * __pycache__
-recursive-exclude * *.pyc
-recursive-exclude * *.pyo

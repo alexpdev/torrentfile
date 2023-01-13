@@ -29,12 +29,8 @@ from pathlib import Path
 
 import pytest
 
-from torrentfile.torrent import (
-    TorrentAssembler,
-    TorrentFile,
-    TorrentFileHybrid,
-    TorrentFileV2,
-)
+from torrentfile.torrent import (TorrentAssembler, TorrentFile,
+                                 TorrentFileHybrid, TorrentFileV2)
 
 
 def tempfile(path=None, exp=18):
@@ -162,7 +158,7 @@ def torrents():
     return [TorrentFile, TorrentFileV2, TorrentFileHybrid, TorrentAssembler]
 
 
-@pytest.fixture(scope="package", params=[2**i for i in range(15, 20)])
+@pytest.fixture(params=[2**i for i in range(15, 20)])
 def sizes(request):
     """
     Generate powers of 2 for file creation package scope.
@@ -171,7 +167,7 @@ def sizes(request):
     yield size
 
 
-@pytest.fixture(scope="package")
+@pytest.fixture()
 def dir1():
     """Create a specific temporary structured directory.
 
@@ -199,7 +195,7 @@ def dir2():
     rmpath(root)
 
 
-@pytest.fixture(scope="package", params=torrents())
+@pytest.fixture(params=torrents())
 def metafile1(dir1, request):
     """
     Create a standard metafile for testing.
@@ -243,7 +239,7 @@ def metafile2(dir2, request):
     yield outfile
 
 
-@pytest.fixture(scope="package")
+@pytest.fixture()
 def file1():
     """
     Return the path to a temporary file package scope.
@@ -252,7 +248,7 @@ def file1():
     yield path
 
 
-@pytest.fixture(scope="package", params=torrents())
+@pytest.fixture(params=torrents())
 def filemeta1(file1, request):
     """
     Test fixture for generating metafile for all versions of torrents.

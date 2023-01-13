@@ -43,15 +43,8 @@ import logging
 import sys
 from argparse import ArgumentParser, HelpFormatter
 
-from torrentfile.commands import (
-    create,
-    edit,
-    info,
-    magnet,
-    rebuild,
-    recheck,
-    rename,
-)
+from torrentfile.commands import (create, edit, info, magnet, rebuild, recheck,
+                                  rename)
 from torrentfile.interactive import select_action
 from torrentfile.utils import toggle_debug_mode
 from torrentfile.version import __version__ as version
