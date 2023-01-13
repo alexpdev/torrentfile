@@ -24,19 +24,8 @@ import os
 import sys
 from pathlib import Path
 
-from tests import (
-    dir1,
-    dir2,
-    file1,
-    file2,
-    filemeta1,
-    filemeta2,
-    metafile1,
-    metafile2,
-    rmpath,
-    sizedfiles,
-    sizes,
-)
+from tests import (dir1, dir2, file1, file2, filemeta1, filemeta2, metafile1,
+                   metafile2, rmpath, sizedfiles, sizes)
 from torrentfile.cli import main_script as main
 from torrentfile.recheck import Checker
 from torrentfile.utils import ArgumentError

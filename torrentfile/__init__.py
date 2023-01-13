@@ -37,4 +37,15 @@ from torrentfile.version import __version__
 
 toggle_debug_mode(False)
 
-__all__ = ["execute", "create", "edit", "info", "magnet", "recheck", "main"]
+VERSION = __version__
+
+__all__ = [
+    "execute",
+    "create",
+    "edit",
+    "info",
+    "magnet",
+    "recheck",
+    "main",
+    "VERSION",
+]
