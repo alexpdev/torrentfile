@@ -54,10 +54,10 @@
             </div>
         </aside>
         <h2>
-            <span class="text">114 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">114<span class="text"> run</span></button>
+            <span class="text">122 statements &nbsp;</span>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">122<span class="text"> run</span></button>
             <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">0<span class="text"> missing</span></button>
-            <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">5<span class="text"> excluded</span></button>
+            <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">9<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
             <a id="prevFileLink" class="nav" href="d_1bc82e0ab2fcb2ec_torrent_py.html">&#xab; prev</a> &nbsp; &nbsp;
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="d_1bc82e0ab2fcb2ec_version_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io">coverage.py v7.0.5</a>,
-            created at 2023-01-13 03:15 -0800
+            created at 2023-01-18 21:27 -0800
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -506,6 +506,33 @@
     <p class="pln"><span class="n"><a id="t424" href="#t424">424</a></span><span class="t"><span class="str">        is debug mode on</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t425" href="#t425">425</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t426" href="#t426">426</a></span><span class="t">    <span class="key">return</span> <span class="nam">os</span><span class="op">.</span><span class="nam">environ</span><span class="op">[</span><span class="str">"TORRENTFILE_DEBUG"</span><span class="op">]</span> <span class="op">==</span> <span class="str">"ON"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t427" href="#t427">427</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t428" href="#t428">428</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t429" href="#t429">429</a></span><span class="t"><span class="key">def</span> <span class="nam">check_path_writable</span><span class="op">(</span><span class="nam">path</span><span class="op">:</span> <span class="nam">str</span><span class="op">)</span> <span class="op">-></span> <span class="nam">bool</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t430" href="#t430">430</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t431" href="#t431">431</a></span><span class="t"><span class="str">    Test if output path is writable.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t432" href="#t432">432</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t433" href="#t433">433</a></span><span class="t"><span class="str">    Parameters</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t434" href="#t434">434</a></span><span class="t"><span class="str">    ----------</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t435" href="#t435">435</a></span><span class="t"><span class="str">    path : str</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t436" href="#t436">436</a></span><span class="t"><span class="str">        file system path string</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t437" href="#t437">437</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t438" href="#t438">438</a></span><span class="t"><span class="str">    Returns</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t439" href="#t439">439</a></span><span class="t"><span class="str">    -------</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t440" href="#t440">440</a></span><span class="t"><span class="str">    bool</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t441" href="#t441">441</a></span><span class="t"><span class="str">        True if writeable, otherwise raises PermissionError</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t442" href="#t442">442</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t443" href="#t443">443</a></span><span class="t">    <span class="key">try</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t444" href="#t444">444</a></span><span class="t">        <span class="key">if</span> <span class="nam">path</span><span class="op">.</span><span class="nam">endswith</span><span class="op">(</span><span class="str">"\\"</span><span class="op">)</span> <span class="key">or</span> <span class="nam">path</span><span class="op">.</span><span class="nam">endswith</span><span class="op">(</span><span class="str">"/"</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t445" href="#t445">445</a></span><span class="t">            <span class="nam">path</span> <span class="op">=</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">join</span><span class="op">(</span><span class="nam">path</span><span class="op">,</span> <span class="str">".torrent"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t446" href="#t446">446</a></span><span class="t">        <span class="nam">fd</span> <span class="op">=</span> <span class="nam">open</span><span class="op">(</span><span class="nam">path</span><span class="op">,</span> <span class="str">"ab"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t447" href="#t447">447</a></span><span class="t">        <span class="nam">fd</span><span class="op">.</span><span class="nam">close</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t448" href="#t448">448</a></span><span class="t">        <span class="nam">os</span><span class="op">.</span><span class="nam">remove</span><span class="op">(</span><span class="nam">path</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t449" href="#t449">449</a></span><span class="t">    <span class="key">except</span> <span class="nam">PermissionError</span> <span class="key">as</span> <span class="nam">err</span><span class="op">:</span>  <span class="com"># pragma: nocover</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t450" href="#t450">450</a></span><span class="t">        <span class="nam">directory</span> <span class="op">=</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">dirname</span><span class="op">(</span><span class="nam">path</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t451" href="#t451">451</a></span><span class="t">        <span class="nam">message</span> <span class="op">=</span> <span class="str">f"Target directory is not writeable {directory}"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t452" href="#t452">452</a></span><span class="t">        <span class="key">raise</span> <span class="nam">PermissionError</span><span class="op">(</span><span class="nam">message</span><span class="op">)</span> <span class="key">from</span> <span class="nam">err</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t453" href="#t453">453</a></span><span class="t">    <span class="key">return</span> <span class="key">True</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -515,7 +542,7 @@
             <a id="nextFileLink" class="nav" href="d_1bc82e0ab2fcb2ec_version_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io">coverage.py v7.0.5</a>,
-            created at 2023-01-13 03:15 -0800
+            created at 2023-01-18 21:27 -0800
         </p>
     </div>
 </footer>

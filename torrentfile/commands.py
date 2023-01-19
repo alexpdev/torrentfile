@@ -45,7 +45,7 @@ from torrentfile.interactive import select_action
 from torrentfile.rebuild import Assembler
 from torrentfile.recheck import Checker
 from torrentfile.torrent import TorrentAssembler, TorrentFile
-from torrentfile.utils import ArgumentError
+from torrentfile.utils import ArgumentError, check_path_writable
 
 logger = logging.getLogger(__name__)
 
@@ -65,6 +65,11 @@ def create(args: Namespace) -> Namespace:
         object containing the path to created metafile and its contents.
     """
     kwargs = vars(args)
+    if args.outfile:
+        check_path_writable(args.outfile)
+    else:  # pragma: nocover
+        samplepath = os.path.join(os.getcwd(), ".torrent")
+        check_path_writable(samplepath)
     logger.debug("Creating torrent from %s", args.content)
     if args.meta_version == "1":
         torrent = TorrentFile(**kwargs)
@@ -292,7 +297,6 @@ def rebuild(args: Namespace) -> int:
     as possible. Currently only checks if the filename and file
     size are a match.
 
-    #### TODO
     1. Check file hashes to improve accuracy
 
     Parameters
