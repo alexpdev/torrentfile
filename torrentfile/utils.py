@@ -424,3 +424,30 @@ def debug_is_on() -> bool:
         is debug mode on
     """
     return os.environ["TORRENTFILE_DEBUG"] == "ON"
+
+
+def check_path_writable(path: str) -> bool:
+    """
+    Test if output path is writable.
+
+    Parameters
+    ----------
+    path : str
+        file system path string
+
+    Returns
+    -------
+    bool
+        True if writeable, otherwise raises PermissionError
+    """
+    try:
+        if path.endswith("\\") or path.endswith("/"):
+            path = os.path.join(path, ".torrent")
+        fd = open(path, "ab")
+        fd.close()
+        os.remove(path)
+    except PermissionError as err:  # pragma: nocover
+        directory = os.path.dirname(path)
+        message = f"Target directory is not writeable {directory}"
+        raise PermissionError(message) from err
+    return True

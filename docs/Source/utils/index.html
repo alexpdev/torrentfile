@@ -593,6 +593,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#torrentfile.utils.check_path_writable" class="md-nav__link">
+    check_path_writable()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#torrentfile.utils.copypath" class="md-nav__link">
     copypath()
   </a>
@@ -1150,6 +1157,121 @@
 
 </div>
 
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="torrentfile.utils.check_path_writable" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">check_path_writable</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span></code>
+
+<a href="#torrentfile.utils.check_path_writable" class="headerlink" title="Permanent link">#</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Test if output path is writable.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>PARAMETER</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>path</code></td>
+          <td class="doc-param-details">
+            <p>file system path string</p>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code>str</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+      <tr>
+        <th><b>RETURNS</b></th>
+        <th><b>DESCRIPTION</b></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>bool</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <p>True if writeable, otherwise raises PermissionError</p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>torrentfile\utils.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">429</span>
+<span class="normal">430</span>
+<span class="normal">431</span>
+<span class="normal">432</span>
+<span class="normal">433</span>
+<span class="normal">434</span>
+<span class="normal">435</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span>
+<span class="normal">453</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">check_path_writable</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if output path is writable.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        file system path string</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        True if writeable, otherwise raises PermissionError</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;.torrent&quot;</span><span class="p">)</span>
+        <span class="n">fd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;ab&quot;</span><span class="p">)</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">PermissionError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
+        <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Target directory is not writeable </span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">raise</span> <span class="ne">PermissionError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
 
 <div class="doc doc-object doc-function">
 
