@@ -537,7 +537,10 @@ def build(dir2):
     dest = os.path.join(os.path.dirname(__file__), "dest")
     if os.path.exists(dest):
         rmpath(dest)
-        os.makedirs(dest)
+        try:
+            os.makedirs(dest)
+        except FileExistsError:
+            rmpath(dest)
     return os.path.dirname(dir2), dest, dir2
 
 

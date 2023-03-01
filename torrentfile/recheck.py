@@ -233,7 +233,6 @@ class Checker:
         # Otherwise Content is more than 1 file.
         self.log_msg("%s points to a directory", self.root)
         if self.meta_version == 1:
-
             for i, item in enumerate(self.info["files"]):
                 self.total += item["length"]
                 base = os.path.join(*item["path"])
@@ -263,10 +262,8 @@ class Checker:
             list of intermediate pathnames.
         """
         for key, val in tree.items():
-
             # Empty string means the tree's leaf is value
             if "" in val:
-
                 base = os.path.join(*partials, key)
                 roothash = None
                 length = val[""]["length"]
