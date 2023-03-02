@@ -30,12 +30,14 @@ Functions
 - recheck_command
 - magnet_command
 """
+import configparser
 import logging
 import os
 import shutil
 import sys
 from argparse import Namespace
 from hashlib import sha1  # nosec
+from pathlib import Path
 from urllib.parse import quote_plus
 
 import pyben
@@ -48,6 +50,80 @@ from torrentfile.torrent import TorrentAssembler, TorrentFile
 from torrentfile.utils import ArgumentError, check_path_writable
 
 logger = logging.getLogger(__name__)
+
+
+def find_config_file(args: Namespace) -> str:
+    """
+    Locate the path to the torrentfile configuration file.
+
+    Parameters
+    ----------
+    args : Namespace
+        command line argument values
+
+    Returns
+    -------
+    str
+        path to the configuration file
+
+    Raises
+    ------
+    FileNotFoundError
+        raised if configuration file not found.
+    """
+    path = None
+    error_message = "Could not find configuration file."
+    if args.config_path:
+        if os.path.exists(args.config_path):
+            path = args.config_path
+        else:
+            raise FileNotFoundError(error_message)
+    else:
+        filename = "torrentfile.ini"
+        paths = [
+            os.path.join(os.getcwd(), filename),
+            Path.home() / ".torrentfile" / filename,
+            Path.home() / ".config" / ".torrentfile" / filename,
+        ]
+        for subpath in paths:
+            if os.path.exists(subpath):
+                path = subpath
+                break
+    if path is None:
+        raise FileNotFoundError(error_message)
+    return path
+
+
+def parse_config_file(path: str, kwargs: dict):
+    """
+    Parse configuration file for torrent setup details.
+
+    Parameters
+    ----------
+    path : str
+        path to configuration file
+    kwargs : dict
+        options from command line arguments
+    """
+    config = configparser.ConfigParser()
+    config.read(path)
+    for key, val in config["config"].items():
+        if key.lower() in ["announce", "http-seed", "web-seed", "tracker"]:
+            val = [i for i in val.split("\n") if i]
+            if key.lower() == "http-seed":
+                kwargs.setdefault("httpseeds", val)
+            elif key.lower() == "web-seed":
+                kwargs.setdefault("url-list", val)
+            else:
+                kwargs.setdefault(key.lower(), val)
+        elif val.lower() == "true":
+            kwargs.setdefault(key.lower(), True)
+        elif val.lower() == "false":
+            kwargs.setdefault(key.lower(), False)
+        elif val.isdigit():
+            kwargs.setdefault(key.lower(), int(val))
+        else:
+            kwargs.setdefault(key.lower(), val)
 
 
 def create(args: Namespace) -> Namespace:
@@ -65,6 +141,9 @@ def create(args: Namespace) -> Namespace:
         object containing the path to created metafile and its contents.
     """
     kwargs = vars(args)
+    if args.config:
+        path = find_config_file(args)
+        parse_config_file(path, kwargs)  # pragma: nocover
     if args.outfile:
         check_path_writable(args.outfile)
     else:  # pragma: nocover

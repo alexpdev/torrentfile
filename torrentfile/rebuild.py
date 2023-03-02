@@ -455,10 +455,10 @@ class Assembler(CbMixin):
         dest: str
             path to the directory where rebuild will take place.
         """
+        Metadata.set_callback(self._callback)
         self.counter = 0
         self._lastlog = None
         self.contents = contents
-        Metadata.set_callback(self._callback)
         self.dest = dest
         self.meta_paths = metafiles
         self.metafiles = self._get_metafiles()

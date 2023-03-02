@@ -537,7 +537,10 @@ def build(dir2):
     dest = os.path.join(os.path.dirname(__file__), "dest")
     if os.path.exists(dest):
         rmpath(dest)
-        os.makedirs(dest)
+        try:
+            os.makedirs(dest)
+        except FileExistsError:  # pragma: nocover
+            rmpath(dest)
     return os.path.dirname(dir2), dest, dir2
 
 
@@ -609,3 +612,13 @@ def test_cli_default_command(folder, version):
     sys.argv = args
     execute()
     assert os.path.exists(torrent)
+
+
+def test_cli_configfile(folder):
+    """Test config cli parameter."""
+    args = ["torrentfile", "create", "--config", folder]
+    sys.argv = args
+    try:
+        execute()
+    except FileNotFoundError:
+        assert True

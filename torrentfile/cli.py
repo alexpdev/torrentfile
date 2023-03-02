@@ -45,7 +45,6 @@ from argparse import ArgumentParser, HelpFormatter
 
 from torrentfile.commands import (create, edit, info, magnet, rebuild, recheck,
                                   rename)
-from torrentfile.interactive import select_action
 from torrentfile.utils import toggle_debug_mode
 from torrentfile.version import __version__ as version
 
@@ -147,7 +146,7 @@ class TorrentFileHelpFormatter(HelpFormatter):
         str
             Formatted text from input.
         """
-        text = text % dict(prog=self._prog) if "%(prog)" in text else text
+        text = text % {"prog": self._prog} if "%(prog)" in text else text
         text = self._whitespace_matcher.sub(" ", text).strip()
         return text + "\n\n"
 
@@ -231,14 +230,6 @@ def execute(args: list = None) -> list:
     )
 
     parser.add_argument(
-        "-i",
-        "--interactive",
-        action="store_true",
-        dest="interactive",
-        help="#Deprecated\t select program options interactively",
-    )
-
-    parser.add_argument(
         "-q",
         "--quiet",
         help="Turn off all text output.",
@@ -306,6 +297,32 @@ def execute(args: list = None) -> list:
         dest="source",
         metavar="<source>",
         help="Add a source string. Useful for cross-seeding.",
+    )
+
+    create_parser.add_argument(
+        "-f",
+        "--config",
+        action="store_true",
+        dest="config",
+        help="""
+        Parse torrent information from a config file. Looks in the current
+        working directory, or the directory named .torrentfile in the users
+        home directory for a torrentfile.ini file. You can also use this
+        option in combination with the --config-path to specify the path to
+        the config file. See documentation for details on properly formatting
+        config file.
+        """,
+    )
+
+    create_parser.add_argument(
+        "--config-path",
+        action="store",
+        metavar="<path>",
+        dest="config_path",
+        help="""
+        Use this option in combination with -f or --config
+        options to specify location of config file.
+        """,
     )
 
     create_parser.add_argument(
@@ -377,9 +394,10 @@ def execute(args: list = None) -> list:
         dest="piece_length",
         metavar="<int>",
         help="""
-        (Default: <blank>) Number of bytes for per chunk of data transmitted
-        by Bittorrent client. Acceptable values include integers 14-26 which
-        will be interpreted as a perfect power of 2.  e.g. 14 = 16KiB pieces.
+        (Default: auto calculated based on total size of content) Number of
+        bytes for per chunk of data transmitted by Bittorrent client.
+        Acceptable values include integers 14-26 which will be interpreted
+        as exponent for power of 2.  e.g. 14 = 16KiB pieces.
         Examples:: [--piece-length 14] [--piece-length 20]
         """,
     )
@@ -630,9 +648,6 @@ def execute(args: list = None) -> list:
 
     elif args.debug:
         Config.activate_logger()
-
-    if args.interactive:
-        return select_action()
 
     if hasattr(args, "func"):
         return args.func(args)

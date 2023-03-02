@@ -2,33 +2,36 @@
 
 ## API and Source
 
-## `Torrent` Module
+### `Torrent` Module
 
 ![mkapi](torrentfile.torrent)
 
-## `Utils` Module
+### `Utils` Module
 
 ![mkapi](torrentfile.utils)
 
-## `Edit` Module
+### `Edit` Module
 
 ![mkapi](torrentfile.edit)
 
-## `Interactive` Module
+### `Interactive` Module
 
 ![mkapi](torrentfile.interactive)
 
-## `CLI` Module
+### `CLI` Module
 
 ![mkapi](torrentfile.cli)
 
-## `Recheck` Module
+### `Recheck` Module
 
 ![mkapi](torrentfile.recheck)
 
-## `Hasher` Module
+### `Hasher` Module
 
 ![mkapi](torrentfile.hasher)
 
+-----
 
-[Coverage](https://codecov.io/gh/alexpdev/torrentfile/branch/master/graphs/icicle.svg?token=EWF7NIL9SQ)
+## Coverage Map
+
+![Coverage](https://codecov.io/gh/alexpdev/torrentfile/branch/master/graphs/icicle.svg?token=EWF7NIL9SQ)
