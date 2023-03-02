@@ -314,8 +314,7 @@ def configfile(namespace, config):
         path = namespace.config_path
     else:
         base = Path.home() / ".torrentfile"
-        if not os.path.exists(base):
-            os.mkdir(base)
+        None if os.path.exists(base) else os.mkdir(base)
         path = base / "torrentfile.ini"
     path.write_text(config, encoding="utf8")
     yield namespace
@@ -340,10 +339,11 @@ def test_find_config_file_missing(path):
     """Test find config file function with missing config file."""
     ns = Namespace(config=True, config_path=path)
     filename = "torrentfile.ini"
+    home = Path.home()
     paths = [
         os.path.join(os.getcwd(), filename),
-        Path.home() / ".torrentfile" / filename,
-        Path.home() / ".config" / ".torrentfile" / filename,
+        home / ".torrentfile" / filename,
+        home / ".config" / ".torrentfile" / filename,
     ]
     existing = [i for i in paths if os.path.exists(i)]
     list(map(os.remove, existing))

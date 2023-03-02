@@ -71,6 +71,7 @@ addopts = "--maxfail=3"
 disable = [
     "R1729",
     "W0108",
+    "W0106",
     "redefined-outer-name",
     "attribute-defined-outside-init",
     "invalid-name",

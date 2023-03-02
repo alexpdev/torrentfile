@@ -539,7 +539,7 @@ def build(dir2):
         rmpath(dest)
         try:
             os.makedirs(dest)
-        except FileExistsError:
+        except FileExistsError:  # pragma: nocover
             rmpath(dest)
     return os.path.dirname(dir2), dest, dir2
 

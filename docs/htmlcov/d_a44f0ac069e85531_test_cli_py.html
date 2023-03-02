@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for tests\test_cli.py: 99%</title>
+    <title>Coverage for tests\test_cli.py: 100%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="coverage_html.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>tests\test_cli.py</b>:
-            <span class="pc_cov">99%</span>
+            <span class="pc_cov">100%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -54,10 +54,10 @@
             </div>
         </aside>
         <h2>
-            <span class="text">250 statements &nbsp;</span>
+            <span class="text">248 statements &nbsp;</span>
             <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">248<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">2<span class="text"> missing</span></button>
-            <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">3<span class="text"> excluded</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">0<span class="text"> missing</span></button>
+            <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">5<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
             <a id="prevFileLink" class="nav" href="d_a44f0ac069e85531___init___py.html">&#xab; prev</a> &nbsp; &nbsp;
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="d_a44f0ac069e85531_test_commands_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.2.1">coverage.py v7.2.1</a>,
-            created at 2023-03-01 23:17 -0800
+            created at 2023-03-01 23:31 -0800
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -621,8 +621,8 @@
     <p class="run"><span class="n"><a id="t539" href="#t539">539</a></span><span class="t">        <span class="nam">rmpath</span><span class="op">(</span><span class="nam">dest</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t540" href="#t540">540</a></span><span class="t">        <span class="key">try</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t541" href="#t541">541</a></span><span class="t">            <span class="nam">os</span><span class="op">.</span><span class="nam">makedirs</span><span class="op">(</span><span class="nam">dest</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t542" href="#t542">542</a></span><span class="t">        <span class="key">except</span> <span class="nam">FileExistsError</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t543" href="#t543">543</a></span><span class="t">            <span class="nam">rmpath</span><span class="op">(</span><span class="nam">dest</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t542" href="#t542">542</a></span><span class="t">        <span class="key">except</span> <span class="nam">FileExistsError</span><span class="op">:</span>  <span class="com"># pragma: nocover</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t543" href="#t543">543</a></span><span class="t">            <span class="nam">rmpath</span><span class="op">(</span><span class="nam">dest</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t544" href="#t544">544</a></span><span class="t">    <span class="key">return</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">dirname</span><span class="op">(</span><span class="nam">dir2</span><span class="op">)</span><span class="op">,</span> <span class="nam">dest</span><span class="op">,</span> <span class="nam">dir2</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t545" href="#t545">545</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t546" href="#t546">546</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -703,7 +703,7 @@
             <a id="nextFileLink" class="nav" href="d_a44f0ac069e85531_test_commands_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.2.1">coverage.py v7.2.1</a>,
-            created at 2023-03-01 23:17 -0800
+            created at 2023-03-01 23:31 -0800
         </p>
     </div>
 </footer>
