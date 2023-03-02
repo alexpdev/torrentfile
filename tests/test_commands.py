@@ -277,7 +277,7 @@ def test_recheck_with_dir():
         assert True
 
 
-@pytest.fixture(params=[("http-seeds", False), ("web-seeds", True)])
+@pytest.fixture(params=[("http-seed", False), ("web-seed", True)])
 def config(request):
     """Test config file contents."""
     field, private = request.param
