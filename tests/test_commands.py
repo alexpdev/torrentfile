@@ -317,7 +317,7 @@ def configfile(namespace, config):
         if not os.path.exists(base):
             os.mkdir(base)
         path = base / "torrentfile.ini"
-    path.write_text(config)
+    path.write_text(config, encoding="utf8")
     yield namespace
     os.remove(path)
 
