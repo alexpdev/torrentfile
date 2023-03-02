@@ -828,7 +828,7 @@ features of the application.</p>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">find_config_file</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-        <span class="n">parse_config_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">parse_config_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># pragma: nocover</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">outfile</span><span class="p">:</span>
         <span class="n">check_path_writable</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>

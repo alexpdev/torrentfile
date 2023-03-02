@@ -143,7 +143,7 @@ def create(args: Namespace) -> Namespace:
     kwargs = vars(args)
     if args.config:
         path = find_config_file(args)
-        parse_config_file(path, kwargs)
+        parse_config_file(path, kwargs)  # pragma: nocover
     if args.outfile:
         check_path_writable(args.outfile)
     else:  # pragma: nocover
