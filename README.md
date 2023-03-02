@@ -7,7 +7,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/alexpdev/torrentfile?color=orange)
 ![GitHub License](https://img.shields.io/github/license/alexpdev/torrentfile?color=red&logo=apache)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/torrentfile?color=brown)
-![GitHub Last Commit](https://badgen.net/github/last-commit/alexpdev/torrentfile?color=blue&icon=github)
+![GitHub Last Commit](https://badgen.net/github/last-commit/alexpdev/torrentfile?color=blue)
 [![CI](https://github.com/alexpdev/TorrentFile/actions/workflows/pyworkflow.yml/badge.svg?branch=master&event=push)](https://github.com/alexpdev/torrentfile/actions/workflows/pyworkflow.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Coverage)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b67ff65b3d574025b65b6587266bbab7)](https://www.codacy.com/gh/alexpdev/torrentfile/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexpdev/torrentfile&utm_campaign=Badge_Grade)
@@ -111,9 +111,8 @@ torrentfile --quiet create /path/to/content
 torrentfile create /path/to/content --prog 0
 ```
 
-**`torrentfile`** automatically extracts the name of the file or directory  
-if the content and saves the file to the current working directory with the 
-extracted title.
+**`torrentfile`** extracts the name of the contents top level file or directory  
+and saves the torrent file to the current working directory with the extracted title.
 
 For example running the follwing command would create `./content.torrent`.
 
@@ -128,20 +127,20 @@ followed by the relative or absolute path to your preferred output location.
 torrentfile create /path/to/content -o /some/other/path/torrent.torrent
 ```
 
-If the path you specified with the `-o` flag already exists and is a directory,  
-then torrentfile will save the output to that directory with the default extracted title.
+If the path `--out` path specified is an existing directory, then the torrent file will be
+saved to that directory, with same filename as the default top level path name.
 
-For example the following command would create a Bittorrent file at `/some/other/path/content.torrent`.
+For example the following command would create a torrent file at `/some/other/path/content.torrent`.
 
 ```bash
 torrentfile create /path/to/content -o /some/other/path/
 ```
 
-Bittorrent V1 is still the most common version of torrent files and the most widely accepted,  
-therefore by default torrentfile uses the version 1 format.  However if you are using a modern 
-Bittorrent client and tracker then you may wish to use the newest version Bittorrent V2 or 
-a combination of the two.  To do this simply use the `--meta-version` flag with the appropriate  
-version.  Options include `1`(v1 default), `2`(v2), or `3`(v1 & v2).
+Bittorrent protocol V1 is still the most common version in use for torrent files, 
+therefore by default __`torrentfile`__ uses the version 1 format when creating the file.  
+However __`torrentfile`__ has full support for creating V2 format torrent files as well as 
+hybrid V1 & V2 format files. Use the `--meta-version` flag to specify which file format
+should be used during torrent file creation. Options include `1`(v1 default), `2`(v2), or `3`(v1 & v2).
 
 ```bash
 torrentfile create /path/to/content --meta-version 2
@@ -150,6 +149,16 @@ torrentfile create /path/to/content --meta-version 2
 ```bash
 torrentfile create /path/to/content --meta-version 3 
 ```
+
+__NEW FEATURE in v0.8.8__:
+
+>`torrentfile` now includes the option to command line flags for the `create` sub-command from an `ini` style
+configuration file, by using the `--config` and optional `--config-path` options to specify the path
+to the configuration file.  If `--config-path` is ommited, then `torrentfile` will look by default in the current
+working directory for a file named `torrentfile.ini`. If the file is not discovered in the current working directory, 
+it will move on to look `~/.torrentfile/torrentfile.ini` followed by `~/.config/torrentfile.ini`.  Please see the 
+[documentation](https://alexpdev.github.io/torrentfile/overview/) for more details on how the configuration file should be
+formatted.
 
 ### Check/Recheck Torrent
 
@@ -174,7 +183,7 @@ torrentfile edit /path/to/content --tracker https://new.tracker.url1.com  https:
 
 You can use the `-h` flag for a full list of available fields that can be edited.
 
-    torrentfile edit -h
+    __`torrentfile`__ edit -h
 
 ### Create Magnet
 

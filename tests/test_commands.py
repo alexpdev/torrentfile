@@ -22,7 +22,9 @@ Testing functions for the sub-action commands from command line args.
 import os
 import shutil
 import sys
+from argparse import Namespace
 from hashlib import sha1  # nosec
+from pathlib import Path
 from urllib.parse import quote_plus
 
 import pyben
@@ -31,7 +33,8 @@ import pytest
 from tests import (dir1, dir2, file1, metafile1, metafile2, rmpath, tempfile,
                    torrents)
 from torrentfile.cli import execute
-from torrentfile.commands import info, magnet, rebuild, recheck
+from torrentfile.commands import (find_config_file, info, magnet,
+                                  parse_config_file, rebuild, recheck)
 from torrentfile.hasher import merkle_root
 from torrentfile.utils import ArgumentError
 
@@ -271,4 +274,72 @@ def test_recheck_with_dir():
     try:
         recheck(Namespace)
     except ArgumentError:
+        assert True
+
+
+@pytest.fixture(params=[("http-seeds", False), ("web-seeds", True)])
+def config(request):
+    """Test config file contents."""
+    field, private = request.param
+    contents = f"""
+[config]
+announce =
+    url3
+    url4
+{field} =
+    url4
+    url5
+private = {str(private).lower()}
+piece-length = 16
+comment = some comment
+source = tracker
+"""
+    return contents
+
+
+@pytest.fixture(params=[True, False])
+def namespace(request, tmp_path):
+    """Test fixture for pytest."""
+    if request.param:
+        ns = Namespace(config=True, config_path=None)
+    else:
+        ns = Namespace(config=True, config_path=tmp_path / "torrentfile.ini")
+    return ns
+
+
+@pytest.fixture
+def configfile(namespace, config):
+    """Test fixture for configfile parsing."""
+    if namespace.config_path:
+        path = namespace.config_path
+    else:
+        base = Path.home() / ".torrentfile"
+        if not os.path.exists(base):
+            os.mkdir(base)
+        path = base / "torrentfile.ini"
+    path.write_text(config)
+    yield namespace
+    os.remove(path)
+
+
+def test_find_config_file(configfile):
+    """Test find config file function in commands module."""
+    assert find_config_file(configfile) is not None
+
+
+def test_parse_config_file(configfile):
+    """Test parse config file function in commands module."""
+    kwargs = {"out": "./somepath"}
+    config = find_config_file(configfile)
+    parse_config_file(config, kwargs)
+    assert "announce" in kwargs
+
+
+@pytest.mark.parametrize("path", [None, Path.home() / "torrentfile.ini"])
+def test_find_config_file_missing(path):
+    """Test find config file function with missing config file."""
+    ns = Namespace(config=True, config_path=path)
+    try:
+        find_config_file(ns)
+    except FileNotFoundError:
         assert True

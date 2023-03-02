@@ -45,7 +45,6 @@ from argparse import ArgumentParser, HelpFormatter
 
 from torrentfile.commands import (create, edit, info, magnet, rebuild, recheck,
                                   rename)
-from torrentfile.interactive import select_action
 from torrentfile.utils import toggle_debug_mode
 from torrentfile.version import __version__ as version
 
@@ -228,14 +227,6 @@ def execute(args: list = None) -> list:
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
         conflict_handler="resolve",
-    )
-
-    parser.add_argument(
-        "-i",
-        "--interactive",
-        action="store_true",
-        dest="interactive",
-        help="#Deprecated\t select program options interactively",
     )
 
     parser.add_argument(
@@ -657,9 +648,6 @@ def execute(args: list = None) -> list:
 
     elif args.debug:
         Config.activate_logger()
-
-    if args.interactive:
-        return select_action()
 
     if hasattr(args, "func"):
         return args.func(args)

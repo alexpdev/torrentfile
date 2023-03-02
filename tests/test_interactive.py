@@ -21,13 +21,11 @@ Testing functions for the command line interface.
 """
 
 import os
-import sys
 
 import pyben
 import pytest
 
 from tests import file1, file2, filemeta2, torrents
-from torrentfile.cli import main
 from torrentfile.interactive import select_action
 from torrentfile.utils import normalize_piece_length
 
@@ -168,8 +166,7 @@ def test_inter_edit_cli(filemeta2, announce, cmnt, srce, urllist, monkeypatch):
     ]
     it = iter(seq)
     monkeypatch.setattr(MOCK, lambda *_: next(it))
-    sys.argv = ["torrentfile", "-i"]
-    main()
+    select_action()
     meta2 = pyben.load(filemeta2)
     assert meta2["info"]["source"] == srce
     assert meta2["info"]["comment"] == cmnt
