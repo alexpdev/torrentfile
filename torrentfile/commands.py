@@ -85,8 +85,9 @@ def find_config_file(args: Namespace) -> str:
             Path.home() / ".torrentfile" / filename,
             Path.home() / ".config" / ".torrentfile" / filename,
         ]
-        for path in paths:
-            if os.path.exists(path):
+        for subpath in paths:
+            if os.path.exists(subpath):
+                path = subpath
                 break
     if path is None:
         raise FileNotFoundError(error_message)

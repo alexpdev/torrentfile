@@ -339,6 +339,14 @@ def test_parse_config_file(configfile):
 def test_find_config_file_missing(path):
     """Test find config file function with missing config file."""
     ns = Namespace(config=True, config_path=path)
+    filename = "torrentfile.ini"
+    paths = [
+        os.path.join(os.getcwd(), filename),
+        Path.home() / ".torrentfile" / filename,
+        Path.home() / ".config" / ".torrentfile" / filename,
+    ]
+    existing = [i for i in paths if os.path.exists(i)]
+    list(map(os.remove, existing))
     try:
         find_config_file(ns)
     except FileNotFoundError:
