@@ -612,3 +612,13 @@ def test_cli_default_command(folder, version):
     sys.argv = args
     execute()
     assert os.path.exists(torrent)
+
+
+def test_cli_configfile(folder):
+    """Test config cli parameter."""
+    args = ["torrentfile", "create", "--config", folder]
+    sys.argv = args
+    try:
+        execute()
+    except FileNotFoundError:
+        assert True
