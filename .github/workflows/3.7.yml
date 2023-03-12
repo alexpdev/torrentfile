@@ -1,4 +1,4 @@
-name: LinuxCI
+name: W3.7
 
 on: [push, pull_request]
 jobs:
