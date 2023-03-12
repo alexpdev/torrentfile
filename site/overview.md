@@ -78,22 +78,18 @@ argument is the path(`<path>`) to the contents file or directory.
   - Specify the full path to the newly created torrent file.  The default is to save it adjacent to the content.
   - Example: if content is at `/home/user/torrents/content` the default would create `/home/user/torrents/content.torrent`
 
-- `--cwd` `--current`  #deprecated
-
-  - This is now the default behaviour. Changes the default save location to the current working directory.
-  - Example: if content is at `/home/user/torrents/content` this option would create `./content.torrent`
-
 - `--progress` `--prog`
 
-  - Options (0, 1):  No status bar will be shown if 0.  Otherwise the default and 1 argument means progress bar is shown
+  - Options (0, 1):  No status bar will be shown if 0.  Otherwise the default and "1" means progress bar is shown
 
 - `--config`
 
   - Load options from a configuration file. default `torrentfile.ini`
   - file can use the same long options names used for the command line
-  - <path> for torrent content must be specified as CLI argument
-  - `--cwd` and `--prog` options also must be used as CLI arguments
+  - The current available options that can be marked in the config file include: `announce`, `source`, `comment`, `http-seeds`, `web-seeds`, `piece-length`, ``
+  
   - Default search paths and priority:
+
     
     1. `./torrentfile.ini`
     2. `~/.torrentfile/torrentfile.ini`

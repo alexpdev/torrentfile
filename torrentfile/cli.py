@@ -300,7 +300,6 @@ def execute(args: list = None) -> list:
     )
 
     create_parser.add_argument(
-        "-f",
         "--config",
         action="store_true",
         dest="config",
@@ -347,15 +346,7 @@ def execute(args: list = None) -> list:
         action="store",
         dest="outfile",
         metavar="<path>",
-        help="Explicitly specify the path to write the file.",
-    )
-
-    create_parser.add_argument(
-        "--cwd",
-        "--current",
-        action="store_true",
-        dest="cwd",
-        help="*deprecated* Saving to current directory is default behaviour",
+        help="Explicitly specify the path to write the file .torrent file",
     )
 
     create_parser.add_argument(
