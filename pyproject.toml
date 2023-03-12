@@ -6,7 +6,6 @@ build-backend = "setuptools.build_meta"
 name = "torrentfile"
 authors = [{name = "alexpdev", email = "alexpdev@pm.me"}]
 description = "Terminal based command line tool for creating Bittorrent files."
-license = {file = "LICENSE"}
 version = "0.8.9"
 readme = "README.md"
 requires-python = ">=3.6"
