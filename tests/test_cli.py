@@ -23,6 +23,7 @@ Testing functions for the command line interface.
 import datetime
 import os
 import sys
+import textwrap
 
 import pyben
 import pytest
@@ -596,9 +597,52 @@ def test_cli_default_command(folder, version):
 
 def test_cli_configfile(folder):
     """Test config cli parameter."""
+    folder, _ = folder
     args = ["torrentfile", "create", "--config", folder]
     sys.argv = args
     try:
         execute()
     except FileNotFoundError:
         assert True
+
+
+@pytest.fixture
+def configfile():
+    """Test fixture for the configfile parameter."""
+    config = """
+    [config]
+    meta-version = 3
+    piece-length = 15
+    announce = example
+    private = true
+    source = example
+    comment = comment example
+    """
+    path = os.path.join(os.path.dirname(__file__), "torrentfile.ini")
+    with open(path, "wt", encoding="utf8") as fd:
+        fd.write(textwrap.dedent(config))
+    yield path
+    rmpath(path)
+
+
+def test_cli_configfile_params(configfile, folder):
+    """Testing parameters with config file option."""
+    folder, torrent = folder
+    args = [
+        "torrentfile",
+        "create",
+        "--config",
+        "--config-path",
+        configfile,
+        "-o",
+        torrent,
+        folder,
+    ]
+    sys.argv = args
+    execute()
+    meta = pyben.load(torrent)
+    assert meta["info"]["private"] == 1
+    assert meta["info"]["source"] == "example"
+    assert meta["info"]["piece length"] == 2**15
+    assert meta["announce"] == "example"
+    assert meta["info"]["meta version"] == 2
