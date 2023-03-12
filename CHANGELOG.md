@@ -1,5 +1,15 @@
 # TorrentFile
 
+## Version 0.8.9
+
+- fixed bug with the config file parsing
+- added checks to ensure the config file is parsed correctly
+- added checks for applying configfile parameters to torrent properly
+- deprecated and removed the `--cwd` command line flag as it is now default behaviour
+- removed unittests testing the `--cwd` behaviour
+
+---
+
 ## Version 0.8.8
 
 - added loading create torrent options from a configuration file

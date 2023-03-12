@@ -63,7 +63,7 @@ def test_magnet_hex(metafile1):
     magnet_link = magnet(metafile1)
     meta = pyben.load(metafile1)
     info = meta["info"]
-    binfo = sha1(pyben.dumps(info)).hexdigest().upper()
+    binfo = sha1(pyben.dumps(info)).hexdigest().upper()  # nosec
     assert binfo in magnet_link
 
 

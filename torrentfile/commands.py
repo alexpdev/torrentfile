@@ -107,23 +107,35 @@ def parse_config_file(path: str, kwargs: dict):
     """
     config = configparser.ConfigParser()
     config.read(path)
+
     for key, val in config["config"].items():
         if key.lower() in ["announce", "http-seed", "web-seed", "tracker"]:
             val = [i for i in val.split("\n") if i]
+
             if key.lower() == "http-seed":
-                kwargs.setdefault("httpseeds", val)
+                kwargs["httpseeds"] = val
+
             elif key.lower() == "web-seed":
-                kwargs.setdefault("url-list", val)
+                kwargs.setdefault("url-list", [])
+                kwargs["url-list"] = val
+
             else:
-                kwargs.setdefault(key.lower(), val)
+                kwargs[key.lower()] = val
+
+        elif key.lower() == "piece-length":
+            kwargs["piece_length"] = val
+
+        elif key.lower() == "meta-version":
+            kwargs["meta_version"] = val
+
         elif val.lower() == "true":
-            kwargs.setdefault(key.lower(), True)
+            kwargs[key.lower()] = True
+
         elif val.lower() == "false":
-            kwargs.setdefault(key.lower(), False)
-        elif val.isdigit():
-            kwargs.setdefault(key.lower(), int(val))
+            kwargs[key.lower()] = False
+
         else:
-            kwargs.setdefault(key.lower(), val)
+            kwargs[key.lower()] = val
 
 
 def create(args: Namespace) -> Namespace:
@@ -144,14 +156,18 @@ def create(args: Namespace) -> Namespace:
     if args.config:
         path = find_config_file(args)
         parse_config_file(path, kwargs)  # pragma: nocover
+
     if args.outfile:
         check_path_writable(args.outfile)
+
     else:  # pragma: nocover
         samplepath = os.path.join(os.getcwd(), ".torrent")
         check_path_writable(samplepath)
+
     logger.debug("Creating torrent from %s", args.content)
     if args.meta_version == "1":
         torrent = TorrentFile(**kwargs)
+
     else:
         torrent = TorrentAssembler(**kwargs)
     outfile, meta = torrent.write()
@@ -194,11 +210,14 @@ def info(args: Namespace) -> str:
     meta.update(data)
     if "private" in meta and meta["private"] == 1:
         meta["private"] = "True"
+
     if "announce-list" in meta:
         lst = meta["announce-list"]
         meta["announce-list"] = ", ".join([j for i in lst for j in i])
+
     if "url-list" in meta:
         meta["url-list"] = ", ".join(meta["url-list"])
+
     if "httpseeds" in meta:
         meta["httpseeds"] = ", ".join(meta["httpseeds"])
 
@@ -214,7 +233,7 @@ def info(args: Namespace) -> str:
     most = max(len(i) for i in text)
     text = ["-" * most, "\n"] + text + ["\n", "-" * most]
     output = "\n".join(text)
-    print(output)
+    logger.info(output)
     return output
 
 
@@ -238,6 +257,7 @@ def edit(args: Namespace) -> str:
     """
     metafile = args.metafile
     logger.info("Editing %s Meta File", str(args.metafile))
+
     editargs = {
         "url-list": args.url_list,
         "httpseeds": args.httpseeds,

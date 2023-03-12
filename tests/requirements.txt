@@ -5,9 +5,16 @@ bandit
 coverage
 pytest
 pytest-cov
+pycodestyle
+pydocstyle
+black
+isort
+yapf
 pyben>=0.3.1
 pylint
 tox
+pyflakes
+mccabe
 markdown
 pygments
 pymdown-extensions
