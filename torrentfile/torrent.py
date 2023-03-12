@@ -388,10 +388,9 @@ class MetaFile:
         """
         if outfile:
             self.outfile = outfile
-        elif self.outfile:
-            pass
-        else:
-            self.outfile = os.path.join(os.getcwd(), self.name) + ".torrent"
+        if not self.outfile:  # pragma: nocover
+            path = os.path.join(os.getcwd(), self.name) + ".torrent"
+            self.outfile = path
         if str(self.outfile)[-1] in "\\/":
             self.outfile = self.outfile + (self.name + ".torrent")
         self.meta = self.sort_meta()

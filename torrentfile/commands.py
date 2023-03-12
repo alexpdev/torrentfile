@@ -134,9 +134,6 @@ def parse_config_file(path: str, kwargs: dict):
         elif val.lower() == "false":
             kwargs[key.lower()] = False
 
-        elif val.isdigit():
-            kwargs[key.lower()] = int(val)
-
         else:
             kwargs[key.lower()] = val
 
