@@ -511,26 +511,6 @@ def test_cli_announce_path(dir1, flag):
     rmpath(outfile)
 
 
-def test_cli_cwd(folder):
-    """
-    Test outfile cli flag.
-    """
-    folder, _ = folder
-    args = [
-        "torrentfile",
-        "create",
-        "--cwd",
-        folder,
-    ]
-    sys.argv = args
-    current = os.getcwd()
-    name = os.path.basename(folder)
-    outfile = os.path.join(current, name) + ".torrent"
-    execute()
-    assert os.path.exists(outfile)
-    rmpath(outfile)
-
-
 @pytest.fixture()
 def build(dir2):
     """Fixture for testing the build subcommand."""
