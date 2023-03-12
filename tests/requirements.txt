@@ -5,8 +5,6 @@ bandit
 coverage
 pytest
 pytest-cov
-pytest-clarity
-pytest-icdiff
 pycodestyle
 pydocstyle
 black
