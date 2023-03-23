@@ -140,7 +140,7 @@ class ProgMixin:
     """
 
     def prog_start(
-        self, total: int, path: str, length: int = 50, unit: str = None
+        self, total: int, path: str, length: int = 50, unit: str = "bytes"
     ):
         """
         Generate a new progress bar for the given file path.

@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="covindex.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="d_1bc82e0ab2fcb2ec_torrent_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.2.1">coverage.py v7.2.1</a>,
-            created at 2023-03-11 22:53 -0800
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.2.2">coverage.py v7.2.2</a>,
+            created at 2023-03-22 23:27 -0700
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -457,7 +457,7 @@
     <p class="run"><span class="n"><a id="t375" href="#t375">375</a></span><span class="t">        <span class="nam">partial</span> <span class="op">=</span> <span class="nam">bytearray</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t376" href="#t376">376</a></span><span class="t">        <span class="key">for</span> <span class="nam">i</span><span class="op">,</span> <span class="nam">path</span> <span class="key">in</span> <span class="nam">enumerate</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">paths</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t377" href="#t377">377</a></span><span class="t">            <span class="nam">total</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">fileinfo</span><span class="op">[</span><span class="nam">i</span><span class="op">]</span><span class="op">[</span><span class="str">"length"</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t378" href="#t378">378</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">prog_start</span><span class="op">(</span><span class="nam">total</span><span class="op">,</span> <span class="nam">path</span><span class="op">,</span> <span class="nam">unit</span><span class="op">=</span><span class="str">"bytes"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t378" href="#t378">378</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">prog_start</span><span class="op">(</span><span class="nam">total</span><span class="op">,</span> <span class="nam">path</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t379" href="#t379">379</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">index</span> <span class="op">=</span> <span class="nam">i</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t380" href="#t380">380</a></span><span class="t">            <span class="key">if</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">exists</span><span class="op">(</span><span class="nam">path</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t381" href="#t381">381</a></span><span class="t">                <span class="key">for</span> <span class="nam">piece</span> <span class="key">in</span> <span class="nam">self</span><span class="op">.</span><span class="nam">extract</span><span class="op">(</span><span class="nam">path</span><span class="op">,</span> <span class="nam">partial</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -665,7 +665,7 @@
     <p class="pln"><span class="n"><a id="t583" href="#t583">583</a></span><span class="t">            <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t584" href="#t584">584</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">pieces</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">root_hash</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t585" href="#t585">585</a></span><span class="t">            <span class="nam">path</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">paths</span><span class="op">[</span><span class="nam">self</span><span class="op">.</span><span class="nam">index</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t586" href="#t586">586</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">prog_start</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">length</span><span class="op">,</span> <span class="nam">path</span><span class="op">,</span> <span class="nam">unit</span><span class="op">=</span><span class="str">"bytes"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t586" href="#t586">586</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">prog_start</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">length</span><span class="op">,</span> <span class="nam">path</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t587" href="#t587">587</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">count</span> <span class="op">=</span> <span class="num">0</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t588" href="#t588">588</a></span><span class="t">            <span class="key">if</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">exists</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">current</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t589" href="#t589">589</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">hasher</span> <span class="op">=</span> <span class="nam">FileHasher</span><span class="op">(</span><span class="nam">path</span><span class="op">,</span> <span class="nam">self</span><span class="op">.</span><span class="nam">piece_length</span><span class="op">,</span> <span class="nam">progress</span><span class="op">=</span><span class="num">0</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -734,8 +734,8 @@
             <a id="indexLink" class="nav" href="covindex.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="d_1bc82e0ab2fcb2ec_torrent_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.2.1">coverage.py v7.2.1</a>,
-            created at 2023-03-11 22:53 -0800
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.2.2">coverage.py v7.2.2</a>,
+            created at 2023-03-22 23:27 -0700
         </p>
     </div>
 </footer>
