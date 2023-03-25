@@ -700,10 +700,8 @@
 <a href="https://deepsource.io/gh/alexpdev/torrentfile/"><img alt="DeepSource" src="https://deepsource.io/gh/alexpdev/TorrentFile.svg/?label=active+issues&amp;token=16Sl_dF7nTU8YgPilcqhvHm8" /></a>
 <a href="https://codecov.io/gh/alexpdev/torrentfile?color=navy&amp;logo=codecov"><img alt="codecov" src="https://codecov.io/gh/alexpdev/torrentfile/branch/master/graph/badge.svg?token=EWF7NIL9SQ" /></a></p>
 <h2 id="overview">🌐 Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>A <code>simple</code> and <code>convenient</code> tool for creating, reviewing, editing, and/or
-validating bittorrent meta files (aka torrent files). <em><code>torrentfile</code></em>
-supports all versions of Bittorrent files, including hybrid meta files, and has
-full unicode support.</p>
+<p>A command line tool for creating, reviewing, editing, or verifying bittorrent meta files (<code>.torrent</code> files). 
+<em><code>torrentfile</code></em> is open source, and supports all versions of Bittorrent files, including hybrid meta files.</p>
 <blockquote>
 <p>A GUI frontend for this project can be found at <a href="https://github.com/alexpdev/TorrentfileQt">https://github.com/alexpdev/TorrentfileQt</a></p>
 </blockquote>
@@ -713,10 +711,10 @@ full unicode support.</p>
 <li>Tested on Linux, Windows and Mac</li>
 </ul>
 <h2 id="install">💻 Install<a class="headerlink" href="#install" title="Permanent link">#</a></h2>
-<p><strong>via PyPi:</strong></p>
+<p><strong>PyPi:</strong></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>torrentfile
 </code></pre></div></td></tr></table></div>
-<p><strong>via Git:</strong></p>
+<p><strong>Git:</strong></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/alexpdev/torrentfile.git
@@ -729,9 +727,6 @@ pip<span class="w"> </span>install<span class="w"> </span>.
 <h2 id="documentation">📚 Documentation<a class="headerlink" href="#documentation" title="Permanent link">#</a></h2>
 <p>Documentation can be found  <a href="https://alexpdev.github.io/torrentfile">here</a>
 or in the <em><code>docs</code></em> directory.</p>
-<blockquote>
-<p><em>torrentfile</em> is under active development, and is subject to significant changes in the codebase between releases.</p>
-</blockquote>
 <h2 id="usage-documentation">🚀 Usage &amp; Documentation<a class="headerlink" href="#usage-documentation" title="Permanent link">#</a></h2>
 <p><img alt="Basic Usage" src="https://github.com/alexpdev/torrentfile/blob/master/assets/Torrentfile.gif?raw=True" /></p>
 <blockquote>
@@ -752,7 +747,7 @@ or in the <em><code>docs</code></em> directory.</p>
 the path to the contents.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile<span class="w"> </span>create<span class="w"> </span>/path/to/content
 </code></pre></div></td></tr></table></div>
-<p>You can add one or more trackers by using any one of <code>-t</code>, <code>--tracker</code>, <code>-a</code>, <code>--announce</code> 
+<p>You can add one or more trackers by using any one of <code>-a</code>, <code>--announce</code> 
 flags and listing their URL as a space separated list.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile<span class="w"> </span>create<span class="w"> </span>/path/to/content<span class="w"> </span>-a<span class="w"> </span>http://tracker1.com<span class="w"> </span>http://tracker2.net
 </code></pre></div></td></tr></table></div>
@@ -777,16 +772,15 @@ and saves the torrent file to the current working directory with the extracted t
 followed by the relative or absolute path to your preferred output location.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile<span class="w"> </span>create<span class="w"> </span>/path/to/content<span class="w"> </span>-o<span class="w"> </span>/some/other/path/torrent.torrent
 </code></pre></div></td></tr></table></div>
-<p>If the path <code>--out</code> path specified is an existing directory, then the torrent file will be
+<p>If the path specified is an existing directory, then the torrent file will be
 saved to that directory, with same filename as the default top level path name.</p>
 <p>For example the following command would create a torrent file at <code>/some/other/path/content.torrent</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile<span class="w"> </span>create<span class="w"> </span>/path/to/content<span class="w"> </span>-o<span class="w"> </span>/some/other/path/
 </code></pre></div></td></tr></table></div>
-<p>Bittorrent protocol V1 is still the most common version in use for torrent files, 
-therefore by default <strong><code>torrentfile</code></strong> uses the version 1 format when creating the file.<br />
-However <strong><code>torrentfile</code></strong> has full support for creating V2 format torrent files as well as 
-hybrid V1 &amp; V2 format files. Use the <code>--meta-version</code> flag to specify which file format
-should be used during torrent file creation. Options include <code>1</code>(v1 default), <code>2</code>(v2), or <code>3</code>(v1 &amp; v2).</p>
+<p>Bittorrent protocol V1 is still the most commonly used version, therefore <em><code>torrentfile</code></em> creates
+Bittorrent version 1 torrent files by default. To specify creating a V2 file or hybrid (v1 and v2)
+use the <code>--meta-version</code> followed by the specific version number format to use.  The options include:
+<code>1</code>(v1 default), <code>2</code>(v2), or <code>3</code>(v1 &amp; v2).</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile<span class="w"> </span>create<span class="w"> </span>/path/to/content<span class="w"> </span>--meta-version<span class="w"> </span><span class="m">2</span>
 </code></pre></div></td></tr></table></div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile<span class="w"> </span>create<span class="w"> </span>/path/to/content<span class="w"> </span>--meta-version<span class="w"> </span><span class="m">3</span><span class="w"> </span>
@@ -815,7 +809,7 @@ subcommand you can specify the field with one of the available field flags, for 
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile<span class="w"> </span>edit<span class="w"> </span>/path/to/content<span class="w"> </span>--tracker<span class="w"> </span>https://new.tracker.url1.com<span class="w">  </span>https://newtracker.url/2
 </code></pre></div></td></tr></table></div>
 <p>You can use the <code>-h</code> flag for a full list of available fields that can be edited.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>__`torrentfile`__ edit -h
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>torrentfile<span class="w"> </span>edit<span class="w"> </span>-h
 </code></pre></div></td></tr></table></div>
 <h3 id="create-magnet">Create Magnet<a class="headerlink" href="#create-magnet" title="Permanent link">#</a></h3>
 <p>To create a magnet URI for a pre-existing torrent meta file, use the sub-command<br />

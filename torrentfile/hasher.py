@@ -61,7 +61,7 @@ class Hasher(CbMixin, ProgMixin):
         self.current = open(self.paths[0], "rb")
         if self.progress:
             total = os.path.getsize(self.paths[0])
-            self.prog_start(total, self.paths[0], unit="bytes")
+            self.prog_start(total, self.paths[0])
         logger.debug("Hashing %s", str(self.paths[0]))
 
     def __iter__(self):
@@ -115,7 +115,7 @@ class Hasher(CbMixin, ProgMixin):
             logger.debug("Hashing %s", str(path))
             self.current.close()
             if self.progress:
-                self.prog_start(os.path.getsize(path), path, unit="bytes")
+                self.prog_start(os.path.getsize(path), path)
             self.current = open(path, "rb")
             return True
         return False
@@ -200,7 +200,7 @@ class HasherV2(CbMixin, ProgMixin):
         self.piece_length = piece_length
         self.num_blocks = piece_length // BLOCK_SIZE
         if progress:
-            self.prog_start(os.path.getsize(path), path, unit="bytes")
+            self.prog_start(os.path.getsize(path), path)
         with open(self.path, "rb") as fd:
             self.process_file(fd)
 
@@ -303,7 +303,7 @@ class HasherHybrid(CbMixin, ProgMixin):
         self.padding_piece = None
         self.padding_file = None
         if progress:
-            self.prog_start(os.path.getsize(path), path, unit="bytes")
+            self.prog_start(os.path.getsize(path), path)
         self.amount = piece_length // BLOCK_SIZE
         with open(path, "rb") as data:
             self.process_file(data)
@@ -437,7 +437,7 @@ class FileHasher(CbMixin, ProgMixin):
         self.hybrid = hybrid
         if progress:
             self.progressbar = True
-            self.prog_start(os.path.getsize(path), path, unit="bytes")
+            self.prog_start(os.path.getsize(path), path)
 
     def __iter__(self):
         """Return `self`: needed to implement iterator implementation."""

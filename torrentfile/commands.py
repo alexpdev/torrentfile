@@ -36,7 +36,7 @@ import os
 import shutil
 import sys
 from argparse import Namespace
-from hashlib import sha1  # nosec
+from hashlib import sha1, sha256  # nosec
 from pathlib import Path
 from urllib.parse import quote_plus
 
@@ -364,8 +364,13 @@ def magnet(metafile: Namespace) -> str:
 
     meta = pyben.load(metafile)
     data = meta["info"]
-    binfo = pyben.dumps(data)
-    infohash = sha1(binfo).hexdigest().upper()  # nosec
+    if "meta version" in data:
+        hashing_func = sha256
+    else:
+        hashing_func = sha1  # nosec
+
+    bencoded = pyben.dumps(data)
+    infohash = hashing_func(bencoded).hexdigest().upper()  # nosec
 
     logger.info("Magnet Info Hash: %s", infohash)
     scheme = "magnet:"

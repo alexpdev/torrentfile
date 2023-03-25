@@ -16,10 +16,8 @@
 
 ## 🌐 Overview
 
-A `simple` and `convenient` tool for creating, reviewing, editing, and/or
-validating bittorrent meta files (aka torrent files). _`torrentfile`_
-supports all versions of Bittorrent files, including hybrid meta files, and has
-full unicode support.
+A command line tool for creating, reviewing, editing, or verifying bittorrent meta files (`.torrent` files). 
+_`torrentfile`_ is open source, and supports all versions of Bittorrent files, including hybrid meta files.
 
 > A GUI frontend for this project can be found at <https://github.com/alexpdev/TorrentfileQt>
 
@@ -30,13 +28,13 @@ full unicode support.
 
 ## 💻 Install
 
-**via PyPi:**
+**PyPi:**
 
 ```bash
 pip install torrentfile
 ```
 
-**via Git:**
+**Git:**
 
 ```bash
 git clone https://github.com/alexpdev/torrentfile.git
@@ -50,8 +48,6 @@ pip install .
 
 Documentation can be found  [here](https://alexpdev.github.io/torrentfile)
 or in the _`docs`_ directory.
-
-> _torrentfile_ is under active development, and is subject to significant changes in the codebase between releases.
 
 ## 🚀 Usage & Documentation
 
@@ -84,7 +80,7 @@ the path to the contents.
 torrentfile create /path/to/content
 ```
 
-You can add one or more trackers by using any one of `-t`, `--tracker`, `-a`, `--announce` 
+You can add one or more trackers by using any one of `-a`, `--announce` 
 flags and listing their URL as a space separated list.
 
 ```bash
@@ -127,7 +123,7 @@ followed by the relative or absolute path to your preferred output location.
 torrentfile create /path/to/content -o /some/other/path/torrent.torrent
 ```
 
-If the path `--out` path specified is an existing directory, then the torrent file will be
+If the path specified is an existing directory, then the torrent file will be
 saved to that directory, with same filename as the default top level path name.
 
 For example the following command would create a torrent file at `/some/other/path/content.torrent`.
@@ -136,11 +132,10 @@ For example the following command would create a torrent file at `/some/other/pa
 torrentfile create /path/to/content -o /some/other/path/
 ```
 
-Bittorrent protocol V1 is still the most common version in use for torrent files, 
-therefore by default __`torrentfile`__ uses the version 1 format when creating the file.  
-However __`torrentfile`__ has full support for creating V2 format torrent files as well as 
-hybrid V1 & V2 format files. Use the `--meta-version` flag to specify which file format
-should be used during torrent file creation. Options include `1`(v1 default), `2`(v2), or `3`(v1 & v2).
+Bittorrent protocol V1 is still the most commonly used version, therefore _`torrentfile`_ creates
+Bittorrent version 1 torrent files by default. To specify creating a V2 file or hybrid (v1 and v2)
+use the `--meta-version` followed by the specific version number format to use.  The options include:
+`1`(v1 default), `2`(v2), or `3`(v1 & v2).
 
 ```bash
 torrentfile create /path/to/content --meta-version 2
@@ -183,7 +178,9 @@ torrentfile edit /path/to/content --tracker https://new.tracker.url1.com  https:
 
 You can use the `-h` flag for a full list of available fields that can be edited.
 
-    __`torrentfile`__ edit -h
+```bash
+torrentfile edit -h
+```
 
 ### Create Magnet
 

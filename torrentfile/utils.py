@@ -51,7 +51,7 @@ class Memo:
 
     def __init__(self, func):
         """
-        Construct for memoization.
+        Construcor for cache.
         """
         self.func = func
         self.counter = 0
@@ -127,6 +127,9 @@ class ArgumentError(Exception):
     """
 
 
+SUFFIXES = ["KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
+
+
 def humanize_bytes(amount: int) -> str:
     """
     Convert integer into human readable memory sized denomination.
@@ -141,13 +144,19 @@ def humanize_bytes(amount: int) -> str:
     str
         human readable representation of the given amount of bytes.
     """
-    if amount < 1024:
-        return str(amount)
-    if 1024 <= amount < 1_048_576:
-        return f"{amount // 1024} KiB"
-    if 1_048_576 <= amount < 1_073_741_824:
-        return f"{amount // 1_048_576} MiB"
-    return f"{amount // 1073741824} GiB"
+    base = 1024
+    amount = float(amount)
+    value = abs(amount)
+    if value == 1:
+        return f"{amount} Byte"  # pragma: nocover
+    if value < base:
+        return f"{amount} Bytes"
+    for i, s in enumerate(SUFFIXES):
+        unit = base ** (i + 2)
+        if value < unit:
+            break
+    value = base * amount / unit
+    return f"{value:.1f} {s}"
 
 
 def normalize_piece_length(piece_length: int) -> int:

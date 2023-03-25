@@ -375,7 +375,7 @@ class FeedChecker(ProgMixin):
         partial = bytearray()
         for i, path in enumerate(self.paths):
             total = self.fileinfo[i]["length"]
-            self.prog_start(total, path, unit="bytes")
+            self.prog_start(total, path)
             self.index = i
             if os.path.exists(path):
                 for piece in self.extract(path, partial):
@@ -583,7 +583,7 @@ class HashChecker(ProgMixin):
             else:
                 self.pieces = self.root_hash
             path = self.paths[self.index]
-            self.prog_start(self.length, path, unit="bytes")
+            self.prog_start(self.length, path)
             self.count = 0
             if os.path.exists(self.current):
                 self.hasher = FileHasher(path, self.piece_length, progress=0)

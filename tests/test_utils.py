@@ -168,12 +168,12 @@ def test_next_power_2(value):
 @pytest.mark.parametrize(
     "amount, result",
     [
-        (100, "100"),
-        (1100, "1 KiB"),
-        (1_100_000, "1 MiB"),
-        (1_100_000_000, "1 GiB"),
-        (4_400_120_000, "4 GiB"),
-        (4_000_120_000, "3 GiB"),
+        (100, "100.0 Bytes"),
+        (1100, "1.1 KiB"),
+        (1_100_000, "1.0 MiB"),
+        (1_100_000_000, "1.0 GiB"),
+        (4_400_120_000, "4.1 GiB"),
+        (4_000_120_000, "3.7 GiB"),
     ],
 )
 def test_humanize_bytes(amount, result):

@@ -236,7 +236,7 @@ def test_progress_bar(params):
     """Testing the prog mixin with various sizes."""
     increment, total = params
     progbar = ProgMixin()
-    progbar.prog_start(1 << total, "some/fake/path", unit="bytes")
+    progbar.prog_start(1 << total, "some/fake/path")
     while progbar.prog.state < total:
         progbar.prog_update(1 << increment)
     assert progbar.prog.state >= total
