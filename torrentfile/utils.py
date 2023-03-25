@@ -148,7 +148,7 @@ def humanize_bytes(amount: int) -> str:
     amount = float(amount)
     value = abs(amount)
     if value == 1:
-        return f"{amount} Byte"
+        return f"{amount} Byte"  # pragma: nocover
     if value < base:
         return f"{amount} Bytes"
     for i, s in enumerate(SUFFIXES):

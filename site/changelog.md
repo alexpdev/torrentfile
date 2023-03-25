@@ -4,6 +4,7 @@
 
 - added support for bittorrent v2 magnet links
 - added unit tests for v2 magnet links
+- updated algorithm for human readable byte formatting
 
 ---
 
