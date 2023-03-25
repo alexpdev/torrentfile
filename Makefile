@@ -74,9 +74,6 @@ clean-build: ## remove build artifacts
 	rm -frv runner/build
 	rm -frv runner/dist
 
-extra: ## extra imports
-	pip install torrentfile torrentfileQt QStyler ebookatty --force-reinstall --no-cache --upgrade
-
 test: ## Get coverage report
 	tox
 
