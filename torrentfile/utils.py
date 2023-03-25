@@ -130,7 +130,7 @@ class ArgumentError(Exception):
 SUFFIXES = ["KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
 
 
-def humanize_bytes(amount: int | str) -> str:
+def humanize_bytes(amount: int) -> str:
     """
     Convert integer into human readable memory sized denomination.
 
