@@ -30,13 +30,14 @@ Functions
 - recheck_command
 - magnet_command
 """
+
 import configparser
 import logging
 import os
 import shutil
 import sys
 from argparse import Namespace
-from hashlib import sha1, sha256  # nosec
+from hashlib import sha1, sha256
 from pathlib import Path
 from urllib.parse import quote_plus
 
@@ -173,7 +174,7 @@ def create(args: Namespace) -> Namespace:
     outfile, meta = torrent.write()
 
     if args.magnet:
-        magnet(outfile)
+        magnet(outfile, version=0)
 
     args.torrent = torrent
     args.kwargs = kwargs
@@ -343,39 +344,64 @@ def rename(args: Namespace) -> str:
     return new_path
 
 
-def magnet(metafile: Namespace) -> str:
+def get_magnet(namespace: Namespace) -> str:
+    """
+    Prepare option parameters for retreiving magnet URI.
+
+    Parameters
+    ----------
+    namespace: Namespace
+        command line argument options
+
+    Returns
+    -------
+    str
+        Magnet URI
+    """
+    metafile = namespace.metafile
+    version = int(namespace.meta_version)
+    return magnet(metafile, version=version)
+
+
+def magnet(metafile: str, version: int = 0) -> str:
     """
     Create a magnet URI from a Bittorrent meta file.
 
     Parameters
     ----------
-    metafile : Namespace
-        Namespace class for CLI arguments.
+    metafile : str
+        path to bittorrent file
+    version: int
+        version of bittorrent protocol [default=1]
 
     Returns
     -------
     str
-        created magnet URI.
+        Magnet URI
     """
-    if hasattr(metafile, "metafile"):
-        metafile = metafile.metafile
     if not os.path.exists(metafile):
-        raise FileNotFoundError
-
+        raise FileNotFoundError(f"No Such File {metafile}")
     meta = pyben.load(metafile)
-    data = meta["info"]
-    if "meta version" in data:
-        hashing_func = sha256
-    else:
-        hashing_func = sha1  # nosec
+    info_dict = meta["info"]
 
-    bencoded = pyben.dumps(data)
-    infohash = hashing_func(bencoded).hexdigest().upper()  # nosec
+    magnet = "magnet:?"
+    bencoded_info = pyben.dumps(info_dict)
 
-    logger.info("Magnet Info Hash: %s", infohash)
-    scheme = "magnet:"
-    hasharg = "?xt=urn:btih:" + infohash
-    namearg = "&dn=" + quote_plus(data["name"])
+    v1 = False
+    if "meta version" not in info_dict or (
+        version in [1, 3, 0] and "pieces" in info_dict
+    ):
+        infohash = sha1(bencoded_info).hexdigest()  # nosec
+        magnet += "xt=urn:btih:" + infohash
+        v1 = True
+
+    if "meta version" in info_dict and version != 1:
+        infohash = sha256(bencoded_info).hexdigest()
+        if v1:
+            magnet += "&"
+        magnet += "xt=urn:btmh:1220" + infohash
+
+    magnet += "&dn=" + quote_plus(info_dict["name"])
 
     if "announce-list" in meta:
         announce_args = [
@@ -383,13 +409,18 @@ def magnet(metafile: Namespace) -> str:
             for urllist in meta["announce-list"]
             for url in urllist
         ]
-    else:
+    elif "announce" in meta:
         announce_args = ["&tr=" + quote_plus(meta["announce"])]
+    else:
+        announce_args = [""]
 
-    full_uri = "".join([scheme, hasharg, namearg] + announce_args)
-    logger.info("Created Magnet URI %s", full_uri)
-    sys.stdout.write("\n" + full_uri + "\n")
-    return full_uri
+    trackers = "".join(announce_args)
+
+    magnet += trackers if trackers != "&tr=" else ""
+
+    logger.info("Created Magnet URI %s", magnet)
+    sys.stdout.write("\n" + magnet + "\n")
+    return magnet
 
 
 def rebuild(args: Namespace) -> int:

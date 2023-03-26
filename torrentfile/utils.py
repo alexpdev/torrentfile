@@ -389,26 +389,23 @@ def copypath(source: str, dest: str) -> None:
     dest : str
         path to target destination
     """
-    if not os.path.exists(source):
+    if not os.path.exists(source) or (
+        os.path.exists(dest)
+        and os.path.getsize(source) <= os.path.getsize(dest)
+    ):
         return
-    if os.path.exists(dest):
-        if os.path.getsize(source) <= os.path.getsize(dest):
-            return
-        shutil.copy(source, dest)  # pragma: nocover
-        return  # pragma: nocover
-    path_parts = iter(Path(dest).parts[:-1])
-    try:
-        root = next(path_parts)
-    except StopIteration:  # pragma: nocover
-        return
-    if not os.path.exists(root):
-        os.mkdir(root)  # pragma: nocover
-    for part in path_parts:
-        path = os.path.join(root, part)
-        if not os.path.exists(path):
-            os.mkdir(path)
-        root = path
-    shutil.copy(source, dest)
+    path_parts = Path(dest).parts
+    if len(path_parts) > 1:
+        root = path_parts[0]
+        path_parts = path_parts[1:-1]
+        if not os.path.exists(root):
+            os.mkdir(root)  # pragma: nocover
+        for part in path_parts:
+            path = os.path.join(root, part)
+            if not os.path.exists(path):
+                os.mkdir(path)
+            root = path
+        shutil.copy(source, dest)
 
 
 def toggle_debug_mode(switch_on: bool):

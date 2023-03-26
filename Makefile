@@ -22,25 +22,16 @@ endef
 export UPDATE_PACKAGE_VERSION
 
 define RENAME_FILE
-import shutil
-import sys
-import subprocess
-import time
 from torrentfile.version import __version__
+import os
+import sys
 if sys.platform == "win32":
-	time.sleep(2)
-	subprocess.Popen(["7z", "a", "./dist/temp.zip", "./dist/torrentfile.exe"])
-	time.sleep(2)
-	shutil.copy(
-		"./dist/temp.zip",
-		"./dist/torrentfile-v" + __version__ + "-win.zip")
-else:
-	time.sleep(2)
-	subprocess.Popen(["zip", "./dist/temp.zip", "./dist/torrentfile"])
-	time.sleep(2)
-	shutil.copy(
-		"./dist/temp.zip",
-		"./dist/torrentfile-v" + __version__ + "-linux.zip")
+	inexe = "./torrentfile-windows-exec.zip"
+	exe = f"./dist/torrentfile-v{__version__}-win-exe.zip"
+	indir = "./torrentfile-windows-dir.zip"
+	dir = f"./dist/torrentfile-v{__version__}-win-dir.zip"
+	os.rename(inexe, exe)
+	os.rename(indir, dir)
 endef
 export RENAME_FILE
 
@@ -73,6 +64,8 @@ clean-build: ## remove build artifacts
 	rm -fvr -- *'/__pycache__'
 	rm -frv runner/build
 	rm -frv runner/dist
+	rm -rfv *.zip
+	rm -fv *.spec
 
 test: ## Get coverage report
 	tox
@@ -98,8 +91,11 @@ setup: clean test ## setup and build repo
 	pip install -e .
 	twine upload dist/*
 
-release: clean test ## create executables for release
+compile: clean test ## compile application for distribution
 	pip install pyinstaller
 	pip install -e .
-	pyinstaller ./runner/execf.spec
-	@python -c "$$RENAME_FILE"
+	pyinstaller -F --name torrentfile --icon ./assets/torrentfile-icon.ico ./bin/torrentfile
+	pyinstaller --name torrentfile --icon ./assets/torrentfile-icon.ico ./bin/torrentfile
+	7z a ./torrentfile-windows-exec.zip ./dist/torrentfile.exe
+	7z a ./torrentfile-windows-dir.zip ./dist/torrentfile
+	python -c "$$RENAME_FILE"

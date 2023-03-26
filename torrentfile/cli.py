@@ -43,8 +43,8 @@ import logging
 import sys
 from argparse import ArgumentParser, HelpFormatter
 
-from torrentfile.commands import (create, edit, info, magnet, rebuild, recheck,
-                                  rename)
+from torrentfile.commands import (create, edit, get_magnet, info, rebuild,
+                                  recheck, rename)
 from torrentfile.utils import toggle_debug_mode
 from torrentfile.version import __version__ as version
 
@@ -96,7 +96,9 @@ class TorrentFileHelpFormatter(HelpFormatter):
     Subclasses Argparse.HelpFormatter.
     """
 
-    def __init__(self, prog, width=45, max_help_positions=45):
+    def __init__(
+        self, prog: str, width: int = 45, max_help_positions: int = 45
+    ):
         """
         Construct HelpFormat class for usage output.
 
@@ -222,7 +224,7 @@ def execute(args: list = None) -> list:
         usage="torrentfile <options>",
         description=(
             "Command line tools for creating, editing, checking, building "
-            "and interacting with Bittorrent metainfo files"
+            "and interacting with Bittorrent meta files"
         ),
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
@@ -355,6 +357,7 @@ def execute(args: list = None) -> list:
         default="1",
         action="store",
         dest="progress",
+        metavar="<int>",
         help="""
         Set the progress bar level.
         Options = 0, 1
@@ -524,7 +527,24 @@ def execute(args: list = None) -> list:
         metavar="<*.torrent>",
     )
 
-    magnet_parser.set_defaults(func=magnet)
+    magnet_parser.add_argument(
+        "--meta-version",
+        action="store",
+        choices=["0", "1", "2", "3"],
+        default="0",
+        help="""
+        This option is only relevant for hybrid torrent files.
+        Options = 0, 1, 2, 3
+        (0) = [default] version is determined automatically
+        (1) = create V1 magnet link only
+        (2) = create V2 magnet link only
+        (3) = create a hybrid magnet link
+        """,
+        dest="meta_version",
+        metavar="<int>",
+    )
+
+    magnet_parser.set_defaults(func=get_magnet)
 
     check_parser = subparsers.add_parser(
         "recheck",
@@ -552,9 +572,11 @@ def execute(args: list = None) -> list:
 
     rebuild_parser = subparsers.add_parser(
         "rebuild",
-        help="""Re-assemble files obtained from a bittorrent file into the
-                appropriate file structure for re-seeding.  Read documentation
-                for more information, or use cases.""",
+        help="""
+        Re-assemble files obtained from a bittorrent file into the
+        appropriate file structure for re-seeding.  Read documentation
+        for more information, or use cases.
+        """,
         formatter_class=TorrentFileHelpFormatter,
     )
 
@@ -608,23 +630,23 @@ def execute(args: list = None) -> list:
     rename_parser.set_defaults(func=rename)
 
     all_commands = [
-        "create",
-        "new",
         "c",
-        "edit",
         "e",
-        "info",
         "i",
-        "magnet",
         "m",
-        "recheck",
-        "check",
         "r",
-        "rename",
-        "rebuild",
         "-i",
         "-h",
         "-V",
+        "new",
+        "edit",
+        "info",
+        "check",
+        "create",
+        "magnet",
+        "rename",
+        "rebuild",
+        "recheck",
     ]
     if not any(i for i in all_commands if i in args):
         start = 0
@@ -648,7 +670,7 @@ def execute(args: list = None) -> list:
 main_script = execute
 
 
-def main():
+def main() -> None:
     """
     Initiate main function for CLI script.
     """

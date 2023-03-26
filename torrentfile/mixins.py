@@ -90,15 +90,15 @@ class ProgressBar:
             self.unit = ""  # pragma: nocover
         elif unit == "bytes":
             if self.total > 1_000_000_000:
-                self.show_total = math.floor(self.total / (2**30))
+                self.show_total = self.total / (2**30)
                 self.unit = "GiB"
             elif self.total > 1_000_000:
-                self.show_total = math.floor(self.total / 1048576)
+                self.show_total = self.total / 1048576
                 self.unit = "MiB"
             elif self.total > 10000:
-                self.show_total = math.floor(self.total / 1024)
+                self.show_total = self.total / 1024
                 self.unit = "KiB"
-        self.suffix = f"/{self.show_total} {self.unit}"
+        self.suffix = f"/{self.show_total:.02f} {self.unit}"
         title = str(title)
         if len(title) > start:
             title = title[: start - 1]  # pragma: nocover
@@ -118,17 +118,18 @@ class ProgressBar:
             fill = self.length
         else:
             fill = math.ceil((self.state / self.total) * self.length)
-        empt = self.length - fill
+        empty = self.length - fill
+        pbar = ["|", self.fill * fill, self.empty * empty, "| "]
         if self.unit == "GiB":
-            state = math.floor(self.state / (2**30))
+            state = self.state / (2**30)
         elif self.unit == "MiB":
-            state = math.floor(self.state / 1048576)
+            state = self.state / 1048576
         elif self.unit == "KiB":
-            state = math.floor(self.state / 1024)
+            state = self.state / 1024
         else:
             state = self.state
-        progbar = ["|", self.fill * fill, self.empty * empt, "| ", str(state)]
-        return "".join(progbar)
+        pbar.append(f"{state:.02f}")
+        return "".join(pbar)
 
 
 class ProgMixin:
