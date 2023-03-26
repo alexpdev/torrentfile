@@ -343,31 +343,49 @@ def rename(args: Namespace) -> str:
     return new_path
 
 
-def magnet(metafile: Namespace) -> str:
+def get_magnet(namespace: Namespace) -> str:
+    """
+    Prepare option parameters for retreiving magnet URI.
+
+    Parameters
+    ----------
+    namespace: Namespace
+        command line argument options
+
+    Returns
+    -------
+    str
+        Magnet URI
+    """
+    metafile = namespace.metafile
+    version = int(namespace.meta_version)
+    return magnet(metafile, version=version)
+
+
+def magnet(metafile: str, version: int = 1) -> str:
     """
     Create a magnet URI from a Bittorrent meta file.
 
     Parameters
     ----------
-    metafile : Namespace
-        Namespace class for CLI arguments.
+    metafile : str
+        path to bittorrent file
+    version: int
+        version of bittorrent protocol [default=1]
 
     Returns
     -------
     str
-        created magnet URI.
+        Magnet URI
     """
-    if hasattr(metafile, "metafile"):
-        metafile = metafile.metafile
     if not os.path.exists(metafile):
-        raise FileNotFoundError
-
+        raise FileNotFoundError(f"No Such File {metafile}")
     meta = pyben.load(metafile)
     data = meta["info"]
+    hashing_func = sha1  # nosec
     if "meta version" in data:
-        hashing_func = sha256
-    else:
-        hashing_func = sha1  # nosec
+        if version == 2 or "pieces" not in data:
+            hashing_func = sha256
 
     bencoded = pyben.dumps(data)
     infohash = hashing_func(bencoded).hexdigest().upper()  # nosec

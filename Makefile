@@ -98,8 +98,9 @@ setup: clean test ## setup and build repo
 	pip install -e .
 	twine upload dist/*
 
-release: clean test ## create executables for release
+compile: clean
 	pip install pyinstaller
 	pip install -e .
+	pyinstaller
 	pyinstaller ./runner/execf.spec
 	@python -c "$$RENAME_FILE"

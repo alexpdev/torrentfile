@@ -63,10 +63,9 @@ def test_magnet_hex(metafile1):
     magnet_link = magnet(metafile1)
     meta = pyben.load(metafile1)
     info = meta["info"]
-    if "meta version" in info:
+    hashing_func = sha1  # nosec
+    if "meta version" in info and "pieces" not in info:
         hashing_func = sha256
-    else:
-        hashing_func = sha1  # nosec
     binfo = hashing_func(pyben.dumps(info)).hexdigest().upper()  # nosec
     assert binfo in magnet_link
 
