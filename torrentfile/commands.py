@@ -399,7 +399,7 @@ def magnet(metafile: str, version: int = 0) -> str:
         infohash = sha256(bencoded_info).hexdigest()
         if v1:
             magnet += "&"
-        magnet += "xt=urn:btmh:" + infohash
+        magnet += "xt=urn:btmh:1220" + infohash
 
     magnet += "&dn=" + quote_plus(info_dict["name"])
 
@@ -414,7 +414,10 @@ def magnet(metafile: str, version: int = 0) -> str:
     else:
         announce_args = [""]
 
-    magnet += "".join(announce_args)
+    trackers = "".join(announce_args)
+
+    magnet += trackers if trackers != "&tr=" else ""
+
     logger.info("Created Magnet URI %s", magnet)
     sys.stdout.write("\n" + magnet + "\n")
     return magnet
