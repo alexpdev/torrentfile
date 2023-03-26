@@ -298,6 +298,12 @@ class MetaFile:
 
         logger.debug("path parameter found %s", path)
 
+        self.meta = {
+            "created by": f"TorrentFile_v{version}",
+            "creation date": int(datetime.timestamp(datetime.now())),
+            "info": {},
+        }
+
         # Format piece_length attribute.
         if piece_length:
             self.piece_length = utils.normalize_piece_length(piece_length)
@@ -317,13 +323,9 @@ class MetaFile:
         elif isinstance(announce, Sequence):
             self.announce, self.announce_list = announce[0], [announce]
 
-        self.meta = {
-            "announce": self.announce,
-            "announce-list": self.announce_list,
-            "created by": f"TorrentFile_v{version}",
-            "creation date": int(datetime.timestamp(datetime.now())),
-            "info": {},
-        }
+        if self.announce:
+            self.meta["announce"] = self.announce
+            self.meta["announce-list"] = self.announce_list
         if comment:
             self.meta["info"]["comment"] = comment
             logger.debug("comment parameter found %s", comment)

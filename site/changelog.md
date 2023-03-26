@@ -1,5 +1,11 @@
 # TorrentFile
 
+## Version 0.8.12
+
+- Fixed bug where torrent files could no be read when created without trackers
+
+---
+
 ## Version 0.8.11
 
 - added new command line option for magnet subcommand
