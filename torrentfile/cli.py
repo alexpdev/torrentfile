@@ -530,13 +530,15 @@ def execute(args: list = None) -> list:
     magnet_parser.add_argument(
         "--meta-version",
         action="store",
-        choices=["1", "2"],
-        default="1",
+        choices=["0", "1", "2", "3"],
+        default="0",
         help="""
-        This option will only effect hybrid torrent files.
-        Options: 1 or 2
-        (1) sha1
-        (2) sha256
+        This option is only relevant for hybrid torrent files.
+        Options = 0, 1, 2, 3
+        (0) = [default] version is determined automatically
+        (1) = create V1 magnet link only
+        (2) = create V2 magnet link only
+        (3) = create a hybrid magnet link
         """,
         dest="meta_version",
         metavar="<int>",

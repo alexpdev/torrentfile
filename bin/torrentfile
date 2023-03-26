@@ -1,0 +1,8 @@
+#! python
+# -*- coding: utf-8 -*-
+
+import sys
+import torrentfile
+
+if __name__ == "__main__":
+    torrentfile.execute(sys.argv)

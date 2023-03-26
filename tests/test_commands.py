@@ -66,7 +66,7 @@ def test_magnet_hex(metafile1):
     hashing_func = sha1  # nosec
     if "meta version" in info and "pieces" not in info:
         hashing_func = sha256
-    binfo = hashing_func(pyben.dumps(info)).hexdigest().upper()  # nosec
+    binfo = hashing_func(pyben.dumps(info)).hexdigest()  # nosec
     assert binfo in magnet_link
 
 
@@ -84,6 +84,22 @@ def test_magnet_no_announce_list(metafile2):
     """
     meta = pyben.load(metafile2)
     del meta["announce-list"]
+    pyben.dump(meta, metafile2)
+    if "meta version" in meta["info"]:
+        prefix = "btmh"
+    else:
+        prefix = "btih"
+    magnet_link = magnet(metafile2)
+    assert prefix in magnet_link
+
+
+def test_magnet_no_announce(metafile2):
+    """
+    Test create magnet function scheme.
+    """
+    meta = pyben.load(metafile2)
+    del meta["announce-list"]
+    del meta["announce"]
     pyben.dump(meta, metafile2)
     magnet_link = magnet(metafile2)
     assert magnet_link.startswith("magnet")

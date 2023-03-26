@@ -4,6 +4,9 @@
 
 - added new command line option for magnet subcommand
 - fixed some coverage gaps caused by 0.8.10
+- fixed bugs introduced by 0.8.10 with magnet URI creation
+- added support for hybrid magnet links
+- added tests for when a magnet link is generated with no trackers at all
 
 ---
 
