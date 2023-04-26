@@ -22,11 +22,11 @@ Collection of classes that can be used as Mixins with other base classes.
 Classes such as TorrentFile, TorrentFilev2, and all Hasher classes can use the
 progress bar mixin.  And any class is eligible to use the callback mixin.
 """
-import math
 import os
-import shutil
 import sys
+import math
 import time
+import shutil
 from pathlib import Path
 
 from torrentfile.utils import debug_is_on
@@ -72,9 +72,8 @@ class ProgressBar:
         column where the progress bar should be drawn
     """
 
-    def __init__(
-        self, total: int, title: str, length: int, unit: str, start: int
-    ):
+    def __init__(self, total: int, title: str, length: int, unit: str,
+                 start: int):
         """
         Construct the progress bar object and store state of it's properties.
         """
@@ -101,7 +100,7 @@ class ProgressBar:
         self.suffix = f"/{self.show_total:.02f} {self.unit}"
         title = str(title)
         if len(title) > start:
-            title = title[: start - 1]  # pragma: nocover
+            title = title[:start - 1]  # pragma: nocover
         padding = (start - len(title)) * " "
         self.prefix = "".join([title, padding])
 
@@ -140,9 +139,11 @@ class ProgMixin:
     really big files.
     """
 
-    def prog_start(
-        self, total: int, path: str, length: int = 50, unit: str = "bytes"
-    ):
+    def prog_start(self,
+                   total: int,
+                   path: str,
+                   length: int = 50,
+                   unit: str = "bytes"):
         """
         Generate a new progress bar for the given file path.
 

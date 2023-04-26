@@ -99,3 +99,9 @@ max-statements=75
 max-branches=20
 min-similarity-lines=4
 max-locals=25
+
+[tool.isort]
+multi_line_output = 4
+length_sort_straight = true
+line_length = 80
+wrap_length = 79

@@ -108,9 +108,8 @@ def test_inter_create_full(
 @pytest.mark.parametrize("url_list", ["ftp url2", "ftp1 ftp2 ftp3"])
 @pytest.mark.parametrize("comment", ["Some Comment", "No Comment"])
 @pytest.mark.parametrize("source", ["Fa", "So", "La"])
-def test_inter_edit_full(
-    filemeta2, announce, comment, source, url_list, monkeypatch
-):
+def test_inter_edit_full(filemeta2, announce, comment, source, url_list,
+                         monkeypatch):
     """
     Test editing torrent file interactively.
     """

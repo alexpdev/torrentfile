@@ -20,8 +20,8 @@
 Unittest package init module.
 """
 
-import atexit
 import os
+import atexit
 import shutil
 import string
 from datetime import datetime
@@ -29,8 +29,8 @@ from pathlib import Path
 
 import pytest
 
-from torrentfile.torrent import (TorrentAssembler, TorrentFile,
-                                 TorrentFileHybrid, TorrentFileV2)
+from torrentfile.torrent import (
+    TorrentAssembler, TorrentFile, TorrentFileHybrid, TorrentFileV2)
 
 
 def tempfile(path=None, exp=18):
