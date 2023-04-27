@@ -1,5 +1,11 @@
 # TorrentFile
 
+## Version 0.8.13
+
+- Fixed error with command line arg `info` not displaying information correctly
+
+---
+
 ## Version 0.8.12
 
 - Fixed bug where torrent files could no be read when created without trackers
