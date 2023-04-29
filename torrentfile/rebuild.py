@@ -23,9 +23,9 @@ Re-assemble a torrent into the propper directory structure as indicated by a
 torrent meta file, and validate the contents of each file allong the
 way. Displays a progress bar for each torrent.
 """
-import logging
-import math
 import os
+import math
+import logging
 from hashlib import sha1
 from pathlib import Path
 
@@ -247,26 +247,22 @@ class Metadata(CbMixin, ProgMixin):
             self.length += info["length"]
             self.is_file = True
             self.filenames.add(info["name"])
-            self.files.append(
-                {
-                    "path": Path(self.name).parent,
-                    "filename": self.name,
-                    "full": self.name,
-                    "length": self.length,
-                }
-            )
+            self.files.append({
+                "path": Path(self.name).parent,
+                "filename": self.name,
+                "full": self.name,
+                "length": self.length,
+            })
         elif "files" in info:
             for f in info["files"]:
                 path = f["path"]
                 full = os.path.join(self.name, *path)
-                self.files.append(
-                    {
-                        "path": Path(full).parent,
-                        "filename": path[-1],
-                        "full": full,
-                        "length": f["length"],
-                    }
-                )
+                self.files.append({
+                    "path": Path(full).parent,
+                    "filename": path[-1],
+                    "full": full,
+                    "length": f["length"],
+                })
                 self.length += f["length"]
                 self.filenames.add(path[-1])
 
@@ -279,7 +275,7 @@ class Metadata(CbMixin, ProgMixin):
         current = {}
         for i in range(total_pieces):
             begin = SHA1 * i
-            piece = PieceNode(self.pieces[begin: begin + SHA1])
+            piece = PieceNode(self.pieces[begin:begin + SHA1])
             target = self.piece_length
             if remainder:
                 start = current["length"] - remainder
@@ -328,15 +324,13 @@ class Metadata(CbMixin, ProgMixin):
                 full = Path(os.path.join(path, key))
                 length = val[""]["length"]
                 root = val[""]["pieces root"]
-                self.files.append(
-                    {
-                        "path": path,
-                        "full": full,
-                        "filename": key,
-                        "length": length,
-                        "root": root,
-                    }
-                )
+                self.files.append({
+                    "path": path,
+                    "full": full,
+                    "filename": key,
+                    "length": length,
+                    "root": root,
+                })
                 self.length += length
             else:
                 self._parse_tree(val, partials + [key])
@@ -496,9 +490,8 @@ class Assembler(CbMixin):
             number of files copied
         """
         for metafile in self.metafiles:
-            logger.info(
-                "#%s Searching contents for %s", self.counter, metafile.name
-            )
+            logger.info("#%s Searching contents for %s", self.counter,
+                        metafile.name)
             self.rebuild(metafile)
         return self.counter
 

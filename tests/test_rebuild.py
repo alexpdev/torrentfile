@@ -116,7 +116,7 @@ def test_single_file_smaller(single2):
     with open(contents, "rb") as content:
         data = content.read()
     with open(contents, "wb") as content:
-        content.write(data[: len(data) // 2])
+        content.write(data[:len(data) // 2])
     assembler = Assembler(*single2)
     counter = assembler.assemble_torrents()
     assert counter == 0

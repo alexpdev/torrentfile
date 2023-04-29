@@ -19,9 +19,10 @@
 """
 Testing functions for the sub-action commands from command line args.
 """
+import io
 import os
-import shutil
 import sys
+import shutil
 from argparse import Namespace
 from hashlib import sha1, sha256  # nosec
 from pathlib import Path
@@ -30,11 +31,11 @@ from urllib.parse import quote_plus
 import pyben
 import pytest
 
-from tests import (dir1, dir2, file1, metafile1, metafile2, rmpath, tempfile,
-                   torrents)
+from tests import (
+    dir1, dir2, file1, metafile1, metafile2, rmpath, tempfile, torrents)
 from torrentfile.cli import execute
-from torrentfile.commands import (find_config_file, info, magnet,
-                                  parse_config_file, rebuild, recheck)
+from torrentfile.commands import (
+    find_config_file, info, magnet, parse_config_file, rebuild, recheck)
 from torrentfile.hasher import merkle_root
 from torrentfile.utils import ArgumentError
 
@@ -113,6 +114,49 @@ def test_magnet_empty():
         magnet("file_that_does_not_exist")
     except FileNotFoundError:
         assert True
+
+
+def test_info_stdout(file1):
+    """
+    Test the info function properly sends output to stdout.
+    """
+    outfile = str(file1) + ".torrent"
+    args = [
+        "torrentfile",
+        "create",
+        "--announce",
+        "url1",
+        "--web-seed",
+        "url5",
+        "url3",
+        "--http-seed",
+        "url4",
+        "--private",
+        "-o",
+        outfile,
+        "--comment",
+        "CommentExample",
+        "--source",
+        "SourceExample",
+        str(file1),
+    ]
+    sys.argv = args
+    execute()
+
+    class NameSpace:
+        """
+        Stand in substitution for argparse.Namespace object.
+        """
+
+        metafile = str(file1) + ".torrent"
+
+    stdout = io.StringIO()
+    sys.stdout = stdout
+
+    output = info(NameSpace)
+    stdout.seek(0)
+    written = stdout.read()
+    assert output in written
 
 
 @pytest.mark.parametrize(

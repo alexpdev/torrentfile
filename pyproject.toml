@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "torrentfile"
 authors = [{name = "alexpdev", email = "alexpdev@pm.me"}]
 description = "Terminal based command line tool for creating Bittorrent files."
-version = "0.8.12"
+version = "0.8.13"
 readme = "README.md"
 requires-python = ">=3.6"
 keywords = ["Bittorrent", "torrent", "bittorrent-metafiles", "CLI"]
@@ -99,3 +99,9 @@ max-statements=75
 max-branches=20
 min-similarity-lines=4
 max-locals=25
+
+[tool.isort]
+multi_line_output = 4
+length_sort_straight = true
+line_length = 80
+wrap_length = 79

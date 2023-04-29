@@ -31,11 +31,11 @@ Functions
 - magnet_command
 """
 
-import configparser
-import logging
 import os
-import shutil
 import sys
+import shutil
+import logging
+import configparser
 from argparse import Namespace
 from hashlib import sha1, sha256
 from pathlib import Path
@@ -234,7 +234,8 @@ def info(args: Namespace) -> str:
     most = max(len(i) for i in text)
     text = ["-" * most, "\n"] + text + ["\n", "-" * most]
     output = "\n".join(text)
-    logger.info(output)
+    sys.stdout.write(output)
+    sys.stdout.flush()
     return output
 
 
@@ -292,14 +293,11 @@ def recheck(args: Namespace) -> str:
     content = args.content
 
     if os.path.isdir(metafile):
-        raise ArgumentError(
-            f"Error: Unable to parse directory {metafile}. "
-            "Check the order of the parameters."
-        )
+        raise ArgumentError(f"Error: Unable to parse directory {metafile}. "
+                            "Check the order of the parameters.")
 
-    logger.debug(
-        "Validating %s <---------------> %s contents", metafile, content
-    )
+    logger.debug("Validating %s <---------------> %s contents", metafile,
+                 content)
 
     msg = f"Rechecking  {metafile} ...\n"
     halfterm = shutil.get_terminal_size().columns / 2
@@ -388,9 +386,8 @@ def magnet(metafile: str, version: int = 0) -> str:
     bencoded_info = pyben.dumps(info_dict)
 
     v1 = False
-    if "meta version" not in info_dict or (
-        version in [1, 3, 0] and "pieces" in info_dict
-    ):
+    if "meta version" not in info_dict or (version in [1, 3, 0]
+                                           and "pieces" in info_dict):
         infohash = sha1(bencoded_info).hexdigest()  # nosec
         magnet += "xt=urn:btih:" + infohash
         v1 = True
@@ -405,8 +402,7 @@ def magnet(metafile: str, version: int = 0) -> str:
 
     if "announce-list" in meta:
         announce_args = [
-            "&tr=" + quote_plus(url)
-            for urllist in meta["announce-list"]
+            "&tr=" + quote_plus(url) for urllist in meta["announce-list"]
             for url in urllist
         ]
     elif "announce" in meta:

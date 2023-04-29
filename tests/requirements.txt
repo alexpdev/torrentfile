@@ -7,6 +7,13 @@ pytest
 pytest-cov
 pycodestyle
 pydocstyle
+mkdocs
+mkdocstrings
+mkapi
+mkdocstrings-python
+mkdocs-material
+pymdown-extensions
+mkdocs-coverage
 black
 isort
 yapf

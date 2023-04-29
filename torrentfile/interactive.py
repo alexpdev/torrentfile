@@ -23,8 +23,8 @@ Module contains the procedures used for Interactive Mode.
 """
 
 import os
-import shutil
 import sys
+import shutil
 
 import pyben
 
@@ -140,14 +140,10 @@ def select_action():
     in the future.
     """
     showcenter("TorrentFile: Starting Interactive Mode")
-    showcenter(
-        "DEPRECATION WARNING: The interactive feature will be"
-        "deprecated in the near future."
-    )
-    action = get_input(
-        "Enter the action you wish to perform.\n"
-        "Action ( Create (c) | Edit (e) | Recheck (r) ): "
-    )
+    showcenter("DEPRECATION WARNING: The interactive feature will be"
+               "deprecated in the near future.")
+    action = get_input("Enter the action you wish to perform.\n"
+                       "Action ( Create (c) | Edit (e) | Recheck (r) ): ")
     action = action.lower()
 
     if "create" in action or action == "c":
@@ -171,9 +167,8 @@ def recheck_torrent():
     showcenter("Check Torrent")
     msg = "Enter path to torrent contents, and corresponding torrent metafile."
     showtext(msg)
-    metafile = get_input(
-        "Conent Path (downloads/complete/torrentname):", os.path.exists
-    )
+    metafile = get_input("Conent Path (downloads/complete/torrentname):",
+                         os.path.exists)
     contents = get_input("Metafile (*.torrent): ", os.path.exists)
     checker = Checker(metafile, contents)
     results = checker.results()
@@ -193,8 +188,7 @@ def create_torrent():
         "or leave blank for program defaults.\nSpaces are considered item "
         "seperators for options that accept a list of values.\nValues "
         "enclosed in () indicate the default value, while {} holds all "
-        "valid choices available for the option.\n\n"
-    )
+        "valid choices available for the option.\n\n")
     creator = InteractiveCreator()
     return creator
 
@@ -282,10 +276,8 @@ class InteractiveEditor:
         @Deprecated
         """
         while True:
-            showcenter(
-                "Choose the number for a propert the needs editing."
-                "Enter DONE when all editing has been completed."
-            )
+            showcenter("Choose the number for a propert the needs editing."
+                       "Enter DONE when all editing has been completed.")
 
             props = {
                 1: "comment",
@@ -315,8 +307,7 @@ class InteractiveEditor:
                 key2 = args[int(prop)]
                 val = self.args.get(key2)
                 showtext(
-                    "Enter new property value or leave empty for no value."
-                )
+                    "Enter new property value or leave empty for no value.")
                 response = get_input(f"{key.title()} ({val}): ")
                 self.sanatize_response(key2, response)
 
@@ -357,25 +348,21 @@ class InteractiveCreator:
 
         @Deprecated
         """
-        piece_length = get_input(
-            "Piece Length (empty=auto): ", lambda x: x.isdigit()
-        )
+        piece_length = get_input("Piece Length (empty=auto): ",
+                                 lambda x: x.isdigit())
 
         self.kwargs["piece_length"] = piece_length
-        announce = get_input(
-            "Tracker list (empty): ", lambda x: isinstance(x, str)
-        )
+        announce = get_input("Tracker list (empty): ",
+                             lambda x: isinstance(x, str))
 
         if announce:
             self.kwargs["announce"] = announce.split()
 
-        url_list = get_input(
-            "Web Seed {GetRight} list (empty): ", lambda x: isinstance(x, str)
-        )
+        url_list = get_input("Web Seed {GetRight} list (empty): ",
+                             lambda x: isinstance(x, str))
 
-        httpseeds = get_input(
-            "Web Seed {Hoffman} list (empty): ", lambda x: isinstance(x, str)
-        )
+        httpseeds = get_input("Web Seed {Hoffman} list (empty): ",
+                              lambda x: isinstance(x, str))
 
         if url_list:
             self.kwargs["url_list"] = url_list.split()
@@ -390,9 +377,8 @@ class InteractiveCreator:
         if source:
             self.kwargs["source"] = source
 
-        private = get_input(
-            "Private Torrent? {Y/N}: (N)", lambda x: x in "yYnN"
-        )
+        private = get_input("Private Torrent? {Y/N}: (N)",
+                            lambda x: x in "yYnN")
 
         if private and private.lower() == "y":
             self.kwargs["private"] = 1
@@ -408,9 +394,8 @@ class InteractiveCreator:
         if outfile:
             self.kwargs["outfile"] = outfile
 
-        meta_version = get_input(
-            "Meta Version {1,2,3}: (1)", lambda x: x in "123"
-        )
+        meta_version = get_input("Meta Version {1,2,3}: (1)",
+                                 lambda x: x in "123")
 
         showcenter(f"creating {outfile}")
 

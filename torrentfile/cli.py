@@ -39,12 +39,12 @@ TorrentFileHelpFormatter : HelpFormatter
 """
 
 import io
-import logging
 import sys
+import logging
 from argparse import ArgumentParser, HelpFormatter
 
-from torrentfile.commands import (create, edit, get_magnet, info, rebuild,
-                                  recheck, rename)
+from torrentfile.commands import (
+    create, edit, get_magnet, info, rebuild, recheck, rename)
 from torrentfile.utils import toggle_debug_mode
 from torrentfile.version import __version__ as version
 
@@ -96,9 +96,10 @@ class TorrentFileHelpFormatter(HelpFormatter):
     Subclasses Argparse.HelpFormatter.
     """
 
-    def __init__(
-        self, prog: str, width: int = 45, max_help_positions: int = 45
-    ):
+    def __init__(self,
+                 prog: str,
+                 width: int = 45,
+                 max_help_positions: int = 45):
         """
         Construct HelpFormat class for usage output.
 
@@ -111,9 +112,9 @@ class TorrentFileHelpFormatter(HelpFormatter):
         max_help_positions : int
             max length until line wrap.
         """
-        super().__init__(
-            prog, width=width, max_help_position=max_help_positions
-        )
+        super().__init__(prog,
+                         width=width,
+                         max_help_position=max_help_positions)
 
     def _split_lines(self, text: str, _: int) -> list:
         """
@@ -224,8 +225,7 @@ def execute(args: list = None) -> list:
         usage="torrentfile <options>",
         description=(
             "Command line tools for creating, editing, checking, building "
-            "and interacting with Bittorrent meta files"
-        ),
+            "and interacting with Bittorrent meta files"),
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
         conflict_handler="resolve",
@@ -592,7 +592,8 @@ def execute(args: list = None) -> list:
     )
 
     rebuild_parser.add_argument(
-        "-c" "--contents",
+        "-c"
+        "--contents",
         action="store",
         dest="contents",
         nargs="+",

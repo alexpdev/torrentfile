@@ -20,8 +20,8 @@
 Piece/File Hashers for Bittorrent meta file contents.
 """
 
-import logging
 import os
+import logging
 from hashlib import sha1, sha256  # nosec
 
 from torrentfile.mixins import CbMixin, ProgMixin

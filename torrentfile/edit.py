@@ -35,8 +35,8 @@ trackers
 web-seeds
 """
 
-import logging
 import os
+import logging
 
 import pyben
 

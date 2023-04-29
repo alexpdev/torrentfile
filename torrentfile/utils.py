@@ -33,8 +33,8 @@ Classes:
     used for piece length field.
 """
 
-import math
 import os
+import math
 import shutil
 from pathlib import Path
 
@@ -152,7 +152,7 @@ def humanize_bytes(amount: int) -> str:
     if value < base:
         return f"{amount} Bytes"
     for i, s in enumerate(SUFFIXES):
-        unit = base ** (i + 2)
+        unit = base**(i + 2)
         if value < unit:
             break
     value = base * amount / unit
@@ -185,7 +185,7 @@ def normalize_piece_length(piece_length: int) -> int:
             raise PieceLengthValueError(piece_length)
 
     if piece_length > (1 << 14):
-        if 2 ** math.log2(piece_length) == piece_length:
+        if 2**math.log2(piece_length) == piece_length:
             return piece_length
         raise PieceLengthValueError(piece_length)
 
@@ -389,10 +389,9 @@ def copypath(source: str, dest: str) -> None:
     dest : str
         path to target destination
     """
-    if not os.path.exists(source) or (
-        os.path.exists(dest)
-        and os.path.getsize(source) <= os.path.getsize(dest)
-    ):
+    if not os.path.exists(source) or (os.path.exists(dest)
+                                      and os.path.getsize(source)
+                                      <= os.path.getsize(dest)):
         return
     path_parts = Path(dest).parts
     if len(path_parts) > 1:

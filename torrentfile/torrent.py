@@ -186,8 +186,8 @@ Bittorrent V1
     in the muliple file case, it's the name of a directory.
 """
 
-import logging
 import os
+import logging
 from collections.abc import Sequence
 from datetime import datetime
 
@@ -399,9 +399,8 @@ class MetaFile:
         try:
             pyben.dump(self.meta, self.outfile)
         except PermissionError as excp:
-            logger.error(
-                "Permission Denied: Could not write to %s", self.outfile
-            )
+            logger.error("Permission Denied: Could not write to %s",
+                         self.outfile)
             raise PermissionError from excp
         return self.outfile, self.meta
 
@@ -447,13 +446,12 @@ class TorrentFile(MetaFile, ProgMixin):
         if os.path.isfile(self.path):
             info["length"] = size
         else:
-            info["files"] = [
-                {
-                    "length": os.path.getsize(path),
-                    "path": os.path.relpath(path, self.path).split(os.sep),
-                }
-                for path in filelist
-            ]
+            info["files"] = [{
+                "length":
+                os.path.getsize(path),
+                "path":
+                os.path.relpath(path, self.path).split(os.sep),
+            } for path in filelist]
         pieces = bytearray()
 
         feeder = Hasher(filelist, self.piece_length, self.progress)
@@ -598,12 +596,12 @@ class TorrentFileHybrid(MetaFile, ProgMixin):
         if os.path.isfile(path):
             file_size = os.path.getsize(path)
 
-            self.files.append(
-                {
-                    "length": file_size,
-                    "path": os.path.relpath(path, self.path).split(os.sep),
-                }
-            )
+            self.files.append({
+                "length":
+                file_size,
+                "path":
+                os.path.relpath(path, self.path).split(os.sep),
+            })
 
             if file_size == 0:
                 return {"": {"length": file_size}}
@@ -693,20 +691,21 @@ class TorrentAssembler(MetaFile):
         if os.path.isfile(path):
             file_size = os.path.getsize(path)
             if self.hybrid:
-                self.files.append(
-                    {
-                        "length": file_size,
-                        "path": os.path.relpath(path, self.path).split(os.sep),
-                    }
-                )
+                self.files.append({
+                    "length":
+                    file_size,
+                    "path":
+                    os.path.relpath(path, self.path).split(os.sep),
+                })
 
             if file_size == 0:
                 return {"": {"length": file_size}}
 
             logger.debug("Hashing %s", str(path))
-            hasher = FileHasher(
-                path, self.piece_length, progress=True, hybrid=self.hybrid
-            )
+            hasher = FileHasher(path,
+                                self.piece_length,
+                                progress=True,
+                                hybrid=self.hybrid)
             layers = bytearray()
             for result in hasher:
                 if self.hybrid:
