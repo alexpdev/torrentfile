@@ -3,7 +3,7 @@ site_url: "https://alexpdev.github.io/torrentfile"
 repo_url: "https://github.com/alexpdev/torrentfile"
 repo_name: "alexpdev/torrentfile"
 site_description: "TorrentFile CLI Documentation and Examples"
-copyright: "alexpdev 2022"
+copyright: "alexpdev 2021 - current"
 extra_css: ["stylesheets/extra.css"]
 docs_dir: "site"
 site_dir: "docs"

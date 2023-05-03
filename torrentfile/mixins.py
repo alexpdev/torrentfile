@@ -34,7 +34,7 @@ from torrentfile.utils import debug_is_on
 
 class CbMixin:
     """
-    Mixin class to set a callback during hashing procedure.
+    Mixin class to set a callback hook during procedure.
     """
 
     @classmethod

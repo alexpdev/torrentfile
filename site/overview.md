@@ -35,7 +35,7 @@ argument is the path(`<path>`) to the contents file or directory.
     torrentfile create [options]`<path>`
     torrentfile c [options] `<path>`
 
-- `-a` `-t` `--announce` `--tracker`
+- `-a` `--announce` 
 
   - Adds the list of url's that follow to the list of trackers for the newly created torrent file.
   - Example `-t http://url1 https://url2 ...`

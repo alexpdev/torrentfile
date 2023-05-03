@@ -170,8 +170,6 @@ class HasherV2(CbMixin, ProgMixin):
     """
     Calculate the root hash and piece layers for file contents.
 
-    **DEPRECATED**
-
     Iterates over 16KiB blocks of data from given file, hashes the data,
     then creates a hash tree from the individual block hashes until size of
     hashed data equals the piece-length.  Then continues the hash tree until
@@ -190,8 +188,6 @@ class HasherV2(CbMixin, ProgMixin):
     def __init__(self, path: str, piece_length: int, progress: bool = True):
         """
         Calculate and store hash information for specific file.
-
-        **DEPRECATED**
         """
         self.path = path
         self.root = None
@@ -207,8 +203,6 @@ class HasherV2(CbMixin, ProgMixin):
     def process_file(self, fd: str):
         """
         Calculate hashes over 16KiB chuncks of file content.
-
-        **DEPRECATED**
 
         Parameters
         ----------
@@ -254,8 +248,6 @@ class HasherV2(CbMixin, ProgMixin):
     def _calculate_root(self):
         """
         Calculate root hash for the target file.
-
-        **DEPRECATED**
         """
         self.piece_layer = b"".join(self.layer_hashes)
         hashes = len(self.layer_hashes)
@@ -271,8 +263,6 @@ class HasherV2(CbMixin, ProgMixin):
 class HasherHybrid(CbMixin, ProgMixin):
     """
     Calculate root and piece hashes for creating hybrid torrent file.
-
-    **DEPRECATED**
 
     Create merkle tree layers from sha256 hashed 16KiB blocks of contents.
     With a branching factor of 2, merge layer hashes until blocks equal
@@ -291,8 +281,6 @@ class HasherHybrid(CbMixin, ProgMixin):
     def __init__(self, path: str, piece_length: int, progress: bool = True):
         """
         Construct Hasher class instances for each file in torrent.
-
-        **DEPRECATED**
         """
         self.path = path
         self.piece_length = piece_length
@@ -311,8 +299,6 @@ class HasherHybrid(CbMixin, ProgMixin):
     def _pad_remaining(self, block_count: int):
         """
         Generate Hash sized, 0 filled bytes for padding.
-
-        **DEPRECATED**
 
         Parameters
         ----------
@@ -335,8 +321,6 @@ class HasherHybrid(CbMixin, ProgMixin):
     def process_file(self, data: bytearray):
         """
         Calculate layer hashes for contents of file.
-
-        **DEPRECATED**
 
         Parameters
         ----------
@@ -472,6 +456,11 @@ class FileHasher(CbMixin, ProgMixin):
         -------
         bytes
             The layer merckle root hash.
+
+        Raises
+        ------
+        StopIteration
+            Halts the iterator from progressing
         """
         if self.end:
             self.end = False

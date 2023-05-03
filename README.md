@@ -16,8 +16,10 @@
 
 ## 🌐 Overview
 
-A command line tool for creating, reviewing, editing, or verifying bittorrent meta files (`.torrent` files). 
-_`torrentfile`_ is open source, and supports all versions of Bittorrent files, including hybrid meta files.
+A command line interface for creating, reviewing, editing, or verifying bittorrent meta files (`.torrent` files). 
+_`torrentfile`_ is open source, and supports all versions of Bittorrent files, including hybrid meta files. The code base
+is also importable and can easily be used as a library for creating or manipulating torrent files in external projects.
+Documentation is available at [https://alexpdev.github.io/torrentfile](https://alexpdev.github.io/torrentfile).
 
 > A GUI frontend for this project can be found at <https://github.com/alexpdev/TorrentfileQt>
 
@@ -46,10 +48,9 @@ pip install .
 
 ## 📚 Documentation
 
-Documentation can be found  [here](https://alexpdev.github.io/torrentfile)
-or in the _`docs`_ directory.
+### torrentfile documentation available at [https://alexpdev.github.io/torrentfile](https://alexpdev.github.io/torrentfile)
 
-## 🚀 Usage & Documentation
+## 🚀 Usage
 
 ![Basic Usage](https://github.com/alexpdev/torrentfile/blob/master/assets/Torrentfile.gif?raw=True)
 
@@ -73,8 +74,7 @@ If you encounter any bugs or would like to request a new feature please open a n
 
 ### Creating Bittorrent Files
 
-Basic torrent file creation is as easy and using the `create` sub-commnand and providing  
-the path to the contents.
+Creating a basic torrent file is as easy as using the create subcommand with the path to the torrent file.
 
 ```bash
 torrentfile create /path/to/content
@@ -117,7 +117,7 @@ torrentfile create /path/to/content
 ```
 
 To specify an alternative path or filename you may use the `-o`, `--out` flags  
-followed by the relative or absolute path to your preferred output location.
+followed by the path to the preferred destination.
 
 ```bash
 torrentfile create /path/to/content -o /some/other/path/torrent.torrent
@@ -145,8 +145,6 @@ torrentfile create /path/to/content --meta-version 2
 torrentfile create /path/to/content --meta-version 3 
 ```
 
-__NEW FEATURE in v0.8.8__:
-
 >`torrentfile` now includes the option to command line flags for the `create` sub-command from an `ini` style
 configuration file, by using the `--config` and optional `--config-path` options to specify the path
 to the configuration file.  If `--config-path` is ommited, then `torrentfile` will look by default in the current
@@ -170,10 +168,10 @@ torrentfile recheck /path/to/some.torrent /path/to/content
 
 To edit specific fields of the torrent file, there is the `edit` subcommand.  Using this
 subcommand you can specify the field with one of the available field flags, for example
-`--tracker` and specify the value you wish to change it to.
+`--announce` and specify the value you wish to change it to.
 
 ```bash
-torrentfile edit /path/to/content --tracker https://new.tracker.url1.com  https://newtracker.url/2
+torrentfile edit /path/to/content --announce https://new.tracker.url1.com  https://newtracker.url/2
 ```
 
 You can use the `-h` flag for a full list of available fields that can be edited.

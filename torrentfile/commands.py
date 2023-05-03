@@ -24,11 +24,15 @@ features of the application.
 
 Functions
 ---------
-- create_command
-- info_command
-- edit_command
-- recheck_command
-- magnet_command
+- create
+- info
+- edit
+- recheck
+- magnet
+- rebuild
+- find_config_file
+- parse_config_file
+- get_magnet
 """
 
 import os
