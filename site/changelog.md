@@ -1,5 +1,11 @@
 # TorrentFile
 
+## Version 0.8.14
+
+- Updates and improvements to documentation
+- Updates and improvements to readme file
+- Updates and improvements to docstrings
+
 ## Version 0.8.13
 
 - Fixed error with command line arg `info` not displaying information correctly
