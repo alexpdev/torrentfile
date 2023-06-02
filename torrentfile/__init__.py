@@ -19,16 +19,8 @@
 """
 Torrentfile can create Bittorrent metafiles for any content.
 
-Both Bittorrent v1 and v2 are fully supported. Also included is a torrent
-torrent file checker, which can verify a .torrent file is formated correctly
-as well as validate files and folders against metadata.
-
-Modules:
-    metafile: Creation/Validation of v1 .torrent files.
-    metafile2: Creation/Validation of v2 .torrent files.
-    torrentfile: torrentfiles Command Line Interface implementation.
-    exceptions: Custom Exceptions used in package.
-    utils: Utilities used throughout package.
+All Bittorrent versions are fully supported.  Torrentfile can also edit,
+recheck torrents contents, and create magnet URI's for torrent files.
 """
 from torrentfile.cli import execute, main
 from torrentfile.commands import create, edit, info, magnet, recheck

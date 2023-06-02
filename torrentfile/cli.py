@@ -308,10 +308,7 @@ def execute(args: list = None) -> list:
         help="""
         Parse torrent information from a config file. Looks in the current
         working directory, or the directory named .torrentfile in the users
-        home directory for a torrentfile.ini file. You can also use this
-        option in combination with the --config-path to specify the path to
-        the config file. See documentation for details on properly formatting
-        config file.
+        home directory for a torrentfile.ini file. See --config-path option.
         """,
     )
 

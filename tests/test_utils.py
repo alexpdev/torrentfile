@@ -168,6 +168,7 @@ def test_next_power_2(value):
 @pytest.mark.parametrize(
     "amount, result",
     [
+        (1, f"{float(1)} Byte"),
         (100, "100.0 Bytes"),
         (1100, "1.1 KiB"),
         (1_100_000, "1.0 MiB"),
