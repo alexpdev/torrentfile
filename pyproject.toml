@@ -77,7 +77,8 @@ disable = [
     "invalid-name",
     "not-callable",
     "consider-using-with",
-    "implicit-str-concat"
+    "implicit-str-concat",
+    "no-member"
 ]
 
 [tool.pylint. 'VARIABLES']
