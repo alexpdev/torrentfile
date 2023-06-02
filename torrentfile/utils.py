@@ -435,7 +435,7 @@ def check_path_writable(path: str) -> bool:
         with open(path, "ab") as _:
             pass
         os.remove(path)
-    except PermissionError as err:
+    except PermissionError as err:  # pragma: nocover
         directory = os.path.dirname(path)
         message = f"Target directory is not writeable {directory}"
         raise PermissionError(message) from err
