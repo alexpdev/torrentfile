@@ -20,6 +20,7 @@
 Unittest functions for testing torrentfile utils module.
 """
 import math
+from tempfile import NamedTemporaryFile
 
 import pytest
 
@@ -168,6 +169,7 @@ def test_next_power_2(value):
 @pytest.mark.parametrize(
     "amount, result",
     [
+        (1, f"{float(1)} Byte"),
         (100, "100.0 Bytes"),
         (1100, "1.1 KiB"),
         (1_100_000, "1.0 MiB"),
@@ -256,3 +258,13 @@ def test_argument_error():
         raise utils.ArgumentError("This message raised by argument error")
     except utils.ArgumentError:
         assert True
+
+
+def test_check_path_writeable_fail():
+    """Test error message when raised."""
+    with NamedTemporaryFile("wb", delete=False) as temp:
+        try:
+            utils.check_path_writable(temp.name)
+        except PermissionError as err:
+            assert err
+    rmpath(temp.name)

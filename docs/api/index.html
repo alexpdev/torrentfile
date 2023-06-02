@@ -1015,18 +1015,7 @@ in the muliple file case, it&rsquo;s the name of a directory.</p>
 </div>
 <div class="mkapi-docstring">
 <div class="mkapi-section">
-      <div class="mkapi-section-body"><p>Utility functions and classes used throughout package.</p>
-<p>Functions:
-  get_piece_length: calculate ideal piece length for torrent file.
-  sortfiles: traverse directory in sorted order yielding paths encountered.
-  path_size: Sum the sizes of each file in path.
-  get_file_list: Return list of all files contained in directory.
-  path_stat: Get ideal piece length, total size, and file list for directory.
-  path_piece_length: Get ideal piece length based on size of directory.</p>
-<p>Classes:
-    MissingPathError: Custom exception raised when no path was provided to CLI.
-    PieceLengthValueError: Custom exception raised when incorrect input value
-    used for piece length field.</p></div>
+      <div class="mkapi-section-body"><p>Utility functions and classes used throughout package.</p></div>
     </div>
   <div class="mkapi-section classes">
       <div class="mkapi-section-name classes">
@@ -1098,7 +1087,7 @@ in the muliple file case, it&rsquo;s the name of a directory.</p>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Return the total size of all files in path recursively.</span></li>
 
 <li class="function"><code class="mkapi-item-name">path_stat</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">path</code><code class="mkapi-object-parenthesis">)</code>
-<span class="mkapi-item-type">(list)</span>
+<span class="mkapi-item-type">(Tuple[list, int, int] :)</span>
 <span class="mkapi-item-dash">&mdash;</span> <span class="mkapi-item-description">Calculate directory statistics.</span></li>
 
 <li class="function"><code class="mkapi-item-name">toggle_debug_mode</code><code class="mkapi-object-parenthesis">(</code><code class="mkapi-object-signature">switch_on</code><code class="mkapi-object-parenthesis">)</code>

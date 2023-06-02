@@ -1,4 +1,13 @@
-# TorrentFile
+# CHANGELOG
+
+## Version 0.9.0
+
+- Updates to Documentation.
+- Updated the main Gif in the readme file
+- Improved unittesting
+- Added new tests for functions in utils module
+
+---
 
 ## Version 0.8.14
 

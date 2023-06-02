@@ -18,19 +18,6 @@
 ##############################################################################
 """
 Utility functions and classes used throughout package.
-
-Functions:
-  get_piece_length: calculate ideal piece length for torrent file.
-  sortfiles: traverse directory in sorted order yielding paths encountered.
-  path_size: Sum the sizes of each file in path.
-  get_file_list: Return list of all files contained in directory.
-  path_stat: Get ideal piece length, total size, and file list for directory.
-  path_piece_length: Get ideal piece length based on size of directory.
-
-Classes:
-    MissingPathError: Custom exception raised when no path was provided to CLI.
-    PieceLengthValueError: Custom exception raised when incorrect input value
-    used for piece length field.
 """
 
 import os
@@ -57,7 +44,7 @@ class Memo:
         self.counter = 0
         self.cache = {}
 
-    def __call__(self, path):
+    def __call__(self, path: str):
         """
         Invoke each time memo function is called.
 
@@ -148,7 +135,7 @@ def humanize_bytes(amount: int) -> str:
     amount = float(amount)
     value = abs(amount)
     if value == 1:
-        return f"{amount} Byte"  # pragma: nocover
+        return f"{amount} Byte"
     if value < base:
         return f"{amount} Bytes"
     for i, s in enumerate(SUFFIXES):
@@ -246,9 +233,9 @@ def filelist_total(pathstring: str) -> os.PathLike:
     raise MissingPathError
 
 
-def _filelist_total(path: str) -> tuple:
+def _filelist_total(path: os.PathLike) -> tuple:
     """
-    Search directory tree for files.
+    Recursively search directory tree for files.
 
     Parameters
     ----------
@@ -257,10 +244,9 @@ def _filelist_total(path: str) -> tuple:
 
     Returns
     -------
-    int
-        Sum of all filesizes in filelist.
-    list
-        All file paths within directory tree.
+    Tuple[int, List] :
+        int - sum of sizes for all files collected
+        list - all file paths within directory tree
     """
     if path.is_file():
         file_size = os.path.getsize(path)
@@ -322,12 +308,10 @@ def path_stat(path: str) -> tuple:
 
     Returns
     -------
-    list
-        List of all files contained in Directory
-    int
-        Total sum of bytes from all contents of dir
-    int
-        The size of pieces of the torrent contents.
+    Tuple[list, int, int] :
+        list - List of all files contained in Directory
+        int - Total sum of bytes from all contents of dir
+        int - The size of pieces of the torrent contents.
     """
     total_size, filelist = filelist_total(path)
     piece_length = get_piece_length(total_size)
@@ -448,10 +432,10 @@ def check_path_writable(path: str) -> bool:
     try:
         if path.endswith("\\") or path.endswith("/"):
             path = os.path.join(path, ".torrent")
-        fd = open(path, "ab")
-        fd.close()
+        with open(path, "ab") as _:
+            pass
         os.remove(path)
-    except PermissionError as err:  # pragma: nocover
+    except PermissionError as err:
         directory = os.path.dirname(path)
         message = f"Target directory is not writeable {directory}"
         raise PermissionError(message) from err

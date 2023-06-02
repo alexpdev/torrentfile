@@ -68,6 +68,7 @@ clean-build: ## remove build artifacts
 	rm -fv *.spec
 
 test: ## Get coverage report
+	pip install --pre --upgrade --force-reinstall --no-cache -rrequirements.txt
 	tox
 
 docs: ## Regenerate docs from changes
@@ -86,7 +87,6 @@ push: clean test docs ## Push to github
 	git push
 
 setup: clean test ## setup and build repo
-	pip install --pre --upgrade --force-reinstall --no-cache -rrequirements.txt
 	python setup.py sdist bdist_wheel bdist_egg
 	pip install -e .
 	twine upload dist/*
