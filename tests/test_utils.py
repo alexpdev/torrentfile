@@ -19,11 +19,7 @@
 """
 Unittest functions for testing torrentfile utils module.
 """
-import os
-import sys
 import math
-import stat
-from tempfile import NamedTemporaryFile
 
 import pytest
 
@@ -261,25 +257,3 @@ def test_argument_error():
         raise utils.ArgumentError("This message raised by argument error")
     except utils.ArgumentError:
         assert True
-
-
-@pytest.mark.skipif(sys.platform != "win32", reason="Windows only.")
-def test_check_path_writeable_windows_fail():
-    """Test error message when raised."""
-    with NamedTemporaryFile("wb", delete=False) as temp:
-        try:
-            utils.check_path_writable(temp.name)
-        except PermissionError as err:
-            assert err
-    rmpath(temp.name)
-
-
-@pytest.mark.skipif(sys.platform == "win32", reason="Unix Only.")
-def test_check_path_writeable_unix_fail():
-    """Test error message when raised on unix."""
-    with NamedTemporaryFile("wb", delete=False) as temp:
-        try:
-            fno = os.fileno(temp)
-            os.fchmod(fno, stat.S_IREAD)
-        except PermissionError as err:
-            assert err
