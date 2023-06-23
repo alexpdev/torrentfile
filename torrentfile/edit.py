@@ -25,14 +25,6 @@ should be edited, and what the new value should be.  Depending on what fields
 are chosen to edit, this command can trigger a new info hash which means the
 torrent will no longer be able to participate in the same swarm as the original
 unedited torrent.
-
-Keywords
---------
-private
-comment
-source
-trackers
-web-seeds
 """
 
 import os

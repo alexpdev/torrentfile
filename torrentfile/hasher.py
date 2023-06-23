@@ -206,7 +206,7 @@ class HasherV2(CbMixin, ProgMixin):
 
         Parameters
         ----------
-        fd : TextIOWrapper
+        fd : BytesIO
             Opened file in read mode.
         """
         while True:

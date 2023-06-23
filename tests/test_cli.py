@@ -154,7 +154,7 @@ def test_cli_announce(folder, piece_length, version):
         str(piece_length),
         "--meta-version",
         version,
-        "--tracker",
+        "--announce",
         "https://announce.org/tracker",
         "-o",
         torrent,
@@ -184,7 +184,7 @@ def test_cli_announce_list(folder, version):
         version,
         "-o",
         torrent,
-        "--tracker",
+        "--announce",
     ] + trackers
     sys.argv = args
     execute()
@@ -321,7 +321,7 @@ def test_cli_web_seeds(folder, piece_length, version):
         str(piece_length),
         "--meta-version",
         version,
-        "-w",
+        "--web-seed",
         "https://webseed.url/1",
         "https://webseed.url/2",
         "https://webseed.url/3",
@@ -453,7 +453,7 @@ def test_cli_slash_path(dir1, ending):
         "create",
         "-o",
         outfile,
-        "-t",
+        "-a",
         "https://announce1.org",
         "--private",
         str(dir1) + ending,
@@ -475,7 +475,7 @@ def test_cli_slash_outpath(dir1, sep):
     args = [
         "torrentfile",
         "create",
-        "-t",
+        "-a",
         "https://announce1.org",
         "--private",
         "-o",
@@ -489,8 +489,8 @@ def test_cli_slash_outpath(dir1, sep):
     rmpath(outfile)
 
 
-@pytest.mark.parametrize(
-    "flag", ["-t", "-w", "--announce", "--web-seed", "--http-seed"])
+@pytest.mark.parametrize("flag",
+                         ["-a", "--announce", "--web-seed", "--http-seed"])
 def test_cli_announce_path(dir1, flag):
     """
     Test CLI when path is placed after the trackers flag.

@@ -171,7 +171,7 @@ def test_info(field, file1):
     args = [
         "torrentfile",
         "create",
-        "-t",
+        "-a",
         "url1",
         "url2",
         "url3",

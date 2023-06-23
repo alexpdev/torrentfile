@@ -224,8 +224,8 @@ def execute(args: list = None) -> list:
         "torrentfile",
         usage="torrentfile <options>",
         description=(
-            "Command line tools for creating, editing, checking, building "
-            "and interacting with Bittorrent meta files"),
+            "Command line tool for creating, editing, validating, building "
+            "and interacting with all versions of Bittorrent files"),
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
         conflict_handler="resolve",
@@ -267,13 +267,12 @@ def execute(args: list = None) -> list:
         "create",
         help="Create a new Bittorrent file.",
         prefix_chars="-",
-        aliases=["c", "new"],
+        aliases=["new"],
         formatter_class=TorrentFileHelpFormatter,
     )
 
     create_parser.add_argument(
         "-a",
-        "-t",
         "--announce",
         "--tracker",
         action="store",
@@ -281,7 +280,7 @@ def execute(args: list = None) -> list:
         metavar="<url>",
         nargs="+",
         default=[],
-        help="One or more space-seperated torrent tracker url(s).",
+        help="one or more space-seperated tracker url(s)",
     )
 
     create_parser.add_argument(
@@ -289,7 +288,7 @@ def execute(args: list = None) -> list:
         "--private",
         action="store_true",
         dest="private",
-        help="Creates private torrent with multi-tracker and DHT turned off.",
+        help="create private torrent",
     )
 
     create_parser.add_argument(
@@ -298,7 +297,7 @@ def execute(args: list = None) -> list:
         action="store",
         dest="source",
         metavar="<source>",
-        help="Add a source string. Useful for cross-seeding.",
+        help="add source field to the metadata",
     )
 
     create_parser.add_argument(
@@ -317,10 +316,7 @@ def execute(args: list = None) -> list:
         action="store",
         metavar="<path>",
         dest="config_path",
-        help="""
-        Use this option in combination with -f or --config
-        options to specify location of config file.
-        """,
+        help="use in combination with --config to provide config file path",
     )
 
     create_parser.add_argument(
@@ -336,7 +332,7 @@ def execute(args: list = None) -> list:
         action="store",
         dest="comment",
         metavar="<comment>",
-        help="Include a comment in file metadata",
+        help="include a comment in the torrent file metadata",
     )
 
     create_parser.add_argument(
@@ -345,7 +341,7 @@ def execute(args: list = None) -> list:
         action="store",
         dest="outfile",
         metavar="<path>",
-        help="Explicitly specify the path to write the file .torrent file",
+        help="path to write torrent file",
     )
 
     create_parser.add_argument(
@@ -356,7 +352,7 @@ def execute(args: list = None) -> list:
         dest="progress",
         metavar="<int>",
         help="""
-        Set the progress bar level.
+        set the progress bar level
         Options = 0, 1
         (0) = Do not display progress bar.
         (1) = Display progress bar.(default)
@@ -371,8 +367,8 @@ def execute(args: list = None) -> list:
         dest="meta_version",
         metavar="<int>",
         help="""
-        Bittorrent metafile version.
-        Options = 1, 2, 3
+        bittorrent metafile version
+        options = 1, 2, 3
         (1) = Bittorrent v1 (Default)
         (2) = Bittorrent v2
         (3) = Bittorrent v1 & v2 hybrid
@@ -385,22 +381,19 @@ def execute(args: list = None) -> list:
         dest="piece_length",
         metavar="<int>",
         help="""
-        (Default: auto calculated based on total size of content) Number of
-        bytes for per chunk of data transmitted by Bittorrent client.
-        Acceptable values include integers 14-26 which will be interpreted
-        as exponent for power of 2.  e.g. 14 = 16KiB pieces.
-        Examples:: [--piece-length 14] [--piece-length 20]
+        (Default: auto calculated based on total size of content)
+        acceptable values include numbers 14-26
+        14 = 16KiB, 20 = 1MiB, 21 = 2MiB etc.  Examples:[--piece-length 14]
         """,
     )
 
     create_parser.add_argument(
-        "-w",
         "--web-seed",
         action="store",
         dest="url_list",
         metavar="<url>",
         nargs="+",
-        help="list of web addresses where torrent data exists (GetRight).",
+        help="list of web addresses where torrent data exists (GetRight)",
     )
 
     create_parser.add_argument(
@@ -409,7 +402,7 @@ def execute(args: list = None) -> list:
         dest="httpseeds",
         metavar="<url>",
         nargs="+",
-        help="list of URLs, addresses where content can be found (Hoffman).",
+        help="list of URLs, addresses where content can be found (Hoffman)",
     )
 
     create_parser.add_argument(
@@ -417,15 +410,14 @@ def execute(args: list = None) -> list:
         action="store",
         metavar="<content>",
         nargs="?",
-        help="Path to content file or directory",
+        help="path to content file or directory",
     )
 
     create_parser.set_defaults(func=create)
 
     edit_parser = subparsers.add_parser(
         "edit",
-        help="""Edit existing torrent meta file.""",
-        aliases=["e"],
+        help="edit torrent file",
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )
@@ -443,10 +435,7 @@ def execute(args: list = None) -> list:
         dest="announce",
         metavar="<url>",
         nargs="+",
-        help="""
-        Replace current list of tracker/announce urls with one or more space
-        seperated Bittorrent tracker announce url(s).
-        """,
+        help="replace current trackers with one or more urls",
     )
 
     edit_parser.add_argument(
@@ -455,7 +444,7 @@ def execute(args: list = None) -> list:
         dest="url_list",
         metavar="<url>",
         nargs="+",
-        help="Replace current list of web-seed urls with one or more url(s)",
+        help="replace current web-seed with one or more url(s)",
     )
 
     edit_parser.add_argument(
@@ -464,19 +453,19 @@ def execute(args: list = None) -> list:
         dest="httpseeds",
         metavar="<url>",
         nargs="+",
-        help="replace all currently listed addresses with new list (Hoffman).",
+        help="replace current http-seed urls with new ones (Hoffman)",
     )
 
     edit_parser.add_argument(
         "--private",
         action="store_true",
-        help="Make torrent private.",
+        help="make torrent private",
         dest="private",
     )
 
     edit_parser.add_argument(
         "--comment",
-        help="Replaces any existing comment with <comment>",
+        help="replaces any existing comment with <comment>",
         metavar="<comment>",
         dest="comment",
         action="store",
@@ -487,15 +476,14 @@ def execute(args: list = None) -> list:
         action="store",
         dest="source",
         metavar="<source>",
-        help="Replaces current source with <source>",
+        help="replaces current source with <source>",
     )
 
     edit_parser.set_defaults(func=edit)
 
     info_parser = subparsers.add_parser(
         "info",
-        help="Show detailed information about a torrent file.",
-        aliases=["i"],
+        help="show detailed information about a torrent file",
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )
@@ -504,14 +492,14 @@ def execute(args: list = None) -> list:
         "metafile",
         action="store",
         metavar="<*.torrent>",
-        help="path to pre-existing torrent file.",
+        help="path to torrent file",
     )
 
     info_parser.set_defaults(func=info)
 
     magnet_parser = subparsers.add_parser(
         "magnet",
-        help="Generate magnet url from an existing Bittorrent meta file.",
+        help="generate magnet url from an existing torrent file",
         aliases=["m"],
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
@@ -520,7 +508,7 @@ def execute(args: list = None) -> list:
     magnet_parser.add_argument(
         "metafile",
         action="store",
-        help="Path to Bittorrent meta file.",
+        help="path to torrent file",
         metavar="<*.torrent>",
     )
 
@@ -545,8 +533,8 @@ def execute(args: list = None) -> list:
 
     check_parser = subparsers.add_parser(
         "recheck",
-        help="Gives a detailed look at how much of the torrent is available.",
-        aliases=["check", "r"],
+        help="gives a detailed look at how much of the torrent is available",
+        aliases=["check"],
         prefix_chars="-",
         formatter_class=TorrentFileHelpFormatter,
     )
@@ -622,18 +610,13 @@ def execute(args: list = None) -> list:
         "target",
         action="store",
         metavar="<target>",
-        help="path to file that needs renaming.",
+        help="path to torrent file",
     )
 
     rename_parser.set_defaults(func=rename)
 
     all_commands = [
-        "c",
-        "e",
-        "i",
         "m",
-        "r",
-        "-i",
         "-h",
         "-V",
         "new",
