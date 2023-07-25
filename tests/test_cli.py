@@ -295,6 +295,7 @@ def test_cli_created_by(folder, piece_length, version):
         str(piece_length),
         "--meta-version",
         version,
+        "--align",
         "--comment",
         "this is a comment",
         "-o",
@@ -303,7 +304,7 @@ def test_cli_created_by(folder, piece_length, version):
     sys.argv = args
     execute()
     meta = pyben.load(torrent)
-    assert "TorrentFile" in meta["created by"]
+    assert "torrentfile" in meta["created by"]
 
 
 @pytest.mark.parametrize("piece_length", [2**exp for exp in range(14, 21)])
@@ -319,6 +320,7 @@ def test_cli_web_seeds(folder, piece_length, version):
         folder,
         "--piece-length",
         str(piece_length),
+        "--align",
         "--meta-version",
         version,
         "--web-seed",

@@ -224,6 +224,7 @@ def test_mbtorrent(version, progress):
         "progress": progress,
         "piece_length": "14",
         "outfile": outfile,
+        "align": True,
     }
     torrent = version(**args)
     outfile, _ = torrent.write()
