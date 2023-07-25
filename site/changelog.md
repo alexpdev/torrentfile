@@ -6,6 +6,7 @@
 - Removed some of the less popularly used argument shortcuts
 - Edited module and class level docstrings
 - Removed old/useless code.
+- Added `--align` cli flag for piece aligning v1 torrents
 
 ---
 
