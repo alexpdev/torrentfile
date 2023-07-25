@@ -255,6 +255,7 @@ class MetaFile:
         path=None,
         announce=None,
         comment=None,
+        align=False,
         piece_length=None,
         private=False,
         outfile=None,
@@ -299,7 +300,7 @@ class MetaFile:
         logger.debug("path parameter found %s", path)
 
         self.meta = {
-            "created by": f"TorrentFile_v{version}",
+            "created by": f"torrentfile_v{version}",
             "creation date": int(datetime.timestamp(datetime.now())),
             "info": {},
         }
@@ -322,6 +323,8 @@ class MetaFile:
 
         elif isinstance(announce, Sequence):
             self.announce, self.announce_list = announce[0], [announce]
+
+        self.align = align
 
         if self.announce:
             self.meta["announce"] = self.announce
@@ -445,16 +448,36 @@ class TorrentFile(MetaFile, ProgMixin):
         size, filelist = utils.filelist_total(self.path)
         if os.path.isfile(self.path):
             info["length"] = size
-        else:
+        elif not self.align:
             info["files"] = [{
                 "length":
                 os.path.getsize(path),
                 "path":
                 os.path.relpath(path, self.path).split(os.sep),
             } for path in filelist]
+        else:
+            info["files"] = []
+            for path in filelist:
+                filesize = os.path.getsize(path)
+                info["files"].append({
+                    "length":
+                    filesize,
+                    "path":
+                    os.path.relpath(path, self.path).split(os.sep),
+                })
+                if filesize < self.piece_length:
+                    remainder = self.piece_length - filesize
+                else:
+                    remainder = filesize % self.piece_length
+                if remainder:
+                    info["files"].append({
+                        "attr": "p",
+                        "length": remainder,
+                        "path": [".pad", str(remainder)],
+                    })
         pieces = bytearray()
 
-        feeder = Hasher(filelist, self.piece_length, self.progress)
+        feeder = Hasher(filelist, self.piece_length, self.progress, self.align)
         for piece in feeder:
             pieces.extend(piece)
 

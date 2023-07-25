@@ -406,6 +406,13 @@ def execute(args: list = None) -> list:
     )
 
     create_parser.add_argument(
+        "--align",
+        action="store_true",
+        help=("Align pieces to file boundaries. "
+              "This option is ignored when not used with V1 torrents."),
+    )
+
+    create_parser.add_argument(
         "content",
         action="store",
         metavar="<content>",
