@@ -51,10 +51,17 @@ class Hasher(CbMixin, ProgMixin):
         default = None
     """
 
-    def __init__(self, paths: list, piece_length: int, progress: bool = True):
+    def __init__(
+        self,
+        paths: list,
+        piece_length: int,
+        progress: bool = True,
+        align: bool = False,
+    ):
         """Generate hashes of piece length data from filelist contents."""
         self.piece_length = piece_length
         self.paths = paths
+        self.align = align
         self.progress = progress
         self.total = sum(os.path.getsize(i) for i in self.paths)
         self.index = 0
@@ -89,6 +96,12 @@ class Hasher(CbMixin, ProgMixin):
         digest : bytearray
             SHA1 digest of the complete piece.
         """
+        if self.align:
+            target = self.piece_length - len(arr)
+            temp = bytearray(target)
+            arr.extend(temp)
+            return sha1(arr).digest()  # nosec
+
         while len(arr) < self.piece_length and self.next_file():
             target = self.piece_length - len(arr)
             temp = bytearray(target)
@@ -206,7 +219,7 @@ class HasherV2(CbMixin, ProgMixin):
 
         Parameters
         ----------
-        fd : TextIOWrapper
+        fd : BytesIO
             Opened file in read mode.
         """
         while True:

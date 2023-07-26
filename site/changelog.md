@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## Version 0.9.1
+
+- Clean up and consolidate many cli help strings
+- Removed some of the less popularly used argument shortcuts
+- Edited module and class level docstrings
+- Removed old/useless code.
+- Added `--align` cli flag for piece aligning v1 torrents
+
+---
+
 ## Version 0.9.0
 
 - Updates to Documentation.

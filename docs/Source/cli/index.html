@@ -764,7 +764,8 @@ TorrentFileHelpFormatter : HelpFormatter
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\cli.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">71</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">70</span>
+<span class="normal">71</span>
 <span class="normal">72</span>
 <span class="normal">73</span>
 <span class="normal">74</span>
@@ -781,8 +782,7 @@ TorrentFileHelpFormatter : HelpFormatter
 <span class="normal">85</span>
 <span class="normal">86</span>
 <span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="normal">88</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span> <span class="nf">activate_logger</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Activate the builtin logging mechanism when passed debug flag from CLI.</span>
@@ -829,7 +829,8 @@ is output to the terminal</p>
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\cli.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">59</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">58</span>
+<span class="normal">59</span>
 <span class="normal">60</span>
 <span class="normal">61</span>
 <span class="normal">62</span>
@@ -838,8 +839,7 @@ is output to the terminal</p>
 <span class="normal">65</span>
 <span class="normal">66</span>
 <span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="normal">68</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span> <span class="nf">activate_quiet</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Activate quiet mode for the duration of the programs life.</span>
@@ -942,7 +942,8 @@ is output to the terminal</p>
 
           <details class="quote">
             <summary>Source code in <code>torrentfile\cli.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 99</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 98</span>
+<span class="normal"> 99</span>
 <span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
@@ -959,8 +960,7 @@ is output to the terminal</p>
 <span class="normal">113</span>
 <span class="normal">114</span>
 <span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<span class="normal">116</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
              <span class="n">prog</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
              <span class="n">width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">45</span><span class="p">,</span>
              <span class="n">max_help_positions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">45</span><span class="p">):</span>
@@ -1070,7 +1070,8 @@ and command line interface.</p>
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\cli.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">198</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">197</span>
+<span class="normal">198</span>
 <span class="normal">199</span>
 <span class="normal">200</span>
 <span class="normal">201</span>
@@ -1526,18 +1527,7 @@ and command line interface.</p>
 <span class="normal">651</span>
 <span class="normal">652</span>
 <span class="normal">653</span>
-<span class="normal">654</span>
-<span class="normal">655</span>
-<span class="normal">656</span>
-<span class="normal">657</span>
-<span class="normal">658</span>
-<span class="normal">659</span>
-<span class="normal">660</span>
-<span class="normal">661</span>
-<span class="normal">662</span>
-<span class="normal">663</span>
-<span class="normal">664</span>
-<span class="normal">665</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="normal">654</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Execute program with provided list of arguments.</span>
 
@@ -1566,8 +1556,8 @@ and command line interface.</p>
         <span class="s2">&quot;torrentfile&quot;</span><span class="p">,</span>
         <span class="n">usage</span><span class="o">=</span><span class="s2">&quot;torrentfile &lt;options&gt;&quot;</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="p">(</span>
-            <span class="s2">&quot;Command line tools for creating, editing, checking, building &quot;</span>
-            <span class="s2">&quot;and interacting with Bittorrent meta files&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;Command line tool for creating, editing, validating, building &quot;</span>
+            <span class="s2">&quot;and interacting with all versions of Bittorrent files&quot;</span><span class="p">),</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
         <span class="n">conflict_handler</span><span class="o">=</span><span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
@@ -1609,13 +1599,12 @@ and command line interface.</p>
         <span class="s2">&quot;create&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Create a new Bittorrent file.&quot;</span><span class="p">,</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
-        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;new&quot;</span><span class="p">],</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;new&quot;</span><span class="p">],</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--announce&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--tracker&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
@@ -1623,7 +1612,7 @@ and command line interface.</p>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;One or more space-seperated torrent tracker url(s).&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;one or more space-seperated tracker url(s)&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1631,7 +1620,7 @@ and command line interface.</p>
         <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;private&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Creates private torrent with multi-tracker and DHT turned off.&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;create private torrent&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1640,7 +1629,7 @@ and command line interface.</p>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;source&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Add a source string. Useful for cross-seeding.&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;add source field to the metadata&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1659,10 +1648,7 @@ and command line interface.</p>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;config_path&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Use this option in combination with -f or --config</span>
-<span class="s2">        options to specify location of config file.</span>
-<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;use in combination with --config to provide config file path&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1678,7 +1664,7 @@ and command line interface.</p>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;comment&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;comment&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Include a comment in file metadata&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;include a comment in the torrent file metadata&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1687,7 +1673,7 @@ and command line interface.</p>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;outfile&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Explicitly specify the path to write the file .torrent file&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to write torrent file&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1698,7 +1684,7 @@ and command line interface.</p>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;progress&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;int&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Set the progress bar level.</span>
+<span class="s2">        set the progress bar level</span>
 <span class="s2">        Options = 0, 1</span>
 <span class="s2">        (0) = Do not display progress bar.</span>
 <span class="s2">        (1) = Display progress bar.(default)</span>
@@ -1713,8 +1699,8 @@ and command line interface.</p>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;meta_version&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;int&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Bittorrent metafile version.</span>
-<span class="s2">        Options = 1, 2, 3</span>
+<span class="s2">        bittorrent metafile version</span>
+<span class="s2">        options = 1, 2, 3</span>
 <span class="s2">        (1) = Bittorrent v1 (Default)</span>
 <span class="s2">        (2) = Bittorrent v2</span>
 <span class="s2">        (3) = Bittorrent v1 &amp; v2 hybrid</span>
@@ -1727,22 +1713,19 @@ and command line interface.</p>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;piece_length&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;int&gt;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        (Default: auto calculated based on total size of content) Number of</span>
-<span class="s2">        bytes for per chunk of data transmitted by Bittorrent client.</span>
-<span class="s2">        Acceptable values include integers 14-26 which will be interpreted</span>
-<span class="s2">        as exponent for power of 2.  e.g. 14 = 16KiB pieces.</span>
-<span class="s2">        Examples:: [--piece-length 14] [--piece-length 20]</span>
+<span class="s2">        (Default: auto calculated based on total size of content)</span>
+<span class="s2">        acceptable values include numbers 14-26</span>
+<span class="s2">        14 = 16KiB, 20 = 1MiB, 21 = 2MiB etc.  Examples:[--piece-length 14]</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-w&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--web-seed&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;url_list&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;list of web addresses where torrent data exists (GetRight).&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;list of web addresses where torrent data exists (GetRight)&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1751,7 +1734,14 @@ and command line interface.</p>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;httpseeds&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;list of URLs, addresses where content can be found (Hoffman).&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;list of URLs, addresses where content can be found (Hoffman)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--align&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Align pieces to file boundaries. &quot;</span>
+              <span class="s2">&quot;This option is ignored when not used with V1 torrents.&quot;</span><span class="p">),</span>
     <span class="p">)</span>
 
     <span class="n">create_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1759,15 +1749,14 @@ and command line interface.</p>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;content&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to content file or directory&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to content file or directory&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">create_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">create</span><span class="p">)</span>
+    <span class="n">create_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">commands</span><span class="o">.</span><span class="n">create</span><span class="p">)</span>
 
     <span class="n">edit_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;edit&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;Edit existing torrent meta file.&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;e&quot;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;edit torrent file&quot;</span><span class="p">,</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
     <span class="p">)</span>
@@ -1785,10 +1774,7 @@ and command line interface.</p>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;announce&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        Replace current list of tracker/announce urls with one or more space</span>
-<span class="s2">        seperated Bittorrent tracker announce url(s).</span>
-<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;replace current trackers with one or more urls&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">edit_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1797,7 +1783,7 @@ and command line interface.</p>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;url_list&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Replace current list of web-seed urls with one or more url(s)&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;replace current web-seed with one or more url(s)&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">edit_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1806,19 +1792,19 @@ and command line interface.</p>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;httpseeds&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;url&gt;&quot;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;replace all currently listed addresses with new list (Hoffman).&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;replace current http-seed urls with new ones (Hoffman)&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">edit_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--private&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Make torrent private.&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;make torrent private&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;private&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">edit_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--comment&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Replaces any existing comment with &lt;comment&gt;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;replaces any existing comment with &lt;comment&gt;&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;comment&gt;&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;comment&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
@@ -1829,15 +1815,14 @@ and command line interface.</p>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;source&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Replaces current source with &lt;source&gt;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;replaces current source with &lt;source&gt;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">edit_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">edit</span><span class="p">)</span>
+    <span class="n">edit_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">commands</span><span class="o">.</span><span class="n">edit</span><span class="p">)</span>
 
     <span class="n">info_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;info&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show detailed information about a torrent file.&quot;</span><span class="p">,</span>
-        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;show detailed information about a torrent file&quot;</span><span class="p">,</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
     <span class="p">)</span>
@@ -1846,14 +1831,14 @@ and command line interface.</p>
         <span class="s2">&quot;metafile&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;*.torrent&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to pre-existing torrent file.&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to torrent file&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">info_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">info</span><span class="p">)</span>
+    <span class="n">info_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">commands</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
 
     <span class="n">magnet_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;magnet&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate magnet url from an existing Bittorrent meta file.&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;generate magnet url from an existing torrent file&quot;</span><span class="p">,</span>
         <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">],</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
@@ -1862,7 +1847,7 @@ and command line interface.</p>
     <span class="n">magnet_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;metafile&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to Bittorrent meta file.&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to torrent file&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;*.torrent&gt;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -1883,12 +1868,12 @@ and command line interface.</p>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;int&gt;&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">magnet_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">get_magnet</span><span class="p">)</span>
+    <span class="n">magnet_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">commands</span><span class="o">.</span><span class="n">get_magnet</span><span class="p">)</span>
 
     <span class="n">check_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;recheck&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Gives a detailed look at how much of the torrent is available.&quot;</span><span class="p">,</span>
-        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;check&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;gives a detailed look at how much of the torrent is available&quot;</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;check&quot;</span><span class="p">],</span>
         <span class="n">prefix_chars</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">TorrentFileHelpFormatter</span><span class="p">,</span>
     <span class="p">)</span>
@@ -1907,7 +1892,7 @@ and command line interface.</p>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to content file or directory&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">check_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">recheck</span><span class="p">)</span>
+    <span class="n">check_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">commands</span><span class="o">.</span><span class="n">recheck</span><span class="p">)</span>
 
     <span class="n">rebuild_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;rebuild&quot;</span><span class="p">,</span>
@@ -1951,7 +1936,7 @@ and command line interface.</p>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to where torrents will be re-assembled&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">rebuild_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">rebuild</span><span class="p">)</span>
+    <span class="n">rebuild_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">commands</span><span class="o">.</span><span class="n">rebuild</span><span class="p">)</span>
 
     <span class="n">rename_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;rename&quot;</span><span class="p">,</span>
@@ -1964,18 +1949,13 @@ and command line interface.</p>
         <span class="s2">&quot;target&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;target&gt;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to file that needs renaming.&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to torrent file&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">rename_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">rename</span><span class="p">)</span>
+    <span class="n">rename_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">commands</span><span class="o">.</span><span class="n">rename</span><span class="p">)</span>
 
     <span class="n">all_commands</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;c&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;e&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;i&quot;</span><span class="p">,</span>
         <span class="s2">&quot;m&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;r&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-i&quot;</span><span class="p">,</span>
         <span class="s2">&quot;-h&quot;</span><span class="p">,</span>
         <span class="s2">&quot;-V&quot;</span><span class="p">,</span>
         <span class="s2">&quot;new&quot;</span><span class="p">,</span>
@@ -2027,11 +2007,11 @@ and command line interface.</p>
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\cli.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">671</span>
-<span class="normal">672</span>
-<span class="normal">673</span>
-<span class="normal">674</span>
-<span class="normal">675</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">660</span>
+<span class="normal">661</span>
+<span class="normal">662</span>
+<span class="normal">663</span>
+<span class="normal">664</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initiate main function for CLI script.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

@@ -16,7 +16,7 @@
 
 ## 🌐 Overview
 
-A command line interface for creating, reviewing, editing, or verifying bittorrent meta files (`.torrent` files). 
+A command line interface for creating, reviewing, editing, or verifying bittorrent meta files (`.torrent` files).
 _`torrentfile`_ is open source, and supports all versions of Bittorrent files, including hybrid meta files. The code base
 is also importable and can easily be used as a library for creating or manipulating torrent files in external projects.
 Documentation is available at [https://alexpdev.github.io/torrentfile](https://alexpdev.github.io/torrentfile).
@@ -25,8 +25,8 @@ Documentation is available at [https://alexpdev.github.io/torrentfile](https://a
 
 ## 🔌 Requirements
 
--   Python 3.6+
--   Tested on Linux, Windows and Mac
+- Python 3.6+
+- Tested on Linux, Windows and Mac
 
 ## 💻 Install
 
@@ -63,10 +63,7 @@ Apache Software License v2.0 - See [LICENSE]("https://github.com/alexpdev/torren
 ## 💡 Issues & Requests & PRs
 
 If you encounter any bugs or would like to request a new feature please open a new issue.
-
-> PRs and other contributions are welcome
-
-<https://github.com/alexpdev/torrentfile/issues>
+PRs and other contributions that are meaningful and add value to the project are welcome.
 
 * * *
 
@@ -80,7 +77,7 @@ Creating a basic torrent file is as easy as using the create subcommand with the
 torrentfile create /path/to/content
 ```
 
-You can add one or more trackers by using any one of `-a`, `--announce` 
+You can add one or more trackers by using any one of `-a`, `--announce`
 flags and listing their URL as a space separated list.
 
 ```bash
@@ -98,10 +95,6 @@ torrentfile create /path/to/content --private
 By default **`torrentfile`** displays a progress bar indicating how much of the content  
 has already been processed.  To turn off this display you can either use `--quiet` mode in  
 as a global flag or you can set the `--prog` flag to 0.
-
-```bash
-torrentfile --quiet create /path/to/content
-```
 
 ```bash
 torrentfile create /path/to/content --prog 0
@@ -132,10 +125,9 @@ For example the following command would create a torrent file at `/some/other/pa
 torrentfile create /path/to/content -o /some/other/path/
 ```
 
-Bittorrent protocol V1 is still the most commonly used version, therefore _`torrentfile`_ creates
-Bittorrent version 1 torrent files by default. To specify creating a V2 file or hybrid (v1 and v2)
-use the `--meta-version` followed by the specific version number format to use.  The options include:
-`1`(v1 default), `2`(v2), or `3`(v1 & v2).
+_`torrentfile`_ creates Bittorrent v1 files by default. To create a V2 or hybrid (v1 and v2)
+torrent file, use the `--meta-version` option followed by the preferred version number option.
+The options include:  `1`(v1 default), `2`(v2), or `3`(v1 & v2).
 
 ```bash
 torrentfile create /path/to/content --meta-version 2
@@ -145,17 +137,17 @@ torrentfile create /path/to/content --meta-version 2
 torrentfile create /path/to/content --meta-version 3 
 ```
 
->`torrentfile` now includes the option to command line flags for the `create` sub-command from an `ini` style
+`torrentfile` includes the option to command line flags for the `create` sub-command from an `ini` style
 configuration file, by using the `--config` and optional `--config-path` options to specify the path
 to the configuration file.  If `--config-path` is ommited, then `torrentfile` will look by default in the current
-working directory for a file named `torrentfile.ini`. If the file is not discovered in the current working directory, 
-it will move on to look `~/.torrentfile/torrentfile.ini` followed by `~/.config/torrentfile.ini`.  Please see the 
+working directory for a file named `torrentfile.ini`. If the file is not discovered in the current working directory,
+it will move on to look `~/.torrentfile/torrentfile.ini` followed by `~/.config/torrentfile.ini`.  Please see the
 [documentation](https://alexpdev.github.io/torrentfile/overview/) for more details on how the configuration file should be
 formatted.
 
 ### Check/Recheck Torrent
 
-The `recheck` subcommand allows you to scan a Bittorrent file and compare it's contents, 
+The `recheck` subcommand allows you to scan a Bittorrent file and compare it's contents,
 against a file or directory containing the contents the torrent file was created from.
 The output provided by this process gives a detailed perspective if any files are missing
 or have been corrupted in any way.  Supports any version of Bittorrent file.
@@ -183,7 +175,7 @@ torrentfile edit -h
 ### Create Magnet
 
 To create a magnet URI for a pre-existing torrent meta file, use the sub-command  
-`magnet` or `m` with the path to the torrent file.
+`magnet` with the path to the torrent file.
 
 ```bash
 torrentfile magnet /path/to/some.torrent
