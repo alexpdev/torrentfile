@@ -43,8 +43,7 @@ import sys
 import logging
 from argparse import ArgumentParser, HelpFormatter
 
-from torrentfile.commands import (
-    create, edit, get_magnet, info, rebuild, recheck, rename)
+from torrentfile import commands
 from torrentfile.utils import toggle_debug_mode
 from torrentfile.version import __version__ as version
 
@@ -420,7 +419,7 @@ def execute(args: list = None) -> list:
         help="path to content file or directory",
     )
 
-    create_parser.set_defaults(func=create)
+    create_parser.set_defaults(func=commands.create)
 
     edit_parser = subparsers.add_parser(
         "edit",
@@ -486,7 +485,7 @@ def execute(args: list = None) -> list:
         help="replaces current source with <source>",
     )
 
-    edit_parser.set_defaults(func=edit)
+    edit_parser.set_defaults(func=commands.edit)
 
     info_parser = subparsers.add_parser(
         "info",
@@ -502,7 +501,7 @@ def execute(args: list = None) -> list:
         help="path to torrent file",
     )
 
-    info_parser.set_defaults(func=info)
+    info_parser.set_defaults(func=commands.info)
 
     magnet_parser = subparsers.add_parser(
         "magnet",
@@ -536,7 +535,7 @@ def execute(args: list = None) -> list:
         metavar="<int>",
     )
 
-    magnet_parser.set_defaults(func=get_magnet)
+    magnet_parser.set_defaults(func=commands.get_magnet)
 
     check_parser = subparsers.add_parser(
         "recheck",
@@ -560,7 +559,7 @@ def execute(args: list = None) -> list:
         help="path to content file or directory",
     )
 
-    check_parser.set_defaults(func=recheck)
+    check_parser.set_defaults(func=commands.recheck)
 
     rebuild_parser = subparsers.add_parser(
         "rebuild",
@@ -604,7 +603,7 @@ def execute(args: list = None) -> list:
         help="path to where torrents will be re-assembled",
     )
 
-    rebuild_parser.set_defaults(func=rebuild)
+    rebuild_parser.set_defaults(func=commands.rebuild)
 
     rename_parser = subparsers.add_parser(
         "rename",
@@ -620,7 +619,7 @@ def execute(args: list = None) -> list:
         help="path to torrent file",
     )
 
-    rename_parser.set_defaults(func=rename)
+    rename_parser.set_defaults(func=commands.rename)
 
     all_commands = [
         "m",
