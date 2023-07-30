@@ -66,9 +66,11 @@ class Hasher(CbMixin, ProgMixin):
         self.total = sum(os.path.getsize(i) for i in self.paths)
         self.index = 0
         self.current = open(self.paths[0], "rb")
-        if self.progress:
+        if self.progress == 1:
             total = os.path.getsize(self.paths[0])
             self.prog_start(total, self.paths[0])
+        elif self.progress == 2:
+            self.prog_start(self.total, self.paths[0])
         logger.debug("Hashing %s", str(self.paths[0]))
 
     def __iter__(self):
@@ -122,12 +124,13 @@ class Hasher(CbMixin, ProgMixin):
             True if there is a next file otherwise False.
         """
         self.index += 1
-        self.prog_close()
+        if self.progress == 1 or self.index >= len(self.paths):
+            self.prog_close()
         if self.index < len(self.paths):
             path = self.paths[self.index]
             logger.debug("Hashing %s", str(path))
             self.current.close()
-            if self.progress:
+            if self.progress == 1:
                 self.prog_start(os.path.getsize(path), path)
             self.current = open(path, "rb")
             return True

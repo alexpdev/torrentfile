@@ -29,7 +29,7 @@ import time
 import shutil
 from pathlib import Path
 
-from torrentfile.utils import debug_is_on
+from torrentfile.utils import debug_is_on, green
 
 
 class CbMixin:
@@ -118,7 +118,8 @@ class ProgressBar:
         else:
             fill = math.ceil((self.state / self.total) * self.length)
         empty = self.length - fill
-        pbar = ["|", self.fill * fill, self.empty * empty, "| "]
+        contents = (self.fill * fill) + (self.empty * empty)
+        pbar = ["|", green(contents), "| "]
         if self.unit == "GiB":
             state = self.state / (2**30)
         elif self.unit == "MiB":
@@ -157,6 +158,8 @@ class ProgMixin:
             the number of characters of the actual progress bar.
         unit : str
             the text representation of the value being measured.
+        mode : int
+            the progress bar mode
         """
         title = path
         width = shutil.get_terminal_size().columns

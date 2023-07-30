@@ -352,9 +352,10 @@ def execute(args: list = None) -> list:
         metavar="<int>",
         help="""
         set the progress bar level
-        Options = 0, 1
+        Options = 0, 1, 2
         (0) = Do not display progress bar.
-        (1) = Display progress bar.(default)
+        (1) = Display progress bar for each file.(default)
+        (2) = Display one progress bar for full torrent.
         """,
     )
 

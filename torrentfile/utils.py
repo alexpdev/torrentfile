@@ -22,8 +22,14 @@ Utility functions and classes used throughout package.
 
 import os
 import math
+import ctypes
 import shutil
+import platform
 from pathlib import Path
+
+if platform.system() == "Windows":
+    kernel32 = ctypes.windll.kernel32
+    kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
 
 
 class Memo:
@@ -440,3 +446,17 @@ def check_path_writable(path: str) -> bool:
         message = f"Target directory is not writeable {directory}"
         raise PermissionError(message) from err
     return True
+
+
+def green(string: str) -> str:
+    """
+    Output terminal content in green color.
+    """
+    return colored(string, 92)
+
+
+def colored(string: str, key: int) -> str:
+    """
+    Output terminal content with formatting.
+    """
+    return f"\033[{key}m{string}\033[0m"
