@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## Version 0.9.2
+
+- Made progress bar now appear in a green color on supported terminals
+- Added progress bar mode #2
+- new mode allows tracking full process with just 1 progress bar
+- completely reconfigured the ProgMixin class
+- major edits to the way progress bars are tracked in all modules
+- other bug fixes
+
 ## Version 0.9.1
 
 - Clean up and consolidate many cli help strings

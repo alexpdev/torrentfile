@@ -236,8 +236,8 @@ def test_mbtorrent(version, progress):
 def test_progress_bar(params):
     """Testing the prog mixin with various sizes."""
     increment, total = params
-    progbar = ProgMixin()
-    progbar.prog_start(1 << total, "some/fake/path")
-    while progbar.prog.state < total:
-        progbar.prog_update(1 << increment)
-    assert progbar.prog.state >= total
+    progress = ProgMixin()
+    progbar = progress.get_progress_tracker(1 << total, "some/fake/path")
+    while progbar.state < total:
+        progbar.update(1 << increment)
+    assert progbar.state >= total

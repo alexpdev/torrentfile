@@ -27,7 +27,7 @@ import shutil
 import platform
 from pathlib import Path
 
-if platform.system() == "Windows":
+if platform.system() == "Windows":  # pragma: nocover
     kernel32 = ctypes.windll.kernel32
     kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
 
@@ -44,7 +44,7 @@ class Memo:
 
     def __init__(self, func):
         """
-        Construcor for cache.
+        Construct cache.
         """
         self.func = func
         self.counter = 0
@@ -52,7 +52,7 @@ class Memo:
 
     def __call__(self, path: str):
         """
-        Invoke each time memo function is called.
+        Invoke each time memo function is executed.
 
         Parameters
         ----------

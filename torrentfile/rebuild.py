@@ -409,14 +409,15 @@ class Metadata(CbMixin, ProgMixin):
         else:
             self._match_v1(filemap, dest)
         if self._prog is not None:
-            self.prog_close()
+            self.progbar.close_out()
 
     def _update(self):
         """Start and updating the progress bar."""
         if self._prog is None:
             self._prog = True
-            self.prog_start(self.num_pieces, self.name, unit="piece")
-        self.prog_update(1)
+            self.progbar = self.get_progress_tracker(self.num_pieces,
+                                                     self.name)
+        self.progbar.update(1)
 
 
 class Assembler(CbMixin):

@@ -446,6 +446,20 @@ class TorrentFile(MetaFile, ProgMixin):
         """
         info = self.meta["info"]
         size, filelist = utils.filelist_total(self.path)
+        kws = {
+            "progress": self.progress,
+            "progress_bar": None,
+            "align": self.align,
+        }
+
+        if self.progress == 2:
+            self.prog_bar = self.get_progress_tracker(size, str(self.path))
+            kws["progress_bar"] = self.prog_bar
+
+        elif self.progress == 0:
+            self.prog_bar = self.get_progress_tracker(-1, "")
+            kws["progress_bar"] = self.prog_bar
+
         if os.path.isfile(self.path):
             info["length"] = size
         elif not self.align:
@@ -476,11 +490,9 @@ class TorrentFile(MetaFile, ProgMixin):
                         "path": [".pad", str(remainder)],
                     })
         pieces = bytearray()
-
-        feeder = Hasher(filelist, self.piece_length, self.progress, self.align)
+        feeder = Hasher(filelist, self.piece_length, **kws)
         for piece in feeder:
             pieces.extend(piece)
-
         info["pieces"] = pieces
 
 
@@ -509,7 +521,18 @@ class TorrentFileV2(MetaFile, ProgMixin):
         logger.debug("Assembling bittorrent v2 torrent file")
         self.piece_layers = {}
         self.hashes = []
-        self.total = len(utils.get_file_list(self.path))
+        size, file_list = utils.filelist_total(self.path)
+        self.kws = {"progress": self.progress, "progress_bar": None}
+        self.total = len(file_list)
+
+        if self.progress == 2:
+            self.prog_bar = self.get_progress_tracker(size, str(self.path))
+            self.kws["progress_bar"] = self.prog_bar
+
+        elif self.progress == 0:
+            self.prog_bar = self.get_progress_tracker(-1, "")
+            self.kws["progress_bar"] = self.prog_bar
+
         self.assemble()
 
     def assemble(self):
@@ -525,7 +548,6 @@ class TorrentFileV2(MetaFile, ProgMixin):
         if os.path.isfile(self.path):
             info["file tree"] = {info["name"]: self._traverse(self.path)}
             info["length"] = os.path.getsize(self.path)
-            self.prog_update(info["length"])
         else:
             info["file tree"] = self._traverse(self.path)
 
@@ -549,7 +571,7 @@ class TorrentFileV2(MetaFile, ProgMixin):
                 return {"": {"length": size}}
 
             logger.debug("Hashing %s", str(path))
-            fhash = HasherV2(path, self.piece_length, self.progress)
+            fhash = HasherV2(path, self.piece_length, **self.kws)
 
             if size > self.piece_length:
                 self.piece_layers[fhash.root] = fhash.piece_layer
@@ -585,7 +607,18 @@ class TorrentFileHybrid(MetaFile, ProgMixin):
         self.piece_layers = {}
         self.pieces = []
         self.files = []
-        self.total = len(utils.get_file_list(self.path))
+        size, file_list = utils.filelist_total(self.path)
+        self.kws = {"progress": self.progress, "progress_bar": None}
+        self.total = len(file_list)
+
+        if self.progress == 0:
+            self.prog_bar = self.get_progress_tracker(-1, "")
+            self.kws["progress_bar"] = self.prog_bar
+
+        elif self.progress == 2:
+            self.prog_bar = self.get_progress_tracker(size, str(self.path))
+            self.kws["progress_bar"] = self.prog_bar
+
         self.assemble()
 
     def assemble(self):
@@ -630,8 +663,7 @@ class TorrentFileHybrid(MetaFile, ProgMixin):
                 return {"": {"length": file_size}}
 
             logger.debug("Hashing %s", str(path))
-            file_hash = HasherHybrid(path, self.piece_length, self.progress)
-            self.prog_update(file_size)
+            file_hash = HasherHybrid(path, self.piece_length, **self.kws)
 
             if file_size > self.piece_length:
                 self.piece_layers[file_hash.root] = file_hash.piece_layer
@@ -651,7 +683,7 @@ class TorrentFileHybrid(MetaFile, ProgMixin):
         return tree
 
 
-class TorrentAssembler(MetaFile):
+class TorrentAssembler(MetaFile, ProgMixin):
     """
     Assembler class for Bittorrent version 2 and hybrid meta files.
 
@@ -678,7 +710,22 @@ class TorrentAssembler(MetaFile):
         self.pieces = bytearray()
         self.files = []
         self.hybrid = self.meta_version == "3"
-        self.total = len(utils.get_file_list(self.path))
+        size, file_list = utils.filelist_total(self.path)
+        self.kws = {
+            "progress": self.progress,
+            "progress_bar": None,
+            "hybrid": self.hybrid,
+        }
+        self.total = len(file_list)
+
+        if self.progress == 2:
+            self.prog_bar = self.get_progress_tracker(size, str(self.path))
+            self.kws["progress_bar"] = self.prog_bar
+
+        elif self.progress == 0:
+            self.prog_bar = self.get_progress_tracker(-1, "")
+            self.kws["progress_bar"] = self.prog_bar
+
         self.assemble()
 
     def assemble(self):
@@ -725,10 +772,7 @@ class TorrentAssembler(MetaFile):
                 return {"": {"length": file_size}}
 
             logger.debug("Hashing %s", str(path))
-            hasher = FileHasher(path,
-                                self.piece_length,
-                                progress=True,
-                                hybrid=self.hybrid)
+            hasher = FileHasher(path, self.piece_length, **self.kws)
             layers = bytearray()
             for result in hasher:
                 if self.hybrid:
