@@ -132,7 +132,8 @@ class ProgressBar:
         pbar.append(f"{state:.02f}")
         return "".join(pbar)
 
-    def close_out(self):
+    @staticmethod
+    def close_out():
         """
         Finalize the last bits of progress bar.
 
@@ -201,7 +202,8 @@ class ProgMixin:
     class NoProg:
         """Stand-in object for when progress mode is set to 0."""
 
-        def update(self, value):
+        @staticmethod
+        def update(value):
             """
             Return the value.
 
