@@ -9,6 +9,8 @@
 - major edits to the way progress bars are tracked in all modules
 - other bug fixes
 
+---
+
 ## Version 0.9.1
 
 - Clean up and consolidate many cli help strings

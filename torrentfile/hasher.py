@@ -47,8 +47,12 @@ class Hasher(CbMixin, ProgMixin):
         List of files.
     piece_length : int
         Size of chuncks to split the data into.
-    **kwargs : dict
-        keyword arguments
+    align: bool
+        flag to indicate if the torrent should be piece aligned
+    progress: int
+        the progress mode
+    progress_bar: [Optional] ProgressBar
+        a progress bar object if progress mode is 2
     """
 
     def __init__(
@@ -431,11 +435,12 @@ class FileHasher(CbMixin, ProgMixin):
         path to target file.
     piece_length : int
         piece length for data chunks.
+    hybrid : bool
+        flag to indicate if it's a hybrid torrent
     progress: int
         the progress mode
     progress_bar: [Optional] ProgressBar
         a progress bar object if progress mode is 2
-
     """
 
     def __init__(

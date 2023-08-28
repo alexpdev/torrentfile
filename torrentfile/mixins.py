@@ -29,7 +29,7 @@ import time
 import shutil
 from pathlib import Path
 
-from torrentfile.utils import green
+from torrentfile.utils import debug_is_on, green
 
 
 class CbMixin:
@@ -77,6 +77,7 @@ class ProgressBar:
         """
         Construct the progress bar object and store state of it's properties.
         """
+        debug_is_on()
         self.total = total
         self.start = start
         self.length = length
@@ -173,8 +174,6 @@ class ProgressBar:
             the number of characters of the actual progress bar.
         unit : str
             the text representation of the value being measured.
-        mode : int
-            the progress bar mode
         """
         title = path
         width = shutil.get_terminal_size().columns
