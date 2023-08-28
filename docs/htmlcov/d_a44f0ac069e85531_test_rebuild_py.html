@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="d_a44f0ac069e85531_test_recheck_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.2.7">coverage.py v7.2.7</a>,
-            created at 2023-07-26 12:16 -0700
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.3.0">coverage.py v7.3.0</a>,
+            created at 2023-08-27 21:50 -0700
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -225,9 +225,9 @@
     <p class="run"><span class="n"><a id="t143" href="#t143">143</a></span><span class="t"><span class="op">@</span><span class="nam">pytest</span><span class="op">.</span><span class="nam">mark</span><span class="op">.</span><span class="nam">parametrize</span><span class="op">(</span><span class="str">"size"</span><span class="op">,</span> <span class="op">[</span><span class="num">2</span><span class="op">**</span><span class="nam">i</span> <span class="key">for</span> <span class="nam">i</span> <span class="key">in</span> <span class="nam">range</span><span class="op">(</span><span class="num">14</span><span class="op">,</span> <span class="num">21</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t144" href="#t144">144</a></span><span class="t"><span class="key">def</span> <span class="nam">test_file1_hashers</span><span class="op">(</span><span class="nam">file2</span><span class="op">,</span> <span class="nam">size</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t145" href="#t145">145</a></span><span class="t">    <span class="str">"""Test that all three of the version2 hashers produce the same result."""</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t146" href="#t146">146</a></span><span class="t">    <span class="nam">hasher1</span> <span class="op">=</span> <span class="nam">HasherHybrid</span><span class="op">(</span><span class="nam">file2</span><span class="op">,</span> <span class="nam">size</span><span class="op">,</span> <span class="nam">progress</span><span class="op">=</span><span class="key">False</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t147" href="#t147">147</a></span><span class="t">    <span class="nam">hasher2</span> <span class="op">=</span> <span class="nam">HasherV2</span><span class="op">(</span><span class="nam">file2</span><span class="op">,</span> <span class="nam">size</span><span class="op">,</span> <span class="nam">progress</span><span class="op">=</span><span class="key">False</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t148" href="#t148">148</a></span><span class="t">    <span class="nam">hasher3</span> <span class="op">=</span> <span class="nam">FileHasher</span><span class="op">(</span><span class="nam">file2</span><span class="op">,</span> <span class="nam">size</span><span class="op">,</span> <span class="nam">progress</span><span class="op">=</span><span class="key">False</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t146" href="#t146">146</a></span><span class="t">    <span class="nam">hasher1</span> <span class="op">=</span> <span class="nam">HasherHybrid</span><span class="op">(</span><span class="nam">file2</span><span class="op">,</span> <span class="nam">size</span><span class="op">,</span> <span class="nam">progress</span><span class="op">=</span><span class="num">1</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t147" href="#t147">147</a></span><span class="t">    <span class="nam">hasher2</span> <span class="op">=</span> <span class="nam">HasherV2</span><span class="op">(</span><span class="nam">file2</span><span class="op">,</span> <span class="nam">size</span><span class="op">,</span> <span class="nam">progress</span><span class="op">=</span><span class="num">1</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t148" href="#t148">148</a></span><span class="t">    <span class="nam">hasher3</span> <span class="op">=</span> <span class="nam">FileHasher</span><span class="op">(</span><span class="nam">file2</span><span class="op">,</span> <span class="nam">size</span><span class="op">,</span> <span class="nam">progress</span><span class="op">=</span><span class="num">1</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t149" href="#t149">149</a></span><span class="t">    <span class="nam">_</span> <span class="op">=</span> <span class="nam">list</span><span class="op">(</span><span class="nam">hasher3</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t150" href="#t150">150</a></span><span class="t">    <span class="nam">lst</span> <span class="op">=</span> <span class="op">[</span><span class="nam">hasher1</span><span class="op">.</span><span class="nam">root</span><span class="op">,</span> <span class="nam">hasher2</span><span class="op">.</span><span class="nam">root</span><span class="op">,</span> <span class="nam">hasher3</span><span class="op">.</span><span class="nam">root</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t151" href="#t151">151</a></span><span class="t">    <span class="nam">print</span><span class="op">(</span><span class="nam">lst</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -273,8 +273,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="d_a44f0ac069e85531_test_recheck_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.2.7">coverage.py v7.2.7</a>,
-            created at 2023-07-26 12:16 -0700
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.3.0">coverage.py v7.3.0</a>,
+            created at 2023-08-27 21:50 -0700
         </p>
     </div>
 </footer>

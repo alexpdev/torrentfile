@@ -373,7 +373,7 @@ class FeedChecker(ProgMixin):
         partial = bytearray()
         for i, path in enumerate(self.paths):
             total = self.fileinfo[i]["length"]
-            self.prog_start(total, path)
+            self.progbar = self.get_progress_tracker(total, path)
             self.index = i
             if os.path.exists(path):
                 for piece in self.extract(path, partial):
@@ -390,7 +390,7 @@ class FeedChecker(ProgMixin):
                         yield pad
                     else:
                         partial = pad
-            self.prog_close()
+            self.progbar.close_out()
 
     def extract(self, path: str, partial: bytearray) -> bytearray:
         """
@@ -422,10 +422,10 @@ class FeedChecker(ProgMixin):
                 partial.extend(part[:amount])
                 if amount < bitlength:
                     if amount > 0 and read == length:
-                        self.prog_update(amount)
+                        self.progbar.update(amount)
                         yield partial
                     break
-                self.prog_update(amount)
+                self.progbar.update(amount)
                 yield partial
                 partial = bytearray(0)
         if length != read:
@@ -570,7 +570,6 @@ class HashChecker(ProgMixin):
             if there is a next file found
         """
         self.index += 1
-        self.prog_close()
         if self.current is None or self.index < len(self.paths):
             self.current = self.paths[self.index]
             self.length = self.fileinfo[self.index]["length"]
@@ -580,10 +579,15 @@ class HashChecker(ProgMixin):
             else:
                 self.pieces = self.root_hash
             path = self.paths[self.index]
-            self.prog_start(self.length, path)
+            self.progbar = self.get_progress_tracker(self.length, path)
             self.count = 0
             if os.path.exists(self.current):
-                self.hasher = FileHasher(path, self.piece_length, progress=0)
+                self.hasher = FileHasher(
+                    path,
+                    self.piece_length,
+                    progress=2,
+                    progress_bar=self.progbar,
+                )
             else:
                 self.hasher = self.Padder(self.length, self.piece_length)
             return True
@@ -610,14 +614,14 @@ class HashChecker(ProgMixin):
         try:
             layer = next(self.hasher)
             piece, size = self.advance()
-            self.prog_update(size)
+            self.progbar.update(size)
             return layer, piece, self.current, size
         except StopIteration as err:
             if self.length > 0 and self.count * SHA256 < len(self.pieces):
                 self.hasher = self.Padder(self.length, self.piece_length)
                 piece, size = self.advance()
                 layer = next(self.hasher)
-                self.prog_update(0)
+                self.progbar.update(0)
                 return layer, piece, self.current, size
             raise StopIteration from err
 

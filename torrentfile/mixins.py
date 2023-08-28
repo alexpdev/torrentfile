@@ -29,7 +29,7 @@ import time
 import shutil
 from pathlib import Path
 
-from torrentfile.utils import debug_is_on
+from torrentfile.utils import debug_is_on, green
 
 
 class CbMixin:
@@ -77,6 +77,7 @@ class ProgressBar:
         """
         Construct the progress bar object and store state of it's properties.
         """
+        debug_is_on()
         self.total = total
         self.start = start
         self.length = length
@@ -118,7 +119,8 @@ class ProgressBar:
         else:
             fill = math.ceil((self.state / self.total) * self.length)
         empty = self.length - fill
-        pbar = ["|", self.fill * fill, self.empty * empty, "| "]
+        contents = (self.fill * fill) + (self.empty * empty)
+        pbar = ["|", green(contents), "| "]
         if self.unit == "GiB":
             state = self.state / (2**30)
         elif self.unit == "MiB":
@@ -130,20 +132,36 @@ class ProgressBar:
         pbar.append(f"{state:.02f}")
         return "".join(pbar)
 
+    @staticmethod
+    def close_out():
+        """
+        Finalize the last bits of progress bar.
 
-class ProgMixin:
-    """
-    Progress bar mixin class.
+        Increment the terminal by one line leaving the progress bar in place,
+        and deleting the progress bar object to clear a space for the next one.
+        """
+        sys.stdout.flush()
+        sys.stdout.write("\n")
 
-    Displays progress of hashing individual files, usefull when hashing
-    really big files.
-    """
+    def update(self, val: int):
+        """
+        Update progress bar.
 
-    def prog_start(self,
-                   total: int,
-                   path: str,
-                   length: int = 50,
-                   unit: str = "bytes"):
+        Using the value provided, increment the progress bar by that value.
+
+        Parameters
+        ----------
+        val : int
+            the number of bytes count the progress bar should increase.
+        """
+        self.state += val
+        pbar = self.get_progress()
+        output = f"{self.prefix}{pbar}{self.suffix}\r"
+        sys.stdout.write(output)
+        sys.stdout.flush()
+
+    @classmethod
+    def new(cls, total: int, path: str, length: int = 50, unit: str = "bytes"):
         """
         Generate a new progress bar for the given file path.
 
@@ -170,50 +188,55 @@ class ProgMixin:
                 title = os.path.basename(path)  # pragma: nocover
         length = min(length, width // 2)
         start = width - int(length * 1.5)
-        self.prog = ProgressBar(total, title, length, unit, start)
+        return cls(total, title, length, unit, start)
 
-    def prog_update(self, val: int):
-        """
-        Update progress bar.
 
-        Using the value provided, increment the progress bar by that value.
+class ProgMixin:
+    """
+    Progress bar mixin class.
+
+    Displays progress of hashing individual files, usefull when hashing
+    really big files.
+    """
+
+    class NoProg:
+        """Stand-in object for when progress mode is set to 0."""
+
+        @staticmethod
+        def update(value):
+            """
+            Return the value.
+
+            Parameters
+            ----------
+            value: int
+                the input and output
+
+            Returns
+            -------
+            int :
+                same as input
+            """
+            return value
+
+    def get_progress_tracker(self, total: int, message: str):
+        """Return the progress bar object for external management.
 
         Parameters
         ----------
-        val : int
-            the number of bytes count the progress bar should increase.
-        """
-        if self.is_active():
-            self.prog.state += val
-            pbar = self.prog.get_progress()
-            output = f"{self.prog.prefix}{pbar}{self.prog.suffix}\r"
-            sys.stdout.write(output)
-            sys.stdout.flush()
-
-    def prog_close(self):
-        """
-        Finalize the last bits of progress bar.
-
-        Increment the terminal by one line leaving the progress bar in place,
-        and deleting the progress bar object to clear a space for the next one.
-        """
-        if self.is_active():
-            sys.stdout.flush()
-            sys.stdout.write("\n")
-            del self.prog
-
-    def is_active(self) -> bool:
-        """
-        Test to see if there is an active progress bar for object.
+        total: int
+            total size to track
+        message: str
+            prompt message for what is being tracked
 
         Returns
         -------
-        bool :
-            True if there is, otherwise False.
+        ProgressBar
+            progress bar object instance
         """
-        if not debug_is_on() and hasattr(self, "prog"):
-            return True
-        return False
+        if total < 0:
+            return self.NoProg()
+        return ProgressBar.new(total, message)
 
 
 def waiting(msg: str, flag: list, timeout: int = 20):

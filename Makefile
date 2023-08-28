@@ -68,7 +68,6 @@ clean-build: ## remove build artifacts
 	rm -fv *.spec
 
 test: ## Get coverage report
-	pip install --pre --upgrade --force-reinstall --no-cache -rrequirements.txt
 	tox
 
 docs: ## Regenerate docs from changes

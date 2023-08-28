@@ -22,8 +22,14 @@ Utility functions and classes used throughout package.
 
 import os
 import math
+import ctypes
 import shutil
+import platform
 from pathlib import Path
+
+if platform.system() == "Windows":  # pragma: nocover
+    kernel32 = ctypes.windll.kernel32
+    kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
 
 
 class Memo:
@@ -38,7 +44,7 @@ class Memo:
 
     def __init__(self, func):
         """
-        Construcor for cache.
+        Construct cache.
         """
         self.func = func
         self.counter = 0
@@ -46,7 +52,7 @@ class Memo:
 
     def __call__(self, path: str):
         """
-        Invoke each time memo function is called.
+        Invoke each time memo function is executed.
 
         Parameters
         ----------
@@ -440,3 +446,17 @@ def check_path_writable(path: str) -> bool:
         message = f"Target directory is not writeable {directory}"
         raise PermissionError(message) from err
     return True
+
+
+def green(string: str) -> str:
+    """
+    Output terminal content in green color.
+    """
+    return colored(string, 92)
+
+
+def colored(string: str, key: int) -> str:
+    """
+    Output terminal content with formatting.
+    """
+    return f"\033[{key}m{string}\033[0m"
