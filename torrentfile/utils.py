@@ -25,6 +25,7 @@ import math
 import ctypes
 import shutil
 import platform
+import re
 from pathlib import Path
 
 if platform.system() == "Windows":  # pragma: nocover
@@ -175,7 +176,12 @@ def normalize_piece_length(piece_length: int) -> int:
         if piece_length.isnumeric():
             piece_length = int(piece_length)
         else:
-            raise PieceLengthValueError(piece_length)
+            try:
+                if re.search('[0-9*<]*(.*)',piece_length).group(1):
+                    raise PieceLengthValueError(piece_length)
+                piece_length = int(eval(piece_length))
+            except:
+                raise PieceLengthValueError(piece_length)
 
     if piece_length > (1 << 14):
         if 2**math.log2(piece_length) == piece_length:
