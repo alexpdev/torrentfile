@@ -1871,8 +1871,7 @@ it can be used as an iterator and works for both versions.</p>
 <span class="normal">725</span>
 <span class="normal">726</span>
 <span class="normal">727</span>
-<span class="normal">728</span>
-<span class="normal">729</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="normal">728</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create Bittorrent v1 v2 hybrid metafiles.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1883,12 +1882,11 @@ it can be used as an iterator and works for both versions.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">hybrid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span>
     <span class="n">size</span><span class="p">,</span> <span class="n">file_list</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">filelist_total</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">kws</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;progress&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">,</span>
         <span class="s2">&quot;progress_bar&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="s2">&quot;hybrid&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hybrid</span><span class="p">,</span>
+        <span class="s2">&quot;meta_version&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_list</span><span class="p">)</span>
 
@@ -1932,7 +1930,8 @@ it can be used as an iterator and works for both versions.</p>
 
       <details class="quote">
         <summary>Source code in <code>torrentfile\torrent.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">731</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">730</span>
+<span class="normal">731</span>
 <span class="normal">732</span>
 <span class="normal">733</span>
 <span class="normal">734</span>
@@ -1950,8 +1949,7 @@ it can be used as an iterator and works for both versions.</p>
 <span class="normal">746</span>
 <span class="normal">747</span>
 <span class="normal">748</span>
-<span class="normal">749</span>
-<span class="normal">750</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">749</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">assemble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Assemble the parts of the torrentfile into meta dictionary.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1964,10 +1962,10 @@ it can be used as an iterator and works for both versions.</p>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;file tree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hybrid</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
             <span class="n">info</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span>
 
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hybrid</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;pieces&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pieces</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;piece layers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">piece_layers</span>
     <span class="k">return</span> <span class="n">info</span>

@@ -743,7 +743,7 @@
 
 
 <h3 id="torrentfile.hasher.FileHasher" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">FileHasher</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hybrid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">progress_bar</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">FileHasher</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">meta_version</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">progress_bar</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span></code>
 
 <a href="#torrentfile.hasher.FileHasher" class="headerlink" title="Permanent link">#</a></h3>
 
@@ -798,10 +798,6 @@ piece_length bytes for the piece layer, and then the root hash.</p>
                 <span class="doc-param-annotation">
                   <b>TYPE:</b>
                     <code>bool</code>
-                </span>
-                <span class="doc-param-default">
-                  <b>DEFAULT:</b> 
-                    <code>False</code>
                 </span>
             </p>
           </td>
@@ -874,7 +870,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
     <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">piece_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">progress</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">hybrid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">meta_version</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="n">progress_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -896,7 +892,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="n">size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_progress_tracker</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">hybrid</span> <span class="o">=</span> <span class="n">hybrid</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="o">=</span> <span class="n">meta_version</span>
 </code></pre></div></td></tr></table></div>
           </details>
 
@@ -1085,7 +1081,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="n">total</span> <span class="o">+=</span> <span class="n">size</span>
         <span class="n">plength</span> <span class="o">-=</span> <span class="n">size</span>
         <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sha256</span><span class="p">(</span><span class="n">block</span><span class="p">[:</span><span class="n">size</span><span class="p">])</span><span class="o">.</span><span class="n">digest</span><span class="p">())</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hybrid</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
             <span class="n">piece</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">block</span><span class="p">[:</span><span class="n">size</span><span class="p">])</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">blocks</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_root</span><span class="p">()</span>
@@ -1100,7 +1096,7 @@ piece_length bytes for the piece layer, and then the root hash.</p>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">progbar</span><span class="o">.</span><span class="n">close_out</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_root</span><span class="p">()</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hybrid</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_version</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">plength</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">padding_file</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;attr&quot;</span><span class="p">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span>

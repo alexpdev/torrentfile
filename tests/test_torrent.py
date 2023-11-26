@@ -23,9 +23,9 @@ import os
 
 import pytest
 
-from tests import dir1, dir2, rmpath, tempfile, torrents
+from tests import dir1, dir2, dirrand, rmpath, tempfile, torrents
 from torrentfile.mixins import ProgMixin, waiting
-from torrentfile.torrent import MetaFile
+from torrentfile.torrent import MetaFile, TorrentAssembler
 from torrentfile.utils import MissingPathError
 
 
@@ -33,7 +33,7 @@ def test_fixtures():
     """
     Test pytest fixtures.
     """
-    assert dir1 and dir2
+    assert dir1 and dir2 and dirrand
 
 
 @pytest.mark.parametrize("version", torrents())
@@ -241,3 +241,72 @@ def test_progress_bar(params):
     while progbar.state < total:
         progbar.update(1 << increment)
     assert progbar.state >= total
+
+
+@pytest.mark.parametrize("progress", [0, 1, 2])
+@pytest.mark.parametrize("sze", list(range(17, 25)))
+@pytest.mark.parametrize("piecelength", [2**i for i in range(14, 18)])
+@pytest.mark.parametrize("meta_version", [1, 2, 3])
+def test_torrent_assembler_single(progress, sze, piecelength, meta_version):
+    """
+    Testing the TorrentAssembler class from torrent module with single file.
+    """
+    tfile = tempfile(exp=sze)
+    outfile = str(tfile) + ".torrent"
+    kwargs = {
+        "path": tfile,
+        "comment": "somecomment",
+        "announce": "announce",
+        "piece_length": piecelength,
+        "outfile": outfile,
+        "meta_version": meta_version,
+        "progress": progress,
+        "align": True,
+    }
+    assembler = TorrentAssembler(**kwargs)
+    assembler.write()
+    assert os.path.exists(outfile)
+
+
+@pytest.mark.parametrize("progress", [0, 1, 2])
+@pytest.mark.parametrize("piecelength", [2**i for i in range(14, 18)])
+@pytest.mark.parametrize("meta_version", [1, 2, 3])
+def test_torrent_assembler_multi(progress, piecelength, meta_version, dir2):
+    """
+    Testing the TorrentAssembler class from torrent module with multi file.
+    """
+    outfile = str(dir2) + ".torrent"
+    kwargs = {
+        "path": dir2,
+        "piece_length": piecelength,
+        "comment": "somecomment",
+        "announce": "announce",
+        "meta_version": meta_version,
+        "outfile": outfile,
+        "progress": progress,
+        "align": True,
+    }
+    assembler = TorrentAssembler(**kwargs)
+    assembler.write()
+    assert os.path.exists(outfile)
+
+
+@pytest.mark.parametrize("meta_version", [1, 2, 3])
+@pytest.mark.parametrize("piecelength", [2**i for i in range(16, 18)])
+def test_torrent_assembler_multi_rand(piecelength, meta_version, dirrand):
+    """
+    Testing the TorrentAssembler class from torrent module with random file.
+    """
+    outfile = str(dirrand) + ".torrent"
+    kwargs = {
+        "path": dirrand,
+        "piece_length": piecelength,
+        "comment": "somecomment",
+        "announce": "announce",
+        "meta_version": meta_version,
+        "outfile": outfile,
+        "align": True,
+    }
+    assembler = TorrentAssembler(**kwargs)
+    assembler.write()
+    assert os.path.exists(outfile)

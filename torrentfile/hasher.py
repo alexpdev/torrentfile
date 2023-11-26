@@ -448,7 +448,7 @@ class FileHasher(CbMixin, ProgMixin):
         path: str,
         piece_length: int,
         progress: int = 1,
-        hybrid: bool = False,
+        meta_version: int = 2,
         progress_bar=None,
     ):
         """
@@ -470,7 +470,7 @@ class FileHasher(CbMixin, ProgMixin):
             size = os.path.getsize(self.path)
             self.progbar = self.get_progress_tracker(size, self.path)
         self.current = open(path, "rb")
-        self.hybrid = hybrid
+        self.meta_version = meta_version
 
     def __iter__(self):
         """Return `self`: needed to implement iterator implementation."""
@@ -528,7 +528,7 @@ class FileHasher(CbMixin, ProgMixin):
             total += size
             plength -= size
             blocks.append(sha256(block[:size]).digest())
-            if self.hybrid:
+            if self.meta_version in [1, 3]:
                 piece.update(block[:size])
         if not blocks:
             self._calculate_root()
@@ -543,7 +543,7 @@ class FileHasher(CbMixin, ProgMixin):
             if self.progress == 1:
                 self.progbar.close_out()
             self._calculate_root()
-        if self.hybrid:
+        if self.meta_version in [1, 3]:
             if plength > 0:
                 self.padding_file = {
                     "attr": "p",

@@ -709,12 +709,11 @@ class TorrentAssembler(MetaFile, ProgMixin):
         self.piece_layers = {}
         self.pieces = bytearray()
         self.files = []
-        self.hybrid = self.meta_version == "3"
         size, file_list = utils.filelist_total(self.path)
         self.kws = {
             "progress": self.progress,
             "progress_bar": None,
-            "hybrid": self.hybrid,
+            "meta_version": self.meta_version,
         }
         self.total = len(file_list)
 
@@ -741,10 +740,10 @@ class TorrentAssembler(MetaFile, ProgMixin):
 
         else:
             info["file tree"] = self._traverse(self.path)
-            if self.hybrid:
+            if self.meta_version in [1, 3]:
                 info["files"] = self.files
 
-        if self.hybrid:
+        if self.meta_version in [1, 3]:
             info["pieces"] = self.pieces
         self.meta["piece layers"] = self.piece_layers
         return info
@@ -760,7 +759,7 @@ class TorrentAssembler(MetaFile, ProgMixin):
         """
         if os.path.isfile(path):
             file_size = os.path.getsize(path)
-            if self.hybrid:
+            if self.meta_version in [1, 3]:
                 self.files.append({
                     "length":
                     file_size,
@@ -775,7 +774,7 @@ class TorrentAssembler(MetaFile, ProgMixin):
             hasher = FileHasher(path, self.piece_length, **self.kws)
             layers = bytearray()
             for result in hasher:
-                if self.hybrid:
+                if self.meta_version in [1, 3]:
                     layer_hash, piece = result
                     self.pieces.extend(piece)
                 else:
@@ -783,7 +782,7 @@ class TorrentAssembler(MetaFile, ProgMixin):
                 layers.extend(layer_hash)
             if file_size > self.piece_length:
                 self.piece_layers[hasher.root] = layers
-            if self.hybrid and hasher.padding_file:
+            if self.meta_version in [1, 3] and hasher.padding_file:
                 self.files.append(hasher.padding_file)
 
             return {"": {"length": file_size, "pieces root": hasher.root}}

@@ -46,37 +46,37 @@ clean: clean-build ## remove all build, test, coverage and Python artifacts
 
 clean-build: ## remove build artifacts
 	@echo Cleaning
-	rm -rvf build/
-	rm -fvr dist/
-	rm -fvr .eggs/
-	rm -fvr .tox/
-	rm -fv .coverage
-	rm -fv coverage.xml
-	rm -fvr htmlcov/
-	rm -fv corbertura.xml
-	rm -fvr .pytest_cache
-	rm -rvf Release
-	rm -rfv *.egg-info
-	rm -rfv .benchmarks
-	rm -rfv .codacy-coverage
-	rm -rfv node_modules
-	rm -fv torrentfile.log
-	rm -fvr -- *'/__pycache__'
-	rm -frv runner/build
-	rm -frv runner/dist
-	rm -rfv *.zip
-	rm -fv *.spec
+	rm -rf build/
+	rm -fr dist/
+	rm -fr .eggs/
+	rm -fr .tox/
+	rm -f .coverage
+	rm -f coverage.xml
+	rm -fr htmlcov/
+	rm -f corbertura.xml
+	rm -fr .pytest_cache
+	rm -rf Release
+	rm -rf *.egg-info
+	rm -rf .benchmarks
+	rm -rf .codacy-coverage
+	rm -rf node_modules
+	rm -f torrentfile.log
+	rm -fr -- *'/__pycache__'
+	rm -fr runner/build
+	rm -fr runner/dist
+	rm -rf *.zip
+	rm -f *.spec
 
 test: ## Get coverage report
 	tox
 
 docs: ## Regenerate docs from changes
-	rm -rfv docs/*
-	rm -rfv site/index.md
-	cp -rfv README.md site/index.md
-	cp -rfv CHANGELOG.md site/changelog.md
-	rm -rfv site/htmlcov
-	mv -fv htmlcov site/
+	rm -rf docs/*
+	rm -rf site/index.md
+	cp -rf README.md site/index.md
+	cp -rf CHANGELOG.md site/changelog.md
+	rm -rf site/htmlcov
+	mv -f htmlcov site/
 	mkdocs build
 	touch docs/.nojekyll
 
@@ -85,8 +85,8 @@ push: clean test docs ## Push to github
 	git commit -m "$m"
 	git push
 
-setup: clean test ## setup and build repo
-	python setup.py sdist bdist_wheel bdist_egg
+setup: clean ## setup and build repo
+	python setup.py sdist bdist_wheel
 	pip install -e .
 	twine upload dist/*
 

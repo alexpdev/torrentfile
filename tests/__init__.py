@@ -22,6 +22,7 @@ Unittest package init module.
 
 import os
 import atexit
+import random
 import shutil
 import string
 from datetime import datetime
@@ -33,7 +34,7 @@ from torrentfile.torrent import (
     TorrentAssembler, TorrentFile, TorrentFileHybrid, TorrentFileV2)
 
 
-def tempfile(path=None, exp=18):
+def tempfile(path=None, exp=18, off=None):
     """Create temporary file.
 
     Creates a temporary file for unittesting purposes.py
@@ -44,6 +45,8 @@ def tempfile(path=None, exp=18):
         relative path to temporary files, by default None
     exp : int, optional
         Exponent used to determine size of file., by default 18
+    off : (default=None)
+        If set it means create randomness at end of files.
 
     Returns
     -------
@@ -71,6 +74,9 @@ def tempfile(path=None, exp=18):
                     else:
                         binfile.write(seq[:size])
                         size -= size
+                if off is not None:
+                    amount = random.randint(64, 1 << 18)  # nosec
+                    binfile.write(bytes(amount))
         else:
             if not os.path.exists(partial):
                 os.mkdir(partial)
@@ -113,6 +119,8 @@ def tempdir(ext="1"):
     str
         path to common root for directory.
     """
+    off = ext if ext == "r" else None
+    ext = ext if ext != "r" else "2"
     layouts = {
         "1": [
             f"dir{ext}/file1.png",
@@ -132,8 +140,9 @@ def tempdir(ext="1"):
         ],
     }
     paths = []
+
     for path in layouts[ext]:
-        temps = tempfile(path=path, exp=18)
+        temps = tempfile(path=path, exp=18, off=off)
         paths.append(temps)
     return os.path.commonpath(paths)
 
@@ -191,6 +200,20 @@ def dir2():
         path to root of temporary directory
     """
     root = tempdir(ext="2")
+    yield Path(root)
+    rmpath(root)
+
+
+@pytest.fixture()
+def dirrand():
+    """Create a randomly sized file tree.
+
+    Yields
+    ------
+    str
+        path to root of temporary directory
+    """
+    root = tempdir(ext="r")
     yield Path(root)
     rmpath(root)
 
