@@ -419,10 +419,11 @@ def magnet(metafile: str, version: int = 0) -> str:
     magnet += trackers if trackers != "&tr=" else ""
 
     if "url-list" in meta:
-        web_seed = [
-            "&ws=" + quote_plus(url) for urllist in meta["url-list"]
-            for url in urllist
+        web_sources = [
+            "&ws=" + quote_plus(urllist) for urllist in meta["url-list"]
             ]
+    web_seed = "".join(web_sources)
+
     magnet += web_seed if web_seed != "&ws=" else ""
 
     logger.info("Created Magnet URI %s", magnet)
