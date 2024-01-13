@@ -422,6 +422,9 @@ def magnet(metafile: str, version: int = 0) -> str:
         web_sources = [
             "&ws=" + quote_plus(urllist) for urllist in meta["url-list"]
             ]
+    else:
+        web_sources = [""]
+
     web_seed = "".join(web_sources)
 
     magnet += web_seed if web_seed != "&ws=" else ""
