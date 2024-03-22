@@ -109,20 +109,12 @@ def test_magnet_web_seed(metafile2):
     """
     Test create magnet function scheme.
     """
-    magnet_link = magnet(metafile2)
+    fake_web_seed = "fake-web-seed"
     meta = pyben.load(metafile2)
-    web_seed = meta["web-seed"]
-    assert quote_plus(web_seed) in magnet_link
-
-def test_magnet_no_web_seed(metafile2):
-    """
-    Test create magnet function scheme.
-    """
-    meta = pyben.load(metafile2)
-    del meta["web-seed"]
+    meta["url-list"] = fake_web_seed
     pyben.dump(meta, metafile2)
     magnet_link = magnet(metafile2)
-    assert magnet_link.startswith("magnet")
+    assert quote_plus(fake_web_seed) in magnet_link
 
 def test_magnet_empty():
     """
