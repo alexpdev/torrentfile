@@ -404,6 +404,7 @@ def magnet(metafile: str, version: int = 0) -> str:
 
     magnet += "&dn=" + quote_plus(info_dict["name"])
 
+    announce_args = [""]
     if "announce-list" in meta:
         announce_args = [
             "&tr=" + quote_plus(url) for urllist in meta["announce-list"]
@@ -411,12 +412,21 @@ def magnet(metafile: str, version: int = 0) -> str:
         ]
     elif "announce" in meta:
         announce_args = ["&tr=" + quote_plus(meta["announce"])]
-    else:
-        announce_args = [""]
+    
 
     trackers = "".join(announce_args)
 
     magnet += trackers if trackers != "&tr=" else ""
+
+    web_sources = [""]
+    if "url-list" in meta:
+        web_sources = [
+            "&ws=" + quote_plus(urllist) for urllist in meta["url-list"]
+            ]
+
+    web_seed = "".join(web_sources)
+
+    magnet += web_seed if web_seed != "&ws=" else ""
 
     logger.info("Created Magnet URI %s", magnet)
     sys.stdout.write("\n" + magnet + "\n")

@@ -105,6 +105,16 @@ def test_magnet_no_announce(metafile2):
     magnet_link = magnet(metafile2)
     assert magnet_link.startswith("magnet")
 
+def test_magnet_web_seed(metafile2):
+    """
+    Test create magnet function scheme.
+    """
+    fake_web_seed = "fake-web-seed"
+    meta = pyben.load(metafile2)
+    meta["url-list"] = fake_web_seed
+    pyben.dump(meta, metafile2)
+    magnet_link = magnet(metafile2)
+    assert quote_plus(fake_web_seed) in magnet_link
 
 def test_magnet_empty():
     """
