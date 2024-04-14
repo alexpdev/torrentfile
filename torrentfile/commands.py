@@ -158,6 +158,19 @@ def create(args: Namespace) -> Namespace:
         object containing the path to created metafile and its contents.
     """
     kwargs = vars(args)
+
+    parent, name = os.path.split(kwargs.get('content'))
+    if not name:
+        name = os.path.basename(parent)
+    outfile = kwargs.get('outfile')
+    if not outfile:
+        path = os.path.join(os.getcwd(), name) + ".torrent"
+        outfile = path
+    if str(outfile)[-1] in "\\/":
+        outfile = outfile + (name + ".torrent")
+    if Path(outfile).exists() and not args.overwrite:
+        raise FileExistsError(outfile)
+
     if args.config:
         path = find_config_file(args)
         parse_config_file(path, kwargs)  # pragma: nocover
