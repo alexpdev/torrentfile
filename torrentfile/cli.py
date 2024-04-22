@@ -42,6 +42,7 @@ import io
 import sys
 import logging
 from argparse import ArgumentParser, HelpFormatter
+from typing import List
 
 from torrentfile import commands
 from torrentfile.utils import toggle_debug_mode
@@ -98,7 +99,7 @@ class TorrentFileHelpFormatter(HelpFormatter):
     def __init__(self,
                  prog: str,
                  width: int = 45,
-                 max_help_positions: int = 45):
+                 max_help_positions: int = 45) -> None:
         """
         Construct HelpFormat class for usage output.
 
@@ -194,7 +195,7 @@ class TorrentFileHelpFormatter(HelpFormatter):
         return parts
 
 
-def execute(args: list = None) -> list:
+def execute(args: List[str] = None) -> List[str]:
     """
     Execute program with provided list of arguments.
 

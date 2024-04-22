@@ -412,7 +412,6 @@ def magnet(metafile: str, version: int = 0) -> str:
         ]
     elif "announce" in meta:
         announce_args = ["&tr=" + quote_plus(meta["announce"])]
-    
 
     trackers = "".join(announce_args)
 
@@ -422,7 +421,7 @@ def magnet(metafile: str, version: int = 0) -> str:
     if "url-list" in meta:
         web_sources = [
             "&ws=" + quote_plus(urllist) for urllist in meta["url-list"]
-            ]
+        ]
 
     web_seed = "".join(web_sources)
 

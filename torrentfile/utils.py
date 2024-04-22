@@ -25,6 +25,7 @@ import math
 import ctypes
 import shutil
 import platform
+from typing import Callable, Any, Tuple, List
 from pathlib import Path
 
 if platform.system() == "Windows":  # pragma: nocover
@@ -42,7 +43,7 @@ class Memo:
         The results of this callable will be cached.
     """
 
-    def __init__(self, func):
+    def __init__(self, func: Callable) -> None:
         """
         Construct cache.
         """
@@ -50,7 +51,7 @@ class Memo:
         self.counter = 0
         self.cache = {}
 
-    def __call__(self, path: str):
+    def __call__(self, path: str) -> Any:
         """
         Invoke each time memo function is executed.
 
@@ -239,7 +240,7 @@ def filelist_total(pathstring: str) -> os.PathLike:
     raise MissingPathError
 
 
-def _filelist_total(path: os.PathLike) -> tuple:
+def _filelist_total(path: os.PathLike) -> Tuple[int, List[str]]:
     """
     Recursively search directory tree for files.
 
@@ -303,7 +304,7 @@ def get_file_list(path: str) -> list:
     return filelist
 
 
-def path_stat(path: str) -> tuple:
+def path_stat(path: str) -> Tuple:
     """
     Calculate directory statistics.
 
@@ -397,7 +398,7 @@ def copypath(source: str, dest: str) -> None:
         shutil.copy(source, dest)
 
 
-def toggle_debug_mode(switch_on: bool):
+def toggle_debug_mode(switch_on: bool) -> None:
     """
     Switch the environment variable debug indicator on or off.
 

@@ -26,7 +26,7 @@ import shutil
 from argparse import Namespace
 from hashlib import sha1, sha256  # nosec
 from pathlib import Path
-from urllib.parse import quote_plus
+from urllib.parse import quote
 
 import pyben
 import pytest
@@ -54,7 +54,7 @@ def test_magnet_uri(metafile1):
     magnet_link = magnet(metafile1)
     meta = pyben.load(metafile1)
     announce = meta["announce"]
-    assert quote_plus(announce) in magnet_link
+    assert quote(announce) in magnet_link
 
 
 def test_magnet_hex(metafile1):
@@ -105,16 +105,18 @@ def test_magnet_no_announce(metafile2):
     magnet_link = magnet(metafile2)
     assert magnet_link.startswith("magnet")
 
+
 def test_magnet_web_seed(metafile2):
     """
     Test create magnet function scheme.
     """
-    fake_web_seed = "fake-web-seed"
+    fake_web_seed = ["fake-web-seed"]
     meta = pyben.load(metafile2)
     meta["url-list"] = fake_web_seed
     pyben.dump(meta, metafile2)
     magnet_link = magnet(metafile2)
-    assert quote_plus(fake_web_seed) in magnet_link
+    assert quote(fake_web_seed[0]) in magnet_link
+
 
 def test_magnet_empty():
     """
