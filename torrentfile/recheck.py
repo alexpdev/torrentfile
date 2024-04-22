@@ -429,8 +429,7 @@ class FeedChecker(ProgMixin):
                 yield partial
                 partial = bytearray(0)
         if length != read:
-            for pad in self._gen_padding(partial, length, read):
-                yield pad
+            yield from self._gen_padding(partial, length, read)
 
     def _gen_padding(self, partial: bytes, length: int, read=0) -> bytes:
         """
