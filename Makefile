@@ -75,8 +75,6 @@ docs: ## Regenerate docs from changes
 	rm -rfv site/index.md
 	cp -rfv README.md site/index.md
 	cp -rfv CHANGELOG.md site/changelog.md
-	rm -rfv site/htmlcov
-	mv -fv htmlcov site/
 	mkdocs build
 	touch docs/.nojekyll
 
