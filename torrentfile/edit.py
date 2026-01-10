@@ -89,8 +89,8 @@ def edit_torrent(metafile: str, args: dict) -> dict:
     if "source" in args:
         info["source"] = args["source"]
 
-    if "private" in args:
-        info["private"] = int(args["private"])
+    if args.get("private"):
+        info["private"] = 1
 
     if "announce" in args:
         val = args.get("announce", None)
