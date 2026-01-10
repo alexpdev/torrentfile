@@ -270,6 +270,7 @@ def edit(args: Namespace) -> str:
         "announce": args.announce,
         "source": args.source,
         "private": args.private,
+        "public": args.public,
         "comment": args.comment,
     }
     return edit_torrent(metafile, editargs)
