@@ -19,6 +19,7 @@
 """
 Testing functions for the torrent module.
 """
+
 import os
 
 import pytest

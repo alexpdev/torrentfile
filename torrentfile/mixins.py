@@ -22,6 +22,7 @@ Collection of classes that can be used as Mixins with other base classes.
 Classes such as TorrentFile, TorrentFilev2, and all Hasher classes can use the
 progress bar mixin.  And any class is eligible to use the callback mixin.
 """
+
 import os
 import sys
 import math

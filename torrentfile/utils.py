@@ -183,7 +183,7 @@ def normalize_piece_length(piece_length: int) -> int:
             return piece_length
         raise PieceLengthValueError(piece_length)
 
-    if 13 < piece_length < 26:
+    if 13 < piece_length <= 29:
         return 2**piece_length
     if piece_length <= 13:
         raise PieceLengthValueError(piece_length)

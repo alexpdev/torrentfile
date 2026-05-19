@@ -417,15 +417,7 @@ def magnet(metafile: str, version: int = 0) -> str:
 
     magnet += trackers if trackers != "&tr=" else ""
 
-    web_sources = [""]
-    if "url-list" in meta:
-        web_sources = [
-            "&ws=" + quote_plus(urllist) for urllist in meta["url-list"]
-        ]
-
-    web_seed = "".join(web_sources)
-
-    magnet += web_seed if web_seed != "&ws=" else ""
+    magnet += magnetize_web_seeds(meta)
 
     logger.info("Created Magnet URI %s", magnet)
     sys.stdout.write("\n" + magnet + "\n")
@@ -461,6 +453,30 @@ def rebuild(args: Namespace) -> int:
             raise FileNotFoundError(path)
     assembler = Assembler(metafiles, contents, dest)
     return assembler.assemble_torrents()
+
+
+def magnetize_web_seeds(meta: dict) -> str:
+    """
+    Extract web seed urls and translate them into magnet query strings.
+
+    Parameters
+    ----------
+    meta: dict
+        torrent metafile contents
+
+    Returns
+    -------
+    str
+        magnet query string for web seeds
+    """
+    web_sources = []
+    if "url-list" in meta:
+        for url in meta["url-list"]:
+            web_sources.append("&ws=" + quote_plus(url))
+    if "httpseeds" in meta:
+        for url in meta["httpseeds"]:
+            web_sources.append("&ws=" + quote_plus(url))
+    return "".join(web_sources) if web_sources else ""
 
 
 interactive = select_action  # for clean import system

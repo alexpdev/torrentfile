@@ -19,6 +19,7 @@
 """
 Unittest functions for testing torrentfile utils module.
 """
+
 import math
 
 import pytest

@@ -22,6 +22,7 @@ Torrentfile can create Bittorrent metafiles for any content.
 All Bittorrent versions are fully supported.  Torrentfile can also edit,
 recheck torrents contents, and create magnet URI's for torrent files.
 """
+
 from torrentfile.cli import execute, main
 from torrentfile.commands import create, edit, info, magnet, recheck
 from torrentfile.utils import toggle_debug_mode

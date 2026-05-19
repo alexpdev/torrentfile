@@ -23,6 +23,7 @@ Re-assemble a torrent into the propper directory structure as indicated by a
 torrent meta file, and validate the contents of each file allong the
 way. Displays a progress bar for each torrent.
 """
+
 import os
 import math
 import logging

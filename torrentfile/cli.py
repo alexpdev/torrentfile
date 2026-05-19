@@ -383,7 +383,7 @@ def execute(args: List[str] = None) -> List[str]:
         metavar="<int>",
         help="""
         (Default: auto calculated based on total size of content)
-        acceptable values include numbers 14-26
+        Acceptable values include numbers 14-29. Piece length is 2^n bytes.
         14 = 16KiB, 20 = 1MiB, 21 = 2MiB etc.  Examples:[--piece-length 14]
         """,
     )
