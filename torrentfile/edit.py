@@ -95,12 +95,17 @@ def edit_torrent(metafile: str, args: dict) -> dict:
     if "announce" in args:
         val = args.get("announce", None)
         if isinstance(val, str):
-            vallist = val.split()
-            meta["announce"] = vallist[0]
-            meta["announce-list"] = [vallist]
-        elif isinstance(val, list):
+            val = val.split()
+        if isinstance(val, list):
+            if val[0].startswith("+"):
+                val[0] = val[0][1:]
             meta["announce"] = val[0]
-            meta["announce-list"] = [val]
+            meta["announce-list"] = []
+            for i in val:
+                if i.startswith("+"):
+                    meta["announce-list"][-1].append(i[1:])
+                else:
+                    meta["announce-list"].append([i])
 
     if "url-list" in args:
         val = args.get("url-list")
