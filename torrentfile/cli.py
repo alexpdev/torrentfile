@@ -280,7 +280,10 @@ def execute(args: List[str] = None) -> List[str]:
         metavar="<url>",
         nargs="+",
         default=[],
-        help="one or more space-seperated tracker url(s)",
+        help="""
+        One or more space-seperated tracker url(s), each will be in its own
+        tier, if a url is prefixed by '+', it will be added to previous tier.
+        """,
     )
 
     create_parser.add_argument(
@@ -443,7 +446,10 @@ def execute(args: List[str] = None) -> List[str]:
         dest="announce",
         metavar="<url>",
         nargs="+",
-        help="replace current trackers with one or more urls",
+        help="""
+        Replace current trackers with one or more urls, each will be in its own
+        tier, if a url is prefixed by '+', it will be added to previous tier.
+        """,
     )
 
     edit_parser.add_argument(

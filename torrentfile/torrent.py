@@ -322,7 +322,14 @@ class MetaFile:
             self.announce, self.announce_list = announce, [[announce]]
 
         elif isinstance(announce, Sequence):
-            self.announce, self.announce_list = announce[0], [announce]
+            if announce[0].startswith("+"):
+                announce[0] = announce[0][1:]
+            self.announce, self.announce_list = announce[0], []
+            for i in announce:
+                if i.startswith("+"):
+                    self.announce_list[-1].append(i[1:])
+                else:
+                    self.announce_list.append([i])
 
         self.align = align
 
